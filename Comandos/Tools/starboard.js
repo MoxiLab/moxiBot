@@ -61,6 +61,47 @@ module.exports = {
         const guildId = message.guild.id;
         const currentSettings = await starboardStorage.getStarboardSettings(guildId) || {};
 
+        // Subcomando help en componente V2
+        if (sub === 'help' || sub === 'ayuda') {
+            const { readFileSync } = require('fs');
+            const path = require('path');
+            try {
+                const filePath = path.join(__dirname, '../../EXPLICACION_STARBOARD.md');
+                const contenido = readFileSync(filePath, 'utf8');
+                const ContainerBuilder = require('discord.js').ContainerBuilder;
+                const SeparatorBuilder = require('discord.js').SeparatorBuilder;
+                const { Bot } = require('../../Config');
+                const container = new ContainerBuilder().setAccentColor(Bot.AccentColor);
+                // Header personalizado
+                container.addTextDisplayComponents(c => c.setContent('🌟 **Guía del sistema Starboard** 🌟'));
+                container.addSeparatorComponents(s => s.setDivider(true));
+                const lineas = contenido.split(/\r?\n/);
+                let bloque = '';
+                for (const linea of lineas) {
+                    if (linea.startsWith('# ')) {
+                        if (bloque) container.addTextDisplayComponents(c => c.setContent(bloque.trim()));
+                        bloque = `**${linea.replace('# ', '')}**\n`;
+                    } else if (linea.startsWith('## ')) {
+                        if (bloque) container.addTextDisplayComponents(c => c.setContent(bloque.trim()));
+                        bloque = `__${linea.replace('## ', '')}__\n`;
+                    } else if (linea.trim() === '') {
+                        if (bloque) container.addTextDisplayComponents(c => c.setContent(bloque.trim()));
+                        bloque = '';
+                    } else {
+                        bloque += linea + '\n';
+                    }
+                }
+                if (bloque) container.addTextDisplayComponents(c => c.setContent(bloque.trim()));
+                // Footer personalizado
+                container.addSeparatorComponents(s => s.setDivider(true));
+                container.addTextDisplayComponents(c => c.setContent(`ℹ️ Usa \\starboard help o !starboard help para volver a ver esta guía.\n${EMOJIS.copyright} ${Bot.Name || 'Moxi'}`));
+                await message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
+            } catch (err) {
+                await message.reply('No se pudo cargar la explicación de starboard.');
+            }
+            return;
+        }
+
         switch (sub) {
             case 'canal':
             case 'channel':
