@@ -66,7 +66,7 @@ module.exports = {
             const { readFileSync } = require('fs');
             const path = require('path');
             try {
-                const filePath = path.join(__dirname, '../../EXPLICACION_STARBOARD.md');
+                const filePath = path.join(__dirname, '../../Languages/es-ES/starboard/explicacion.md');
                 const contenido = readFileSync(filePath, 'utf8');
                 const ContainerBuilder = require('discord.js').ContainerBuilder;
                 const SeparatorBuilder = require('discord.js').SeparatorBuilder;
