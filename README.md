@@ -17,6 +17,12 @@ Un bot de Discord moderno y modular estructurado alrededor de carpetas reales qu
 ### Comandos prefijados (`Comandos/`)
 
 - `Comandos/Admin/` cubre `prefix`, `language`, `welcome`, `byes`, `audit`, `SetLevel`, `ResetLevels`, `LevelConfig`, `RankSetup`, `AddEmoji` y `SetLevel`. Estos comandos pagan roles, configuración de servidor, logs y niveles.
+
+- `Comandos/Admin/prefix.js` permite ver o cambiar el prefijo en el servidor; valida que el nuevo prefijo tenga entre 1 y 6 caracteres y guarda la selección en MongoDB.
+
+- `Comandos/Admin/language.js` fija el idioma del servidor y actualiza el traducción en `GuildSettings`.
+
+- `Comandos/Admin/welcome.js` y `Comandos/Admin/byes.js` ofrecen rutas para personalizar mensajes de entrada/salida y sus imágenes renderizadas.
 - `Comandos/Moderation/` gestiona ban, kick, mute, timeout, warn y una suite de reglas automáticas (`AutoRuleCreate`, `AutoRuleEdit`, etc.).
 - `Comandos/Music/` ofrece reproducción (`play`, `pause`, `stop`, `skip`), control de cola (`queue`, `volume`, `autoplay`, `resume`) y ajustes de sesión.
 - `Comandos/Tools/` dispone de utilidades como `help`, `ping`, `starboard`, `bug` y `afk`, mientras que `Comandos/Utiility/` suma `Feedback`, `Prestige`, `Rank`, `Stats` y `Levels` para experiencia gamificada.
