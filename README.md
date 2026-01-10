@@ -12,6 +12,26 @@ Un bot de Discord moderno y modular estructurado alrededor de carpetas reales qu
 - Traduce todo el bot mediante `Languages/` (`ar-SA`, `de-DE`, `en-US`, `es-ES`, `fr-FR`, `hi-IN`, `id-ID`, `it-IT`, `ja-JP`, `ko-KR`, `zh-CN`) y servicios de i18next para prefijos, panels y mensajes.
 - Mantiene estabilidad con `anticrash/antiCrash.js`, scripts de validación (`scripts/`) y utilitarios de depuración e integración (`Util/debug.js`, `Util/logger.js`).
 
+## 📜 Comandos disponibles ahora
+
+### Comandos prefijados (`Comandos/`)
+
+- `Comandos/Admin/` cubre `prefix`, `language`, `welcome`, `byes`, `audit`, `SetLevel`, `ResetLevels`, `LevelConfig`, `RankSetup`, `AddEmoji` y `SetLevel`. Estos comandos pagan roles, configuración de servidor, logs y niveles.
+- `Comandos/Moderation/` gestiona ban, kick, mute, timeout, warn y una suite de reglas automáticas (`AutoRuleCreate`, `AutoRuleEdit`, etc.).
+- `Comandos/Music/` ofrece reproducción (`play`, `pause`, `stop`, `skip`), control de cola (`queue`, `volume`, `autoplay`, `resume`) y ajustes de sesión.
+- `Comandos/Tools/` dispone de utilidades como `help`, `ping`, `starboard`, `bug` y `afk`, mientras que `Comandos/Utiility/` suma `Feedback`, `Prestige`, `Rank`, `Stats` y `Levels` para experiencia gamificada.
+
+### Comandos slash (`Slashcmd/`)
+
+- `Slashcmd/Admin/` incluye `audit` y rutas de configuración que replica los prefijos pero en formato slash.
+- `Slashcmd/Moderation/` y `Slashcmd/Musica/` contienen `mod` y `musica` para acciones de moderación y reproducción con nodos Poru.
+- `Slashcmd/Tools/` expone `afk`, `bug`, `help` y otras herramientas que usan botones/Componentes de `Components/V2`.
+
+### Otros comandos auxiliares
+
+- `deploy-commands.js` sincroniza la colección de slash commands; `scripts/list_slash_commands.js` lista los comandos activos.
+- `Handlers/commands.js` y `Handlers/slashcommands.js` usan `getFiles.js` para detectar comandos en tiempo de ejecución.
+
 ## 📁 Estructura relevante actual
 
 ```
