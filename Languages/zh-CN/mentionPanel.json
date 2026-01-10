@@ -1,0 +1,10 @@
+{
+    "greeting": "## 🌸 你好！我是{{mention}}，你的东方风格音乐伙伴。",
+    "lang_label": "🌐 **{{langName}}** ({{lang}})",
+    "prefix_label": "✨ **本服务器的前缀：** `{{prefix}}`",
+    "forgot_prefix": "忘记我的前缀了？随时@我即可查看。",
+    "invite": "邀请我",
+    "support": "支持",
+    "web": "网站",
+    "thanks": "感谢你选择了 {{mention}}！"
+}

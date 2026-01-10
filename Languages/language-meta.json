@@ -1,0 +1,154 @@
+[
+    {
+        "name": "en-US",
+        "nativeName": "English",
+        "moment": "en",
+        "defaultMomentFormat": "MMMM Do YYYY",
+        "default": true,
+        "alias": [
+            "English",
+            "english",
+            "en",
+            "en-us",
+            "en_us",
+            "en_US"
+        ]
+    },
+    {
+        "name": "es-ES",
+        "nativeName": "Español",
+        "moment": "es",
+        "defaultMomentFormat": "D [de] MMMM [de] YYYY",
+        "alias": [
+            "Español",
+            "español",
+            "es",
+            "es-es",
+            "es_es",
+            "es_ES"
+        ]
+    },
+    {
+        "name": "zh-CN",
+        "nativeName": "简体中文",
+        "moment": "zh-cn",
+        "defaultMomentFormat": "YYYY年M月D日",
+        "alias": [
+            "简体中文",
+            "中文",
+            "Chinese",
+            "chinese",
+            "zh",
+            "zh-cn",
+            "zh-CN",
+            "ch",
+            "ch-ch",
+            "cn",
+            "cn-cn"
+        ]
+    },
+    {
+        "name": "de-DE",
+        "nativeName": "Deutsch",
+        "moment": "de",
+        "defaultMomentFormat": "D. MMMM YYYY",
+        "alias": [
+            "Deutsch",
+            "de",
+            "de-de",
+            "de_DE",
+            "de_de"
+        ]
+    },
+    {
+        "name": "fr-FR",
+        "nativeName": "Français",
+        "moment": "fr",
+        "defaultMomentFormat": "D MMMM YYYY",
+        "alias": [
+            "Français",
+            "fr",
+            "fr-fr",
+            "fr_FR",
+            "fr_fr"
+        ]
+    },
+    {
+        "name": "it-IT",
+        "nativeName": "Italiano",
+        "moment": "it",
+        "defaultMomentFormat": "D MMMM YYYY",
+        "alias": [
+            "Italiano",
+            "it",
+            "it-it",
+            "it_IT",
+            "it_it"
+        ]
+    },
+    {
+        "name": "ja-JP",
+        "nativeName": "日本語",
+        "moment": "ja",
+        "defaultMomentFormat": "YYYY年M月D日",
+        "alias": [
+            "日本語",
+            "ja",
+            "ja-jp",
+            "ja_JP",
+            "ja_jp"
+        ]
+    },
+    {
+        "name": "ko-KR",
+        "nativeName": "한국어",
+        "moment": "ko",
+        "defaultMomentFormat": "YYYY년 M월 D일",
+        "alias": [
+            "한국어",
+            "ko",
+            "ko-kr",
+            "ko_KR",
+            "ko_kr"
+        ]
+    },
+    {
+        "name": "id-ID",
+        "nativeName": "Bahasa Indonesia",
+        "moment": "id",
+        "defaultMomentFormat": "D MMMM YYYY",
+        "alias": [
+            "Bahasa Indonesia",
+            "id",
+            "id-id",
+            "id_ID",
+            "id_id"
+        ]
+    },
+    {
+        "name": "hi-IN",
+        "nativeName": "हिन्दी",
+        "moment": "hi",
+        "defaultMomentFormat": "D MMMM YYYY",
+        "alias": [
+            "हिन्दी",
+            "hi",
+            "hi-in",
+            "hi_IN",
+            "hi_in"
+        ]
+    },
+    {
+        "name": "ar-SA",
+        "nativeName": "العربية",
+        "moment": "ar",
+        "defaultMomentFormat": "D MMMM YYYY",
+        "alias": [
+            "العربية",
+            "ar",
+            "ar-sa",
+            "ar_SA",
+            "ar_sa"
+        ]
+    }
+]

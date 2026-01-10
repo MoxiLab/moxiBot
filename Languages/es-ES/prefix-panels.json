@@ -1,0 +1,11 @@
+{
+    "CURRENT_PREFIX_TITLE": "Prefijo actual",
+    "CURRENT_PREFIX_DESC": "El prefijo actual del bot es: **{{prefix}}**",
+    "ALSO_CAN_USE": "También puedes usar: {{prefixes}}",
+    "PREFIX_TOO_LONG_TITLE": "Prefijo demasiado largo",
+    "PREFIX_TOO_LONG": "❗ El prefijo no puede tener más de 5 caracteres.",
+    "PREFIX_SUCCESS_TITLE": "Prefijo actualizado",
+    "PREFIX_SUCCESS": "✅ El nuevo prefijo es: **{{prefix}}**",
+    "PREFIX_ERROR_TITLE": "Error al actualizar",
+    "PREFIX_ERROR": "❌ Hubo un error al actualizar el prefijo. Intenta de nuevo."
+}

@@ -1,0 +1,18 @@
+{
+    "DAYS": "{{amount}} 天",
+    "HOURS": "{{amount}} 小时",
+    "MINUTES": "{{amount}} 分钟",
+    "SECONDS": "{{amount}} 秒",
+    "NOT_NUMBER": "必须为数字。",
+    "INCORRECT_DELIMITERS": "请使用以下时间分隔符之一：`d`、`h`、`m`、`s`。",
+    "INVALID_TIME": "输入的数字无效。（示例：1m 或 16h）",
+    "MAX_TIME": "不能超过 10 天。",
+    "day": "天",
+    "days": "天",
+    "hour": "小时",
+    "hours": "小时",
+    "minute": "分钟",
+    "minutes": "分钟",
+    "second": "秒",
+    "seconds": "秒"
+}

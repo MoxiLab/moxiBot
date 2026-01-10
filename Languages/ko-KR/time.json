@@ -1,0 +1,18 @@
+{
+    "DAYS": "{{amount}}일",
+    "HOURS": "{{amount}}시간",
+    "MINUTES": "{{amount}}분",
+    "SECONDS": "{{amount}}초",
+    "NOT_NUMBER": "숫자여야 합니다.",
+    "INCORRECT_DELIMITERS": "다음 시간 단위를 사용해 주세요: `d`, `h`, `m`, `s`.",
+    "INVALID_TIME": "잘못된 숫자가 입력되었습니다. (예: 1m 또는 16h)",
+    "MAX_TIME": "10일을 초과할 수 없습니다.",
+    "day": "일",
+    "days": "일",
+    "hour": "시간",
+    "hours": "시간",
+    "minute": "분",
+    "minutes": "분",
+    "second": "초",
+    "seconds": "초"
+}

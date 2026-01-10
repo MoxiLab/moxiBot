@@ -1,0 +1,10 @@
+{
+    "greeting": "## 🌸 Hallo! Ich bin {{mention}}, deine musikalische Begleiterin mit einem orientalischen Touch.",
+    "lang_label": "🌐 **{{langName}}** ({{lang}})",
+    "prefix_label": "✨ **Präfix auf diesem Server:** `{{prefix}}`",
+    "forgot_prefix": "Präfix vergessen? Erwähne mich einfach, um ihn jederzeit zu sehen.",
+    "invite": "Lade mich ein",
+    "support": "Support",
+    "web": "Web",
+    "thanks": "Danke, dass du dich für {{mention}} entschieden hast!"
+}

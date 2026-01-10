@@ -1,0 +1,11 @@
+{
+    "CURRENT_PREFIX_TITLE": "현재 접두사",
+    "CURRENT_PREFIX_DESC": "봇의 현재 접두사는: **{{prefix}}**",
+    "ALSO_CAN_USE": "다음 접두사도 사용할 수 있어요: {{prefixes}}",
+    "PREFIX_TOO_LONG_TITLE": "접두사가 너무 깁니다",
+    "PREFIX_TOO_LONG": "❗ 접두사는 5자를 초과할 수 없습니다.",
+    "PREFIX_SUCCESS_TITLE": "접두사 업데이트됨",
+    "PREFIX_SUCCESS": "✅ 새 접두사는: **{{prefix}}**",
+    "PREFIX_ERROR_TITLE": "업데이트 오류",
+    "PREFIX_ERROR": "❌ 접두사 업데이트 중 오류가 발생했습니다. 다시 시도해 주세요."
+}

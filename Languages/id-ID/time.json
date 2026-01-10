@@ -1,0 +1,18 @@
+{
+    "DAYS": "{{amount}} hari",
+    "HOURS": "{{amount}} jam",
+    "MINUTES": "{{amount}} menit",
+    "SECONDS": "{{amount}} detik",
+    "NOT_NUMBER": "Harus berupa angka.",
+    "INCORRECT_DELIMITERS": "Harap gunakan salah satu pemisah waktu berikut: `d`, `h`, `m`, `s`.",
+    "INVALID_TIME": "Angka yang dimasukkan tidak valid. (Contoh: 1m atau 16h)",
+    "MAX_TIME": "Tidak boleh lebih dari 10 hari.",
+    "day": "hari",
+    "days": "hari",
+    "hour": "jam",
+    "hours": "jam",
+    "minute": "menit",
+    "minutes": "menit",
+    "second": "detik",
+    "seconds": "detik"
+}

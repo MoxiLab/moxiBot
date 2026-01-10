@@ -1,0 +1,11 @@
+{
+    "CURRENT_PREFIX_TITLE": "現在のプレフィックス",
+    "CURRENT_PREFIX_DESC": "現在のボットのプレフィックスは: **{{prefix}}**",
+    "ALSO_CAN_USE": "次のプレフィックスも使えます: {{prefixes}}",
+    "PREFIX_TOO_LONG_TITLE": "プレフィックスが長すぎます",
+    "PREFIX_TOO_LONG": "❗ プレフィックスは5文字以内でなければなりません。",
+    "PREFIX_SUCCESS_TITLE": "プレフィックスが更新されました",
+    "PREFIX_SUCCESS": "✅ 新しいプレフィックスは: **{{prefix}}**",
+    "PREFIX_ERROR_TITLE": "更新エラー",
+    "PREFIX_ERROR": "❌ プレフィックスの更新中にエラーが発生しました。もう一度お試しください。"
+}

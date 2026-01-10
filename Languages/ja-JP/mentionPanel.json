@@ -1,0 +1,10 @@
+{
+    "greeting": "## 🌸 こんにちは！私は{{mention}}、オリエンタルな雰囲気の音楽コンパニオンです。",
+    "lang_label": "🌐 **{{langName}}** ({{lang}})",
+    "prefix_label": "✨ **このサーバーのプレフィックス：** `{{prefix}}`",
+    "forgot_prefix": "プレフィックスを忘れた？いつでもメンションして確認できます。",
+    "invite": "招待する",
+    "support": "サポート",
+    "web": "ウェブ",
+    "thanks": "{{mention}} を選んでくれてありがとう！"
+}
