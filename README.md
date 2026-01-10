@@ -1,390 +1,77 @@
 # 🤖 MoXi - Discord Bot
 
-Un bot de Discord moderno y versátil con soporte multiidioma, comandos avanzados, componentes visuales mejorados y sistema completo de niveles.
-
-## 📚 Documentación Completa
-
-Todo en este archivo. Última actualización: 29 de Diciembre, 2025
-
-## 📋 Características Principales
-
-### 🆕 Cambios recientes (Diciembre 2025)
-
-- **Permitir añadir emojis por attachment**: Ahora puedes subir un archivo de imagen y se usará como emoji personalizado, usando el nombre del archivo si no se especifica nombre.
-- **Migración completa a ContainerBuilder v2**: Todos los mensajes interactivos usan los nuevos componentes visuales v2 de Discord.js, eliminando los embeds antiguos.
-- **Consistencia de idioma en botones**: Los botones y mensajes interactivos siempre respetan el idioma configurado del servidor o usuario.
-- **Limpieza de consola en reinicio**: El comando `/restart` ahora limpia la consola antes de reiniciar el bot para mayor claridad.
-
-### 🌍 Soporte Multiidioma
-
-- **Idiomas disponibles**: en-US, es-ES, zh-CN
-- Sistema de traducciones centralizado con `message.translate()`
-- Soporte completo en comandos, embeds y respuestas del sistema
-
-### 👤 Comandos de Utilidad
-
-#### `/user` - Información de Usuario
-
-- Muestra avatar del usuario con detección automática de GIF
-- Banner del servidor si está disponible
-- Listado de roles (sin menciones)
-- Fechas de creación y unión con timestamps de Discord
-- Diseño compacto con ContainerBuilder y MediaGallery
-
-**Ejemplo**: `/user @usuario`
-
-#### `/help` - Sistema de Ayuda
-
-- Interfaz interactiva con navegación por categorías
-- Botones para navegar entre categorías de comandos
-- Información detallada de cada comando (uso, aliases, cooldown)
-- Fallback a EmbedBuilder si ContainerBuilder no está disponible
-
-**Ejemplo**: `/help` o `/help eval`
-
-#### `/feedback` - Reportar Problemas
-
-- Sistema de retroalimentación para usuarios
-- Webhook logging automático
-- Confirmación al usuario vía DM o followUp
-- Almacenamiento de ID de feedback
-
-**Ejemplo**: `/feedback Este comando no funciona bien`
-
-#### `/bug` - Reporte de Bugs
-
-- Interfaz para reportar errores del bot
-- Integración con webhooks de logging
-
-### ⚙️ Comandos de Administración
-
-#### `/prefix` - Gestionar Prefijo
-
-- Cambiar el prefijo de comandos del servidor
-- Validación de prefijos personalizados
-
-#### `/language` - Cambiar Idioma
-
-- Seleccionar idioma del servidor
-- Cambios persistentes en la base de datos
-
-### 🧭 Sistema de Niveles y XP
-
-#### `/rank [usuario]` - Ver Tarjeta de Rango
-
-- Muestra tarjeta visual con nivel y XP actual
-- Barra de progreso hacia el siguiente nivel
-- Posición en leaderboard
-- Badges obtenidos
-
-#### `/levels [tipo]` - Ver Leaderboard
-
-- Top 10 usuarios por: Nivel, XP Total, Prestige, Mensajes
-- Muestra tu posición actual
-- Opciones de filtrado
-
-#### `/stats [usuario]` - Estadísticas Detalladas
-
-- Información completa de progreso
-- Mensajes enviados, reacciones, streaks
-- XP ganado por bonuses
-- Badges obtenidos
-
-#### `/prestige` - Subir de Prestige
-
-- Sube de rango al alcanzar nivel 50
-- Resetea nivel pero mantiene prestige
-- Anuncios automáticos
-
-#### `/setlevel @user <nivel>` - Establecer Nivel (Admin)
-
-- Cambiar nivel manualmente
-- Requiere: Manage Roles
-
-#### `/resetlevels [usuario]` - Resetear Niveles (Admin)
-
-- Resetear usuario específico o servidor completo
-- Confirmación de seguridad
-- Requiere: Administrator
-
-#### `/levelconfig` - Configurar Sistema (Admin)
-
-**Subcomandos disponibles:**
-
-- `xp` - XP mín/máx y cooldown por mensaje
-- `prestige` - Habilitar/deshabilitar prestige
-- `dailybonus` - Bonus diario de XP
-- `reaccionbonus` - XP por reacciones
-- `notificaciones` - Configurar level-up notifications
-- `canal_bloqueado` - Bloquear/permitir canales para XP
-
-**Características:**
-
-- Ganancia de XP escribiendo mensajes
-- Multiplicadores por rol y canal (stackeables hasta 3x)
-- Bonus diario (24h)
-- Bonus por reacciones
-- Streaks de días activos
-- 5 Badges automáticos
-- Auto-roles al subir de nivel
-- Prestige System
-- Leaderboards múltiples
-- Estadísticas detalladas
-
-### 🖼️ Imágenes de Bienvenida y Despedida
-
-#### Welcome Image
-
-- Tarjeta personalizada con avatar
-- Información de llegada
-- Badges del usuario
-- Borde gradiente pastel pink
-
-#### Farewell Image (Mejorado)
-
-- Muestra nivel y prestige alcanzados
-- Estadísticas finales del usuario
-- Todos los badges obtenidos
-- Borde gradiente rojo/naranja
-- Soporte para placeholders: `{level}`, `{prestige}`, `{xp}`, `{rank}`
-
-#### `/setfarewell <canal> <mensaje>` - Configurar Despedida
-
-- Personalizar mensaje de despedida
-- Nuevos placeholders de nivel
-- Notificación al irse un miembro
-
-### 🎉 Sistema de Giveaways
-
-#### `/giveaway start` - Iniciar Giveaway
-
-- Crear sorteos con duraciones personalizadas
-- Número de ganadores configurable
-- Requisitos de rol opcionales
-
-#### `/giveaway list` - Listar Sorteos Activos
-
-- Ver todos los giveaways en progreso
-- Información de cada sorteo
-
-#### `/giveaway edit` - Editar Sorteo
-
-- Modificar parámetros de sorteos activos
-
-#### `/giveaway pause/resume` - Control de Pausa
-
-- Pausar y reanudar sorteos
-
-#### `/giveaway reroll` - Sortear de Nuevo
-
-- Seleccionar nuevos ganadores
-- Útil si alguien no puede reclamar el premio
-
-#### `/giveaway end` - Finalizar Sorteo
-
-- Terminar sorteo antes de tiempo
-- Seleccionar ganadores
-
-### 🛠️ Comandos Root (Solo Owner)
-
-#### `/eval` - Evaluar Código
-
-- Ejecutar código JavaScript en tiempo real
-- Soporte para Promises
-- Detección automática de tipo de dato
-- Enlace a bin para output largo
-- Muestra tiempo de ejecución
-
-#### `/exec` - Ejecutar Comandos del Sistema
-
-- Ejecutar comandos del shell directamente
-- Control completo del servidor
-
-#### `/reload` - Recargar Comandos y Eventos
-
-- Recargar todos los comandos sin reiniciar
-- Recargar eventos del bot
-
-#### `/restart` - Reiniciar Bot
-
-- Reinicio limpio del proceso
-- Recarga de todos los módulos
-
-#### `/leave` - Abandonar Servidor
-
-- Salir de un servidor específico
-- Útil para testing
-
-#### `/servers` - Listar Servidores
-
-- Ver todos los servidores donde está el bot
-- Información de cada servidor
-
-#### `/news` - Configurar Noticias
-
-- Establecer canal para noticias del bot
-
-#### `/portal` - Panel de Control
-
-- Acceso a funciones administrativas
-- Interfaz web opcional
-
-### 📊 Sistema de Logging
-
-#### Logger.js
-
-- **Success**: Mensajes de éxito en consola
-- **Debug**: Depuración con webhook opcional
-- **Log**: Información general
-- **Warn**: Advertencias
-- **Error**: Errores con stack trace y webhook de errores
-- **Line**: Separador visual
-
-Todos los mensajes de error usan **ContainerBuilder** con componentes modernos.
-
-### 🎨 Sistema de Componentes Visuales
-
-#### ContainerBuilder
-
-Componentes visuales modernos v2 de Discord.js:
-
-- **TextDisplayComponents** para contenido de texto
-- **SeparatorComponents** para divisores
-- **MediaGalleryComponents** para galerías de imágenes
-- **MessageFlags.IsComponentsV2** para renderizado correcto
-- **Sin embeds**: Todos los mensajes interactivos usan solo componentes v2 para máxima compatibilidad
-
-#### Timestamps de Discord
-
-- Formato automático: `<t:timestamp:f>`
-- Se adapta automáticamente a la zona horaria del usuario
-- Usado en: fechas de creación, unión a servidor, etc.
-
-## 📁 Estructura del Proyecto
+Un bot de Discord moderno y modular estructurado alrededor de carpetas reales que están en el repositorio (Comandos/, Slashcmd/, Util/, etc.). Esta documentación refleja la organización actual en lugar de una versión anterior.
+
+## ✨ Qué hace MoXi hoy
+
+- Soporta comandos prefijados (`Comandos/`) y slash (`Slashcmd/`), categorizados en Admin, Moderación, Música, Herramientas y utilidades de nivel/feedback.
+- Usa `Comandos/Utiility/` y `Util/` para helpers visuales (canvacard, rankcard, welcome/farewell cards), sistemas de niveles, logs y render de imágenes.
+- Centraliza la respuesta usando componentes modernos almacenados en `Components/`, `Embeds/`, y botones reutilizables bajo `Components/V2`.
+- Gestiona eventos a través de `Handlers/` y `Eventos/` (client, interactionCreate, messageCreate, music) con nodos Poru coordinados desde `Handlers/poru.js` y `poruEvent/`.
+- Persiste datos en MongoDB mediante los esquemas de `Models/` (Guilds, Users, Ranks, Starboard, Welcome, Audit, etc.).
+- Traduce todo el bot mediante `Languages/` (`ar-SA`, `de-DE`, `en-US`, `es-ES`, `fr-FR`, `hi-IN`, `id-ID`, `it-IT`, `ja-JP`, `ko-KR`, `zh-CN`) y servicios de i18next para prefijos, panels y mensajes.
+- Mantiene estabilidad con `anticrash/antiCrash.js`, scripts de validación (`scripts/`) y utilitarios de depuración e integración (`Util/debug.js`, `Util/logger.js`).
+
+## 📁 Estructura relevante actual
 
 ```
-moxi/
-├── Global/
-│   ├── Assets/              # Fuentes y recursos
-│   ├── Base/               # Clases base
-│   ├── Database/           # Esquemas de BD
-│   ├── Handlers/           # Manejadores del bot
-│   ├── Helpers/            # Utilidades y extensiones
-│   ├── Languages/          # Archivos de traducción
-│   └── Settings/           # Configuración
-├── Source/
-│   ├── index.js            # Punto de entrada
-│   ├── manager.js          # Manager de shards
-│   ├── Commands/           # Comandos del bot
-│   ├── Contexts/           # Contexto de comandos
-│   └── Events/             # Eventos del bot
-├── Readme.md               # Documentación principal
-└── BOT_INFO.md             # Este archivo
+moxiBot/
+├── Comandos/            # Comandos con prefijo en categorías claras
+├── Slashcmd/           # Comandos slash (Admin, Moderación, Musica, Tools)
+├── Util/               # Helpers (imágenes, rankings, nivel, feedback, debugging)
+├── Components/          # Controles visuales (botones, embeds, confirmaciones)
+├── Embeds/             # Templates como botones o embeds reutilizados
+├── Handlers/           # Registro de comandos/eventos y carga de nodos
+├── Eventos/            # Eventos para client, interacciones, mensajes, música
+├── Models/             # Esquemas de MongoDB (Guilds, Users, Clan, etc.)
+├── Languages/          # Traducciones organizadas por locale
+├── poruEvent/          # Callbacks de eventos de Poru (voice, track, queue)
+├── Global/             # Helpers (niveles, bienvenida, bonus) utilizados por varios módulos
+├── Functions/          # Funciones puntuales (e.g. searchSpotify)
+├── scripts/            # Utilidades para chequear estructura, migrar datos, refrescar comandos
+├── anticrash/          # Handler para reinicios y seguimiento de crash
+├── deploy-commands.js  # Script para registrar slash commands en Discord
+├── index.js            # Punto de entrada principal
+├── sharder.js          # Sharding y clusterización
+├── Config.js           # Configuración básica (prefix, opciones por defecto)
+├── i18n.js             # Inicialización de i18next
+└── package.json        # Dependencias y scripts (`dev`, `start:clean`)
 ```
 
-## 🔧 Configuración
+## 🚀 Instalación y ejecución
 
-### Idiomas Soportados
+1. Copia `.env.example` (si no existe, crea `.env`) y define `TOKEN`, `MONGODB_URI`, `CLIENT_ID`, `PREFIX`, `PORT`, `PORU_NODES`, etc.
+2. Ejecuta `npm install` para instalar dependencias locales.
+3. Usa `npm run dev` para desarrollo (activa nodemon y DEBUG; se limpia consola automáticamente) o `npm run start:clean` para producción sin warnings conocidos.
 
-**en-US** (Inglés)
+## 🧰 Dependencias clave
+- `discord.js@14`, `mongoose`, `dotenv`, `i18next`, `poru`, `poru-spotify`, `canvacard`, `rankcard`, `sylphacard`, `canvafy`, `muzicard`.
+- Utilidades de logging: `silentDotenv`, `logger`, `debugHelper` y `Util/commandHandler` para centralizar prefijos y comandos.
 
-- Comandos y mensajes en inglés
-- Formatos de fecha/hora en inglés
+## 🌐 Localización activa
 
-**es-ES** (Español)
+- Traducciones completas para `ar-SA`, `de-DE`, `en-US`, `es-ES`, `fr-FR`, `hi-IN`, `id-ID`, `it-IT`, `ja-JP`, `ko-KR`, `zh-CN`.
+- El sistema carga el archivo correspondiente en `Languages/<locale>/` y usa `Languages/prefix-panels.json`, `language-meta.json`, `i18n.js` y `Global/Settings` para aplicar el idioma en interacciones.
 
-- Comandos y mensajes en español
-- Formatos de fecha/hora en español
+## 🧭 Scripts y mantenimiento
+- `scripts/` contiene herramientas como `check-commands-load.js`, `set_welcome_style.js`, `refresh_slash_commands.js` y `scan-help-i18n.js` para mantener coherencia entre código y traducciones.
+- `deploy-commands.js` refresca los slash commands contra Discord, mientras que `scripts/list_slash_commands.js` imprime el catálogo actual.
 
-**zh-CN** (Chino Simplificado)
+## 🛠️ Cómo contribuir
 
-- Soporte completo en chino
-- Caracteres especiales manejados correctamente
+1. Alinea nuevas características con la estructura existente (agrupa por carpetas funcionales y sigue los namespaces ya definidos).
+2. Agrupa tus commits en fases claras (infraestructura/core, comandos/UI, idiomas/modelos) para conservar un historial limpio como ya se ha hecho.
+3. Ejecuta los scripts relevantes (`npm run dev`, `scripts/check-commands-load.js`, `scripts/check-locales.js`) antes de abrir un PR.
 
-### Base de Datos
+## 📦 Qué verificar antes de subir
 
-- MongoDB para almacenamiento persistente
-- Esquemas para Guild, Giveaway y usuario
-- Auto-inicialización en servidores nuevos
+- Asegúrate de que no se suben `node_modules`, `.env`, `.vscode` ni `.npm` gracias al `.gitignore`.
+- Ejecútalo `npm run dev` para verificar logging y carga de nodos Poru.
+- Revisa `Languages/` para confirmar que todos los locales estén sincronizados con `i18n.js`.
 
-## 📝 Ejemplos de Uso
+## 📞 Soporte y documentación adicional
 
-### Obtener información de un usuario
+- Usa `/bug` o `/feedback` en Discord para reportar errores y sugerencias.
+- `DEBUGGING.md` recoge consejos de depuración si necesitas observar logs/comportamiento del bot.
 
-```
-/user @usuario
-```
-
-### Crear un giveaway
-
-```
-/giveaway start
-- duration: 1h
-- winners: 2
-- prize: Nitro Classic
-```
-
-### Cambiar idioma del servidor
-
-```
-/language es-ES
-```
-
-### Evaluar código
-
-```
-/eval console.log("Hello MoXi!")
-```
-
-## 🚀 Características Técnicas
-
-- **Discord.js v14**: API moderna de Discord
-- **i18next**: Sistema de internacionalización
-- **MongoDB**: Base de datos NoSQL
-- **Node.js**: Runtime JavaScript
-- **Sharding**: Soporte para múltiples servidores
-- **Webhooks**: Logging remoto de errores y eventos
-- **Components v2**: Interfaz visual moderna
-
-## 📊 Estadísticas del Bot
-
-- **28 comandos** (16 Prefix, 10 Slash, 2 Context)
-- **6 eventos** cargados
-- **3 idiomas** soportados
-- **Múltiples servidores** con sharding
-
-## 🔐 Permisos Requeridos
-
-- `SEND_MESSAGES` - Enviar mensajes
-- `EMBED_LINKS` - Usar embeds
-- `READ_MESSAGE_HISTORY` - Leer historial
-- `MANAGE_MESSAGES` - Gestionar mensajes
-- `ADD_REACTIONS` - Agregar reacciones
-- `USE_APPLICATION_COMMANDS` - Usar comandos slash
-
-## 📞 Soporte
-
-Para reportar bugs o problemas:
-
-```
-/bug Descripción del problema
-```
-
-Para enviar feedback:
-
-```
-/feedback Tu feedback aquí
-```
-
----
-
-**Última actualización**: 29 de Diciembre, 2025  
-**Versión**: 3.0  
-**Estado**: ✅ En Desarrollo Activo
-
-### ✨ Cambios Recientes (v3.0)
-
-- ✅ **Añadir emojis por attachment**
-- ✅ **Migración total a ContainerBuilder v2**
-- ✅ **Botones y mensajes siempre en el idioma correcto**
-- ✅ **/restart limpia la consola antes de reiniciar**
+**Nota**: este README refleja la estructura actual del proyecto descrita por los archivos y carpetas que hay en el repositorio. Si añades nuevas carpetas, actualiza también este documento.
