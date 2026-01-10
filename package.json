@@ -1,0 +1,40 @@
+{
+  "name": "moxi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:clean": "node index.js 2>&1 | findstr /V \"Multiple Resolves\" | findstr /V \"AbortError\" | findstr /V \"DeprecationWarning\"",
+    "dev": "set NODE_ENV=development&& set DEBUG=1&& nodemon index.js"
+  },
+  "keywords": [
+    "discord.js",
+    "bot",
+    "music"
+  ],
+  "author": "Nini",
+  "license": "ISC",
+  "description": "Bot multiusos con musica y muchas funciones.",
+  "dependencies": {
+    "ascii-table": "^0.0.9",
+    "axios": "^1.13.2",
+    "canvacard": "^6.0.5",
+    "canvafy": "^7.2.1",
+    "color": "^5.0.3",
+    "colors": "^1.4.0",
+    "discord-arts": "^0.7.1",
+    "discord.js": "^14.25.1",
+    "dotenv": "^17.2.3",
+    "i18next": "^25.7.3",
+    "i18next-fs-backend": "^2.6.1",
+    "mongoose": "^9.0.2",
+    "muzicard": "^2.6.3",
+    "poru": "^5.2.0",
+    "poru-spotify": "^2.0.2",
+    "rankcard": "^1.2.8",
+    "sylphacard": "^3.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
