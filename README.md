@@ -1,103 +1,66 @@
-# 🤖 MoXi - Discord Bot
+# 🤖 Comandos de MoXi
 
-Un bot de Discord moderno y modular estructurado alrededor de carpetas reales que están en el repositorio (Comandos/, Slashcmd/, Util/, etc.). Esta documentación refleja la organización actual en lugar de una versión anterior.
+Este README documenta únicamente los comandos que el bot expone hoy, separados por tipo y utilidad.
 
-## ✨ Qué hace MoXi hoy
+## Comandos con prefijo
 
-- Soporta comandos prefijados (`Comandos/`) y slash (`Slashcmd/`), categorizados en Admin, Moderación, Música, Herramientas y utilidades de nivel/feedback.
-- Usa `Comandos/Utiility/` y `Util/` para helpers visuales (canvacard, rankcard, welcome/farewell cards), sistemas de niveles, logs y render de imágenes.
-- Centraliza la respuesta usando componentes modernos almacenados en `Components/`, `Embeds/`, y botones reutilizables bajo `Components/V2`.
-- Gestiona eventos a través de `Handlers/` y `Eventos/` (client, interactionCreate, messageCreate, music) con nodos Poru coordinados desde `Handlers/poru.js` y `poruEvent/`.
-- Persiste datos en MongoDB mediante los esquemas de `Models/` (Guilds, Users, Ranks, Starboard, Welcome, Audit, etc.).
-- Traduce todo el bot mediante `Languages/` (`ar-SA`, `de-DE`, `en-US`, `es-ES`, `fr-FR`, `hi-IN`, `id-ID`, `it-IT`, `ja-JP`, `ko-KR`, `zh-CN`) y servicios de i18next para prefijos, panels y mensajes.
-- Mantiene estabilidad con `anticrash/antiCrash.js`, scripts de validación (`scripts/`) y utilitarios de depuración e integración (`Util/debug.js`, `Util/logger.js`).
+### Administrador
+- `prefix`: muestra o cambia el prefijo del servidor (valida longitud entre 1 y 6 caracteres y guarda el nuevo valor en MongoDB).
+- `language`: fija el idioma del servidor y actualiza los ajustes en GuildSettings para todos los mensajes.
+- `welcome` / `byes`: administran los mensajes e imágenes de bienvenida y despedida con render personalizado.
+- `audit`: exporta los registros de auditoría y permite consultar eventos recientes relacionados con roles y moderación.
+- `AddEmoji`: agrega emojis al servidor y valida permisos antes de crear la reacción.
+- `SetLevel` / `ResetLevels` / `LevelConfig`: ajustan la experiencia de niveles (por canal o rol) y reinician progresos cuando es necesario.
+- `RankSetup`: define canales y estilos para tarjetas de nivel.
 
-## 📜 Comandos disponibles ahora
+### Moderación
+- `AutoRuleCreate`, `AutoRuleEdit`, `AutoRuleList`, `AutoRuleDelete`: establecen reglas automáticas (mensajes, reacciones) y permiten modificarlas sin tocar el código.
+- `ban`, `kick`, `timeout`: aplican sanciones básicas con motivo y duración opcional.
+- `warn`: registra avisos y notifica al autorizado; `unban` y `unmute` revocan sanciones.
+- `mute`: silencia usuarios en canal de voz y texto mediante roles automáticos.
 
-### Comandos prefijados (`Comandos/`)
+### Música
+- `play`: reproduce canciones o playlists desde YouTube/Spotify a través de los nodos Poru.
+- `queue`: muestra y gestiona la cola actual.
+- `pause` / `resume`: detienen y reanudan la reproducción.
+- `skip` / `stop`: saltan la pista en curso o liberan los recursos del nodo.
+- `volume`: ajusta el volumen (0-150).
+- `add`: agrega URLs o búsquedas a la cola sin interrumpir la lista.
+- `autoplay`: alterna el modo de reproducción automática.
 
-- `Comandos/Admin/` cubre `prefix`, `language`, `welcome`, `byes`, `audit`, `SetLevel`, `ResetLevels`, `LevelConfig`, `RankSetup`, `AddEmoji` y `SetLevel`. Estos comandos pagan roles, configuración de servidor, logs y niveles.
+### Herramientas y utilidades
+- `help`: despliega la guía interactiva con botones para cada categoría.
+- `ping`: comprueba latencias del bot y del nodo Poru.
+- `bug`: registra un reporte en MongoDB con la información enviada por el usuario.
+- `afk`: marca un usuario como ausente y notifica respuestas automáticas.
+- `starboard`: configura el canal y los criterios que elevan mensajes destacados.
+- `autonuke`: limpia mensajes o permisos conflictivos con un solo comando.
+- `user`: muestra estadísticas y roles del miembro en cuestión.
 
-- `Comandos/Admin/prefix.js` permite ver o cambiar el prefijo en el servidor; valida que el nuevo prefijo tenga entre 1 y 6 caracteres y guarda la selección en MongoDB.
+### Funciones de experiencia gamificada
+- `Feedback`: permite recopilar impresiones de la comunidad con botones en tiempo real.
+- `Prestige`: controla el sistema de prestigio tras alcanzar el máximo nivel.
+- `Levels`, `Rank`, `Stats`: exponen estadísticas, tablas de clasificación y progresos por servidor.
+- `emojiinfo`: muestra metadatos de un emoji (creador, ID, uso) para moderadores.
 
-- `Comandos/Admin/language.js` fija el idioma del servidor y actualiza el traducción en `GuildSettings`.
+### Comandos raíz
+- `mongo`: ofrece diagnósticos y estadísticas de la conexión con MongoDB.
+- `lava`: reinicia o consulta el estado de los nodos Poru cuando hay fallos de audio.
 
-- `Comandos/Admin/welcome.js` y `Comandos/Admin/byes.js` ofrecen rutas para personalizar mensajes de entrada/salida y sus imágenes renderizadas.
-- `Comandos/Moderation/` gestiona ban, kick, mute, timeout, warn y una suite de reglas automáticas (`AutoRuleCreate`, `AutoRuleEdit`, etc.).
-- `Comandos/Music/` ofrece reproducción (`play`, `pause`, `stop`, `skip`), control de cola (`queue`, `volume`, `autoplay`, `resume`) y ajustes de sesión.
-- `Comandos/Tools/` dispone de utilidades como `help`, `ping`, `starboard`, `bug` y `afk`, mientras que `Comandos/Utiility/` suma `Feedback`, `Prestige`, `Rank`, `Stats` y `Levels` para experiencia gamificada.
+## Comandos slash
 
-### Comandos slash (`Slashcmd/`)
+### Administración
+- `audit`: consulta registros de auditoría y permite filtrar por acción, usuario o canal desde una interfaz slash.
 
-- `Slashcmd/Admin/` incluye `audit` y rutas de configuración que replica los prefijos pero en formato slash.
-- `Slashcmd/Moderation/` y `Slashcmd/Musica/` contienen `mod` y `musica` para acciones de moderación y reproducción con nodos Poru.
-- `Slashcmd/Tools/` expone `afk`, `bug`, `help` y otras herramientas que usan botones/Componentes de `Components/V2`.
+### Moderación
+- `mod`: agrupa acciones clave (ban, kick, mute, timeout, warn, unban) con parámetros estructurados, confirmaciones y registros automáticos en canales dedicados.
 
-### Otros comandos auxiliares
+### Música
+- `musica`: cubre reproducción, control de cola y volumen con menús recomendados por defecto y compatibilidad con Poru/Spotify.
 
-- `deploy-commands.js` sincroniza la colección de slash commands; `scripts/list_slash_commands.js` lista los comandos activos.
-- `Handlers/commands.js` y `Handlers/slashcommands.js` usan `getFiles.js` para detectar comandos en tiempo de ejecución.
+### Herramientas
+- `help`: abre el panel gráfico con atajos rápidos (prefijos, ayuda y soporte).
+- `bug`: genera un ticket en la base de datos con la descripción del error.
+- `afk`: marca o quita el estado de ausencia para el autor inmediatamente.
 
-## 📁 Estructura relevante actual
-
-```
-moxiBot/
-├── Comandos/            # Comandos con prefijo en categorías claras
-├── Slashcmd/           # Comandos slash (Admin, Moderación, Musica, Tools)
-├── Util/               # Helpers (imágenes, rankings, nivel, feedback, debugging)
-├── Components/          # Controles visuales (botones, embeds, confirmaciones)
-├── Embeds/             # Templates como botones o embeds reutilizados
-├── Handlers/           # Registro de comandos/eventos y carga de nodos
-├── Eventos/            # Eventos para client, interacciones, mensajes, música
-├── Models/             # Esquemas de MongoDB (Guilds, Users, Clan, etc.)
-├── Languages/          # Traducciones organizadas por locale
-├── poruEvent/          # Callbacks de eventos de Poru (voice, track, queue)
-├── Global/             # Helpers (niveles, bienvenida, bonus) utilizados por varios módulos
-├── Functions/          # Funciones puntuales (e.g. searchSpotify)
-├── scripts/            # Utilidades para chequear estructura, migrar datos, refrescar comandos
-├── anticrash/          # Handler para reinicios y seguimiento de crash
-├── deploy-commands.js  # Script para registrar slash commands en Discord
-├── index.js            # Punto de entrada principal
-├── sharder.js          # Sharding y clusterización
-├── Config.js           # Configuración básica (prefix, opciones por defecto)
-├── i18n.js             # Inicialización de i18next
-└── package.json        # Dependencias y scripts (`dev`, `start:clean`)
-```
-
-## 🚀 Instalación y ejecución
-
-1. Copia `.env.example` (si no existe, crea `.env`) y define `TOKEN`, `MONGODB_URI`, `CLIENT_ID`, `PREFIX`, `PORT`, `PORU_NODES`, etc.
-2. Ejecuta `npm install` para instalar dependencias locales.
-3. Usa `npm run dev` para desarrollo (activa nodemon y DEBUG; se limpia consola automáticamente) o `npm run start:clean` para producción sin warnings conocidos.
-
-## 🧰 Dependencias clave
-- `discord.js@14`, `mongoose`, `dotenv`, `i18next`, `poru`, `poru-spotify`, `canvacard`, `rankcard`, `sylphacard`, `canvafy`, `muzicard`.
-- Utilidades de logging: `silentDotenv`, `logger`, `debugHelper` y `Util/commandHandler` para centralizar prefijos y comandos.
-
-## 🌐 Localización activa
-
-- Traducciones completas para `ar-SA`, `de-DE`, `en-US`, `es-ES`, `fr-FR`, `hi-IN`, `id-ID`, `it-IT`, `ja-JP`, `ko-KR`, `zh-CN`.
-- El sistema carga el archivo correspondiente en `Languages/<locale>/` y usa `Languages/prefix-panels.json`, `language-meta.json`, `i18n.js` y `Global/Settings` para aplicar el idioma en interacciones.
-
-## 🧭 Scripts y mantenimiento
-- `scripts/` contiene herramientas como `check-commands-load.js`, `set_welcome_style.js`, `refresh_slash_commands.js` y `scan-help-i18n.js` para mantener coherencia entre código y traducciones.
-- `deploy-commands.js` refresca los slash commands contra Discord, mientras que `scripts/list_slash_commands.js` imprime el catálogo actual.
-
-## 🛠️ Cómo contribuir
-
-1. Alinea nuevas características con la estructura existente (agrupa por carpetas funcionales y sigue los namespaces ya definidos).
-2. Agrupa tus commits en fases claras (infraestructura/core, comandos/UI, idiomas/modelos) para conservar un historial limpio como ya se ha hecho.
-3. Ejecuta los scripts relevantes (`npm run dev`, `scripts/check-commands-load.js`, `scripts/check-locales.js`) antes de abrir un PR.
-
-## 📦 Qué verificar antes de subir
-
-- Asegúrate de que no se suben `node_modules`, `.env`, `.vscode` ni `.npm` gracias al `.gitignore`.
-- Ejecútalo `npm run dev` para verificar logging y carga de nodos Poru.
-- Revisa `Languages/` para confirmar que todos los locales estén sincronizados con `i18n.js`.
-
-## 📞 Soporte y documentación adicional
-
-- Usa `/bug` o `/feedback` en Discord para reportar errores y sugerencias.
-- `DEBUGGING.md` recoge consejos de depuración si necesitas observar logs/comportamiento del bot.
-
-**Nota**: este README refleja la estructura actual del proyecto descrita por los archivos y carpetas que hay en el repositorio. Si añades nuevas carpetas, actualiza también este documento.
+Mantén este README actualizado cada vez que se agregue o retire un comando para reflejar los cambios reales en `Comandos/` y `Slashcmd/`.
