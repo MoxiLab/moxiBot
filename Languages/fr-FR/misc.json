@@ -102,7 +102,7 @@
     "BUTTONS_NOT_OWNER": "Seule la personne ayant exécuté la commande peut utiliser les boutons.",
     "ADDEMOJI_NAV_INFO": "Utilisez accueil, précédent et suivant pour parcourir la liste des émojis.",
     "ADDEMOJI_NAV_PAGE_INVALID": "Entrez un nombre entre {min} et {max}.",
-    "ADDEMOJI_EMOJI": "Émoji"
+    "ADDEMOJI_EMOJI": "Émoji",
     "INCORRECT_FORMAT": "Oups ! Il semble y avoir une erreur, mais ne vous inquiétez pas. Suivez ce conseil pour la corriger :\n\n{{commandExample}}",
     "LANGUAGE_DESCRIPTION": "Sélectionnez votre langue préférée pour l’interface du bot.",
     "LANGUAGE_NAME": "Français",
