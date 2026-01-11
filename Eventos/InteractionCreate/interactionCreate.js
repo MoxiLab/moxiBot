@@ -6,6 +6,7 @@ const debugHelper = require('../../Util/debugHelper');
 
 const selectMenuController = require("./controllers/selectMenu");
 const buttonController = require("./controllers/button");
+const modalController = require("./controllers/modals");
 
 Moxi.on("interactionCreate", async (interaction) => {
   if (interaction.channel.type === 'dm') return;
@@ -69,6 +70,7 @@ Moxi.on("interactionCreate", async (interaction) => {
     } else if (interaction.isButton()) {
       await buttonController(interaction, Moxi, logger);
     } else if (interaction.isModalSubmit && interaction.isModalSubmit()) {
+      await modalController(interaction, Moxi, logger);
       if (interaction.customId && interaction.customId.startsWith('help2_jump_modal:')) {
         const moxi = require("../../i18n");
         const guildId = interaction.guildId || interaction.guild?.id;
