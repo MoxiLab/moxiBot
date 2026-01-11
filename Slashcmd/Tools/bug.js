@@ -47,7 +47,7 @@ module.exports = {
                 flags: MessageFlags.IsComponentsV2,
                 ephemeral: true,
             });
-        } 
+        }
 
         const tags = [
             { name: 'Info', moderated: false },
@@ -112,6 +112,23 @@ module.exports = {
                 await starter.pin().catch(() => null);
                 if (GUIDE_THREAD_REACTION) {
                     await starter.react(GUIDE_THREAD_REACTION).catch(() => null);
+                }
+                // Guardar en GuildMessage el hilo guía
+                try {
+                    const GuildMessage = require('../../Models/GuildMessage');
+                    await GuildMessage.findOneAndUpdate(
+                        { guildId: guild.id, type: 'bugGuide' },
+                        {
+                            guildId: guild.id,
+                            type: 'bugGuide',
+                            channelId: guideThread.id,
+                            messageId: starter.id,
+                            lastLanguage: lang,
+                        },
+                        { upsert: true, new: true }
+                    );
+                } catch (err) {
+                    console.error('[bug] No se pudo guardar el mensaje de bugGuide en MongoDB:', err);
                 }
             }
         } catch (error) {
