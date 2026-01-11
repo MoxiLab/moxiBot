@@ -9,7 +9,7 @@ module.exports = {
     name: 'timer',
     alias: ['temporizador', 'temporizador', 'temporizador'],
     description: lang => 'Crea y consulta temporizadores visuales',
-    usage: 'timer [nuevo <minutos>]',
+    usage: 'timer [minutos]',
     Category: lang => 'Utilidad',
     cooldown: 5,
     async execute(Moxi, message, args) {
@@ -24,7 +24,7 @@ module.exports = {
 
         // Si hay un temporizador activo en este canal, mostrar cuánto falta
         const current = timerStorage.getTimer(guildId, channelId);
-        if (!args[0] || args[0].toLowerCase() !== 'nuevo') {
+        if (!args[0]) {
             let desc = '';
             if (current) {
                 const msLeft = current.endTime - Date.now();
@@ -61,36 +61,17 @@ module.exports = {
             return message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
         }
 
-        // Subcomando: nuevo <minutos> o desde <minutos>
-        let minutos = null;
-        let modo = null;
-        if (args[0].toLowerCase() === 'nuevo') {
-            minutos = parseInt(args[1], 10);
-            modo = 'nuevo';
-        } else if (args[0].toLowerCase() === 'desde') {
-            minutos = parseInt(args[1], 10);
-            modo = 'desde';
-        }
+        // Si el argumento es un número, crear el temporizador
+        const minutos = parseInt(args[0], 10);
         if (isNaN(minutos) || minutos < 1 || minutos > 1440) {
-            return message.reply('Elige una cantidad de minutos entre 1 y 1440. Ejemplo: .timer nuevo 10 o .timer desde 5');
+            return message.reply('Elige una cantidad de minutos entre 1 y 1440. Ejemplo: .timer 10');
         }
         if (current) {
             return message.reply('Ya hay un temporizador activo en este canal. Espera a que termine o cancélalo antes de crear uno nuevo.');
         }
 
-        let startTime = Date.now();
-        let refMsg = null;
-        if (modo === 'desde') {
-            // Buscar el último mensaje del usuario en el canal (excluyendo el comando actual)
-            const fetched = await message.channel.messages.fetch({ limit: 10 });
-            refMsg = fetched.filter(m => m.author.id === userId && m.id !== message.id).first();
-            if (refMsg) {
-                startTime = refMsg.createdTimestamp;
-            }
-        }
-        const endTime = startTime + minutos * 60 * 1000;
+        const endTime = Date.now() + minutos * 60 * 1000;
         const msToWait = Math.max(0, endTime - Date.now());
-
         const timerImageUrl = `https://dummyimage.com/600x200/222/fff&text=⏰+${minutos}+minutos`;
         const container = new ContainerBuilder()
             .setAccentColor(Bot.AccentColor)
@@ -124,7 +105,6 @@ module.exports = {
                 c.setContent(`${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`)
             );
 
-        // Guardar el temporizador (para consistencia, aunque el timeout real es custom)
         timerStorage.setTimer(guildId, channelId, userId, minutos, async () => {
             try {
                 await message.channel.send(`⏰ ¡Tu temporizador de **${minutos} minutos** ha terminado!`);
