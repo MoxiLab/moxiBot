@@ -82,7 +82,7 @@ module.exports = async function handleCommand(Moxi, ctx, args, comando) {
                         user: username,
                         guild: guildName
                     }) ||
-                    `**Comando:** \\`${commandName}\\`\n**Usuario:** ${username}\n**Servidor:** ${guildName}`),
+                    '**Comando:** `' + commandName + '`\n**Usuario:** ' + username + '\n**Servidor:** ' + guildName),
                 timestamp: new Date().toISOString(),
             };
             channel.send({ embeds: [embed] }).catch(() => {});
