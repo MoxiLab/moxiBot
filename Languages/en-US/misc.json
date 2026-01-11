@@ -103,7 +103,7 @@
     "BUTTONS_NOT_OWNER": "Only the person who executed the command can use the buttons.",
     "ADDEMOJI_NAV_INFO": "Use home, previous, and next to browse the emoji list.",
     "ADDEMOJI_NAV_PAGE_INVALID": "Enter a number between {min} and {max}.",
-    "ADDEMOJI_EMOJI": "Emoji"
+    "ADDEMOJI_EMOJI": "Emoji",
     "HELP_WEB_URL": "https://moxibot.es/",
     "INCORRECT_FORMAT": "Uh-oh! There seems to be a mistake, but don't worry. Follow this tip to fix it:\n\n{{commandExample}}",
     "LANGUAGE_DESCRIPTION": "Select your preferred language for the bot interface.",
