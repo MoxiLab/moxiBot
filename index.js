@@ -10,7 +10,12 @@ const client = new Client({
         IntentsBitField.Flags.GuildVoiceStates
     ]
 });
+
 require('./Util/silentDotenv')();
+
+// Restaurar temporizadores desde MongoDB al iniciar el bot
+const { restoreTimers } = require('./Util/timerStorage');
+restoreTimers();
 
 
 const moxi = require('./i18n');
