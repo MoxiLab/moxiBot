@@ -14,13 +14,13 @@ async function restoreTimers(onFinish) {
                 const timeoutId = setTimeout(() => {
                     if (onFinish) onFinish(t.guildId, t.channelId, t.userId, t.minutos);
                     delete timers[t.guildId][t.channelId];
-                    TimerModel.deleteOne({ guildId: t.guildId, channelId: t.channelId }).catch(() => {});
+                    TimerModel.deleteOne({ guildId: t.guildId, channelId: t.channelId }).catch(() => { });
                 }, msLeft);
                 if (!timers[t.guildId]) timers[t.guildId] = {};
                 timers[t.guildId][t.channelId] = { userId: t.userId, endTime: t.endTime, timeoutId };
             } else {
                 // Si ya expiró, eliminar de MongoDB
-                TimerModel.deleteOne({ guildId: t.guildId, channelId: t.channelId }).catch(() => {});
+                TimerModel.deleteOne({ guildId: t.guildId, channelId: t.channelId }).catch(() => { });
             }
         }
         console.log(`[timerStorage] Temporizadores restaurados desde MongoDB: ${all.length}`);
