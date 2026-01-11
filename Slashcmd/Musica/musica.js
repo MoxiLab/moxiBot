@@ -125,6 +125,7 @@ module.exports = {
         }
 
         if (subcommand === "play") {
+
             // Requiere estar en un canal de voz
             const voiceErr = ensureVoice({ requireSameChannel: true });
             if (voiceErr) return interaction.reply(voiceErr);
@@ -135,7 +136,17 @@ module.exports = {
             debugHelper.log('play', 'start', { guildId, requesterId, track: requestedTrack, platform: lugar });
 
             const source = lugar === 'youtube' ? 'ytsearch' : 'spotify';
-            const res = await Moxi.poru.resolve({ query: requestedTrack, source, requester: interaction.member });
+            let res;
+            try {
+                res = await Moxi.poru.resolve({ query: requestedTrack, source, requester: interaction.member });
+            } catch (err) {
+                debugHelper.error('play', 'poru resolve error', err);
+                return interaction.editReply({ components: [buildV2Notice('Error al conectar con el nodo de música. Intenta más tarde.')], flags: v2Flags() });
+            }
+            if (typeof res === 'string') {
+                debugHelper.error('play', 'poru returned string', { res });
+                return interaction.editReply({ components: [buildV2Notice('Error al conectar con el nodo de música. Intenta más tarde.')], flags: v2Flags() });
+            }
             debugHelper.log('play', 'resolve result', { guildId, requesterId, loadType: res.loadType });
 
             if (res.loadType === "LOAD_FAILED") {
@@ -281,24 +292,27 @@ module.exports = {
 
                 if (player.autoplay === true) {
                     player.autoplay = false;
-
                     await player.queue.clear();
                     debugHelper.log('autoplay', 'yt disabled', { guildId, requesterId });
                     return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_AUTOPLAY_DISABLED', lang))], flags: v2Flags() });
-                } else {
-                    player.autoplay = true;
-
-                    if (ytUri) {
-                        const identifier = currentsong.identifier;
-                        const search = `https://music.youtube.com/watch?v=${identifier}&list=RD${identifier}`;
-                        const res = await Moxi.poru.resolve({ query: search, source: "ytmsearch", requester: interaction.user });
-
-                        await player.queue.add(res.tracks[Math.floor(Math.random() * res.tracks.length) ?? 5]);
-
-                        debugHelper.log('autoplay', 'yt enabled', { guildId, requesterId, playlist: res.playlistInfo?.name });
-                        return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_AUTOPLAY_ENABLED', lang))], flags: v2Flags() });
-                    }
                 }
+                player.autoplay = true;
+                const identifier = currentsong.identifier;
+                const search = `https://music.youtube.com/watch?v=${identifier}&list=RD${identifier}`;
+                let res;
+                try {
+                    res = await Moxi.poru.resolve({ query: search, source: "ytmsearch", requester: interaction.user });
+                } catch (err) {
+                    debugHelper.error('autoplay', 'poru resolve error', err);
+                    return interaction.editReply({ components: [buildV2Notice('Error al conectar con el nodo de música. Intenta más tarde.')], flags: v2Flags() });
+                }
+                if (typeof res === 'string') {
+                    debugHelper.error('autoplay', 'poru returned string', { res });
+                    return interaction.editReply({ components: [buildV2Notice('Error al conectar con el nodo de música. Intenta más tarde.')], flags: v2Flags() });
+                }
+                await player.queue.add(res.tracks[Math.floor(Math.random() * res.tracks.length) ?? 5]);
+                debugHelper.log('autoplay', 'yt enabled', { guildId, requesterId, playlist: res.playlistInfo?.name });
+                return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_AUTOPLAY_ENABLED', lang))], flags: v2Flags() });
 
             }
 
@@ -357,8 +371,6 @@ module.exports = {
                     }
                 }
             }
-        }
-
         if (subcommand === "stop") {
             debugHelper.log('stop', 'start', { guildId, requesterId });
             const voiceErr = ensureVoice({ requireSameChannel: true });
@@ -419,7 +431,17 @@ module.exports = {
             const currentsong = player.currentTrack.info;
             const ytUri = /^(https?:\/\/)?(www\.)?(m\.)?(music\.)?(youtube\.com|youtu\.?be)\/.+$/gi.test(currentsong.uri);
 
-            if (!ytUri) {
+                let res;
+                try {
+                    res = await Moxi.poru.resolve({ query: search, source: "ytmsearch", requester: interaction.user });
+                } catch (err) {
+                    debugHelper.error('add', 'poru resolve error', err);
+                    return interaction.editReply({ components: [buildV2Notice('Error al conectar con el nodo de música. Intenta más tarde.')], flags: v2Flags() });
+                }
+                if (typeof res === 'string') {
+                    debugHelper.error('add', 'poru returned string', { res });
+                    return interaction.editReply({ components: [buildV2Notice('Error al conectar con el nodo de música. Intenta más tarde.')], flags: v2Flags() });
+                }
                 debugHelper.warn('add', 'not youtube track', { guildId, requesterId });
                 return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_ADD_YT_ONLY', lang))], flags: v2Flags() });
             }
@@ -438,7 +460,6 @@ module.exports = {
                 return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_TRACKS_ADDED', lang, { count: num }))], flags: v2Flags() });
             }
         }
-
         if (subcommand === "volume") {
             const value = interaction.options.getNumber("amount")
             debugHelper.log('volume', 'start', { guildId, requesterId, value });
