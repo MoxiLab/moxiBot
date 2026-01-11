@@ -63,17 +63,36 @@ module.exports = {
 
         // Subcomando help en componente V2
         if (sub === 'help' || sub === 'ayuda') {
-            const { readFileSync } = require('fs');
+            const { readFileSync, existsSync } = require('fs');
             const path = require('path');
             try {
-                const filePath = path.join(__dirname, '../../Languages/es-ES/starboard/explicacion.md');
+                let langCode = lang || 'es-ES';
+                let filePath = path.join(__dirname, `../../Languages/${langCode}/starboard/explicacion.md`);
+                let metaPath = path.join(__dirname, `../../Languages/${langCode}/starboard/meta.json`);
+                if (!existsSync(filePath)) {
+                    filePath = path.join(__dirname, '../../Languages/es-ES/starboard/explicacion.md');
+                    metaPath = path.join(__dirname, '../../Languages/es-ES/starboard/meta.json');
+                    if (!existsSync(filePath)) {
+                        filePath = path.join(__dirname, '../../Languages/en-US/starboard/explicacion.md');
+                        metaPath = path.join(__dirname, '../../Languages/en-US/starboard/meta.json');
+                    }
+                }
                 const contenido = readFileSync(filePath, 'utf8');
+                let header = '🌟 Starboard System Guide 🌟';
+                let footer = 'ℹ️ Use \\starboard help or !starboard help to see this guide again.';
+                if (existsSync(metaPath)) {
+                    try {
+                        const meta = JSON.parse(readFileSync(metaPath, 'utf8'));
+                        if (meta.header) header = meta.header;
+                        if (meta.footer) footer = meta.footer;
+                    } catch {}
+                }
                 const ContainerBuilder = require('discord.js').ContainerBuilder;
                 const SeparatorBuilder = require('discord.js').SeparatorBuilder;
                 const { Bot } = require('../../Config');
                 const container = new ContainerBuilder().setAccentColor(Bot.AccentColor);
-                // Header personalizado
-                container.addTextDisplayComponents(c => c.setContent('🌟 **Guía del sistema Starboard** 🌟'));
+                // Header multilenguaje
+                container.addTextDisplayComponents(c => c.setContent(header));
                 container.addSeparatorComponents(s => s.setDivider(true));
                 const lineas = contenido.split(/\r?\n/);
                 let bloque = '';
@@ -92,9 +111,9 @@ module.exports = {
                     }
                 }
                 if (bloque) container.addTextDisplayComponents(c => c.setContent(bloque.trim()));
-                // Footer personalizado
+                // Footer multilenguaje
                 container.addSeparatorComponents(s => s.setDivider(true));
-                container.addTextDisplayComponents(c => c.setContent(`ℹ️ Usa \\starboard help o !starboard help para volver a ver esta guía.\n${EMOJIS.copyright} ${Bot.Name || 'Moxi'}`));
+                container.addTextDisplayComponents(c => c.setContent(`${footer}\n${EMOJIS.copyright} ${Bot.Name || 'Moxi'}`));
                 await message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
             } catch (err) {
                 await message.reply('No se pudo cargar la explicación de starboard.');
