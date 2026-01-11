@@ -7,6 +7,7 @@ const { buildDiscordArtsProfile } = require('../../Util/discordArts');
 const { buildCanvacardWelcomeLeave } = require('../../Util/canvacard');
 const { Bot } = require('../../Config');
 const debugHelper = require('../../Util/debugHelper');
+const { buildLogEventContainer } = require('../../Components/V2/logEvent');
 
 function toHexColor(value, fallback = '#00d9ff') {
     if (!value && value !== 0) return fallback;
@@ -45,6 +46,26 @@ function resolveByesTemplate(serverDoc, cfg) {
 }
 
 Moxi.on('guildMemberRemove', async (member) => {
+
+    // --- Log visual V2 al canal de logs general configurado ---
+    try {
+        const Guild = require('../../Models/GuildSchema');
+        const guildDoc = await Guild.findOne({ guildID: member.guild.id }).lean();
+        const logChannelId = guildDoc?.logChannelID;
+        if (logChannelId) {
+            const logChannel = await member.guild.channels.fetch(logChannelId).catch(() => null);
+            if (logChannel && logChannel.isTextBased()) {
+                const container = buildLogEventContainer({
+                    type: 'leave',
+                    user: `${member.user?.username || 'Usuario'}`,
+                    avatarURL: member.user?.displayAvatarURL?.() || '',
+                    timestamp: new Date()
+                });
+                await logChannel.send({ content: '', components: [container] });
+            }
+        }
+    } catch (e) {}
+    // --- Fin log visual V2 ---
 
     try {
         const guildId = member?.guild?.id;

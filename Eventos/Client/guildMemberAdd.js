@@ -2,6 +2,8 @@ const Moxi = require('../../index');
 const Welcome = require('../../Models/WelcomeSchema');
 const Servers = require('../../Models/GuildSchema');
 const { AttachmentBuilder, PermissionsBitField } = require('discord.js');
+const { buildLogEventContainer } = require('../../Components/V2/logEvent');
+const Guild = require('../../Models/GuildSchema');
 const { buildSylphaGreeting } = require('../../Util/sylphacard');
 const { buildDiscordArtsProfile } = require('../../Util/discordArts');
 const { buildCanvacardWelcomeLeave } = require('../../Util/canvacard');
@@ -43,6 +45,25 @@ function getWelcomeTemplateForLang(serverDoc, cfg) {
 }
 
 Moxi.on('guildMemberAdd', async (member) => {
+
+    // --- Log visual V2 al canal de logs general configurado ---
+    try {
+        const guildDoc = await Guild.findOne({ guildID: member.guild.id }).lean();
+        const logChannelId = guildDoc?.logChannelID;
+        if (logChannelId) {
+            const logChannel = await member.guild.channels.fetch(logChannelId).catch(() => null);
+            if (logChannel && logChannel.isTextBased()) {
+                const container = buildLogEventContainer({
+                    type: 'join',
+                    user: `${member.user.username}`,
+                    avatarURL: member.user.displayAvatarURL?.() || '',
+                    timestamp: new Date()
+                });
+                await logChannel.send({ content: '', components: [container] });
+            }
+        }
+    } catch (e) {}
+    // --- Fin log visual V2 ---
 
     try {
         const guildId = member?.guild?.id;
