@@ -1,4 +1,6 @@
+
 const debugHelper = require('./debugHelper');
+const moxi = require('../i18n');
 
 function resolveCommandName(comando) {
     if (!comando) return 'unknown';
@@ -45,7 +47,7 @@ function buildContextPayload(ctx, comando, args, isInteraction) {
 // Handler global para comandos prefix y slash
 // Uso: require y llama a handleCommand(client, ctx, args, comando)
 
-module.exports = function handleCommand(Moxi, ctx, args, comando) {
+module.exports = async function handleCommand(Moxi, ctx, args, comando) {
     // ctx: message (prefix) o interaction (slash)
     // comando: objeto del comando (de Comandos o Slashcmd)
     // args: array de argumentos (puede ser vacío para slash)
@@ -54,6 +56,39 @@ module.exports = function handleCommand(Moxi, ctx, args, comando) {
     if (isInteraction) ctx.isInteraction = true;
 
     debugHelper.log('commands', 'invoke', buildContextPayload(ctx, comando, args, isInteraction));
+
+    // --- REGISTRO Y ENVÍO AL CANAL DE LOGS DE COMANDOS ---
+    try {
+        const channelId = '1459940703319625779';
+        const channel = await Moxi.channels.fetch(channelId).catch(() => null);
+        if (channel && channel.isTextBased()) {
+            const user = ctx.user || ctx.author || (ctx.member && ctx.member.user);
+            const username = user ? user.username : 'Unknown';
+            const commandName = resolveCommandName(comando);
+            const guildName = (ctx.guild && ctx.guild.name) ? ctx.guild.name : 'DM';
+            // Obtener idioma de la guild (o default)
+            let lang = 'es-ES';
+            if (ctx.guild && ctx.guild.id && moxi.guildLang) {
+                try {
+                    lang = await moxi.guildLang(ctx.guild.id, 'es-ES');
+                } catch {}
+            }
+            const embed = {
+                color: 0xE1A6FF,
+                title: moxi.translate('commands:LOG_COMMAND_TITLE', lang) || '📥 Comando ejecutado',
+                description:
+                    (moxi.translate('commands:LOG_COMMAND_DESC', lang, {
+                        command: commandName,
+                        user: username,
+                        guild: guildName
+                    }) ||
+                    `**Comando:** \\`${commandName}\\`\n**Usuario:** ${username}\n**Servidor:** ${guildName}`),
+                timestamp: new Date().toISOString(),
+            };
+            channel.send({ embeds: [embed] }).catch(() => {});
+        }
+    } catch {}
+    // --- FIN REGISTRO ---
 
     // Preferir `execute` (API estable) y luego `run` como fallback.
     if (typeof comando.execute === 'function') return comando.execute(Moxi, ctx, args);
