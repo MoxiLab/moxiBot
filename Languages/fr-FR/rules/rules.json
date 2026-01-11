@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "title": "Respect et convivialité",
+        "description": "Soyez aimable et tolérant avec tout le monde. Aucun harcèlement, insulte, discrimination, discours de haine, menace ou attitude toxique n'est autorisé. N'utilisez pas de langage offensant, d'attaques personnelles ou d'insultes indirectes. En cas de conflit, contactez le staff avant d'aggraver la situation."
+    },
+    {
+        "id": 2,
+        "title": "Contenu autorisé",
+        "description": "Tout contenu NSFW, illégal, violent, gore, jumpscares ou liens dangereux est interdit. Les images, vidéos et fichiers doivent être adaptés à tous les publics. Ne partagez pas de liens suspects ni de fichiers exécutables."
+    },
+    {
+        "id": 3,
+        "title": "Canaux et thématiques",
+        "description": "Utilisez chaque canal pour son but. Lisez la description avant d'écrire. Le spam, flood, messages répétés ou hors sujet seront supprimés. Gardez les canaux propres et organisés."
+    },
+    {
+        "id": 4,
+        "title": "Publicité et autopromotion",
+        "description": "La promotion d'autres serveurs, réseaux sociaux, chaînes, produits ou services est interdite sans l'autorisation du staff. N'envoyez pas de messages privés non sollicités pour promouvoir quoi que ce soit."
+    },
+    {
+        "id": 5,
+        "title": "Propriété intellectuelle et créativité",
+        "description": "Partagez uniquement votre propre contenu ou avec des autorisations et des crédits clairs. Ne plagiez pas, ne volez pas et n'utilisez pas le matériel d'autrui sans autorisation. Valorisez et respectez le travail des autres."
+    },
+    {
+        "id": 6,
+        "title": "Feedback et critiques",
+        "description": "Donnez toujours des avis et des critiques de manière constructive et respectueuse. Les moqueries, sarcasmes destructeurs ou humiliations publiques ne sont pas tolérés."
+    },
+    {
+        "id": 7,
+        "title": "Vie privée et sécurité",
+        "description": "Ne partagez pas de données personnelles vous concernant ou concernant d'autres personnes (adresses, numéros de téléphone, etc.). Signalez toute situation suspecte, harcèlement ou utilisateur enfreignant les règles."
+    },
+    {
+        "id": 8,
+        "title": "Utilisation des bots et commandes",
+        "description": "Utilisez les commandes du bot uniquement dans les canaux désignés. L'abus, le spam ou la mauvaise utilisation des commandes seront sanctionnés."
+    },
+    {
+        "id": 9,
+        "title": "Staff et modération",
+        "description": "Respectez et suivez les instructions du staff. Leurs décisions sont finales. Si vous avez des questions, suggestions ou problèmes, contactez un modérateur en privé."
+    },
+    {
+        "id": 10,
+        "title": "Participation et attitude",
+        "description": "Collaborez, partagez et profitez. Cet espace est fait pour apprendre, créer et s'amuser en communauté. Apportez toujours votre meilleure énergie et contribuez à faire de Moxi Studio un lieu unique."
+    }
+]

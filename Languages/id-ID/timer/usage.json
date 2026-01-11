@@ -1,0 +1,5 @@
+[
+    {
+        "usage": ".timer nuevo [menit] — Memulai timer baru di channel ini. Hanya satu timer aktif per channel yang diizinkan.\n.timer desde [menit] — Membuat timer relatif ke pesan terakhir Anda di channel.\n.timer — Menampilkan status timer aktif dan berapa banyak yang ada di server."
+    }
+]

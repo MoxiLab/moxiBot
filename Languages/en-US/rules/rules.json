@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "title": "Respect and coexistence",
+        "description": "Be kind and tolerant with everyone. Any kind of harassment, insult, discrimination, hate speech, threats or toxic attitudes is not allowed. Do not use offensive language, personal attacks, or indirect insults. If you have a conflict, contact the staff before escalating the situation."
+    },
+    {
+        "id": 2,
+        "title": "Allowed content",
+        "description": "All NSFW, illegal, violent, gore, jumpscares or dangerous links are prohibited. Images, videos and files must be suitable for all audiences. Do not share suspicious links or executable files."
+    },
+    {
+        "id": 3,
+        "title": "Channels and topics",
+        "description": "Use each channel for its purpose. Read the description before writing. Spam, flooding, repeated or off-topic messages will be deleted. Keep channels clean and organized."
+    },
+    {
+        "id": 4,
+        "title": "Advertising and self-promotion",
+        "description": "Promotion of other servers, social networks, channels, products or services is prohibited without staff permission. Do not send unsolicited private messages to promote anything."
+    },
+    {
+        "id": 5,
+        "title": "Intellectual property and creativity",
+        "description": "Share only your own content or with clear permissions and credits. Do not plagiarize, steal or use someone else's material without authorization. Value and respect the work of others."
+    },
+    {
+        "id": 6,
+        "title": "Feedback and criticism",
+        "description": "Give opinions and criticism always in a constructive and respectful way. Mockery, destructive sarcasm or public humiliation are not tolerated."
+    },
+    {
+        "id": 7,
+        "title": "Privacy and security",
+        "description": "Do not share personal data of yourself or others (addresses, phone numbers, etc). Report any suspicious situation, harassment or user who breaks the rules."
+    },
+    {
+        "id": 8,
+        "title": "Use of bots and commands",
+        "description": "Use bot commands only in designated channels. Abuse, spam or misuse of commands will be sanctioned."
+    },
+    {
+        "id": 9,
+        "title": "Staff and moderation",
+        "description": "Respect and follow the instructions of the staff. Their decisions are final. If you have questions, suggestions or problems, contact a moderator privately."
+    },
+    {
+        "id": 10,
+        "title": "Participation and attitude",
+        "description": "Collaborate, share and enjoy. This is a space to learn, create and have fun as a community. Always bring your best energy and help make Moxi Studio a unique place."
+    }
+]

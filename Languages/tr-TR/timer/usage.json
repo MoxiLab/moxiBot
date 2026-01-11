@@ -1,0 +1,5 @@
+[
+    {
+        "usage": ".timer nuevo [dakika] — Bu kanalda yeni bir zamanlayıcı başlatır. Kanal başına yalnızca bir etkin zamanlayıcıya izin verilir.\n.timer desde [dakika] — Kanaldaki son mesajınıza göre bir zamanlayıcı oluşturur.\n.timer — Etkin zamanlayıcının durumunu ve sunucuda kaç tane olduğunu gösterir."
+    }
+]

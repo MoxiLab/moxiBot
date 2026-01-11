@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "title": "Respekt und Zusammenleben",
+        "description": "Sei freundlich und tolerant zu allen. Jegliche Art von Belästigung, Beleidigung, Diskriminierung, Hassrede, Drohungen oder toxischem Verhalten ist nicht erlaubt. Verwende keine beleidigende Sprache, persönlichen Angriffe oder indirekte Beleidigungen. Bei Konflikten wende dich an das Team, bevor du die Situation eskalierst."
+    },
+    {
+        "id": 2,
+        "title": "Erlaubte Inhalte",
+        "description": "Jegliche NSFW-, illegale, gewalttätige, Gore-, Jumpscare-Inhalte oder gefährliche Links sind verboten. Bilder, Videos und Dateien müssen für alle Altersgruppen geeignet sein. Teile keine verdächtigen Links oder ausführbaren Dateien."
+    },
+    {
+        "id": 3,
+        "title": "Kanäle und Themen",
+        "description": "Nutze jeden Kanal für seinen Zweck. Lies die Beschreibung, bevor du schreibst. Spam, Flood, wiederholte oder themenfremde Nachrichten werden gelöscht. Halte die Kanäle sauber und organisiert."
+    },
+    {
+        "id": 4,
+        "title": "Werbung und Eigenwerbung",
+        "description": "Das Bewerben anderer Server, sozialer Netzwerke, Kanäle, Produkte oder Dienstleistungen ist ohne Erlaubnis des Teams verboten. Sende keine unerwünschten Privatnachrichten zur Werbung."
+    },
+    {
+        "id": 5,
+        "title": "Geistiges Eigentum und Kreativität",
+        "description": "Teile nur eigene Inhalte oder solche mit klaren Genehmigungen und Quellenangaben. Plagiat, Diebstahl oder die Nutzung fremder Materialien ohne Erlaubnis sind untersagt. Schätze und respektiere die Arbeit anderer."
+    },
+    {
+        "id": 6,
+        "title": "Feedback und Kritik",
+        "description": "Gib Meinungen und Kritik immer konstruktiv und respektvoll. Spott, destruktiver Sarkasmus oder öffentliche Demütigungen werden nicht toleriert."
+    },
+    {
+        "id": 7,
+        "title": "Privatsphäre und Sicherheit",
+        "description": "Teile keine persönlichen Daten von dir oder anderen (Adressen, Telefonnummern usw.). Melde verdächtige Situationen, Belästigungen oder Regelverstöße."
+    },
+    {
+        "id": 8,
+        "title": "Nutzung von Bots und Befehlen",
+        "description": "Nutze Bot-Befehle nur in den dafür vorgesehenen Kanälen. Missbrauch, Spam oder unsachgemäße Nutzung von Befehlen werden sanktioniert."
+    },
+    {
+        "id": 9,
+        "title": "Team und Moderation",
+        "description": "Respektiere und befolge die Anweisungen des Teams. Ihre Entscheidungen sind endgültig. Bei Fragen, Vorschlägen oder Problemen wende dich privat an einen Moderator."
+    },
+    {
+        "id": 10,
+        "title": "Teilnahme und Einstellung",
+        "description": "Arbeite mit, teile und genieße. Dies ist ein Raum zum Lernen, Erschaffen und Spaß haben in der Community. Bring immer deine beste Energie ein und hilf mit, Moxi Studio zu einem einzigartigen Ort zu machen."
+    }
+]

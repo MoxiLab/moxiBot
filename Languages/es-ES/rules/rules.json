@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "titulo": "Respeto y convivencia",
+        "descripcion": "Sé amable y tolerante con todos. No se permite ningún tipo de acoso, insulto, discriminación, discurso de odio, amenazas o actitudes tóxicas. No uses lenguaje ofensivo, ni ataques personales, ni indirectas. Si tienes un conflicto, contacta al staff antes de escalar la situación."
+    },
+    {
+        "id": 2,
+        "titulo": "Contenido permitido",
+        "descripcion": "Prohibido todo contenido NSFW, ilegal, violento, gore, jumpscares o enlaces peligrosos. Las imágenes, videos y archivos deben ser aptos para todo público. No compartas links sospechosos ni archivos ejecutables."
+    },
+    {
+        "id": 3,
+        "titulo": "Canales y temáticas",
+        "descripcion": "Usa cada canal para su propósito. Lee la descripción antes de escribir. El spam, flood, mensajes repetidos o fuera de tema serán eliminados. Mantén los canales limpios y organizados."
+    },
+    {
+        "id": 4,
+        "titulo": "Publicidad y autopromoción",
+        "descripcion": "Prohibida la promoción de otros servidores, redes sociales, canales, productos o servicios sin permiso del staff. No envíes mensajes privados no solicitados para promocionar nada."
+    },
+    {
+        "id": 5,
+        "titulo": "Propiedad intelectual y creatividad",
+        "descripcion": "Comparte solo contenido propio o con permisos y créditos claros. No plagies, robes ni uses material ajeno sin autorización. Valora y respeta el trabajo de los demás."
+    },
+    {
+        "id": 6,
+        "titulo": "Feedback y críticas",
+        "descripcion": "Da opiniones y críticas siempre de forma constructiva y respetuosa. No se toleran burlas, sarcasmo destructivo ni humillaciones públicas."
+    },
+    {
+        "id": 7,
+        "titulo": "Privacidad y seguridad",
+        "descripcion": "No compartas datos personales tuyos ni de otros (direcciones, teléfonos, etc). Reporta cualquier situación sospechosa, acoso o usuario que infrinja las normas."
+    },
+    {
+        "id": 8,
+        "titulo": "Uso de bots y comandos",
+        "descripcion": "Usa los comandos del bot solo en los canales designados. El abuso, spam o uso indebido de comandos será sancionado."
+    },
+    {
+        "id": 9,
+        "titulo": "Staff y moderación",
+        "descripcion": "Respeta y sigue las indicaciones del staff. Sus decisiones son finales. Si tienes dudas, sugerencias o problemas, contacta por privado a un moderador."
+    },
+    {
+        "id": 10,
+        "titulo": "Participación y actitud",
+        "descripcion": "Colabora, comparte y disfruta. Este es un espacio para aprender, crear y divertirse en comunidad. Aporta siempre tu mejor energía y ayuda a que Moxi Studio sea un lugar único."
+    }
+]

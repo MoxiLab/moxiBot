@@ -1,0 +1,5 @@
+[
+    {
+        "usage": ".timer nuevo [minutos] — Inicia un nuevo temporizador en este canal. Solo puede haber un temporizador activo por canal.\n.timer desde [minutos] — Crea un temporizador relativo a tu último mensaje en el canal.\n.timer — Muestra el estado del temporizador activo y cuántos hay en el servidor."
+    }
+]
