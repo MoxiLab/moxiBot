@@ -6,6 +6,13 @@ const LEVELS = {
   debug: 3,
 };
 
+// Evitar require circular
+let client = null;
+function getClient() {
+  if (!client) client = require('../index');
+  return client;
+}
+
 const debug = require('./debug');
 
 function anyDebugEnvEnabled() {
@@ -51,9 +58,49 @@ function formatPrefix(levelName) {
 function log(levelName, ...msg) {
   if (!shouldLog(levelName)) return;
   const prefix = formatPrefix(levelName);
-  if (levelName === 'error') return console.error(prefix, ...msg);
-  if (levelName === 'warn') return console.warn(prefix, ...msg);
-  return console.log(prefix, ...msg);
+  let color = process.env.BOT_ACCENT_COLOR || '#E1A6FF';
+  let secondaryColor = process.env.BOT_SECONDARY_COLOR || '#FFB6E6';
+  if (levelName === 'startup' || levelName === 'warn') color = secondaryColor;
+  // Consola
+  if (levelName === 'error') console.error(prefix, ...msg);
+  else if (levelName === 'warn') console.warn(prefix, ...msg);
+  else console.log(prefix, ...msg);
+  // Discord embed
+  sendLogToDiscordChannel(levelName, prefix, color, ...msg);
+}
+
+async function sendLogToDiscordChannel(levelName, prefix, color, ...msg) {
+  try {
+    const channelId = process.env.ERROR_CHANNEL_ID;
+    const webhookUrl = process.env.ERROR_WEBHOOK_URL;
+    let text = msg.map(m => (typeof m === 'object' ? JSON.stringify(m, null, 2) : String(m))).join(' ');
+    if (text.length > 1900) text = text.slice(0, 1900) + '...';
+    const botName = getClient().user && getClient().user.username ? getClient().user.username : 'MoxiBot';
+    const year = new Date().getFullYear();
+    const embed = {
+      color,
+      title: `# Log: ${levelName.toUpperCase()}`,
+      description: `---\n**${prefix}**\n\n${text}\n---`,
+      footer: { text: `© ${botName} • ${year}` },
+      timestamp: new Date().toISOString(),
+    };
+    // Enviar a canal si está configurado
+    if (channelId) {
+      const client = getClient();
+      const channel = await client.channels.fetch(channelId).catch(() => null);
+      if (channel) channel.send({ embeds: [embed] }).catch(() => { });
+    }
+    // Enviar a webhook si está configurado
+    if (webhookUrl) {
+      const { WebhookClient } = require('discord.js');
+      const webhook = new WebhookClient({ url: webhookUrl });
+      await webhook.send({
+        username: botName + ' Logger',
+        avatarURL: 'https://i.imgur.com/1Q9Z1Zm.png',
+        embeds: [embed],
+      });
+    }
+  } catch { }
 }
 
 function startup(...msg) {
