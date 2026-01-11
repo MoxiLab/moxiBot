@@ -15,6 +15,11 @@ const GuildSchema = new Schema({
         type: String,
         default: 'es-ES'
     },
+    // Canal de logs general
+    logChannelID: {
+        type: String,
+        default: null
+    },
     guildName: {
         type: String,
         default: null
