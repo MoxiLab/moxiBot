@@ -7,6 +7,7 @@ const handlers = [
   require('./buttons/helpV2'),
   require('./buttons/helpLegacy'),
   require('./buttons/userPerms'),
+  require('./buttons/timer'),
 ];
 
 module.exports = async function buttonController(interaction, Moxi, logger) {
