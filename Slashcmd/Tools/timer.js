@@ -1,0 +1,56 @@
+const { SlashCommandBuilder, ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const fetch = require('node-fetch');
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('timer')
+        .setDescription('Crea un temporizador visual y elegante')
+        .addIntegerOption(opt =>
+            opt.setName('minutos')
+                .setDescription('Duración en minutos')
+                .setRequired(true)
+        ),
+    async run(Moxi, interaction) {
+        const minutos = interaction.options.getInteger('minutos');
+        if (minutos < 1 || minutos > 1440) {
+            return interaction.reply({ content: 'Elige entre 1 y 1440 minutos.', ephemeral: true });
+        }
+
+        // Usaremos la API de https://timer.guru/api para obtener una imagen SVG del temporizador
+        const timerApiUrl = `https://timer.guru/api/timer?minutes=${minutos}`;
+        let timerImageUrl = null;
+        try {
+            // Esta API es ficticia, reemplaza por una real si tienes una
+            // Aquí simulamos una imagen SVG de temporizador
+            timerImageUrl = `https://dummyimage.com/600x200/222/fff&text=⏰+${minutos}+minutos`;
+        } catch {
+            timerImageUrl = null;
+        }
+
+        const container = new ContainerBuilder()
+            .setAccentColor(0x2ecc71)
+            .addTextDisplayComponents(c => c.setContent(`# ⏰ Temporizador iniciado`))
+            .addSeparatorComponents(s => s.setDivider(true));
+        if (timerImageUrl) {
+            container.addImageDisplayComponents(img => img.setURL(timerImageUrl));
+        }
+        container.addTextDisplayComponents(c => c.setContent(`Duración: **${minutos} minutos**\nTe avisaré cuando termine.`));
+        container.addActionRowComponents(row =>
+            row.addComponents(
+                new ButtonBuilder()
+                    .setCustomId('cancel_timer')
+                    .setLabel('Cancelar')
+                    .setStyle(ButtonStyle.Danger)
+            )
+        );
+
+        await interaction.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2, ephemeral: false });
+
+        // Esperar el tiempo y avisar
+        setTimeout(async () => {
+            try {
+                await interaction.followUp({ content: `⏰ ¡Tu temporizador de **${minutos} minutos** ha terminado!`, ephemeral: false });
+            } catch { }
+        }, minutos * 60 * 1000);
+    }
+};
