@@ -96,6 +96,14 @@ module.exports = {
                     message.guild.settings = message.guild.settings || {};
                     message.guild.settings.Language = targetLang.code;
                     invalidateGuildSettingsCache(message.guild.id);
+                    // Actualizar mensaje de reglas si existe
+                    try {
+                        const onGuildLanguageChange = require('../../Eventos/Client/onGuildLanguageChange');
+                        await onGuildLanguageChange(message.guild, targetLang.code);
+                    } catch (err) {
+                        // No bloquear el comando si falla la actualización
+                        console.error('No se pudo actualizar el mensaje de reglas tras cambiar idioma:', err);
+                    }
                     return message.reply(
                         asV2MessageOptions(
                             buildNoticeContainer({
