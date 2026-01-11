@@ -61,6 +61,8 @@ function clearTimer(guildId, channelId) {
         clearTimeout(timers[guildId][channelId].timeoutId);
         delete timers[guildId][channelId];
     }
+    // Eliminar también de MongoDB aunque no esté en memoria
+    TimerModel.deleteOne({ guildId, channelId }).catch(() => { });
 }
 
 function getAllTimers() {
