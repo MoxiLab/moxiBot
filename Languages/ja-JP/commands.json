@@ -1,4 +1,6 @@
 {
+    "LOG_COMMAND_TITLE": "📥 コマンドが実行されました",
+    "LOG_COMMAND_DESC": "**コマンド:** `{{command}}`\n**ユーザー:** {{user}}\n**サーバー:** {{guild}}",
     "CATEGORY_MODERATION": "モデレーション",
     "CATEGORY_ADMIN": "管理",
     "CATEGORY_HERRAMIENTAS": "ツール",

@@ -1,4 +1,6 @@
 {
+    "LOG_COMMAND_TITLE": "📥 명령어 실행됨",
+    "LOG_COMMAND_DESC": "**명령어:** `{{command}}`\n**사용자:** {{user}}\n**서버:** {{guild}}",
     "CATEGORY_MODERATION": "모더레이션",
     "CATEGORY_ADMIN": "관리",
     "CATEGORY_HERRAMIENTAS": "도구",

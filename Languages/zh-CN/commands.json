@@ -1,4 +1,6 @@
 {
+    "LOG_COMMAND_TITLE": "📥 命令已执行",
+    "LOG_COMMAND_DESC": "**命令：** `{{command}}`\n**用户：** {{user}}\n**服务器：** {{guild}}",
     "CATEGORY_MODERATION": "管理",
     "CATEGORY_ADMIN": "管理",
     "CATEGORY_HERRAMIENTAS": "工具",

@@ -1,4 +1,6 @@
 {
+    "LOG_COMMAND_TITLE": "📥 Befehl ausgeführt",
+    "LOG_COMMAND_DESC": "**Befehl:** `{{command}}`\n**Benutzer:** {{user}}\n**Server:** {{guild}}",
     "CATEGORY_MODERATION": "Moderation",
     "CATEGORY_ADMIN": "Admin",
     "CATEGORY_HERRAMIENTAS": "Tools",
