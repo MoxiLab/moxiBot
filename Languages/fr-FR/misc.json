@@ -97,6 +97,12 @@
     "HELP_TOTAL_CATEGORIES": "Nombre total de catégories",
     "HELP_TOTAL_COMMANDS": "Nombre total de commandes",
     "HELP_USAGE": "Utilisation",
+    "ADDEMOJI_LIST_TITLE": "Émojis enregistrés",
+    "ADDEMOJI_NAV_HINT": "Utilisez les boutons gris pour naviguer entre les pages ou ouvrir la fenêtre de saut rapide.",
+    "BUTTONS_NOT_OWNER": "Seule la personne ayant exécuté la commande peut utiliser les boutons.",
+    "ADDEMOJI_NAV_INFO": "Utilisez accueil, précédent et suivant pour parcourir la liste des émojis.",
+    "ADDEMOJI_NAV_PAGE_INVALID": "Entrez un nombre entre {min} et {max}.",
+    "ADDEMOJI_EMOJI": "Émoji"
     "INCORRECT_FORMAT": "Oups ! Il semble y avoir une erreur, mais ne vous inquiétez pas. Suivez ce conseil pour la corriger :\n\n{{commandExample}}",
     "LANGUAGE_DESCRIPTION": "Sélectionnez votre langue préférée pour l’interface du bot.",
     "LANGUAGE_NAME": "Français",
