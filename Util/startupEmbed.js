@@ -21,25 +21,38 @@ async function sendStartupEmbed(client) {
     const botTag = client.user?.tag || 'Moxi';
     const botId = client.user?.id || '';
     const guilds = client.guilds?.cache?.size || 0;
-    const uptime = formatUptime(client.uptime || 0);
     const fecha = `<t:${Math.floor(Date.now() / 1000)}:f>`;
 
-    const embed = new EmbedBuilder()
+    let embed = new EmbedBuilder()
         .setTitle('💜 Moxi encendido')
         .setColor(color)
         .setDescription(`Moxi se inició como **${botTag}**`)
         .addFields(
             { name: 'Gremios', value: guilds.toString(), inline: true },
-            { name: 'Uptime', value: uptime, inline: true },
+            { name: 'Uptime', value: formatUptime(client.uptime || 0), inline: true },
             { name: 'Fecha', value: fecha, inline: false },
         )
         .setFooter({ text: `ID: ${botId}` })
-        .setTimestamp(); 
+        .setTimestamp();
 
     try {
         const channel = await client.channels.fetch(channelId);
         if (channel && channel.isTextBased()) {
-            await channel.send({ embeds: [embed] });
+            const sentMsg = await channel.send({ embeds: [embed] });
+            // Actualizar el uptime cada 5 segundos durante 1 minuto
+            let updates = 0;
+            const maxUpdates = 12; // 12 * 5s = 60s
+            const interval = setInterval(async () => {
+                updates++;
+                const newUptime = formatUptime(client.uptime || 0);
+                embed = EmbedBuilder.from(embed).spliceFields(1, 1, { name: 'Uptime', value: newUptime, inline: true });
+                try {
+                    await sentMsg.edit({ embeds: [embed] });
+                } catch (e) {
+                    clearInterval(interval);
+                }
+                if (updates >= maxUpdates) clearInterval(interval);
+            }, 5000);
         }
     } catch (err) {
         // Si falla, loguea el error pero no detiene el arranque

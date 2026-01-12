@@ -50,6 +50,8 @@
     "SERVERS_TITLE": "Servidores totales - {{count}}",
     "CMD_SKIP_DESC": "Salta la canción actual",
     "CMD_SKIP_NAME": "skip",
+    "CMD_UPTIME_DESC": "Muestra el tiempo que el bot lleva encendido",
+    "CMD_UPTIME_NAME": "uptime",
     "CMD_MOXI_DESC": "Escucha tu música favorita",
     "OPT_TRACK_DESC": "Canción a reproducir",
     "OPT_PLATFORM_DESC": "Elige una plataforma para reproducir música",

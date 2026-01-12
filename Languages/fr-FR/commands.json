@@ -50,6 +50,8 @@
     "SERVERS_TITLE": "Serveurs totaux - {{count}}",
     "CMD_SKIP_DESC": "Passe la piste actuelle",
     "CMD_SKIP_NAME": "skip",
+    "CMD_UPTIME_DESC": "Affiche depuis combien de temps le bot est en ligne",
+    "CMD_UPTIME_NAME": "uptime",
     "CMD_MOXI_DESC": "Écoute ta musique préférée",
     "OPT_TRACK_DESC": "Morceau à jouer",
     "OPT_PLATFORM_DESC": "Choisis une plateforme pour lire la musique",

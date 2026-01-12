@@ -48,6 +48,8 @@
     "SERVERS_TITLE": "Total Server - {{count}}",
     "CMD_SKIP_DESC": "Melewati trek saat ini",
     "CMD_SKIP_NAME": "skip",
+    "CMD_UPTIME_DESC": "Menampilkan berapa lama bot sudah berjalan",
+    "CMD_UPTIME_NAME": "uptime",
     "CMD_MOXI_DESC": "Dengarkan musik favoritmu",
     "OPT_TRACK_DESC": "Lagu yang ingin diputar",
     "OPT_PLATFORM_DESC": "Pilih platform untuk memutar musik",

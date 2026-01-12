@@ -50,6 +50,8 @@
     "SERVERS_TITLE": "合計サーバー数 - {{count}}",
     "CMD_SKIP_DESC": "現在の曲をスキップします",
     "CMD_SKIP_NAME": "skip",
+    "CMD_UPTIME_DESC": "ボットが稼働している時間を表示します",
+    "CMD_UPTIME_NAME": "uptime",
     "CMD_MOXI_DESC": "お気に入りの音楽を聴こう",
     "OPT_TRACK_DESC": "再生する曲",
     "OPT_PLATFORM_DESC": "音楽を再生するプラットフォームを選択",

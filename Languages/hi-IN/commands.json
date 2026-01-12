@@ -48,6 +48,8 @@
     "SERVERS_TITLE": "कुल सर्वर - {{count}}",
     "CMD_SKIP_DESC": "वर्तमान ट्रैक छोड़ता है",
     "CMD_SKIP_NAME": "skip",
+    "CMD_UPTIME_DESC": "बोट कब से चालू है दिखाता है",
+    "CMD_UPTIME_NAME": "uptime",
     "CMD_MOXI_DESC": "अपना पसंदीदा संगीत सुनें",
     "OPT_TRACK_DESC": "प्लेबैक के लिए ट्रैक",
     "OPT_PLATFORM_DESC": "संगीत चलाने के लिए एक प्लेटफ़ॉर्म चुनें",

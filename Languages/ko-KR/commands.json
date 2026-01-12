@@ -50,6 +50,8 @@
     "SERVERS_TITLE": "총 서버 - {{count}}",
     "CMD_SKIP_DESC": "현재 트랙을 건너뜁니다",
     "CMD_SKIP_NAME": "skip",
+    "CMD_UPTIME_DESC": "봇이 얼마나 오래 실행되고 있는지 표시합니다",
+    "CMD_UPTIME_NAME": "uptime",
     "CMD_MOXI_DESC": "좋아하는 음악을 들어보세요",
     "OPT_TRACK_DESC": "재생할 곡",
     "OPT_PLATFORM_DESC": "음악을 재생할 플랫폼을 선택하세요",

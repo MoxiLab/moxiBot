@@ -50,6 +50,8 @@
     "SERVERS_TITLE": "服务器总数 - {{count}}",
     "CMD_SKIP_DESC": "跳过当前曲目",
     "CMD_SKIP_NAME": "skip",
+    "CMD_UPTIME_DESC": "显示机器人已运行的时间",
+    "CMD_UPTIME_NAME": "uptime",
     "CMD_MOXI_DESC": "收听你最喜欢的音乐",
     "OPT_TRACK_DESC": "要播放的歌曲",
     "OPT_PLATFORM_DESC": "选择播放音乐的平台",

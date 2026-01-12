@@ -48,6 +48,8 @@
     "SERVERS_TITLE": "إجمالي الخوادم - {{count}}",
     "CMD_SKIP_DESC": "يتخطى المقطع الحالي",
     "CMD_SKIP_NAME": "skip",
+    "CMD_UPTIME_DESC": "يعرض منذ متى يعمل البوت",
+    "CMD_UPTIME_NAME": "uptime",
     "CMD_MOXI_DESC": "استمع إلى أغانيك المفضلة",
     "OPT_TRACK_DESC": "المسار المراد تشغيله",
     "OPT_PLATFORM_DESC": "اختر منصة لتشغيل الموسيقى",
