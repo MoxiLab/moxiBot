@@ -3,7 +3,10 @@ const Guild = require('../../Models/GuildSchema');
 module.exports = {
     name: 'logs',
     alias: ['setlogs', 'logschannel'],
-    Category: 'Admin',
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_HERRAMIENTAS', lang);
+    },
     usage: 'logs set #canal',
     description: 'Configura el canal de logs general para el servidor.',
     async execute(Moxi, message, args) {
