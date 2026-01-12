@@ -1,6 +1,6 @@
 const Moxi = require("../../index");
 const { ActivityType } = require("discord.js");
-const { mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const logger = require("../../Util/logger");
 const { EMOJIS } = require("../../Util/emojis");
 const Config = require("../../Config");
@@ -9,7 +9,6 @@ const Config = require("../../Config");
 
 Moxi.once("clientReady", async () => {
     const moxi = require("../../i18n");
-
     const globalPrefix = (Array.isArray(Config?.Bot?.Prefix) && Config.Bot.Prefix[0])
         ? Config.Bot.Prefix[0]
         : (process.env.PREFIX || '.');
@@ -64,7 +63,8 @@ Moxi.once("clientReady", async () => {
     setInterval(updateStatus, 5000);
 
     logger.startup(`${EMOJIS.butter} Conectado como ${Moxi.user.tag}`);
-
+    logger.divider();
+    // logger.startup(`${EMOJIS.butter} Conectado como ${Moxi.user.tag}`);
     // Enviar componente V2 de arranque (estilo ping, sin botón)
     const { getStartupComponentV2 } = require("../../Components/V2/startupEmbedComponent");
     const { MessageFlags } = require("discord.js");
