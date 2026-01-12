@@ -8,6 +8,7 @@ const handlers = [
   require('./buttons/helpLegacy'),
   require('./buttons/userPerms'),
   require('./buttons/timer'),
+  require('./buttons/channel'), // <-- Añadido para canal/channel
 ];
 
 module.exports = async function buttonController(interaction, Moxi, logger) {
