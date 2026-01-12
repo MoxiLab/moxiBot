@@ -35,6 +35,16 @@ module.exports = {
         });
         if (!permCheck.ok) {
             debugHelper.warn('unban', 'permission check failed', { guildId: message.guild?.id, reason: permCheck.reply });
+            // Registrar aviso en canal de auditoría
+            const { sendPermissionInfoLog } = require('../../Util/audit.js');
+            await sendPermissionInfoLog({
+                client: message.client,
+                guild: message.guild,
+                guildId: message.guild?.id,
+                moderatorId: message.author?.id,
+                reason: permCheck.reply,
+                fallbackLang: lang
+            });
             return message.reply(asV2MessageOptions(buildNoticeContainer({ emoji: EMOJIS.cross, text: permCheck.reply })));
         }
 
