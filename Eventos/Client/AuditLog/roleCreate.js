@@ -1,9 +1,12 @@
+
 // Evento: rol creado
 const { roleCreateEmbed } = require('../../../Util/auditAdminEmbeds');
 const { resolveAuditConfig } = require('../../../Util/audit');
+const auditLogDebug = require('../../../Util/auditLogDebug');
 
 module.exports = async (role) => {
     const { guild, name, id } = role;
+    auditLogDebug('roleCreate', { guildId: guild?.id, name, id });
     const { lang, channelId, enabled } = await resolveAuditConfig(guild.id, 'es-ES');
     if (!enabled || !channelId) return;
     const ch = guild.channels.cache.get(channelId);
