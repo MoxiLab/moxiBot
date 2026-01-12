@@ -8,6 +8,7 @@ const path = require('path');
 const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 const { Bot } = require('../../Config');
 const { EMOJIS } = require('../../Util/emojis');
+const { isFlagEnabled } = require('../../Util/debug');
 
 module.exports = async (guild, newLanguage) => {
 
@@ -78,7 +79,7 @@ module.exports = async (guild, newLanguage) => {
                         // Actualizar el idioma en el registro
                         rulesMsg.lastLanguage = newLanguage;
                         await rulesMsg.save();
-                        console.log(`Mensaje de reglas actualizado automáticamente para el servidor ${guild.id} (${newLanguage})`);
+                        if (isFlagEnabled('onGuildLanguageChange')) console.log(`[ONGUILDLANGUAGECHANGE_DEBUG] Mensaje de reglas actualizado automáticamente para el servidor ${guild.id} (${newLanguage})`);
                     }
                 }
             }
@@ -119,12 +120,12 @@ module.exports = async (guild, newLanguage) => {
                         // Actualizar el idioma en el registro
                         bugGuideMsg.lastLanguage = newLanguage;
                         await bugGuideMsg.save();
-                        console.log(`Mensaje de bugGuide actualizado automáticamente para el servidor ${guild.id} (${newLanguage})`);
+                        if (isFlagEnabled('onGuildLanguageChange')) console.log(`[ONGUILDLANGUAGECHANGE_DEBUG] Mensaje de bugGuide actualizado automáticamente para el servidor ${guild.id} (${newLanguage})`);
                     }
                 }
             }
         }
     } catch (err) {
-        console.error('Error actualizando mensajes tras cambiar idioma:', err);
+        if (isFlagEnabled('onGuildLanguageChange')) console.error('[ONGUILDLANGUAGECHANGE_DEBUG] Error actualizando mensajes tras cambiar idioma:', err);
     }
 };
