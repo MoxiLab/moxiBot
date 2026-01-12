@@ -23,7 +23,6 @@ async function restoreTimers(onFinish) {
                 TimerModel.deleteOne({ guildId: t.guildId, channelId: t.channelId }).catch(() => { });
             }
         }
-        console.log(`[timerStorage] Temporizadores restaurados desde MongoDB: ${all.length}`);
     } catch (err) {
         console.error('[timerStorage] Error restaurando temporizadores desde MongoDB:', err);
     }
