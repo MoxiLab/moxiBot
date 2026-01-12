@@ -34,7 +34,7 @@ async function sendStartupEmbed(client) {
             { name: 'Fecha', value: fecha, inline: false },
         )
         .setFooter({ text: `ID: ${botId}` })
-        .setTimestamp();
+        .setTimestamp(); 
 
     try {
         const channel = await client.channels.fetch(channelId);
