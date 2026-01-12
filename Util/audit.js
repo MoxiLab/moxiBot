@@ -1,3 +1,24 @@
+const { permissionInfoEmbed } = require('./auditPermissionEmbeds');
+// Permite registrar avisos informativos de permisos insuficientes en el canal de auditoría
+async function sendPermissionInfoLog({ client, guild, guildId, moderatorId, reason, fallbackLang = 'es-ES' }) {
+    const gid = String(guildId || guild?.id || '');
+    if (!gid) return false;
+
+    const { lang, channelId, enabled } = await resolveAuditConfig(gid, fallbackLang);
+    if (!enabled || !channelId) return false;
+
+    const g = guild || (client?.guilds ? await client.guilds.fetch(gid).catch(() => null) : null);
+    if (!g) return false;
+
+    const ch = g.channels?.cache?.get(channelId) || (g.channels ? await g.channels.fetch(channelId).catch(() => null) : null);
+    if (!ch || typeof ch.send !== 'function') return false;
+
+    const now = new Date();
+    const timeStr = now.toISOString().replace('T', ' ').replace('Z', ' UTC');
+    const embed = permissionInfoEmbed({ moderatorId, reason, timeStr });
+    await ch.send({ embeds: [embed] }).catch(() => null);
+    return true;
+}
 const { ContainerBuilder, MessageFlags, MediaGalleryBuilder, MediaGalleryItemBuilder } = require('discord.js');
 const moxi = require('../i18n');
 const { Bot } = require('../Config');
@@ -5,16 +26,83 @@ const { EMOJIS } = require('./emojis');
 
 function actionLabel(action, lang) {
     const keyByAction = {
-        ban: 'AUDIT_ACTION_BAN',
-        kick: 'AUDIT_ACTION_KICK',
-        timeout: 'AUDIT_ACTION_TIMEOUT',
-        unban: 'AUDIT_ACTION_UNBAN',
-        warn: 'AUDIT_ACTION_WARN',
-        mute: 'AUDIT_ACTION_MUTE',
-        unmute: 'AUDIT_ACTION_UNMUTE',
+        1: 'GUILD_UPDATE',
+        10: 'CHANNEL_CREATE',
+        11: 'CHANNEL_UPDATE',
+        12: 'CHANNEL_DELETE',
+        13: 'CHANNEL_OVERWRITE_CREATE',
+        14: 'CHANNEL_OVERWRITE_UPDATE',
+        15: 'CHANNEL_OVERWRITE_DELETE',
+        20: 'MEMBER_KICK',
+        21: 'MEMBER_PRUNE',
+        22: 'MEMBER_BAN_ADD',
+        23: 'MEMBER_BAN_REMOVE',
+        24: 'MEMBER_UPDATE',
+        25: 'MEMBER_ROLE_UPDATE',
+        26: 'MEMBER_MOVE',
+        27: 'MEMBER_DISCONNECT',
+        28: 'BOT_ADD',
+        30: 'ROLE_CREATE',
+        31: 'ROLE_UPDATE',
+        32: 'ROLE_DELETE',
+        40: 'INVITE_CREATE',
+        41: 'INVITE_UPDATE',
+        42: 'INVITE_DELETE',
+        50: 'WEBHOOK_CREATE',
+        51: 'WEBHOOK_UPDATE',
+        52: 'WEBHOOK_DELETE',
+        60: 'EMOJI_CREATE',
+        61: 'EMOJI_UPDATE',
+        62: 'EMOJI_DELETE',
+        72: 'MESSAGE_DELETE',
+        73: 'MESSAGE_BULK_DELETE',
+        74: 'MESSAGE_PIN',
+        75: 'MESSAGE_UNPIN',
+        80: 'INTEGRATION_CREATE',
+        81: 'INTEGRATION_UPDATE',
+        82: 'INTEGRATION_DELETE',
+        83: 'STAGE_INSTANCE_CREATE',
+        84: 'STAGE_INSTANCE_UPDATE',
+        85: 'STAGE_INSTANCE_DELETE',
+        90: 'STICKER_CREATE',
+        91: 'STICKER_UPDATE',
+        92: 'STICKER_DELETE',
+        100: 'GUILD_SCHEDULED_EVENT_CREATE',
+        101: 'GUILD_SCHEDULED_EVENT_UPDATE',
+        102: 'GUILD_SCHEDULED_EVENT_DELETE',
+        110: 'THREAD_CREATE',
+        111: 'THREAD_UPDATE',
+        112: 'THREAD_DELETE',
+        121: 'APPLICATION_COMMAND_PERMISSION_UPDATE',
+        130: 'SOUNDBOARD_SOUND_CREATE',
+        131: 'SOUNDBOARD_SOUND_UPDATE',
+        132: 'SOUNDBOARD_SOUND_DELETE',
+        140: 'AUTO_MODERATION_RULE_CREATE',
+        141: 'AUTO_MODERATION_RULE_UPDATE',
+        142: 'AUTO_MODERATION_RULE_DELETE',
+        143: 'AUTO_MODERATION_BLOCK_MESSAGE',
+        144: 'AUTO_MODERATION_FLAG_TO_CHANNEL',
+        145: 'AUTO_MODERATION_USER_COMMUNICATION_DISABLED',
+        146: 'AUTO_MODERATION_QUARANTINE_USER',
+        150: 'CREATOR_MONETIZATION_REQUEST_CREATED',
+        151: 'CREATOR_MONETIZATION_TERMS_ACCEPTED',
+        163: 'ONBOARDING_PROMPT_CREATE',
+        164: 'ONBOARDING_PROMPT_UPDATE',
+        165: 'ONBOARDING_PROMPT_DELETE',
+        166: 'ONBOARDING_CREATE',
+        167: 'ONBOARDING_UPDATE',
+        190: 'HOME_SETTINGS_CREATE',
+        191: 'HOME_SETTINGS_UPDATE',
     };
-    const key = keyByAction[action] || '';
-    return key ? moxi.translate(`audit:${key}`, lang) : String(action || '');
+    // Permitir tanto string como number
+    const actionType = typeof action === 'number' ? action : Number(action);
+    const eventKey = keyByAction[actionType];
+    // Si existe traducción, usarla, si no, mostrar el nombre oficial
+    if (eventKey) {
+        const translation = moxi.translate(`audit:${eventKey}`, lang);
+        return translation !== `audit:${eventKey}` ? translation : eventKey;
+    }
+    return String(actionType || '');
 }
 
 async function resolveAuditConfig(guildId, fallbackLang) {
@@ -85,4 +173,6 @@ async function sendAuditLog({ client, guild, guildId, action, moderatorId, targe
 
 module.exports = {
     sendAuditLog,
+    sendPermissionInfoLog,
+    resolveAuditConfig,
 };
