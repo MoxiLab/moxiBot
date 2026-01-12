@@ -1,7 +1,9 @@
 const { buildLogEventContainer } = require('../../Components/V2/logEvent');
 const Guild = require('../../Models/GuildSchema');
+const { isFlagEnabled } = require('../../Util/debug');
 
 module.exports = async (oldMember, newMember) => {
+    if (isFlagEnabled('guildMemberUpdate')) console.log('[GUILDMEMBERUPDATE_DEBUG] Ejecutado: guildMemberUpdate');
     try {
         const guildDoc = await Guild.findOne({ guildID: newMember.guild.id }).lean();
         const logChannelId = guildDoc?.logChannelID;
