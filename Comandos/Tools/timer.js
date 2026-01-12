@@ -66,15 +66,20 @@ module.exports = {
     alias: ['temporizador', 'temporizador', 'temporizador'],
     description: lang => 'Crea y consulta temporizadores visuales',
     usage: 'timer [minutos]',
-    Category: lang => 'Utilidad',
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_HERRAMIENTAS', lang);
+    },
     cooldown: 5,
     buildListContainer,
     async execute(Moxi, message, args) {
+            const TIMER_DEBUG = isFlagEnabled('timer');
         // Mostrar lista de temporizadores activos
+            if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Comando timer ejecutado con args:', args);
         if (args[0] && args[0].toLowerCase() === 'list') {
             const allTimers = timerStorage.getAllTimers();
+                if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Lista de temporizadores:', allTimers);
             if (allTimers.length === 0) {
-                // Si es interacción, usa .send; si es mensaje, usa .reply
                 if (message && message.reply) {
                     return message.reply('No hay temporizadores activos en el bot.');
                 } else if (message && message.send) {
@@ -82,7 +87,6 @@ module.exports = {
                 }
             }
             const container = buildListContainer(Moxi, message, allTimers);
-            // Si es interacción, usa .send; si es mensaje, usa .reply
             if (message && message.reply) {
                 return message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
             } else if (message && message.send) {
@@ -97,9 +101,11 @@ module.exports = {
         // Mostrar cuántos temporizadores hay activos en el bot
         const allTimers = timerStorage.getAllTimers();
         const totalTimers = allTimers.length;
+            if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Total temporizadores activos:', totalTimers);
 
         // Si hay un temporizador activo en este canal, mostrar cuánto falta
         const current = timerStorage.getTimer(guildId, channelId);
+            if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Temporizador actual en canal:', current);
         if (!args[0] || args[0].toLowerCase() === 'help' || args[0] === '?') {
             if (args[0] && (args[0].toLowerCase() === 'help' || args[0] === '?')) {
                 const helpContainer = new ContainerBuilder()
@@ -213,6 +219,7 @@ module.exports = {
             );
 
         timerStorage.setTimer(guildId, channelId, userId, minutos, async () => {
+                if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Temporizador finalizado para canal:', channelId);
             try {
                 await message.channel.send(`⏰ ¡Tu temporizador de **${minutos} minutos** ha terminado!`);
             } catch { }
