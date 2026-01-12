@@ -8,7 +8,7 @@ const { PermissionsBitField: { Flags } } = require('discord.js');
 
 module.exports = {
     name: 'prefix',
-    alias: ['setprefix', 'prefix', 'sp'],
+    alias: ['setprefix', 'prefix', 'sp'], 
     description: function (lang) {
         lang = lang || 'es-ES';
         return moxi.translate('commands:CMD_PREFIX_DESC', lang);
