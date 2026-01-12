@@ -70,7 +70,7 @@ module.exports = async (Moxi, player, track) => {
             .setThumbnail(track.info.image || iconURL);
 
         const buffer = await card.build();
-        const fileName = `v8_${Date.now()}.png`;
+        const fileName = `moxi_${Date.now()}.png`;
         const attachment = new AttachmentBuilder(buffer, { name: fileName });
 
 
