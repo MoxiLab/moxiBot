@@ -26,6 +26,17 @@ module.exports = {
         const guild = isInteraction ? messageOrInteraction.guild : messageOrInteraction.guild;
         const channel = isInteraction ? messageOrInteraction.channel : messageOrInteraction.channel;
         const author = isInteraction ? messageOrInteraction.user : messageOrInteraction.author;
+        // Comprobar permisos antes de continuar
+        const member = messageOrInteraction.member;
+        if (!member?.permissions?.has(PermissionsBitField.Flags.ManageChannels)) {
+            const lang = await moxi.guildLang(guild?.id, process.env.DEFAULT_LANG || 'es-ES');
+            const noPermMsg = moxi.translate('AUTONUKE_NO_PERMS', lang) || 'No tienes permisos para usar este comando.';
+            if (isInteraction) {
+                return messageOrInteraction.reply({ content: noPermMsg, ephemeral: true });
+            } else {
+                return messageOrInteraction.reply(noPermMsg);
+            }
+        }
         const lang = await moxi.guildLang(guild?.id, process.env.DEFAULT_LANG || 'es-ES');
 
         // Todos los textos de respuesta y embeds usan el idioma del servidor
