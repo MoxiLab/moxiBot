@@ -1,4 +1,4 @@
-const { ContainerBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { ContainerBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 const { Bot } = require('../../Config');
 
 /**
@@ -56,4 +56,53 @@ function buildLogEventContainer(options) {
     return container;
 }
 
-module.exports = { buildLogEventContainer };
+/**
+ * Genera un embed clásico para logs de eventos de Discord
+ * @param {Object} options
+ * @param {string} options.type - Tipo de evento: 'join', 'leave', 'edit', 'delete', etc.
+ * @param {string} options.user - Nombre del usuario afectado
+ * @param {string} [options.avatarURL] - URL del avatar del usuario
+ * @param {string} [options.extra] - Texto extra (motivo, cambios, etc.)
+ * @param {string} [options.oldContent] - Contenido anterior (para ediciones)
+ * @param {string} [options.newContent] - Contenido nuevo (para ediciones)
+ * @param {string} [options.channel] - Canal afectado
+ * @param {Date} [options.timestamp] - Fecha/hora del evento
+ */
+function buildLogEventEmbed(options) {
+    const {
+        type = 'info',
+        user = 'Usuario',
+        avatarURL = null,
+        extra = '',
+        oldContent = '',
+        newContent = '',
+        channel = '',
+        timestamp = new Date()
+    } = options;
+
+    let color = 0xE1A6FF;
+    let title = 'Evento';
+    let emoji = 'ℹ️';
+    if (type === 'join') { color = 0x57F287; title = 'Usuario entró'; emoji = '🟢'; }
+    if (type === 'leave') { color = 0xED4245; title = 'Usuario salió'; emoji = '🔴'; }
+    if (type === 'edit') { color = 0xFEE75C; title = 'Mensaje editado'; emoji = '✏️'; }
+    if (type === 'delete') { color = 0xED4245; title = 'Mensaje eliminado'; emoji = '🗑️'; }
+
+    const embed = new EmbedBuilder()
+        .setColor(color)
+        .setTitle(`${emoji} ${title}`)
+        .setTimestamp(timestamp)
+        .setFooter({ text: Bot.Name ?? 'Moxi Studio' });
+
+    let desc = `**Usuario:** ${user}`;
+    if (channel) desc += `\n**Canal:** ${channel}`;
+    if (type === 'edit' && oldContent && newContent) {
+        desc += `\n**Antes:**\n${oldContent}\n**Después:**\n${newContent}`;
+    }
+    if (extra) desc += `\n${extra}`;
+    embed.setDescription(desc);
+    if (avatarURL) embed.setThumbnail(avatarURL);
+    return embed;
+}
+
+module.exports = { buildLogEventContainer, buildLogEventEmbed };
