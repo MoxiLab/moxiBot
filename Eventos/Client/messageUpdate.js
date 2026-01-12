@@ -1,7 +1,9 @@
-const { buildLogEventContainer } = require('../../Components/V2/logEvent');
+const { buildLogEventEmbed } = require('../../Components/V2/logEvent');
 const Guild = require('../../Models/GuildSchema');
+const { isFlagEnabled } = require('../../Util/debug');
 
 module.exports = async (oldMessage, newMessage) => {
+    if (isFlagEnabled('messageUpdate')) console.log('[MESSAGEUPDATE_DEBUG] Ejecutado: messageUpdate');
     if (!oldMessage.guild || oldMessage.author?.bot) return;
     try {
         const guildDoc = await Guild.findOne({ guildID: oldMessage.guild.id }).lean();
@@ -9,7 +11,7 @@ module.exports = async (oldMessage, newMessage) => {
         if (logChannelId) {
             const logChannel = await oldMessage.guild.channels.fetch(logChannelId).catch(() => null);
             if (logChannel && logChannel.isTextBased()) {
-                const container = buildLogEventContainer({
+                const embed = buildLogEventEmbed({
                     type: 'edit',
                     user: `${oldMessage.author.username}`,
                     oldContent: oldMessage.content,
@@ -17,8 +19,10 @@ module.exports = async (oldMessage, newMessage) => {
                     channel: `<#${oldMessage.channel.id}>`,
                     timestamp: new Date()
                 });
-                await logChannel.send({ content: '', components: [container] });
-            }
+                await logChannel.send({ embeds: [embed] });
+            } 
         }
-    } catch (e) {}
+    } catch (e) {
+        console.error('[LOG EVENT ERROR]', e);
+    } 
 };
