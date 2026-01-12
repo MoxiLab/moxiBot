@@ -11,22 +11,31 @@ const validEvents = [
     'emojiCreate', 'emojiDelete', 'emojiUpdate',
     'guildBanAdd', 'guildBanRemove',
     'guildMemberAdd', 'guildMemberRemove', 'guildMemberUpdate',
-    'messageCreate', 'messageDelete', 'messageDeleteBulk', 'messageUpdate',
+    'messageCreate', 'messageDelete', 'messageDeleteBulk', 'messageBulkDelete', 'messageUpdate',
     'roleCreate', 'roleDelete', 'roleUpdate',
     // ...agrega más si usas otros eventos
 ];
 
-const eventsDir = path.join(__dirname, 'Eventos', 'Client');
 
-fs.readdirSync(eventsDir).forEach(file => {
-    if (!file.endsWith('.js')) return;
-    const eventName = file.replace('.js', '');
-    const eventHandler = require(path.join(eventsDir, file));
-    if (typeof eventHandler === 'function') {
-        if (validEvents.includes(eventName)) {
-            client.on(eventName, eventHandler); 
-        } else {
-            return;
+
+function registerEventsRecursive(dir) {
+    fs.readdirSync(dir).forEach(file => {
+        const fullPath = path.join(dir, file);
+        const stat = fs.statSync(fullPath);
+        if (stat.isDirectory()) {
+            registerEventsRecursive(fullPath);
+        } else if (file.endsWith('.js')) {
+            const eventName = file.replace('.js', '');
+            const eventHandler = require(fullPath);
+            if (typeof eventHandler === 'function' && validEvents.includes(eventName)) {
+                client.on(eventName, (...args) => {
+                    console.log(`[AuditLog] Evento '${eventName}' disparado`);
+                    eventHandler(...args);
+                }); 
+            }
         }
-    }
-});
+    });
+}
+
+const eventsDir = path.join(__dirname, 'Eventos', 'Client');
+registerEventsRecursive(eventsDir);
