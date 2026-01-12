@@ -113,6 +113,11 @@ function isDebugFlagEnabled(envKey) {
   return debug.isFlagEnabled(envKey);
 }
 
+function divider() {
+  const prefix = formatPrefix('info');
+  return console.log(prefix, '────────────────────────────────────────────');
+}
+
 module.exports = {
   // Compat: API existente
   info: (...msg) => log('info', ...msg),
@@ -124,4 +129,5 @@ module.exports = {
   getLevel: () => CURRENT_LEVEL,
   isDebugFlagEnabled,
   startup,
+  divider,
 };
