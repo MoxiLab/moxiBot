@@ -1,7 +1,9 @@
 const { buildLogEventContainer } = require('../../Components/V2/logEvent');
 const Guild = require('../../Models/GuildSchema');
+const { isFlagEnabled } = require('../../Util/debug');
 
 module.exports = async (emoji) => {
+    if (isFlagEnabled('emojiCreate')) console.log('[EMOJICREATE_DEBUG] Ejecutado: emojiCreate');
     try {
         const guildDoc = await Guild.findOne({ guildID: emoji.guild.id }).lean();
         const logChannelId = guildDoc?.logChannelID;
