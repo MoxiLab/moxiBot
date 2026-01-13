@@ -5,62 +5,43 @@ Este README documenta únicamente los comandos que el bot expone hoy, separados 
 ## Comandos con prefijo
 
 ### Administrador
-- `prefix`: muestra o cambia el prefijo del servidor (valida longitud entre 1 y 6 caracteres y guarda el nuevo valor en MongoDB).
-- `language`: fija el idioma del servidor y actualiza los ajustes en GuildSettings para todos los mensajes.
-- `welcome` / `byes`: administran los mensajes e imágenes de bienvenida y despedida con render personalizado.
-- `audit`: exporta los registros de auditoría y permite consultar eventos recientes relacionados con roles y moderación.
-- `AddEmoji`: agrega emojis al servidor y valida permisos antes de crear la reacción.
-- `SetLevel` / `ResetLevels` / `LevelConfig`: ajustan la experiencia de niveles (por canal o rol) y reinician progresos cuando es necesario.
+- `prefix`: muestra o cambia el prefijo del servidor.
+- `language`: fija el idioma del servidor.
+- `welcome` / `byes`: administran mensajes e imágenes de bienvenida y despedida.
+- `audit`: exporta registros de auditoría y consulta eventos recientes.
+- `AddEmoji`: agrega emojis al servidor.
+- `SetLevel`, `ResetLevels`, `LevelConfig`: ajustan y reinician experiencia de niveles.
 - `RankSetup`: define canales y estilos para tarjetas de nivel.
+- `channel`, `leave`, `permiso`, `perms`, `rol`: utilidades administrativas varias.
 
 ### Moderación
-- `AutoRuleCreate`, `AutoRuleEdit`, `AutoRuleList`, `AutoRuleDelete`: establecen reglas automáticas (mensajes, reacciones) y permiten modificarlas sin tocar el código.
-- `ban`, `kick`, `timeout`: aplican sanciones básicas con motivo y duración opcional.
-- `warn`: registra avisos y notifica al autorizado; `unban` y `unmute` revocan sanciones.
-- `mute`: silencia usuarios en canal de voz y texto mediante roles automáticos.
+- `AutoRuleCreate`, `AutoRuleEdit`, `AutoRuleList`, `AutoRuleDelete`: gestionan reglas automáticas.
+- `ban`, `kick`, `timeout`, `warn`, `mute`, `unban`, `unmute`: sanciones y moderación básica.
 
 ### Música
-- `play`: reproduce canciones o playlists desde YouTube/Spotify a través de los nodos Poru.
-- `queue`: muestra y gestiona la cola actual.
-- `pause` / `resume`: detienen y reanudan la reproducción.
-- `skip` / `stop`: saltan la pista en curso o liberan los recursos del nodo.
-- `volume`: ajusta el volumen (0-150).
-- `add`: agrega URLs o búsquedas a la cola sin interrumpir la lista.
-- `autoplay`: alterna el modo de reproducción automática.
+- `play`, `queue`, `pause`, `resume`, `skip`, `stop`, `volume`, `add`, `autoplay`: control total de la música.
 
 ### Herramientas y utilidades
-- `help`: despliega la guía interactiva con botones para cada categoría.
-- `ping`: comprueba latencias del bot y del nodo Poru.
-- `bug`: registra un reporte en MongoDB con la información enviada por el usuario.
-- `afk`: marca un usuario como ausente y notifica respuestas automáticas.
-- `starboard`: configura el canal y los criterios que elevan mensajes destacados.
-- `autonuke`: limpia mensajes o permisos conflictivos con un solo comando.
-- `user`: muestra estadísticas y roles del miembro en cuestión.
+- `help`, `ping`, `bug`, `afk`, `starboard`, `autonuke`, `user`, `cls`, `rules`, `timer`, `uptime`: utilidades generales y de soporte.
 
 ### Funciones de experiencia gamificada
-- `Feedback`: permite recopilar impresiones de la comunidad con botones en tiempo real.
-- `Prestige`: controla el sistema de prestigio tras alcanzar el máximo nivel.
-- `Levels`, `Rank`, `Stats`: exponen estadísticas, tablas de clasificación y progresos por servidor.
-- `emojiinfo`: muestra metadatos de un emoji (creador, ID, uso) para moderadores.
+- `Feedback`, `Prestige`, `Levels`, `Rank`, `Stats`, `emojiinfo`: experiencia, estadísticas y feedback de la comunidad.
 
 ### Comandos raíz
-- `mongo`: ofrece diagnósticos y estadísticas de la conexión con MongoDB.
-- `lava`: reinicia o consulta el estado de los nodos Poru cuando hay fallos de audio.
+- `mongo`, `lava`: diagnósticos y control de nodos.
 
 ## Comandos slash
 
 ### Administración
-- `audit`: consulta registros de auditoría y permite filtrar por acción, usuario o canal desde una interfaz slash.
+- `audit`: consulta registros de auditoría.
 
 ### Moderación
-- `mod`: agrupa acciones clave (ban, kick, mute, timeout, warn, unban) con parámetros estructurados, confirmaciones y registros automáticos en canales dedicados.
+- `mod`: acciones clave de moderación (ban, kick, mute, timeout, warn, unban).
 
 ### Música
-- `musica`: cubre reproducción, control de cola y volumen con menús recomendados por defecto y compatibilidad con Poru/Spotify.
+- `musica`: reproducción, control de cola y volumen.
 
 ### Herramientas
-- `help`: abre el panel gráfico con atajos rápidos (prefijos, ayuda y soporte).
-- `bug`: genera un ticket en la base de datos con la descripción del error.
-- `afk`: marca o quita el estado de ausencia para el autor inmediatamente.
+- `help`, `bug`, `afk`, `cls`, `rules`, `starboard`, `timer`: utilidades y soporte.
 
 Mantén este README actualizado cada vez que se agregue o retire un comando para reflejar los cambios reales en `Comandos/` y `Slashcmd/`.
