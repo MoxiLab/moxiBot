@@ -243,6 +243,8 @@
     "HELP_CATEGORY_MUSIC_DESC": "音楽再生やキュー管理のコマンド。",
     "HELP_CATEGORY_TOOLS": "ツール",
     "HELP_CATEGORY_TOOLS_DESC": "様々なサーバー機能のためのユーティリティコマンド。",
+    "HELP_CATEGORY_ECONOMY": "経済",
+    "HELP_CATEGORY_ECONOMY_DESC": "経済コマンド：ショップ、バッグ、インベントリ。",
     "HELP_CATEGORY_WELCOME": "ウェルカムシステム",
     "HELP_CATEGORY_WELCOME_DESC": "ウェルカムメッセージや設定を構成するコマンド。",
     "HELP_CATEGORY_ROOT": "オーナー",
