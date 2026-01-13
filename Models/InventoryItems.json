@@ -1,0 +1,942 @@
+[
+  {
+    "category": "Buffs",
+    "items": [
+      {
+        "id": "buffs/scroll-de-impulso-moxi",
+        "name": "Scroll de Impulso Moxi",
+        "description": "Aumenta la velocidad de todas tus acciones durante 1 hora.",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/pez-lumina",
+        "name": "Pez Lumina",
+        "description": "Bonus de experiencia en actividades acuáticas.",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/gusano-brillo",
+        "name": "Gusano Brillo",
+        "description": "Mejora la probabilidad de encontrar recursos raros.",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/linterna-solar",
+        "name": "Linterna Solar",
+        "description": "Permite explorar zonas oscuras y descubrir tesoros ocultos.",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/fruta-vital",
+        "name": "Fruta Vital",
+        "description": "Recupera energía y da un pequeño boost de velocidad.",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/scroll-mascota-veloz",
+        "name": "Scroll Mascota Veloz",
+        "description": "Tu mascota obtiene velocidad extra temporalmente.",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/fruta-mutante",
+        "name": "Fruta Mutante",
+        "description": "Da un efecto aleatorio, puede ser positivo o negativo.",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/holly-prisma",
+        "name": "Holly Prisma",
+        "description": "Bonus especial en eventos de temporada.",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/pan-dulce-moxi",
+        "name": "Pan Dulce Moxi",
+        "description": "Duplica las recompensas de misiones durante 10 minutos.",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/pase-de-evento",
+        "name": "Pase de Evento",
+        "description": "Acceso a recompensas y zonas exclusivas (expirados y actuales).",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/fogata-elemental",
+        "name": "Fogata Elemental",
+        "description": "Permite acampar y obtener buffs temporales según el tipo de madera.",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/scroll-gelido",
+        "name": "Scroll Gélido",
+        "description": "Aumenta defensa en zonas frías.",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/corona-de-invierno",
+        "name": "Corona de Invierno",
+        "description": "Bonus especial en eventos invernales.",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/dulce-de-fresa",
+        "name": "Dulce de Fresa",
+        "description": "Recupera energía y da bonus de suerte.",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/trebol-de-fortuna",
+        "name": "Trébol de Fortuna",
+        "description": "Aumenta la probabilidad de obtener ítems raros.",
+        "rarity": "uncommon",
+        "price": 250
+      },
+      {
+        "id": "buffs/cascanueces-moxi",
+        "name": "Cascanueces Moxi",
+        "description": "Bonus de defensa en eventos de invierno.",
+        "rarity": "uncommon",
+        "price": 250
+      }
+    ]
+  },
+  {
+    "category": "Coleccionables",
+    "items": [
+      {
+        "id": "coleccionables/medalla-de-nieve",
+        "name": "Medalla de Nieve",
+        "description": "Coleccionable de temporada invernal.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/medalla-prisma",
+        "name": "Medalla Prisma",
+        "description": "Coleccionable especial de eventos.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/medalla-lunar",
+        "name": "Medalla Lunar",
+        "description": "Se obtiene en misiones nocturnas.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/token-festivo",
+        "name": "Token Festivo",
+        "description": "Canjeable por recompensas en la tienda de eventos.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/carta-de-amistad",
+        "name": "Carta de Amistad",
+        "description": "Coleccionable de eventos sociales.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/moneda-de-fortuna",
+        "name": "Moneda de Fortuna",
+        "description": "Da bonus de suerte al poseerla.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/gema-de-espiritu",
+        "name": "Gema de Espíritu",
+        "description": "Requerida para misiones avanzadas.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/corazon-prisma",
+        "name": "Corazón Prisma",
+        "description": "Coleccionable de eventos románticos.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/petalo-de-sakura",
+        "name": "Pétalo de Sakura",
+        "description": "Coleccionable de primavera.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/bouquet-festivo",
+        "name": "Bouquet Festivo",
+        "description": "Coleccionable de eventos florales.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/ticket-de-temporada",
+        "name": "Ticket de Temporada",
+        "description": "Acceso a eventos especiales.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/varita-de-luz",
+        "name": "Varita de Luz",
+        "description": "Coleccionable mágico.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/cascabel-festivo",
+        "name": "Cascabel Festivo",
+        "description": "Coleccionable de invierno.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/flor-de-espiritu",
+        "name": "Flor de Espíritu",
+        "description": "Coleccionable de eventos de flores.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/fantasmita-moxi",
+        "name": "Fantasmita Moxi",
+        "description": "Coleccionable de Halloween.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/gato-sombrio",
+        "name": "Gato Sombrío",
+        "description": "Coleccionable de eventos oscuros.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/copa-de-campeon",
+        "name": "Copa de Campeón",
+        "description": "Se obtiene al completar desafíos especiales.",
+        "rarity": "common",
+        "price": 80
+      }
+    ]
+  },
+  {
+    "category": "Consumibles",
+    "items": [
+      {
+        "id": "consumibles/galleta-energetica",
+        "name": "Galleta Energética",
+        "description": "Recupera energía.",
+        "rarity": "common",
+        "price": 40
+      },
+      {
+        "id": "consumibles/pastel-de-celebracion",
+        "name": "Pastel de Celebración",
+        "description": "Da bonus de experiencia.",
+        "rarity": "common",
+        "price": 40
+      },
+      {
+        "id": "consumibles/fruta-magica",
+        "name": "Fruta Mágica",
+        "description": "Da efecto aleatorio.",
+        "rarity": "common",
+        "price": 40
+      },
+      {
+        "id": "consumibles/ensalada-refrescante",
+        "name": "Ensalada Refrescante",
+        "description": "Recupera energía y salud.",
+        "rarity": "common",
+        "price": 40
+      },
+      {
+        "id": "consumibles/fuegos-artificiales",
+        "name": "Fuegos Artificiales",
+        "description": "Da bonus de suerte en eventos.",
+        "rarity": "common",
+        "price": 40
+      },
+      {
+        "id": "consumibles/calabaza-festiva",
+        "name": "Calabaza Festiva",
+        "description": "Consumible de Halloween.",
+        "rarity": "common",
+        "price": 40
+      },
+      {
+        "id": "consumibles/nuez-dorada",
+        "name": "Nuez Dorada",
+        "description": "Da bonus de defensa.",
+        "rarity": "common",
+        "price": 40
+      },
+      {
+        "id": "consumibles/electrolito",
+        "name": "Electrolito",
+        "description": "Recupera energía instantáneamente.",
+        "rarity": "common",
+        "price": 40
+      },
+      {
+        "id": "consumibles/monedas-de-oro",
+        "name": "Monedas de Oro",
+        "description": "Consumible para comprar en la tienda.",
+        "rarity": "common",
+        "price": 40
+      }
+    ]
+  },
+  {
+    "category": "Herramientas",
+    "items": [
+      {
+        "id": "herramientas/pico-prisma",
+        "name": "Pico Prisma",
+        "description": "Permite minar minerales raros.",
+        "rarity": "rare",
+        "price": 1200
+      },
+      {
+        "id": "herramientas/cana-de-pesca-moxi",
+        "name": "Caña de Pesca Moxi",
+        "description": "Aumenta la probabilidad de pescar ítems raros.",
+        "rarity": "rare",
+        "price": 1200
+      },
+      {
+        "id": "herramientas/llave-multiusos",
+        "name": "Llave Multiusos",
+        "description": "Herramienta para reparar y construir.",
+        "rarity": "rare",
+        "price": 1200
+      },
+      {
+        "id": "herramientas/varita-solar",
+        "name": "Varita Solar",
+        "description": "Permite realizar acciones mágicas.",
+        "rarity": "rare",
+        "price": 1200
+      },
+      {
+        "id": "herramientas/hacha-elemental",
+        "name": "Hacha Elemental",
+        "description": "Herramienta para recolectar madera especial.",
+        "rarity": "rare",
+        "price": 1200
+      },
+      {
+        "id": "herramientas/incubadora",
+        "name": "Incubadora",
+        "description": "Permite eclosionar huevos.",
+        "rarity": "rare",
+        "price": 1200
+      },
+      {
+        "id": "herramientas/revelador-prisma",
+        "name": "Revelador Prisma",
+        "description": "Herramienta para descubrir tesoros ocultos.",
+        "rarity": "rare",
+        "price": 1200
+      },
+      {
+        "id": "herramientas/barco-moxi",
+        "name": "Barco Moxi",
+        "description": "Permite explorar zonas marítimas.",
+        "rarity": "rare",
+        "price": 1200
+      },
+      {
+        "id": "herramientas/dinamita",
+        "name": "Dinamita",
+        "description": "Permite abrir zonas bloqueadas.",
+        "rarity": "rare",
+        "price": 1200
+      },
+      {
+        "id": "herramientas/golem-minero-pescador",
+        "name": "Gólem Minero/Pescador",
+        "description": "Herramientas automáticas para minar/pescar.",
+        "rarity": "rare",
+        "price": 1200
+      }
+    ]
+  },
+  {
+    "category": "Llaves",
+    "items": [
+      {
+        "id": "llaves/llave-prisma",
+        "name": "Llave Prisma",
+        "description": "Abre cofres especiales.",
+        "rarity": "rare",
+        "price": 900
+      },
+      {
+        "id": "llaves/llave-elemental",
+        "name": "Llave Elemental",
+        "description": "Abre zonas y cofres de eventos.",
+        "rarity": "rare",
+        "price": 900
+      },
+      {
+        "id": "llaves/talisman-solar",
+        "name": "Talismán Solar",
+        "description": "Permite acceder a zonas mágicas.",
+        "rarity": "rare",
+        "price": 900
+      },
+      {
+        "id": "llaves/anillo-de-fuego",
+        "name": "Anillo de Fuego",
+        "description": "Llave especial para eventos de fuego.",
+        "rarity": "rare",
+        "price": 900
+      }
+    ]
+  },
+  {
+    "category": "Loots",
+    "items": [
+      {
+        "id": "loots/caja-misteriosa",
+        "name": "Caja Misteriosa",
+        "description": "Contiene ítems aleatorios.",
+        "rarity": "uncommon",
+        "price": 600
+      },
+      {
+        "id": "loots/cofre-de-fortuna",
+        "name": "Cofre de Fortuna",
+        "description": "Contiene monedas, materiales o ítems raros.",
+        "rarity": "uncommon",
+        "price": 600
+      },
+      {
+        "id": "loots/caja-marina",
+        "name": "Caja Marina",
+        "description": "Contiene ítems de eventos acuáticos.",
+        "rarity": "uncommon",
+        "price": 600
+      },
+      {
+        "id": "loots/caja-premium-diamante-platino",
+        "name": "Caja Premium/Diamante/Platino",
+        "description": "Contiene ítems de alta calidad.",
+        "rarity": "uncommon",
+        "price": 600
+      },
+      {
+        "id": "loots/pack-de-celebracion",
+        "name": "Pack de Celebración",
+        "description": "Packs con ítems de eventos.",
+        "rarity": "uncommon",
+        "price": 600
+      },
+      {
+        "id": "loots/caja-de-suerte",
+        "name": "Caja de Suerte",
+        "description": "Caja con alta probabilidad de ítems raros.",
+        "rarity": "uncommon",
+        "price": 600
+      },
+      {
+        "id": "loots/tarjeta-de-regalo",
+        "name": "Tarjeta de Regalo",
+        "description": "Canjeable por ítems en la tienda.",
+        "rarity": "uncommon",
+        "price": 600
+      }
+    ]
+  },
+  {
+    "category": "Mascotas",
+    "items": [
+      {
+        "id": "mascotas/huevo-prisma",
+        "name": "Huevo Prisma",
+        "description": "Permite obtener mascotas con habilidades únicas.",
+        "rarity": "rare",
+        "price": 2200
+      },
+      {
+        "id": "mascotas/huevo-festivo",
+        "name": "Huevo Festivo",
+        "description": "Mascotas de eventos especiales.",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-elemental",
+        "name": "Huevo Elemental",
+        "description": "Mascotas con poderes elementales.",
+        "rarity": "rare",
+        "price": 2200
+      },
+      {
+        "id": "mascotas/huevo-legendario",
+        "name": "Huevo Legendario",
+        "description": "Mascotas raras y poderosas.",
+        "rarity": "legendary",
+        "price": 5000
+      },
+      {
+        "id": "mascotas/huevo-magico",
+        "name": "Huevo Mágico",
+        "description": "Eclosión con rasgos mágicos y habilidades especiales.",
+        "rarity": "rare",
+        "price": 2200
+      },
+      {
+        "id": "mascotas/huevo-abisal",
+        "name": "Huevo Abisal",
+        "description": "Eclosión de zonas profundas; afinidad con agua y sombra.",
+        "rarity": "epic",
+        "price": 3200
+      },
+      {
+        "id": "mascotas/huevo-solar",
+        "name": "Huevo Solar",
+        "description": "Eclosión de luz; mejora recompensas diurnas.",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-brumoso",
+        "name": "Huevo Brumoso",
+        "description": "Eclosión de bruma; bonus en exploración sigilosa.",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-de-bosque",
+        "name": "Huevo de Bosque",
+        "description": "Eclosión natural; bonus en recolección.",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-de-montana",
+        "name": "Huevo de Montaña",
+        "description": "Eclosión resistente; bonus en minería y rutas empinadas.",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-de-tormenta",
+        "name": "Huevo de Tormenta",
+        "description": "Eclosión eléctrica; bonus en eventos de clima.",
+        "rarity": "uncommon",
+        "price": 1500
+      },
+      {
+        "id": "mascotas/huevo-aurora",
+        "name": "Huevo Aurora",
+        "description": "Eclosión invernal rara; bonus en temporadas frías.",
+        "rarity": "epic",
+        "price": 3200
+      },
+      {
+        "id": "mascotas/huevo-jardin",
+        "name": "Huevo Jardín",
+        "description": "Eclosión amistosa; bonus en tareas sociales y cuidado.",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-de-cristal",
+        "name": "Huevo de Cristal",
+        "description": "Eclosión prismática; pequeño bonus de suerte.",
+        "rarity": "rare",
+        "price": 2200
+      },
+      {
+        "id": "mascotas/huevo-meteoro",
+        "name": "Huevo Meteoro",
+        "description": "Eclosión muy rara; bonus en botines y materiales especiales.",
+        "rarity": "legendary",
+        "price": 5000
+      },
+      {
+        "id": "mascotas/huevo-volcanico",
+        "name": "Huevo Volcánico",
+        "description": "Eclosión de zonas calientes; bonus en minería y resistencia al calor.",
+        "rarity": "uncommon",
+        "price": 1500
+      },
+      {
+        "id": "mascotas/huevo-glaciar",
+        "name": "Huevo Glaciar",
+        "description": "Eclosión de zonas frías; bonus en supervivencia y exploración invernal.",
+        "rarity": "uncommon",
+        "price": 1500
+      },
+      {
+        "id": "mascotas/huevo-marino",
+        "name": "Huevo Marino",
+        "description": "Eclosión acuática; bonus en pesca y rutas marítimas.",
+        "rarity": "uncommon",
+        "price": 1500
+      },
+      {
+        "id": "mascotas/huevo-selvatico",
+        "name": "Huevo Selvático",
+        "description": "Eclosión de jungla; bonus en recolección de plantas raras.",
+        "rarity": "uncommon",
+        "price": 1500
+      },
+      {
+        "id": "mascotas/huevo-umbrio",
+        "name": "Huevo Umbrío",
+        "description": "Eclosión de sombras; bonus en eventos nocturnos.",
+        "rarity": "uncommon",
+        "price": 1500
+      },
+      {
+        "id": "mascotas/huevo-radiante",
+        "name": "Huevo Radiante",
+        "description": "Eclosión de luz; bonus de suerte ligera en cofres.",
+        "rarity": "uncommon",
+        "price": 1500
+      },
+      {
+        "id": "mascotas/huevo-torbellino",
+        "name": "Huevo Torbellino",
+        "description": "Eclosión de viento; mejora viajes y misiones rápidas.",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-fertil",
+        "name": "Huevo Fértil",
+        "description": "Eclosión de pradera; bonus en recolección común.",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-coral",
+        "name": "Huevo Coral",
+        "description": "Eclosión de arrecife; bonus en botines marinos.",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-relampago",
+        "name": "Huevo Relámpago",
+        "description": "Eclosión eléctrica rara; bonus en desafíos de tiempo.",
+        "rarity": "epic",
+        "price": 3200
+      },
+      {
+        "id": "mascotas/huevo-lunar",
+        "name": "Huevo Lunar",
+        "description": "Eclosión nocturna rara; bonus en misiones nocturnas.",
+        "rarity": "epic",
+        "price": 3200
+      },
+      {
+        "id": "mascotas/huevo-solar-real",
+        "name": "Huevo Solar Real",
+        "description": "Versión rara del huevo solar; bonus diurno mejorado.",
+        "rarity": "legendary",
+        "price": 5000
+      },
+      {
+        "id": "mascotas/huevo-prisma-antiguo",
+        "name": "Huevo Prisma Antiguo",
+        "description": "Eclosión muy rara; bonus en eventos especiales.",
+        "rarity": "legendary",
+        "price": 5000
+      },
+      {
+        "id": "mascotas/huevo-cometa",
+        "name": "Huevo Cometa",
+        "description": "Eclosión ultra rara; chance extra de objetos raros.",
+        "rarity": "legendary",
+        "price": 5000
+      },
+      {
+        "id": "mascotas/huevo-encantado",
+        "name": "Huevo Encantado",
+        "description": "Eclosión mágica; bonus en efectos de buffs temporales.",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-guardian",
+        "name": "Huevo Guardián",
+        "description": "Eclosión defensiva; reduce penalizaciones en eventos.",
+        "rarity": "common",
+        "price": 900
+      }
+    ]
+  },
+  {
+    "category": "Materiales",
+    "items": [
+      {
+        "id": "materiales/hierba-prisma",
+        "name": "Hierba Prisma",
+        "description": "Material para crafteo.",
+        "rarity": "common",
+        "price": 25
+      },
+      {
+        "id": "materiales/roca-volcanica",
+        "name": "Roca Volcánica",
+        "description": "Material para mejoras de defensa.",
+        "rarity": "common",
+        "price": 25
+      },
+      {
+        "id": "materiales/barra-de-oro-acero",
+        "name": "Barra de Oro/Acero",
+        "description": "Material para crafteo avanzado.",
+        "rarity": "common",
+        "price": 25
+      },
+      {
+        "id": "materiales/fragmento-de-espiritu",
+        "name": "Fragmento de Espíritu",
+        "description": "Material para misiones y mejoras.",
+        "rarity": "common",
+        "price": 25
+      },
+      {
+        "id": "materiales/mineral-elemental",
+        "name": "Mineral Elemental",
+        "description": "Material para crafteo de herramientas.",
+        "rarity": "common",
+        "price": 25
+      },
+      {
+        "id": "materiales/flor-de-amor",
+        "name": "Flor de Amor",
+        "description": "Material para eventos románticos.",
+        "rarity": "common",
+        "price": 25
+      },
+      {
+        "id": "materiales/fosil",
+        "name": "Fósil",
+        "description": "Material para misiones de exploración.",
+        "rarity": "common",
+        "price": 25
+      },
+      {
+        "id": "materiales/dulce-festivo",
+        "name": "Dulce Festivo",
+        "description": "Material para eventos de temporada.",
+        "rarity": "common",
+        "price": 25
+      }
+    ]
+  },
+  {
+    "category": "Mejoras",
+    "items": [
+      {
+        "id": "mejoras/potenciador-de-fortuna",
+        "name": "Potenciador de Fortuna",
+        "description": "Aumenta la probabilidad de obtener grandes recompensas.",
+        "rarity": "rare",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/escudo-de-tolerancia",
+        "name": "Escudo de Tolerancia",
+        "description": "Reduce penalizaciones en eventos.",
+        "rarity": "rare",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/expansion-de-mochila",
+        "name": "Expansión de Mochila",
+        "description": "Aumenta el espacio de inventario.",
+        "rarity": "rare",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/entrenamiento-moxi",
+        "name": "Entrenamiento Moxi",
+        "description": "Bonus de experiencia por actividad.",
+        "rarity": "rare",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/trabajo-en-equipo",
+        "name": "Trabajo en Equipo",
+        "description": "Bonus al trabajar en grupo.",
+        "rarity": "rare",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/estrella-de-suerte",
+        "name": "Estrella de Suerte",
+        "description": "Bonus de suerte.",
+        "rarity": "rare",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/aurora-festiva",
+        "name": "Aurora Festiva",
+        "description": "Bonus en eventos de invierno.",
+        "rarity": "rare",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/tinte-personalizado",
+        "name": "Tinte Personalizado",
+        "description": "Cambia el color de tu perfil o club.",
+        "rarity": "rare",
+        "price": 1500
+      }
+    ]
+  },
+  {
+    "category": "Misiones",
+    "items": [
+      {
+        "id": "misiones/gema-prisma",
+        "name": "Gema Prisma",
+        "description": "Requerida para misiones avanzadas.",
+        "rarity": "epic",
+        "price": 0
+      },
+      {
+        "id": "misiones/conejo-de-peluche",
+        "name": "Conejo de Peluche",
+        "description": "Objeto de misión especial.",
+        "rarity": "epic",
+        "price": 0
+      },
+      {
+        "id": "misiones/espada-de-hielo",
+        "name": "Espada de Hielo",
+        "description": "Requerida para misiones de exploración.",
+        "rarity": "epic",
+        "price": 0
+      },
+      {
+        "id": "misiones/katana-solar",
+        "name": "Katana Solar",
+        "description": "Objeto de misión avanzada.",
+        "rarity": "epic",
+        "price": 0
+      },
+      {
+        "id": "misiones/mascara-de-zorro",
+        "name": "Máscara de Zorro",
+        "description": "Objeto de misión especial.",
+        "rarity": "epic",
+        "price": 0
+      }
+    ]
+  },
+  {
+    "category": "Pociones",
+    "items": [
+      {
+        "id": "pociones/pocion-de-regeneracion",
+        "name": "Poción de Regeneración",
+        "description": "Recupera salud.",
+        "rarity": "uncommon",
+        "price": 180
+      },
+      {
+        "id": "pociones/pocion-de-resistencia",
+        "name": "Poción de Resistencia",
+        "description": "Aumenta defensa temporalmente.",
+        "rarity": "uncommon",
+        "price": 180
+      },
+      {
+        "id": "pociones/pocion-del-explorador",
+        "name": "Poción del Explorador",
+        "description": "Permite explorar zonas nuevas.",
+        "rarity": "uncommon",
+        "price": 180
+      },
+      {
+        "id": "pociones/elixir-prisma",
+        "name": "Elixir Prisma",
+        "description": "Da bonus de experiencia y energía.",
+        "rarity": "uncommon",
+        "price": 180
+      },
+      {
+        "id": "pociones/huevito-de-energia-exploracion-regeneracion-resistencia",
+        "name": "Huevito de Energía/Exploración/Regeneración/Resistencia",
+        "description": "Consumibles especiales.",
+        "rarity": "uncommon",
+        "price": 180
+      }
+    ]
+  },
+  {
+    "category": "Rollos",
+    "items": [
+      {
+        "id": "rollos/rollo-moxi",
+        "name": "Rollo Moxi",
+        "description": "Da habilidades especiales temporales.",
+        "rarity": "uncommon",
+        "price": 220
+      },
+      {
+        "id": "rollos/rollo-de-estrategia",
+        "name": "Rollo de Estrategia",
+        "description": "Permite estrategias avanzadas en eventos.",
+        "rarity": "uncommon",
+        "price": 220
+      },
+      {
+        "id": "rollos/notas-del-explorador",
+        "name": "Notas del Explorador",
+        "description": "Da pistas para misiones.",
+        "rarity": "uncommon",
+        "price": 220
+      },
+      {
+        "id": "rollos/papiro-jeroglifico",
+        "name": "Papiro/Jeroglífico",
+        "description": "Desbloquea contenido oculto.",
+        "rarity": "uncommon",
+        "price": 220
+      }
+    ]
+  },
+  {
+    "category": "Protección",
+    "items": [
+      {
+        "id": "proteccion/vida-extra",
+        "name": "Vida Extra",
+        "description": "Permite revivir una vez en eventos especiales.",
+        "rarity": "rare",
+        "price": 2500
+      }
+    ]
+  }
+]
