@@ -12,6 +12,9 @@ const LanguageSchema = require('./LanguageSchema');
 const RankSchema = require('./RankSchema');
 const UserSchema = require('./UserSchema');
 const WelcomeSchema = require('./WelcomeSchema');
+const UserInventory = require('./InventorySchema');
+const Economy = require('./EconomySchema');
+const SlashCommandId = require('./SlashCommandId');
 
 // Export all models individually
 module.exports = {
@@ -25,6 +28,9 @@ module.exports = {
     LanguageSchema,
     RankSchema,
     UserSchema,
+    UserInventory,
+    Economy,
+    SlashCommandId,
     WelcomeSchema,
     // Also export them as named exports for destructuring
     Audit: AuditSchema,
@@ -37,5 +43,8 @@ module.exports = {
     Language: LanguageSchema,
     Rank: RankSchema,
     User: UserSchema,
+    Inventory: UserInventory,
+    EconomyModels: Economy,
+    SlashCommandIds: SlashCommandId,
     Welcome: WelcomeSchema,
 };
