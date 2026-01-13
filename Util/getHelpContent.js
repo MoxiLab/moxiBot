@@ -16,6 +16,7 @@ function normalizeCategoryKey(value) {
   // Si i18n aún no está listo, algunos comandos devuelven claves tipo "commands:CATEGORY_HERRAMIENTAS".
   // Convertimos esas claves a categorías estables para que el help funcione en cualquier idioma.
   const upper = value.toUpperCase();
+  if (upper.includes('CATEGORY_ECONOMIA') || upper.includes('ECONOMIA') || upper.includes('ECONOMÍA')) return 'Economy';
   if (upper.includes('CATEGORY_HERRAMIENTAS') || upper.includes('HERRAMIENTAS')) return 'Tools';
   if (upper.includes('CATEGORY_MUSICA') || upper.includes('MUSICA')) return 'Music';
   if (upper.includes('CATEGORY_ADMIN')) return 'Admin';
@@ -36,7 +37,10 @@ function normalizeCategoryKey(value) {
 }
 
 function buildHelpIndex(Moxi) {
-  // Obtener todos los comandos del bot y deduplicar por nombre (prefiere el de prefijo)
+  // Obtener todos los comandos del bot y deduplicar por nombre.
+  // Importante: no queremos “perder” la versión slash si existe también versión prefix.
+  // Preferimos el objeto de prefijo como base, pero fusionamos (merge) la info slash (.data/.command.Slash)
+  // para poder mostrar ambos formatos en el help.
   let allCommands = [];
   let commandsArr = [];
   let slashArr = [];
@@ -55,19 +59,79 @@ function buildHelpIndex(Moxi) {
     }
   }
 
-  const seen = new Set();
-  for (const _cmd of [...commandsArr, ...slashArr]) {
-    if (!_cmd) continue;
-    let cmdName = _cmd.name || (_cmd.data && _cmd.data.name);
-    if (!cmdName) continue;
-    if (seen.has(cmdName)) continue;
-    seen.add(cmdName);
-    let cmd = _cmd;
-    if (!cmd.name && cmd.data && cmd.data.name) {
-      cmd = { ...cmd, name: cmd.data.name };
+  const byName = new Map();
+
+  const getName = (c) => c?.name || (c?.data && c.data.name);
+
+  const merge = (base, incoming) => {
+    const merged = base ? { ...base } : (incoming ? { ...incoming } : {});
+
+    // Nombre
+    if (!merged.name) {
+      const n = getName(incoming);
+      if (n) merged.name = n;
     }
-    allCommands.push(cmd);
+
+    // Si viene data (slash), adjuntarla si falta
+    if (!merged.data && incoming && incoming.data) {
+      merged.data = incoming.data;
+    }
+
+    // Flags command (Prefix/Slash)
+    const baseCmd = merged.command && typeof merged.command === 'object' ? merged.command : {};
+    const incCmd = incoming && incoming.command && typeof incoming.command === 'object' ? incoming.command : {};
+    const hasSlashData = Boolean(merged.data || incoming?.data);
+    merged.command = {
+      ...baseCmd,
+      ...incCmd,
+      Prefix: Boolean(baseCmd.Prefix || incCmd.Prefix),
+      Slash: Boolean(baseCmd.Slash || incCmd.Slash || hasSlashData),
+    };
+
+    // Mantener Category/usage/description del prefijo si existen; si faltan, copiar del incoming
+    if (!merged.Category && incoming?.Category) merged.Category = incoming.Category;
+    if (!merged.category && incoming?.category) merged.category = incoming.category;
+    if (!merged.usage && incoming?.usage) merged.usage = incoming.usage;
+    if (!merged.description && incoming?.description) merged.description = incoming.description;
+    if (!merged.execute && typeof incoming?.execute === 'function') merged.execute = incoming.execute;
+    if (!merged.run && typeof incoming?.run === 'function') merged.run = incoming.run;
+    if (!merged.alias && incoming?.alias) merged.alias = incoming.alias;
+    if (!merged.aliases && incoming?.aliases) merged.aliases = incoming.aliases;
+
+    return merged;
+  };
+
+  // Primero prefijos, luego slash: el prefijo queda como “base” en caso de colisión.
+  for (const _cmd of commandsArr) {
+    if (!_cmd) continue;
+    const cmdName = getName(_cmd);
+    if (!cmdName) continue;
+    const normalized = {
+      ..._cmd,
+      name: cmdName,
+      command: {
+        ...((_cmd.command && typeof _cmd.command === 'object') ? _cmd.command : {}),
+        Prefix: true,
+      },
+    };
+    byName.set(cmdName, merge(byName.get(cmdName), normalized));
   }
+  for (const _cmd of slashArr) {
+    if (!_cmd) continue;
+    const cmdName = getName(_cmd);
+    if (!cmdName) continue;
+    const normalized = {
+      ..._cmd,
+      name: cmdName,
+      command: {
+        ...((_cmd.command && typeof _cmd.command === 'object') ? _cmd.command : {}),
+        Slash: true,
+      },
+    };
+    byName.set(cmdName, merge(byName.get(cmdName), normalized));
+  }
+
+  allCommands = Array.from(byName.values());
 
   // Agrupar por clave interna (no traducida)
   const categoriasBase = {};
@@ -182,7 +246,9 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
     try {
       const normalize = str => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       let key = '';
-      if (categoria === 'Tools') {
+      if (categoria === 'Economy') {
+        key = 'HELP_CATEGORY_ECONOMY_DESC';
+      } else if (categoria === 'Tools') {
         key = 'HELP_CATEGORY_TOOLS_DESC';
       } else if (categoria === 'Music') {
         key = 'HELP_CATEGORY_MUSIC_DESC';
@@ -212,104 +278,83 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
   if (page < 0) page = 0;
   if (page > totalPages - 1) page = totalPages - 1;
   const cmds = filteredCommands.slice(page * pageSize, (page + 1) * pageSize);
-  const formatCmd = (cmd) => {
-    let lines = [];
-    // Mostrar ambos formatos si el comando es de prefijo y/o slash
-    if (cmd.command && cmd.command.Prefix) {
-      lines.push(`${prefix}${cmd.name}`);
+  const isPrefixCmd = (cmd) => Boolean((cmd?.command && cmd.command.Prefix) || typeof cmd?.execute === 'function');
+  const isSlashCmd = (cmd) => Boolean((cmd?.command && cmd.command.Slash) || (cmd?.data && typeof cmd.data.toJSON === 'function') || typeof cmd?.run === 'function');
+
+  const getPrefixLines = (cmd) => {
+    if (!cmd?.name) return [];
+    return [`${prefix}${cmd.name}`];
+  };
+
+  const getSlashLines = (cmd) => {
+    if (!cmd) return [];
+    if (!(cmd.data && typeof cmd.data.toJSON === 'function')) {
+      // Si no hay data, pero está marcado como slash, mostramos /name como fallback
+      if (cmd.name) return [`/${cmd.name}`];
+      return [];
     }
-    // Mostrar slash principal y subcomandos si existen
-    if ((cmd.command && cmd.command.Slash) || (cmd.data && cmd.data.toJSON)) {
-      let slashName = cmd.name;
-      let subcmds = [];
-      if (cmd.data && cmd.data.toJSON) {
-        let data = SLASH_JSON_CACHE.get(cmd.data);
-        if (!data) {
-          data = cmd.data.toJSON();
-          SLASH_JSON_CACHE.set(cmd.data, data);
-        }
-        slashName = data.name;
-        if (Array.isArray(data.options)) {
-          subcmds = data.options.filter(opt => opt.type === 1).map(opt => opt.name);
-        }
-      }
-      if (subcmds.length) {
-        for (const sub of subcmds) {
-          lines.push(`/${slashName} ${sub}`);
-        }
-      } else {
-        lines.push(`/${slashName}`);
-      }
+
+    let data = SLASH_JSON_CACHE.get(cmd.data);
+    if (!data) {
+      data = cmd.data.toJSON();
+      SLASH_JSON_CACHE.set(cmd.data, data);
     }
-    // Si solo es slash clásico (sin .command), mostrar como /comando
-    if (!lines.length && cmd.data && cmd.data.toJSON) {
-      let data = SLASH_JSON_CACHE.get(cmd.data);
-      if (!data) {
-        data = cmd.data.toJSON();
-        SLASH_JSON_CACHE.set(cmd.data, data);
-      }
-      if (Array.isArray(data.options)) {
-        const subcmds = data.options.filter(opt => opt.type === 1).map(opt => opt.name);
-        for (const sub of subcmds) {
-          lines.push(`/${data.name} ${sub}`);
-        }
-      } else {
-        lines.push(`/${data.name}`);
-      }
+
+    const slashName = data?.name || cmd.name;
+    if (!slashName) return [];
+
+    if (Array.isArray(data.options)) {
+      const subcmds = data.options.filter(opt => opt.type === 1).map(opt => opt.name);
+      if (subcmds.length) return subcmds.map(sub => `/${slashName} ${sub}`);
     }
-    // Si solo es prefijo clásico
-    if (!lines.length) {
-      lines.push(`${prefix}${cmd.name}`);
+    return [`/${slashName}`];
+  };
+
+  const renderLabels = (labels) => {
+    const cmdLabels = Array.from(new Set((labels || []).map(l => String(l).trim()).filter(Boolean)));
+    if (!cmdLabels.length) return '';
+    if (isRtl) return cmdLabels.map(l => `» ${l}`).join('\n');
+
+    const cols = 3;
+    const zws = '\u200b';
+    const nbsp = '\u00A0';
+    const rows = [];
+    for (let i = 0; i < cmdLabels.length; i += cols) {
+      rows.push(cmdLabels.slice(i, i + cols));
     }
-    // Evitar duplicados y multilinea (cada uso es una línea)
-    return Array.from(new Set(lines.map(l => String(l).trim()).filter(Boolean)));
+    const colWidth = Math.max(...cmdLabels.map(l => l.length), 12);
+    return rows
+      .map((r) => r
+        .map((cell) => (cell + zws).padEnd(colWidth + 2, nbsp))
+        .join('')
+        .trimEnd()
+      )
+      .join('\n');
   };
   let desc = '';
   if (categoria) {
     desc = bienvenidaCategoria ? bienvenidaCategoria + '\n\n' : '';
     if (cmds.length) {
-      const cmdLabels = cmds.flatMap(formatCmd);
-      if (isRtl) {
-        // RTL: lista simple para evitar problemas visuales
-        desc += cmdLabels.map(l => `» ${l}`).join('\n');
-      } else {
-        // LTR: 3 columnas sin ``` y sin tabla (usa padding con NBSP)
-        const cols = 3;
-        const zws = '\u200b';
-        const nbsp = '\u00A0';
-        const rows = [];
-        for (let i = 0; i < cmdLabels.length; i += cols) {
-          rows.push(cmdLabels.slice(i, i + cols));
-        }
+      const prefixLabels = [];
+      const slashLabels = [];
+      for (const cmd of cmds) {
+        if (isPrefixCmd(cmd)) prefixLabels.push(...getPrefixLines(cmd));
+        if (isSlashCmd(cmd)) slashLabels.push(...getSlashLines(cmd));
+      }
 
-        const colWidths = [0, 0, 0];
-        for (const row of rows) {
-          for (let i = 0; i < cols; i++) {
-            const cell = row[i] ? `» ${row[i]}` : '';
-            colWidths[i] = Math.max(colWidths[i], cell.length);
-          }
-        }
+      const prefixBlock = renderLabels(prefixLabels);
+      const slashBlock = renderLabels(slashLabels);
 
-        const padTo = (text, width) => {
-          const s = String(text || '');
-          const missing = Math.max(0, width - s.length);
-          return s + nbsp.repeat(missing);
-        };
+      if (prefixBlock) {
+        desc += `**${moxi.translate('HELP_PREFIX_COMMANDS', lang)}**\n${prefixBlock}`;
+      }
+      if (slashBlock) {
+        if (prefixBlock) desc += '\n\n';
+        desc += `**${moxi.translate('HELP_SLASH_COMMANDS', lang)}**\n${slashBlock}`;
+      }
 
-        const body = rows
-          .map((row) => {
-            const c1 = row[0] ? `» ${row[0]}` : zws;
-            const c2 = row[1] ? `» ${row[1]}` : zws;
-            const c3 = row[2] ? `» ${row[2]}` : zws;
-            // Espacio extra entre columnas
-            return (
-              padTo(c1, colWidths[0]) + nbsp.repeat(6) +
-              padTo(c2, colWidths[1]) + nbsp.repeat(6) +
-              padTo(c3, colWidths[2])
-            );
-          })
-          .join('\n');
-        desc += body;
+      if (!prefixBlock && !slashBlock) {
+        desc += moxi.translate('HELP_NO_COMMANDS', lang);
       }
     } else {
       desc += moxi.translate('HELP_NO_COMMANDS', lang);
@@ -357,6 +402,8 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
     const categoryMap = {
       'Administración': 'HELP_CATEGORY_ADMIN',
       'Admin': 'HELP_CATEGORY_ADMIN',
+      'Economía': 'HELP_CATEGORY_ECONOMY',
+      'Economy': 'HELP_CATEGORY_ECONOMY',
       'Moderation': 'HELP_CATEGORY_MODERATION',
       'Moderación': 'HELP_CATEGORY_MODERATION',
       'Music': 'HELP_CATEGORY_MUSIC',
