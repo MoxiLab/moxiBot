@@ -28,10 +28,11 @@ function registerEventsRecursive(dir) {
             const eventName = file.replace('.js', '');
             const eventHandler = require(fullPath);
             if (typeof eventHandler === 'function' && validEvents.includes(eventName)) {
+                const auditLogDebug = require('./Util/auditLogDebug');
                 client.on(eventName, (...args) => {
-                    console.log(`[AuditLog] Evento '${eventName}' disparado`);
+                    auditLogDebug(eventName, `Evento '${eventName}' disparado`);
                     eventHandler(...args);
-                }); 
+                });
             }
         }
     });
