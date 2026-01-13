@@ -1,0 +1,39 @@
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const moxi = require('../../i18n');
+const { buildBagMessage } = require('../../Util/bagView');
+
+module.exports = {
+  cooldown: 0,
+  Category: function (lang) {
+    lang = lang || 'es-ES';
+    return moxi.translate('commands:CATEGORY_ECONOMIA', lang);
+  },
+  data: new SlashCommandBuilder()
+    .setName('bag')
+    .setDescription('Muestra tu mochila (inventario)')
+    .addIntegerOption((opt) =>
+      opt
+        .setName('pagina')
+        .setDescription('Página (opcional)')
+        .setRequired(false)
+        .setMinValue(1)
+    ),
+
+  async run(Moxi, interaction) {
+    const rawPage = interaction.options.getInteger('pagina');
+    const page = rawPage ? Math.max(0, rawPage - 1) : 0;
+
+    const payload = await buildBagMessage({
+      userId: interaction.user.id,
+      viewerId: interaction.user.id,
+      page,
+      isPrivate: true,
+    });
+
+    const baseFlags = Number(payload?.flags) || 0;
+    return interaction.reply({
+      ...payload,
+      flags: baseFlags | MessageFlags.Ephemeral,
+    });
+  },
+};
