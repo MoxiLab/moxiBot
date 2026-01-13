@@ -1,7 +1,8 @@
 const timerModal = require('./timer');
 const channelModal = require('./channel');
+const shopModal = require('./shop');
 
-const handlers = [timerModal, channelModal];
+const handlers = [timerModal, channelModal, shopModal];
 
 module.exports = async function modalController(interaction, Moxi, logger) {
     for (const handler of handlers) {
