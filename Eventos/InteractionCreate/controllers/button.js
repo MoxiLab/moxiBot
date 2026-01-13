@@ -1,4 +1,5 @@
 const handlers = [
+  require('./buttons/shop'),
   require('./buttons/bugStatus'),
   require('./buttons/modv2'),
   require('./buttons/lavanode'),
@@ -9,6 +10,8 @@ const handlers = [
   require('./buttons/userPerms'),
   require('./buttons/timer'),
   require('./buttons/channel'),
+  require('./buttons/perms'),
+  require('./buttons/bag'),
   require('./buttons/leave'), // <-- Añadido para leave
 ];
 
