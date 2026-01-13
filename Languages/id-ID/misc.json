@@ -59,6 +59,8 @@
     "HELP_CATEGORY_MODERATION_DESC": "Perintah moderasi: ban, kick, mute, warn, dan lainnya.",
     "HELP_CATEGORY_TOOLS": "Alat",
     "HELP_CATEGORY_TOOLS_DESC": "Perintah utilitas untuk berbagai fungsi server.",
+    "HELP_CATEGORY_ECONOMY": "Ekonomi",
+    "HELP_CATEGORY_ECONOMY_DESC": "Perintah ekonomi: toko, tas, inventaris.",
     "HELP_CATEGORY_WELCOME": "Sistem sambutan",
     "HELP_CATEGORY_WELCOME_DESC": "Perintah untuk mengatur pesan dan pengaturan sambutan.",
     "HELP_COMMAND_NOT_FOUND": "Perintah `{{command}}` tidak ditemukan.",
