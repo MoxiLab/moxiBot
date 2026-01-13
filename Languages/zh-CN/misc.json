@@ -59,6 +59,8 @@
     "HELP_CATEGORY_MUSIC_DESC": "用于播放和管理音乐的命令。",
     "HELP_CATEGORY_TOOLS": "工具",
     "HELP_CATEGORY_TOOLS_DESC": "用于各种服务器功能的实用命令。",
+    "HELP_CATEGORY_ECONOMY": "经济",
+    "HELP_CATEGORY_ECONOMY_DESC": "经济命令：商店、背包、库存。",
     "HELP_CATEGORY_WELCOME": "欢迎系统",
     "HELP_CATEGORY_WELCOME_DESC": "用于配置欢迎消息和设置的命令。",
     "HELP_COMMAND_NOT_FOUND": "未找到命令 `{{command}}`。",
