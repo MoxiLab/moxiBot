@@ -4,6 +4,7 @@
     "CATEGORY_MODERATION": "Moderation",
     "CATEGORY_ADMIN": "Admin",
     "CATEGORY_HERRAMIENTAS": "Tools",
+    "CATEGORY_ECONOMIA": "Economy",
     "CATEGORY_MUSICA": "Music",
     "CATEGORY_ROOT": "Root",
     "CMD_add_DESC": "Adds songs to the queue",
