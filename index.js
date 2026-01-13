@@ -13,6 +13,9 @@ const client = new Client({
     ]
 });
 
+// Compat discord.js: `ephemeral` está deprecado, usamos flags internamente.
+require('./Util/discordEphemeralCompat').installEphemeralCompat();
+
 require('./Util/silentDotenv')();
 
 const { restoreTimers } = require('./Util/timerStorage');
