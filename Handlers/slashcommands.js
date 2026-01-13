@@ -2,8 +2,10 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { REST, Routes } = require("discord.js");
 const logger = require('../Util/logger');
+const { upsertDeployedCommandIds } = require('../Util/slashCommandMentions');
 const token = process.env.TOKEN;
 const clientId = process.env.CLIENT_ID;
+const guildId = process.env.GUILD_ID;
 
 
 
@@ -37,9 +39,27 @@ const rest = new REST({ version: '10' }).setToken(token);
 
 async function createSlash() {
   try {
+    if (!token || !clientId) {
+      return logger.error && logger.error('[slash] missing TOKEN and/or CLIENT_ID in environment');
+    }
     if (!commands.length) return logger.info && logger.info('[slash] no commands to deploy');
-    await rest.put(Routes.applicationCommands(clientId), { body: commands });
-    logger.info && logger.info('[slash] deployed', commands.length, 'commands');
+    if (guildId) {
+      const data = await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands });
+      try {
+        await upsertDeployedCommandIds({ applicationId: clientId, guildId, deployed: Array.isArray(data) ? data : [] });
+      } catch (e) {
+        logger.warn && logger.warn('[slash] failed saving command ids (guild)', e?.message || e);
+      }
+      logger.info && logger.info('[slash] deployed', commands.length, 'commands (guild)', guildId);
+    } else {
+      const data = await rest.put(Routes.applicationCommands(clientId), { body: commands });
+      try {
+        await upsertDeployedCommandIds({ applicationId: clientId, guildId: null, deployed: Array.isArray(data) ? data : [] });
+      } catch (e) {
+        logger.warn && logger.warn('[slash] failed saving command ids (global)', e?.message || e);
+      }
+      logger.info && logger.info('[slash] deployed', commands.length, 'commands (global)');
+    }
   } catch (e) {
     logger.error(e);
   }
