@@ -8,6 +8,7 @@ const { EMOJIS } = require('../../Util/emojis');
 const { Bot } = require('../../Config');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const debugHelper = require('../../Util/debugHelper');
+const { getSlashCommandId } = require('../../Util/slashCommandMentions');
 
 module.exports = {
     name: 'language',
@@ -40,6 +41,19 @@ module.exports = {
     },
     async execute(Moxi, message, args) {
         const baseLang = await moxi.guildLang(message.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
+
+        const applicationId = process.env.CLIENT_ID;
+        const bugCommandId = await getSlashCommandId({
+            name: 'bug',
+            applicationId,
+            guildId: message.guild?.id,
+        });
+
+        const errorText = (lang, err) => moxi.translate('ERROR_MESSAGE', lang, {
+            err,
+            command: bugCommandId || '',
+            COMMAND: bugCommandId || '',
+        });
         // Use the messageRun logic from your design
         const languages = JSON.parse(require('fs').readFileSync(require('path').join(__dirname, '../../Languages/language-meta.json'), 'utf8')).map(lang => ({
             code: lang.name,
@@ -122,7 +136,7 @@ module.exports = {
                         asV2MessageOptions(
                             buildNoticeContainer({
                                 emoji: EMOJIS.cross,
-                                text: moxi.translate('ERROR_MESSAGE', baseLang, { err: 'No se pudo actualizar el idioma en la base de datos.' }),
+                                text: errorText(baseLang, 'No se pudo actualizar el idioma en la base de datos.'),
                             })
                         )
                     );
@@ -137,7 +151,7 @@ module.exports = {
                     asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: EMOJIS.cross,
-                            text: moxi.translate('ERROR_MESSAGE', baseLang, { err: err.message }),
+                            text: errorText(baseLang, err.message),
                         })
                     )
                 );
@@ -277,7 +291,7 @@ module.exports = {
                         components: [
                             buildNoticeContainer({
                                 emoji: EMOJIS.cross,
-                                text: moxi.translate('ERROR_MESSAGE', selectedCode, { err: 'No se pudo actualizar el idioma en la base de datos.' }),
+                                text: errorText(selectedCode, 'No se pudo actualizar el idioma en la base de datos.'),
                             }),
                         ],
                         flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
