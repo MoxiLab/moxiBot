@@ -58,6 +58,8 @@
     "HELP_CATEGORY_MUSIC_DESC": "Musikbefehle zum Abspielen und Verwalten von Songs.",
     "HELP_CATEGORY_TOOLS": "Werkzeuge",
     "HELP_CATEGORY_TOOLS_DESC": "Nützliche Befehle für verschiedene Serverfunktionen.",
+    "HELP_CATEGORY_ECONOMY": "Wirtschaft",
+    "HELP_CATEGORY_ECONOMY_DESC": "Wirtschaftsbefehle: Shop, Tasche, Inventar.",
     "HELP_CATEGORY_WELCOME": "Willkommenssystem",
     "HELP_CATEGORY_WELCOME_DESC": "Befehle zum Konfigurieren von Willkommensnachrichten und Einstellungen.",
     "HELP_CATEGORY_ROOT": "Besitzer",
