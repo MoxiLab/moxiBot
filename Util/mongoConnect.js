@@ -8,10 +8,17 @@ async function ensureMongoConnection(options = {}) {
     if (mongoose.connection.readyState === 1) return mongoose.connection;
     if (connectionPromise) return connectionPromise;
 
+    const uri = process.env.MONGODB;
+    if (typeof uri !== 'string' || !uri.trim()) {
+        const err = new Error('MONGODB env var no está definida (URI vacío).');
+        logger.error(`${EMOJIS.cross} ${err.message}`);
+        throw err;
+    }
+
     connectionPromise = (async () => {
         mongoose.set('strictQuery', false);
         logger.startup(`${EMOJIS.hourglass} Conectando a MongoDB...`);
-        await mongoose.connect(process.env.MONGODB, options);
+        await mongoose.connect(uri, options);
         logger.startup(`${EMOJIS.waffle} MongoDB conectado (${mongoose.connection.name || 'default'})`);
         return mongoose.connection;
     })();
