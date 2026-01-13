@@ -7,6 +7,7 @@ const fs = require('fs');
 
 // Lista de eventos válidos de Discord.js (puedes ampliarla si usas más)
 const validEvents = [
+    'ready',
     'channelCreate', 'channelDelete', 'channelUpdate',
     'emojiCreate', 'emojiDelete', 'emojiUpdate',
     'guildBanAdd', 'guildBanRemove',
