@@ -110,6 +110,11 @@ function autofillMissingTranslation(lang, nsKey) {
 }
 
 // Initialize i18next with backend
+let __readyResolve;
+const ready = new Promise((resolve) => {
+  __readyResolve = resolve;
+});
+
 i18next
   .use(Backend)
   .init({
@@ -127,10 +132,13 @@ i18next
     }
   }, (err) => {
     if (err) console.error('i18next init error:', err);
-    else {
-      return;
-    }
+    try { __readyResolve && __readyResolve(); } catch { }
   });
+
+// Fallback extra: si por algún motivo no se llama al callback (casos raros), no bloquees.
+setTimeout(() => {
+  try { __readyResolve && __readyResolve(); } catch { }
+}, 5000);
 
 // Función de traducción global segura
 function translate(key, lang, vars = {}) {
@@ -145,7 +153,7 @@ function translate(key, lang, vars = {}) {
     res = i18next.t(nsKey, { ...options, lng: 'en-US' });
   }
 
-  const finalValue = (!res || res === nsKey) ? originalKey : res;
+  let finalValue = (!res || res === nsKey) ? originalKey : res;
 
   // Log de claves faltantes (siempre, pero con cache para evitar spam)
   {
@@ -160,18 +168,33 @@ function translate(key, lang, vars = {}) {
     }
   }
 
-  if (typeof res === 'string') {
+  if (typeof finalValue === 'string') {
     // Normaliza emojis custom del tipo <a:name:id> o <:name:id> a los definidos en EMOJIS.
-    res = res.replace(/<a?:([\w]+):\d+>/g, (match, name) => {
+    finalValue = finalValue.replace(/<a?:([\w]+):\d+>/g, (match, name) => {
       return EMOJIS[name] || match;
     });
 
     // Normaliza emojis Unicode por codepoint -> clave de EMOJIS (sin hardcodear emojis aquí).
-    res = res.replace(/\p{Extended_Pictographic}/gu, (ch) => {
+    finalValue = finalValue.replace(/\p{Extended_Pictographic}/gu, (ch) => {
       const code = (ch.codePointAt(0) || 0).toString(16).toUpperCase();
-      const key = UNICODE_CODEPOINT_TO_KEY[code];
-      return key && EMOJIS[key] ? EMOJIS[key] : ch;
+      const k = UNICODE_CODEPOINT_TO_KEY[code];
+      return k && EMOJIS[k] ? EMOJIS[k] : ch;
     });
+
+    // Resuelve placeholders de menciones slash tipo </bug:{{COMMAND}}>
+    // Nota: es síncrono; usa caché. Si aún no hay IDs, degrada a /bug.
+    try {
+      const applicationId = process.env.CLIENT_ID;
+      const guildId = vars?.guildId || vars?.guild?.id || null;
+      // Lazy require para evitar ciclos
+      // eslint-disable-next-line global-require
+      const { resolveSlashMentionPlaceholders } = require('./Util/slashCommandMentions');
+      if (applicationId) {
+        finalValue = resolveSlashMentionPlaceholders(finalValue, { applicationId, guildId });
+      }
+    } catch {
+      // ignore
+    }
   }
 
   return finalValue;
@@ -213,6 +236,7 @@ async function translateGuild(guildId, key, vars = {}, fallbackLang = 'es-ES') {
 const moxi = {
   i18next,
   translate,
+  ready,
   // Alias para que puedas usar moxi.translation(...) o moxi.t(...)
   translation: translate,
   t: translate,
