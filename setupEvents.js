@@ -7,7 +7,8 @@ const fs = require('fs');
 
 // Lista de eventos válidos de Discord.js (puedes ampliarla si usas más)
 const validEvents = [
-    'ready',
+    // discord.js v14+: usa clientReady (ready está deprecado hacia v15)
+    'clientReady',
     'channelCreate', 'channelDelete', 'channelUpdate',
     'emojiCreate', 'emojiDelete', 'emojiUpdate',
     'guildBanAdd', 'guildBanRemove',
@@ -26,7 +27,9 @@ function registerEventsRecursive(dir) {
         if (stat.isDirectory()) {
             registerEventsRecursive(fullPath);
         } else if (file.endsWith('.js')) {
-            const eventName = file.replace('.js', '');
+            const fileEventName = file.replace('.js', '');
+            // Compat: mantenemos el archivo ready.js pero lo registramos como clientReady.
+            const eventName = fileEventName === 'ready' ? 'clientReady' : fileEventName;
             const eventHandler = require(fullPath);
             if (typeof eventHandler === 'function' && validEvents.includes(eventName)) {
                 const auditLogDebug = require('./Util/auditLogDebug');
