@@ -242,6 +242,8 @@
     "HELP_CATEGORY_MUSIC_DESC": "أوامر لتشغيل الموسيقى وإدارة قائمة الانتظار.",
     "HELP_CATEGORY_TOOLS": "الأدوات",
     "HELP_CATEGORY_TOOLS_DESC": "أوامر مساعدة لمهام متنوعة في الخادم.",
+    "HELP_CATEGORY_ECONOMY": "الاقتصاد",
+    "HELP_CATEGORY_ECONOMY_DESC": "أوامر الاقتصاد: المتجر والحقيبة والمخزون.",
     "HELP_CATEGORY_WELCOME": "نظام الترحيب",
     "HELP_CATEGORY_WELCOME_DESC": "أوامر لإعداد رسائل الترحيب والإعدادات.",
     "BUG_TITLE": "الإبلاغ عن عيب",
