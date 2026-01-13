@@ -58,6 +58,8 @@
     "HELP_CATEGORY_MUSIC_DESC": "Commandes pour écouter de la musique et gérer la file d’attente.",
     "HELP_CATEGORY_TOOLS": "Outils",
     "HELP_CATEGORY_TOOLS_DESC": "Commandes utilitaires pour diverses fonctions du serveur.",
+    "HELP_CATEGORY_ECONOMY": "Économie",
+    "HELP_CATEGORY_ECONOMY_DESC": "Commandes d'économie : boutique, sac, inventaire.",
     "HELP_CATEGORY_WELCOME": "Système de bienvenue",
     "HELP_CATEGORY_WELCOME_DESC": "Commandes pour configurer les messages et paramètres de bienvenue.",
     "HELP_COMMAND_NOT_FOUND": "Commande `{{command}}` introuvable.",
