@@ -3,10 +3,14 @@ const { channelUpdateEmbed } = require('../../../Util/auditAdminEmbeds');
 const { resolveAuditConfig } = require('../../../Util/audit');
 
 module.exports = async (oldChannel, newChannel) => {
+    if (!oldChannel || !newChannel) return;
+
     const { guild, id: channelId, name: oldName, type: oldType } = oldChannel;
+    const { name: newName, type: newType } = newChannel;
     const auditLogDebug = require('../../../Util/auditLogDebug');
     auditLogDebug('channelUpdate', { guildId: guild?.id, channelId, oldName, newName, oldType, newType });
-    const { name: newName, type: newType } = newChannel;
+
+    if (!guild?.id) return;
     const { lang, channelId: auditChannelId, enabled } = await resolveAuditConfig(guild.id, 'es-ES');
     if (!enabled || !auditChannelId) return;
     const ch = guild.channels.cache.get(auditChannelId);
