@@ -6,6 +6,8 @@ const fs = require('fs');
 const path = require('path');
 require('./Util/silentDotenv')();
 const { EMOJIS } = require('./Util/emojis');
+const moxi = require('./i18n');
+const { upsertDeployedCommandIds } = require('./Util/slashCommandMentions');
 
 const clientId = process.env.CLIENT_ID || 'TU_CLIENT_ID';
 const guildId = process.env.GUILD_ID; // Opcional: para registro por servidor
@@ -25,19 +27,23 @@ function getSlashCommands(dir) {
   return results;
 }
 
-const commands = [];
-const slashFiles = getSlashCommands(path.join(__dirname, 'Slashcmd'));
-for (const file of slashFiles) {
-  const command = require(file);
-  if (command.data) {
-    commands.push(command.data.toJSON ? command.data.toJSON() : command.data);
-  }
-}
-
 const rest = new REST({ version: '10' }).setToken(token);
 
 (async () => {
   try {
+    // Espera a que i18next cargue los namespaces para que moxi.translate funcione
+    // durante la construcción de SlashCommandBuilder.
+    if (moxi?.ready) await moxi.ready;
+
+    const commands = [];
+    const slashFiles = getSlashCommands(path.join(__dirname, 'Slashcmd'));
+    for (const file of slashFiles) {
+      const command = require(file);
+      if (command.data) {
+        commands.push(command.data.toJSON ? command.data.toJSON() : command.data);
+      }
+    }
+
     console.log(`${EMOJIS.hourglass} Registrando ${commands.length} slash commands...`);
     let data;
     if (guildId) {
@@ -52,6 +58,17 @@ const rest = new REST({ version: '10' }).setToken(token);
         { body: commands },
       );
       console.log(`${EMOJIS.check} Slash commands registrados globalmente.`);
+    }
+
+    try {
+      await upsertDeployedCommandIds({
+        applicationId: clientId,
+        guildId: guildId || null,
+        deployed: Array.isArray(data) ? data : [],
+      });
+      console.log(`${EMOJIS.check} IDs de slash commands guardados en Mongo.`);
+    } catch (e) {
+      console.warn('No se pudieron guardar IDs de slash commands en Mongo:', e?.message || e);
     }
     console.log(`Total: ${data.length}`);
   } catch (error) {
