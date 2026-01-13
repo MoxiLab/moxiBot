@@ -4,6 +4,7 @@
     "CATEGORY_MODERATION": "管理",
     "CATEGORY_ADMIN": "管理",
     "CATEGORY_HERRAMIENTAS": "工具",
+    "CATEGORY_ECONOMIA": "经济",
     "CATEGORY_MUSICA": "音乐",
     "CATEGORY_ROOT": "Root",
     "CMD_add_DESC": "将歌曲添加到队列",
