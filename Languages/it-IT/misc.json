@@ -59,6 +59,8 @@
     "HELP_CATEGORY_MUSIC_DESC": "Comandi musicali per riprodurre e gestire l'audio.",
     "HELP_CATEGORY_TOOLS": "Strumenti",
     "HELP_CATEGORY_TOOLS_DESC": "Comandi utili per varie funzioni del server.",
+    "HELP_CATEGORY_ECONOMY": "Economia",
+    "HELP_CATEGORY_ECONOMY_DESC": "Comandi economia: negozio, borsa, inventario.",
     "HELP_CATEGORY_WELCOME": "Sistema di benvenuto",
     "HELP_CATEGORY_WELCOME_DESC": "Comandi per configurare messaggi e impostazioni di benvenuto.",
     "HELP_COMMAND_NOT_FOUND": "Comando `{{command}}` non trovato.",
