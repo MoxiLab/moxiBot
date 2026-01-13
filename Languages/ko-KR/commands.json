@@ -4,6 +4,7 @@
     "CATEGORY_MODERATION": "모더레이션",
     "CATEGORY_ADMIN": "관리",
     "CATEGORY_HERRAMIENTAS": "도구",
+    "CATEGORY_ECONOMIA": "경제",
     "CATEGORY_MUSICA": "음악",
     "CATEGORY_ROOT": "Root",
     "CMD_add_DESC": "노래를 대기열에 추가합니다",
