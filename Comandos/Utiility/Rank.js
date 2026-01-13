@@ -13,7 +13,10 @@ module.exports = {
     alias: ['rango', 'level-card'],
     description: 'Muestra tu tarjeta de rango actual',
     usage: 'rank [usuario]',
-    category: 'Utility',
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_ECONOMIA', lang);
+    },
     cooldown: 5,
     permissions: {
         user: [],
