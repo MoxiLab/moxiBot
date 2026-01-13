@@ -9,6 +9,8 @@
   "AUTONUKE_CANCELLED": "Operación cancelada.",
   "AUTONUKE_ONLY_TEXT": "Solo puedes usar autonuke en canales de texto.",
   "AUTONUKE_REASON": "Autonuke: canal recreado por moderación",
+  "AUTONUKE_REQUIRED_CHANNEL": "No puedo eliminar este canal porque es requerido por el servidor (Community).",
+  "AUTONUKE_FAILED": "No pude recrear el canal. Revisa permisos/configuración e inténtalo de nuevo.",
   "AUTONUKE_UNSUPPORTED_TYPE": "No puedes usar autonuke en este tipo de canal.",
   "ADDEMOJI_ERROR": "Error al add un emoji",
   "ADDEMOJI_NAME": "Nombre",
@@ -59,6 +61,8 @@
   "HELP_CATEGORY_ADMIN_DESC": "Comandos administrativos para la gestión del servidor.",
   "HELP_CATEGORY_TOOLS": "Herramientas",
   "HELP_CATEGORY_TOOLS_DESC": "Comandos útiles para varias funciones del servidor.",
+  "HELP_CATEGORY_ECONOMY": "Economía",
+  "HELP_CATEGORY_ECONOMY_DESC": "Comandos de economía: tienda, mochila e inventario.",
   "HELP_CATEGORY_WELCOME": "Sistema de bienvenida",
   "HELP_CATEGORY_WELCOME_DESC": "Comandos para configurar mensajes y ajustes de bienvenida.",
   "HELP_CATEGORY_MODERATION_DESC": "Comandos de moderación: banear, expulsar, silenciar, advertir y más.",
@@ -351,5 +355,6 @@
   "ADDEMOJI_EMOJI": "Emoji",
   "HELP_CATEGORY_UTILIDAD": "HELP_CATEGORY_UTILIDAD",
   "HELP_CATEGORY_UTILIDAD_DESC": "HELP_CATEGORY_UTILIDAD_DESC",
-  "HELP_CATEGORY_CATEGORY_UTILIDAD": "HELP_CATEGORY_CATEGORY_UTILIDAD"
+  "HELP_CATEGORY_CATEGORY_UTILIDAD": "HELP_CATEGORY_CATEGORY_UTILIDAD",
+  "AUTONUKE_NO_PERMS": "No tienes permisos para usar este comando."
 }
