@@ -57,6 +57,8 @@
     "HELP_CATEGORY_MUSIC_DESC": "음악 재생 및 대기열 관리를 위한 명령어.",
     "HELP_CATEGORY_TOOLS": "도구",
     "HELP_CATEGORY_TOOLS_DESC": "서버의 다양한 기능을 위한 유틸리티 명령어.",
+    "HELP_CATEGORY_ECONOMY": "경제",
+    "HELP_CATEGORY_ECONOMY_DESC": "경제 명령어: 상점, 가방, 인벤토리.",
     "HELP_CATEGORY_WELCOME": "환영 시스템",
     "HELP_CATEGORY_WELCOME_DESC": "환영 메시지 및 설정을 구성하는 명령어.",
     "HELP_CATEGORY_MODERATION": "모더레이션",
