@@ -4,9 +4,9 @@ const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notic
 const { EMOJIS } = require('../../Util/emojis');
 
 module.exports = {
-    name: 'bag',
-    alias: ['mochila', 'inventario'],
-    Category: function (lang) {
+  name: 'bag',
+  alias: ['mochila', 'inventario'],
+  Category: function (lang) {
     lang = lang || 'es-ES';
     return moxi.translate('commands:CATEGORY_ECONOMIA', lang);
   },
