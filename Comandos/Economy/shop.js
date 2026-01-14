@@ -57,11 +57,15 @@ module.exports = {
                 '`.shop buy 10 2`',
             ].join('\n');
 
-            return message.reply(asV2MessageOptions(buildNoticeContainer({
-                emoji: EMOJIS.info,
-                title: 'Shop',
-                text,
-            })));
+            return message.reply(
+                asV2MessageOptions(
+                    buildNoticeContainer({
+                        emoji: EMOJIS.info,
+                        title: 'Shop',
+                        text,
+                    })
+                )
+            );
         }
 
         if (sub === 'list' || sub === 'lista' || sub === 'l') {
@@ -89,11 +93,15 @@ module.exports = {
             const amount = subArgs[1] ? Number(subArgs[1]) : 1;
 
             if (!isPositiveInt(Math.trunc(id))) {
-                return message.reply(asV2MessageOptions(buildNoticeContainer({
-                    emoji: EMOJIS.cross,
-                    title: 'Tienda',
-                    text: 'Uso: `.shop buy <id> [cantidad]` (ej: `.shop buy 10 2`)'
-                })));
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: 'Tienda',
+                            text: 'Uso: `.shop buy <id> [cantidad]` (ej: `.shop buy 10 2`)',
+                        })
+                    )
+                );
             }
 
             const qty = isPositiveInt(Math.trunc(amount)) ? Math.trunc(amount) : 1;
@@ -102,11 +110,15 @@ module.exports = {
             const item = byShopId.get(Math.trunc(id));
 
             if (!item) {
-                return message.reply(asV2MessageOptions(buildNoticeContainer({
-                    emoji: EMOJIS.cross,
-                    title: 'Tienda',
-                    text: `No existe un ítem con ID ${Math.trunc(id)}. Usa \.shop list para ver los IDs.`,
-                })));
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: 'Tienda',
+                            text: `No existe un ítem con ID ${Math.trunc(id)}. Usa \.shop list para ver los IDs.`,
+                        })
+                    )
+                );
             }
 
             const { UserEconomy } = require('../../Models/EconomySchema');
@@ -121,19 +133,27 @@ module.exports = {
             const cost = price * qty;
 
             if (cost <= 0) {
-                return message.reply(asV2MessageOptions(buildNoticeContainer({
-                    emoji: EMOJIS.cross,
-                    title: 'Tienda',
-                    text: 'Este ítem no se puede comprar (precio inválido).',
-                })));
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: 'Tienda',
+                            text: 'Este ítem no se puede comprar (precio inválido).',
+                        })
+                    )
+                );
             }
 
             if ((eco.balance || 0) < cost) {
-                return message.reply(asV2MessageOptions(buildNoticeContainer({
-                    emoji: EMOJIS.cross,
-                    title: 'Fondos insuficientes',
-                    text: `Necesitas ${cost} 🪙 y tienes ${eco.balance || 0} 🪙.`,
-                })));
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: 'Fondos insuficientes',
+                            text: `Necesitas ${cost} 🪙 y tienes ${eco.balance || 0} 🪙.`,
+                        })
+                    )
+                );
             }
 
             const inv = Array.isArray(eco.inventory) ? eco.inventory : [];
@@ -147,17 +167,25 @@ module.exports = {
             eco.balance = (eco.balance || 0) - cost;
             await eco.save();
 
-            return message.reply(asV2MessageOptions(buildNoticeContainer({
-                emoji: EMOJIS.check,
-                title: 'Compra realizada',
-                text: `Compraste **${qty}x ${item.name}** por **${cost}** 🪙.`,
-            })));
+            return message.reply(
+                asV2MessageOptions(
+                    buildNoticeContainer({
+                        emoji: EMOJIS.check,
+                        title: 'Compra realizada',
+                        text: `Compraste **${qty}x ${item.name}** por **${cost}** 🪙.`,
+                    })
+                )
+            );
         }
 
-        return message.reply(asV2MessageOptions(buildNoticeContainer({
-            emoji: EMOJIS.info,
-            title: 'Shop',
-            text: 'Subcomando no válido. Usa `.shop help`',
-        })));
+        return message.reply(
+            asV2MessageOptions(
+                buildNoticeContainer({
+                    emoji: EMOJIS.info,
+                    title: 'Shop',
+                    text: 'Subcomando no válido. Usa `.shop help`',
+                })
+            )
+        );
     },
 };
