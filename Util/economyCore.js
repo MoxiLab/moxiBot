@@ -23,6 +23,12 @@ function msUntilNext(lastDate, cooldownMs) {
 }
 
 async function getOrCreateEconomy(userId) {
+  if (!process.env.MONGODB) {
+    throw new Error('MongoDB no está configurado (MONGODB vacío).');
+  }
+
+  await ensureMongoConnection();
+
   const { UserEconomy } = require('../Models/EconomySchema');
 
   // Upsert atómico para evitar carreras (shards / comandos simultáneos)
