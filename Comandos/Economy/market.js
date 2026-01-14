@@ -1,1 +1,6 @@
-module.exports = require('../../Util/economyPlaceholders').makePrefixEconomyPlaceholder({ name: 'market', description: 'Mercado (próximamente)' });
+const { makePrefixEconomyPlaceholder } = require('../../Util/economyPlaceholders');
+
+module.exports = makePrefixEconomyPlaceholder({
+    name: 'market',
+    description: 'Mercado (próximamente)',
+});
