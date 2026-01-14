@@ -14,6 +14,8 @@ let _catalogCache = null;
 let _byIdCache = null;
 let _categoryByItemIdCache = null;
 
+let _shopByItemIdCache = null;
+
 function getCatalogIndexes() {
   if (_byIdCache && _categoryByItemIdCache) return { byId: _byIdCache, categoryByItemId: _categoryByItemIdCache };
   _catalogCache = loadCatalog();
@@ -32,6 +34,16 @@ function getCatalogIndexes() {
   _categoryByItemIdCache = categoryByItemId;
 
   return { byId: _byIdCache, categoryByItemId: _categoryByItemIdCache };
+}
+
+function getShopIndexes() {
+  if (_shopByItemIdCache) return { shopByItemId: _shopByItemIdCache };
+  // Lazy require para evitar ciclos
+  // eslint-disable-next-line global-require
+  const { buildShopData } = require('./shopView');
+  const { byItemId } = buildShopData();
+  _shopByItemIdCache = byItemId;
+  return { shopByItemId: _shopByItemIdCache };
 }
 
 function safeInt(n, fallback = 0) {
@@ -78,55 +90,43 @@ async function getUserInventoryRows(userId) {
   }
 
   const { byId, categoryByItemId } = getCatalogIndexes();
+  const { shopByItemId } = getShopIndexes();
 
   const items = Array.from(totals.entries())
     .map(([itemId, amount]) => {
       const item = byId.get(itemId) || null;
+      const shop = shopByItemId.get(itemId) || null;
       return {
         itemId,
         amount,
+        shopId: safeInt(shop?.shopId, 0),
         name: item?.name || itemId,
         description: item?.description || '',
         rarity: item?.rarity || 'comun',
         category: categoryByItemId.get(itemId) || 'Otros',
       };
     })
-    .sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }));
+    .sort((a, b) => {
+      const sa = safeInt(a.shopId, 0);
+      const sb = safeInt(b.shopId, 0);
+      if (sa && sb) return sa - sb;
+      if (sa && !sb) return -1;
+      if (!sa && sb) return 1;
+      return a.name.localeCompare(b.name, 'es', { sensitivity: 'base' });
+    });
 
   return { items, balance: safeInt(eco.balance, 0) };
 }
 
-function buildBagEmbed({ title, categories, pageCategories, page, totalPages, selectedCategoryKey, balance }) {
-  const totalCats = categories.length;
-  const keyToIndex = new Map(categories.map((c, idx) => [c.key, idx + 1]));
-
-  const lines = pageCategories.map((c) => {
-    const idx = keyToIndex.get(c.key) || 0;
-    return `**${idx}** • **${c.label}** — ${c.uniqueCount} tipos • ${c.totalQty} total`;
+function buildBagEmbed({ title, categoryLabel, itemsTotal, pageItems, page, totalPages, helpLines = [] }) {
+  const lines = pageItems.map((it) => {
+    const idPart = safeInt(it.shopId, 0) ? `\`${safeInt(it.shopId, 0)}\` ` : '';
+    return `${idPart}${it.name} (x${safeInt(it.amount, 0)})`;
   });
 
-  const selected = selectedCategoryKey
-    ? categories.find((c) => c.key === selectedCategoryKey)
-    : null;
-
-  let detail = '';
-  if (selected) {
-    const shown = selected.items.slice(0, 10);
-    const itemLines = shown.map((it) => `• **${it.name}** (x${safeInt(it.amount, 0)})`);
-    const remaining = Math.max(0, selected.items.length - shown.length);
-    detail = [
-      `\n\n**Categoría seleccionada:** ${selected.label}`,
-      itemLines.length ? itemLines.join('\n') : '_No tienes items en esta categoría._',
-      remaining ? `\n_… y ${remaining} más._` : '',
-    ].join('\n');
-  }
-
   const desc = [
-    `**Saldo:** ${balance} 🪙`,
-    '',
-    `**Categorías (${totalCats})**`,
-    lines.length ? lines.join('\n') : '_No tienes items todavía._',
-    detail,
+    ...helpLines,
+    lines.length ? lines.join('\n') : '_No tienes items en esta categoría._',
   ].join('\n');
 
   return new EmbedBuilder()
@@ -137,7 +137,28 @@ function buildBagEmbed({ title, categories, pageCategories, page, totalPages, se
 }
 
 async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey = null, isPrivate = false, pageSize = 10 } = {}) {
-  const { items, balance } = await getUserInventoryRows(userId);
+  const { items } = await getUserInventoryRows(userId);
+
+  const applicationId = process.env.CLIENT_ID;
+  let useMention = '/use';
+  let buffsMention = '/buffs';
+  if (applicationId) {
+    try {
+      // Lazy import to avoid cycles
+      // eslint-disable-next-line global-require
+      const { slashMention } = require('./slashCommandMentions');
+      useMention = await slashMention({ name: 'use', applicationId });
+      buffsMention = await slashMention({ name: 'buffs', applicationId });
+    } catch {
+      // keep fallbacks
+    }
+  }
+
+  const helpLines = [
+    `Puedes consumir un item con: ${useMention}`,
+    `Puedes mirar tus potenciadores activos con: ${buffsMention}`,
+    '',
+  ];
 
   const categoriesMap = new Map();
   for (const it of items) {
@@ -152,29 +173,30 @@ async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey
     cat.totalQty += Math.max(0, safeInt(it.amount, 0));
   }
 
-  const categories = Array.from(categoriesMap.values())
-    .map((c) => ({
-      ...c,
-      items: c.items.sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' })),
-    }))
-    .sort((a, b) => a.label.localeCompare(b.label, 'es', { sensitivity: 'base' }));
+  const categories = Array.from(categoriesMap.values()).sort((a, b) =>
+    a.label.localeCompare(b.label, 'es', { sensitivity: 'base' })
+  );
 
-  const { slice, page: safePage, totalPages } = paginate(categories, page, pageSize);
+  const activeCategoryKey =
+    selectedCategoryKey && categoriesMap.has(selectedCategoryKey)
+      ? selectedCategoryKey
+      : (categories[0]?.key || null);
+
+  const activeCategory = activeCategoryKey ? categoriesMap.get(activeCategoryKey) : null;
+  const activeItems = Array.isArray(activeCategory?.items) ? activeCategory.items : [];
+
+  const { slice, page: safePage, totalPages } = paginate(activeItems, page, pageSize);
 
   const title = isPrivate ? '🎒 Tu mochila (privada)' : '🎒 Tu mochila';
 
-  const selected = selectedCategoryKey && categories.some((c) => c.key === selectedCategoryKey)
-    ? selectedCategoryKey
-    : (slice[0]?.key || null);
-
   const embed = buildBagEmbed({
     title,
-    categories,
-    pageCategories: slice,
+    categoryLabel: activeCategory?.label || 'Otros',
+    itemsTotal: activeItems.length,
+    pageItems: slice,
     page: safePage,
     totalPages,
-    selectedCategoryKey: selected,
-    balance,
+    helpLines,
   });
 
   const prevDisabled = safePage <= 0;
@@ -182,15 +204,15 @@ async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey
 
   const select = new StringSelectMenuBuilder()
     .setCustomId(`bag:sel:${viewerId}:${safePage}`)
-    .setPlaceholder('Haz una selección')
+    .setPlaceholder(activeCategory?.label || 'Elige una categoría')
     .addOptions(
-      slice.length
-        ? slice.map((it) => ({
-            label: it.label.length > 90 ? it.label.slice(0, 90) : it.label,
-            value: it.key,
-            description: `${safeInt(it.uniqueCount, 0)} tipos • ${safeInt(it.totalQty, 0)} total`.slice(0, 100),
-            default: selected ? it.key === selected : false,
-          }))
+      categories.length
+        ? categories.slice(0, 25).map((c) => ({
+          label: c.label.length > 90 ? c.label.slice(0, 90) : c.label,
+          value: c.key,
+          description: `${safeInt(c.uniqueCount, 0)} tipos • ${safeInt(c.totalQty, 0)} total`.slice(0, 100),
+          default: activeCategoryKey ? c.key === activeCategoryKey : false,
+        }))
         : [{ label: 'No tienes items', value: 'none', default: true }]
     );
 
@@ -198,24 +220,24 @@ async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey
 
   const buttonRow = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
-      .setCustomId(`bag:nav:${viewerId}:${safePage}:prev`)
+      .setCustomId(`bag:nav:${viewerId}:${activeCategoryKey || 'none'}:${safePage}:prev`)
       .setEmoji(EMOJIS.arrowLeft)
       .setStyle(ButtonStyle.Secondary)
       .setDisabled(prevDisabled),
     new ButtonBuilder()
-      .setCustomId(`bag:nav:${viewerId}:${safePage}:home`)
+      .setCustomId(`bag:nav:${viewerId}:${activeCategoryKey || 'none'}:${safePage}:home`)
       .setEmoji(EMOJIS.package)
       .setStyle(ButtonStyle.Secondary),
     new ButtonBuilder()
-      .setCustomId(`bag:nav:${viewerId}:${safePage}:close`)
+      .setCustomId(`bag:nav:${viewerId}:${activeCategoryKey || 'none'}:${safePage}:close`)
       .setEmoji(EMOJIS.cross)
       .setStyle(ButtonStyle.Danger),
     new ButtonBuilder()
-      .setCustomId(`bag:nav:${viewerId}:${safePage}:info`)
+      .setCustomId(`bag:nav:${viewerId}:${activeCategoryKey || 'none'}:${safePage}:info`)
       .setEmoji(EMOJIS.question)
       .setStyle(ButtonStyle.Secondary),
     new ButtonBuilder()
-      .setCustomId(`bag:nav:${viewerId}:${safePage}:next`)
+      .setCustomId(`bag:nav:${viewerId}:${activeCategoryKey || 'none'}:${safePage}:next`)
       .setEmoji(EMOJIS.arrowRight)
       .setStyle(ButtonStyle.Secondary)
       .setDisabled(nextDisabled)
@@ -224,7 +246,7 @@ async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey
   return {
     embeds: [embed],
     components: [selectRow, buttonRow],
-    __meta: { page: safePage, totalPages },
+    __meta: { categoryKey: activeCategoryKey, page: safePage, totalPages },
   };
 }
 
