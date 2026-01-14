@@ -1,1 +1,7 @@
-module.exports = require('../../Util/economyPlaceholders').makePrefixEconomyPlaceholder({ name: 'mine', alias: ['minar'], description: 'Minería (próximamente)' });
+const { makePrefixEconomyPlaceholder } = require('../../Util/economyPlaceholders');
+
+module.exports = makePrefixEconomyPlaceholder({
+    name: 'mine',
+    alias: ['minar'],
+    description: 'Minería (próximamente)',
+});
