@@ -1,1 +1,7 @@
-module.exports = require('../../Util/economyPlaceholders').makePrefixEconomyPlaceholder({ name: 'quest', alias: ['mision'], description: 'Misiones (próximamente)' });
+const { makePrefixEconomyPlaceholder } = require('../../Util/economyPlaceholders');
+
+module.exports = makePrefixEconomyPlaceholder({
+    name: 'quest',
+    alias: ['mision'],
+    description: 'Misiones (próximamente)',
+});
