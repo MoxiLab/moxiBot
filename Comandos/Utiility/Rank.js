@@ -15,7 +15,7 @@ module.exports = {
     usage: 'rank [usuario]',
     Category: function (lang) {
         lang = lang || 'es-ES';
-        return moxi.translate('commands:CATEGORY_ECONOMIA', lang);
+        return moxi.translate('commands:CATEGORY_HERRAMIENTAS', lang);
     },
     cooldown: 5,
     permissions: {
