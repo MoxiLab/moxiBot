@@ -6,11 +6,15 @@ module.exports = async function bagButtons(interaction, Moxi, logger) {
   const id = String(interaction.customId || '');
   if (!id.startsWith('bag:nav:')) return false;
 
-  // bag:nav:<viewerId>:<page>:action
+  // Formatos soportados:
+  // - Antiguo: bag:nav:<viewerId>:<page>:action
+  // - Nuevo:   bag:nav:<viewerId>:<categoryKey>:<page>:action
   const parts = id.split(':');
   const viewerId = parts[2];
-  const page = Number(parts[3] || 0);
-  const action = parts[4] || '';
+  const hasCategory = parts.length >= 6;
+  const categoryKey = hasCategory ? parts[3] : null;
+  const page = Number((hasCategory ? parts[4] : parts[3]) || 0);
+  const action = (hasCategory ? parts[5] : parts[4]) || '';
 
   if (interaction.user?.id !== viewerId) {
     await interaction.reply({ content: 'Solo quien abrió la mochila puede usar estos botones.', flags: MessageFlags.Ephemeral });
@@ -19,7 +23,7 @@ module.exports = async function bagButtons(interaction, Moxi, logger) {
 
   if (action === 'info') {
     await interaction.reply({
-      content: 'Usa el selector para ver detalles. Navega con ◀ ▶. Cierra con ❌.',
+      content: 'Usa el selector para cambiar de categoría. Navega páginas con ◀ ▶. Cierra con ❌.',
       flags: MessageFlags.Ephemeral,
     });
     return true;
@@ -35,7 +39,7 @@ module.exports = async function bagButtons(interaction, Moxi, logger) {
     } catch {
       try {
         await interaction.update({ content: 'Mochila cerrada.', embeds: [], components: [] });
-      } catch {}
+      } catch { }
     }
     return true;
   }
@@ -51,6 +55,7 @@ module.exports = async function bagButtons(interaction, Moxi, logger) {
     userId: viewerId,
     viewerId,
     page: nextPage,
+    selectedCategoryKey: categoryKey && categoryKey !== 'none' ? categoryKey : null,
     isPrivate: Boolean(interaction.message?.flags?.has?.(64)),
   });
 
