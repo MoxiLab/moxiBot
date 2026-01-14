@@ -1,1 +1,7 @@
-module.exports = require('../../Util/economyPlaceholders').makePrefixEconomyPlaceholder({ name: 'buy', alias: ['comprar'], description: 'Compra rápida (próximamente)' });
+const { makePrefixEconomyPlaceholder } = require('../../Util/economyPlaceholders');
+
+module.exports = makePrefixEconomyPlaceholder({
+    name: 'buy',
+    alias: ['comprar'],
+    description: 'Compra rápida (próximamente)',
+});
