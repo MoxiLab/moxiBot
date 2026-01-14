@@ -1,1 +1,6 @@
-module.exports = require('../../Util/economyPlaceholders').makePrefixEconomyPlaceholder({ name: 'nekodex', description: 'Nekodex (próximamente)' });
+const { makePrefixEconomyPlaceholder } = require('../../Util/economyPlaceholders');
+
+module.exports = makePrefixEconomyPlaceholder({
+    name: 'nekodex',
+    description: 'Nekodex (próximamente)',
+});
