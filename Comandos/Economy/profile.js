@@ -1,1 +1,7 @@
-module.exports = require('../../Util/economyPlaceholders').makePrefixEconomyPlaceholder({ name: 'profile', alias: ['perfil'], description: 'Perfil (próximamente)' });
+const { makePrefixEconomyPlaceholder } = require('../../Util/economyPlaceholders');
+
+module.exports = makePrefixEconomyPlaceholder({
+    name: 'profile',
+    alias: ['perfil'],
+    description: 'Perfil (próximamente)',
+});
