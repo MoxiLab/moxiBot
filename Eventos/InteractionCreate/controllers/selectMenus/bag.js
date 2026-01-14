@@ -20,8 +20,8 @@ module.exports = async function bagSelectMenu(interaction, Moxi, logger) {
   const payload = await buildBagMessage({
     userId: viewerId,
     viewerId,
-    page,
-    selectedCategoryKey,
+    page: 0,
+    selectedCategoryKey: selectedCategoryKey && selectedCategoryKey !== 'none' ? selectedCategoryKey : null,
     isPrivate: Boolean(interaction.message?.flags?.has?.(64)),
   });
 
