@@ -26,6 +26,17 @@ const bugSchema = new mongoose.Schema({
     collection: 'bugs'
 });
 
-ensureMongoConnection().catch(() => null);
+// Evitar side-effects (conexión a Mongo) cuando el archivo se carga desde scripts/CLI.
+// El bot conecta en `Eventos/Client/ready.js` y los helpers llaman `ensureMongoConnection` cuando toca.
+try {
+    const path = require('path');
+    const mainFile = require.main && require.main.filename ? String(require.main.filename) : '';
+    const isScript = mainFile.includes(`${path.sep}scripts${path.sep}`);
+    if (!isScript) {
+        ensureMongoConnection().catch(() => null);
+    }
+} catch {
+    ensureMongoConnection().catch(() => null);
+}
 
 module.exports = mongoose.model('Bug', bugSchema);

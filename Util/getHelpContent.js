@@ -303,6 +303,10 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
     const slashName = data?.name || cmd.name;
     if (!slashName) return [];
 
+    // Algunos comandos agrupan muchos subcomandos (o están WIP) y ensucian el help.
+    // Permite forzar que solo se muestre el comando raíz.
+    if (cmd.hideSubcommandsInHelp) return [`/${slashName}`];
+
     if (Array.isArray(data.options)) {
       const subcmds = data.options.filter(opt => opt.type === 1).map(opt => opt.name);
       if (subcmds.length) return subcmds.map(sub => `/${slashName} ${sub}`);

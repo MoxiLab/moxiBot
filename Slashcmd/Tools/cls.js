@@ -12,19 +12,20 @@ module.exports = {
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
 
-  async execute(interaction) {
+  async run(Moxi, interaction) {
     const amount = interaction.options.getInteger('cantidad') || 50;
     if (!interaction.member.permissions.has(PermissionFlagsBits.ManageMessages)) {
       return interaction.reply({ content: 'Necesitas el permiso de **Gestionar mensajes** para usar este comando.', ephemeral: true });
     }
     try {
-      await interaction.channel.bulkDelete(amount, true);
+      const deleted = await interaction.channel.bulkDelete(amount, true);
+      const deletedCount = deleted?.size ?? 0;
       const container = new ContainerBuilder()
         .setAccentColor(0x00bfff)
-        .addTextDisplayComponents(c => c.setContent(`🧹 Se han borrado **${amount}** mensajes.`));
+        .addTextDisplayComponents(c => c.setContent(`🧹 Se han borrado **${deletedCount}** mensajes.`));
       await interaction.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
       setTimeout(async () => {
-        try { await interaction.deleteReply(); } catch {}
+        try { await interaction.deleteReply(); } catch { }
       }, 3000);
     } catch (err) {
       return interaction.reply({ content: 'No se pudieron borrar los mensajes. ¿Son muy antiguos?', ephemeral: true });

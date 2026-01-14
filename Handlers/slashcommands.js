@@ -67,6 +67,9 @@ async function createSlash() {
 
 // Only auto-deploy if explicitly enabled to avoid duplicate registrations
 if (process.env.AUTO_DEPLOY_SLASH === 'true') {
+  if (!guildId) {
+    logger.warn && logger.warn('[slash] AUTO_DEPLOY_SLASH=true pero falta GUILD_ID: se desplegará GLOBAL y puede tardar en reflejarse. Para instantáneo, configura GUILD_ID en .env');
+  }
   createSlash();
 } else {
   console.log('[slash] AUTO_DEPLOY_SLASH not enabled — skipping automatic deployment');

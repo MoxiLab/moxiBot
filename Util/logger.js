@@ -9,7 +9,8 @@ const LEVELS = {
 // Evitar require circular
 let client = null;
 function getClient() {
-  if (!client) client = require('../index');
+  // IMPORTANTE: no arrancar el bot desde scripts (node ./scripts/*.js)
+  // ni desde procesos donde el cliente no está inicializado.
   return client;
 }
 
@@ -71,11 +72,24 @@ function log(levelName, ...msg) {
 
 async function sendLogToDiscordChannel(levelName, prefix, color, ...msg) {
   try {
+    // Evitar side-effects en scripts/CLI
+    if (process.env.DISABLE_DISCORD_LOGS === '1') return;
+    try {
+      const mainFile = require.main && require.main.filename ? String(require.main.filename) : '';
+      if (mainFile.includes(`${require('path').sep}scripts${require('path').sep}`)) return;
+    } catch {
+      // ignore
+    }
+
     const channelId = process.env.ERROR_CHANNEL_ID;
     const webhookUrl = process.env.ERROR_WEBHOOK_URL;
+    // Si no hay destino, no intentamos nada.
+    if (!channelId && !webhookUrl) return;
+
     let text = msg.map(m => (typeof m === 'object' ? JSON.stringify(m, null, 2) : String(m))).join(' ');
     if (text.length > 1900) text = text.slice(0, 1900) + '...';
-    const botName = getClient().user && getClient().user.username ? getClient().user.username : 'MoxiBot';
+    const c = getClient();
+    const botName = c && c.user && c.user.username ? c.user.username : 'MoxiBot';
     const year = new Date().getFullYear();
     const embed = {
       color,
@@ -87,8 +101,10 @@ async function sendLogToDiscordChannel(levelName, prefix, color, ...msg) {
     // Enviar a canal si está configurado
     if (channelId) {
       const client = getClient();
-      const channel = await client.channels.fetch(channelId).catch(() => null);
-      if (channel) channel.send({ embeds: [embed] }).catch(() => { });
+      if (client && client.channels) {
+        const channel = await client.channels.fetch(channelId).catch(() => null);
+        if (channel) channel.send({ embeds: [embed] }).catch(() => { });
+      }
     }
     // Enviar a webhook si está configurado
     if (webhookUrl) {

@@ -2,7 +2,7 @@ const { ContainerBuilder, MessageFlags } = require('discord.js');
 
 module.exports = {
   name: 'cls',
-  aliases: ['clear', 'limpiar'],
+  alias: ['clear', 'limpiar'],
   description: 'Limpia el chat borrando los mensajes recientes (máx 100)',
   category: 'Tools',
   async execute(client, message, args) {
@@ -14,13 +14,14 @@ module.exports = {
       return message.reply('Debes especificar un número entre 1 y 100.');
     }
     try {
-      await message.channel.bulkDelete(amount, true);
+      const deleted = await message.channel.bulkDelete(amount, true);
+      const deletedCount = deleted?.size ?? 0;
       // Componentes V2 para confirmación visual
       const container = new ContainerBuilder()
         .setAccentColor(0x00bfff)
-        .addTextDisplayComponents(c => c.setContent(`🧹 Se han borrado **${amount}** mensajes.`));
+        .addTextDisplayComponents(c => c.setContent(`🧹 Se han borrado **${deletedCount}** mensajes.`));
       const msg = await message.channel.send({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
-      setTimeout(() => msg.delete().catch(() => {}), 3000);
+      setTimeout(() => msg.delete().catch(() => { }), 3000);
     } catch (err) {
       return;
     }
