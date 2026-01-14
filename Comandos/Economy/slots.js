@@ -1,1 +1,6 @@
-module.exports = require('../../Util/economyPlaceholders').makePrefixEconomyPlaceholder({ name: 'slots', description: 'Tragaperras (próximamente)' });
+const { makePrefixEconomyPlaceholder } = require('../../Util/economyPlaceholders');
+
+module.exports = makePrefixEconomyPlaceholder({
+    name: 'slots',
+    description: 'Tragaperras (próximamente)',
+});
