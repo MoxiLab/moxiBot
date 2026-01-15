@@ -182,6 +182,7 @@ function getHelpIndex(Moxi) {
  */
 async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria = null, client: Moxi, lang = 'es-ES', userId = null, guildId = null, useV2 = false } = {}) {
   const isRtl = typeof lang === 'string' && /^ar(-|$)/i.test(lang);
+  const isSpanish = typeof lang === 'string' && /^es(-|$)/i.test(lang);
 
   // Asegurar que la categoría entrante coincide con las claves internas.
   categoria = normalizeCategoryKey(categoria);
@@ -228,6 +229,41 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
   const totalCommandsVisible = Object.values(categorias).reduce((sum, arr) => sum + (Array.isArray(arr) ? arr.length : 0), 0);
   const categoryKeys = Object.keys(categorias).slice(0, 25);
 
+  const resolveCategoryLabel = (cat) => {
+    if (!cat) return '';
+    const categoryMap = {
+      'Administración': 'HELP_CATEGORY_ADMIN',
+      'Admin': 'HELP_CATEGORY_ADMIN',
+      'Economía': 'HELP_CATEGORY_ECONOMY',
+      'Economy': 'HELP_CATEGORY_ECONOMY',
+      'Moderation': 'HELP_CATEGORY_MODERATION',
+      'Moderación': 'HELP_CATEGORY_MODERATION',
+      'Music': 'HELP_CATEGORY_MUSIC',
+      'Música': 'HELP_CATEGORY_MUSIC',
+      'Root': 'HELP_CATEGORY_ROOT',
+      'Tools': 'HELP_CATEGORY_TOOLS',
+      'Herramientas': 'HELP_CATEGORY_TOOLS',
+      'Welcome': 'HELP_CATEGORY_WELCOME',
+      'Sistema de bienvenida': 'HELP_CATEGORY_WELCOME'
+    };
+    const categoriaKey = categoryMap[cat] || `HELP_CATEGORY_${String(cat).toUpperCase()}`;
+    const categoriaTraducida = moxi.translate(categoriaKey, lang);
+    return (categoriaTraducida && categoriaTraducida !== categoriaKey) ? categoriaTraducida : String(cat);
+  };
+
+  const renderGrid = (items, cols = 6) => {
+    const values = Array.from(new Set((items || []).map(v => String(v).trim()).filter(Boolean)));
+    if (!values.length) return '';
+    if (isRtl) return values.join('\n');
+
+    const width = Math.max(12, ...values.map(v => v.length));
+    const rows = [];
+    for (let i = 0; i < values.length; i += cols) rows.push(values.slice(i, i + cols));
+    return rows
+      .map((r) => r.map((cell) => cell.padEnd(width + 2, ' ')).join('').trimEnd())
+      .join('\n');
+  };
+
   // Filtrar por categoría si corresponde
   let bienvenidaCategoria = '';
   let filteredCommands = allCommands;
@@ -271,7 +307,7 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
     }
   }
   // Paginación
-  const pageSize = 10;
+  const pageSize = categoria ? 60 : 10;
   const total = filteredCommands.length;
   const totalPagesCalc = Math.ceil(total / pageSize) || 1;
   if (typeof totalPages !== 'number') totalPages = totalPagesCalc;
@@ -314,54 +350,58 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
     return [`/${slashName}`];
   };
 
-  const renderLabels = (labels) => {
-    const cmdLabels = Array.from(new Set((labels || []).map(l => String(l).trim()).filter(Boolean)));
-    if (!cmdLabels.length) return '';
-    if (isRtl) return cmdLabels.map(l => `» ${l}`).join('\n');
-
-    const cols = 3;
-    const zws = '\u200b';
-    const nbsp = '\u00A0';
-    const rows = [];
-    for (let i = 0; i < cmdLabels.length; i += cols) {
-      rows.push(cmdLabels.slice(i, i + cols));
-    }
-    const colWidth = Math.max(...cmdLabels.map(l => l.length), 12);
-    return rows
-      .map((r) => r
-        .map((cell) => (cell + zws).padEnd(colWidth + 2, nbsp))
-        .join('')
-        .trimEnd()
-      )
-      .join('\n');
-  };
   let desc = '';
   if (categoria) {
-    desc = bienvenidaCategoria ? bienvenidaCategoria + '\n\n' : '';
-    if (cmds.length) {
-      const prefixLabels = [];
-      const slashLabels = [];
-      for (const cmd of cmds) {
-        if (isPrefixCmd(cmd)) prefixLabels.push(...getPrefixLines(cmd));
-        if (isSlashCmd(cmd)) slashLabels.push(...getSlashLines(cmd));
-      }
+    // Estilo tipo captura: cabecera de categoría + bloque de comandos en cuadrícula.
+    const categoriaLabel = resolveCategoryLabel(categoria);
+    const emoji = (categoria === 'Economy')
+      ? '💰'
+      : (categoria === 'Tools')
+        ? '🛠️'
+        : (categoria === 'Music')
+          ? '🎵'
+          : (categoria === 'Admin')
+            ? '🛡️'
+            : (categoria === 'Moderation')
+              ? '🧯'
+              : (categoria === 'Welcome')
+                ? '👋'
+                : '';
 
-      const prefixBlock = renderLabels(prefixLabels);
-      const slashBlock = renderLabels(slashLabels);
+    const header = `${emoji ? `${emoji} ` : ''}**${categoriaLabel}**`;
 
-      if (prefixBlock) {
-        desc += `**${moxi.translate('HELP_PREFIX_COMMANDS', lang)}**\n${prefixBlock}`;
-      }
-      if (slashBlock) {
-        if (prefixBlock) desc += '\n\n';
-        desc += `**${moxi.translate('HELP_SLASH_COMMANDS', lang)}**\n${slashBlock}`;
-      }
+    const tip = isSpanish
+      ? `¿Quieres más info de un comando? Usa \`${prefix}help <comando>\`.`
+      : `${moxi.translate('HELP_HOME_DESCRIPTION', lang).replace('{{prefix}}', prefix)}`;
 
-      if (!prefixBlock && !slashBlock) {
-        desc += moxi.translate('HELP_NO_COMMANDS', lang);
-      }
-    } else {
-      desc += moxi.translate('HELP_NO_COMMANDS', lang);
+    const prefixLabels = [];
+    const slashLabels = [];
+    for (const cmd of cmds) {
+      if (isPrefixCmd(cmd)) prefixLabels.push(...getPrefixLines(cmd));
+      if (isSlashCmd(cmd)) slashLabels.push(...getSlashLines(cmd));
+    }
+
+    const uniqueSort = (arr) => Array.from(new Set((arr || []).map(v => String(v).trim()).filter(Boolean)))
+      .sort((a, b) => a.localeCompare(b, lang || 'es-ES'));
+
+    const prefixList = uniqueSort(prefixLabels);
+    const slashList = uniqueSort(slashLabels);
+
+    desc = `${header}\n${tip}`;
+    if (bienvenidaCategoria) desc += `\n${bienvenidaCategoria}`;
+
+    if (prefixList.length) {
+      desc += `\n\n${EMOJIS.book} **${moxi.translate('HELP_PREFIX_COMMANDS', lang)}**\n` +
+        `\`\`\`\n${renderGrid(prefixList, 4)}\n\`\`\``;
+    }
+
+    if (slashList.length) {
+      desc += `\n\n${EMOJIS.package} **${moxi.translate('HELP_SLASH_COMMANDS', lang)}**\n` +
+        `\`\`\`\n${renderGrid(slashList, 3)}\n\`\`\``;
+    }
+
+    if (!prefixList.length && !slashList.length) {
+      desc += `\n\n${moxi.translate('HELP_NO_COMMANDS', lang)}`;
     }
 
     if (helpDebugEnabled) {
@@ -402,26 +442,13 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
   if (!desc || desc.trim() === '') desc = null;
   let titulo = moxi.translate('HELP_TITLE', lang);
   if (categoria) {
-    // Mapeo explícito de categorías
-    const categoryMap = {
-      'Administración': 'HELP_CATEGORY_ADMIN',
-      'Admin': 'HELP_CATEGORY_ADMIN',
-      'Economía': 'HELP_CATEGORY_ECONOMY',
-      'Economy': 'HELP_CATEGORY_ECONOMY',
-      'Moderation': 'HELP_CATEGORY_MODERATION',
-      'Moderación': 'HELP_CATEGORY_MODERATION',
-      'Music': 'HELP_CATEGORY_MUSIC',
-      'Música': 'HELP_CATEGORY_MUSIC',
-      'Root': 'HELP_CATEGORY_ROOT',
-      'Tools': 'HELP_CATEGORY_TOOLS',
-      'Herramientas': 'HELP_CATEGORY_TOOLS',
-      'Welcome': 'HELP_CATEGORY_WELCOME',
-      'Sistema de bienvenida': 'HELP_CATEGORY_WELCOME'
-    };
-    let categoriaKey = categoryMap[categoria] || `HELP_CATEGORY_${categoria.toUpperCase()}`;
-    let categoriaTraducida = moxi.translate(categoriaKey, lang);
-    let categoriaFinal = categoriaTraducida !== categoriaKey ? categoriaTraducida : categoria;
-    titulo += `: ${categoriaFinal}`;
+    // En español, estilo tipo captura: título fijo y la categoría en el cuerpo.
+    if (isSpanish) {
+      titulo = 'Mis comandos';
+    } else {
+      const categoriaFinal = resolveCategoryLabel(categoria);
+      titulo += `: ${categoriaFinal}`;
+    }
   }
   // -------------------------
   // Components V2 mode
