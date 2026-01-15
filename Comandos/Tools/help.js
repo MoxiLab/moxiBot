@@ -9,6 +9,89 @@ const logger = require('../../Util/logger.js');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const getHelpContent = require('../../Util/getHelpContent');
 
+function splitUsageVariants(usage) {
+    const raw = String(usage || '').trim();
+    if (!raw) return [];
+    return raw
+        .split('|')
+        .map(s => String(s).trim())
+        .filter(Boolean);
+}
+
+function normalizeUsageLine(line, cmdName) {
+    const raw = String(line || '').trim();
+    const name = String(cmdName || '').trim();
+    if (!raw) return '';
+    if (!name) return raw;
+    const lowerRaw = raw.toLowerCase();
+    const lowerName = name.toLowerCase();
+    if (lowerRaw === lowerName) return raw;
+    if (lowerRaw.startsWith(lowerName + ' ')) return raw;
+    return `${name} ${raw}`;
+}
+
+function extractSubcommandsFromUsageLines(lines, cmdName) {
+    const name = String(cmdName || '').trim().toLowerCase();
+    if (!name) return [];
+    const subs = new Set();
+    for (const ln of Array.isArray(lines) ? lines : []) {
+        const raw = String(ln || '').trim();
+        if (!raw) continue;
+        const parts = raw.split(/\s+/g).filter(Boolean);
+        if (!parts.length) continue;
+        if (String(parts[0]).toLowerCase() !== name) continue;
+        const maybe = parts[1];
+        if (!maybe) continue;
+        if (/^[\[<]/.test(maybe)) continue;
+        subs.add(String(maybe).trim().toLowerCase());
+    }
+    return Array.from(subs.values()).sort();
+}
+
+function safeArrayLower(arr) {
+    return (Array.isArray(arr) ? arr : [])
+        .map(v => String(v || '').trim())
+        .filter(Boolean);
+}
+
+function resolvePermissions(cmd) {
+    const perms = (cmd && cmd.permissions && typeof cmd.permissions === 'object') ? cmd.permissions : null;
+    if (!perms) return { user: [], bot: [] };
+
+    // Soporta variantes: User/Bot (mayúsculas), user/bot (minúsculas)
+    const user = safeArrayLower(perms.User || perms.user);
+    const bot = safeArrayLower(perms.Bot || perms.bot);
+    return { user, bot };
+}
+
+function getSlashHelpLines(cmd) {
+    if (!cmd) return [];
+    const data = cmd.data;
+    if (!data || typeof data.toJSON !== 'function') {
+        const name = cmd.name;
+        return name ? [`/${name}`] : [];
+    }
+
+    const json = data.toJSON();
+    const name = json?.name || cmd.name;
+    if (!name) return [];
+
+    // Mostrar subcomandos si existen
+    const opts = Array.isArray(json?.options) ? json.options : [];
+    const sub = opts.filter(o => o && o.type === 1 && o.name).map(o => o.name);
+    if (sub.length) return sub.map(s => `/${name} ${s}`);
+    return [`/${name}`];
+}
+
+function extractSubcommandsFromSlash(cmd) {
+    const data = cmd?.data;
+    if (!data || typeof data.toJSON !== 'function') return [];
+    const json = data.toJSON();
+    const opts = Array.isArray(json?.options) ? json.options : [];
+    const sub = opts.filter(o => o && o.type === 1 && o.name).map(o => String(o.name).trim().toLowerCase()).filter(Boolean);
+    return Array.from(new Set(sub)).sort();
+}
+
 function normalizeCategoryQuery(input) {
     const raw = String(input || '').trim().toLowerCase();
     if (!raw) return null;
@@ -128,14 +211,28 @@ module.exports = {
     },
     async execute(Moxi, message, args) {
         const lang = await moxi.guildLang(message.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
+
+        // Prefijo real del servidor
+        const Config = require('../../Config');
+        const { Bot } = Config;
+        const globalPrefix = (Array.isArray(Bot?.Prefix) && Bot.Prefix[0])
+            ? Bot.Prefix[0]
+            : (process.env.PREFIX || '.');
+        const prefix = await moxi.guildPrefix(message.guild?.id, globalPrefix);
+
         // Si hay argumento, buscar info del comando
         if (args.length > 0) {
             const query = args[0].toLowerCase();
             // Buscar en prefix y slash
+            const matchAlias = (c) => {
+                const a = Array.isArray(c?.alias) ? c.alias : (Array.isArray(c?.aliases) ? c.aliases : []);
+                return a.some(v => String(v || '').trim().toLowerCase() === query);
+            };
+
             let cmd = Moxi.commands?.get(query) ||
-                Array.from(Moxi.commands?.values() || []).find(c => c.alias && c.alias.includes(query)) ||
+                Array.from(Moxi.commands?.values() || []).find(matchAlias) ||
                 Moxi.slashcommands?.get(query) ||
-                Array.from(Moxi.slashcommands?.values() || []).find(c => c.alias && c.alias.includes(query));
+                Array.from(Moxi.slashcommands?.values() || []).find(matchAlias);
             if (!cmd) {
                 const categoria = normalizeCategoryQuery(query);
                 if (categoria) {
@@ -163,50 +260,116 @@ module.exports = {
                     )
                 );
             }
-            // Construir panel tipo ContainerBuilder (estilo ping)
+            // Construir panel tipo ContainerBuilder (estilo captura “work”)
             const { ContainerBuilder, MessageFlags, ButtonBuilder, ButtonStyle } = require('discord.js');
-            const { Bot } = require('../../Config');
-            const desc = resolveCommandDescription(cmd, lang, query);
 
-            const usage = cmd.usage || moxi.translate('HELP_NO_USAGE', lang);
+            // Intentar enriquecer: si existe versión prefix y slash, usar ambas
+            const canonicalName = (typeof cmd?.name === 'string' && cmd.name.trim())
+                ? cmd.name.trim()
+                : (cmd?.data && cmd.data.name ? String(cmd.data.name).trim() : query);
 
-            const alias = (cmd.alias && cmd.alias.length)
-                ? cmd.alias.join(', ')
+            const prefixCmd = Moxi.commands?.get(canonicalName) || Array.from(Moxi.commands?.values() || []).find(c => String(c?.name || '').toLowerCase() === canonicalName.toLowerCase());
+            const slashCmd = Moxi.slashcommands?.get(canonicalName) || Array.from(Moxi.slashcommands?.values() || []).find(c => String(c?.name || (c?.data && c.data.name) || '').toLowerCase() === canonicalName.toLowerCase());
+
+            // Preferir el objeto de prefijo como base (suele tener usage/alias); pero mantener el actual si no existe
+            const baseCmd = prefixCmd || cmd;
+
+            const desc = resolveCommandDescription(baseCmd, lang, canonicalName);
+            const displayName = resolveCommandDisplayName(baseCmd, lang, canonicalName);
+
+            const category = (baseCmd.Category && typeof baseCmd.Category === 'function')
+                ? baseCmd.Category(lang)
+                : (baseCmd.Category || baseCmd.category || moxi.translate('HELP_NO_CATEGORY', lang));
+
+            const aliasArr = Array.isArray(baseCmd?.alias) ? baseCmd.alias : (Array.isArray(baseCmd?.aliases) ? baseCmd.aliases : []);
+            const alias = aliasArr.length ? aliasArr.join(', ') : moxi.translate('HELP_NONE', lang);
+
+            const usageRaw = baseCmd.usage || moxi.translate('HELP_NO_USAGE', lang);
+            const usageVariants = splitUsageVariants(usageRaw).map(u => normalizeUsageLine(u, canonicalName)).filter(Boolean);
+
+            const hasPrefix = Boolean(
+                prefixCmd ||
+                typeof baseCmd?.execute === 'function' ||
+                baseCmd?.command?.Prefix || baseCmd?.command?.prefix
+            );
+            const hasSlash = Boolean(
+                slashCmd ||
+                (baseCmd?.data && typeof baseCmd.data.toJSON === 'function') ||
+                baseCmd?.command?.Slash || baseCmd?.command?.slash
+            );
+
+            const prefixUsageLines = (hasPrefix)
+                ? (usageVariants.length
+                    ? usageVariants.map(u => `${prefix}${u}`)
+                    : [`${prefix}${canonicalName}`])
+                : [];
+
+            const slashLines = (hasSlash)
+                ? (slashCmd ? getSlashHelpLines(slashCmd) : getSlashHelpLines(baseCmd))
+                : [];
+
+            const subs = Array.from(new Set([
+                ...extractSubcommandsFromUsageLines(usageVariants, canonicalName),
+                ...extractSubcommandsFromSlash(slashCmd || baseCmd),
+            ])).sort();
+
+            const cooldownSec = (typeof baseCmd.cooldown === 'number' && Number.isFinite(baseCmd.cooldown)) ? baseCmd.cooldown : 0;
+            const cooldownLabel = cooldownSec > 0
+                ? `${cooldownSec}s`
                 : moxi.translate('HELP_NONE', lang);
 
-            const category = (cmd.Category && typeof cmd.Category === 'function')
-                ? cmd.Category(lang)
-                : (cmd.Category || cmd.category || moxi.translate('HELP_NO_CATEGORY', lang));
+            const { user: userPerms, bot: botPerms } = resolvePermissions(baseCmd);
+            const hasAnyPerms = (userPerms.length || botPerms.length);
 
-            let name = resolveCommandDisplayName(cmd, lang, query);
-            let perms = '';
-            if (cmd.permissions && (cmd.permissions.User || cmd.permissions.Bot)) {
-                perms += cmd.permissions.User ? `${EMOJIS.person} ${moxi.translate('HELP_PERMISSIONS_USER', lang)}: ${cmd.permissions.User.join(', ')}\n` : '';
-                perms += cmd.permissions.Bot ? `${EMOJIS.robot} ${moxi.translate('HELP_PERMISSIONS_BOT', lang)}: ${cmd.permissions.Bot.join(', ')}\n` : '';
-            } else {
-                perms = moxi.translate('HELP_NO_PERMISSIONS', lang);
+            const permsText = hasAnyPerms
+                ? [
+                    `${EMOJIS.person} **${moxi.translate('HELP_PERMISSIONS_USER', lang)}:** ${userPerms.length ? userPerms.join(', ') : '—'}`,
+                    `${EMOJIS.robot} **${moxi.translate('HELP_PERMISSIONS_BOT', lang)}:** ${botPerms.length ? botPerms.join(', ') : '—'}`,
+                ].join('\n')
+                : moxi.translate('HELP_NO_PERMISSIONS', lang);
+
+            const usageBlockLines = [];
+            if (prefixUsageLines.length) {
+                usageBlockLines.push(`**${moxi.translate('HELP_PREFIX_COMMANDS', lang)}**`);
+                usageBlockLines.push(prefixUsageLines.map(l => `• \`${l}\``).join('\n'));
             }
+            if (slashLines.length) {
+                usageBlockLines.push(`\n**${moxi.translate('HELP_SLASH_COMMANDS', lang)}**`);
+                usageBlockLines.push(slashLines.map(l => `• \`${l}\``).join('\n'));
+            }
+            if (subs.length) {
+                usageBlockLines.push(`\n**Subcomandos:** ${subs.map(s => `\`${s}\``).join(', ')}`);
+            }
+
+            if (!usageBlockLines.length) {
+                usageBlockLines.push(`• \`${usageRaw}\``);
+            }
+
             const container = new ContainerBuilder()
                 .setAccentColor(Bot.AccentColor)
                 .addTextDisplayComponents(c =>
-                    c.setContent(`# ${EMOJIS.info} ${moxi.translate('HELP_COMMAND_INFO_TITLE', lang, { name })}`)
+                    c.setContent(`# ${EMOJIS.info} ${moxi.translate('HELP_COMMAND_INFO_TITLE', lang, { name: displayName })}`)
                 )
                 .addSeparatorComponents(s => s.setDivider(true))
                 .addTextDisplayComponents(c =>
-                    c.setContent(`**${moxi.translate('HELP_DESCRIPTION', lang)}:** ${desc}`)
+                    c.setContent(`> ${desc}`)
                 )
                 .addSeparatorComponents(s => s.setDivider(true))
                 .addTextDisplayComponents(c =>
-                    c.setContent(`${EMOJIS.book} **${moxi.translate('HELP_USAGE', lang)}:** ${usage}`)
+                    c.setContent(`${EMOJIS.book} **${moxi.translate('HELP_USAGE', lang)}**\n${usageBlockLines.join('\n')}`)
                 )
+                .addSeparatorComponents(s => s.setDivider(true))
                 .addTextDisplayComponents(c =>
                     c.setContent(`${EMOJIS.link} **${moxi.translate('HELP_ALIASES', lang)}:** ${alias}`)
+                )
+                .addTextDisplayComponents(c =>
+                    c.setContent(`${EMOJIS.hourglass || '⏳'} **${moxi.translate('HELP_COOLDOWN', lang)}:** ${cooldownLabel}`)
                 )
                 .addTextDisplayComponents(c =>
                     c.setContent(`${EMOJIS.folder} **${moxi.translate('HELP_CATEGORY', lang)}:** ${category}`)
                 )
                 .addTextDisplayComponents(c =>
-                    c.setContent(`${EMOJIS.shield} **${moxi.translate('HELP_PERMISSIONS', lang)}:** ${perms}`)
+                    c.setContent(`${EMOJIS.shield} **${moxi.translate('HELP_PERMISSIONS', lang)}**\n${permsText}`)
                 )
                 .addSeparatorComponents(s => s.setDivider(true));
             const webLabel = moxi.translate('HELP_WEB_LABEL', lang) || 'Web';
