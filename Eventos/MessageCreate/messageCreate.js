@@ -169,8 +169,28 @@ Moxi.on("messageCreate", async (message) => {
   const raw = settings?.Prefix;
   debugHelper.log('prefix', `guildId=${message.guild.id} global=${JSON.stringify(globalPrefixes)} settings.Prefix=${JSON.stringify(raw)} resolved=${prefix}`);
 
+  // Prefijos activos:
+  // - Si hay prefijo en DB, usar ese; si no, los globales
+  // - Siempre permitir la mención del bot
+  // - Siempre permitir 'moxi' y 'mx' (case-insensitive) como prefijo palabra
+  // Nota: añadimos '.' como prefijo "universal" para comandos estilo .bag
+  const prefixesToUse = uniqStrings([...(settings?.Prefix ? [prefix] : globalPrefixes), '.', ...mentionPrefixes, 'moxi', 'mx']);
+  const matched = matchPrefix(message.content, prefixesToUse);
+
+  // IMPORTANTE: no queremos que ciertos comandos (p.ej. say) quiten el estado AFK del usuario.
+  let skipAfkCleanup = false;
+  if (matched) {
+    const parts = matched.rest.trim().split(/ +/g);
+    const maybeCmd = (parts.shift() || '').toLowerCase();
+    if (maybeCmd === 'say' || maybeCmd === 'decir' || maybeCmd === 'sayu' || maybeCmd === 'sayuser') {
+      skipAfkCleanup = true;
+    }
+  }
+
   try {
-    await handleAfkCleanup(message);
+    if (!skipAfkCleanup) {
+      await handleAfkCleanup(message);
+    }
   } catch (error) {
     debugHelper?.error?.('afk-cleanup', 'handleAfkCleanup failed', error);
   }
@@ -191,13 +211,6 @@ Moxi.on("messageCreate", async (message) => {
     }
     return message.reply(panelResult);
   }
-
-  // Prefijos activos:
-  // - Si hay prefijo en DB, usar ese; si no, los globales
-  // - Siempre permitir la mención del bot
-  // - Siempre permitir 'moxi' y 'mx' (case-insensitive) como prefijo palabra
-  const prefixesToUse = uniqStrings([...(settings?.Prefix ? [prefix] : globalPrefixes), ...mentionPrefixes, 'moxi', 'mx']);
-  const matched = matchPrefix(message.content, prefixesToUse);
 
   // Sistema de niveles (usa ClvlsSchema): solo otorgar XP si NO es un comando.
   // Importante: esto ocurre después de resolver settings/prefix para poder detectar comandos.
@@ -314,7 +327,7 @@ async function handleAfkMentions(message) {
   for (let index = 0; index < limit; index += 1) {
     const { user, entry } = entries[index];
     if (entry.scope === 'guild') {
-      lines.push(`${EMOJIS.person} ${user.toString()} · ${user.tag}`); 
+      lines.push(`${EMOJIS.person} ${user.toString()} · ${user.tag}`);
       lines.push(message.translate('AFK_SCOPE_GUILD'));
       lines.push(message.translate('AFK_MESSAGE_LINE', { message: entry.message || message.translate('AFK_DEFAULT_MESSAGE') }));
       lines.push(message.translate('AFK_DURATION', { duration: formatAfkDuration(entry.createdAt, lang) }));
