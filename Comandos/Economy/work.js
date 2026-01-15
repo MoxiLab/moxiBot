@@ -11,9 +11,10 @@ const {
     leaveJob,
     doShift,
     getWorkStats,
-    getTopBalances,
+    getTopByJob,
 } = require('../../Util/workSystem');
 const { formatDuration } = require('../../Util/economyCore');
+const { buildWorkListMessageOptions } = require('../../Util/workListPanel');
 
 function economyCategory(lang) {
     return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
@@ -34,16 +35,16 @@ async function renderTop({ client, rows }) {
         rows.map(async (r) => {
             try {
                 const u = await client.users.fetch(r.userId);
-                return { label: u.tag, userId: r.userId, balance: r.balance };
+                return { label: u.tag, userId: r.userId, totalEarned: r.totalEarned, shifts: r.shifts };
             } catch {
-                return { label: r.userId, userId: r.userId, balance: r.balance };
+                return { label: r.userId, userId: r.userId, totalEarned: r.totalEarned, shifts: r.shifts };
             }
         })
     );
 
     const lines = resolved.map((p, idx) => {
-        const v = p.status === 'fulfilled' ? p.value : { label: 'Unknown', userId: 'unknown', balance: 0 };
-        return `**${idx + 1}.** ${v.label} — **${v.balance}**`;
+        const v = p.status === 'fulfilled' ? p.value : { label: 'Unknown', userId: 'unknown', totalEarned: 0, shifts: 0 };
+        return `**${idx + 1}.** ${v.label} — Ganado: **${v.totalEarned}** • Turnos: **${v.shifts}**`;
     });
 
     return lines.join('\n');
@@ -51,11 +52,15 @@ async function renderTop({ client, rows }) {
 
 module.exports = {
     name: 'work',
-    alias: ['trabajo', 'job'],
+    alias: ['w', 'trabajo', 'job'],
     Category: economyCategory,
     usage: 'work list | work apply <trabajo> | work leave | work shift | work stats | work top',
-    description: 'Sistema de trabajo: aplica a un empleo, haz turnos y gana monedas.',
+    description: 'Trabaja para ganar monedas y experiencia.',
     cooldown: Math.floor(getWorkCooldownMs() / 1000),
+    permissions: {
+        Bot: ['Ver canal', 'Enviar mensajes', 'Insertar enlaces'],
+        User: [],
+    },
     command: {
         prefix: true,
         slash: false,
@@ -68,7 +73,62 @@ module.exports = {
 
         const sub = normalizeSubcommand(args?.[0]);
 
-        if (!sub || sub === 'help') {
+        // Si el usuario ya eligió trabajo, `.work` debe hacer el turno directo.
+        if (!sub) {
+            const res = await doShift({ userId: message.author.id });
+
+            if (!res.ok) {
+                if (res.reason === 'cooldown') {
+                    return message.reply(
+                        asV2MessageOptions(
+                            buildNoticeContainer({
+                                emoji: EMOJIS.hourglass,
+                                title: 'Aún no puedes trabajar',
+                                text: `Te falta **${res.nextInText}** para tu próximo turno.\nSaldo: **${res.balance}**`,
+                            })
+                        )
+                    );
+                }
+                if (res.reason === 'no-job') {
+                    const cd = formatDuration(getWorkCooldownMs());
+                    return message.reply(
+                        asV2MessageOptions(
+                            buildNoticeContainer({
+                                emoji: '💼',
+                                title: 'Work',
+                                text:
+                                    `No tienes un trabajo activo.\n\n` +
+                                    `Usa: \`work apply <trabajo>\` o \`work list\`\n` +
+                                    `**Cooldown del turno:** ${cd}`,
+                            })
+                        )
+                    );
+                }
+
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: 'No se pudo trabajar',
+                            text: res.message || 'Error desconocido.',
+                        })
+                    )
+                );
+            }
+
+            return message.reply({
+                ...asV2MessageOptions(
+                    buildNoticeContainer({
+                        emoji: '💰',
+                        title: 'Turno completado',
+                        text: `Trabajo: **${getJobDisplayName(res.job, lang)}** ${res.job.emoji || ''}\nGanaste: **+${res.amount}**\nSaldo: **${res.balance}**`,
+                    })
+                ),
+                allowedMentions: { repliedUser: false },
+            });
+        }
+
+        if (sub === 'help') {
             const cd = formatDuration(getWorkCooldownMs());
             return message.reply(
                 asV2MessageOptions(
@@ -85,15 +145,8 @@ module.exports = {
         }
 
         if (sub === 'list') {
-            return message.reply(
-                asV2MessageOptions(
-                    buildNoticeContainer({
-                        emoji: '📋',
-                        title: 'Trabajos disponibles',
-                        text: formatJobsList(lang),
-                    })
-                )
-            );
+            const payload = buildWorkListMessageOptions({ lang, page: 0, userId: message.author.id });
+            return message.reply({ ...payload, allowedMentions: { repliedUser: false } });
         }
 
         if (sub === 'apply') {
@@ -103,8 +156,8 @@ module.exports = {
                     asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: EMOJIS.cross,
-                            title: 'Uso incorrecto',
-                            text: 'Debes indicar el trabajo. Ej: `work apply developer`',
+                            title: 'Elige un trabajo',
+                            text: `${formatJobsList(lang)}\n\nEjemplo: \`work apply developer\``,
                         })
                     )
                 );
@@ -236,7 +289,20 @@ module.exports = {
         }
 
         if (sub === 'top') {
-            const top = await getTopBalances({ limit: 10 });
+            const st = await getWorkStats({ userId: message.author.id });
+            if (!st.job) {
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: 'Sin trabajo',
+                            text: 'No tienes un trabajo activo. Usa `work apply <trabajo>` primero.',
+                        })
+                    )
+                );
+            }
+
+            const top = await getTopByJob({ jobId: st.job.id, limit: 10 });
             if (!top.ok) {
                 return message.reply(
                     asV2MessageOptions(
@@ -257,7 +323,7 @@ module.exports = {
                 asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: '🏆',
-                        title: 'Top economía (saldo)',
+                        title: `Top • ${getJobDisplayName(st.job, lang)}`,
                         text: body,
                     })
                 )

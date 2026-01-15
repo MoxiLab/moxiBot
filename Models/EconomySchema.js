@@ -14,6 +14,8 @@ const ItemSchema = new mongoose.Schema({
 const UserEconomySchema = new mongoose.Schema({
     userId: { type: String, required: true, unique: true },
     balance: { type: Number, default: 0 }, // Moneda principal
+    bank: { type: Number, default: 0 }, // Banco
+    sakuras: { type: Number, default: 0 }, // Moneda secundaria
     inventory: [{
         itemId: { type: String, required: true },
         amount: { type: Number, default: 1 },
@@ -43,6 +45,9 @@ const UserEconomySchema = new mongoose.Schema({
 
     lastDaily: { type: Date },
     lastWork: { type: Date },
+    lastFish: { type: Date },
+    lastMine: { type: Date },
+    lastExplore: { type: Date },
 });
 
 module.exports = {

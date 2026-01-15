@@ -5,28 +5,28 @@ const moxi = require('../i18n');
 const DEFAULT_WORK_COOLDOWN_MS = 60 * 60 * 1000; // 1h
 
 const JOBS = Object.freeze([
-    { id: 'barista', name: 'Barista', min: 30, max: 80, emoji: '☕' },
-    { id: 'developer', name: 'Developer', min: 60, max: 140, emoji: '💻' },
-    { id: 'designer', name: 'Designer', min: 50, max: 120, emoji: '🎨' },
-    { id: 'chef', name: 'Chef', min: 40, max: 110, emoji: '🍳' },
-    { id: 'delivery', name: 'Delivery', min: 35, max: 90, emoji: '🛵' },
+    { id: 'barista', name: 'Barista', min: 30, max: 80, salary: 60, shiftsRequired: 8, deathRisk: false, featured: true, emoji: '☕', tagline: 'Únete para servir experiencias memorables como barista.' },
+    { id: 'developer', name: 'Developer', min: 60, max: 140, salary: 100, shiftsRequired: 8, deathRisk: false, emoji: '💻', imageUrl: 'https://dummyimage.com/160x160/0f172a/ffffff.png&text=%F0%9F%92%BB' },
+    { id: 'designer', name: 'Designer', min: 50, max: 120, salary: 90, shiftsRequired: 8, deathRisk: false, emoji: '🎨', imageUrl: 'https://dummyimage.com/160x160/1f2937/ffffff.png&text=%F0%9F%8E%A8' },
+    { id: 'chef', name: 'Chef', min: 40, max: 110, salary: 85, shiftsRequired: 8, deathRisk: false, emoji: '🍳', imageUrl: 'https://dummyimage.com/160x160/111827/ffffff.png&text=%F0%9F%8D%B3' },
+    { id: 'delivery', name: 'Delivery', min: 35, max: 90, salary: 70, shiftsRequired: 8, deathRisk: false, emoji: '🛵', imageUrl: 'https://dummyimage.com/160x160/111827/ffffff.png&text=%F0%9F%9B%B5' },
 
     // Más jobs
-    { id: 'cashier', name: 'Cashier', min: 30, max: 85, emoji: '🧾' },
-    { id: 'waiter', name: 'Waiter', min: 35, max: 95, emoji: '🍽️' },
-    { id: 'baker', name: 'Baker', min: 35, max: 105, emoji: '🥐' },
-    { id: 'librarian', name: 'Librarian', min: 40, max: 110, emoji: '📚' },
-    { id: 'teacher', name: 'Teacher', min: 45, max: 120, emoji: '🧑‍🏫' },
-    { id: 'photographer', name: 'Photographer', min: 45, max: 125, emoji: '📷' },
-    { id: 'musician', name: 'Musician', min: 45, max: 130, emoji: '🎸' },
-    { id: 'artist', name: 'Artist', min: 45, max: 130, emoji: '🖌️' },
-    { id: 'mechanic', name: 'Mechanic', min: 50, max: 140, emoji: '🧰' },
-    { id: 'electrician', name: 'Electrician', min: 55, max: 150, emoji: '⚡' },
-    { id: 'nurse', name: 'Nurse', min: 55, max: 155, emoji: '🩺' },
-    { id: 'pilot', name: 'Pilot', min: 70, max: 190, emoji: '🛫' },
-    { id: 'architect', name: 'Architect', min: 65, max: 185, emoji: '📐' },
-    { id: 'engineer', name: 'Engineer', min: 70, max: 200, emoji: '🧪' },
-    { id: 'scientist', name: 'Scientist', min: 75, max: 210, emoji: '🔬' },
+    { id: 'cashier', name: 'Cashier', min: 30, max: 85, salary: 70, shiftsRequired: 8, deathRisk: false, emoji: '🧾' },
+    { id: 'waiter', name: 'Waiter', min: 35, max: 95, salary: 75, shiftsRequired: 8, deathRisk: false, emoji: '🍽️' },
+    { id: 'baker', name: 'Baker', min: 35, max: 105, salary: 80, shiftsRequired: 8, deathRisk: false, emoji: '🥐' },
+    { id: 'librarian', name: 'Librarian', min: 40, max: 110, salary: 85, shiftsRequired: 8, deathRisk: false, emoji: '📚' },
+    { id: 'teacher', name: 'Teacher', min: 45, max: 120, salary: 90, shiftsRequired: 8, deathRisk: false, emoji: '🧑‍🏫' },
+    { id: 'photographer', name: 'Photographer', min: 45, max: 125, salary: 95, shiftsRequired: 8, deathRisk: false, emoji: '📷' },
+    { id: 'musician', name: 'Musician', min: 45, max: 130, salary: 100, shiftsRequired: 8, deathRisk: false, emoji: '🎸' },
+    { id: 'artist', name: 'Artist', min: 45, max: 130, salary: 100, shiftsRequired: 8, deathRisk: false, emoji: '🖌️' },
+    { id: 'mechanic', name: 'Mechanic', min: 50, max: 140, salary: 105, shiftsRequired: 8, deathRisk: false, emoji: '🧰' },
+    { id: 'electrician', name: 'Electrician', min: 55, max: 150, salary: 110, shiftsRequired: 8, deathRisk: false, emoji: '⚡' },
+    { id: 'nurse', name: 'Nurse', min: 55, max: 155, salary: 115, shiftsRequired: 8, deathRisk: false, emoji: '🩺' },
+    { id: 'pilot', name: 'Pilot', min: 70, max: 190, salary: 150, shiftsRequired: 8, deathRisk: true, emoji: '🛫' },
+    { id: 'architect', name: 'Architect', min: 65, max: 185, salary: 145, shiftsRequired: 8, deathRisk: false, emoji: '📐' },
+    { id: 'engineer', name: 'Engineer', min: 70, max: 200, salary: 160, shiftsRequired: 8, deathRisk: false, emoji: '🧪' },
+    { id: 'scientist', name: 'Scientist', min: 75, max: 210, salary: 170, shiftsRequired: 8, deathRisk: true, emoji: '🔬' },
 ]);
 
 function normalizeText(input) {
@@ -105,7 +105,7 @@ async function getOrCreateEconomy(userId) {
     try {
         await UserEconomy.updateOne(
             { userId },
-            { $setOnInsert: { userId, balance: 0, inventory: [], workTotalEarned: 0, workShifts: 0 } },
+            { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [], workTotalEarned: 0, workShifts: 0 } },
             { upsert: true }
         );
     } catch (e) {
@@ -129,7 +129,7 @@ async function applyJob({ userId, jobId }) {
     try {
         await UserEconomy.updateOne(
             { userId },
-            { $setOnInsert: { userId, balance: 0, inventory: [], workTotalEarned: 0, workShifts: 0 } },
+            { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [], workTotalEarned: 0, workShifts: 0 } },
             { upsert: true }
         );
     } catch (e) {
@@ -181,7 +181,7 @@ async function doShift({ userId }) {
     try {
         await UserEconomy.updateOne(
             { userId },
-            { $setOnInsert: { userId, balance: 0, inventory: [], workTotalEarned: 0, workShifts: 0 } },
+            { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [], workTotalEarned: 0, workShifts: 0 } },
             { upsert: true }
         );
     } catch (e) {
@@ -202,7 +202,8 @@ async function doShift({ userId }) {
     const cooldownMs = getWorkCooldownMs();
     const now = new Date();
     const cutoff = new Date(Date.now() - cooldownMs);
-    const amount = rollAmount(job.min, job.max);
+    const fixedSalary = Number.isFinite(Number(job.salary)) ? Math.max(0, Math.trunc(job.salary)) : null;
+    const amount = fixedSalary !== null ? fixedSalary : rollAmount(job.min, job.max);
 
     const claimFilter = {
         userId,
@@ -280,6 +281,38 @@ async function getTopBalances({ limit = 10 } = {}) {
     };
 }
 
+async function getTopByJob({ jobId, limit = 10 } = {}) {
+    if (!process.env.MONGODB) {
+        return { ok: false, reason: 'no-db', message: 'MongoDB no está configurado (MONGODB vacío).' };
+    }
+
+    const id = String(jobId || '').trim();
+    if (!id) {
+        return { ok: false, reason: 'missing-job', message: 'Falta jobId.' };
+    }
+
+    await ensureMongoConnection();
+    const { UserEconomy } = require('../Models/EconomySchema');
+
+    const n = Math.max(1, Math.min(25, safeInt(limit, 10)));
+    const rows = await UserEconomy.find(
+        { workJobId: id },
+        { userId: 1, workTotalEarned: 1, workShifts: 1, balance: 1 }
+    )
+        .sort({ workTotalEarned: -1, workShifts: -1, balance: -1 })
+        .limit(n);
+
+    return {
+        ok: true,
+        rows: rows.map(r => ({
+            userId: r.userId,
+            totalEarned: safeInt(r.workTotalEarned, 0),
+            shifts: safeInt(r.workShifts, 0),
+            balance: safeInt(r.balance, 0),
+        })),
+    };
+}
+
 module.exports = {
     listJobs,
     resolveJob,
@@ -290,4 +323,5 @@ module.exports = {
     doShift,
     getWorkStats,
     getTopBalances,
+    getTopByJob,
 };

@@ -65,6 +65,18 @@ Moxi.on("interactionCreate", async (interaction) => {
   }
 
   try {
+    // Autocomplete (slash options)
+    if (interaction.isAutocomplete && interaction.isAutocomplete()) {
+      const slashcmd = Moxi.slashcommands.get(interaction.commandName);
+      if (!slashcmd || typeof slashcmd.autocomplete !== 'function') return;
+      try {
+        await slashcmd.autocomplete(Moxi, interaction);
+      } catch (err) {
+        // best-effort; evita romper el handler
+      }
+      return;
+    }
+
     if (interaction.isCommand()) {
       const slashcmd = Moxi.slashcommands.get(interaction.commandName);
       if (!slashcmd) {

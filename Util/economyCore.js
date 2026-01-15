@@ -35,7 +35,7 @@ async function getOrCreateEconomy(userId) {
   try {
     await UserEconomy.updateOne(
       { userId },
-      { $setOnInsert: { userId, balance: 0, inventory: [] } },
+      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [] } },
       { upsert: true }
     );
   } catch (e) {
@@ -69,7 +69,7 @@ async function claimCooldownReward({
   try {
     await UserEconomy.updateOne(
       { userId },
-      { $setOnInsert: { userId, balance: 0, inventory: [] } },
+      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [] } },
       { upsert: true }
     );
   } catch (e) {

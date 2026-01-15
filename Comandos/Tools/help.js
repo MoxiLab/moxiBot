@@ -8,6 +8,7 @@ const { EMOJIS } = require('../../Util/emojis');
 const logger = require('../../Util/logger.js');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const getHelpContent = require('../../Util/getHelpContent');
+const { formatDuration } = require('../../Util/economyCore');
 
 function splitUsageVariants(usage) {
     const raw = String(usage || '').trim();
@@ -197,6 +198,107 @@ function resolveCommandDisplayName(cmd, lang, fallbackName) {
     return fallbackName || '';
 }
 
+function tOr(key, lang, fallback) {
+    const t = moxi.translate(key, lang);
+    if (t && !isUntranslated(key, t)) return t;
+    return fallback;
+}
+
+function formatCooldownPretty(cooldownSec, lang) {
+    const sec = (typeof cooldownSec === 'number' && Number.isFinite(cooldownSec)) ? cooldownSec : 0;
+    if (!sec || sec <= 0) return tOr('HELP_NONE', lang, 'Ninguno');
+    return formatDuration(sec * 1000);
+}
+
+function resolveHelpText(cmd, lang) {
+    const raw = cmd?.helpText;
+    if (!raw) return '';
+    if (typeof raw === 'function') {
+        try {
+            const v = raw(lang);
+            return (typeof v === 'string') ? v.trim() : '';
+        } catch {
+            return '';
+        }
+    }
+    return (typeof raw === 'string') ? raw.trim() : '';
+}
+
+function resolveExamples({ cmd, canonicalName, prefix, usageVariants, subs }) {
+    const fromCmd = Array.isArray(cmd?.examples) ? cmd.examples : [];
+    const cleaned = fromCmd.map(s => String(s || '').trim()).filter(Boolean);
+    if (cleaned.length) {
+        return cleaned.slice(0, 8).map(ex => `${prefix}${ex}`);
+    }
+
+    const out = [];
+    out.push(`${prefix}${canonicalName}`);
+
+    // Si hay variantes de uso, pon 1-2 ejemplos
+    const variants = (Array.isArray(usageVariants) ? usageVariants : [])
+        .map(u => String(u || '').trim())
+        .filter(Boolean);
+    for (const v of variants.slice(0, 3)) {
+        out.push(`${prefix}${normalizeUsageLine(v, canonicalName)}`);
+    }
+
+    // Si hay subcomandos, añade 1-2
+    const subList = Array.isArray(subs) ? subs : [];
+    for (const s of subList.slice(0, 2)) {
+        out.push(`${prefix}${canonicalName} ${s}`);
+    }
+
+    return Array.from(new Set(out)).slice(0, 8);
+}
+
+function resolveCooldownLines(baseCmd, lang) {
+    const tiers = baseCmd?.cooldownTiers;
+    const sec = (typeof baseCmd?.cooldown === 'number' && Number.isFinite(baseCmd.cooldown)) ? baseCmd.cooldown : 0;
+
+    const hasTiers = tiers && typeof tiers === 'object' && (
+        Number.isFinite(Number(tiers.normal)) ||
+        Number.isFinite(Number(tiers.normalHaste)) ||
+        Number.isFinite(Number(tiers.premium)) ||
+        Number.isFinite(Number(tiers.premiumHaste))
+    );
+
+    if (!hasTiers && (!sec || sec <= 0)) return null;
+
+    const lines = [];
+    if (hasTiers) {
+        const normal = Number.isFinite(Number(tiers.normal)) ? formatDuration(Number(tiers.normal) * 1000) : formatCooldownPretty(sec, lang);
+        lines.push(`Normal: ${normal}`);
+
+        if (Number.isFinite(Number(tiers.normalHaste))) {
+            lines.push(`Normal: ${formatDuration(Number(tiers.normalHaste) * 1000)} con Haste`);
+        }
+        if (Number.isFinite(Number(tiers.premium))) {
+            lines.push(`Premium: ${formatDuration(Number(tiers.premium) * 1000)}`);
+        }
+        if (Number.isFinite(Number(tiers.premiumHaste))) {
+            lines.push(`Premium: ${formatDuration(Number(tiers.premiumHaste) * 1000)} con Haste`);
+        }
+        return lines;
+    }
+
+    lines.push(`${tOr('HELP_COOLDOWN_NORMAL', lang, 'Normal')}: ${formatCooldownPretty(sec, lang)}`);
+    return lines;
+}
+
+function getSlashSubcommandsWithDescriptions(cmd) {
+    const data = cmd?.data;
+    if (!data || typeof data.toJSON !== 'function') return [];
+    const json = data.toJSON();
+    const opts = Array.isArray(json?.options) ? json.options : [];
+    return opts
+        .filter(o => o && o.type === 1 && o.name)
+        .map(o => ({
+            name: String(o.name).trim(),
+            description: String(o.description || '').trim(),
+        }))
+        .filter(o => o.name);
+}
+
 module.exports = {
     name: "help",
     alias: ['h', 'commands'],
@@ -314,79 +416,99 @@ module.exports = {
             ])).sort();
 
             const cooldownSec = (typeof baseCmd.cooldown === 'number' && Number.isFinite(baseCmd.cooldown)) ? baseCmd.cooldown : 0;
-            const cooldownLabel = cooldownSec > 0
-                ? `${cooldownSec}s`
-                : moxi.translate('HELP_NONE', lang);
+            const cooldownLabel = formatCooldownPretty(cooldownSec, lang);
 
             const { user: userPerms, bot: botPerms } = resolvePermissions(baseCmd);
-            const hasAnyPerms = (userPerms.length || botPerms.length);
+            const noneText = tOr('HELP_NONE', lang, 'Ninguno');
 
-            const permsText = hasAnyPerms
-                ? [
-                    `${EMOJIS.person} **${moxi.translate('HELP_PERMISSIONS_USER', lang)}:** ${userPerms.length ? userPerms.join(', ') : '—'}`,
-                    `${EMOJIS.robot} **${moxi.translate('HELP_PERMISSIONS_BOT', lang)}:** ${botPerms.length ? botPerms.join(', ') : '—'}`,
-                ].join('\n')
-                : moxi.translate('HELP_NO_PERMISSIONS', lang);
+            const botPermsText = botPerms.length ? botPerms.join('\n') : noneText;
+            const userPermsText = userPerms.length ? userPerms.join('\n') : noneText;
 
-            const usageBlockLines = [];
-            if (prefixUsageLines.length) {
-                usageBlockLines.push(`**${moxi.translate('HELP_PREFIX_COMMANDS', lang)}**`);
-                usageBlockLines.push(prefixUsageLines.map(l => `• \`${l}\``).join('\n'));
-            }
-            if (slashLines.length) {
-                usageBlockLines.push(`\n**${moxi.translate('HELP_SLASH_COMMANDS', lang)}**`);
-                usageBlockLines.push(slashLines.map(l => `• \`${l}\``).join('\n'));
-            }
-            if (subs.length) {
-                usageBlockLines.push(`\n**Subcomandos:** ${subs.map(s => `\`${s}\``).join(', ')}`);
-            }
+            const subLabel = tOr('HELP_SUBCOMMANDS', lang, 'Subcomandos');
+            const howToLabel = tOr('HELP_HOW_TO_USE', lang, 'Cómo usar');
+            const botPermLabel = tOr('HELP_BOT_PERMISSIONS', lang, 'Permisos de la bot');
+            const userPermLabel = tOr('HELP_USER_PERMISSIONS', lang, 'Permisos del usuario');
+            const syntaxNote = tOr(
+                'HELP_SYNTAX_NOTE',
+                lang,
+                'Sintaxis: <requerido> [opcional] (no incluir estos símbolos)'
+            );
 
-            if (!usageBlockLines.length) {
-                usageBlockLines.push(`• \`${usageRaw}\``);
-            }
+            const aliasesUnique = Array.from(new Set([
+                String(canonicalName || '').trim(),
+                ...(Array.isArray(aliasArr) ? aliasArr : []).map(a => String(a || '').trim()),
+            ].filter(Boolean)));
+            const aliasLine = aliasesUnique.length ? aliasesUnique.join(', ') : noneText;
 
-            const container = new ContainerBuilder()
-                .setAccentColor(Bot.AccentColor)
-                .addTextDisplayComponents(c =>
-                    c.setContent(`# ${EMOJIS.info} ${moxi.translate('HELP_COMMAND_INFO_TITLE', lang, { name: displayName })}`)
-                )
-                .addSeparatorComponents(s => s.setDivider(true))
-                .addTextDisplayComponents(c =>
-                    c.setContent(`> ${desc}`)
-                )
-                .addSeparatorComponents(s => s.setDivider(true))
-                .addTextDisplayComponents(c =>
-                    c.setContent(`${EMOJIS.book} **${moxi.translate('HELP_USAGE', lang)}**\n${usageBlockLines.join('\n')}`)
-                )
-                .addSeparatorComponents(s => s.setDivider(true))
-                .addTextDisplayComponents(c =>
-                    c.setContent(`${EMOJIS.link} **${moxi.translate('HELP_ALIASES', lang)}:** ${alias}`)
-                )
-                .addTextDisplayComponents(c =>
-                    c.setContent(`${EMOJIS.hourglass || '⏳'} **${moxi.translate('HELP_COOLDOWN', lang)}:** ${cooldownLabel}`)
-                )
-                .addTextDisplayComponents(c =>
-                    c.setContent(`${EMOJIS.folder} **${moxi.translate('HELP_CATEGORY', lang)}:** ${category}`)
-                )
-                .addTextDisplayComponents(c =>
-                    c.setContent(`${EMOJIS.shield} **${moxi.translate('HELP_PERMISSIONS', lang)}**\n${permsText}`)
-                )
-                .addSeparatorComponents(s => s.setDivider(true));
+            const slashSubWithDesc = getSlashSubcommandsWithDescriptions(slashCmd || baseCmd);
+            const subLines = (slashSubWithDesc.length ? slashSubWithDesc : subs.map(s => ({ name: s, description: '' })))
+                .map(sc => {
+                    const n = String(sc.name || '').trim();
+                    if (!n) return null;
+                    const d = String(sc.description || '').trim();
+                    if (!d) return `\`\.${n}\``;
+                    return `\`\.${n}\`: ${d.endsWith('.') ? d : (d + '.')}`;
+                })
+                .filter(Boolean);
+
+            // “Cómo usar” (como en captura): usar usage completo si existe
+            const howToBase = (usageVariants.length ? usageVariants[0] : canonicalName);
+            const howToLine = `\`${prefix}${normalizeUsageLine(howToBase, canonicalName)}\``;
+
+            const helpText = resolveHelpText(baseCmd, lang);
+            const tryItLabel = tOr('HELP_TRY_IT', lang, 'Pruébalo así');
+            const tryExamples = resolveExamples({ cmd: baseCmd, canonicalName, prefix, usageVariants, subs });
+            const cooldownLines = resolveCooldownLines(baseCmd, lang);
+
+            const container = new ContainerBuilder().setAccentColor(Bot.AccentColor);
+
+            const addBlock = (text) => {
+                const t = String(text || '').trim();
+                if (!t) return;
+                container.addTextDisplayComponents(c => c.setContent(t));
+            };
+
+            const addSection = (title, body) => {
+                const b = String(body || '').trim();
+                if (!b) return;
+                container.addSeparatorComponents(s => s.setDivider(true));
+                container.addTextDisplayComponents(c => c.setContent(`## ${title}\n${b}`));
+            };
+
+            addBlock(`# ${tOr('HELP_COMMAND_TITLE', lang, 'Comando')} ${displayName}`);
+            addBlock(`> ${desc}`);
+            if (helpText) addBlock(helpText);
+
+            addSection(howToLabel, howToLine);
+            addSection(tryItLabel, (tryExamples.length ? tryExamples.join('\n') : noneText));
+            if (subLines.length && !helpText) addSection(subLabel, subLines.join('\n'));
+            addSection(tOr('HELP_ALIASES', lang, 'Aliases'), aliasLine);
+            if (cooldownLines) addSection(moxi.translate('HELP_COOLDOWN', lang), cooldownLines.join('\n'));
+            addSection(moxi.translate('HELP_CATEGORY', lang), category);
+            addSection(botPermLabel, botPermsText);
+            addSection(userPermLabel, userPermsText);
+            // Nota de sintaxis (como en captura)
+            addSection(tOr('HELP_SYNTAX_NOTE', lang, 'Sintaxis'), syntaxNote);
+
             const webLabel = moxi.translate('HELP_WEB_LABEL', lang) || 'Web';
             let webUrl = moxi.translate('HELP_WEB_URL', lang);
             if (!webUrl || typeof webUrl !== 'string' || !/^https?:\/\//.test(webUrl)) {
                 webUrl = 'https://moxilab.net';
             }
+
             const webButton = new ButtonBuilder()
                 .setLabel(webLabel)
                 .setStyle(ButtonStyle.Link)
                 .setURL(webUrl);
+
             container
+                .addSeparatorComponents(s => s.setDivider(true))
                 .addActionRowComponents(row => row.addComponents(webButton))
                 .addSeparatorComponents(s => s.setDivider(true))
                 .addTextDisplayComponents(c =>
                     c.setContent(`${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`)
                 );
+
             return message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
         }
         await helpSlash.messageRun(Moxi, message, args);

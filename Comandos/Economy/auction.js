@@ -25,6 +25,15 @@ module.exports = {
     Category: economyCategory,
     usage: 'auction [subcomando]',
     description: 'Subasta y puja por items en el mercado de subastas.',
+    helpText:
+        '`auction add` » Subasta un item.\n' +
+        '`auction bid` » Puja por un item.\n' +
+        '`auction bids` » Mira tus pujas en subastas.\n' +
+        '`auction cancel` » Cancela una subasta.\n' +
+        '`auction list` » Mira tus items en subasta.\n' +
+        '`auction search` » Mira y busca en la subasta.\n' +
+        '`auction upgrade` » Incrementa tu límite de subastas.',
+    examples: ['auction', 'auction list', 'auction search', 'auction add', 'auction bid'],
     cooldown: 0,
     command: {
         prefix: true,

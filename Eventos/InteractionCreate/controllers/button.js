@@ -12,7 +12,11 @@ const handlers = [
   require('./buttons/channel'),
   require('./buttons/perms'),
   require('./buttons/bag'),
+  require('./buttons/balance'),
+  require('./buttons/fish'),
+  require('./buttons/zones'),
   require('./buttons/leave'), // <-- Añadido para leave
+  require('./buttons/workList'),
 ];
 
 module.exports = async function buttonController(interaction, Moxi, logger) {

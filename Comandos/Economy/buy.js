@@ -16,8 +16,9 @@ module.exports = {
     name: 'buy',
     alias: ['comprar'],
     Category: economyCategory,
-    usage: 'buy <id> [cantidad]',
+    usage: 'buy <item>',
     description: 'Compra un ítem de la tienda por su ID.',
+    examples: ['buy 1', 'buy 10', 'buy pocion'],
     cooldown: 0,
     command: {
         prefix: true,

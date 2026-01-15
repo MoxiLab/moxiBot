@@ -11,9 +11,10 @@ const {
     leaveJob,
     doShift,
     getWorkStats,
-    getTopBalances,
+    getTopByJob,
 } = require('../../Util/workSystem');
 const { formatDuration } = require('../../Util/economyCore');
+const { buildWorkListMessageOptions } = require('../../Util/workListPanel');
 
 function economyCategory(lang) {
     lang = lang || 'es-ES';
@@ -31,16 +32,16 @@ async function renderTop({ client, rows }) {
         rows.map(async (r) => {
             try {
                 const u = await client.users.fetch(r.userId);
-                return { label: u.tag, userId: r.userId, balance: r.balance };
+                return { label: u.tag, userId: r.userId, totalEarned: r.totalEarned, shifts: r.shifts };
             } catch {
-                return { label: r.userId, userId: r.userId, balance: r.balance };
+                return { label: r.userId, userId: r.userId, totalEarned: r.totalEarned, shifts: r.shifts };
             }
         })
     );
 
     const lines = resolved.map((p, idx) => {
-        const v = p.status === 'fulfilled' ? p.value : { label: 'Unknown', userId: 'unknown', balance: 0 };
-        return `**${idx + 1}.** ${v.label} — **${v.balance}**`;
+        const v = p.status === 'fulfilled' ? p.value : { label: 'Unknown', userId: 'unknown', totalEarned: 0, shifts: 0 };
+        return `**${idx + 1}.** ${v.label} — Ganado: **${v.totalEarned}** • Turnos: **${v.shifts}**`;
     });
 
     return lines.join('\n');
@@ -51,11 +52,11 @@ module.exports = {
     Category: economyCategory,
     data: new SlashCommandBuilder()
         .setName('work')
-        .setDescription('Sistema de trabajo: aplica, haz turnos y gana monedas')
+        .setDescription('Trabaja para ganar monedas y experiencia')
         .addSubcommand((s) =>
             s
                 .setName('list')
-                .setDescription('Muestra los trabajos disponibles')
+                .setDescription('Mira la lista de trabajos')
         )
         .addSubcommand((s) =>
             s
@@ -64,30 +65,71 @@ module.exports = {
                 .addStringOption((o) =>
                     o
                         .setName('trabajo')
-                        .setDescription('ID o nombre del trabajo (ej: developer)')
+                        .setDescription('ID o nombre del trabajo')
+                        .setAutocomplete(true)
                         .setRequired(true)
                 )
         )
         .addSubcommand((s) =>
             s
                 .setName('leave')
-                .setDescription('Deja tu trabajo actual')
+                .setDescription('Renuncia a tu trabajo')
         )
         .addSubcommand((s) =>
             s
                 .setName('shift')
-                .setDescription('Haz un turno para ganar monedas (con cooldown)')
+                .setDescription('Completa un turno de trabajo')
         )
         .addSubcommand((s) =>
             s
                 .setName('stats')
-                .setDescription('Muestra tus estadísticas de trabajo')
+                .setDescription('Muestra tu progreso en el trabajo actual')
         )
         .addSubcommand((s) =>
             s
                 .setName('top')
-                .setDescription('Muestra el top de saldo')
+                .setDescription('Mira los mejores empleados de tu profesión')
         ),
+
+    async autocomplete(Moxi, interaction) {
+        try {
+            const guildId = interaction.guildId || interaction.guild?.id;
+            const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+
+            const focused = interaction.options.getFocused?.() ?? '';
+            const q = String(focused || '')
+                .trim()
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '');
+
+            const jobs = listJobs();
+            const matches = jobs
+                .filter(j => {
+                    if (!q) return true;
+                    const id = String(j.id || '').toLowerCase();
+                    const baseName = String(j.name || '').toLowerCase();
+                    const displayName = String(getJobDisplayName(j, lang) || '').toLowerCase();
+                    const norm = (s) => String(s || '')
+                        .normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '');
+                    return norm(id).includes(q) || norm(baseName).includes(q) || norm(displayName).includes(q);
+                })
+                .slice(0, 25)
+                .map(j => {
+                    const label = `${j.emoji || '💼'} ${getJobDisplayName(j, lang)} (${j.id})`;
+                    return {
+                        name: label.length > 100 ? label.slice(0, 97) + '...' : label,
+                        value: String(j.id).slice(0, 100),
+                    };
+                });
+
+            return interaction.respond(matches);
+        } catch {
+            // best-effort
+            try { return interaction.respond([]); } catch { }
+        }
+    },
 
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;
@@ -96,14 +138,8 @@ module.exports = {
         const sub = interaction.options.getSubcommand();
 
         if (sub === 'list') {
-            const payload = asV2MessageOptions(
-                buildNoticeContainer({
-                    emoji: '📋',
-                    title: 'Trabajos disponibles',
-                    text: formatJobsList(lang),
-                })
-            );
-            return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
+            const payload = buildWorkListMessageOptions({ lang, page: 0, userId: interaction.user.id });
+            return interaction.reply(payload);
         }
 
         if (sub === 'apply') {
@@ -225,7 +261,19 @@ module.exports = {
         }
 
         if (sub === 'top') {
-            const top = await getTopBalances({ limit: 10 });
+            const st = await getWorkStats({ userId: interaction.user.id });
+            if (!st.job) {
+                const payload = asV2MessageOptions(
+                    buildNoticeContainer({
+                        emoji: EMOJIS.cross,
+                        title: 'Sin trabajo',
+                        text: 'No tienes un trabajo activo. Usa `/work apply` primero.',
+                    })
+                );
+                return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
+            }
+
+            const top = await getTopByJob({ jobId: st.job.id, limit: 10 });
             if (!top.ok) {
                 const payload = asV2MessageOptions(
                     buildNoticeContainer({
@@ -244,7 +292,7 @@ module.exports = {
             const payload = asV2MessageOptions(
                 buildNoticeContainer({
                     emoji: '🏆',
-                    title: 'Top economía (saldo)',
+                    title: `Top • ${getJobDisplayName(st.job, lang)}`,
                     text: body,
                 })
             );
