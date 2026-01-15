@@ -7,6 +7,7 @@ const { getSettings: getBugSettings } = require('../../Util/bugStorage');
 const moxi = require('../../i18n');
 const logger = require('../../Util/logger');
 const debugHelper = require('../../Util/debugHelper');
+const { trackBotUserUsage } = require('../../Util/botUsageTracker');
 const { awardXpForMessage } = require('../../Util/levels');
 const afkStorage = require('../../Util/afkStorage');
 const { buildAfkContainer, formatAfkTimestamp, formatAfkDuration } = require('../../Util/afkRender');
@@ -256,6 +257,14 @@ Moxi.on("messageCreate", async (message) => {
     }
   }
   if (cmd) {
+    try {
+      const uid = message.author?.id;
+      if (uid && !message.author?.bot) {
+        trackBotUserUsage({ userId: uid, guildId: message.guild?.id, source: 'prefix', name: cmd.name || command });
+      }
+    } catch (_) {
+      // best-effort
+    }
     const handleCommand = require('../../Util/commandHandler');
     await handleCommand(Moxi, message, args, cmd);
   }
