@@ -22,7 +22,7 @@ Este README documenta únicamente los comandos que el bot expone hoy, separados 
 - `play`, `queue`, `pause`, `resume`, `skip`, `stop`, `volume`, `add`, `autoplay`: control total de la música.
 
 ### Herramientas y utilidades
-- `help`, `ping`, `bug`, `afk`, `starboard`, `autonuke`, `user`, `cls`, `rules`, `timer`, `uptime`, `invite`: utilidades generales y de soporte.
+- `help`, `ping`, `bug`, `afk`, `starboard`, `autonuke`, `user`, `cls`, `rules`, `timer`, `uptime`, `invite`, `portal`, `botstats`: utilidades generales y de soporte.
 
 ### Funciones de experiencia gamificada
 - `Feedback`, `Prestige`, `Levels`, `Rank`, `Stats`, `emojiinfo`: experiencia, estadísticas y feedback de la comunidad.
@@ -42,7 +42,7 @@ Este README documenta únicamente los comandos que el bot expone hoy, separados 
 - `musica`: reproducción, control de cola y volumen.
 
 ### Herramientas
-- `help`, `bug`, `afk`, `cls`, `rules`, `starboard`, `timer`, `invite`: utilidades y soporte.
+- `help`, `bug`, `afk`, `cls`, `rules`, `starboard`, `timer`, `invite`, `portal`, `botstats`: utilidades y soporte.
 
 ## Sistema de invitaciones (permanentes + anti-manual + tracking)
 
@@ -51,6 +51,7 @@ El bot incluye un sistema para **tener siempre una única invitación permanente
 ### Qué hace
 
 - **Invitación permanente única**: el comando `/invite` (slash) o `invite` (prefijo) devuelve siempre la misma invitación.
+- **Portal del servidor**: el comando `/portal` (slash) o `portal` (prefijo) muestra un panel con botón y el enlace oficial.
 - **Sin crear más invitaciones**: si ya existe una invitación guardada, no se crean nuevas aunque se pida otro canal.
 - **Anti-invitaciones manuales (best-effort)**: si alguien crea una invitación manual, el bot intenta borrarla automáticamente.
 - **Tracking de invitación usada (best-effort)**: cuando entra un usuario, el bot intenta detectar qué invitación subió de usos y lo añade al log de auditoría.
