@@ -34,6 +34,13 @@ const UserEconomySchema = new mongoose.Schema({
         status: { type: String, default: 'active' },
         progress: { type: Object }
     }],
+
+    // --- Work system (empleos) ---
+    workJobId: { type: String },
+    workStartedAt: { type: Date },
+    workTotalEarned: { type: Number, default: 0 },
+    workShifts: { type: Number, default: 0 },
+
     lastDaily: { type: Date },
     lastWork: { type: Date },
 });
