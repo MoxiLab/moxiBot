@@ -497,7 +497,7 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
       const webLabel = moxi.translate('HELP_WEB_LABEL', lang);
       let webUrl = moxi.translate('HELP_WEB_URL', lang);
       if (!webUrl || typeof webUrl !== 'string' || !/^https?:\/\//.test(webUrl)) {
-        webUrl = 'https://moxibot.es';
+        webUrl = 'https://moxilab.net';
       }
       const webButton = new ButtonBuilder()
         .setLabel(webLabel)
