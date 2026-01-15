@@ -135,15 +135,15 @@ async function discordPutJson(route, body, { timeoutMs = 45_000 } = {}) {
         } else {
             logger.startup('[refresh-slash] skipping clear (recomendado).');
         }
-        logger.startup('[refresh-slash] deploying fresh commands...');
+        logger.startup('[refresh-slash] updating commands...');
         if (guildId) {
             const res = await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands });
-            logger.startup('[refresh-slash] deployed to guild ' + guildId + ' count ' + res.length);
+            logger.startup('[refresh-slash] updated guild ' + guildId + ' count ' + res.length);
         } else {
             const res = await discordPutJson(Routes.applicationCommands(clientId), commands);
             const count = Array.isArray(res) ? res.length : 0;
-            logger.startup('[refresh-slash] deployed global count ' + count);
-            logger.startup('[refresh-slash] nota: el deploy GLOBAL puede tardar en reflejarse (minutos-horas).');
+            logger.startup('[refresh-slash] updated global count ' + count);
+            logger.startup('[refresh-slash] nota: el GLOBAL puede tardar en reflejarse (minutos-horas).');
             logger.startup('[refresh-slash] TIP: evita redeploys global frecuentes, Discord limita las creaciones diarias (código 30034).');
         }
         logger.startup('[refresh-slash] refresh completed');
