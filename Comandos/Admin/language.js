@@ -183,7 +183,7 @@ module.exports = {
                         new ButtonBuilder()
                             .setCustomId(`lang_button_${lang.code}`)
                             .setLabel(moxi.translate('SELECT', langCode) || 'Select')
-                            .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Primary)
+                            .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Danger)
                     )
             );
         });
@@ -261,7 +261,7 @@ module.exports = {
                                     new ButtonBuilder()
                                         .setCustomId(`lang_button_${lang.code}`)
                                         .setLabel(moxi.translate('SELECT', selectedCode) || 'Select')
-                                        .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Primary)
+                                        .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Danger)
                                 )
                         );
                     });
@@ -334,7 +334,7 @@ module.exports = {
                                 new ButtonBuilder()
                                     .setCustomId(`lang_button_${lang.code}`)
                                     .setLabel(moxi.translate('SELECT', lastLangCode) || 'Select')
-                                    .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Primary)
+                                    .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Danger)
                                     .setDisabled(true)
                             )
                     );
