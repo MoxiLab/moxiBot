@@ -50,6 +50,14 @@ module.exports = async (Moxi) => {
         logger.warn(`${EMOJIS.warning || EMOJIS.cross} MongoDB no configurado (MONGODB vacío). Se omiten funciones con base de datos.`);
     }
 
+    // Prime invite snapshot for tracking (best-effort, avoids first-join misses).
+    try {
+        const { snapshotGuildInvites } = require('../../Util/inviteTracker');
+        for (const guild of Moxi.guilds.cache.values()) {
+            await snapshotGuildInvites(guild).catch(() => null);
+        }
+    } catch { }
+
     // IDs de comandos slash:
     // Ya NO se sincronizan/guardan al arrancar. Si SLASH_MENTIONS_WITH_ID está activo,
     // los IDs se resuelven bajo demanda via Discord API y se cachean en memoria.
