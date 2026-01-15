@@ -7,6 +7,37 @@ const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const logger = require('../../Util/logger.js');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
+const getHelpContent = require('../../Util/getHelpContent');
+
+function normalizeCategoryQuery(input) {
+    const raw = String(input || '').trim().toLowerCase();
+    if (!raw) return null;
+
+    // Economía
+    if (raw.includes('econom')) return 'Economy';
+    if (raw.includes('eco')) return 'Economy';
+
+    // Herramientas
+    if (raw.includes('herra')) return 'Tools';
+    if (raw.includes('tool')) return 'Tools';
+
+    // Música
+    if (raw.includes('music') || raw.includes('musi')) return 'Music';
+
+    // Moderación
+    if (raw.includes('moder')) return 'Moderation';
+
+    // Administración
+    if (raw.includes('admin')) return 'Admin';
+
+    // Root/Owner
+    if (raw === 'root' || raw.includes('owner') || raw.includes('due')) return 'Root';
+
+    // Welcome
+    if (raw.includes('welc') || raw.includes('bienv') || raw.includes('welcome')) return 'Welcome';
+
+    return null;
+}
 
 function isUntranslated(key, value) {
     if (value === undefined || value === null) return true;
@@ -90,7 +121,7 @@ module.exports = {
         lang = lang || 'es-ES';
         return moxi.translate('commands:CATEGORY_HERRAMIENTAS', lang);
     },
-    usage: 'help [comando]',
+    usage: 'help [comando|categoria]',
     description: function (lang) {
         lang = lang || 'es-ES';
         return moxi.translate('commands:CMD_HELP_DESC', lang);
@@ -106,6 +137,22 @@ module.exports = {
                 Moxi.slashcommands?.get(query) ||
                 Array.from(Moxi.slashcommands?.values() || []).find(c => c.alias && c.alias.includes(query));
             if (!cmd) {
+                const categoria = normalizeCategoryQuery(query);
+                if (categoria) {
+                    const help = await getHelpContent({
+                        client: Moxi,
+                        lang,
+                        userId: message.author?.id,
+                        guildId: message.guild?.id,
+                        categoria,
+                        useV2: true,
+                    });
+
+                    if (help && (help.content || (Array.isArray(help.components) && help.components.length))) {
+                        return message.reply(help);
+                    }
+                }
+
                 return message.reply(
                     asV2MessageOptions(
                         buildNoticeContainer({
