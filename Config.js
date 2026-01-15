@@ -15,5 +15,7 @@ module.exports = {
         Prefix: process.env.PREFIX ? [process.env.PREFIX, 'moxi'] : ['.', 'moxi'],
         Language: process.env.LANGUAGE || 'es-ES',
         AccentColor: parseHexColor(process.env.ACCENT_COLOR, 0xFFB6E6),
+        // Alternativa a SLASH_MENTIONS_WITH_ID (útil si tu host no permite env vars)
+        SlashMentionsWithId: true,
     }
 };
