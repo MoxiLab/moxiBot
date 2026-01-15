@@ -1,10 +1,28 @@
 const { REST, Routes } = require('discord.js');
-const { ensureMongoConnection } = require('./mongoConnect');
 const logger = require('./logger');
 
-let SlashCommandIdModel = null; 
+// Por defecto NO usamos IDs para menciones (evita depender de Mongo / sync).
+// Si quieres volver a menciones reales tipo </bug:ID>, activa:
+//   SLASH_MENTIONS_WITH_ID=true
+function isUsingSlashCommandIds() {
+  const env = process.env.SLASH_MENTIONS_WITH_ID;
+  if (env === 'true') return true;
+  if (env === 'false') return false;
 
-// In-memory cache to allow fast lookups and avoid DB roundtrips.
+  try {
+    // eslint-disable-next-line global-require
+    const Config = require('../Config');
+    if (typeof Config?.Bot?.SlashMentionsWithId === 'boolean') return Config.Bot.SlashMentionsWithId;
+  } catch {
+    // ignore
+  }
+
+  return false;
+}
+
+const USE_SLASH_COMMAND_IDS = isUsingSlashCommandIds();
+
+// In-memory cache for fast lookups.
 // Key: `${applicationId}:${guildId||'global'}:${name}` => commandId
 const CACHE = new Map();
 
@@ -24,6 +42,15 @@ function resolveSlashMentionPlaceholders(text, { applicationId, guildId = null }
   if (!text.includes('{{COMMAND') && !text.includes('{{command')) return text;
   if (!applicationId) return text;
 
+  if (!USE_SLASH_COMMAND_IDS) {
+    // Solo convierte el placeholder a texto del comando: /name o /name sub
+    return text.replace(/<\/\s*([^:>]+?)\s*:\s*\{\{\s*(?:COMMAND|command)\s*\}\}\s*>/g, (match, fullNameRaw) => {
+      const fullName = String(fullNameRaw || '').trim().replace(/\s+/g, ' ');
+      if (!fullName) return match;
+      return `/${fullName}`;
+    });
+  }
+
   // Matches: </bug:{{COMMAND}}> or </bug:{{command}}> or with subcommand: </music play:{{COMMAND}}>
   return text.replace(/<\/\s*([^:>]+?)\s*:\s*\{\{\s*(?:COMMAND|command)\s*\}\}\s*>/g, (match, fullNameRaw) => {
     const fullName = String(fullNameRaw || '').trim().replace(/\s+/g, ' ');
@@ -35,58 +62,12 @@ function resolveSlashMentionPlaceholders(text, { applicationId, guildId = null }
   });
 }
 
-async function getModel() {
-  if (SlashCommandIdModel) return SlashCommandIdModel;
-  // Lazy require to avoid import cycles
-  // eslint-disable-next-line global-require
-  SlashCommandIdModel = require('../Models/SlashCommandId');
-  return SlashCommandIdModel;
-}
-
-async function upsertDeployedCommandIds({ applicationId, guildId = null, deployed }) {
-  if (!applicationId) throw new Error('upsertDeployedCommandIds: applicationId is required');
-  if (!Array.isArray(deployed) || deployed.length === 0) return { upserted: 0 };
-
-  // Update cache immediately
-  for (const cmd of deployed) {
+function cacheCommands({ applicationId, guildId = null, commands }) {
+  if (!applicationId || !Array.isArray(commands)) return;
+  for (const cmd of commands) {
     if (!cmd || !cmd.name || !cmd.id) continue;
-    CACHE.set(cacheKey({ applicationId, guildId, name: cmd.name }), String(cmd.id));
+    CACHE.set(cacheKey({ applicationId, guildId, name: String(cmd.name) }), String(cmd.id));
   }
-
-  if (!process.env.MONGODB) return { upserted: 0 };
-
-  await ensureMongoConnection();
-  const Model = await getModel();
-
-  const ops = deployed
-    .filter((c) => c && c.name && c.id)
-    .map((c) => ({
-      updateOne: {
-        filter: { applicationId, guildId: guildId || null, name: String(c.name) },
-        update: { $set: { commandId: String(c.id) } },
-        upsert: true,
-      },
-    }));
-
-  if (!ops.length) return { upserted: 0 };
-
-  const res = await Model.bulkWrite(ops, { ordered: false });
-  const upserted = res?.upsertedCount || 0;
-  return { upserted };
-}
-
-async function loadIdsFromDb({ applicationId, guildId = null } = {}) {
-  if (!process.env.MONGODB) return 0;
-  if (!applicationId) return 0;
-
-  await ensureMongoConnection();
-  const Model = await getModel();
-  const docs = await Model.find({ applicationId, guildId: guildId || null }).lean();
-  for (const d of docs) {
-    if (!d?.name || !d?.commandId) continue;
-    CACHE.set(cacheKey({ applicationId, guildId, name: d.name }), String(d.commandId));
-  }
-  return docs.length;
 }
 
 async function fetchIdsFromDiscord({ applicationId, token, guildId = null } = {}) {
@@ -98,16 +79,8 @@ async function fetchIdsFromDiscord({ applicationId, token, guildId = null } = {}
   return rest.get(Routes.applicationCommands(applicationId));
 }
 
-async function syncSlashCommandIds({ applicationId, guildId = null } = {}) {
-  const token = process.env.TOKEN;
-  if (!applicationId || !token) return { synced: 0 };
-  const list = await fetchIdsFromDiscord({ applicationId, token, guildId });
-  const deployed = Array.isArray(list) ? list : [];
-  await upsertDeployedCommandIds({ applicationId, guildId, deployed });
-  return { synced: deployed.length };
-}
-
 async function getSlashCommandId({ name, applicationId, guildId = null, allowFetch = true } = {}) {
+  if (!USE_SLASH_COMMAND_IDS) return null;
   if (!name || !applicationId) return null;
 
   const primaryKey = cacheKey({ applicationId, guildId, name });
@@ -116,35 +89,14 @@ async function getSlashCommandId({ name, applicationId, guildId = null, allowFet
   if (CACHE.has(primaryKey)) return CACHE.get(primaryKey);
   if (CACHE.has(globalKey)) return CACHE.get(globalKey);
 
-  // Try DB
-  if (process.env.MONGODB) {
-    try {
-      await ensureMongoConnection();
-      const Model = await getModel();
-      const doc = await Model.findOne({ applicationId, guildId: guildId || null, name }).lean();
-      if (doc?.commandId) {
-        CACHE.set(primaryKey, String(doc.commandId));
-        return String(doc.commandId);
-      }
-      // Fallback to global
-      const docGlobal = await Model.findOne({ applicationId, guildId: null, name }).lean();
-      if (docGlobal?.commandId) {
-        CACHE.set(globalKey, String(docGlobal.commandId));
-        return String(docGlobal.commandId);
-      }
-    } catch {
-      // ignore and continue
-    }
-  }
-
-  // As a last resort, fetch from Discord API (and persist if possible)
+  // Fetch from Discord API (no DB sync; only in-memory cache)
   if (allowFetch) {
     const token = process.env.TOKEN;
     if (token) {
       try {
         const list = await fetchIdsFromDiscord({ applicationId, token, guildId });
         if (Array.isArray(list) && list.length) {
-          await upsertDeployedCommandIds({ applicationId, guildId, deployed: list });
+          cacheCommands({ applicationId, guildId, commands: list });
           const found = list.find((c) => c && c.name === name);
           if (found?.id) return String(found.id);
         }
@@ -157,7 +109,7 @@ async function getSlashCommandId({ name, applicationId, guildId = null, allowFet
         try {
           const list = await fetchIdsFromDiscord({ applicationId, token, guildId: null });
           if (Array.isArray(list) && list.length) {
-            await upsertDeployedCommandIds({ applicationId, guildId: null, deployed: list });
+            cacheCommands({ applicationId, guildId: null, commands: list });
             const found = list.find((c) => c && c.name === name);
             if (found?.id) return String(found.id);
           }
@@ -172,18 +124,18 @@ async function getSlashCommandId({ name, applicationId, guildId = null, allowFet
 }
 
 async function slashMention({ name, subcommand = null, applicationId, guildId = null } = {}) {
-  const id = await getSlashCommandId({ name, applicationId, guildId });
   const fullName = subcommand ? `${name} ${subcommand}` : name;
+  if (!USE_SLASH_COMMAND_IDS) return `/${fullName}`;
+
+  const id = await getSlashCommandId({ name, applicationId, guildId });
   if (!id) return `/${fullName}`;
   return `</${fullName}:${id}>`;
 }
 
 module.exports = {
-  upsertDeployedCommandIds,
-  loadIdsFromDb,
+  isUsingSlashCommandIds,
   getSlashCommandId,
   slashMention,
-  syncSlashCommandIds,
   getCachedSlashCommandId,
   resolveSlashMentionPlaceholders,
 };
