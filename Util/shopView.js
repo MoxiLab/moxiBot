@@ -91,7 +91,7 @@ function buildShopMessage({
                 'Bienvenido/a a mi tiendita.',
                 'Puedes comprar con: `/shop buy` o `.shop buy`',
                 '',
-                `**Lista de ítems — ${categoryLabel}**`,
+                `**Lista de ítems**`,
                 '',
                 lines.length ? lines.join('\n\n') : '_No hay ítems en esta categoría._',
             ].join('\n')
