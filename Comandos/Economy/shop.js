@@ -1,0 +1,151 @@
+const moxi = require('../../i18n');
+const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
+const { EMOJIS } = require('../../Util/emojis');
+const { buildShopData, buildShopMessage } = require('../../Util/shopView');
+
+function economyCategory(lang) {
+    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
+}
+
+function safeInt(n, fallback = 0) {
+    const x = Number(n);
+    return Number.isFinite(x) ? Math.trunc(x) : fallback;
+}
+
+module.exports = {
+    name: 'shop',
+    alias: ['tienda'],
+    Category: economyCategory,
+    usage: 'shop list [categoria] [pagina] | shop buy <id> [cantidad]',
+    description: 'Tienda: lista y compra ítems.',
+    cooldown: 0,
+    command: {
+        prefix: true,
+        slash: false,
+        ephemeral: false,
+    },
+
+    async execute(Moxi, message, args) {
+        const sub = (args?.[0] ? String(args[0]).trim().toLowerCase() : '');
+
+        if (!sub || sub === 'list' || sub === 'lista') {
+            // .shop list [categoria] [pagina]
+            const rawCategoria = args?.[1] ? String(args[1]).trim() : '';
+            const rawPagina = args?.[2] ? safeInt(args[2], 0) : 0;
+            const page = rawPagina ? Math.max(0, rawPagina - 1) : 0;
+
+            let categoryKey = 'all';
+            if (rawCategoria) {
+                const { categories } = buildShopData();
+                const needle = rawCategoria.toLowerCase();
+                const match = categories.find((c) => c.key === needle || String(c.label).toLowerCase() === needle);
+                if (match) categoryKey = match.key;
+            }
+
+            const payload = buildShopMessage({ userId: message.author.id, categoryKey, page });
+            return message.reply({
+                ...payload,
+                allowedMentions: { repliedUser: false },
+            });
+        }
+
+        if (sub === 'buy' || sub === 'comprar') {
+            // .shop buy <id> [cantidad]
+            const id = safeInt(args?.[1], 0);
+            const amount = Math.max(1, safeInt(args?.[2], 1));
+
+            if (!id) {
+                return message.reply({
+                    ...asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: 'Tienda',
+                            text: 'Uso: `.shop buy <id> [cantidad]`',
+                        })
+                    ),
+                    allowedMentions: { repliedUser: false },
+                });
+            }
+
+            const { byShopId } = buildShopData();
+            const item = byShopId.get(id);
+            if (!item) {
+                return message.reply({
+                    ...asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: 'Tienda',
+                            text: `No existe un ítem con ID ${id}. Usa .shop list para ver los IDs.`,
+                        })
+                    ),
+                    allowedMentions: { repliedUser: false },
+                });
+            }
+
+            const { UserEconomy } = require('../../Models/EconomySchema');
+            const userId = message.author.id;
+            let eco = await UserEconomy.findOne({ userId });
+            if (!eco) eco = await UserEconomy.create({ userId, balance: 0, inventory: [] });
+
+            const price = Number.isFinite(item.price) ? item.price : 0;
+            const cost = price * amount;
+
+            if (cost <= 0) {
+                return message.reply({
+                    ...asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: 'Tienda',
+                            text: 'Este ítem no se puede comprar (precio inválido).',
+                        })
+                    ),
+                    allowedMentions: { repliedUser: false },
+                });
+            }
+
+            if ((eco.balance || 0) < cost) {
+                return message.reply({
+                    ...asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: 'Fondos insuficientes',
+                            text: `Necesitas ${cost} 🪙 y tienes ${eco.balance || 0} 🪙.`,
+                        })
+                    ),
+                    allowedMentions: { repliedUser: false },
+                });
+            }
+
+            const inv = Array.isArray(eco.inventory) ? eco.inventory : [];
+            const existing = inv.find((x) => x && x.itemId === item.itemId);
+            if (existing) existing.amount = (existing.amount || 0) + amount;
+            else inv.push({ itemId: item.itemId, amount, obtainedAt: new Date() });
+
+            eco.inventory = inv;
+            eco.balance = (eco.balance || 0) - cost;
+            await eco.save();
+
+            return message.reply({
+                ...asV2MessageOptions(
+                    buildNoticeContainer({
+                        emoji: EMOJIS.check,
+                        title: 'Compra realizada',
+                        text: `Compraste **${amount}x ${item.name}** por **${cost}** 🪙.`,
+                    })
+                ),
+                allowedMentions: { repliedUser: false },
+            });
+        }
+
+        return message.reply({
+            ...asV2MessageOptions(
+                buildNoticeContainer({
+                    emoji: EMOJIS.info,
+                    title: 'Tienda',
+                    text: 'Uso: `.shop list [categoria] [pagina]` o `.shop buy <id> [cantidad]`',
+                })
+            ),
+            allowedMentions: { repliedUser: false },
+        });
+    },
+};
