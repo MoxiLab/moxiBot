@@ -3,6 +3,7 @@ const Moxi = require("../../index");
 const moxi = require('../../i18n');
 const { getGuildSettingsCached } = require('../../Util/guildSettings');
 const debugHelper = require('../../Util/debugHelper');
+const { trackBotUserUsage } = require('../../Util/botUsageTracker');
 
 const selectMenuController = require("./controllers/selectMenu");
 const buttonController = require("./controllers/button");
@@ -10,6 +11,23 @@ const modalController = require("./controllers/modals");
 
 Moxi.on("interactionCreate", async (interaction) => {
   if (interaction.channel.type === 'dm') return;
+
+  try {
+    const uid = interaction.user?.id;
+    if (uid && !interaction.user?.bot) {
+      const kind = interaction.isCommand?.() ? 'slash'
+        : interaction.isButton?.() ? 'button'
+          : (interaction.isStringSelectMenu?.() || (interaction.isChannelSelectMenu && interaction.isChannelSelectMenu())) ? 'select'
+            : (interaction.isModalSubmit && interaction.isModalSubmit()) ? 'modal'
+              : 'interaction';
+      const name = interaction.isCommand?.()
+        ? interaction.commandName
+        : (typeof interaction.customId === 'string' ? interaction.customId : null);
+      trackBotUserUsage({ userId: uid, guildId: interaction.guildId || interaction.guild?.id, source: kind, name });
+    }
+  } catch (_) {
+    // best-effort
+  }
   const logger = require("../../Util/logger");
   const { buildNoticeContainer } = require('../../Util/v2Notice');
   const { EMOJIS } = require('../../Util/emojis');
