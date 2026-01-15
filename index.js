@@ -1,6 +1,9 @@
 // PRUEBA DE ERROR V2 POR WEBHOOK
 require('./Util/webhookError').sendErrorToWebhook('Error de prueba V2', 'console.log("¡Funciona el V2!")');
 
+// Cargar .env y configuración de red (Undici) lo antes posible.
+require('./Util/silentDotenv')();
+
 const { Client, IntentsBitField } = require("discord.js");
 const client = new Client({
     intents: [
@@ -15,8 +18,6 @@ const client = new Client({
 
 // Compat discord.js: `ephemeral` está deprecado, usamos flags internamente.
 require('./Util/discordEphemeralCompat').installEphemeralCompat();
-
-require('./Util/silentDotenv')();
 
 const { restoreTimers } = require('./Util/timerStorage');
 restoreTimers();
