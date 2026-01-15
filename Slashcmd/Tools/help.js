@@ -15,13 +15,20 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('help')
-        .setDescription('Muestra la lista de comandos disponibles y su uso'),
+        .setDescription('Muestra la lista de comandos disponibles y su uso')
+        .addStringOption((opt) =>
+            opt
+                .setName('categoria')
+                .setDescription('Filtra por categoría (ej: economia, herramientas, musica)')
+                .setRequired(false)
+        ),
 
     async run(Moxi, interaction) {
         let guildId = interaction.guildId || interaction.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
         const userId = interaction.user?.id || interaction.member?.user?.id;
-        const help = await getHelpContent({ client: Moxi, lang, userId, guildId, useV2: true });
+        const categoria = interaction.options.getString('categoria');
+        const help = await getHelpContent({ client: Moxi, lang, userId, guildId, categoria, useV2: true });
 
         const isV2 = Boolean(help && help.flags);
         const embedsCount = Array.isArray(help?.embeds) ? help.embeds.length : 0;
@@ -47,7 +54,8 @@ module.exports = {
         let guildId = message.guildId || message.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
         const userId = message.author?.id;
-        const help = await getHelpContent({ client: Moxi, lang, userId, guildId, useV2: true });
+        const categoria = (Array.isArray(args) && args[0]) ? String(args[0]) : null;
+        const help = await getHelpContent({ client: Moxi, lang, userId, guildId, categoria, useV2: true });
 
         const isV2 = Boolean(help && help.flags);
         const embedsCount = Array.isArray(help?.embeds) ? help.embeds.length : 0;
