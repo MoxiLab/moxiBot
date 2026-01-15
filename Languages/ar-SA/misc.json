@@ -88,7 +88,7 @@
     "HELP_TOTAL_CATEGORIES": "إجمالي الفئات",
     "HELP_TOTAL_COMMANDS": "إجمالي الأوامر",
     "HELP_USAGE": "الاستخدام",
-    "HELP_WEB_URL": "https://moxibot.es/",
+    "HELP_WEB_URL": "https://moxilab.net/",
     "INCORRECT_FORMAT": "أوه! يبدو أن هناك خطأ، لكن لا تقلق. اتبع هذه النصيحة لإصلاحه:\n\n{{commandExample}}",
     "LANGUAGE_DESCRIPTION": "اختر لغتك المفضلة لواجهة البوت.",
     "LANGUAGE_SELECTION": "اختيار اللغة",
@@ -181,7 +181,7 @@
     "MUSIC_TRACK_REPEATED": "🔁 تم تكرار الأغنية.",
     "MUSIC_TRACK_SKIPPED": "تم تجاوز المقطع الحالي.",
     "MUSIC_UNKNOWN_SUBCOMMAND": "أمر فرعي غير معروف.",
-    "NEWS": "**__أحدث الأخبار:__ {{DATE}}** [`({{DATE2}})`](https://moxibot.es/)\n{{NEWS}}",
+    "NEWS": "**__أحدث الأخبار:__ {{DATE}}** [`({{DATE2}})`](https://moxilab.net/)\n{{NEWS}}",
     "NO_MUSIC_PLAYING": "لا توجد موسيقى قيد التشغيل!",
     "OWNER_ONLY": "هذا الأمر متاح للمطوّرين فقط!",
     "PING_DESCRIPTION": "زمن الاستجابة لدي **{{ping}} مللي ثانية**",
@@ -345,4 +345,47 @@
     "BUG_STATUS_REOPEN_SUCCESS": "تم إعادة فتح التقرير وتعيينه كقيد انتظار.",
     "BUG_THREAD_BUTTON": "فتح المحادثة",
     "STARBOARD_TITLE": "لوحة النجوم"
+,
+    "BOTSTATS_CHANNELS": "Channels",
+    "BOTSTATS_CMD_DESC": "Shows bot statistics",
+    "BOTSTATS_COMMANDS": "Commands",
+    "BOTSTATS_CPU": "CPU",
+    "BOTSTATS_DISCORD": "Discord",
+    "BOTSTATS_DJS": "discord.js",
+    "BOTSTATS_EMOJIS": "Emojis",
+    "BOTSTATS_GENERAL": "General",
+    "BOTSTATS_GENERAL_INFO": "GENERAL INFO",
+    "BOTSTATS_GUILDS": "Servers",
+    "BOTSTATS_LATENCY": "Latency",
+    "BOTSTATS_MEMBERS": "Members",
+    "BOTSTATS_MEMORY": "Memory",
+    "BOTSTATS_NAME": "Name",
+    "BOTSTATS_NODE": "Node.js",
+    "BOTSTATS_OS": "OS",
+    "BOTSTATS_PING": "Ping",
+    "BOTSTATS_PLAYERS": "Players",
+    "BOTSTATS_PREFIX": "Prefix",
+    "BOTSTATS_PREFIX_USED": "Prefix",
+    "BOTSTATS_RAM": "RAM",
+    "BOTSTATS_ROLES": "Roles",
+    "BOTSTATS_RUNTIME": "Runtime",
+    "BOTSTATS_SHARD": "Shard",
+    "BOTSTATS_SHARDS": "Shards",
+    "BOTSTATS_SLASH": "Slash",
+    "BOTSTATS_STATUS_BUTTON": "Status",
+    "BOTSTATS_STREAMS": "Streams",
+    "BOTSTATS_SYSTEM_CONFIG": "SYSTEM CONFIG",
+    "BOTSTATS_SYSTEM_LOAD": "SYSTEM LOAD",
+    "BOTSTATS_TEXT_CHANNELS": "Text channels",
+    "BOTSTATS_THIS_SERVER": "THIS SERVER",
+    "BOTSTATS_TITLE": "📊 Bot stats",
+    "BOTSTATS_TOTAL_COMMANDS": "Commands",
+    "BOTSTATS_UPTIME": "Uptime",
+    "BOTSTATS_USERS": "Users",
+    "BOTSTATS_USERS_ACTIVE": "Active users (30d)",
+    "BOTSTATS_USERS_CACHE": "Users (cache)",
+    "BOTSTATS_USERS_USED": "Users (used the bot)",
+    "BOTSTATS_USER_INSTALLS": "User installs",
+    "BOTSTATS_VERSION": "Version",
+    "BOTSTATS_VOICE_CHANNELS": "Voice channels"
 }
