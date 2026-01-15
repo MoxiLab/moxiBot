@@ -16,8 +16,8 @@ const rest = new REST({ version: '10' }).setToken(token);
 
         // Try deploying a single minimal command globally.
         const ping = new SlashCommandBuilder().setName('moxi-ping').setDescription('Ping (test)');
-        const deployed = await rest.put(Routes.applicationCommands(clientId), { body: [ping.toJSON()] });
-        console.log('[test-global] deployed count:', Array.isArray(deployed) ? deployed.length : deployed);
+        const result = await rest.put(Routes.applicationCommands(clientId), { body: [ping.toJSON()] });
+        console.log('[test-global] updated count:', Array.isArray(result) ? result.length : result);
 
         const after = await rest.get(Routes.applicationCommands(clientId));
         console.log('[test-global] after count:', Array.isArray(after) ? after.length : after);
