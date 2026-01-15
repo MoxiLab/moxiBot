@@ -24,7 +24,7 @@ function createEmojiContainer({ header, body, detail, actionRows = [] }) {
 
 function finalizeEmojiContainer(container, client, translateFn) {
     const webLabel = translateFn('HELP_WEB_LABEL') || 'Help';
-    const webUrl = translateFn('HELP_WEB_URL') || 'https://moxibot.es/';
+    const webUrl = translateFn('HELP_WEB_URL') || 'https://moxilab.net/';
     return container
         .addSeparatorComponents((s) => s.setDivider(true))
         .addActionRowComponents((row) =>
