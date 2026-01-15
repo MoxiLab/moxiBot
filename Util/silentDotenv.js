@@ -1,6 +1,23 @@
 // Helper to load dotenv while suppressing its informational output
 module.exports = function silentDotenv() {
     if (global.__dotenv_loaded_silently) return;
+
+    // Aumenta el connect timeout de Undici (usado por discord.js REST y fetch en Node)
+    // para redes lentas o picos de latencia con Cloudflare/Discord.
+    // Configurable con: DISCORD_API_CONNECT_TIMEOUT_MS=30000
+    try {
+        // eslint-disable-next-line global-require
+        const { setGlobalDispatcher, Agent } = require('undici');
+        const raw = process.env.DISCORD_API_CONNECT_TIMEOUT_MS;
+        const connectTimeout = Number.isFinite(Number(raw)) ? Math.max(1_000, Number(raw)) : 30_000;
+        if (!global.__undici_dispatcher_configured) {
+            setGlobalDispatcher(new Agent({ connectTimeout }));
+            global.__undici_dispatcher_configured = true;
+        }
+    } catch {
+        // ignore
+    }
+
     const saved = { log: console.log, info: console.info, warn: console.warn };
     let envFileExists = false;
     try {
