@@ -212,7 +212,7 @@ module.exports = {
             const webLabel = moxi.translate('HELP_WEB_LABEL', lang) || 'Web';
             let webUrl = moxi.translate('HELP_WEB_URL', lang);
             if (!webUrl || typeof webUrl !== 'string' || !/^https?:\/\//.test(webUrl)) {
-                webUrl = 'https://moxibot.es';
+                webUrl = 'https://moxilab.net';
             }
             const webButton = new ButtonBuilder()
                 .setLabel(webLabel)
