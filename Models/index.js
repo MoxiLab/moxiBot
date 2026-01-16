@@ -15,6 +15,7 @@ const WelcomeSchema = require('./WelcomeSchema');
 const UserInventory = require('./InventorySchema');
 const Economy = require('./EconomySchema');
 const SlashCommandId = require('./SlashCommandId');
+const SuggestionsSchema = require('./SuggestionsSchema');
 
 // Export all models individually
 module.exports = {
@@ -32,6 +33,7 @@ module.exports = {
     Economy,
     SlashCommandId,
     WelcomeSchema,
+    SuggestionsSchema,
     // Also export them as named exports for destructuring
     Audit: AuditSchema,
     Bugs: Bug,
@@ -47,4 +49,5 @@ module.exports = {
     EconomyModels: Economy,
     SlashCommandIds: SlashCommandId,
     Welcome: WelcomeSchema,
+    Suggestions: SuggestionsSchema,
 };
