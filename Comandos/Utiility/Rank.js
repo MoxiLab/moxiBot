@@ -1,6 +1,7 @@
 const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ActionRowBuilder, ButtonBuilder, ButtonStyle, ContainerBuilder, MediaGalleryBuilder, MediaGalleryItemBuilder, MessageFlags } = require('discord.js');
 const LevelSystem = require('../../Global/Helpers/LevelSystem');
 const { generateRankImage } = require('../../Global/Helpers/WelcomeImage');
+const RankConfig = require('../../Models/RankSchema');
 const GuildData = require('../../Models/GuildSchema');
 const { Bot } = require('../../Config');
 const moxi = require('../../i18n');
@@ -47,12 +48,17 @@ module.exports = {
             const userID = target.id;
             debugHelper.log('rank', 'command start', { guildID, requesterId, targetId: userID });
 
-            const serverDoc = await GuildData.findOne({ guildID }).lean().catch(() => null);
-            const style = (serverDoc?.Rank?.style && typeof serverDoc.Rank.style === 'string')
-                ? serverDoc.Rank.style
-                : ((serverDoc?.Welcome?.style && typeof serverDoc.Welcome.style === 'string') ? serverDoc.Welcome.style : 'sylphacard');
+            // Fuente de verdad: RankSchema (colección separada). Fallback legacy: guilds embebido.
+            const rankDoc = await RankConfig.findOne({ guildID }).lean().catch(() => null);
+            const legacyGuildDoc = !rankDoc ? await GuildData.findOne({ guildID }).lean().catch(() => null) : null;
+            const style = (rankDoc?.style && typeof rankDoc.style === 'string')
+                ? rankDoc.style
+                : ((legacyGuildDoc?.Rank?.style && typeof legacyGuildDoc.Rank.style === 'string')
+                    ? legacyGuildDoc.Rank.style
+                    : ((legacyGuildDoc?.Welcome?.style && typeof legacyGuildDoc.Welcome.style === 'string') ? legacyGuildDoc.Welcome.style : 'sylphacard'));
 
             const fetchedUser = await Moxi.users.fetch(target.id, { force: true }).catch(() => null);
+            const userForCard = fetchedUser || target;
             const userBanner = fetchedUser?.bannerURL?.({ size: 2048, extension: 'png' });
             const guildBg = message.guild?.bannerURL?.({ size: 2048, extension: 'png' })
                 || message.guild?.iconURL?.({ size: 2048, extension: 'png' });
@@ -70,7 +76,7 @@ module.exports = {
             const rankPos = await LevelSystem.getUserRank(guildID, userID, 'level').catch(() => null);
             if (rankPos) levelInfo.rank = rankPos;
 
-            const rankImage = await generateRankImage(target, levelInfo, { style, backgroundUrl });
+            const rankImage = await generateRankImage(userForCard, levelInfo, { style, backgroundUrl });
             if (!rankImage) {
                 debugHelper.warn('rank', 'missing rank image', { guildID, requesterId, targetId: userID });
                 const container = new ContainerBuilder()
@@ -87,6 +93,7 @@ module.exports = {
                 .addTextDisplayComponents(c => c.setContent(
                     `**${t('LEVEL_LABEL')}:** ${levelInfo.level} | **${t('LEVEL_XP')}:** ${levelInfo.currentXp}\n` +
                     `**${t('LEVEL_PRESTIGE')}:** ${levelInfo.prestige}\n` +
+                    `**Estilo:** ${style}\n` +
                     `━━━\n${t('LEVEL_CARD_FOOTER')}`
                 ))
                 .addSeparatorComponents(s => s.setDivider(true))
@@ -126,12 +133,17 @@ module.exports = {
             const userID = target.id;
             debugHelper.log('rank', 'interaction start', { guildID, requesterId, targetId: userID });
 
-            const serverDoc = await GuildData.findOne({ guildID }).lean().catch(() => null);
-            const style = (serverDoc?.Rank?.style && typeof serverDoc.Rank.style === 'string')
-                ? serverDoc.Rank.style
-                : ((serverDoc?.Welcome?.style && typeof serverDoc.Welcome.style === 'string') ? serverDoc.Welcome.style : 'sylphacard');
+            // Fuente de verdad: RankSchema (colección separada). Fallback legacy: guilds embebido.
+            const rankDoc = await RankConfig.findOne({ guildID }).lean().catch(() => null);
+            const legacyGuildDoc = !rankDoc ? await GuildData.findOne({ guildID }).lean().catch(() => null) : null;
+            const style = (rankDoc?.style && typeof rankDoc.style === 'string')
+                ? rankDoc.style
+                : ((legacyGuildDoc?.Rank?.style && typeof legacyGuildDoc.Rank.style === 'string')
+                    ? legacyGuildDoc.Rank.style
+                    : ((legacyGuildDoc?.Welcome?.style && typeof legacyGuildDoc.Welcome.style === 'string') ? legacyGuildDoc.Welcome.style : 'sylphacard'));
 
             const fetchedUser = await client.users.fetch(target.id, { force: true }).catch(() => null);
+            const userForCard = fetchedUser || target;
             const userBanner = fetchedUser?.bannerURL?.({ size: 2048, extension: 'png' });
             const guildBg = interaction.guild?.bannerURL?.({ size: 2048, extension: 'png' })
                 || interaction.guild?.iconURL?.({ size: 2048, extension: 'png' });
@@ -149,7 +161,7 @@ module.exports = {
             const rankPos = await LevelSystem.getUserRank(guildID, userID, 'level').catch(() => null);
             if (rankPos) levelInfo.rank = rankPos;
 
-            const rankImage = await generateRankImage(target, levelInfo, { style, backgroundUrl });
+            const rankImage = await generateRankImage(userForCard, levelInfo, { style, backgroundUrl });
             if (!rankImage) {
                 debugHelper.warn('rank', 'interaction missing rank image', { guildID, requesterId, targetId: userID });
                 const container = new ContainerBuilder()
@@ -166,6 +178,7 @@ module.exports = {
                 .addTextDisplayComponents(c => c.setContent(
                     `**${t('LEVEL_LABEL')}:** ${levelInfo.level} | **${t('LEVEL_XP')}:** ${levelInfo.currentXp}\n` +
                     `**${t('LEVEL_PRESTIGE')}:** ${levelInfo.prestige}\n` +
+                    `**Estilo:** ${style}\n` +
                     `━━━\n${t('LEVEL_CARD_FOOTER')}`
                 ))
                 .addSeparatorComponents(s => s.setDivider(true))
