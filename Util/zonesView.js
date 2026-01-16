@@ -7,12 +7,48 @@ const {
 } = require('discord.js');
 
 const { Bot } = require('../Config');
+const moxi = require('../i18n');
 const { EMOJIS } = require('./emojis');
 const { getItemById } = require('./inventoryCatalog');
 const { FISH_ZONES } = require('./fishView');
 
 const YEAR = new Date().getFullYear();
 const BRAND_FOOTER = `© MoxiBot • ${YEAR}`;
+
+function tZones(lang, key, vars = {}) {
+    const fullKey = String(key || '').includes(':') ? String(key) : `economy/zones:${key}`;
+    const res = moxi.translate(fullKey, lang, vars);
+    if (!res) return '';
+
+    const idx = fullKey.indexOf(':');
+    const keyPath = (idx >= 0) ? fullKey.slice(idx + 1) : '';
+    if (res === fullKey) return '';
+    if (keyPath && res === keyPath) return '';
+
+    // Si el valor es un placeholder tipo "__ui.page__" (o viene con variables detrás), no lo muestres.
+    const firstToken = String(res).trim().split(/\s+/)[0] || '';
+    if (firstToken.startsWith('__') && firstToken.endsWith('__')) return '';
+
+    return res;
+}
+
+function zoneName({ kind, zone, lang }) {
+    const k = normalizeKind(kind);
+    const id = String(zone?.id || '').trim();
+    const key = `economy/zones:${k}.${id}`;
+    const res = moxi.translate(key, lang);
+    if (res && res !== key) {
+        const idx = key.indexOf(':');
+        const keyPath = (idx >= 0) ? key.slice(idx + 1) : '';
+        if (!keyPath || res !== keyPath) {
+            const firstToken = String(res).trim().split(/\s+/)[0] || '';
+            if (!(firstToken.startsWith('__') && firstToken.endsWith('__'))) {
+                return res;
+            }
+        }
+    }
+    return zone?.name || id || '—';
+}
 
 const MINE_ZONES = Object.freeze([
     {
@@ -634,32 +670,32 @@ function getZonesPage({ kind, page = 0, perPage = 5 } = {}) {
     return { zones, page: p, perPage: safePerPage, totalPages, slice };
 }
 
-function buildKindSelect({ userId, kind, page = 0, disabled = false } = {}) {
+function buildKindSelect({ lang = 'es-ES', userId, kind, page = 0, disabled = false } = {}) {
     const safeUserId = String(userId || '').trim();
     const current = normalizeKind(kind);
     const p = clampInt(page, 0, 999);
 
     return new StringSelectMenuBuilder()
         .setCustomId(`zones:select:${safeUserId}:${current}:${p}`)
-        .setPlaceholder('Selecciona una categoría…')
+        .setPlaceholder(tZones(lang, 'ui.selectCategory') || 'Selecciona una categoría…')
         .setMinValues(1)
         .setMaxValues(1)
         .setDisabled(disabled)
         .addOptions(
             {
-                label: 'Pesca',
+                label: tZones(lang, 'kinds.fish') || 'Pesca',
                 value: 'fish',
                 emoji: ZONE_KINDS.fish.emoji,
                 default: current === 'fish',
             },
             {
-                label: 'Minería',
+                label: tZones(lang, 'kinds.mine') || 'Minería',
                 value: 'mine',
                 emoji: ZONE_KINDS.mine.emoji,
                 default: current === 'mine',
             },
             {
-                label: 'Exploración',
+                label: tZones(lang, 'kinds.explore') || 'Exploración',
                 value: 'explore',
                 emoji: ZONE_KINDS.explore.emoji,
                 default: current === 'explore',
@@ -724,33 +760,34 @@ function buildPickButtons({ userId, kind, page, slice, disabled = false } = {}) 
 function buildZonesContainer({ lang = 'es-ES', userId, kind = 'fish', page = 0, perPage = 5, disabledButtons = false } = {}) {
     const k = normalizeKind(kind);
     const kindInfo = ZONE_KINDS[k] || ZONE_KINDS.fish;
+    const kindLabel = tZones(lang, `kinds.${k}`) || kindInfo.label;
 
     const { page: p, totalPages, slice, zones } = getZonesPage({ kind: k, page, perPage });
 
     const container = new ContainerBuilder()
         .setAccentColor(Bot.AccentColor)
-        .addTextDisplayComponents(t => t.setContent(`Página ${p + 1} de ${totalPages}`))
+        .addTextDisplayComponents(t => t.setContent(tZones(lang, 'ui.page', { page: p + 1, total: totalPages }) || `Página ${p + 1} de ${totalPages}`))
         .addSeparatorComponents(s => s.setDivider(true))
         .addTextDisplayComponents(t => {
-            if (k === 'fish') return t.setContent('## Fish • Zonas');
-            return t.setContent(`## ${kindInfo.emoji} Zonas • ${kindInfo.label}`);
+            if (k === 'fish') return t.setContent(tZones(lang, 'ui.fishTitle') || '## Fish • Zonas');
+            return t.setContent(tZones(lang, 'ui.kindTitle', { icon: kindInfo.emoji, label: kindLabel }) || `## ${kindInfo.emoji} Zonas • ${kindLabel}`);
         });
 
     if (k === 'fish') {
         container
-            .addTextDisplayComponents(t => t.setContent(`Zonas de pesca disponibles: **${zones.length}**`))
+            .addTextDisplayComponents(t => t.setContent(tZones(lang, 'ui.availableFish', { count: zones.length }) || `Zonas de pesca disponibles: **${zones.length}**`))
             .addSeparatorComponents(s => s.setDivider(true));
     }
 
     if (k === 'mine') {
         container
-            .addTextDisplayComponents(t => t.setContent(`Zonas de minería disponibles: **${zones.length}**`))
+            .addTextDisplayComponents(t => t.setContent(tZones(lang, 'ui.availableMine', { count: zones.length }) || `Zonas de minería disponibles: **${zones.length}**`))
             .addSeparatorComponents(s => s.setDivider(true));
     }
 
     if (k === 'explore') {
         container
-            .addTextDisplayComponents(t => t.setContent(`Zonas de exploración disponibles: **${zones.length}**`))
+            .addTextDisplayComponents(t => t.setContent(tZones(lang, 'ui.availableExplore', { count: zones.length }) || `Zonas de exploración disponibles: **${zones.length}**`))
             .addSeparatorComponents(s => s.setDivider(true));
     }
 
@@ -758,20 +795,20 @@ function buildZonesContainer({ lang = 'es-ES', userId, kind = 'fish', page = 0, 
         container.addTextDisplayComponents(t => t.setContent('Próximamente…\nPor ahora solo está disponible **Pesca**.'));
     } else {
         for (const z of slice) {
-            const rewardText = `Requiere: ${itemLabel(z.requiredItemId)}`;
+            const requiredLabel = tZones(lang, 'ui.requires', { item: itemLabel(z.requiredItemId) }) || `Requiere: ${itemLabel(z.requiredItemId)}`;
             container
                 .addTextDisplayComponents(t =>
                     t.setContent(
-                        `${z.emoji || '📍'} **${z.id}** — ${z.name}\n` +
-                        rewardText
+                        `${z.emoji || '📍'} **${z.id}** — ${zoneName({ kind: k, zone: z, lang })}\n` +
+                        requiredLabel
                     )
                 )
                 .addSeparatorComponents(s => s.setDivider(true));
         }
 
         container.addTextDisplayComponents(t => {
-            if (k === 'fish') return t.setContent('Pulsa un botón de zona para pescar.');
-            return t.setContent('Pulsa una zona para hacer la acción.');
+            if (k === 'fish') return t.setContent(tZones(lang, 'ui.pickHintFish') || 'Pulsa un botón de zona para pescar.');
+            return t.setContent(tZones(lang, 'ui.pickHintOther') || 'Pulsa una zona para hacer la acción.');
         });
     }
 
@@ -789,7 +826,7 @@ function buildZonesContainer({ lang = 'es-ES', userId, kind = 'fish', page = 0, 
 
     // Row 3: select debajo de los botones
     container.addActionRowComponents(row => row.addComponents(
-        buildKindSelect({ userId, kind: k, page: p, disabled: disabledButtons })
+        buildKindSelect({ lang, userId, kind: k, page: p, disabled: disabledButtons })
     ));
 
     // Footer (paginación) debajo del select
