@@ -4,15 +4,13 @@ const moxi = require('../../../../i18n');
 const { EMOJIS } = require('../../../../Util/emojis');
 const { buildNoticeContainer } = require('../../../../Util/v2Notice');
 const { getItemById } = require('../../../../Util/inventoryCatalog');
-const { claimCooldownReward, formatDuration, getOrCreateEconomy } = require('../../../../Util/economyCore');
+const { claimCooldown, formatDuration, getOrCreateEconomy } = require('../../../../Util/economyCore');
 const {
     parseFishCustomId,
     buildFishZonesContainer,
     getZoneForPick,
     hasInventoryItem,
 } = require('../../../../Util/fishView');
-
-const COIN = EMOJIS.coin || '\u{1FA99}'; // 🪙
 
 function safeInt(n, fallback = 0) {
     const x = Number(n);
@@ -113,12 +111,10 @@ module.exports = async function fishButtons(interaction) {
         }
 
         const cooldownMs = Math.max(1, safeInt(300, 300)) * 1000; // default; el comando puede ajustar su cooldown por texto
-        const res = await claimCooldownReward({
+        const res = await claimCooldown({
             userId,
             field: 'lastFish',
             cooldownMs,
-            minAmount: safeInt(zone.reward?.min, 25),
-            maxAmount: safeInt(zone.reward?.max, 60),
         });
 
         if (!res.ok && res.reason === 'cooldown') {
@@ -145,7 +141,7 @@ module.exports = async function fishButtons(interaction) {
                 buildNoticeContainer({
                     emoji: zone.emoji || '🎣',
                     title: `Fish • ${zone.name}`,
-                    text: `Has pescado y ganas **${res.amount}** ${COIN}.\nBalance: **${res.balance}** ${COIN}.`,
+                    text: 'Has pescado. ¡Buen lance! 🎣',
                 }),
             ],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
