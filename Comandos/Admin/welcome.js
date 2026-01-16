@@ -497,7 +497,11 @@ module.exports = {
                 debugHelper.error('welcome', 'DB findOne failed (test)', err);
                 return null;
             });
-            const cfg = serverDoc?.Welcome;
+            const welcomeDoc = await Welcome.findOne({ guildID: guildId, type: 'config' }).lean().catch((err) => {
+                debugHelper.error('welcome', 'Welcome.findOne failed (test)', err);
+                return null;
+            });
+            const cfg = welcomeDoc || serverDoc?.Welcome || {};
             const style = (cfg?.style && typeof cfg.style === 'string') ? cfg.style : 'sylphacard';
             const channelId = cfg?.channelID ? String(cfg.channelID) : message.channel.id;
             const channel = message.guild.channels.cache.get(channelId) || await message.guild.channels.fetch(channelId).catch(() => message.channel);

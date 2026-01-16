@@ -117,8 +117,8 @@ module.exports = {
             try {
                 const now = new Date();
                 await Byes.updateOne(
-                    { guildID: guildId },
-                    { $setOnInsert: { guildID: guildId, createdAt: now }, $set: { enabled: true, channelID: ch.id, updatedAt: now, guildName: message.guild.name } },
+                    { guildID: guildId, type: 'config' },
+                    { $setOnInsert: { guildID: guildId, type: 'config', createdAt: now }, $set: { enabled: true, channelID: ch.id, updatedAt: now, guildName: message.guild.name } },
                     { upsert: true }
                 );
                 try { logger.info && logger.info('[byes] saved config (set)', { guildID: guildId, channelID: ch.id }); } catch (_) { }
@@ -134,7 +134,7 @@ module.exports = {
             try {
                 const now = new Date();
                 await Byes.updateOne(
-                    { guildID: guildId },
+                    { guildID: guildId, type: 'config' },
                     { $set: { enabled: false, channelID: null, message: null, updatedAt: now, guildName: message.guild.name } },
                     { upsert: false }
                 );
@@ -159,7 +159,7 @@ module.exports = {
 
             // Sin argumento: selector interactivo
             if (!raw) {
-                const serverDoc = await Byes.findOne({ guildID: guildId }).lean().catch(() => null) || await GuildData.findOne({ guildID: guildId }).lean().catch(() => null);
+                const serverDoc = await Byes.findOne({ guildID: guildId, type: 'config' }).lean().catch(() => null) || await GuildData.findOne({ guildID: guildId }).lean().catch(() => null);
                 const cfg = serverDoc?.Byes ? serverDoc.Byes : serverDoc;
                 let currentStyle = (cfg?.style && typeof cfg.style === 'string') ? cfg.style : 'sylphacard';
 
@@ -337,8 +337,8 @@ module.exports = {
                     try {
                         const now = new Date();
                         await Byes.updateOne(
-                            { guildID: guildId },
-                            { $setOnInsert: { guildID: guildId, createdAt: now }, $set: { style: selected, updatedAt: now, guildName: message.guild.name } },
+                            { guildID: guildId, type: 'config' },
+                            { $setOnInsert: { guildID: guildId, type: 'config', createdAt: now }, $set: { style: selected, updatedAt: now, guildName: message.guild.name } },
                             { upsert: true }
                         );
                         try { logger.info && logger.info('[byes] saved style (button)', { guildID: guildId, style: selected }); } catch (_) { }
@@ -375,8 +375,8 @@ module.exports = {
             try {
                 const now = new Date();
                 await Byes.updateOne(
-                    { guildID: guildId },
-                    { $setOnInsert: { guildID: guildId, createdAt: now }, $set: { style: normalized, updatedAt: now, guildName: message.guild.name } },
+                    { guildID: guildId, type: 'config' },
+                    { $setOnInsert: { guildID: guildId, type: 'config', createdAt: now }, $set: { style: normalized, updatedAt: now, guildName: message.guild.name } },
                     { upsert: true }
                 );
                 try { logger.info && logger.info('[byes] saved style', { guildID: guildId, style: normalized }); } catch (_) { }
@@ -404,7 +404,7 @@ module.exports = {
                     const now = new Date();
                     const upd = { $set: { message: '', updatedAt: now, guildName: message.guild.name } };
                     if (targetLang) upd.$unset = { [`messages.${targetLang}`]: '' };
-                    const res = await Byes.updateOne({ guildID: guildId }, upd, { upsert: false });
+                    const res = await Byes.updateOne({ guildID: guildId, type: 'config' }, upd, { upsert: false });
                     try { logger.info && logger.info('[byes] cleared message', { guildID: guildId, targetLang, modifiedCount: res?.modifiedCount ?? res?.nModified }); } catch (_) { }
                     debugHelper.log('byes', 'cleared message', { guildId, targetLang, modifiedCount: res?.modifiedCount ?? res?.nModified });
                 } catch (err) {
@@ -427,10 +427,10 @@ module.exports = {
 
             try {
                 const now = new Date();
-                const upd = { $setOnInsert: { guildID: guildId, createdAt: now }, $set: { updatedAt: now, guildName: message.guild.name } };
+                const upd = { $setOnInsert: { guildID: guildId, type: 'config', createdAt: now }, $set: { updatedAt: now, guildName: message.guild.name } };
                 if (setObj['Byes.message'] !== undefined) upd.$set.message = setObj['Byes.message'];
                 if (setObj[`Byes.messages.${targetLang}`]) upd.$set[`messages.${targetLang}`] = setObj[`Byes.messages.${targetLang}`];
-                const res = await Byes.updateOne({ guildID: guildId }, upd, { upsert: true });
+                const res = await Byes.updateOne({ guildID: guildId, type: 'config' }, upd, { upsert: true });
                 try { logger.info && logger.info('[byes] saved message', { guildID: guildId, targetLang, upsertedId: res?.upsertedId ?? null }); } catch (_) { }
                 debugHelper.log('byes', 'saved message', { guildId, targetLang, upsertedId: res?.upsertedId ?? null });
             } catch (err) {
@@ -441,7 +441,7 @@ module.exports = {
         }
 
         if (sub === 'test') {
-            const serverDoc = await Byes.findOne({ guildID: guildId }).lean().catch((err) => {
+            const serverDoc = await Byes.findOne({ guildID: guildId, type: 'config' }).lean().catch((err) => {
                 return null;
             }) || await GuildData.findOne({ guildID: guildId }).lean().catch((err) => {
                 return null;
@@ -550,7 +550,7 @@ module.exports = {
         }
 
         // status
-        const serverDoc = await Byes.findOne({ guildID: guildId }).lean().catch((err) => {
+        const serverDoc = await Byes.findOne({ guildID: guildId, type: 'config' }).lean().catch((err) => {
             return null;
         }) || await GuildData.findOne({ guildID: guildId }).lean().catch(() => null);
 
