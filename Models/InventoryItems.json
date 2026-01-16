@@ -316,14 +316,14 @@
         "name": "Pico Prisma",
         "description": "Permite minar minerales raros.",
         "rarity": "rare",
-        "price": 1200
+        "price": 300
       },
       {
         "id": "herramientas/cana-de-pesca-moxi",
         "name": "Caña de Pesca Moxi",
         "description": "Aumenta la probabilidad de pescar ítems raros.",
         "rarity": "rare",
-        "price": 1200
+        "price": 300
       },
       {
         "id": "herramientas/llave-multiusos",
