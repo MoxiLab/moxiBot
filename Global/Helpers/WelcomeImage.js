@@ -26,9 +26,21 @@ async function generateRankImage(user, levelInfo, styleOrOpts) {
 
     // Datos
     const username = user?.username ? String(user.username) : 'User';
+    const discriminator = (user && typeof user.discriminator === 'string' && user.discriminator !== '0')
+        ? user.discriminator
+        : null;
     const avatar = typeof user?.displayAvatarURL === 'function'
         ? user.displayAvatarURL({ extension: 'png', size: 512, forceStatic: true })
         : null;
+
+    // Avatar decoration (best-effort; depende de la versión de discord.js)
+    const avatarDecorationAsset = user?.avatarDecorationData?.asset
+        || user?.avatar_decoration_data?.asset
+        || null;
+
+    const flags = user?.flags?.bitfield ?? user?.publicFlags?.bitfield ?? null;
+    const isBot = !!user?.bot;
+    const createdTimestamp = user?.createdTimestamp || null;
 
     const level = Number(levelInfo?.level || 1);
     const prestige = Number(levelInfo?.prestige || 0);
@@ -81,7 +93,12 @@ async function generateRankImage(user, levelInfo, styleOrOpts) {
         try {
             return await buildCanvacardRank({
                 username,
+                discriminator,
                 avatarUrl: avatar,
+                avatarDecorationAsset,
+                flags,
+                isBot,
+                createdTimestamp,
                 level,
                 prestige,
                 currentXp,
@@ -106,8 +123,11 @@ async function generateRankImage(user, levelInfo, styleOrOpts) {
     }
 
     if (style === 'rankcard') {
-        const buf = await tryRankCard();
+        // Preferimos canvacard (más control + ya es dependency del proyecto).
+        const buf = await tryCanvacard();
         if (buf) return buf;
+        const fallback = await tryRankCard();
+        if (fallback) return fallback;
     }
 
     // Estilo por defecto (sylphacard): mantenemos el rank card actual (canvafy) por estabilidad.
