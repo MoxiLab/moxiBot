@@ -22,7 +22,7 @@ try {
 } catch (e) {
   console.error('Error loading language-meta.json:', e);
 }
-const defaultNamespaces = ['misc', 'commands', 'moderation', 'permissions', 'time', 'mentionPanel', 'prefix-panels', 'audit', 'utility/feedback', 'utility/bugGuidelines'];
+const defaultNamespaces = ['misc', 'commands', 'moderation', 'permissions', 'time', 'mentionPanel', 'prefix-panels', 'audit', 'utility/feedback', 'utility/bugGuidelines', 'economy/zones'];
 
 function isDevRuntime() {
   const lifecycle = String(process.env.npm_lifecycle_event || '').trim().toLowerCase();
