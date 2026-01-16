@@ -10,7 +10,7 @@ const debugHelper = require('../../Util/debugHelper');
 
 module.exports = {
     name: 'feedback',
-    alias: ['suggestion'],
+    alias: [],
     description: 'Share your thoughts about the bot',
     usage: 'feedback <text>',
     category: 'Utility',
@@ -33,14 +33,6 @@ module.exports = {
             debugHelper.warn('feedback', 'missing feedback body', { guildId, requesterId, argsLength: args.length });
             const container = containerBase()
                 .addTextDisplayComponents(c => c.setContent(`# ❌ ${t('FEEDBACK_REPORT')}`))
-                .addTextDisplayComponents(c => c.setContent(`© ${Moxi.user.username} • ${year}`));
-            return message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2, allowedMentions: { repliedUser: false } });
-        }
-
-        if (args.length < 3) {
-            debugHelper.warn('feedback', 'feedback too short', { guildId, requesterId, argsLength: args.length });
-            const container = containerBase()
-                .addTextDisplayComponents(c => c.setContent(`# ❌ ${t('FEEDBACK_MORE')}`))
                 .addTextDisplayComponents(c => c.setContent(`© ${Moxi.user.username} • ${year}`));
             return message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2, allowedMentions: { repliedUser: false } });
         }

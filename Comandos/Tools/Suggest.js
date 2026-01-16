@@ -8,7 +8,14 @@ const crypto = require('crypto');
 const { Bot } = require('../../Config');
 const { EMOJIS } = require('../../Util/emojis');
 const Suggestions = require('../../Models/SuggestionsSchema');
-const { isStaff, normalizeSuggestionId, buildSuggestionEmbed, buildSuggestionButtons } = require('../../Util/suggestions');
+const { isStaff, normalizeSuggestionId, buildSuggestionCard } = require('../../Util/suggestions');
+
+function authorNameFromTag(tag) {
+    if (!tag) return null;
+    const str = String(tag);
+    const idx = str.indexOf('#');
+    return idx > 0 ? str.slice(0, idx) : str;
+}
 
 function panel(title, body, client) {
     const container = new ContainerBuilder()
@@ -45,7 +52,7 @@ module.exports = {
     name: 'suggest',
     alias: ['sugerencia', 'sugerir', 'idea', 'ideas'],
     Category: 'Tools',
-    usage: 'suggest <texto> | suggest status | suggest set #canal | suggest off | suggest approve <id> [motivo] | suggest deny <id> [motivo]',
+    usage: 'suggest <texto> | suggest status | suggest set #canal | suggest staff #canal | suggest off | suggest approve <id> [motivo] | suggest deny <id> [motivo]',
     description: () => 'Sistema de sugerencias del servidor.',
     cooldown: 5,
 
@@ -75,11 +82,30 @@ module.exports = {
             return message.reply(panel('Sugerencias', `${EMOJIS.tick} Canal de sugerencias: <#${ch.id}>`, Moxi));
         }
 
+        if (['staff', 'mod', 'mods', 'review', 'revisar', 'moderacion', 'moderación'].includes(sub)) {
+            if (!isStaff(message.member)) {
+                return message.reply(panel('Sugerencias', `${EMOJIS.cross} Necesitas permisos de moderación para configurar.`, Moxi));
+            }
+            const mentioned = message.mentions?.channels?.first?.();
+            const raw = args[1];
+            const id = mentioned?.id || (raw ? String(raw).replace(/[<#>]/g, '') : '');
+            const ch = id ? (message.guild.channels.cache.get(id) || await message.guild.channels.fetch(id).catch(() => null)) : null;
+            if (!ch) {
+                return message.reply(panel('Sugerencias', `${EMOJIS.cross} Uso: suggest staff #canal`, Moxi));
+            }
+            if (![ChannelType.GuildText, ChannelType.GuildAnnouncement, ChannelType.PublicThread, ChannelType.PrivateThread].includes(ch.type) && !ch.isTextBased?.()) {
+                return message.reply(panel('Sugerencias', `${EMOJIS.cross} Ese canal no es válido para revisión.`, Moxi));
+            }
+
+            await upsertConfig(guildId, message.guild.name, { staffChannelID: ch.id });
+            return message.reply(panel('Sugerencias', `${EMOJIS.tick} Canal de revisión: <#${ch.id}>`, Moxi));
+        }
+
         if (['off', 'disable'].includes(sub)) {
             if (!isStaff(message.member)) {
                 return message.reply(panel('Sugerencias', `${EMOJIS.cross} Necesitas permisos de moderación para desactivar.`, Moxi));
             }
-            await upsertConfig(guildId, message.guild.name, { enabled: false, channelID: null });
+            await upsertConfig(guildId, message.guild.name, { enabled: false, channelID: null, staffChannelID: null });
             return message.reply(panel('Sugerencias', `${EMOJIS.tick} Sistema de sugerencias desactivado.`, Moxi));
         }
 
@@ -87,9 +113,10 @@ module.exports = {
             const cfg = await getConfig(guildId);
             const enabled = !!cfg?.enabled;
             const channelId = cfg?.channelID ? String(cfg.channelID) : '';
+            const staffChannelId = cfg?.staffChannelID ? String(cfg.staffChannelID) : '';
             return message.reply(panel(
                 'Sugerencias',
-                `${EMOJIS.info || ''} Estado: **${enabled ? 'ON' : 'OFF'}**\n${EMOJIS.channel || ''} Canal: ${channelId ? `<#${channelId}>` : '-'}`,
+                `${EMOJIS.info || ''} Estado: **${enabled ? 'ON' : 'OFF'}**\n${EMOJIS.channel || ''} Canal sugerencias: ${channelId ? `<#${channelId}>` : '-'}\n${EMOJIS.channel || ''} Canal revisión: ${staffChannelId ? `<#${staffChannelId}>` : '-'}`,
                 Moxi
             ));
         }
@@ -132,17 +159,35 @@ module.exports = {
                 if (channel && channel.isTextBased()) {
                     const msg = await channel.messages.fetch(String(doc.messageID)).catch(() => null);
                     if (msg) {
-                        const embed = buildSuggestionEmbed({
-                            guild: message.guild,
-                            author: doc.authorTag ? `@${doc.authorTag}` : (doc.authorID ? `<@${doc.authorID}>` : null),
+                        const card = buildSuggestionCard({
+                            content: doc.content,
+                            status: doc.status,
+                            withButtons: false,
+                            authorName: authorNameFromTag(doc.authorTag),
+                            footerText: `${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`,
+                        });
+                        await msg.edit({ content: '', components: [card], allowedMentions: { parse: [] } }).catch(() => null);
+                    }
+                }
+            }
+
+            // Update staff review message if exists
+            if (doc.staffMessageID && doc.staffMessageChannelID) {
+                const staffChannel = message.guild.channels.cache.get(String(doc.staffMessageChannelID)) || await message.guild.channels.fetch(String(doc.staffMessageChannelID)).catch(() => null);
+                if (staffChannel && staffChannel.isTextBased()) {
+                    const staffMsg = await staffChannel.messages.fetch(String(doc.staffMessageID)).catch(() => null);
+                    if (staffMsg) {
+                        const linkUrl = doc.messageID ? `https://discord.com/channels/${guildId}/${doc.messageChannelID}/${doc.messageID}` : null;
+                        const card = buildSuggestionCard({
                             suggestionId: doc.suggestionId,
                             content: doc.content,
                             status: doc.status,
-                            staff: message.author.tag,
-                            reason,
+                            linkUrl,
+                            withButtons: true,
+                            authorName: authorNameFromTag(doc.authorTag),
+                            footerText: `${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`,
                         });
-                        const row = buildSuggestionButtons({ suggestionId: doc.suggestionId, status: doc.status });
-                        await msg.edit({ embeds: [embed], components: [row] }).catch(() => null);
+                        await staffMsg.edit({ content: '', components: [card], allowedMentions: { parse: [] } }).catch(() => null);
                     }
                 }
             }
@@ -208,17 +253,17 @@ module.exports = {
             return message.reply(panel('Sugerencias', `${EMOJIS.cross} No pude crear la sugerencia. Intenta de nuevo.`, Moxi));
         }
 
-        const embed = buildSuggestionEmbed({
-            guild: message.guild,
-            author: message.author.tag,
-            suggestionId,
+        const footerText = `${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`;
+        const publicCard = buildSuggestionCard({
             content,
             status: 'pending',
+            withButtons: false,
+            authorName: message.author.username,
+            footerText,
         });
 
-        const row = buildSuggestionButtons({ suggestionId, status: 'pending' });
-
-        const sent = await channel.send({ embeds: [embed], components: [row] }).catch(() => null);
+        // Public message (always) — sin botones
+        const sent = await channel.send({ content: '', components: [publicCard], flags: MessageFlags.IsComponentsV2, allowedMentions: { parse: [] } }).catch(() => null);
         if (!sent) {
             await Suggestions.deleteOne({ _id: created._id }).catch(() => null);
             return message.reply(panel('Sugerencias', `${EMOJIS.cross} No pude enviar la sugerencia en <#${channelId}>.`, Moxi));
@@ -231,9 +276,36 @@ module.exports = {
             // ignore
         }
 
+        // Staff review message (optional)
+        let staffMsg = null;
+        const staffChannelId = cfg?.staffChannelID ? String(cfg.staffChannelID) : '';
+        if (staffChannelId) {
+            const staffChannel = message.guild.channels.cache.get(staffChannelId) || await message.guild.channels.fetch(staffChannelId).catch(() => null);
+            if (staffChannel && staffChannel.isTextBased()) {
+                const staffCard = buildSuggestionCard({
+                    suggestionId,
+                    content,
+                    status: 'pending',
+                    linkUrl: sent.url,
+                    withButtons: true,
+                    authorName: message.author.username,
+                    footerText,
+                });
+                staffMsg = await staffChannel.send({ content: '', components: [staffCard], flags: MessageFlags.IsComponentsV2, allowedMentions: { parse: [] } }).catch(() => null);
+            }
+        }
+
         await Suggestions.updateOne(
             { _id: created._id },
-            { $set: { messageID: sent.id, messageChannelID: sent.channel.id, updatedAt: new Date() } }
+            {
+                $set: {
+                    messageID: sent.id,
+                    messageChannelID: sent.channel.id,
+                    staffMessageID: staffMsg?.id || null,
+                    staffMessageChannelID: staffMsg?.channel?.id || null,
+                    updatedAt: new Date(),
+                }
+            }
         ).catch(() => null);
 
         return message.reply(panel('Sugerencias', `${EMOJIS.tick} Sugerencia enviada: **#${suggestionId}**\n${sent.url}`, Moxi));
