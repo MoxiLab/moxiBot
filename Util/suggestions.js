@@ -1,8 +1,7 @@
 const {
-    ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle,
-    EmbedBuilder,
+    ContainerBuilder,
     PermissionsBitField,
 } = require('discord.js');
 
@@ -21,64 +20,67 @@ function normalizeSuggestionId(input) {
     return String(input || '').trim().replace(/[^A-Za-z0-9]/g, '').toUpperCase();
 }
 
-function statusLabel(status) {
-    if (status === 'approved') return 'APROBADA';
-    if (status === 'denied') return 'RECHAZADA';
-    return 'PENDIENTE';
+function statusIcon(status) {
+    if (status === 'approved') return '✅';
+    if (status === 'denied') return '❌';
+    return '💡';
 }
 
-function statusColor(status) {
-    if (status === 'approved') return 0x57F287;
-    if (status === 'denied') return 0xED4245;
-    return (Bot.AccentColor ?? 0x00d9ff);
-}
+function buildSuggestionCard({ suggestionId = null, content, status = 'pending', linkUrl = null, withButtons = false, authorName = null, footerText = null } = {}) {
+    const container = new ContainerBuilder().setAccentColor(Bot.AccentColor ?? 0x00d9ff);
 
-function buildSuggestionEmbed({ guild, author, suggestionId, content, status, staff, reason }) {
-    const embed = new EmbedBuilder()
-        .setColor(statusColor(status))
-        .setTitle(`Sugerencia #${suggestionId}`)
-        .setDescription(content && content.length ? content : '-')
-        .addFields(
-            { name: 'Estado', value: statusLabel(status), inline: true },
-            { name: 'Autor', value: author ? `${author}` : '-', inline: true },
-        )
-        .setTimestamp(new Date());
+    container.addTextDisplayComponents(c => c.setContent(`# ${statusIcon(status)} Sugerencia`));
+    container.addSeparatorComponents(s => s.setDivider(true));
 
-    if (guild?.name) {
-        embed.setFooter({ text: guild.name });
+    if (linkUrl) {
+        container.addTextDisplayComponents(c => c.setContent(`🔗 ${linkUrl}`));
+        container.addSeparatorComponents(s => s.setDivider(true));
     }
 
-    if (staff) {
-        embed.addFields({ name: 'Revisado por', value: String(staff), inline: true });
+    container.addTextDisplayComponents(c => c.setContent(content && content.length ? String(content) : '-'));
+
+    if (withButtons) {
+        const isDone = status === 'approved' || status === 'denied';
+        if (!suggestionId) {
+            throw new Error('buildSuggestionCard: suggestionId required when withButtons=true');
+        }
+        container.addSeparatorComponents(s => s.setDivider(true));
+        container.addActionRowComponents(row =>
+            row.addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`suggest:approve:${suggestionId}`)
+                    .setLabel('Aprobar')
+                    .setStyle(ButtonStyle.Success)
+                    .setDisabled(isDone),
+                new ButtonBuilder()
+                    .setCustomId(`suggest:deny:${suggestionId}`)
+                    .setLabel('Rechazar')
+                    .setStyle(ButtonStyle.Danger)
+                    .setDisabled(isDone),
+            )
+        );
     }
-    if (reason) {
-        embed.addFields({ name: 'Motivo', value: String(reason).slice(0, 1024), inline: false });
+
+    if (authorName || footerText) {
+        container.addSeparatorComponents(s => s.setDivider(true));
     }
 
-    return embed;
-}
+    if (authorName) {
+        container.addTextDisplayComponents(c => c.setContent(String(authorName)));
+    }
 
-function buildSuggestionButtons({ suggestionId, disabled = false, status = 'pending' }) {
-    const isDone = status === 'approved' || status === 'denied';
-    const finalDisabled = disabled || isDone;
+    if (footerText) {
+        if (authorName) {
+            container.addSeparatorComponents(s => s.setDivider(true));
+        }
+        container.addTextDisplayComponents(c => c.setContent(String(footerText)));
+    }
 
-    return new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-            .setCustomId(`suggest:approve:${suggestionId}`)
-            .setLabel('Aprobar')
-            .setStyle(ButtonStyle.Success)
-            .setDisabled(finalDisabled),
-        new ButtonBuilder()
-            .setCustomId(`suggest:deny:${suggestionId}`)
-            .setLabel('Rechazar')
-            .setStyle(ButtonStyle.Danger)
-            .setDisabled(finalDisabled),
-    );
+    return container;
 }
 
 module.exports = {
     isStaff,
     normalizeSuggestionId,
-    buildSuggestionEmbed,
-    buildSuggestionButtons,
+    buildSuggestionCard,
 };
