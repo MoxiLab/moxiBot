@@ -15,6 +15,7 @@ const {
 } = require('../../Util/workSystem');
 const { formatDuration } = require('../../Util/economyCore');
 const { buildWorkListMessageOptions } = require('../../Util/workListPanel');
+const { buildWorkApplyMessageOptions } = require('../../Util/workApplyPanel');
 
 function economyCategory(lang) {
     lang = lang || 'es-ES';
@@ -156,25 +157,8 @@ module.exports = {
                 return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
             }
 
-            const res = await applyJob({ userId: interaction.user.id, jobId: job.id });
-            if (!res.ok) {
-                const payload = asV2MessageOptions(
-                    buildNoticeContainer({
-                        emoji: EMOJIS.cross,
-                        title: 'Error',
-                        text: res.message || 'No se pudo aplicar al trabajo.',
-                    })
-                );
-                return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
-            }
-
-            const payload = asV2MessageOptions(
-                buildNoticeContainer({
-                    emoji: '✅',
-                    title: 'Trabajo asignado',
-                    text: `Ahora trabajas como **${getJobDisplayName(job, lang)}** ${job.emoji || ''}.\nUsa \`/work shift\` para tu turno.`,
-                })
-            );
+            // Enviar panel de postulación adaptado al puesto (privado)
+            const payload = buildWorkApplyMessageOptions({ lang, userId: interaction.user.id, job });
             return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
         }
 
