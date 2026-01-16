@@ -1,13 +1,17 @@
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { getItemById } = require('../../Util/inventoryCatalog');
-const { claimCooldown, formatDuration, getOrCreateEconomy } = require('../../Util/economyCore');
+const { claimCooldown, awardBalance, formatDuration, getOrCreateEconomy } = require('../../Util/economyCore');
+const { pickFishActivity } = require('../../Util/fishActivities');
+const { scaleRange, randInt, chance } = require('../../Util/activityUtils');
 const {
     FISH_ZONES,
     resolveFishZone,
     hasInventoryItem,
 } = require('../../Util/fishView');
 const { buildZonesMessageOptions } = require('../../Util/zonesView');
+
+const FISH_FAIL_CHANCE = 0.22;
 
 function economyCategory(lang) {
     return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
@@ -121,11 +125,57 @@ module.exports = {
             }
 
             const cooldownMs = Math.max(1, safeInt(this.cooldown, 300)) * 1000;
-            const res = await claimCooldown({
+            const minAmount = Math.max(1, safeInt(autoZone?.reward?.min, 25));
+            const maxAmount = Math.max(minAmount, safeInt(autoZone?.reward?.max, 60));
+            const activity = pickFishActivity();
+            const scaled = scaleRange(minAmount, maxAmount, activity?.multiplier || 1);
+            const cd = await claimCooldown({
                 userId,
                 field: 'lastFish',
                 cooldownMs,
             });
+
+            if (!cd.ok && cd.reason === 'cooldown') {
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: '⏳',
+                            title: 'Fish • Cooldown',
+                            text: `Aún estás cansad@ de pescar. Vuelve en **${formatDuration(cd.nextInMs)}**.`,
+                        })
+                    )
+                );
+            }
+
+            if (!cd.ok) {
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: '⚠️',
+                            title: 'Fish',
+                            text: cd.message || 'No pude procesar tu pesca ahora mismo.',
+                        })
+                    )
+                );
+            }
+
+            const actionLine = activity?.phrase || 'Has pescado';
+
+            if (chance(FISH_FAIL_CHANCE)) {
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: autoZone.emoji || '🎣',
+                            title: `Fish • ${autoZone.name}`,
+                            text: `${actionLine}... pero no ha picado nada.`,
+                        })
+                    )
+                );
+            }
+
+            const amount = randInt(scaled.min, scaled.max);
+            const res = await awardBalance({ userId, amount });
+            const balanceLine = Number.isFinite(res?.balance) ? `Saldo: **${res.balance}** 🪙` : '';
 
             if (!res.ok && res.reason === 'cooldown') {
                 return message.reply(
@@ -156,7 +206,10 @@ module.exports = {
                     buildNoticeContainer({
                         emoji: autoZone.emoji || '🎣',
                         title: `Fish • ${autoZone.name}`,
-                        text: 'Has pescado. ¡Buen lance! 🎣',
+                        text: [
+                            `${actionLine} y ganaste **${res.amount}** 🪙. ¡Buen lance! 🎣`,
+                            balanceLine,
+                        ].filter(Boolean).join('\n'),
                     })
                 )
             );
@@ -203,11 +256,57 @@ module.exports = {
         }
 
         const cooldownMs = Math.max(1, safeInt(this.cooldown, 300)) * 1000;
-        const res = await claimCooldown({
+        const minAmount = Math.max(1, safeInt(zone?.reward?.min, 25));
+        const maxAmount = Math.max(minAmount, safeInt(zone?.reward?.max, 60));
+        const activity = pickFishActivity();
+        const scaled = scaleRange(minAmount, maxAmount, activity?.multiplier || 1);
+        const cd = await claimCooldown({
             userId,
             field: 'lastFish',
             cooldownMs,
         });
+
+        if (!cd.ok && cd.reason === 'cooldown') {
+            return message.reply(
+                asV2MessageOptions(
+                    buildNoticeContainer({
+                        emoji: '⏳',
+                        title: 'Fish • Cooldown',
+                        text: `Aún estás cansad@ de pescar. Vuelve en **${formatDuration(cd.nextInMs)}**.`,
+                    })
+                )
+            );
+        }
+
+        if (!cd.ok) {
+            return message.reply(
+                asV2MessageOptions(
+                    buildNoticeContainer({
+                        emoji: '⚠️',
+                        title: 'Fish',
+                        text: cd.message || 'No pude procesar tu pesca ahora mismo.',
+                    })
+                )
+            );
+        }
+
+        const actionLine = activity?.phrase || 'Has pescado';
+
+        if (chance(FISH_FAIL_CHANCE)) {
+            return message.reply(
+                asV2MessageOptions(
+                    buildNoticeContainer({
+                        emoji: zone.emoji || '🎣',
+                        title: `Fish • ${zone.name}`,
+                        text: `${actionLine}... pero no ha picado nada.`,
+                    })
+                )
+            );
+        }
+
+        const amount = randInt(scaled.min, scaled.max);
+        const res = await awardBalance({ userId, amount });
+        const balanceLine = Number.isFinite(res?.balance) ? `Saldo: **${res.balance}** 🪙` : '';
 
         if (!res.ok && res.reason === 'cooldown') {
             return message.reply(
@@ -238,7 +337,10 @@ module.exports = {
                 buildNoticeContainer({
                     emoji: zone.emoji || '🎣',
                     title: `Fish • ${zone.name}`,
-                    text: 'Has pescado. ¡Buen lance! 🎣',
+                    text: [
+                        `${actionLine} y ganaste **${res.amount}** 🪙. ¡Buen lance! 🎣`,
+                        balanceLine,
+                    ].filter(Boolean).join('\n'),
                 })
             )
         );
