@@ -114,10 +114,61 @@ async function claimCooldownReward({
   };
 }
 
+async function claimCooldown({
+  userId,
+  field,
+  cooldownMs,
+} = {}) {
+  if (!process.env.MONGODB) {
+    return { ok: false, reason: 'no-db', message: 'MongoDB no está configurado (MONGODB vacío).' };
+  }
+
+  await ensureMongoConnection();
+
+  const { UserEconomy } = require('../Models/EconomySchema');
+
+  const now = new Date();
+  const cutoff = new Date(Date.now() - cooldownMs);
+
+  try {
+    await UserEconomy.updateOne(
+      { userId },
+      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [] } },
+      { upsert: true }
+    );
+  } catch (e) {
+    if (e?.code !== 11000) throw e;
+  }
+
+  const claimFilter = {
+    userId,
+    $or: [
+      { [field]: { $exists: false } },
+      { [field]: null },
+      { [field]: { $lte: cutoff } },
+    ],
+  };
+
+  const updated = await UserEconomy.findOneAndUpdate(
+    claimFilter,
+    { $set: { [field]: now } },
+    { new: true }
+  );
+
+  if (updated) {
+    return { ok: true, nextInMs: 0 };
+  }
+
+  const existing = await getOrCreateEconomy(userId);
+  const remaining = msUntilNext(existing[field], cooldownMs);
+  return { ok: false, reason: 'cooldown', nextInMs: remaining };
+}
+
 module.exports = {
   safeInt,
   formatDuration,
   msUntilNext,
   getOrCreateEconomy,
   claimCooldownReward,
+  claimCooldown,
 };

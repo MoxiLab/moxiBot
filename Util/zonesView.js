@@ -268,15 +268,24 @@ function buildZonesContainer({ lang = 'es-ES', userId, kind = 'fish', page = 0, 
             return t.setContent(`## ${kindInfo.emoji} Zonas • ${kindInfo.label}`);
         });
 
+    if (k === 'fish') {
+        container
+            .addTextDisplayComponents(t => t.setContent(`Zonas de pesca disponibles: **${zones.length}**`))
+            .addSeparatorComponents(s => s.setDivider(true));
+    }
+
     if (!zones.length) {
         container.addTextDisplayComponents(t => t.setContent('Próximamente…\nPor ahora solo está disponible **Pesca**.'));
     } else {
         for (const z of slice) {
+            const rewardText = k === 'fish'
+                ? `Requiere: ${itemLabel(z.requiredItemId)}`
+                : `Requiere: ${itemLabel(z.requiredItemId)} | Recompensa: **${z.reward?.min ?? 0}-${z.reward?.max ?? 0}** ${COIN}`;
             container
                 .addTextDisplayComponents(t =>
                     t.setContent(
                         `${z.emoji || '📍'} **${z.id}** — ${z.name}\n` +
-                        `Requiere: ${itemLabel(z.requiredItemId)} | Recompensa: **${z.reward?.min ?? 0}-${z.reward?.max ?? 0}** ${COIN}`
+                        rewardText
                     )
                 )
                 .addSeparatorComponents(s => s.setDivider(true));

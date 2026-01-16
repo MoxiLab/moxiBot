@@ -435,7 +435,7 @@ function buildFishZonesContainer({ lang = 'es-ES', userId, page = 0, perPage = 5
             .addTextDisplayComponents(t =>
                 t.setContent(
                     `${z.emoji || '🎣'} **${z.id}** — ${z.name}\n` +
-                    `Requiere: ${itemLabel(z.requiredItemId)} | Recompensa: **${z.reward?.min ?? 0}-${z.reward?.max ?? 0}** ${COIN}`
+                    `Requiere: ${itemLabel(z.requiredItemId)}`
                 )
             )
             .addSeparatorComponents(s => s.setDivider(true));
