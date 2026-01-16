@@ -1,4 +1,5 @@
 const { Clvls, User } = require('../Models');
+const { Bot } = require('../Config');
 const debugHelper = require('./debugHelper');
 
 const CONFIG_TTL_MS = 2 * 60 * 1000;
@@ -93,6 +94,31 @@ function applyLevelUpTemplate(template, { userMention, level }) {
         .replace(/\{level\}/g, String(level));
 }
 
+function toHexColor(color, fallback = '#ffb6e6') {
+    if (typeof color === 'number' && Number.isFinite(color)) {
+        return `#${(color & 0xffffff).toString(16).padStart(6, '0')}`;
+    }
+
+    const raw = String(color || '').trim();
+    if (!raw) return fallback;
+
+    if (raw.startsWith('#') && raw.length === 7) return raw.toLowerCase();
+    if (raw.startsWith('0x')) return `#${raw.slice(2).padStart(6, '0').toLowerCase()}`;
+
+    const hex = raw.startsWith('#') ? raw.slice(1) : raw;
+    if (/^[0-9a-fA-F]{6}$/.test(hex)) return `#${hex.toLowerCase()}`;
+
+    return fallback;
+}
+
+async function getUserBannerUrl(client, userId) {
+    if (!client?.users?.fetch) return null;
+    const fetched = await client.users.fetch(userId, { force: true }).catch(() => null);
+    return fetched?.bannerURL?.({ size: 2048, extension: 'png' })
+        || fetched?.bannerURL?.({ size: 2048, extension: 'jpg' })
+        || null;
+}
+
 async function sendLevelUpNotification({ message, cfg, newLevel }) {
     if (!cfg?.levelUpNotifications?.enabled) return;
 
@@ -113,9 +139,40 @@ async function sendLevelUpNotification({ message, cfg, newLevel }) {
 
     const tpl = cfg?.levelUpNotifications?.message;
     const content = applyLevelUpTemplate(tpl, { userMention: `<@${message.author.id}>`, level: newLevel });
-    if (!content) return;
 
-    await channel.send({ content }).catch(() => null);
+    // Card (canvafy LevelUp). Siempre que esté enabled. Best-effort + fallback a texto.
+    try {
+        const { AttachmentBuilder } = require('discord.js');
+        const { LevelUp } = require('canvafy');
+        const accentHex = toHexColor(Bot?.AccentColor);
+
+        const bannerUrl = await getUserBannerUrl(message.client, message.author.id);
+
+        const avatar = typeof message.author?.displayAvatarURL === 'function'
+            ? message.author.displayAvatarURL({ extension: 'png', size: 512, forceStatic: true })
+            : null;
+
+        const prev = Math.max(1, Number(newLevel || 1) - 1);
+        const next = Math.max(1, Number(newLevel || 1));
+
+        const card = await new LevelUp()
+            .setAvatar(avatar || 'https://cdn.discordapp.com/embed/avatars/0.png')
+            .setBackground(bannerUrl ? 'image' : 'color', bannerUrl || '#23272a')
+            .setUsername(String(message.author?.username || 'User'))
+            .setBorder(accentHex)
+            .setAvatarBorder(accentHex)
+            .setOverlayOpacity(0.7)
+            .setLevels(prev, next)
+            .build();
+
+        const attachment = new AttachmentBuilder(card, { name: 'levelup.png' });
+        await channel.send({ content: content || '', files: [attachment] }).catch(() => null);
+        return;
+    } catch (e) {
+        // fallback a texto
+        if (!content) return;
+        await channel.send({ content }).catch(() => null);
+    }
 }
 
 async function awardXpForMessage(message) {

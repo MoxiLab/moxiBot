@@ -1,3 +1,5 @@
+require('./silentDotenv')();
+
 const mongoose = require('mongoose');
 const logger = require('./logger');
 const { EMOJIS } = require('./emojis');

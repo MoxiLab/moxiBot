@@ -51,7 +51,12 @@ async function buildCanvacardWelcomeLeave({
 
 async function buildCanvacardRank({
     username,
+    discriminator,
     avatarUrl,
+    avatarDecorationAsset,
+    flags,
+    isBot,
+    createdTimestamp,
     level,
     prestige,
     currentXp,
@@ -67,35 +72,59 @@ async function buildCanvacardRank({
     try {
         const card = new Ctor();
 
-        if (avatarUrl && typeof card.setAvatar === 'function') card.setAvatar(String(avatarUrl));
-        if (username && typeof card.setUsername === 'function') card.setUsername(String(username));
-
         const lvl = Math.max(1, Number(level) || 1);
         const cur = Math.max(0, Number(currentXp) || 0);
         const req = Math.max(1, Number(requiredXp) || 1);
         const rnk = Math.max(0, Number(rank) || 0);
         const pres = Math.max(0, Number(prestige) || 0);
 
-        if (typeof card.setLevel === 'function') card.setLevel(lvl);
-        if (typeof card.setPrestige === 'function') card.setPrestige(pres);
+        // canvacard v6: setAvatar(url, decorationAsset, overlay)
+        if (avatarUrl && typeof card.setAvatar === 'function') {
+            try {
+                card.setAvatar(String(avatarUrl), avatarDecorationAsset || null, false);
+            } catch (_) {
+                try { card.setAvatar(String(avatarUrl)); } catch (_) { }
+            }
+        }
 
-        if (typeof card.setCurrentXP === 'function') card.setCurrentXP(cur);
-        if (typeof card.setCurrentXp === 'function') card.setCurrentXp(cur);
-        if (typeof card.setRequiredXP === 'function') card.setRequiredXP(req);
-        if (typeof card.setRequiredXp === 'function') card.setRequiredXp(req);
+        // canvacard v6: setUsername(username, discriminator, color)
+        if (username && typeof card.setUsername === 'function') {
+            try {
+                card.setUsername(String(username), discriminator ? String(discriminator) : null, '#FFFFFF');
+            } catch (_) {
+                try { card.setUsername(String(username)); } catch (_) { }
+            }
+        }
 
-        if (rnk && typeof card.setRank === 'function') card.setRank(rnk);
+        // canvacard v6: setBadges(flags, bot, display)
+        if (typeof card.setBadges === 'function') {
+            try {
+                card.setBadges(flags ?? 0, !!isBot, true);
+            } catch (_) { }
+        }
 
+        // canvacard v6: setBorder([color1, color2], direction)
+        if (typeof card.setBorder === 'function') {
+            try {
+                card.setBorder(['#22274a', '#001eff'], 'vertical');
+            } catch (_) { }
+        }
+
+        // canvacard v6: setBanner(url, blur)
         if (backgroundUrl) {
-            if (typeof card.setBackground === 'function') {
-                // Muchas versiones aceptan ('IMAGE', url) o ('image', url)
+            if (typeof card.setBanner === 'function') {
+                try {
+                    card.setBanner(String(backgroundUrl), true);
+                } catch (_) {
+                    try { card.setBanner(String(backgroundUrl)); } catch (_) { }
+                }
+            } else if (typeof card.setBackground === 'function') {
                 try {
                     card.setBackground('IMAGE', String(backgroundUrl));
                 } catch (_) {
                     try { card.setBackground('image', String(backgroundUrl)); } catch (_) { }
                 }
-            }
-            if (typeof card.setBackgroundImage === 'function') {
+            } else if (typeof card.setBackgroundImage === 'function') {
                 try { card.setBackgroundImage(String(backgroundUrl)); } catch (_) { }
             }
         } else if (typeof card.setBackground === 'function') {
@@ -106,7 +135,54 @@ async function buildCanvacardRank({
             }
         }
 
-        if (typeof card.build === 'function') return await card.build();
+        if (typeof card.setCurrentXP === 'function') card.setCurrentXP(cur);
+        if (typeof card.setCurrentXp === 'function') card.setCurrentXp(cur);
+        if (typeof card.setRequiredXP === 'function') card.setRequiredXP(req);
+        if (typeof card.setRequiredXp === 'function') card.setRequiredXp(req);
+
+        if (typeof card.setRank === 'function') {
+            try {
+                card.setRank(rnk || 0, 'RANK', true);
+            } catch (_) {
+                try { card.setRank(rnk || 0); } catch (_) { }
+            }
+        }
+
+        if (typeof card.setLevel === 'function') {
+            try {
+                card.setLevel(lvl, 'LEVEL');
+            } catch (_) {
+                try { card.setLevel(lvl); } catch (_) { }
+            }
+        }
+
+        if (typeof card.setPrestige === 'function') {
+            try { card.setPrestige(pres); } catch (_) { }
+        }
+
+        if (typeof card.setStatus === 'function') {
+            try { card.setStatus('online'); } catch (_) { }
+        }
+
+        // canvacard v6: setProgressBar([color1,color2], type, rounded)
+        if (typeof card.setProgressBar === 'function') {
+            try {
+                card.setProgressBar(['#14C49E', '#FF0000'], 'GRADIENT', true);
+            } catch (_) { }
+        }
+
+        if (createdTimestamp && typeof card.setCreatedTimestamp === 'function') {
+            try { card.setCreatedTimestamp(Number(createdTimestamp)); } catch (_) { }
+        }
+
+        // canvacard.build(fontName)
+        if (typeof card.build === 'function') {
+            try {
+                return await card.build('Cascadia Code PL, Noto Color Emoji, Arial');
+            } catch (_) {
+                return await card.build();
+            }
+        }
         if (typeof card.render === 'function') return await card.render();
         return null;
     } catch (err) {
