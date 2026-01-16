@@ -4,15 +4,13 @@ const moxi = require('../../../../i18n');
 const { EMOJIS } = require('../../../../Util/emojis');
 const { buildNoticeContainer } = require('../../../../Util/v2Notice');
 const { getItemById } = require('../../../../Util/inventoryCatalog');
-const { claimCooldownReward, formatDuration, getOrCreateEconomy } = require('../../../../Util/economyCore');
+const { claimCooldown, formatDuration, getOrCreateEconomy } = require('../../../../Util/economyCore');
 const {
     parseZonesCustomId,
     buildZonesContainer,
     getZoneForPick,
 } = require('../../../../Util/zonesView');
 const { hasInventoryItem } = require('../../../../Util/fishView');
-
-const COIN = EMOJIS.coin || '\u{1FA99}'; // 🪙
 
 function safeInt(n, fallback = 0) {
     const x = Number(n);
@@ -49,7 +47,7 @@ module.exports = async function zonesButtons(interaction) {
                 buildNoticeContainer({
                     emoji: EMOJIS.question,
                     title: 'Zonas',
-                    text: 'Usa los botones para cambiar de categoría (Pesca / Minería / Exploración).\nPulsa una zona para ejecutar la acción.\nPor ahora: Minería y Exploración están en preparación.',
+                    text: 'Usa los botones para cambiar de categoría (Pesca / Minería / Exploración).\nPulsa una zona para ejecutar la acción.',
                 }),
             ],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
@@ -129,13 +127,7 @@ module.exports = async function zonesButtons(interaction) {
         const field = kind === 'fish' ? 'lastFish' : (kind === 'mine' ? 'lastMine' : 'lastExplore');
         const cooldownSec = kind === 'fish' ? 300 : (kind === 'mine' ? 420 : 600);
         const cooldownMs = Math.max(1, safeInt(cooldownSec, 300)) * 1000;
-        const res = await claimCooldownReward({
-            userId,
-            field,
-            cooldownMs,
-            minAmount: safeInt(zone.reward?.min, 25),
-            maxAmount: safeInt(zone.reward?.max, 60),
-        });
+        const res = await claimCooldown({ userId, field, cooldownMs });
 
         if (!res.ok && res.reason === 'cooldown') {
             await interaction.followUp({
@@ -162,9 +154,11 @@ module.exports = async function zonesButtons(interaction) {
             content: '',
             components: [
                 buildNoticeContainer({
-                    emoji: zone.emoji || '🎣',
+                    emoji: zone.emoji || (kind === 'mine' ? '⛏️' : (kind === 'explore' ? '🧭' : '🎣')),
                     title: `${titlePrefix} • ${zone.name}`,
-                    text: `${actionText} y ganas **${res.amount}** ${COIN}.\nBalance: **${res.balance}** ${COIN}.`,
+                    text: kind === 'fish'
+                        ? `${actionText}. ¡Buen lance! 🎣`
+                        : `${actionText}. ¡Hecho!`,
                 }),
             ],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
