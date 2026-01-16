@@ -3,11 +3,46 @@ const BonusSystem = require('../../Global/Helpers/BonusSystem');
 const { Bot } = require('../../Config');
 const debugHelper = require('../../Util/debugHelper');
 
+function toHexColor(color, fallback = '#ffb6e6') {
+    if (typeof color === 'number' && Number.isFinite(color)) {
+        return `#${(color & 0xffffff).toString(16).padStart(6, '0')}`;
+    }
+
+    const raw = String(color || '').trim();
+    if (!raw) return fallback;
+
+    if (raw.startsWith('#') && raw.length === 7) return raw.toLowerCase();
+    if (raw.startsWith('0x')) return `#${raw.slice(2).padStart(6, '0').toLowerCase()}`;
+
+    const hex = raw.startsWith('#') ? raw.slice(1) : raw;
+    if (/^[0-9a-fA-F]{6}$/.test(hex)) return `#${hex.toLowerCase()}`;
+
+    return fallback;
+}
+
+async function getUserBannerUrl(client, userId) {
+    if (!client?.users?.fetch) return null;
+    const fetched = await client.users.fetch(userId, { force: true }).catch(() => null);
+    return fetched?.bannerURL?.({ size: 2048, extension: 'png' })
+        || fetched?.bannerURL?.({ size: 2048, extension: 'jpg' })
+        || null;
+}
+
 module.exports = {
     name: 'levelconfig',
     alias: ['levelconfig-admin', 'config-level'],
     description: 'Configura el sistema de niveles del servidor',
-    usage: 'levelconfig [subcomando]',
+    usage: 'levelconfig set <#canal> | levelconfig notificaciones <si/no> [#canal] | levelconfig xp <minimo> <maximo> <cooldown_seg> | levelconfig prestige <si/no> [nivel] | levelconfig dailybonus <si/no> [xp] | levelconfig reaccionbonus <si/no> [xp] | levelconfig canal_bloqueado <#canal> <si/no> | levelconfig preview',
+    helpText: () => (
+        'Configura la XP y las notificaciones de subida de nivel.\n' +
+        'Atajo recomendado: `levelconfig set #canal` (activa notificaciones y fija el canal).'
+    ),
+    examples: [
+        'levelconfig set #niveles',
+        'levelconfig notificaciones si #niveles',
+        'levelconfig notificaciones no',
+        'levelconfig xp 5 15 60',
+    ],
     category: 'Admin',
     cooldown: 5,
 
@@ -18,7 +53,7 @@ module.exports = {
     },
 
     command: {
-        prefix: false,
+        prefix: true,
         slash: true,
         ephemeral: false,
         options: [
@@ -157,9 +192,277 @@ module.exports = {
     },
 
     execute: async (Moxi, message, args) => {
-        const container = new ContainerBuilder().setAccentColor(Bot.AccentColor)
-            .addTextDisplayComponents(c => c.setContent('# ❌ Este comando solo funciona con slash commands.'));
-        return message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2, allowedMentions: { repliedUser: false } });
+        try {
+            const guildID = message.guildId;
+            const subcommand = (args[0] || '').toLowerCase();
+
+            debugHelper.log('levelconfig', 'execute start', {
+                guildId: guildID || 'dm',
+                userId: message.author?.id,
+                subcommand: subcommand || null,
+                argsPreview: Array.isArray(args) ? args.slice(0, 6) : [],
+            });
+
+            const usageLines = [
+                '**Uso:**',
+                '`levelconfig set <#canal>`',
+                '`levelconfig xp <minimo> <maximo> <cooldown_seg>`',
+                '`levelconfig prestige <si/no> [nivel_requerido]`',
+                '`levelconfig dailybonus <si/no> [xp]`',
+                '`levelconfig reaccionbonus <si/no> [xp_por_reaccion]`',
+                '`levelconfig notificaciones <si/no> [#canal]`',
+                '`levelconfig canal_bloqueado <#canal> <si/no>`',
+                '`levelconfig preview`',
+            ].join('\n');
+
+            const parseBoolean = (input) => {
+                if (input === undefined || input === null) return null;
+                const v = String(input).trim().toLowerCase();
+                if (!v) return null;
+                const truthy = new Set(['1', 'true', 't', 'yes', 'y', 'si', 'sí', 'on', 'enable', 'enabled', 'habilitar', 'habilitado']);
+                const falsy = new Set(['0', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', 'deshabilitar', 'deshabilitado']);
+                if (truthy.has(v)) return true;
+                if (falsy.has(v)) return false;
+                return null;
+            };
+
+            const parseIntStrict = (input) => {
+                if (input === undefined || input === null) return null;
+                const n = parseInt(String(input), 10);
+                return Number.isFinite(n) ? n : null;
+            };
+
+            const replyPanel = async (title, body) => {
+                const container = new ContainerBuilder()
+                    .setAccentColor(Bot.AccentColor)
+                    .addTextDisplayComponents(c => c.setContent(title))
+                    .addSeparatorComponents(s => s.setDivider(true))
+                    .addTextDisplayComponents(c => c.setContent(body));
+                return message.reply({
+                    content: '',
+                    components: [container],
+                    flags: MessageFlags.IsComponentsV2,
+                    allowedMentions: { repliedUser: false }
+                });
+            };
+
+            if (!subcommand) {
+                return replyPanel('# ⚙️ Configuración de niveles', usageLines);
+            }
+
+            let config = await BonusSystem.getConfig(guildID);
+            const updates = {};
+
+            switch (subcommand) {
+                case 'set': {
+                    const mentioned = message.mentions.channels.first();
+                    const channelIdArg = args[1] ? String(args[1]).replace(/[<#>]/g, '') : null;
+                    const fallbackChannel = channelIdArg
+                        ? (message.guild?.channels?.cache?.get(channelIdArg) || null)
+                        : null;
+                    const notifChannel = mentioned || fallbackChannel;
+
+                    if (!notifChannel) {
+                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig set #niveles\``);
+                    }
+
+                    updates.levelUpNotifications = {
+                        enabled: true,
+                        channel: notifChannel.id,
+                        message: '🎉 ¡{user} ha subido al nivel {level}!'
+                    };
+
+                    await BonusSystem.updateConfig(guildID, updates);
+                    debugHelper.log('levelconfig', 'set notifications channel (prefix)', { guildId: guildID, channel: notifChannel.id });
+                    return replyPanel('# ✅ Configuración actualizada', `Notificaciones de level-up: **habilitadas**\nCanal: ${notifChannel}`);
+                }
+                case 'set': {
+                    const mentioned = message.mentions.channels.first();
+                    const channelIdArg = args[1] ? String(args[1]).replace(/[<#>]/g, '') : null;
+                    const targetChannel = mentioned || (channelIdArg ? (message.guild?.channels?.cache?.get(channelIdArg) || null) : null);
+
+                    if (!targetChannel) {
+                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig set #niveles\``);
+                    }
+
+                    updates.levelUpNotifications = {
+                        enabled: true,
+                        channel: targetChannel.id,
+                        message: '🎉 ¡{user} ha subido al nivel {level}!'
+                    };
+
+                    await BonusSystem.updateConfig(guildID, updates);
+                    debugHelper.log('levelconfig', 'updated notifications via set (prefix)', { guildId: guildID, channel: targetChannel.id });
+                    return replyPanel('# ✅ Configuración actualizada', `Notificaciones **habilitadas** en ${targetChannel}.`);
+                }
+                case 'preview': {
+                    const { LevelUp } = require('canvafy');
+                    const { AttachmentBuilder } = require('discord.js');
+                    const LevelSystem = require('../../Global/Helpers/LevelSystem');
+                    const accentHex = toHexColor(Bot?.AccentColor);
+                    const bannerUrl = await getUserBannerUrl(message.client, message.author.id);
+
+                    const userInfo = await LevelSystem.getUserLevelInfo(message.guildId, message.author.id);
+                    if (!userInfo) {
+                        debugHelper.warn('levelconfig', 'preview missing data (prefix)', { guildId: guildID, userId: message.author?.id });
+                        return replyPanel('# ❌ Sin datos', 'No se encontraron datos de nivel para este usuario.');
+                    }
+
+                    const card = await new LevelUp()
+                        .setAvatar(message.author.displayAvatarURL({ extension: 'png' }))
+                        .setBackground(bannerUrl ? 'image' : 'color', bannerUrl || '#23272a')
+                        .setUsername(message.author.username)
+                        .setBorder(accentHex)
+                        .setAvatarBorder(accentHex)
+                        .setOverlayOpacity(0.7)
+                        .setLevels(userInfo.level > 1 ? userInfo.level - 1 : 1, userInfo.level)
+                        .build();
+
+                    const attachment = new AttachmentBuilder(card, { name: 'levelup.png' });
+                    return message.reply({
+                        content: '🖼️ Vista previa de la tarjeta de level-up:',
+                        files: [attachment],
+                        allowedMentions: { repliedUser: false }
+                    });
+                }
+
+                case 'xp': {
+                    const minXp = parseIntStrict(args[1]);
+                    const maxXp = parseIntStrict(args[2]);
+                    const cooldown = parseIntStrict(args[3]);
+
+                    if (!minXp || !maxXp || !cooldown) {
+                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig xp 5 15 60\``);
+                    }
+                    if (minXp < 1 || maxXp < 1 || cooldown < 1) {
+                        return replyPanel('# ❌ Argumentos inválidos', 'Los valores deben ser números enteros mayores o iguales a 1.');
+                    }
+                    if (maxXp < minXp) {
+                        return replyPanel('# ❌ Argumentos inválidos', 'El máximo no puede ser menor que el mínimo.');
+                    }
+
+                    updates.minXpPerMessage = minXp;
+                    updates.maxXpPerMessage = maxXp;
+                    updates.xpCooldown = cooldown;
+
+                    await BonusSystem.updateConfig(guildID, updates);
+                    debugHelper.log('levelconfig', 'updated xp config (prefix)', { guildId: guildID, ...updates });
+                    return replyPanel('# ✅ Configuración actualizada', `XP por mensaje:\n- Mínimo: **${minXp}**\n- Máximo: **${maxXp}**\n- Cooldown: **${cooldown}s**`);
+                }
+
+                case 'prestige': {
+                    const enabled = parseBoolean(args[1]);
+                    if (enabled === null) {
+                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig prestige si 50\``);
+                    }
+                    const levelRequired = parseIntStrict(args[2]) || 50;
+                    if (levelRequired < 1) {
+                        return replyPanel('# ❌ Argumentos inválidos', 'El nivel requerido debe ser un entero >= 1.');
+                    }
+
+                    updates.prestigeEnabled = enabled;
+                    updates.levelRequiredForPrestige = levelRequired;
+
+                    await BonusSystem.updateConfig(guildID, updates);
+                    debugHelper.log('levelconfig', 'updated prestige config (prefix)', { guildId: guildID, ...updates });
+                    return replyPanel('# ✅ Configuración actualizada', `Prestige: **${enabled ? 'habilitado' : 'deshabilitado'}**${enabled ? `\nNivel requerido: **${levelRequired}**` : ''}`);
+                }
+
+                case 'dailybonus': {
+                    const enabled = parseBoolean(args[1]);
+                    if (enabled === null) {
+                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig dailybonus si 100\``);
+                    }
+                    const xp = parseIntStrict(args[2]) || 100;
+                    if (xp < 1) {
+                        return replyPanel('# ❌ Argumentos inválidos', 'La XP del bonus debe ser un entero >= 1.');
+                    }
+
+                    updates.dailyBonusEnabled = enabled;
+                    updates.dailyBonusXp = xp;
+
+                    await BonusSystem.updateConfig(guildID, updates);
+                    debugHelper.log('levelconfig', 'updated daily bonus (prefix)', { guildId: guildID, ...updates });
+                    return replyPanel('# ✅ Configuración actualizada', `Bonus diario: **${enabled ? 'habilitado' : 'deshabilitado'}**${enabled ? `\nXP: **${xp}**` : ''}`);
+                }
+
+                case 'reaccionbonus': {
+                    const enabled = parseBoolean(args[1]);
+                    if (enabled === null) {
+                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig reaccionbonus si 5\``);
+                    }
+                    const xp = parseIntStrict(args[2]) || 5;
+                    if (xp < 1) {
+                        return replyPanel('# ❌ Argumentos inválidos', 'La XP por reacción debe ser un entero >= 1.');
+                    }
+
+                    updates.reactionBonusEnabled = enabled;
+                    updates.xpPerReaction = xp;
+
+                    await BonusSystem.updateConfig(guildID, updates);
+                    debugHelper.log('levelconfig', 'updated reaction bonus (prefix)', { guildId: guildID, ...updates });
+                    return replyPanel('# ✅ Configuración actualizada', `Bonus de reacciones: **${enabled ? 'habilitado' : 'deshabilitado'}**${enabled ? `\nXP por reacción: **${xp}**` : ''}`);
+                }
+
+                case 'notificaciones': {
+                    const enabled = parseBoolean(args[1]);
+                    if (enabled === null) {
+                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig notificaciones si #canal\``);
+                    }
+
+                    const mentioned = message.mentions.channels.first();
+                    const channelIdArg = args[2] ? String(args[2]).replace(/[<#>]/g, '') : null;
+                    const fallbackChannel = channelIdArg
+                        ? (message.guild?.channels?.cache?.get(channelIdArg) || null)
+                        : null;
+                    const notifChannel = mentioned || fallbackChannel;
+
+                    updates.levelUpNotifications = {
+                        enabled,
+                        channel: notifChannel?.id || null,
+                        message: '🎉 ¡{user} ha subido al nivel {level}!'
+                    };
+
+                    await BonusSystem.updateConfig(guildID, updates);
+                    debugHelper.log('levelconfig', 'updated notifications (prefix)', { guildId: guildID, enabled, channel: notifChannel?.id || null });
+                    return replyPanel('# ✅ Configuración actualizada', `Notificaciones: **${enabled ? 'habilitadas' : 'deshabilitadas'}**${notifChannel ? `\nCanal: ${notifChannel}` : ''}`);
+                }
+
+                case 'canal_bloqueado': {
+                    const mentioned = message.mentions.channels.first();
+                    const channelIdArg = args[1] ? String(args[1]).replace(/[<#>]/g, '') : null;
+                    const targetChannel = mentioned || (channelIdArg ? (message.guild?.channels?.cache?.get(channelIdArg) || null) : null);
+                    const block = parseBoolean(args[2]);
+
+                    if (!targetChannel || block === null) {
+                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig canal_bloqueado #general si\``);
+                    }
+
+                    if (!config.blockedChannels) config.blockedChannels = [];
+
+                    if (block && !config.blockedChannels.includes(targetChannel.id)) {
+                        config.blockedChannels.push(targetChannel.id);
+                    } else if (!block && config.blockedChannels.includes(targetChannel.id)) {
+                        config.blockedChannels = config.blockedChannels.filter(id => id !== targetChannel.id);
+                    }
+
+                    await BonusSystem.updateConfig(guildID, { blockedChannels: config.blockedChannels });
+                    debugHelper.log('levelconfig', 'updated blocked channel (prefix)', { guildId: guildID, channel: targetChannel.id, blocked: block });
+                    return replyPanel('# ✅ Configuración actualizada', `Canal ${targetChannel} **${block ? 'bloqueado' : 'desbloqueado'}** para XP.`);
+                }
+
+                default:
+                    debugHelper.warn('levelconfig', 'unknown subcommand (prefix)', { guildId: guildID, subcommand });
+                    return replyPanel('# ❌ Subcomando inválido', usageLines);
+            }
+
+        } catch (error) {
+            console.error('[LevelConfig Command] Error (prefix):', error);
+            debugHelper.error('levelconfig', 'execute failure', { guildId: message.guildId || 'dm', userId: message.author?.id, error: error?.message || error });
+            const container = new ContainerBuilder().setAccentColor(Bot.AccentColor)
+                .addTextDisplayComponents(c => c.setContent('# ❌ Error al actualizar configuración.'));
+            return message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2, allowedMentions: { repliedUser: false } });
+        }
     },
 
     interactionRun: async (client, interaction) => {
@@ -183,6 +486,8 @@ module.exports = {
                     const { LevelUp } = require('canvafy');
                     const { AttachmentBuilder } = require('discord.js');
                     const LevelSystem = require('../../Global/Helpers/LevelSystem');
+                    const accentHex = toHexColor(Bot?.AccentColor);
+                    const bannerUrl = await getUserBannerUrl(interaction.client, interaction.user.id);
 
                     const userInfo = await LevelSystem.getUserLevelInfo(interaction.guildId, interaction.user.id);
                     if (!userInfo) {
@@ -192,10 +497,10 @@ module.exports = {
 
                     const card = await new LevelUp()
                         .setAvatar(interaction.user.displayAvatarURL({ extension: 'png' }))
-                        .setBackground('color', '#23272a')
+                        .setBackground(bannerUrl ? 'image' : 'color', bannerUrl || '#23272a')
                         .setUsername(interaction.user.username)
-                        .setBorder('#000000')
-                        .setAvatarBorder('#ff0000')
+                        .setBorder(accentHex)
+                        .setAvatarBorder(accentHex)
                         .setOverlayOpacity(0.7)
                         .setLevels(userInfo.level > 1 ? userInfo.level - 1 : 1, userInfo.level)
                         .build();

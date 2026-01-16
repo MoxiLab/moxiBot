@@ -12,6 +12,7 @@ const {
 } = require('discord.js');
 
 const { Bot } = require('../../Config');
+const RankConfig = require('../../Models/RankSchema');
 const GuildData = require('../../Models/GuildSchema');
 const LevelSystem = require('../../Global/Helpers/LevelSystem');
 const debugHelper = require('../../Util/debugHelper');
@@ -26,6 +27,10 @@ function normalizeStyle(raw) {
     return '';
 }
 
+const SYLPHA_FILE = 'rank-style-sylphacard.png';
+const ARTS_FILE = 'rank-style-discord-arts.png';
+const CANVA_FILE = 'rank-style-canvacard.png';
+
 function buildPanel({ selectedStyle, availability }) {
     const { hasSylpha, hasArts, hasCanva, disabled } = availability;
 
@@ -38,33 +43,83 @@ function buildPanel({ selectedStyle, availability }) {
         ))
         .addSeparatorComponents(s => s.setDivider(true));
 
-    const row = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-            .setCustomId('rank_style_sylphacard')
-            .setLabel('Sylphacard')
-            .setStyle(selectedStyle === 'sylphacard' ? ButtonStyle.Success : ButtonStyle.Primary)
-            .setDisabled(!!disabled),
-        new ButtonBuilder()
-            .setCustomId('rank_style_discord-arts')
-            .setLabel('Discord-Arts')
-            .setStyle(selectedStyle === 'discord-arts' ? ButtonStyle.Success : ButtonStyle.Primary)
-            .setDisabled(!!disabled),
-        new ButtonBuilder()
-            .setCustomId('rank_style_canvacard')
-            .setLabel('Canvacard')
-            .setStyle(selectedStyle === 'canvacard' ? ButtonStyle.Success : ButtonStyle.Primary)
-            .setDisabled(!!disabled),
+    // Opción 1 (Sylphacard)
+    container.addSectionComponents(section =>
+        section
+            .addTextDisplayComponents(t => t.setContent(
+                `**Sylphacard**${selectedStyle === 'sylphacard' ? ' ✅' : ''}` +
+                `${hasSylpha ? '' : '\n_❌ Preview no disponible_'}`
+            ))
+            .setButtonAccessory(
+                new ButtonBuilder()
+                    .setCustomId('rank_style_sylphacard')
+                    .setLabel('Usar Sylphacard')
+                    .setStyle(selectedStyle === 'sylphacard' ? ButtonStyle.Success : ButtonStyle.Primary)
+                    .setDisabled(!!disabled)
+            )
     );
 
-    const notes = [
-        `**Sylphacard**${selectedStyle === 'sylphacard' ? ' ✅' : ''}${hasSylpha ? '' : ' (preview no disponible)'}`,
-        `**Discord-Arts**${selectedStyle === 'discord-arts' ? ' ✅' : ''}${hasArts ? '' : ' (preview no disponible)'}`,
-        `**Canvacard**${selectedStyle === 'canvacard' ? ' ✅' : ''}${hasCanva ? '' : ' (preview no disponible)'}`,
-    ].join('\n');
+    if (hasSylpha) {
+        container.addMediaGalleryComponents(
+            new MediaGalleryBuilder().addItems(
+                new MediaGalleryItemBuilder().setURL(`attachment://${SYLPHA_FILE}`)
+            )
+        );
+    }
 
-    container.addTextDisplayComponents(t => t.setContent(notes));
     container.addSeparatorComponents(s => s.setDivider(true));
-    container.addActionRowComponents(row);
+
+    // Opción 2 (Discord-Arts)
+    container.addSectionComponents(section =>
+        section
+            .addTextDisplayComponents(t => t.setContent(
+                `**Discord-Arts**${selectedStyle === 'discord-arts' ? ' ✅' : ''}` +
+                `${hasArts ? '' : '\n_❌ Preview no disponible_'}`
+            ))
+            .setButtonAccessory(
+                new ButtonBuilder()
+                    .setCustomId('rank_style_discord-arts')
+                    .setLabel('Usar Discord-Arts')
+                    .setStyle(selectedStyle === 'discord-arts' ? ButtonStyle.Success : ButtonStyle.Primary)
+                    .setDisabled(!!disabled)
+            )
+    );
+
+    if (hasArts) {
+        container.addMediaGalleryComponents(
+            new MediaGalleryBuilder().addItems(
+                new MediaGalleryItemBuilder().setURL(`attachment://${ARTS_FILE}`)
+            )
+        );
+    }
+
+    container.addSeparatorComponents(s => s.setDivider(true));
+
+    // Opción 3 (Canvacard)
+    container.addSectionComponents(section =>
+        section
+            .addTextDisplayComponents(t => t.setContent(
+                `**Canvacard**${selectedStyle === 'canvacard' ? ' ✅' : ''}` +
+                `${hasCanva ? '' : '\n_❌ Preview no disponible_'}`
+            ))
+            .setButtonAccessory(
+                new ButtonBuilder()
+                    .setCustomId('rank_style_canvacard')
+                    .setLabel('Usar Canvacard')
+                    .setStyle(selectedStyle === 'canvacard' ? ButtonStyle.Success : ButtonStyle.Primary)
+                    .setDisabled(!!disabled)
+            )
+    );
+
+    if (hasCanva) {
+        container.addMediaGalleryComponents(
+            new MediaGalleryBuilder().addItems(
+                new MediaGalleryItemBuilder().setURL(`attachment://${CANVA_FILE}`)
+            )
+        );
+    }
+
+    container.addSeparatorComponents(s => s.setDivider(true));
 
     return container;
 }
@@ -145,15 +200,18 @@ module.exports = {
         const raw = args[0];
         const normalized = normalizeStyle(raw);
 
-        const serverDoc = await GuildData.findOne({ guildID }).lean().catch(() => null);
-        const currentStyle = (serverDoc?.Rank?.style && typeof serverDoc.Rank.style === 'string')
-            ? serverDoc.Rank.style
-            : ((serverDoc?.Welcome?.style && typeof serverDoc.Welcome.style === 'string') ? serverDoc.Welcome.style : 'sylphacard');
+        const rankDoc = await RankConfig.findOne({ guildID }).lean().catch(() => null);
+        const legacyGuildDoc = !rankDoc ? await GuildData.findOne({ guildID }).lean().catch(() => null) : null;
+        const currentStyle = (rankDoc?.style && typeof rankDoc.style === 'string')
+            ? rankDoc.style
+            : ((legacyGuildDoc?.Rank?.style && typeof legacyGuildDoc.Rank.style === 'string')
+                ? legacyGuildDoc.Rank.style
+                : ((legacyGuildDoc?.Welcome?.style && typeof legacyGuildDoc.Welcome.style === 'string') ? legacyGuildDoc.Welcome.style : 'sylphacard'));
 
         if (normalized) {
-            await GuildData.findOneAndUpdate(
+            await RankConfig.findOneAndUpdate(
                 { guildID },
-                { $set: { 'Rank.style': normalized, 'Rank.updatedAt': new Date() }, $setOnInsert: { guildName: guild.name } },
+                { $set: { style: normalized, updatedAt: new Date() } },
                 { upsert: true, new: true }
             ).catch(() => null);
 
@@ -177,19 +235,15 @@ module.exports = {
         const previews = await renderPreviews({ client: Moxi, guild, user, levelInfo, backgroundUrl });
 
         const files = [];
-        const items = [];
 
         if (previews.sylphacard) {
-            files.push(new AttachmentBuilder(previews.sylphacard, { name: 'rank-style-sylphacard.png' }));
-            items.push(new MediaGalleryItemBuilder().setURL('attachment://rank-style-sylphacard.png'));
+            files.push(new AttachmentBuilder(previews.sylphacard, { name: SYLPHA_FILE }));
         }
         if (previews['discord-arts']) {
-            files.push(new AttachmentBuilder(previews['discord-arts'], { name: 'rank-style-discord-arts.png' }));
-            items.push(new MediaGalleryItemBuilder().setURL('attachment://rank-style-discord-arts.png'));
+            files.push(new AttachmentBuilder(previews['discord-arts'], { name: ARTS_FILE }));
         }
         if (previews.canvacard) {
-            files.push(new AttachmentBuilder(previews.canvacard, { name: 'rank-style-canvacard.png' }));
-            items.push(new MediaGalleryItemBuilder().setURL('attachment://rank-style-canvacard.png'));
+            files.push(new AttachmentBuilder(previews.canvacard, { name: CANVA_FILE }));
         }
 
         const container = buildPanel({
@@ -201,11 +255,6 @@ module.exports = {
                 disabled: false,
             }
         });
-
-        if (items.length) {
-            container.addMediaGalleryComponents(new MediaGalleryBuilder().addItems(...items));
-            container.addSeparatorComponents(s => s.setDivider(true));
-        }
 
         const sent = await message.reply({
             content: '',
@@ -229,9 +278,9 @@ module.exports = {
                 ? 'discord-arts'
                 : (i.customId === 'rank_style_canvacard' ? 'canvacard' : 'sylphacard');
 
-            await GuildData.findOneAndUpdate(
+            await RankConfig.findOneAndUpdate(
                 { guildID },
-                { $set: { 'Rank.style': selected, 'Rank.updatedAt': new Date() }, $setOnInsert: { guildName: guild.name } },
+                { $set: { style: selected, updatedAt: new Date() } },
                 { upsert: true, new: true }
             ).catch(() => null);
 
@@ -247,11 +296,6 @@ module.exports = {
                 }
             });
 
-            if (items.length) {
-                updated.addMediaGalleryComponents(new MediaGalleryBuilder().addItems(...items));
-                updated.addSeparatorComponents(s => s.setDivider(true));
-            }
-
             await i.update({ components: [updated], files });
         });
 
@@ -266,11 +310,6 @@ module.exports = {
                         disabled: true,
                     }
                 });
-
-                if (items.length) {
-                    disabled.addMediaGalleryComponents(new MediaGalleryBuilder().addItems(...items));
-                    disabled.addSeparatorComponents(s => s.setDivider(true));
-                }
 
                 await sent.edit({ components: [disabled] });
                 debugHelper.log('ranksetup', 'collector ended', { guildId: guildID });
@@ -293,15 +332,18 @@ module.exports = {
         const raw = interaction.options.getString('style');
         const normalized = normalizeStyle(raw);
 
-        const serverDoc = await GuildData.findOne({ guildID }).lean().catch(() => null);
-        const currentStyle = (serverDoc?.Rank?.style && typeof serverDoc.Rank.style === 'string')
-            ? serverDoc.Rank.style
-            : ((serverDoc?.Welcome?.style && typeof serverDoc.Welcome.style === 'string') ? serverDoc.Welcome.style : 'sylphacard');
+        const rankDoc = await RankConfig.findOne({ guildID }).lean().catch(() => null);
+        const legacyGuildDoc = !rankDoc ? await GuildData.findOne({ guildID }).lean().catch(() => null) : null;
+        const currentStyle = (rankDoc?.style && typeof rankDoc.style === 'string')
+            ? rankDoc.style
+            : ((legacyGuildDoc?.Rank?.style && typeof legacyGuildDoc.Rank.style === 'string')
+                ? legacyGuildDoc.Rank.style
+                : ((legacyGuildDoc?.Welcome?.style && typeof legacyGuildDoc.Welcome.style === 'string') ? legacyGuildDoc.Welcome.style : 'sylphacard'));
 
         if (normalized) {
-            await GuildData.findOneAndUpdate(
+            await RankConfig.findOneAndUpdate(
                 { guildID },
-                { $set: { 'Rank.style': normalized, 'Rank.updatedAt': new Date() }, $setOnInsert: { guildName: guild?.name } },
+                { $set: { style: normalized, updatedAt: new Date() } },
                 { upsert: true, new: true }
             ).catch(() => null);
 
@@ -325,19 +367,15 @@ module.exports = {
         const previews = await renderPreviews({ client: client, guild, user, levelInfo, backgroundUrl });
 
         const files = [];
-        const items = [];
 
         if (previews.sylphacard) {
-            files.push(new AttachmentBuilder(previews.sylphacard, { name: 'rank-style-sylphacard.png' }));
-            items.push(new MediaGalleryItemBuilder().setURL('attachment://rank-style-sylphacard.png'));
+            files.push(new AttachmentBuilder(previews.sylphacard, { name: SYLPHA_FILE }));
         }
         if (previews['discord-arts']) {
-            files.push(new AttachmentBuilder(previews['discord-arts'], { name: 'rank-style-discord-arts.png' }));
-            items.push(new MediaGalleryItemBuilder().setURL('attachment://rank-style-discord-arts.png'));
+            files.push(new AttachmentBuilder(previews['discord-arts'], { name: ARTS_FILE }));
         }
         if (previews.canvacard) {
-            files.push(new AttachmentBuilder(previews.canvacard, { name: 'rank-style-canvacard.png' }));
-            items.push(new MediaGalleryItemBuilder().setURL('attachment://rank-style-canvacard.png'));
+            files.push(new AttachmentBuilder(previews.canvacard, { name: CANVA_FILE }));
         }
 
         const container = buildPanel({
@@ -349,11 +387,6 @@ module.exports = {
                 disabled: false,
             }
         });
-
-        if (items.length) {
-            container.addMediaGalleryComponents(new MediaGalleryBuilder().addItems(...items));
-            container.addSeparatorComponents(s => s.setDivider(true));
-        }
 
         await interaction.editReply({
             content: '',
@@ -379,9 +412,9 @@ module.exports = {
                 ? 'discord-arts'
                 : (i.customId === 'rank_style_canvacard' ? 'canvacard' : 'sylphacard');
 
-            await GuildData.findOneAndUpdate(
+            await RankConfig.findOneAndUpdate(
                 { guildID },
-                { $set: { 'Rank.style': selected, 'Rank.updatedAt': new Date() }, $setOnInsert: { guildName: guild?.name } },
+                { $set: { style: selected, updatedAt: new Date() } },
                 { upsert: true, new: true }
             ).catch(() => null);
 
@@ -397,11 +430,6 @@ module.exports = {
                 }
             });
 
-            if (items.length) {
-                updated.addMediaGalleryComponents(new MediaGalleryBuilder().addItems(...items));
-                updated.addSeparatorComponents(s => s.setDivider(true));
-            }
-
             await i.update({ components: [updated], files });
         });
 
@@ -416,11 +444,6 @@ module.exports = {
                         disabled: true,
                     }
                 });
-
-                if (items.length) {
-                    disabled.addMediaGalleryComponents(new MediaGalleryBuilder().addItems(...items));
-                    disabled.addSeparatorComponents(s => s.setDivider(true));
-                }
 
                 await replyMsg.edit({ components: [disabled] });
             } catch (_) { }
