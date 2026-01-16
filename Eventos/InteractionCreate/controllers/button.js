@@ -17,7 +17,9 @@ const handlers = [
   require('./buttons/zones'),
   require('./buttons/leave'), // <-- Añadido para leave
   require('./buttons/workList'),
+  require('./buttons/workApply'),
   require('./buttons/suggest'),
+  require('./buttons/craft'),
 ];
 
 module.exports = async function buttonController(interaction, Moxi, logger) {

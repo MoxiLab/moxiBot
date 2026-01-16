@@ -5,6 +5,11 @@ module.exports = async function selectMenuController(interaction, Moxi, logger) 
   const shopSelectMenu = require('./selectMenus/shop');
   const permsSelectMenu = require('./selectMenus/perms');
   const bagSelectMenu = require('./selectMenus/bag');
+  const zonesSelectMenu = require('./buttons/zones');
+  const craftSelectMenu = require('./selectMenus/craft');
+
+  // Zones menus (Pesca / Minería / Exploración)
+  if (await zonesSelectMenu(interaction, Moxi, logger)) return;
 
   // Help menus
   if (await helpSelectMenu(interaction, Moxi, logger)) return;
@@ -16,4 +21,6 @@ module.exports = async function selectMenuController(interaction, Moxi, logger) 
   if (await permsSelectMenu(interaction, Moxi, logger)) return;
   // Bag menus
   if (await bagSelectMenu(interaction, Moxi, logger)) return;
+  // Craft menus
+  if (await craftSelectMenu(interaction, Moxi, logger)) return;
 };
