@@ -164,6 +164,40 @@ async function claimCooldown({
   return { ok: false, reason: 'cooldown', nextInMs: remaining };
 }
 
+async function awardBalance({ userId, amount } = {}) {
+  if (!process.env.MONGODB) {
+    return { ok: false, reason: 'no-db', message: 'MongoDB no está configurado (MONGODB vacío).' };
+  }
+
+  const inc = safeInt(amount, 0);
+  if (inc <= 0) {
+    const existing = await getOrCreateEconomy(userId);
+    return { ok: true, amount: 0, balance: safeInt(existing.balance, 0) };
+  }
+
+  await ensureMongoConnection();
+  const { UserEconomy } = require('../Models/EconomySchema');
+
+  // Asegura doc
+  try {
+    await UserEconomy.updateOne(
+      { userId },
+      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [] } },
+      { upsert: true }
+    );
+  } catch (e) {
+    if (e?.code !== 11000) throw e;
+  }
+
+  const updated = await UserEconomy.findOneAndUpdate(
+    { userId },
+    { $inc: { balance: inc } },
+    { new: true }
+  );
+
+  return { ok: true, amount: inc, balance: safeInt(updated?.balance, 0) };
+}
+
 module.exports = {
   safeInt,
   formatDuration,
@@ -171,4 +205,5 @@ module.exports = {
   getOrCreateEconomy,
   claimCooldownReward,
   claimCooldown,
+  awardBalance,
 };

@@ -28,7 +28,7 @@ const RECIPES = Object.freeze([
     // --- Herramientas ---
     makeRecipe({
         itemId: 'herramientas/pico-prisma',
-        cost: 25,
+        cost: 5,
         inputs: [
             { itemId: 'materiales/mineral-elemental', amount: 5 },
             { itemId: 'materiales/barra-de-oro-acero', amount: 2 },
@@ -37,7 +37,7 @@ const RECIPES = Object.freeze([
     }),
     makeRecipe({
         itemId: 'herramientas/cana-de-pesca-moxi',
-        cost: 25,
+        cost: 5,
         inputs: [
             { itemId: 'materiales/hierba-prisma', amount: 6 },
             { itemId: 'materiales/barra-de-oro-acero', amount: 1 },
