@@ -13,6 +13,7 @@ const suggestionsSchema = new mongoose.Schema({
     // Config
     enabled: { type: Boolean, default: false },
     channelID: { type: String, default: null },
+    staffChannelID: { type: String, default: null },
 
     // Suggestion
     suggestionId: { type: String, default: null },
@@ -31,6 +32,9 @@ const suggestionsSchema = new mongoose.Schema({
 
     messageID: { type: String, default: null },
     messageChannelID: { type: String, default: null },
+
+    staffMessageID: { type: String, default: null },
+    staffMessageChannelID: { type: String, default: null },
 
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
