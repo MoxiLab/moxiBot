@@ -27,6 +27,20 @@ function parsePageArgToIndex(pageArg) {
     return num - 1;
 }
 
+function pickBestUsableZone(eco, zones) {
+    const usable = (Array.isArray(zones) ? zones : []).filter(z => hasInventoryItem(eco, z.requiredItemId));
+    if (!usable.length) return null;
+
+    let bestMax = -1;
+    for (const z of usable) {
+        const max = safeInt(z?.reward?.max, 0);
+        if (max > bestMax) bestMax = max;
+    }
+
+    const best = usable.filter(z => safeInt(z?.reward?.max, 0) === bestMax);
+    return best[Math.floor(Math.random() * best.length)] || usable[0];
+}
+
 function buildFishHelpText(prefix) {
     const p = String(prefix || '.');
     return [
@@ -81,20 +95,68 @@ module.exports = {
             return message.reply(buildZonesMessageOptions({ lang, userId: message.author?.id, kind: 'fish', page }));
         }
 
-        // Si no pasan args, damos un resumen corto + cómo ver zonas.
+        const userId = message.author?.id;
+        const eco = await getOrCreateEconomy(userId);
+
+        // Si no pasan args, pesca directamente en la mejor zona que puedas usar.
         if (!sub) {
+            const autoZone = pickBestUsableZone(eco, FISH_ZONES);
+            if (!autoZone) {
+                const required = getItemById('herramientas/cana-de-pesca-moxi');
+                const requiredName = required?.name || 'herramientas/cana-de-pesca-moxi';
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: '⛔',
+                            title: 'Fish • Requisito',
+                            text: [
+                                `Para empezar a pescar necesitas: **${requiredName}**`,
+                                'Cuando la tengas, usa `.fish` y pescaré automáticamente.',
+                                '',
+                                `Zonas: \`${prefix}fish zones\``,
+                            ].join('\n'),
+                        })
+                    )
+                );
+            }
+
+            const cooldownMs = Math.max(1, safeInt(this.cooldown, 300)) * 1000;
+            const res = await claimCooldown({
+                userId,
+                field: 'lastFish',
+                cooldownMs,
+            });
+
+            if (!res.ok && res.reason === 'cooldown') {
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: '⏳',
+                            title: 'Fish • Cooldown',
+                            text: `Aún estás cansad@ de pescar. Vuelve en **${formatDuration(res.nextInMs)}**.`,
+                        })
+                    )
+                );
+            }
+
+            if (!res.ok) {
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: '⚠️',
+                            title: 'Fish',
+                            text: res.message || 'No pude procesar tu pesca ahora mismo.',
+                        })
+                    )
+                );
+            }
+
             return message.reply(
                 asV2MessageOptions(
                     buildNoticeContainer({
-                        emoji: '🎣',
-                        title: 'Fish',
-                        text: [
-                            'Elige una zona y pesca.',
-                            `Zonas: \`${prefix}fish zones\``,
-                            `Pescar: \`${prefix}fish <zona>\``,
-                            '',
-                            'Tip: también puedes usar **/zones** (panel con botones).',
-                        ].join('\n'),
+                        emoji: autoZone.emoji || '🎣',
+                        title: `Fish • ${autoZone.name}`,
+                        text: 'Has pescado. ¡Buen lance! 🎣',
                     })
                 )
             );
@@ -120,9 +182,6 @@ module.exports = {
                 )
             );
         }
-
-        const userId = message.author?.id;
-        const eco = await getOrCreateEconomy(userId);
 
         if (!hasInventoryItem(eco, zone.requiredItemId)) {
             const required = getItemById(zone.requiredItemId);
