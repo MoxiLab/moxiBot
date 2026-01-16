@@ -1,15 +1,13 @@
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { getItemById } = require('../../Util/inventoryCatalog');
-const { claimCooldownReward, formatDuration, getOrCreateEconomy } = require('../../Util/economyCore');
+const { claimCooldown, formatDuration, getOrCreateEconomy } = require('../../Util/economyCore');
 const {
     FISH_ZONES,
     resolveFishZone,
     hasInventoryItem,
 } = require('../../Util/fishView');
 const { buildZonesMessageOptions } = require('../../Util/zonesView');
-
-const COIN = '\u{1FA99}'; // 🪙
 
 function economyCategory(lang) {
     return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
@@ -91,7 +89,7 @@ module.exports = {
                         emoji: '🎣',
                         title: 'Fish',
                         text: [
-                            `Elige una zona y pesca para ganar ${COIN}.`,
+                            'Elige una zona y pesca.',
                             `Zonas: \`${prefix}fish zones\``,
                             `Pescar: \`${prefix}fish <zona>\``,
                             '',
@@ -146,12 +144,10 @@ module.exports = {
         }
 
         const cooldownMs = Math.max(1, safeInt(this.cooldown, 300)) * 1000;
-        const res = await claimCooldownReward({
+        const res = await claimCooldown({
             userId,
             field: 'lastFish',
             cooldownMs,
-            minAmount: safeInt(zone.reward?.min, 25),
-            maxAmount: safeInt(zone.reward?.max, 60),
         });
 
         if (!res.ok && res.reason === 'cooldown') {
@@ -183,7 +179,7 @@ module.exports = {
                 buildNoticeContainer({
                     emoji: zone.emoji || '🎣',
                     title: `Fish • ${zone.name}`,
-                    text: [`Has pescado y ganas **${res.amount}** ${COIN}.`, `Balance: **${res.balance}** ${COIN}.`].join('\n'),
+                    text: 'Has pescado. ¡Buen lance! 🎣',
                 })
             )
         );
