@@ -60,6 +60,16 @@ module.exports = async function suggestButtons(interaction, Moxi, logger) {
         return true;
     }
 
+    // Si hay canal de revisión configurado, forzar a usarlo
+    if (doc.staffMessageChannelID && interaction.channelId && String(interaction.channelId) !== String(doc.staffMessageChannelID)) {
+        await interaction.reply({
+            content: '',
+            components: [buildNoticeContainer({ emoji: EMOJIS.info, text: `La revisión de sugerencias se hace en <#${doc.staffMessageChannelID}>.` })],
+            flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
+        }).catch(() => null);
+        return true;
+    }
+
     if (doc.status === 'approved' || doc.status === 'denied') {
         await interaction.reply({
             content: '',

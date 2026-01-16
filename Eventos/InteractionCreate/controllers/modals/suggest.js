@@ -1,9 +1,38 @@
 const { MessageFlags } = require('discord.js');
 
 const Suggestions = require('../../../../Models/SuggestionsSchema');
-const { isStaff, normalizeSuggestionId, buildSuggestionEmbed, buildSuggestionButtons } = require('../../../../Util/suggestions');
+const { isStaff, normalizeSuggestionId, buildSuggestionCard } = require('../../../../Util/suggestions');
 const { buildNoticeContainer } = require('../../../../Util/v2Notice');
 const { EMOJIS } = require('../../../../Util/emojis');
+
+function authorNameFromTag(tag) {
+    if (!tag) return null;
+    const str = String(tag);
+    const idx = str.indexOf('#');
+    return idx > 0 ? str.slice(0, idx) : str;
+}
+
+async function tryEditMessage(channel, messageId, payload) {
+    if (!channel || !messageId) return false;
+    try {
+        if (channel.messages && typeof channel.messages.edit === 'function') {
+            await channel.messages.edit(String(messageId), payload);
+            return true;
+        }
+    } catch { }
+
+    try {
+        if (channel.messages && typeof channel.messages.fetch === 'function') {
+            const msg = await channel.messages.fetch(String(messageId)).catch(() => null);
+            if (msg) {
+                await msg.edit(payload);
+                return true;
+            }
+        }
+    } catch { }
+
+    return false;
+}
 
 module.exports = async function suggestModalHandler(interaction, Moxi) {
     if (!interaction.isModalSubmit || !interaction.isModalSubmit()) return false;
@@ -69,26 +98,59 @@ module.exports = async function suggestModalHandler(interaction, Moxi) {
         return true;
     }
 
-    // Edit original message
+    const footerText = `${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`;
+    const publicCard = buildSuggestionCard({
+        content: updated.content,
+        status: updated.status,
+        withButtons: false,
+        authorName: authorNameFromTag(updated.authorTag),
+        footerText,
+    });
+
+    // Edit public/original message
     if (updated.messageID && updated.messageChannelID) {
         const channel = interaction.guild.channels.cache.get(String(updated.messageChannelID))
             || await interaction.guild.channels.fetch(String(updated.messageChannelID)).catch(() => null);
 
         if (channel && channel.isTextBased && channel.isTextBased()) {
-            const msg = await channel.messages.fetch(String(updated.messageID)).catch(() => null);
-            if (msg) {
-                const embed = buildSuggestionEmbed({
-                    guild: interaction.guild,
-                    author: updated.authorTag || (updated.authorID ? `<@${updated.authorID}>` : null),
-                    suggestionId: updated.suggestionId,
-                    content: updated.content,
-                    status: updated.status,
-                    staff: interaction.user?.tag || interaction.user?.id,
-                    reason,
-                });
-                const row = buildSuggestionButtons({ suggestionId: updated.suggestionId, status: updated.status });
-                await msg.edit({ embeds: [embed], components: [row] }).catch(() => null);
+            const edited = await tryEditMessage(channel, updated.messageID, { content: '', components: [publicCard], allowedMentions: { parse: [] } });
+
+            // Fallback: si no se puede editar (permisos/historial), publicar actualización visible en el canal
+            if (!edited) {
+                const posted = await channel.send({
+                    content: `${updated.status === 'approved' ? '✅' : '❌'} Actualización de sugerencia **#${updated.suggestionId}**`,
+                    components: [publicCard],
+                    flags: MessageFlags.IsComponentsV2,
+                    allowedMentions: { parse: [] },
+                }).catch(() => null);
+
+                if (posted) {
+                    await Suggestions.updateOne(
+                        { _id: updated._id },
+                        { $set: { messageID: posted.id, messageChannelID: posted.channel.id, updatedAt: new Date() } }
+                    ).catch(() => null);
+                }
             }
+        }
+    }
+
+    // Edit staff review message
+    if (updated.staffMessageID && updated.staffMessageChannelID) {
+        const staffChannel = interaction.guild.channels.cache.get(String(updated.staffMessageChannelID))
+            || await interaction.guild.channels.fetch(String(updated.staffMessageChannelID)).catch(() => null);
+
+        if (staffChannel && staffChannel.isTextBased && staffChannel.isTextBased()) {
+            const linkUrl = updated.messageID ? `https://discord.com/channels/${interaction.guildId}/${updated.messageChannelID}/${updated.messageID}` : null;
+            const staffCard = buildSuggestionCard({
+                suggestionId: updated.suggestionId,
+                content: updated.content,
+                status: updated.status,
+                linkUrl,
+                withButtons: true,
+                authorName: authorNameFromTag(updated.authorTag),
+                footerText,
+            });
+            await tryEditMessage(staffChannel, updated.staffMessageID, { content: '', components: [staffCard], allowedMentions: { parse: [] } });
         }
     }
 
