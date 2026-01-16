@@ -4,7 +4,12 @@ const moxi = require('../../../../i18n');
 const { EMOJIS } = require('../../../../Util/emojis');
 const { buildNoticeContainer } = require('../../../../Util/v2Notice');
 const { getItemById } = require('../../../../Util/inventoryCatalog');
-const { claimCooldown, formatDuration, getOrCreateEconomy } = require('../../../../Util/economyCore');
+const { claimCooldown, awardBalance, formatDuration, getOrCreateEconomy } = require('../../../../Util/economyCore');
+const { addManyToInventory } = require('../../../../Util/inventoryOps');
+const { rollMineMaterials } = require('../../../../Util/mineLoot');
+const { pickMineActivity } = require('../../../../Util/mineActivities');
+const { pickFishActivity } = require('../../../../Util/fishActivities');
+const { scaleRange, randInt, chance } = require('../../../../Util/activityUtils');
 const {
     parseZonesCustomId,
     buildZonesContainer,
@@ -17,6 +22,9 @@ function safeInt(n, fallback = 0) {
     if (!Number.isFinite(x)) return fallback;
     return Math.trunc(x);
 }
+
+const FISH_FAIL_CHANCE = 0.22;
+const MINE_FAIL_CHANCE = 0.18;
 
 module.exports = async function zonesButtons(interaction) {
     const parsed = parseZonesCustomId(interaction?.customId);
@@ -127,7 +135,47 @@ module.exports = async function zonesButtons(interaction) {
         const field = kind === 'fish' ? 'lastFish' : (kind === 'mine' ? 'lastMine' : 'lastExplore');
         const cooldownSec = kind === 'fish' ? 300 : (kind === 'mine' ? 420 : 600);
         const cooldownMs = Math.max(1, safeInt(cooldownSec, 300)) * 1000;
-        const res = await claimCooldown({ userId, field, cooldownMs });
+
+        let res;
+        let activity = null;
+        if (kind === 'fish') {
+            const minAmount = Math.max(1, safeInt(zone?.reward?.min, 25));
+            const maxAmount = Math.max(minAmount, safeInt(zone?.reward?.max, 60));
+            activity = pickFishActivity();
+            const scaled = scaleRange(minAmount, maxAmount, activity?.multiplier || 1);
+            const cd = await claimCooldown({ userId, field, cooldownMs });
+            if (!cd.ok) res = cd;
+            else {
+                const actionLine = activity?.phrase || 'Has pescado';
+                if (chance(FISH_FAIL_CHANCE)) {
+                    res = { ok: true, failed: true, actionLine };
+                } else {
+                    const amount = randInt(scaled.min, scaled.max);
+                    res = await awardBalance({ userId, amount });
+                    res.actionLine = actionLine;
+                }
+            }
+        } else if (kind === 'mine') {
+            const requiredId = String(zone?.requiredItemId || '');
+            const isExplosive = requiredId.includes('dinamita');
+            activity = pickMineActivity(zone);
+            const base = isExplosive ? { min: 60, max: 140 } : { min: 30, max: 75 };
+            const scaled = scaleRange(base.min, base.max, activity?.multiplier || 1);
+            const cd = await claimCooldown({ userId, field, cooldownMs });
+            if (!cd.ok) res = cd;
+            else {
+                const actionLine = activity?.phrase || 'Has minado';
+                if (chance(MINE_FAIL_CHANCE)) {
+                    res = { ok: true, failed: true, actionLine };
+                } else {
+                    const amount = randInt(scaled.min, scaled.max);
+                    res = await awardBalance({ userId, amount });
+                    res.actionLine = actionLine;
+                }
+            }
+        } else {
+            res = await claimCooldown({ userId, field, cooldownMs });
+        }
 
         if (!res.ok && res.reason === 'cooldown') {
             await interaction.followUp({
@@ -149,6 +197,34 @@ module.exports = async function zonesButtons(interaction) {
 
         const titlePrefix = kind === 'fish' ? 'Fish' : (kind === 'mine' ? 'Minería' : 'Exploración');
         const actionText = kind === 'fish' ? 'Has pescado' : (kind === 'mine' ? 'Has minado' : 'Has explorado');
+        const actionLine = (kind === 'fish' || kind === 'mine') ? (res?.actionLine || activity?.phrase || actionText) : actionText;
+        const coin = EMOJIS.coin || '🪙';
+        let rewardText = (kind === 'fish' || kind === 'mine') && Number.isFinite(res?.amount)
+            ? `\n+ Ganaste **${res.amount}** ${coin}`
+            : '';
+
+        if ((kind === 'fish' || kind === 'mine') && Number.isFinite(res?.balance)) {
+            rewardText += `\nSaldo: **${res.balance}** ${coin}`;
+        }
+
+        // Materiales extra por minería
+        if (kind === 'mine' && res?.ok && !res?.failed) {
+            const drops = rollMineMaterials(zone, activity);
+            if (drops.length) {
+                const ecoAfter = await getOrCreateEconomy(userId);
+                addManyToInventory(ecoAfter, drops);
+                await ecoAfter.save();
+
+                const lines = drops
+                    .map(d => {
+                        const it = getItemById(d.itemId);
+                        const name = it?.name || d.itemId;
+                        return `+${d.amount} ${name}`;
+                    })
+                    .join('\n');
+                if (lines) rewardText += `\n\nMateriales:\n${lines}`;
+            }
+        }
 
         await interaction.followUp({
             content: '',
@@ -157,8 +233,8 @@ module.exports = async function zonesButtons(interaction) {
                     emoji: zone.emoji || (kind === 'mine' ? '⛏️' : (kind === 'explore' ? '🧭' : '🎣')),
                     title: `${titlePrefix} • ${zone.name}`,
                     text: kind === 'fish'
-                        ? `${actionText}. ¡Buen lance! 🎣`
-                        : `${actionText}. ¡Hecho!`,
+                        ? (res?.failed ? `${actionLine}... pero no ha picado nada.` : `${actionLine}. ¡Buen lance! 🎣${rewardText}`)
+                        : (kind === 'mine' && res?.failed ? `${actionLine}... pero no has encontrado nada útil.` : `${actionLine}. ¡Hecho!${rewardText}`),
                 }),
             ],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
