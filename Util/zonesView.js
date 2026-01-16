@@ -11,7 +11,6 @@ const { EMOJIS } = require('./emojis');
 const { getItemById } = require('./inventoryCatalog');
 const { FISH_ZONES } = require('./fishView');
 
-const COIN = EMOJIS.coin || '\u{1FA99}'; // 🪙
 const YEAR = new Date().getFullYear();
 const BRAND_FOOTER = `© MoxiBot • ${YEAR}`;
 
@@ -21,58 +20,351 @@ const MINE_ZONES = Object.freeze([
         name: 'Cantera Prisma',
         emoji: '⛏️',
         requiredItemId: 'herramientas/pico-prisma',
-        reward: { min: 60, max: 140 },
         aliases: ['cantera'],
+    },
+    {
+        id: 'cintas-cobre',
+        name: 'Cintas de Cobre',
+        emoji: '🧲',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['cobre', 'cintas'],
     },
     {
         id: 'minas-oxidadas',
         name: 'Minas Oxidadas',
         emoji: '⚙️',
         requiredItemId: 'herramientas/pico-prisma',
-        reward: { min: 80, max: 180 },
         aliases: ['oxidadas'],
+    },
+    {
+        id: 'tunel-magnetita',
+        name: 'Túnel de Magnetita',
+        emoji: '🧲',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['magnetita', 'tunel'],
     },
     {
         id: 'vetas-lunares',
         name: 'Vetas Lunares',
         emoji: '🌙',
         requiredItemId: 'herramientas/pico-prisma',
-        reward: { min: 110, max: 240 },
         aliases: ['lunares', 'vetas'],
+    },
+    {
+        id: 'mina-cristal',
+        name: 'Mina de Cristal',
+        emoji: '💎',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['cristal', 'mina'],
+    },
+    {
+        id: 'cavernas-cuarzo',
+        name: 'Cavernas de Cuarzo',
+        emoji: '🔮',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['cuarzo', 'cavernas'],
+    },
+    {
+        id: 'nodo-onice',
+        name: 'Nodo de Ónice',
+        emoji: '🖤',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['onice', 'ónice', 'nodo'],
     },
     {
         id: 'galeria-fracturada',
         name: 'Galería Fracturada',
         emoji: '🪨',
         requiredItemId: 'herramientas/dinamita',
-        reward: { min: 140, max: 320 },
         aliases: ['fracturada', 'galeria'],
+    },
+    {
+        id: 'camara-geoda',
+        name: 'Cámara Geoda',
+        emoji: '🟣',
+        requiredItemId: 'herramientas/dinamita',
+        aliases: ['geoda', 'camara', 'cámara'],
     },
     {
         id: 'tajo-prohibido',
         name: 'Tajo Prohibido',
         emoji: '🚧',
         requiredItemId: 'herramientas/dinamita',
-        reward: { min: 170, max: 390 },
         aliases: ['prohibido', 'tajo'],
+    },
+    {
+        id: 'fosa-azufre',
+        name: 'Fosa de Azufre',
+        emoji: '🌋',
+        requiredItemId: 'herramientas/dinamita',
+        aliases: ['azufre', 'fosa'],
+    },
+    {
+        id: 'frente-obsidiana',
+        name: 'Frente de Obsidiana',
+        emoji: '🟫',
+        requiredItemId: 'herramientas/dinamita',
+        aliases: ['obsidiana', 'frente'],
+    },
+    {
+        id: 'abismo-basaltico',
+        name: 'Abismo Basáltico',
+        emoji: '⬛',
+        requiredItemId: 'herramientas/dinamita',
+        aliases: ['basalto', 'basáltico', 'abismo'],
     },
     {
         id: 'extraccion-automatizada',
         name: 'Extracción Automatizada',
         emoji: '🤖',
         requiredItemId: 'herramientas/golem-minero-pescador',
-        reward: { min: 130, max: 300 },
         aliases: ['automatizada', 'golem'],
+    },
+    {
+        id: 'refineria-subterranea',
+        name: 'Refinería Subterránea',
+        emoji: '🏭',
+        requiredItemId: 'herramientas/golem-minero-pescador',
+        aliases: ['refineria', 'refinería'],
+    },
+    {
+        id: 'pozo-prisma',
+        name: 'Pozo Prisma',
+        emoji: '🌀',
+        requiredItemId: 'herramientas/golem-minero-pescador',
+        aliases: ['pozo'],
+    },
+    {
+        id: 'nido-meteorita',
+        name: 'Nido de Meteorita',
+        emoji: '☄️',
+        requiredItemId: 'herramientas/golem-minero-pescador',
+        aliases: ['meteorita', 'nido'],
+    },
+    {
+        id: 'cantera-ambar',
+        name: 'Cantera de Ámbar',
+        emoji: '🟠',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['ambar', 'ámbar'],
+    },
+    {
+        id: 'veta-cobalto',
+        name: 'Veta de Cobalto',
+        emoji: '🔷',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['cobalto', 'veta'],
+    },
+    {
+        id: 'cripta-estratos',
+        name: 'Cripta de Estratos',
+        emoji: '🗿',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['cripta', 'estratos'],
+    },
+    {
+        id: 'catedral-estalactitas',
+        name: 'Catedral de Estalactitas',
+        emoji: '🧊',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['catedral', 'estalactitas'],
+    },
+    {
+        id: 'sima-fulgurita',
+        name: 'Sima de Fulgurita',
+        emoji: '⚡',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['sima', 'fulgurita'],
+    },
+    {
+        id: 'taller-robotico',
+        name: 'Taller Robótico',
+        emoji: '🦾',
+        requiredItemId: 'herramientas/dinamita',
+        aliases: ['taller', 'robotico', 'robótico'],
+    },
+    {
+        id: 'sala-derrumbe',
+        name: 'Sala del Derrumbe',
+        emoji: '🧱',
+        requiredItemId: 'herramientas/dinamita',
+        aliases: ['derrumbe', 'sala'],
+    },
+    {
+        id: 'camara-pirita',
+        name: 'Cámara de Pirita',
+        emoji: '✨',
+        requiredItemId: 'herramientas/dinamita',
+        aliases: ['pirita', 'camara', 'cámara'],
+    },
+    {
+        id: 'sima-ceniza',
+        name: 'Sima de Ceniza',
+        emoji: '🌫️',
+        requiredItemId: 'herramientas/dinamita',
+        aliases: ['ceniza'],
+    },
+    {
+        id: 'abismo-ferroso',
+        name: 'Abismo Ferroso',
+        emoji: '🪨',
+        requiredItemId: 'herramientas/dinamita',
+        aliases: ['ferroso'],
+    },
+    {
+        id: 'boveda-mineral',
+        name: 'Bóveda Mineral',
+        emoji: '🏦',
+        requiredItemId: 'herramientas/golem-minero-pescador',
+        aliases: ['boveda', 'bóveda'],
+    },
+    {
+        id: 'anillo-geologico',
+        name: 'Anillo Geológico',
+        emoji: '🪐',
+        requiredItemId: 'herramientas/golem-minero-pescador',
+        aliases: ['anillo', 'geologico', 'geológico'],
+    },
+    {
+        id: 'crater-mineral',
+        name: 'Cráter Mineral',
+        emoji: '☄️',
+        requiredItemId: 'herramientas/golem-minero-pescador',
+        aliases: ['crater', 'cráter'],
+    },
+
+    // Más zonas (pico prisma)
+    {
+        id: 'hondonada-esmeralda',
+        name: 'Hondonada Esmeralda',
+        emoji: '🟢',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['esmeralda', 'hondonada'],
+    },
+    {
+        id: 'pasaje-de-granito',
+        name: 'Pasaje de Granito',
+        emoji: '🪨',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['granito', 'pasaje'],
+    },
+    {
+        id: 'terrazas-de-malaquita',
+        name: 'Terrazas de Malaquita',
+        emoji: '🟩',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['malaquita', 'terrazas'],
+    },
+    {
+        id: 'galeria-del-eco',
+        name: 'Galería del Eco',
+        emoji: '🔊',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['eco', 'galeria'],
+    },
+    {
+        id: 'corte-ametista',
+        name: 'Corte de Amatista',
+        emoji: '🟣',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['amatista', 'corte'],
+    },
+    {
+        id: 'pozos-salinos',
+        name: 'Pozos Salinos',
+        emoji: '🧂',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['sal', 'salinos', 'pozos'],
+    },
+    {
+        id: 'estratos-piriticos',
+        name: 'Estratos Piríticos',
+        emoji: '✨',
+        requiredItemId: 'herramientas/pico-prisma',
+        aliases: ['piriticos', 'piríticos', 'estratos'],
+    },
+
+    // Más zonas (dinamita)
+    {
+        id: 'cascada-subterranea',
+        name: 'Cascada Subterránea',
+        emoji: '💧',
+        requiredItemId: 'herramientas/dinamita',
+        aliases: ['cascada', 'subterranea', 'subterránea'],
+    },
+    {
+        id: 'boveda-de-basaltos',
+        name: 'Bóveda de Basaltos',
+        emoji: '⬛',
+        requiredItemId: 'herramientas/dinamita',
+        aliases: ['basaltos', 'boveda', 'bóveda'],
+    },
+    {
+        id: 'santuario-de-obeliscos',
+        name: 'Santuario de Obeliscos',
+        emoji: '🗼',
+        requiredItemId: 'herramientas/dinamita',
+        aliases: ['obeliscos', 'santuario'],
+    },
+    {
+        id: 'corredor-de-lava-fria',
+        name: 'Corredor de Lava Fría',
+        emoji: '🧊',
+        requiredItemId: 'herramientas/dinamita',
+        aliases: ['lava', 'fria', 'fría', 'corredor'],
+    },
+    {
+        id: 'pozo-azabache',
+        name: 'Pozo de Azabache',
+        emoji: '🖤',
+        requiredItemId: 'herramientas/dinamita',
+        aliases: ['azabache', 'pozo'],
+    },
+
+    // Más zonas (gólem)
+    {
+        id: 'plataforma-industrial',
+        name: 'Plataforma Industrial',
+        emoji: '🏗️',
+        requiredItemId: 'herramientas/golem-minero-pescador',
+        aliases: ['plataforma', 'industrial'],
+    },
+    {
+        id: 'cinta-transportadora',
+        name: 'Cinta Transportadora',
+        emoji: '📦',
+        requiredItemId: 'herramientas/golem-minero-pescador',
+        aliases: ['cinta', 'transportadora'],
+    },
+    {
+        id: 'nucleo-de-extraccion',
+        name: 'Núcleo de Extracción',
+        emoji: '🧲',
+        requiredItemId: 'herramientas/golem-minero-pescador',
+        aliases: ['nucleo', 'núcleo', 'extraccion', 'extracción'],
+    },
+    {
+        id: 'mecanismo-ancestral',
+        name: 'Mecanismo Ancestral',
+        emoji: '⚙️',
+        requiredItemId: 'herramientas/golem-minero-pescador',
+        aliases: ['mecanismo', 'ancestral'],
+    },
+    {
+        id: 'taller-de-calibracion',
+        name: 'Taller de Calibración',
+        emoji: '🛠️',
+        requiredItemId: 'herramientas/golem-minero-pescador',
+        aliases: ['calibracion', 'calibración', 'taller'],
     },
 ]);
 
-const EXPLORE_ZONES = Object.freeze([
+const BASE_EXPLORE_ZONES = [
     {
         id: 'sendero-antiguo',
         name: 'Sendero Antiguo',
         emoji: '🧭',
         requiredItemId: 'herramientas/llave-multiusos',
-        reward: { min: 55, max: 130 },
         aliases: ['sendero'],
     },
     {
@@ -80,7 +372,6 @@ const EXPLORE_ZONES = Object.freeze([
         name: 'Bosque Elemental',
         emoji: '🌿',
         requiredItemId: 'herramientas/hacha-elemental',
-        reward: { min: 70, max: 160 },
         aliases: ['bosque'],
     },
     {
@@ -88,7 +379,6 @@ const EXPLORE_ZONES = Object.freeze([
         name: 'Ruinas Ocultas',
         emoji: '🏛️',
         requiredItemId: 'herramientas/revelador-prisma',
-        reward: { min: 120, max: 280 },
         aliases: ['ocultas'],
     },
     {
@@ -96,7 +386,6 @@ const EXPLORE_ZONES = Object.freeze([
         name: 'Faros Solares',
         emoji: '🔆',
         requiredItemId: 'herramientas/varita-solar',
-        reward: { min: 95, max: 220 },
         aliases: ['faros'],
     },
     {
@@ -104,7 +393,6 @@ const EXPLORE_ZONES = Object.freeze([
         name: 'Costa Perdida',
         emoji: '🏝️',
         requiredItemId: 'herramientas/barco-moxi',
-        reward: { min: 140, max: 330 },
         aliases: ['costa'],
     },
     {
@@ -112,10 +400,190 @@ const EXPLORE_ZONES = Object.freeze([
         name: 'Túnel de Sombras',
         emoji: '🕯️',
         requiredItemId: 'buffs/linterna-solar',
-        reward: { min: 160, max: 360 },
         aliases: ['sombras', 'tunel'],
     },
-]);
+
+    // Más zonas (llave multiusos)
+    {
+        id: 'pasarela-oxidada',
+        name: 'Pasarela Oxidada',
+        emoji: '🧰',
+        requiredItemId: 'herramientas/llave-multiusos',
+        aliases: ['pasarela', 'oxidada'],
+    },
+    {
+        id: 'muelle-abandonado',
+        name: 'Muelle Abandonado',
+        emoji: '⚓',
+        requiredItemId: 'herramientas/llave-multiusos',
+        aliases: ['muelle', 'abandonado'],
+    },
+    {
+        id: 'bazar-oculto',
+        name: 'Bazar Oculto',
+        emoji: '🧿',
+        requiredItemId: 'herramientas/llave-multiusos',
+        aliases: ['bazar', 'oculto'],
+    },
+
+    // Más zonas (hacha elemental)
+    {
+        id: 'sotobosque-brillante',
+        name: 'Sotobosque Brillante',
+        emoji: '🍃',
+        requiredItemId: 'herramientas/hacha-elemental',
+        aliases: ['sotobosque', 'brillante'],
+    },
+    {
+        id: 'arboleda-del-viento',
+        name: 'Arboleda del Viento',
+        emoji: '🌬️',
+        requiredItemId: 'herramientas/hacha-elemental',
+        aliases: ['arboleda', 'viento'],
+    },
+
+    // Más zonas (revelador prisma)
+    {
+        id: 'camaras-selladas',
+        name: 'Cámaras Selladas',
+        emoji: '🗝️',
+        requiredItemId: 'herramientas/revelador-prisma',
+        aliases: ['camaras', 'cámaras', 'selladas'],
+    },
+    {
+        id: 'archivo-perdido',
+        name: 'Archivo Perdido',
+        emoji: '📜',
+        requiredItemId: 'herramientas/revelador-prisma',
+        aliases: ['archivo', 'perdido'],
+    },
+
+    // Más zonas (varita solar)
+    {
+        id: 'jardin-luminoso',
+        name: 'Jardín Luminoso',
+        emoji: '🌻',
+        requiredItemId: 'herramientas/varita-solar',
+        aliases: ['jardin', 'jardín', 'luminoso'],
+    },
+    {
+        id: 'observatorio-claro',
+        name: 'Observatorio Claro',
+        emoji: '🔭',
+        requiredItemId: 'herramientas/varita-solar',
+        aliases: ['observatorio', 'claro'],
+    },
+
+    // Más zonas (barco moxi)
+    {
+        id: 'islas-albas',
+        name: 'Islas Albas',
+        emoji: '🏖️',
+        requiredItemId: 'herramientas/barco-moxi',
+        aliases: ['islas', 'albas'],
+    },
+    {
+        id: 'archipielago-bruma',
+        name: 'Archipiélago de Bruma',
+        emoji: '🌫️',
+        requiredItemId: 'herramientas/barco-moxi',
+        aliases: ['archipielago', 'archipiélago', 'bruma'],
+    },
+
+    // Más zonas (linterna solar)
+    {
+        id: 'catacumbas-tenues',
+        name: 'Catacumbas Tenues',
+        emoji: '🕯️',
+        requiredItemId: 'buffs/linterna-solar',
+        aliases: ['catacumbas', 'tenues'],
+    },
+];
+
+function makeZones(requiredItemId, entries) {
+    const req = String(requiredItemId || '').trim();
+    return (Array.isArray(entries) ? entries : []).map(([id, name, emoji, aliases]) => ({
+        id,
+        name,
+        emoji,
+        requiredItemId: req,
+        aliases: Array.isArray(aliases) ? aliases : [],
+    }));
+}
+
+const EXTRA_EXPLORE_ZONES = [
+    ...makeZones('herramientas/llave-multiusos', [
+        ['barrio-del-taller', 'Barrio del Taller', '🛠️', ['barrio', 'taller']],
+        ['almacen-ferroviario', 'Almacén Ferroviario', '🚃', ['almacen', 'almacén', 'ferroviario']],
+        ['puerta-del-candado', 'Puerta del Candado', '🔒', ['puerta', 'candado']],
+        ['pasadizo-sin-luz', 'Pasadizo Sin Luz', '🕳️', ['pasadizo', 'sinluz']],
+        ['muros-de-grafito', 'Muros de Grafito', '🖍️', ['muros', 'grafito']],
+        ['pasillo-de-cajas', 'Pasillo de Cajas', '📦', ['pasillo', 'cajas']],
+        ['torre-de-llaves', 'Torre de Llaves', '🗝️', ['torre', 'llaves']],
+        ['muelle-de-sombras', 'Muelle de Sombras', '⚓', ['muelle', 'sombras']],
+        ['puente-partido', 'Puente Partido', '🌉', ['puente', 'partido']],
+        ['sala-de-mapas', 'Sala de Mapas', '🗺️', ['sala', 'mapas']],
+    ]),
+
+    ...makeZones('herramientas/hacha-elemental', [
+        ['claro-del-rocio', 'Claro del Rocío', '💦', ['claro', 'rocio', 'rocío']],
+        ['sendero-de-hongos', 'Sendero de Hongos', '🍄', ['sendero', 'hongos']],
+        ['pinos-azules', 'Pinos Azules', '🌲', ['pinos', 'azules']],
+        ['cascada-esmeralda', 'Cascada Esmeralda', '💧', ['cascada', 'esmeralda']],
+        ['colina-florida', 'Colina Florida', '🌸', ['colina', 'florida']],
+        ['bosque-de-bruma', 'Bosque de Bruma', '🌫️', ['bosque', 'bruma']],
+        ['arbol-anciano', 'Árbol Anciano', '🌳', ['arbol', 'árbol', 'anciano']],
+        ['jardin-silvestre', 'Jardín Silvestre', '🌿', ['jardin', 'jardín', 'silvestre']],
+        ['anillo-de-brezo', 'Anillo de Brezo', '🪻', ['anillo', 'brezo']],
+        ['finca-musgosa', 'Finca Musgosa', '🪴', ['finca', 'musgosa']],
+    ]),
+
+    ...makeZones('herramientas/revelador-prisma', [
+        ['sala-de-artefactos', 'Sala de Artefactos', '📿', ['sala', 'artefactos']],
+        ['cripta-de-mosaicos', 'Cripta de Mosaicos', '🧱', ['cripta', 'mosaicos']],
+        ['camaras-del-reloj', 'Cámaras del Reloj', '⏱️', ['camaras', 'cámaras', 'reloj']],
+        ['pasaje-prismatico', 'Pasaje Prismático', '🌈', ['pasaje', 'prismatico', 'prismático']],
+        ['biblioteca-sumergida', 'Biblioteca Sumergida', '📚', ['biblioteca', 'sumergida']],
+        ['laboratorio-antiguo', 'Laboratorio Antiguo', '⚗️', ['laboratorio', 'antiguo']],
+        ['sello-de-piedra', 'Sello de Piedra', '🪨', ['sello', 'piedra']],
+        ['altar-olvidado', 'Altar Olvidado', '🕯️', ['altar', 'olvidado']],
+        ['salon-de-espejos', 'Salón de Espejos', '🪞', ['salon', 'salón', 'espejos']],
+        ['camara-criptograma', 'Cámara Criptograma', '🔎', ['camara', 'cámara', 'criptograma']],
+    ]),
+
+    ...makeZones('herramientas/varita-solar', [
+        ['mirador-del-amanecer', 'Mirador del Amanecer', '🌅', ['mirador', 'amanecer']],
+        ['cumbre-dorada', 'Cumbre Dorada', '🏔️', ['cumbre', 'dorada']],
+        ['patio-del-sol', 'Patio del Sol', '☀️', ['patio', 'sol']],
+        ['plaza-luminaria', 'Plaza Luminaria', '💡', ['plaza', 'luminaria']],
+        ['cristales-de-luz', 'Cristales de Luz', '🔆', ['cristales', 'luz']],
+        ['valle-radiante', 'Valle Radiante', '✨', ['valle', 'radiante']],
+        ['torre-helio', 'Torre Helio', '🗼', ['torre', 'helio']],
+        ['sendero-solar', 'Sendero Solar', '🌞', ['sendero', 'solar']],
+    ]),
+
+    ...makeZones('herramientas/barco-moxi', [
+        ['bahia-de-corales', 'Bahía de Corales', '🪸', ['bahia', 'bahía', 'corales']],
+        ['costa-de-perlas', 'Costa de Perlas', '🦪', ['costa', 'perlas']],
+        ['arrecife-brillante', 'Arrecife Brillante', '🐠', ['arrecife', 'brillante']],
+        ['laguna-de-bruma', 'Laguna de Bruma', '🌫️', ['laguna', 'bruma']],
+        ['isla-del-faro', 'Isla del Faro', '🗼', ['isla', 'faro']],
+        ['puerto-olvidado', 'Puerto Olvidado', '🛳️', ['puerto', 'olvidado']],
+        ['mar-de-vidrio', 'Mar de Vidrio', '🌊', ['mar', 'vidrio']],
+    ]),
+
+    ...makeZones('buffs/linterna-solar', [
+        ['cripta-de-humedad', 'Cripta de Humedad', '💦', ['cripta', 'humedad']],
+        ['galeria-de-susurros', 'Galería de Susurros', '👂', ['galeria', 'galería', 'susurros']],
+        ['escaleras-invertidas', 'Escaleras Invertidas', '🌀', ['escaleras', 'invertidas']],
+        ['sala-de-cera', 'Sala de Cera', '🕯️', ['sala', 'cera']],
+        ['tuneles-laberinto', 'Túneles Laberinto', '🧩', ['tuneles', 'túneles', 'laberinto']],
+        ['nicho-vigilante', 'Nicho Vigilante', '👁️', ['nicho', 'vigilante']],
+        ['pasaje-de-bronce', 'Pasaje de Bronce', '🥉', ['pasaje', 'bronce']],
+    ]),
+];
+
+const EXPLORE_ZONES = Object.freeze([...BASE_EXPLORE_ZONES, ...EXTRA_EXPLORE_ZONES]);
 
 const ZONE_KINDS = Object.freeze({
     fish: { id: 'fish', label: 'Pesca', emoji: '🎣' },
@@ -274,13 +742,23 @@ function buildZonesContainer({ lang = 'es-ES', userId, kind = 'fish', page = 0, 
             .addSeparatorComponents(s => s.setDivider(true));
     }
 
+    if (k === 'mine') {
+        container
+            .addTextDisplayComponents(t => t.setContent(`Zonas de minería disponibles: **${zones.length}**`))
+            .addSeparatorComponents(s => s.setDivider(true));
+    }
+
+    if (k === 'explore') {
+        container
+            .addTextDisplayComponents(t => t.setContent(`Zonas de exploración disponibles: **${zones.length}**`))
+            .addSeparatorComponents(s => s.setDivider(true));
+    }
+
     if (!zones.length) {
         container.addTextDisplayComponents(t => t.setContent('Próximamente…\nPor ahora solo está disponible **Pesca**.'));
     } else {
         for (const z of slice) {
-            const rewardText = k === 'fish'
-                ? `Requiere: ${itemLabel(z.requiredItemId)}`
-                : `Requiere: ${itemLabel(z.requiredItemId)} | Recompensa: **${z.reward?.min ?? 0}-${z.reward?.max ?? 0}** ${COIN}`;
+            const rewardText = `Requiere: ${itemLabel(z.requiredItemId)}`;
             container
                 .addTextDisplayComponents(t =>
                     t.setContent(
@@ -363,8 +841,11 @@ function getZoneForPick({ kind, page, index, perPage = 5 } = {}) {
 }
 
 module.exports = {
+    MINE_ZONES,
+    EXPLORE_ZONES,
     ZONE_KINDS,
     normalizeKind,
+    getZonesForKind,
     buildZonesContainer,
     buildZonesMessageOptions,
     parseZonesCustomId,
