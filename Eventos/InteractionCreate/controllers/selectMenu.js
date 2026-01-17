@@ -1,5 +1,6 @@
 // Router for select menu interactions
 module.exports = async function selectMenuController(interaction, Moxi, logger) {
+  const petSelectMenu = require('./buttons/pet');
   const helpSelectMenu = require('./selectMenus/help');
   const channelSelectMenu = require('./selectMenus/channel');
   const shopSelectMenu = require('./selectMenus/shop');
@@ -9,6 +10,9 @@ module.exports = async function selectMenuController(interaction, Moxi, logger) 
   const zonesSelectMenu = require('./buttons/zones');
   const craftSelectMenu = require('./selectMenus/craft');
   const crimeSelectMenu = require('./selectMenus/crime');
+
+  // Pet menus
+  if (await petSelectMenu(interaction, Moxi, logger)) return;
 
   // Zones menus (Pesca / Minería / Exploración)
   if (await zonesSelectMenu(interaction, Moxi, logger)) return;

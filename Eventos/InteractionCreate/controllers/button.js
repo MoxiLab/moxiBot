@@ -1,5 +1,6 @@
 const handlers = [
   require('./buttons/moxidex'),
+  require('./buttons/pet'),
   require('./buttons/shop'),
   require('./buttons/bugStatus'),
   require('./buttons/modv2'),
