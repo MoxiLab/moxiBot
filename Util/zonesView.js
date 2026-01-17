@@ -619,7 +619,14 @@ const EXTRA_EXPLORE_ZONES = [
     ]),
 ];
 
-const EXPLORE_ZONES = Object.freeze([...BASE_EXPLORE_ZONES, ...EXTRA_EXPLORE_ZONES]);
+const EXPLORE_ZONES = Object.freeze(
+    [...BASE_EXPLORE_ZONES, ...EXTRA_EXPLORE_ZONES].map((z, idx) => {
+        const existing = z && Object.prototype.hasOwnProperty.call(z, 'requiredPetLevel') ? Number(z.requiredPetLevel) : null;
+        const auto = 1 + (Math.floor(Math.max(0, idx) / 5) * 2); // 1,3,5,7... cada 5 zonas
+        const requiredPetLevel = Number.isFinite(existing) ? Math.max(1, Math.trunc(existing)) : auto;
+        return { ...z, requiredPetLevel };
+    })
+);
 
 const ZONE_KINDS = Object.freeze({
     fish: { id: 'fish', label: 'Pesca', emoji: '🎣' },

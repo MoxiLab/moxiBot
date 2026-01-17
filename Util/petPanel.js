@@ -47,9 +47,13 @@ function normalizeZoneOptions(zones, selectedZoneId) {
     const list = Array.isArray(zones) ? zones : [];
     const safeSelected = selectedZoneId ? String(selectedZoneId) : null;
 
+    if (!list.length) {
+        return [{ label: 'Próximamente…', value: 'soon', emoji: '🧭', default: true }];
+    }
+
     // Discord limita opciones a 25
     return list.slice(0, 25).map((z) => ({
-        label: String(z?.name || z?.id || 'Zona'),
+        label: `${String(z?.name || z?.id || 'Zona')}${Number.isFinite(Number(z?.requiredPetLevel)) ? ` (Nv. ${Math.max(1, Math.trunc(Number(z.requiredPetLevel)))}+)` : ''}`,
         value: String(z?.id || ''),
         emoji: z?.emoji || '🧭',
         default: safeSelected ? String(z?.id || '') === safeSelected : false,
@@ -123,13 +127,16 @@ function buildPetPanelMessageOptions({
         embed.setFooter({ text: `Compañeros desde hace ${since}` });
     }
 
+    const zoneOptions = normalizeZoneOptions(EXPLORE_ZONES, selectedZoneId);
+    const disableZoneSelect = (disabled || Boolean(away) || zoneOptions.length === 1 && zoneOptions[0]?.value === 'soon');
+
     const zoneSelect = new StringSelectMenuBuilder()
         .setCustomId(`pet:zone:${safeUserId}`)
-        .setPlaceholder('Selecciona una zona a explorar')
+        .setPlaceholder('Selecciona una zona mejor')
         .setMinValues(1)
         .setMaxValues(1)
-        .setDisabled(disabled || Boolean(away))
-        .addOptions(...normalizeZoneOptions(EXPLORE_ZONES, selectedZoneId));
+        .setDisabled(disableZoneSelect)
+        .addOptions(...zoneOptions);
 
     const rowSelect = new ActionRowBuilder().addComponents(zoneSelect);
 
@@ -177,6 +184,38 @@ function buildPetPanelMessageOptions({
     };
 }
 
+function buildPetActionResultMessageOptions({
+    userId,
+    title,
+    text,
+    gifUrl,
+    disabled = false,
+} = {}) {
+    const safeUserId = String(userId || '').trim();
+    const embed = new EmbedBuilder()
+        .setColor(Bot?.AccentColor || 0xB57EDC)
+        .setTitle(String(title || 'Mascota'))
+        .setDescription(String(text || ''));
+
+    if (gifUrl) embed.setThumbnail(String(gifUrl));
+
+    const row = new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
+            .setCustomId(`pet:open:${safeUserId}`)
+            .setLabel('Menú')
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji('⬅️')
+            .setDisabled(Boolean(disabled))
+    );
+
+    return {
+        content: '',
+        embeds: [embed],
+        components: [row],
+        allowedMentions: { repliedUser: false },
+    };
+}
+
 function parsePetCustomId(customId) {
     const raw = String(customId || '');
     if (!raw.startsWith('pet:')) return null;
@@ -198,5 +237,6 @@ function parsePetCustomId(customId) {
 
 module.exports = {
     buildPetPanelMessageOptions,
+    buildPetActionResultMessageOptions,
     parsePetCustomId,
 };

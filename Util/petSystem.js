@@ -99,7 +99,7 @@ function returnPetFromAway(pet, now = Date.now()) {
 }
 
 function applyPetAction(pet, action, now = Date.now()) {
-    if (!pet) return { changed: false, leveledUp: false };
+    if (!pet) return { changed: false, leveledUp: false, xpGained: 0 };
     ensurePetAttributes(pet, now);
     if (isPetAway(pet)) {
         const err = new Error('PET_AWAY');
@@ -109,7 +109,20 @@ function applyPetAction(pet, action, now = Date.now()) {
 
     const a = pet.attributes;
     const care = a.care;
+    const before = {
+        affection: care.affection,
+        hunger: care.hunger,
+        hygiene: care.hygiene,
+        xp: a.xp,
+        level: Math.max(1, Math.trunc(safeNumber(pet.level, 1))),
+    };
+
     const act = String(action || '').trim().toLowerCase();
+
+    const xpAwardedByAction = (act === 'play') ? 10
+        : (act === 'feed' ? 6
+            : (act === 'clean' ? 6
+                : (act === 'train' ? 18 : 0)));
 
     if (act === 'play') {
         care.affection += 10;
@@ -139,7 +152,6 @@ function applyPetAction(pet, action, now = Date.now()) {
     care.hunger = clamp(Math.trunc(care.hunger), 0, 100);
     care.hygiene = clamp(Math.trunc(care.hygiene), 0, 100);
     a.xp = clamp(Math.trunc(a.xp), 0, 999999);
-
     a.lastCareAt = new Date(now);
 
     let leveledUp = false;
@@ -153,8 +165,26 @@ function applyPetAction(pet, action, now = Date.now()) {
         leveledUp = true;
     }
 
-    // Si se queda a 0 en necesidades, se considera “descuido” (no lo hacemos huir instantáneo)
-    return { changed: true, leveledUp };
+    const after = {
+        affection: care.affection,
+        hunger: care.hunger,
+        hygiene: care.hygiene,
+        xp: a.xp,
+        level: Math.max(1, Math.trunc(safeNumber(pet.level, 1))),
+    };
+
+    return {
+        changed: true,
+        leveledUp,
+        xpGained: xpAwardedByAction,
+        delta: {
+            affection: after.affection - before.affection,
+            hunger: after.hunger - before.hunger,
+            hygiene: after.hygiene - before.hygiene,
+            levels: after.level - before.level,
+        },
+        snapshot: { before, after },
+    };
 }
 
 function isEggItemId(itemId) {
