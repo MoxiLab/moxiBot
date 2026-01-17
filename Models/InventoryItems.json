@@ -943,6 +943,13 @@
         "price": 1500
       },
       {
+        "id": "mascotas/ocarina-del-vinculo",
+        "name": "Ocarina del Vínculo",
+        "description": "Un sonido antiguo que llama a tu mascota de vuelta si se ha ido por falta de cuidados.",
+        "rarity": "uncommon",
+        "price": 1800
+      },
+      {
         "id": "mascotas/huevo-torbellino",
         "name": "Huevo Torbellino",
         "description": "Eclosión de viento; mejora viajes y misiones rápidas.",
