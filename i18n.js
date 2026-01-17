@@ -22,7 +22,7 @@ try {
 } catch (e) {
   console.error('Error loading language-meta.json:', e);
 }
-const defaultNamespaces = ['misc', 'commands', 'moderation', 'permissions', 'time', 'mentionPanel', 'prefix-panels', 'audit', 'utility/feedback', 'utility/bugGuidelines', 'economy/zones'];
+const defaultNamespaces = ['misc', 'commands', 'moderation', 'permissions', 'time', 'mentionPanel', 'prefix-panels', 'audit', 'utility/feedback', 'utility/bugGuidelines', 'economy/zones', 'economy/crime'];
 
 function isDevRuntime() {
   const lifecycle = String(process.env.npm_lifecycle_event || '').trim().toLowerCase();
@@ -125,7 +125,18 @@ i18next
     defaultNS: 'misc',
     load: 'currentOnly', // Only use the exact language code, never fallback to 'en', 'es', 'zh'
     backend: {
-      loadPath: path.join(__dirname, 'Languages', '{{lng}}', '{{ns}}.json')
+      loadPath: path.join(__dirname, 'Languages', '{{lng}}', '{{ns}}.json'),
+      // Evita que falte el init por archivos de namespace inexistentes.
+      // Si el JSON no existe, tratamos el recurso como vacío y dejamos que fallbackLng haga su trabajo.
+      readFile: (filename, arg2, arg3) => {
+        const encoding = (typeof arg2 === 'string') ? arg2 : 'utf8';
+        const callback = (typeof arg2 === 'function') ? arg2 : arg3;
+        fs.readFile(filename, encoding, (err, data) => {
+          if (err && err.code === 'ENOENT') return callback(null, '{}');
+          if (err) return callback(err, data);
+          return callback(null, data);
+        });
+      }
     },
     interpolation: {
       escapeValue: false
