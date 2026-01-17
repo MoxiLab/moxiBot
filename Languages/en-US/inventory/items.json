@@ -1,0 +1,47 @@
+{
+    "categories": {
+        "Buffs": "Buffs",
+        "Coleccionables": "Collectibles",
+        "Consumibles": "Consumables",
+        "Herramientas": "Tools",
+        "Llaves": "Keys",
+        "Loots": "Loot",
+        "Mascotas": "Pets",
+        "Materiales": "Materials",
+        "Mejoras": "Upgrades",
+        "Misiones": "Quests",
+        "Pociones": "Potions",
+        "Rollos": "Scrolls",
+        "Protección": "Protection"
+    },
+    "items": {
+        "herramientas/cana-de-pesca-moxi": {
+            "name": "Moxi Fishing Rod",
+            "description": "Basic tool for fishing in most zones."
+        },
+        "herramientas/pico-prisma": {
+            "name": "Prism Pickaxe",
+            "description": "Sturdy tool for mining minerals and materials."
+        },
+        "herramientas/barco-moxi": {
+            "name": "Moxi Boat",
+            "description": "Lets you access open-sea fishing zones."
+        },
+        "materiales/alga-marina": {
+            "name": "Seaweed",
+            "description": "Fishing material and marine crafting ingredient."
+        },
+        "materiales/concha-marina": {
+            "name": "Seashell",
+            "description": "Common material from coastal areas."
+        },
+        "materiales/coral-prisma": {
+            "name": "Prism Coral",
+            "description": "Rare material from reefs and deep seas."
+        },
+        "materiales/perla-azur": {
+            "name": "Azur Pearl",
+            "description": "A valuable marine treasure."
+        }
+    }
+}

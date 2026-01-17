@@ -1,0 +1,30 @@
+﻿{
+    "ui": {
+        "panelTitle": "Crimen",
+        "selectActivity": "Elige una actividad",
+        "riskPlaceholder": "Nivel de riesgo",
+        "btnRun": "Huir"
+    },
+    "options": {
+        "stealth": "Sigilo",
+        "talk": "Distracción",
+        "rush": "Arrebato"
+    },
+    "doors": {
+        "a": "Puerta A",
+        "b": "Puerta B",
+        "c": "Puerta C"
+    },
+    "risks": {
+        "safe": "Seguro",
+        "normal": "Normal",
+        "risky": "Arriesgado"
+    },
+    "wires": {
+        "red": "Cable rojo",
+        "blue": "Cable azul",
+        "yellow": "Cable amarillo",
+        "green": "Cable verde"
+    },
+    "activities": {}
+}
