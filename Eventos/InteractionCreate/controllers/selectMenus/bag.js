@@ -17,12 +17,17 @@ module.exports = async function bagSelectMenu(interaction, Moxi, logger) {
   }
 
   const selectedCategoryKey = Array.isArray(interaction.values) ? interaction.values[0] : null;
+
+  const guildId = interaction.guildId || interaction.guild?.id;
+  const lang = Moxi?.guildLang ? await Moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES') : (process.env.DEFAULT_LANG || 'es-ES');
+
   const payload = await buildBagMessage({
     userId: viewerId,
     viewerId,
     page: 0,
     selectedCategoryKey: selectedCategoryKey && selectedCategoryKey !== 'none' ? selectedCategoryKey : null,
     isPrivate: Boolean(interaction.message?.flags?.has?.(64)),
+    lang,
   });
 
   await interaction.update(payload);
