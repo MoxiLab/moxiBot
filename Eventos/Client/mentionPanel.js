@@ -40,7 +40,7 @@ async function panelV2({ client: Moxi, message, prefix }) {
         .addSeparatorComponents(s => s.setDivider(true))
         .addActionRowComponents(row =>
             row.addComponents(
-                new ButtonBuilder().setLabel(t(panel.invite)).setStyle(ButtonStyle.Link).setURL(`https://discord.com/oauth2/authorize?client_id=${Moxi.user.id}&scope=bot+applications.commands&permissions=8`),
+                new ButtonBuilder().setLabel(t(panel.invite)).setStyle(ButtonStyle.Link).setURL('https://discord.com/oauth2/authorize?client_id=1456441655769956436&permissions=8&integration_type=0&scope=bot'),
                 new ButtonBuilder().setLabel(t(panel.support)).setStyle(ButtonStyle.Link).setURL('https://discord.gg/tu-servidor'),
                 new ButtonBuilder().setLabel(t(panel.web)).setStyle(ButtonStyle.Link).setURL('https://moxilab.net')
             )
