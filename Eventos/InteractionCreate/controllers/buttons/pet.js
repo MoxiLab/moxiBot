@@ -10,7 +10,7 @@ const moxi = require('../../../../i18n');
 const { EMOJIS } = require('../../../../Util/emojis');
 const { buildNoticeContainer } = require('../../../../Util/v2Notice');
 const { getOrCreateEconomy } = require('../../../../Util/economyCore');
-const { buildPetPanelMessageOptions, buildPetActionResultMessageOptions, parsePetCustomId, renderCareCircles } = require('../../../../Util/petPanel');
+const { buildPetPanelMessageOptions, buildPetTrainingMessageOptions, buildPetActionResultMessageOptions, parsePetCustomId, renderCareCircles } = require('../../../../Util/petPanel');
 const { EXPLORE_ZONES } = require('../../../../Util/zonesView');
 const {
     getActivePet,
@@ -89,12 +89,84 @@ module.exports = async function petButtons(interaction) {
 
     // Si se descuidó demasiado tiempo, huye (y bloquea acciones)
     const awayRes = checkAndMarkPetAway(pet, now);
-    if (awayRes.changed) await eco.save().catch(() => null);
+    if (awayRes.changed) {
+        eco.markModified('pets');
+        await eco.save().catch(() => null);
+    }
 
     const ownerName = interaction.user?.username || 'Usuario';
 
     if (action === 'open') {
         const payload = buildPetPanelMessageOptions({ userId, ownerName, pet });
+        await safeUpdateOrReply(interaction, payload);
+        return true;
+    }
+
+    if (action === 'train') {
+        const payload = buildPetTrainingMessageOptions({ userId, ownerName, pet });
+        await safeUpdateOrReply(interaction, payload);
+        return true;
+    }
+
+    if (action === 'trainHelp') {
+        await replyEphemeralNotice(interaction, {
+            emoji: EMOJIS.info,
+            title: 'Entrenamiento',
+            text: 'Ganas **1 punto** por cada nivel a partir del nivel 2.\nUsa los botones para asignar puntos (máx. **10** por stat).',
+        });
+        return true;
+    }
+
+    if (action === 'stat') {
+        const key = String(extra?.[0] || '').trim();
+        const allowed = new Set(['attack', 'defense', 'resistance', 'hunt']);
+        if (!allowed.has(key)) {
+            await replyEphemeralNotice(interaction, {
+                emoji: EMOJIS.cross,
+                title: 'Entrenamiento',
+                text: 'Stat inválido.',
+            });
+            return true;
+        }
+
+        // Estado de stats
+        pet.attributes = pet.attributes && typeof pet.attributes === 'object' ? pet.attributes : {};
+        pet.attributes.stats = pet.attributes.stats && typeof pet.attributes.stats === 'object' ? pet.attributes.stats : {};
+
+        const level = Math.max(1, Math.trunc(Number(pet?.level) || 1));
+        const totalPoints = Math.max(0, level - 1);
+        const stats = {
+            attack: Math.max(0, Math.min(10, Math.trunc(Number(pet.attributes.stats.attack) || 0))),
+            defense: Math.max(0, Math.min(10, Math.trunc(Number(pet.attributes.stats.defense) || 0))),
+            resistance: Math.max(0, Math.min(10, Math.trunc(Number(pet.attributes.stats.resistance) || 0))),
+            hunt: Math.max(0, Math.min(10, Math.trunc(Number(pet.attributes.stats.hunt) || 0))),
+        };
+        const used = stats.attack + stats.defense + stats.resistance + stats.hunt;
+        const remaining = Math.max(0, totalPoints - used);
+
+        if (remaining <= 0) {
+            await replyEphemeralNotice(interaction, {
+                emoji: EMOJIS.info,
+                title: 'Entrenamiento',
+                text: 'Te quedan **0** puntos para usar.',
+            });
+            return true;
+        }
+
+        if (stats[key] >= 10) {
+            await replyEphemeralNotice(interaction, {
+                emoji: EMOJIS.info,
+                title: 'Entrenamiento',
+                text: 'Ese stat ya está al máximo (**10/10**).',
+            });
+            return true;
+        }
+
+        pet.attributes.stats[key] = stats[key] + 1;
+        eco.markModified('pets');
+        await eco.save().catch(() => null);
+
+        const payload = buildPetTrainingMessageOptions({ userId, ownerName, pet });
         await safeUpdateOrReply(interaction, payload);
         return true;
     }
@@ -154,6 +226,7 @@ module.exports = async function petButtons(interaction) {
             }
 
             pet.attributes.selectedZoneId = selected;
+            eco.markModified('pets');
             await eco.save().catch(() => null);
         }
 
@@ -165,6 +238,13 @@ module.exports = async function petButtons(interaction) {
     if (action === 'do') {
         const act = String(extra?.[0] || '').trim();
 
+        // Entrenar abre el panel de stats (tipo Nekotina)
+        if (act === 'train') {
+            const payload = buildPetTrainingMessageOptions({ userId, ownerName, pet });
+            await safeUpdateOrReply(interaction, payload);
+            return true;
+        }
+
         // Si el stat principal ya está a tope, no sumamos puntos; solo avisamos.
         const care = pet?.attributes?.care || {};
         const maxStat = 100;
@@ -175,10 +255,10 @@ module.exports = async function petButtons(interaction) {
 
         if (primaryStatKey && primaryBefore >= maxStat) {
             const msg = act === 'feed'
-                ? 'Tu mascota ya está llena. Si sigues sobrealimentándola, terminará engordando. 🐷'
+                ? 'Hey, si sigues sobre alimentando a tu mascota, terminará engordando. 🐷'
                 : (act === 'clean'
-                    ? 'Tu mascota ya está impecable. No hace falta limpiarla más ahora.'
-                    : 'Tu mascota ya está al máximo de cariño. Dale un respiro un rato.');
+                    ? 'Tu mascota ya está muy limpia. 🧼'
+                    : 'Tu mascota ya está al máximo de cariño. 🤍');
 
             await replyEphemeralNotice(interaction, {
                 emoji: EMOJIS.info,
@@ -191,6 +271,7 @@ module.exports = async function petButtons(interaction) {
         const beforeHunger = Number(care?.hunger) || 0;
         try {
             const result = applyPetAction(pet, act, now);
+            eco.markModified('pets');
             await eco.save().catch(() => null);
 
             const afterHunger = Number(pet?.attributes?.care?.hunger) || 0;
@@ -199,7 +280,8 @@ module.exports = async function petButtons(interaction) {
             let text = 'Acción realizada.';
             let gifUrl = process.env.PET_ACTION_GIF_URL || process.env.AFK_FALLBACK_GIF_URL || null;
 
-            const xpLine = `\n\n[+${result?.xpGained || 0} exp]`;
+            const xpCompact = `\n[+${result?.xpGained || 0} exp]`;
+            const xpBlock = `\n\n[+${result?.xpGained || 0} exp]`;
 
             // Mostrar progreso con círculos (antes/después) en acciones de cuidado
             const afterCare = pet?.attributes?.care || {};
@@ -210,16 +292,17 @@ module.exports = async function petButtons(interaction) {
 
             if (act === 'play') {
                 title = 'Cariño';
-                text = `Has jugado con tu mascota 🤍${xpLine}${circlesLine}`;
+                // Como Nekotina: sin barra/círculos, texto compacto
+                text = `Has jugado con tu mascota 🤍${xpCompact}`;
             } else if (act === 'feed') {
                 title = 'Hambre';
-                text = `Has alimentado a tu mascota 🍎${xpLine}${circlesLine}`;
+                text = `Has alimentado a tu mascota 🍎${xpBlock}${circlesLine}`;
             } else if (act === 'clean') {
                 title = 'Higiene';
-                text = `Has limpiado a tu mascota 🧼${xpLine}${circlesLine}`;
+                text = `Has limpiado a tu mascota 🧼${xpBlock}${circlesLine}`;
             } else if (act === 'train') {
                 title = 'Entrenamiento';
-                text = `Has entrenado a tu mascota 🏋️${xpLine}`;
+                text = `Has entrenado a tu mascota 🏋️${xpBlock}`;
             }
 
             const payload = buildPetActionResultMessageOptions({
@@ -231,8 +314,8 @@ module.exports = async function petButtons(interaction) {
 
             await safeUpdateOrReply(interaction, payload);
 
-            // Aviso de sobrealimentación (como en tu captura)
-            if (act === 'feed' && (beforeHunger < 95) && afterHunger >= 95) {
+            // Aviso de sobrealimentación (solo cuando la barra queda llena)
+            if (act === 'feed' && (beforeHunger < 100) && afterHunger >= 100) {
                 const warn = {
                     content: '',
                     components: [

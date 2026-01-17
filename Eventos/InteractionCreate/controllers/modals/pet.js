@@ -49,6 +49,7 @@ module.exports = async function petModal(interaction) {
 
     ensurePetAttributes(pet, Date.now());
     pet.name = name.slice(0, 20);
+    eco.markModified('pets');
     await eco.save().catch(() => null);
 
     // Intentar refrescar el panel si viene desde un mensaje
