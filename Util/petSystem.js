@@ -1,6 +1,162 @@
 const { getItemById } = require('./inventoryCatalog');
 const { formatDuration } = require('./economyCore');
 
+function safeNumber(n, fallback = 0) {
+    const x = Number(n);
+    if (!Number.isFinite(x)) return fallback;
+    return x;
+}
+
+function clamp(n, min, max) {
+    return Math.max(min, Math.min(max, n));
+}
+
+function getNeglectMs() {
+    const raw = process.env.PET_NEGLECT_HOURS;
+    const hours = safeNumber(raw, 48);
+    return Math.max(1, hours) * 60 * 60 * 1000;
+}
+
+function ensurePetAttributes(pet, now = Date.now()) {
+    if (!pet) return null;
+    pet.attributes = pet.attributes && typeof pet.attributes === 'object' ? pet.attributes : {};
+    const a = pet.attributes;
+
+    if (!a.createdAt) a.createdAt = new Date(now);
+    if (!a.lastCareAt) a.lastCareAt = new Date(now);
+
+    if (!a.care || typeof a.care !== 'object') {
+        a.care = { affection: 80, hunger: 80, hygiene: 80 };
+    }
+
+    if (!Number.isFinite(Number(a.care.affection))) a.care.affection = 80;
+    if (!Number.isFinite(Number(a.care.hunger))) a.care.hunger = 80;
+    if (!Number.isFinite(Number(a.care.hygiene))) a.care.hygiene = 80;
+
+    a.care.affection = clamp(Math.trunc(safeNumber(a.care.affection, 0)), 0, 100);
+    a.care.hunger = clamp(Math.trunc(safeNumber(a.care.hunger, 0)), 0, 100);
+    a.care.hygiene = clamp(Math.trunc(safeNumber(a.care.hygiene, 0)), 0, 100);
+
+    if (!Number.isFinite(Number(a.xp))) a.xp = 0;
+    if (!Number.isFinite(Number(a.stars))) a.stars = 0;
+
+    a.xp = clamp(Math.trunc(safeNumber(a.xp, 0)), 0, 999999);
+    a.stars = clamp(Math.trunc(safeNumber(a.stars, 0)), 0, 5);
+
+    // Valor base para UI; se recalcula dinámicamente
+    a.xpToNext = petXpToNext(pet);
+
+    return pet;
+}
+
+function petXpToNext(pet) {
+    const level = Math.max(1, Math.trunc(safeNumber(pet?.level, 1)));
+    // Simple y estable (nivel 1 => 100, etc.)
+    return 100 + Math.max(0, level - 1) * 20;
+}
+
+function getActivePet(eco) {
+    const pets = Array.isArray(eco?.pets) ? eco.pets : [];
+    if (!pets.length) return null;
+    return pets[pets.length - 1];
+}
+
+function isPetAway(pet) {
+    const away = pet?.attributes?.away;
+    return Boolean(away && typeof away === 'object');
+}
+
+function checkAndMarkPetAway(pet, now = Date.now()) {
+    if (!pet) return { changed: false, away: false };
+    ensurePetAttributes(pet, now);
+    if (isPetAway(pet)) return { changed: false, away: true };
+
+    const last = pet?.attributes?.lastCareAt ? new Date(pet.attributes.lastCareAt).getTime() : null;
+    if (!last || !Number.isFinite(last)) return { changed: false, away: false };
+
+    const neglectMs = getNeglectMs();
+    if (now - last < neglectMs) return { changed: false, away: false };
+
+    pet.attributes.away = {
+        at: new Date(now),
+        reason: 'neglect',
+    };
+    return { changed: true, away: true };
+}
+
+function returnPetFromAway(pet, now = Date.now()) {
+    if (!pet) return false;
+    ensurePetAttributes(pet, now);
+    if (!isPetAway(pet)) return false;
+    pet.attributes.away = null;
+    pet.attributes.lastCareAt = new Date(now);
+
+    // Pequeño “reset” amable
+    pet.attributes.care.affection = clamp(pet.attributes.care.affection, 30, 100);
+    pet.attributes.care.hunger = clamp(pet.attributes.care.hunger, 30, 100);
+    pet.attributes.care.hygiene = clamp(pet.attributes.care.hygiene, 30, 100);
+    return true;
+}
+
+function applyPetAction(pet, action, now = Date.now()) {
+    if (!pet) return { changed: false, leveledUp: false };
+    ensurePetAttributes(pet, now);
+    if (isPetAway(pet)) {
+        const err = new Error('PET_AWAY');
+        err.code = 'PET_AWAY';
+        throw err;
+    }
+
+    const a = pet.attributes;
+    const care = a.care;
+    const act = String(action || '').trim().toLowerCase();
+
+    if (act === 'play') {
+        care.affection += 10;
+        care.hunger -= 5;
+        care.hygiene -= 2;
+        a.xp += 10;
+    } else if (act === 'feed') {
+        care.hunger += 20;
+        care.affection += 4;
+        a.xp += 6;
+    } else if (act === 'clean') {
+        care.hygiene += 20;
+        care.affection += 2;
+        a.xp += 6;
+    } else if (act === 'train') {
+        a.xp += 18;
+        care.affection -= 2;
+        care.hunger -= 10;
+        care.hygiene -= 8;
+    } else {
+        const err = new Error('INVALID_ACTION');
+        err.code = 'INVALID_ACTION';
+        throw err;
+    }
+
+    care.affection = clamp(Math.trunc(care.affection), 0, 100);
+    care.hunger = clamp(Math.trunc(care.hunger), 0, 100);
+    care.hygiene = clamp(Math.trunc(care.hygiene), 0, 100);
+    a.xp = clamp(Math.trunc(a.xp), 0, 999999);
+
+    a.lastCareAt = new Date(now);
+
+    let leveledUp = false;
+    let guard = 0;
+    while (guard++ < 25) {
+        const need = petXpToNext(pet);
+        a.xpToNext = need;
+        if (a.xp < need) break;
+        a.xp -= need;
+        pet.level = Math.max(1, Math.trunc(safeNumber(pet.level, 1))) + 1;
+        leveledUp = true;
+    }
+
+    // Si se queda a 0 en necesidades, se considera “descuido” (no lo hacemos huir instantáneo)
+    return { changed: true, leveledUp };
+}
+
 function isEggItemId(itemId) {
     const id = String(itemId || '').trim();
     return id.startsWith('mascotas/huevo-');
@@ -137,4 +293,12 @@ module.exports = {
     incubationRemainingMs,
     formatRemaining,
     buildPetFromEgg,
+    // --- New pet panel helpers ---
+    getActivePet,
+    ensurePetAttributes,
+    petXpToNext,
+    isPetAway,
+    checkAndMarkPetAway,
+    returnPetFromAway,
+    applyPetAction,
 };

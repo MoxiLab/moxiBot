@@ -47,8 +47,13 @@ function resolveItemFromInput({ shopId, query } = {}) {
     }
 
     // 2) Match by shop name (exact/contains)
-    const needle = normalizeText(raw)
+    let needle = normalizeText(raw)
         .replace(/\bheuvo\b/g, 'huevo');
+
+    // Sinónimos (para evitar “copiar” nombres de otros bots pero mantener compatibilidad al escribir)
+    needle = needle
+        .replace(/\bflauta magica\b/g, 'ocarina del vinculo')
+        .replace(/\bflauta\s+magica\b/g, 'ocarina del vinculo');
     const exactName = allItems.find((i) => normalizeText(i.name) === needle);
     if (exactName) {
         return {
