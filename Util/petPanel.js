@@ -59,7 +59,7 @@ function normalizeZoneOptions(zones, selectedZoneId) {
 
     // Discord limita opciones a 25
     return list.slice(0, 25).map((z) => ({
-        label: `${String(z?.name || z?.id || 'Zona')}${Number.isFinite(Number(z?.requiredPetLevel)) ? ` (Nv. ${Math.max(1, Math.trunc(Number(z.requiredPetLevel)))}+)` : ''}`,
+        label: `${String(z?.name || z?.id || 'Zona')}`,
         value: String(z?.id || ''),
         emoji: z?.emoji || '🧭',
         default: safeSelected ? String(z?.id || '') === safeSelected : false,
@@ -134,6 +134,7 @@ function buildPetTrainingMessageOptions({ userId, ownerName, pet, disabled = fal
         .addSeparatorComponents(s => s.setDivider(true))
         .addTextDisplayComponents(t => t.setContent(statsText));
 
+    // Botones azules en hilera (3 por fila) como el estilo que quieres.
     container.addActionRowComponents(r => r.addComponents(
         new ButtonBuilder()
             .setCustomId(`pet:stat:${safeUserId}:attack`)
@@ -149,15 +150,16 @@ function buildPetTrainingMessageOptions({ userId, ownerName, pet, disabled = fal
             .setCustomId(`pet:stat:${safeUserId}:resistance`)
             .setStyle(ButtonStyle.Primary)
             .setEmoji('🧬')
-            .setDisabled(Boolean(disabled)),
+            .setDisabled(Boolean(disabled))
+    ));
+
+    // El cuarto stat pasa a la segunda fila junto al menú/ayuda.
+    container.addActionRowComponents(r => r.addComponents(
         new ButtonBuilder()
             .setCustomId(`pet:stat:${safeUserId}:hunt`)
             .setStyle(ButtonStyle.Primary)
             .setEmoji('🏹')
-            .setDisabled(Boolean(disabled))
-    ));
-
-    container.addActionRowComponents(r => r.addComponents(
+            .setDisabled(Boolean(disabled)),
         new ButtonBuilder()
             .setCustomId(`pet:open:${safeUserId}`)
             .setLabel('Menú principal')
@@ -221,7 +223,6 @@ function buildPetPanelMessageOptions({
     }
 
     const statsText =
-        `• Nivel: **${level}** (${xp}/${xpToNext} XP)\n` +
         `• Estrellas: ${starLine(stars)}\n` +
         `• Cariño: ${barLine(affection)}\n` +
         `• Hambre: ${barLine(hunger)}\n` +
@@ -289,6 +290,12 @@ function buildPetPanelMessageOptions({
             .setEmoji('🏋️')
             .setDisabled(disabled || Boolean(away)),
         new ButtonBuilder()
+            .setCustomId(`pet:exploreStart:${safeUserId}`)
+            .setLabel('Explorar')
+            .setStyle(ButtonStyle.Secondary)
+            .setEmoji('🧭')
+            .setDisabled(disabled || Boolean(away)),
+        new ButtonBuilder()
             .setCustomId(`pet:renameModal:${safeUserId}`)
             .setLabel('Cambiar nombre')
             .setStyle(ButtonStyle.Secondary)
@@ -309,12 +316,15 @@ function buildPetActionResultMessageOptions({
     title,
     text,
     gifUrl,
+    buttons,
     disabled = false,
 } = {}) {
     const safeUserId = String(userId || '').trim();
     const safeTitle = String(title || 'Mascota');
     const safeText = String(text || '');
     const safeGif = gifUrl && /^https?:\/\//.test(String(gifUrl)) ? String(gifUrl) : null;
+
+    const extraButtons = Array.isArray(buttons) ? buttons : [];
 
     const container = new ContainerBuilder()
         .setAccentColor(Bot?.AccentColor || 0xB57EDC)
@@ -331,14 +341,38 @@ function buildPetActionResultMessageOptions({
         container.addTextDisplayComponents(t => t.setContent(`## ${safeTitle}\n${safeText}`));
     }
 
-    container.addActionRowComponents(row => row.addComponents(
-        new ButtonBuilder()
-            .setCustomId(`pet:open:${safeUserId}`)
-            .setLabel('Menú')
-            .setStyle(ButtonStyle.Primary)
-            .setEmoji('⬅️')
-            .setDisabled(Boolean(disabled))
-    ));
+    container.addActionRowComponents(row => {
+        const built = [];
+
+        for (const b of extraButtons.slice(0, 4)) {
+            const customId = String(b?.customId || '').trim();
+            if (!customId) continue;
+            const label = b?.label != null ? String(b.label) : null;
+            const emoji = b?.emoji != null ? String(b.emoji) : null;
+            const style = Number.isFinite(Number(b?.style)) ? Number(b.style) : ButtonStyle.Secondary;
+
+            const btn = new ButtonBuilder()
+                .setCustomId(customId)
+                .setStyle(style)
+                .setDisabled(Boolean(disabled));
+
+            if (label) btn.setLabel(label);
+            if (emoji) btn.setEmoji(emoji);
+
+            built.push(btn);
+        }
+
+        built.push(
+            new ButtonBuilder()
+                .setCustomId(`pet:open:${safeUserId}`)
+                .setLabel('Menú')
+                .setStyle(ButtonStyle.Primary)
+                .setEmoji('⬅️')
+                .setDisabled(Boolean(disabled))
+        );
+
+        return row.addComponents(...built);
+    });
 
     return {
         content: '',

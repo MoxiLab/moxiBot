@@ -91,19 +91,6 @@ function checkAndMarkPetAway(pet, now = Date.now()) {
     ensurePetAttributes(pet, now);
     if (isPetAway(pet)) return { changed: false, away: true };
 
-    // Si se dejó de cuidar y alguno de los stats llegó a 0, la mascota se va.
-    const care = pet?.attributes?.care || {};
-    const affection = clamp(Math.trunc(safeNumber(care.affection, 0)), 0, 100);
-    const hunger = clamp(Math.trunc(safeNumber(care.hunger, 0)), 0, 100);
-    const hygiene = clamp(Math.trunc(safeNumber(care.hygiene, 0)), 0, 100);
-    if (affection <= 0 || hunger <= 0 || hygiene <= 0) {
-        pet.attributes.away = {
-            at: new Date(now),
-            reason: 'care_empty',
-        };
-        return { changed: true, away: true };
-    }
-
     const last = pet?.attributes?.lastCareAt ? new Date(pet.attributes.lastCareAt).getTime() : null;
     if (!last || !Number.isFinite(last)) return { changed: false, away: false };
 

@@ -622,9 +622,10 @@ const EXTRA_EXPLORE_ZONES = [
 const EXPLORE_ZONES = Object.freeze(
     [...BASE_EXPLORE_ZONES, ...EXTRA_EXPLORE_ZONES].map((z, idx) => {
         const existing = z && Object.prototype.hasOwnProperty.call(z, 'requiredPetLevel') ? Number(z.requiredPetLevel) : null;
-        // Progresión con muchos niveles: cada zona sube el requisito (+1)
-        // idx 0 => nivel 1, idx 1 => nivel 2, etc.
-        const auto = 1 + Math.max(0, Math.trunc(Number(idx) || 0));
+        // Progresión de niveles “de 5 en 5” por bloques de 5 zonas:
+        // idx 0–4 => nivel 1, idx 5–9 => nivel 6, idx 10–14 => nivel 11...
+        const safeIdx = Math.max(0, Math.trunc(Number(idx) || 0));
+        const auto = 1 + (Math.floor(safeIdx / 5) * 5);
         const requiredPetLevel = Number.isFinite(existing) ? Math.max(1, Math.trunc(existing)) : auto;
         return { ...z, requiredPetLevel };
     })
