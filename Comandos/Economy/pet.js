@@ -4,10 +4,14 @@ const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notic
 const { getOrCreateEconomy, formatDuration } = require('../../Util/economyCore');
 const { getItemById } = require('../../Util/inventoryCatalog');
 const { EMOJIS } = require('../../Util/emojis');
+const { buildPetPanelMessageOptions } = require('../../Util/petPanel');
 const {
     isIncubationReady,
     incubationRemainingMs,
     buildPetFromEgg,
+    getActivePet,
+    ensurePetAttributes,
+    checkAndMarkPetAway,
 } = require('../../Util/petSystem');
 
 function economyCategory(lang) {
@@ -61,33 +65,30 @@ module.exports = {
             eco.petIncubation = undefined;
             await eco.save();
 
-            return message.reply({
-                content: '',
-                components: [
-                    buildNoticeContainer({
-                        emoji: '🐾',
-                        title: '¡Huevo eclosionado!',
-                        text: `Nació tu mascota: **${pet.name}**\nRareza: **${pet.attributes?.rarity || 'common'}**`,
-                    }),
-                ],
-                flags: MessageFlags.IsComponentsV2,
-                allowedMentions: { repliedUser: false },
+            ensurePetAttributes(pet, now);
+            const awayRes = checkAndMarkPetAway(pet, now);
+            if (awayRes.changed) await eco.save().catch(() => null);
+
+            const panel = buildPetPanelMessageOptions({
+                userId: message.author.id,
+                ownerName: message.author.username,
+                pet,
             });
+            return message.reply(panel);
         }
 
-        const pets = Array.isArray(eco.pets) ? eco.pets : [];
-        if (pets.length) {
-            const last = pets[pets.length - 1];
-            return message.reply({
-                ...asV2MessageOptions(
-                    buildNoticeContainer({
-                        emoji: '🐾',
-                        title: 'Tu mascota',
-                        text: `Nombre: **${last?.name || 'Sin nombre'}**\nNivel: **${last?.level || 1}**`,
-                    })
-                ),
-                allowedMentions: { repliedUser: false },
+        const pet = getActivePet(eco);
+        if (pet) {
+            ensurePetAttributes(pet, now);
+            const awayRes = checkAndMarkPetAway(pet, now);
+            if (awayRes.changed) await eco.save().catch(() => null);
+
+            const panel = buildPetPanelMessageOptions({
+                userId: message.author.id,
+                ownerName: message.author.username,
+                pet,
             });
+            return message.reply(panel);
         }
 
         return message.reply({
