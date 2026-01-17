@@ -639,8 +639,8 @@ function clampInt(n, min, max) {
     return Math.max(min, Math.min(max, x));
 }
 
-function itemLabel(itemId) {
-    const item = getItemById(itemId);
+function itemLabel(itemId, lang) {
+    const item = getItemById(itemId, { lang });
     return item?.name ? `**${item.name}**` : `**${itemId}**`;
 }
 
@@ -795,7 +795,7 @@ function buildZonesContainer({ lang = 'es-ES', userId, kind = 'fish', page = 0, 
         container.addTextDisplayComponents(t => t.setContent('Próximamente…\nPor ahora solo está disponible **Pesca**.'));
     } else {
         for (const z of slice) {
-            const requiredLabel = tZones(lang, 'ui.requires', { item: itemLabel(z.requiredItemId) }) || `Requiere: ${itemLabel(z.requiredItemId)}`;
+            const requiredLabel = tZones(lang, 'ui.requires', { item: itemLabel(z.requiredItemId, lang) }) || `Requiere: ${itemLabel(z.requiredItemId, lang)}`;
             container
                 .addTextDisplayComponents(t =>
                     t.setContent(

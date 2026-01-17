@@ -1,5 +1,20 @@
 const { ensureMongoConnection } = require('./mongoConnect');
 
+const STARTER_EGG_ITEM_ID = 'mascotas/huevo-de-bosque';
+
+function starterInventory() {
+  return [{ itemId: STARTER_EGG_ITEM_ID, amount: 1, obtainedAt: new Date() }];
+}
+
+function hasAnyEgg(inventory) {
+  const inv = Array.isArray(inventory) ? inventory : [];
+  return inv.some((row) => {
+    const itemId = String(row?.itemId || '');
+    const amount = Number(row?.amount || 0);
+    return itemId.startsWith('mascotas/huevo-') && amount > 0;
+  });
+}
+
 function safeInt(n, fallback = 0) {
   const x = Number(n);
   if (!Number.isFinite(x)) return fallback;
@@ -35,7 +50,7 @@ async function getOrCreateEconomy(userId) {
   try {
     await UserEconomy.updateOne(
       { userId },
-      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [] } },
+      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
       { upsert: true }
     );
   } catch (e) {
@@ -43,7 +58,22 @@ async function getOrCreateEconomy(userId) {
     if (e?.code !== 11000) throw e;
   }
 
-  return UserEconomy.findOne({ userId });
+  const eco = await UserEconomy.findOne({ userId });
+
+  // Backfill suave: si el doc existía vacío (sin pets, sin incubación, sin inventario), le damos el huevo inicial.
+  if (eco) {
+    const inv = Array.isArray(eco.inventory) ? eco.inventory : [];
+    const pets = Array.isArray(eco.pets) ? eco.pets : [];
+    const hasEgg = hasAnyEgg(inv);
+    const hasIncubation = Boolean(eco.petIncubation?.eggItemId);
+
+    if (!hasEgg && inv.length === 0 && pets.length === 0 && !hasIncubation) {
+      eco.inventory = starterInventory();
+      await eco.save();
+    }
+  }
+
+  return eco;
 }
 
 async function claimCooldownReward({
@@ -69,7 +99,7 @@ async function claimCooldownReward({
   try {
     await UserEconomy.updateOne(
       { userId },
-      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [] } },
+      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
       { upsert: true }
     );
   } catch (e) {
@@ -133,7 +163,7 @@ async function claimCooldown({
   try {
     await UserEconomy.updateOne(
       { userId },
-      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [] } },
+      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
       { upsert: true }
     );
   } catch (e) {
@@ -182,7 +212,7 @@ async function awardBalance({ userId, amount } = {}) {
   try {
     await UserEconomy.updateOne(
       { userId },
-      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [] } },
+      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
       { upsert: true }
     );
   } catch (e) {

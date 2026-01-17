@@ -8,7 +8,7 @@ const {
 
 const { Bot } = require('../Config');
 const { EMOJIS } = require('./emojis');
-const { loadCatalog, buildItemIndex } = require('./inventoryCatalog');
+const { loadCatalog, buildItemIndex, resolveLocalizedString, resolveCategoryFromLanguages, normalizeItemForLang } = require('./inventoryCatalog');
 
 let _catalogCache = null;
 let _byIdCache = null;
@@ -24,7 +24,7 @@ function getCatalogIndexes() {
 
   const categoryByItemId = new Map();
   for (const cat of _catalogCache) {
-    const categoryLabel = String(cat?.category || 'Otros');
+    const categoryLabel = cat?.category || 'Otros';
     const items = Array.isArray(cat?.items) ? cat.items : [];
     for (const item of items) {
       if (!item?.id) continue;
@@ -69,7 +69,7 @@ function slugifyKey(label) {
     .replace(/(^-|-$)/g, '') || 'otros';
 }
 
-async function getUserInventoryRows(userId) {
+async function getUserInventoryRows(userId, { lang = process.env.DEFAULT_LANG || 'es-ES' } = {}) {
   const { UserEconomy } = require('../Models/EconomySchema');
 
   if (typeof process.env.MONGODB === 'string' && process.env.MONGODB.trim()) {
@@ -78,7 +78,7 @@ async function getUserInventoryRows(userId) {
   }
 
   let eco = await UserEconomy.findOne({ userId });
-  if (!eco) eco = await UserEconomy.create({ userId, balance: 0, inventory: [] });
+  if (!eco) eco = await UserEconomy.create({ userId, balance: 0, bank: 0, sakuras: 0 });
 
   const inv = Array.isArray(eco.inventory) ? eco.inventory : [];
   const totals = new Map();
@@ -94,16 +94,18 @@ async function getUserInventoryRows(userId) {
 
   const items = Array.from(totals.entries())
     .map(([itemId, amount]) => {
-      const item = byId.get(itemId) || null;
+      const rawItem = byId.get(itemId) || null;
+      const item = rawItem ? normalizeItemForLang(rawItem, lang) : null;
       const shop = shopByItemId.get(itemId) || null;
+      const rawCategory = categoryByItemId.get(itemId) || 'Otros';
       return {
         itemId,
         amount,
         shopId: safeInt(shop?.shopId, 0),
-        name: item?.name || itemId,
-        description: item?.description || '',
+        name: resolveLocalizedString(item?.name, lang) || itemId,
+        description: resolveLocalizedString(item?.description, lang) || '',
         rarity: item?.rarity || 'comun',
-        category: categoryByItemId.get(itemId) || 'Otros',
+        category: resolveCategoryFromLanguages(rawCategory, lang) || resolveLocalizedString(rawCategory, lang) || String(rawCategory || 'Otros'),
       };
     })
     .sort((a, b) => {
@@ -112,7 +114,7 @@ async function getUserInventoryRows(userId) {
       if (sa && sb) return sa - sb;
       if (sa && !sb) return -1;
       if (!sa && sb) return 1;
-      return a.name.localeCompare(b.name, 'es', { sensitivity: 'base' });
+      return a.name.localeCompare(b.name, lang || 'es', { sensitivity: 'base' });
     });
 
   return { items, balance: safeInt(eco.balance, 0) };
@@ -136,8 +138,8 @@ function buildBagEmbed({ title, categoryLabel, itemsTotal, pageItems, page, tota
     .setFooter({ text: `Página ${page + 1} de ${totalPages}` });
 }
 
-async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey = null, isPrivate = false, pageSize = 10 } = {}) {
-  const { items } = await getUserInventoryRows(userId);
+async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey = null, isPrivate = false, pageSize = 10, lang = process.env.DEFAULT_LANG || 'es-ES' } = {}) {
+  const { items } = await getUserInventoryRows(userId, { lang });
 
   const applicationId = process.env.CLIENT_ID;
   let useMention = '/use';
@@ -174,7 +176,7 @@ async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey
   }
 
   const categories = Array.from(categoriesMap.values()).sort((a, b) =>
-    a.label.localeCompare(b.label, 'es', { sensitivity: 'base' })
+    a.label.localeCompare(b.label, lang || 'es', { sensitivity: 'base' })
   );
 
   const activeCategoryKey =

@@ -31,8 +31,8 @@ function hasInventoryItem(economyDoc, itemId) {
     return inv.some((it) => it?.itemId === itemId && safeInt(it?.amount, 0) > 0);
 }
 
-function itemLabel(itemId) {
-    const item = getItemById(itemId);
+function itemLabel(itemId, lang) {
+    const item = getItemById(itemId, { lang });
     return item?.name ? `**${item.name}**` : `**${itemId}**`;
 }
 
@@ -435,7 +435,7 @@ function buildFishZonesContainer({ lang = 'es-ES', userId, page = 0, perPage = 5
             .addTextDisplayComponents(t =>
                 t.setContent(
                     `${z.emoji || '🎣'} **${z.id}** — ${z.name}\n` +
-                    `Requiere: ${itemLabel(z.requiredItemId)}`
+                    `Requiere: ${itemLabel(z.requiredItemId, lang)}`
                 )
             )
             .addSeparatorComponents(s => s.setDivider(true));
@@ -463,19 +463,27 @@ function parseFishCustomId(customId) {
     const raw = String(customId || '');
     if (!raw.startsWith('fish:')) return null;
     const parts = raw.split(':');
-    // fish:action:userId:page(:index)
     const action = parts[1] || null;
     const userId = parts[2] || null;
-    const page = parts[3] || '0';
-    const index = parts[4];
 
     if (!action || !userId) return null;
-    return {
-        action,
-        userId,
-        page: Number.parseInt(page, 10) || 0,
-        index: index !== undefined ? Number.parseInt(index, 10) : null,
-    };
+
+    // Formato legacy (panel de zonas): fish:action:userId:page(:index)
+    const isLegacy = ['prev', 'next', 'refresh', 'close', 'help', 'pick'].includes(action);
+    if (isLegacy) {
+        const page = parts[3] || '0';
+        const index = parts[4];
+        return {
+            action,
+            userId,
+            page: Number.parseInt(page, 10) || 0,
+            index: index !== undefined ? Number.parseInt(index, 10) : null,
+            parts,
+        };
+    }
+
+    // Otros formatos (minijuegos): deja que el handler interprete parts
+    return { action, userId, page: 0, index: null, parts };
 }
 
 module.exports = {

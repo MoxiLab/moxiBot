@@ -1,7 +1,7 @@
 const { ContainerBuilder, MessageFlags } = require('discord.js');
 const { Bot } = require('../Config');
 
-function buildNoticeContainer({ title, text, emoji, accentColor } = {}) {
+function buildNoticeContainer({ title, text, emoji, accentColor, footerText, footerDivider = true } = {}) {
     const container = new ContainerBuilder().setAccentColor(accentColor ?? Bot.AccentColor);
 
     if (title) {
@@ -12,6 +12,13 @@ function buildNoticeContainer({ title, text, emoji, accentColor } = {}) {
 
     if (text) {
         container.addTextDisplayComponents(c => c.setContent(String(text)));
+    }
+
+    if (footerText) {
+        if (footerDivider) {
+            container.addSeparatorComponents(s => s.setDivider(true));
+        }
+        container.addTextDisplayComponents(c => c.setContent(String(footerText)));
     }
 
     return container;

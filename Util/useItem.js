@@ -107,7 +107,7 @@ async function ensureEconomyUser(userId) {
     }
 
     let eco = await UserEconomy.findOne({ userId });
-    if (!eco) eco = await UserEconomy.create({ userId, balance: 0, inventory: [] });
+    if (!eco) eco = await UserEconomy.create({ userId, balance: 0, bank: 0, sakuras: 0 });
     return eco;
 }
 

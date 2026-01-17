@@ -1,6 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } = require('discord.js');
 const { Bot } = require('../Config');
-const { loadCatalog } = require('./inventoryCatalog');
+const { loadCatalog, resolveLocalizedString, resolveCategoryFromLanguages, normalizeItemForLang } = require('./inventoryCatalog');
 const { EMOJIS } = require('./emojis');
 
 function slugify(input) {
@@ -12,14 +12,14 @@ function slugify(input) {
         .replace(/(^-|-$)/g, '');
 }
 
-function buildShopData({ catalogPath } = {}) {
+function buildShopData({ catalogPath, lang = process.env.DEFAULT_LANG || 'es-ES' } = {}) {
     const catalog = loadCatalog(catalogPath);
 
     const categories = catalog
-        .filter((c) => c && typeof c.category === 'string')
+        .filter((c) => c && c.category)
         .map((c) => ({
-            label: c.category,
-            key: slugify(c.category) || 'categoria',
+            label: resolveCategoryFromLanguages(c.category, lang) || resolveLocalizedString(c.category, lang) || String(c.category),
+            key: slugify(resolveCategoryFromLanguages(c.category, lang) || resolveLocalizedString(c.category, lang) || String(c.category)) || 'categoria',
             items: Array.isArray(c.items) ? c.items : [],
         }));
 
@@ -28,11 +28,12 @@ function buildShopData({ catalogPath } = {}) {
     for (const cat of categories) {
         for (const item of cat.items) {
             if (!item || !item.id) continue;
+            const normalized = normalizeItemForLang(item, lang);
             allItems.push({
                 shopId: index++,
                 itemId: item.id,
-                name: item.name || item.id,
-                description: item.description || '',
+                name: resolveLocalizedString(normalized?.name, lang) || item.id,
+                description: resolveLocalizedString(normalized?.description, lang) || '',
                 price: Number.isFinite(item.price) ? item.price : 0,
                 rarity: item.rarity || 'common',
                 categoryLabel: cat.label,
@@ -63,8 +64,9 @@ function buildShopMessage({
     page = 0,
     catalogPath,
     pageSize = 5,
+    lang = process.env.DEFAULT_LANG || 'es-ES',
 } = {}) {
-    const { categories, allItems, categoryKeyToLabel } = buildShopData({ catalogPath });
+    const { categories, allItems, categoryKeyToLabel } = buildShopData({ catalogPath, lang });
 
     const filtered = categoryKey === 'all'
         ? allItems
@@ -85,7 +87,7 @@ function buildShopMessage({
 
     const embed = new EmbedBuilder()
         .setColor(Bot.AccentColor)
-        .setTitle('🛍️ Tienda de Moxi')
+        .setTitle('�️ Tienda de Moxi')
         .setDescription(
             [
                 'Bienvenido/a a mi tiendita.',
