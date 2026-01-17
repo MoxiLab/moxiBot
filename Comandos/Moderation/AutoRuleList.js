@@ -2,12 +2,14 @@
 const fetch = require('node-fetch');
 const { ContainerBuilder, MessageFlags, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require('discord.js');
 const debugHelper = require('../../Util/debugHelper');
+const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
+const { EMOJIS } = require('../../Util/emojis');
 
 module.exports = {
-    name: 'listareglasauto',
-    alias: ['listautoregla'],
+    name: 'amls',
+    alias: ['listareglasauto', 'listautoregla', 'automodlist', 'amlist'],
     description: 'Lista todas las reglas de auto-moderación del servidor.',
-    usage: 'listareglasauto',
+    usage: 'amls',
     category: 'Moderation',
     cooldown: 5,
     permissions: {
@@ -30,9 +32,13 @@ module.exports = {
                 headers: { 'Authorization': `Bot ${Moxi.token}` }
             });
             if (!res.ok) {
-                const container = new ContainerBuilder()
-                    .addTextDisplayComponents(c => c.setContent(`# ❌ Error al obtener las reglas.`));
-                return message.reply({ components: [container], flags: MessageFlags.IsComponentsV2 });
+                const container = buildNoticeContainer({
+                    emoji: EMOJIS.cross,
+                    title: 'AutoMod',
+                    text: 'Error al obtener las reglas.',
+                    footerText: `${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`,
+                });
+                return message.reply(asV2MessageOptions(container));
             }
             const reglas = await res.json();
             if (!reglas.length) {
@@ -82,9 +88,13 @@ module.exports = {
             });
         } catch (e) {
             debugHelper.error('autorulelist', 'exception', { guildId, error: e.message });
-            const container = new ContainerBuilder()
-                .addTextDisplayComponents(c => c.setContent(`# ❌ Error: ${e.message}`));
-            return message.reply({ components: [container], flags: MessageFlags.IsComponentsV2 });
+            const container = buildNoticeContainer({
+                emoji: EMOJIS.cross,
+                title: 'AutoMod',
+                text: `Error: ${e.message}`,
+                footerText: `${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`,
+            });
+            return message.reply(asV2MessageOptions(container));
         }
     }
 };
