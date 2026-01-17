@@ -13,10 +13,48 @@ const { formatDuration } = require('../../Util/economyCore');
 function splitUsageVariants(usage) {
     const raw = String(usage || '').trim();
     if (!raw) return [];
-    return raw
-        .split('|')
-        .map(s => String(s).trim())
-        .filter(Boolean);
+
+    // Ojo: algunos comandos usan '|' dentro de [] o <> para indicar alternativas,
+    // p.ej. "deposit [cantidad|all]". En ese caso NO queremos partirlo en variantes.
+    const variants = [];
+    let cur = '';
+    let squareDepth = 0;
+    let angleDepth = 0;
+    let escaped = false;
+
+    for (let i = 0; i < raw.length; i++) {
+        const ch = raw[i];
+
+        if (escaped) {
+            cur += ch;
+            escaped = false;
+            continue;
+        }
+
+        if (ch === '\\') {
+            cur += ch;
+            escaped = true;
+            continue;
+        }
+
+        if (ch === '[') squareDepth++;
+        else if (ch === ']') squareDepth = Math.max(0, squareDepth - 1);
+        else if (ch === '<') angleDepth++;
+        else if (ch === '>') angleDepth = Math.max(0, angleDepth - 1);
+
+        if (ch === '|' && squareDepth === 0 && angleDepth === 0) {
+            const v = cur.trim();
+            if (v) variants.push(v);
+            cur = '';
+            continue;
+        }
+
+        cur += ch;
+    }
+
+    const last = cur.trim();
+    if (last) variants.push(last);
+    return variants;
 }
 
 function normalizeUsageLine(line, cmdName) {
@@ -488,7 +526,9 @@ module.exports = {
             addSection(botPermLabel, botPermsText);
             addSection(userPermLabel, userPermsText);
             // Nota de sintaxis (como en captura)
-            addSection(tOr('HELP_SYNTAX_NOTE', lang, 'Sintaxis'), syntaxNote);
+            // El título NO debe repetir el texto completo del aviso.
+            const syntaxTitle = String(syntaxNote).split(':')[0].trim() || 'Sintaxis';
+            addSection(syntaxTitle, syntaxNote);
 
             const webLabel = moxi.translate('HELP_WEB_LABEL', lang) || 'Web';
             let webUrl = moxi.translate('HELP_WEB_URL', lang);
