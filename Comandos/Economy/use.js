@@ -1,4 +1,10 @@
-const { MessageFlags } = require('discord.js');
+const {
+    MessageFlags,
+    EmbedBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+} = require('discord.js');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
@@ -7,6 +13,7 @@ const { getRandomNekosGif } = require('../../Util/nekosApi');
 const { resolveItemFromInput, consumeInventoryItem } = require('../../Util/useItem');
 const { getOrCreateEconomy, formatDuration } = require('../../Util/economyCore');
 const { getItemById } = require('../../Util/inventoryCatalog');
+const { Bot } = require('../../Config');
 const {
     isEggItemId,
     pickFirstOwnedEgg,
@@ -15,7 +22,13 @@ const {
     startIncubation,
     isIncubationReady,
     formatRemaining,
+    getActivePet,
+    ensurePetAttributes,
+    checkAndMarkPetAway,
+    returnPetFromAway,
 } = require('../../Util/petSystem');
+
+const PET_RETURN_ITEM_ID = 'mascotas/ocarina-del-vinculo';
 
 function economyCategory(lang) {
     return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
@@ -90,6 +103,83 @@ module.exports = {
                     })
                 )
             );
+        }
+
+        // --- Pet return item ---
+        if (resolved.itemId === PET_RETURN_ITEM_ID) {
+            const eco = await getOrCreateEconomy(message.author.id);
+            const now = Date.now();
+
+            const pet = getActivePet(eco);
+            if (!pet) {
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.info,
+                            title: 'Mascotas',
+                            text: 'Aún no tienes mascotas. Incuba un huevo para conseguir una.',
+                        })
+                    )
+                );
+            }
+
+            ensurePetAttributes(pet, now);
+            const awayRes = checkAndMarkPetAway(pet, now);
+            if (awayRes.changed) await eco.save().catch(() => null);
+
+            if (!pet?.attributes?.away) {
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: '🐾',
+                            title: 'Ocarina del Vínculo',
+                            text: 'Tu mascota ya está contigo. No necesitas usarla ahora.',
+                        })
+                    )
+                );
+            }
+
+            try {
+                consumeFromInventory(eco, PET_RETURN_ITEM_ID, 1);
+            } catch (err) {
+                if (err?.code === 'NOT_OWNED') {
+                    return message.reply(
+                        asV2MessageOptions(
+                            buildNoticeContainer({
+                                emoji: EMOJIS.cross,
+                                title: 'Ocarina del Vínculo',
+                                text: 'No tienes este ítem en tu mochila.',
+                            })
+                        )
+                    );
+                }
+                throw err;
+            }
+
+            returnPetFromAway(pet, now);
+            await eco.save().catch(() => null);
+
+            const gifUrl = process.env.PET_RETURN_GIF_URL || await resolveUseGif();
+            const embed = new EmbedBuilder()
+                .setColor(Bot?.AccentColor || 0xB57EDC)
+                .setTitle('🎶 Ocarina del Vínculo')
+                .setDescription(`🐾 **${pet.name || 'Tu mascota'}** ha oído el sonido… ¡y ha regresado!`);
+            if (gifUrl) embed.setImage(gifUrl);
+
+            const row = new ActionRowBuilder().addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`pet:open:${message.author.id}`)
+                    .setLabel('Ver mascota')
+                    .setStyle(ButtonStyle.Primary)
+                    .setEmoji('🐣')
+            );
+
+            return message.reply({
+                content: '',
+                embeds: [embed],
+                components: [row],
+                allowedMentions: { repliedUser: false },
+            });
         }
 
         // --- Pet incubation hook ---
