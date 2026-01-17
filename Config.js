@@ -17,5 +17,14 @@ module.exports = {
         AccentColor: parseHexColor(process.env.ACCENT_COLOR, 0xFFB6E6),
         // Alternativa a SLASH_MENTIONS_WITH_ID (útil si tu host no permite env vars)
         SlashMentionsWithId: true,
-    }
+    },
+
+    TimeGates: {
+        timezone: process.env.TIMEZONE || 'Europe/Madrid',
+        commands: {},
+        bypass: {
+            permissions: ['ManageGuild', 'ManageMessages', 'ManageChannels', 'Administrator'],
+            roleIds: [],
+        },
+    },
 };
