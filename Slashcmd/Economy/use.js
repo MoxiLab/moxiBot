@@ -166,6 +166,7 @@ module.exports = {
             }
 
             returnPetFromAway(pet, now);
+            eco.markModified('pets');
             await eco.save().catch(() => null);
 
             const gifUrl = process.env.PET_RETURN_GIF_URL || await resolveUseGif();
