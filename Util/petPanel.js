@@ -95,22 +95,21 @@ function buildPetPanelMessageOptions({
     const createdAt = attrs?.createdAt ? new Date(attrs.createdAt).getTime() : null;
     const since = createdAt && Number.isFinite(createdAt) ? formatSince(Date.now() - createdAt) : null;
 
-    \nUsa ** Ocarina del Vínculo ** para que regrese.`
     const container = new ContainerBuilder()
         .setAccentColor(Bot?.AccentColor || 0xB57EDC)
-        .addTextDisplayComponents(t => t.setContent(`## Mascota de ${ safeOwnerName } `))
+        .addTextDisplayComponents(t => t.setContent(`## Mascota de ${safeOwnerName}`))
         .addSeparatorComponents(s => s.setDivider(true));
 
     if (away) {
         container
-            .addTextDisplayComponents(t => t.setContent(`** ${ name }** se ha ido por falta de cuidados.\nUsa ** Ocarina del Vínculo ** para que regrese.`))
+            .addTextDisplayComponents(t => t.setContent(`**${name}** se ha ido por falta de cuidados.\nUsa **Ocarina del Vínculo** para que regrese.`))
             .addSeparatorComponents(s => s.setDivider(true));
     } else {
-        container.addTextDisplayComponents(t => t.setContent(`** ${ name }** `));
+        container.addTextDisplayComponents(t => t.setContent(`**${name}**`));
     }
 
     const statsText =
-        `• Nivel: ** ${ level }** (${ xp } /${xpToNext} XP)\n` +
+        `• Nivel: **${level}** (${xp}/${xpToNext} XP)\n` +
         `• Estrellas: ${starLine(stars)}\n` +
         `• Cariño: ${barLine(affection)}\n` +
         `• Hambre: ${barLine(hunger)}\n` +
