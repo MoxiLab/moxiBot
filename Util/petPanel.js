@@ -1,9 +1,12 @@
 const {
-    EmbedBuilder,
-    ActionRowBuilder,
+    ContainerBuilder,
     ButtonBuilder,
     ButtonStyle,
+    MessageFlags,
+    MediaGalleryBuilder,
+    MediaGalleryItemBuilder,
     StringSelectMenuBuilder,
+    ThumbnailBuilder,
 } = require('discord.js');
 
 const { Bot } = require('../Config');
@@ -24,6 +27,10 @@ function barLine(value) {
     const v = clampInt(value, 0, 100);
     const filled = clampInt(Math.round(v / 20), 0, 5);
     return `${'●'.repeat(filled)}${'○'.repeat(5 - filled)}`;
+}
+
+function renderCareCircles(value) {
+    return barLine(value);
 }
 
 function formatSince(ms) {
@@ -88,43 +95,42 @@ function buildPetPanelMessageOptions({
     const createdAt = attrs?.createdAt ? new Date(attrs.createdAt).getTime() : null;
     const since = createdAt && Number.isFinite(createdAt) ? formatSince(Date.now() - createdAt) : null;
 
-    const embed = new EmbedBuilder()
-        .setColor(Bot?.AccentColor || 0xB57EDC)
-        .setTitle(`Mascota de ${safeOwnerName}`)
-        .setDescription(away
-            ? `**${name}** se ha ido por falta de cuidados.
-\nUsa **Ocarina del Vínculo** para que regrese.`
-            : `**${name}**`)
-        .addFields(
-            {
-                name: 'Nivel',
-                value: `${level} (${xp}/${xpToNext} XP)`,
-                inline: true,
-            },
-            {
-                name: 'Estrellas',
-                value: starLine(stars),
-                inline: true,
-            },
-            {
-                name: 'Cariño',
-                value: barLine(affection),
-                inline: true,
-            },
-            {
-                name: 'Hambre',
-                value: barLine(hunger),
-                inline: true,
-            },
-            {
-                name: 'Higiene',
-                value: barLine(hygiene),
-                inline: true,
+    \nUsa ** Ocarina del Vínculo ** para que regrese.`
+    const container = new ContainerBuilder()
+        .setAccentColor(Bot?.AccentColor || 0xB57EDC)
+        .addTextDisplayComponents(t => t.setContent(`## Mascota de ${ safeOwnerName } `))
+        .addSeparatorComponents(s => s.setDivider(true));
+
+    if (away) {
+        container
+            .addTextDisplayComponents(t => t.setContent(`** ${ name }** se ha ido por falta de cuidados.\nUsa ** Ocarina del Vínculo ** para que regrese.`))
+            .addSeparatorComponents(s => s.setDivider(true));
+    } else {
+        container.addTextDisplayComponents(t => t.setContent(`** ${ name }** `));
+    }
+
+    const statsText =
+        `• Nivel: ** ${ level }** (${ xp } /${xpToNext} XP)\n` +
+        `• Estrellas: ${starLine(stars)}\n` +
+        `• Cariño: ${barLine(affection)}\n` +
+        `• Hambre: ${barLine(hunger)}\n` +
+        `• Higiene: ${barLine(hygiene)}`;
+
+    container
+        .addSeparatorComponents(s => s.setDivider(true))
+        .addSectionComponents(section => {
+            section.addTextDisplayComponents(t => t.setContent(statsText));
+            const thumbUrl = String(process.env.PET_PANEL_THUMBNAIL_URL || '').trim();
+            if (/^https?:\/\//.test(thumbUrl)) {
+                section.setThumbnailAccessory(new ThumbnailBuilder().setURL(thumbUrl));
             }
-        );
+            return section;
+        });
 
     if (since) {
-        embed.setFooter({ text: `Compañeros desde hace ${since}` });
+        container
+            .addSeparatorComponents(s => s.setDivider(true))
+            .addTextDisplayComponents(t => t.setContent(`Compañeros desde hace ${since}`));
     }
 
     const zoneOptions = normalizeZoneOptions(EXPLORE_ZONES, selectedZoneId);
@@ -138,9 +144,9 @@ function buildPetPanelMessageOptions({
         .setDisabled(disableZoneSelect)
         .addOptions(...zoneOptions);
 
-    const rowSelect = new ActionRowBuilder().addComponents(zoneSelect);
+    container.addActionRowComponents(row => row.addComponents(zoneSelect));
 
-    const rowMain = new ActionRowBuilder().addComponents(
+    container.addActionRowComponents(row => row.addComponents(
         new ButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:play`)
             .setLabel('Jugar')
@@ -159,9 +165,9 @@ function buildPetPanelMessageOptions({
             .setStyle(ButtonStyle.Primary)
             .setEmoji('🧼')
             .setDisabled(disabled || Boolean(away))
-    );
+    ));
 
-    const rowSecondary = new ActionRowBuilder().addComponents(
+    container.addActionRowComponents(row => row.addComponents(
         new ButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:train`)
             .setLabel('Entrenar')
@@ -174,12 +180,12 @@ function buildPetPanelMessageOptions({
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('📝')
             .setDisabled(disabled || Boolean(away))
-    );
+    ));
 
     return {
         content: '',
-        embeds: [embed],
-        components: [rowSelect, rowMain, rowSecondary],
+        components: [container],
+        flags: MessageFlags.IsComponentsV2,
         allowedMentions: { repliedUser: false },
     };
 }
@@ -192,26 +198,37 @@ function buildPetActionResultMessageOptions({
     disabled = false,
 } = {}) {
     const safeUserId = String(userId || '').trim();
-    const embed = new EmbedBuilder()
-        .setColor(Bot?.AccentColor || 0xB57EDC)
-        .setTitle(String(title || 'Mascota'))
-        .setDescription(String(text || ''));
+    const safeTitle = String(title || 'Mascota');
+    const safeText = String(text || '');
+    const safeGif = gifUrl && /^https?:\/\//.test(String(gifUrl)) ? String(gifUrl) : null;
 
-    if (gifUrl) embed.setThumbnail(String(gifUrl));
+    const container = new ContainerBuilder()
+        .setAccentColor(Bot?.AccentColor || 0xB57EDC)
+        .addTextDisplayComponents(t => t.setContent(`## ${safeTitle}`))
+        .addSeparatorComponents(s => s.setDivider(true));
 
-    const row = new ActionRowBuilder().addComponents(
+    if (safeGif) {
+        container.addMediaGalleryComponents(
+            new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(safeGif))
+        );
+        container.addSeparatorComponents(s => s.setDivider(true));
+    }
+
+    if (safeText) container.addTextDisplayComponents(t => t.setContent(safeText));
+
+    container.addActionRowComponents(row => row.addComponents(
         new ButtonBuilder()
             .setCustomId(`pet:open:${safeUserId}`)
             .setLabel('Menú')
             .setStyle(ButtonStyle.Primary)
             .setEmoji('⬅️')
             .setDisabled(Boolean(disabled))
-    );
+    ));
 
     return {
         content: '',
-        embeds: [embed],
-        components: [row],
+        components: [container],
+        flags: MessageFlags.IsComponentsV2,
         allowedMentions: { repliedUser: false },
     };
 }
@@ -239,4 +256,5 @@ module.exports = {
     buildPetPanelMessageOptions,
     buildPetActionResultMessageOptions,
     parsePetCustomId,
+    renderCareCircles,
 };
