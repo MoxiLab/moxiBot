@@ -7,6 +7,7 @@ const { getItemById } = require('../../../../Util/inventoryCatalog');
 const { claimCooldown, awardBalance, formatDuration, getOrCreateEconomy } = require('../../../../Util/economyCore');
 const { addManyToInventory } = require('../../../../Util/inventoryOps');
 const { rollMineMaterials } = require('../../../../Util/mineLoot');
+const { rollFishMaterials } = require('../../../../Util/fishLoot');
 const { pickMineActivity } = require('../../../../Util/mineActivities');
 const { pickFishActivity } = require('../../../../Util/fishActivities');
 const { scaleRange, randInt, chance } = require('../../../../Util/activityUtils');
@@ -102,7 +103,7 @@ module.exports = async function zonesButtons(interaction) {
 
         const eco = await getOrCreateEconomy(userId);
         if (!hasInventoryItem(eco, zone.requiredItemId)) {
-            const required = getItemById(zone.requiredItemId);
+            const required = getItemById(zone.requiredItemId, { lang });
             const requiredName = required?.name || zone.requiredItemId;
 
             const titlePrefix = kind === 'fish' ? 'Fish' : (kind === 'mine' ? 'Minería' : 'Exploración');
@@ -133,7 +134,7 @@ module.exports = async function zonesButtons(interaction) {
         }
 
         const field = kind === 'fish' ? 'lastFish' : (kind === 'mine' ? 'lastMine' : 'lastExplore');
-        const cooldownSec = kind === 'fish' ? 300 : (kind === 'mine' ? 420 : 600);
+        const cooldownSec = kind === 'fish' ? 120 : (kind === 'mine' ? 180 : 600);
         const cooldownMs = Math.max(1, safeInt(cooldownSec, 300)) * 1000;
 
         let res;
@@ -217,7 +218,26 @@ module.exports = async function zonesButtons(interaction) {
 
                 const lines = drops
                     .map(d => {
-                        const it = getItemById(d.itemId);
+                        const it = getItemById(d.itemId, { lang });
+                        const name = it?.name || d.itemId;
+                        return `+${d.amount} ${name}`;
+                    })
+                    .join('\n');
+                if (lines) rewardText += `\n\nMateriales:\n${lines}`;
+            }
+        }
+
+        // Materiales extra por pesca
+        if (kind === 'fish' && res?.ok && !res?.failed) {
+            const drops = rollFishMaterials(zone, activity);
+            if (drops.length) {
+                const ecoAfter = await getOrCreateEconomy(userId);
+                addManyToInventory(ecoAfter, drops);
+                await ecoAfter.save();
+
+                const lines = drops
+                    .map(d => {
+                        const it = getItemById(d.itemId, { lang });
                         const name = it?.name || d.itemId;
                         return `+${d.amount} ${name}`;
                     })

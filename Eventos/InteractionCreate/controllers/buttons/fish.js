@@ -5,6 +5,8 @@ const { EMOJIS } = require('../../../../Util/emojis');
 const { buildNoticeContainer } = require('../../../../Util/v2Notice');
 const { getItemById } = require('../../../../Util/inventoryCatalog');
 const { claimCooldown, awardBalance, formatDuration, getOrCreateEconomy } = require('../../../../Util/economyCore');
+const { addManyToInventory } = require('../../../../Util/inventoryOps');
+const { rollFishMaterials } = require('../../../../Util/fishLoot');
 const { pickFishActivity } = require('../../../../Util/fishActivities');
 const { scaleRange, randInt, chance } = require('../../../../Util/activityUtils');
 const {
@@ -13,6 +15,11 @@ const {
     getZoneForPick,
     hasInventoryItem,
 } = require('../../../../Util/fishView');
+const {
+    buildFishPlayMessageOptions,
+    resolveFishPlay,
+    buildFishResultPayload,
+} = require('../../../../Util/fishPlay');
 
 function safeInt(n, fallback = 0) {
     const x = Number(n);
@@ -26,7 +33,7 @@ module.exports = async function fishButtons(interaction) {
     const parsed = parseFishCustomId(interaction?.customId);
     if (!parsed) return false;
 
-    const { action, userId, page, index } = parsed;
+    const { action, userId, page, index, parts } = parsed;
 
     // Solo el autor puede usar el panel
     if (interaction.user?.id !== String(userId)) {
@@ -43,6 +50,50 @@ module.exports = async function fishButtons(interaction) {
 
     const guildId = interaction.guildId || interaction.guild?.id;
     const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+
+    // --- Minijuego: fish:play:<userId>:<zoneId>
+    if (action === 'play') {
+        const zoneId = parts?.[3];
+        const payload = buildFishPlayMessageOptions({ userId, zoneId });
+        await interaction.update(payload).catch(() => null);
+        return true;
+    }
+
+    // --- Minijuego: fish:closeplay:<userId>:<zoneId>
+    if (action === 'closeplay') {
+        const zoneId = parts?.[3];
+        const payload = buildFishPlayMessageOptions({ userId, zoneId, disabled: true });
+        await interaction.update(payload).catch(() => null);
+        return true;
+    }
+
+    // --- Minijuego: fish:do:<userId>:<zoneId>:<mode>:<choice>[:seed]
+    if (action === 'do') {
+        const zoneId = parts?.[3];
+        const mode = parts?.[4];
+        const choiceId = parts?.[5];
+        const seed = parts?.[6];
+
+        // deferUpdate y luego edit del mensaje con resultado
+        if (!interaction.deferred && !interaction.replied) {
+            await interaction.deferUpdate().catch(() => null);
+        }
+
+        const res = await resolveFishPlay({ userId, zoneId, mode, choiceId, seed, lang });
+        const zone = res?.zone;
+
+        // Cooldown / errores -> ephemeral
+        if (!res?.ok || res?.reason === 'cooldown' || res?.reason === 'requirement') {
+            const payload = buildFishResultPayload({ zone, res, lang });
+            await interaction.followUp({ ...payload, flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2 }).catch(() => null);
+            return true;
+        }
+
+        // Resultado público editando el mensaje
+        const payload = buildFishResultPayload({ zone, res, lang });
+        await interaction.message?.edit?.(payload).catch(() => null);
+        return true;
+    }
 
     if (action === 'help') {
         const payload = {
@@ -91,7 +142,7 @@ module.exports = async function fishButtons(interaction) {
 
         const eco = await getOrCreateEconomy(userId);
         if (!hasInventoryItem(eco, zone.requiredItemId)) {
-            const required = getItemById(zone.requiredItemId);
+            const required = getItemById(zone.requiredItemId, { lang });
             const requiredName = required?.name || zone.requiredItemId;
             const payload = {
                 content: '',
@@ -114,7 +165,7 @@ module.exports = async function fishButtons(interaction) {
             await interaction.deferUpdate().catch(() => null);
         }
 
-        const cooldownMs = Math.max(1, safeInt(300, 300)) * 1000; // default; el comando puede ajustar su cooldown por texto
+        const cooldownMs = Math.max(1, safeInt(120, 120)) * 1000; // default; el comando puede ajustar su cooldown por texto
         const minAmount = Math.max(1, safeInt(zone?.reward?.min, 25));
         const maxAmount = Math.max(minAmount, safeInt(zone?.reward?.max, 60));
         const activity = pickFishActivity();
@@ -176,6 +227,22 @@ module.exports = async function fishButtons(interaction) {
             return true;
         }
 
+        // Drops (solo si éxito)
+        const drops = rollFishMaterials(zone, activity);
+        if (drops.length) {
+            const ecoAfter = await getOrCreateEconomy(userId);
+            addManyToInventory(ecoAfter, drops);
+            await ecoAfter.save();
+        }
+
+        const materialLines = drops
+            .map(d => {
+                const it = getItemById(d.itemId, { lang });
+                const name = it?.name || d.itemId;
+                return `+${d.amount} ${name}`;
+            })
+            .join('\n');
+
         await interaction.followUp({
             content: '',
             components: [
@@ -185,6 +252,7 @@ module.exports = async function fishButtons(interaction) {
                     text: [
                         `${actionLine} y ganaste **${res.amount}** 🪙. ¡Buen lance! 🎣`,
                         balanceLine,
+                        materialLines ? `\nMateriales:\n${materialLines}` : '',
                     ].filter(Boolean).join('\n'),
                 }),
             ],

@@ -51,12 +51,17 @@ module.exports = async function bagButtons(interaction, Moxi, logger) {
         ? 0
         : page + 1;
 
+  const guildId = interaction.guildId || interaction.guild?.id;
+  // Lazy: Moxi puede venir undefined en algunos routers, pero el handler recibe (interaction, Moxi, logger)
+  const lang = Moxi?.guildLang ? await Moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES') : (process.env.DEFAULT_LANG || 'es-ES');
+
   const payload = await buildBagMessage({
     userId: viewerId,
     viewerId,
     page: nextPage,
     selectedCategoryKey: categoryKey && categoryKey !== 'none' ? categoryKey : null,
     isPrivate: Boolean(interaction.message?.flags?.has?.(64)),
+    lang,
   });
 
   await interaction.update(payload);
