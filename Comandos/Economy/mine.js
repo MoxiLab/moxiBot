@@ -10,6 +10,7 @@ const { addManyToInventory } = require('../../Util/inventoryOps');
 const { rollMineMaterials } = require('../../Util/mineLoot');
 const { pickMineActivity } = require('../../Util/mineActivities');
 const { scaleRange, randInt, chance } = require('../../Util/activityUtils');
+const { buildMinePlayMessageOptions } = require('../../Util/minePlay');
 
 const MINE_FAIL_CHANCE = 0.18;
 
@@ -91,6 +92,8 @@ module.exports = {
             return message.reply(buildZonesMessageOptions({ lang, userId: message.author?.id, kind: 'mine', page }));
         }
 
+        const wantsAuto = sub === 'auto' || sub === 'instant' || sub === 'instante';
+
         // UX: permitir `.mine 2` como alias de `.mine zones 2`
         if (/^\d+$/.test(sub)) {
             return message.reply(buildZonesMessageOptions({ lang, userId: message.author?.id, kind: 'mine', page: parsePageArgToIndex(sub) }));
@@ -99,11 +102,11 @@ module.exports = {
         const userId = message.author?.id;
         const eco = await getOrCreateEconomy(userId);
 
-        // Si no pasan args, mina directamente en la mejor zona que puedas usar.
-        if (!sub) {
+        // Si no pasan args, por defecto abre un minijuego con botones.
+        if (!sub || wantsAuto) {
             const autoZone = pickBestUsableMineZone(eco);
             if (!autoZone) {
-                const required = getItemById('herramientas/pico-prisma');
+                const required = getItemById('herramientas/pico-prisma', { lang });
                 const requiredName = required?.name || 'herramientas/pico-prisma';
                 return message.reply(
                     asV2MessageOptions(
@@ -112,7 +115,8 @@ module.exports = {
                             title: 'Mine • Requisito',
                             text: [
                                 `Para empezar a minar necesitas: **${requiredName}**`,
-                                'Cuando lo tengas, usa `.mine` y minaré automáticamente.',
+                                'Cuando lo tengas, usa `.mine` y podrás jugar con botones.',
+                                `Si quieres el modo instantáneo: \`${prefix}mine auto\``,
                                 '',
                                 `Zonas: \`${prefix}mine zones\``,
                             ].join('\n'),
@@ -121,7 +125,123 @@ module.exports = {
                 );
             }
 
-            const cooldownMs = 420 * 1000;
+            // Modo instantáneo anterior
+            if (wantsAuto) {
+                const cooldownMs = 180 * 1000;
+                const requiredId = String(autoZone?.requiredItemId || '');
+                const isExplosive = requiredId.includes('dinamita');
+                const activity = pickMineActivity(autoZone);
+                const baseRange = isExplosive ? { min: 60, max: 140 } : { min: 30, max: 75 };
+                const scaled = scaleRange(baseRange.min, baseRange.max, activity?.multiplier || 1);
+                const cd = await claimCooldown({
+                    userId,
+                    field: 'lastMine',
+                    cooldownMs,
+                });
+
+                if (!cd.ok && cd.reason === 'cooldown') {
+                    return message.reply(
+                        asV2MessageOptions(
+                            buildNoticeContainer({
+                                emoji: '⏳',
+                                title: 'Mine • Cooldown',
+                                text: `Aún estás cansad@ de minar. Vuelve en **${formatDuration(cd.nextInMs)}**.`,
+                            })
+                        )
+                    );
+                }
+
+                if (!cd.ok) {
+                    return message.reply(
+                        asV2MessageOptions(
+                            buildNoticeContainer({
+                                emoji: '⚠️',
+                                title: 'Mine',
+                                text: cd.message || 'No pude procesar tu minería ahora mismo.',
+                            })
+                        )
+                    );
+                }
+
+                const actionLine = activity?.phrase || 'Has minado';
+                const coin = (EMOJIS.coin || '🪙');
+
+                // Fallo: consume cooldown pero no da recompensa
+                if (chance(MINE_FAIL_CHANCE)) {
+                    return message.reply(
+                        asV2MessageOptions(
+                            buildNoticeContainer({
+                                emoji: autoZone.emoji || '⛏️',
+                                title: `Mine • ${autoZone.name}`,
+                                text: `${actionLine}... pero hoy no has encontrado nada útil.`,
+                            })
+                        )
+                    );
+                }
+
+                const amount = randInt(scaled.min, scaled.max);
+                const res = await awardBalance({ userId, amount });
+
+                if (!res.ok && res.reason === 'cooldown') {
+                    return message.reply(
+                        asV2MessageOptions(
+                            buildNoticeContainer({
+                                emoji: '⏳',
+                                title: 'Mine • Cooldown',
+                                text: `Aún estás cansad@ de minar. Vuelve en **${formatDuration(res.nextInMs)}**.`,
+                            })
+                        )
+                    );
+                }
+
+                if (!res.ok) {
+                    return message.reply(
+                        asV2MessageOptions(
+                            buildNoticeContainer({
+                                emoji: '⚠️',
+                                title: 'Mine',
+                                text: res.message || 'No pude procesar tu minería ahora mismo.',
+                            })
+                        )
+                    );
+                }
+
+                // Materiales: recargar doc para no pisar el balance/cooldown.
+                const drops = rollMineMaterials(autoZone, activity);
+                if (drops.length) {
+                    const ecoAfter = await getOrCreateEconomy(userId);
+                    addManyToInventory(ecoAfter, drops);
+                    await ecoAfter.save();
+                }
+                const balanceLine = Number.isFinite(res?.balance) ? `Saldo: **${res.balance}** ${coin}` : '';
+
+                const materialLines = drops
+                    .map(d => {
+                        const it = getItemById(d.itemId, { lang });
+                        const name = it?.name || d.itemId;
+                        return `+${d.amount} ${name}`;
+                    })
+                    .join('\n');
+
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: autoZone.emoji || '⛏️',
+                            title: `Mine • ${autoZone.name}`,
+                            text: [
+                                `${actionLine} y ganaste **${res.amount}** ${coin}. ¡Buen golpe! ⛏️`,
+                                balanceLine,
+                                materialLines ? `\nMateriales:\n${materialLines}` : '',
+                            ].filter(Boolean).join('\n'),
+                        })
+                    )
+                );
+            }
+
+            // Default: minijuego
+            return message.reply(buildMinePlayMessageOptions({ userId, zoneId: autoZone.id }));
+
+            const cooldownMs = 180 * 1000;
             const requiredId = String(autoZone?.requiredItemId || '');
             const isExplosive = requiredId.includes('dinamita');
             const activity = pickMineActivity(autoZone);
@@ -251,7 +371,7 @@ module.exports = {
             }
 
             if (!hasInventoryItem(eco, zone.requiredItemId)) {
-                const required = getItemById(zone.requiredItemId);
+                const required = getItemById(zone.requiredItemId, { lang });
                 const requiredName = required?.name || zone.requiredItemId;
                 return message.reply(
                     asV2MessageOptions(
@@ -267,9 +387,12 @@ module.exports = {
                         })
                     )
                 );
+
+                // Para zonas explícitas, también usamos minijuego por defecto.
+                return message.reply(buildMinePlayMessageOptions({ userId, zoneId: zone.id }));
             }
 
-            const cooldownMs = 420 * 1000;
+            const cooldownMs = 180 * 1000;
             const requiredId = String(zone?.requiredItemId || '');
             const isExplosive = requiredId.includes('dinamita');
             const activity = pickMineActivity(zone);
@@ -357,7 +480,7 @@ module.exports = {
 
             const materialLines = drops
                 .map(d => {
-                    const it = getItemById(d.itemId);
+                    const it = getItemById(d.itemId, { lang });
                     const name = it?.name || d.itemId;
                     return `+${d.amount} ${name}`;
                 })

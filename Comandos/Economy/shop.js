@@ -13,10 +13,10 @@ function safeInt(n, fallback = 0) {
 }
 
 module.exports = {
-    name: 'shop',
-    alias: ['tienda'],
+    name: 'moxishop',
+    alias: ['shop', 'tienda', 'nekoshop', 'tiendamoxi', 'moxi-shop', 'shopmoxi'],
     Category: economyCategory,
-    usage: 'shop list [categoria] [pagina] | shop buy <id> [cantidad]',
+    usage: 'moxishop list [categoria] [pagina] | moxishop buy <id> [cantidad]',
     description: 'Tienda: lista y compra ítems.',
     cooldown: 0,
     command: {
@@ -60,7 +60,7 @@ module.exports = {
                         buildNoticeContainer({
                             emoji: EMOJIS.cross,
                             title: 'Tienda',
-                            text: 'Uso: `.shop buy <id> [cantidad]`',
+                            text: 'Uso: `.moxishop buy <id> [cantidad]`',
                         })
                     ),
                     allowedMentions: { repliedUser: false },
@@ -75,7 +75,7 @@ module.exports = {
                         buildNoticeContainer({
                             emoji: EMOJIS.cross,
                             title: 'Tienda',
-                            text: `No existe un ítem con ID ${id}. Usa .shop list para ver los IDs.`,
+                            text: `No existe un ítem con ID ${id}. Usa .moxishop list para ver los IDs.`,
                         })
                     ),
                     allowedMentions: { repliedUser: false },
@@ -142,7 +142,7 @@ module.exports = {
                 buildNoticeContainer({
                     emoji: EMOJIS.info,
                     title: 'Tienda',
-                    text: 'Uso: `.shop list [categoria] [pagina]` o `.shop buy <id> [cantidad]`',
+                    text: 'Uso: `.moxishop list [categoria] [pagina]` o `.moxishop buy <id> [cantidad]`',
                 })
             ),
             allowedMentions: { repliedUser: false },

@@ -5,6 +5,17 @@ const { EMOJIS } = require('../../Util/emojis');
 const { buildAfkContainer } = require('../../Util/afkRender');
 const { getRandomNekosGif } = require('../../Util/nekosApi');
 const { resolveItemFromInput, consumeInventoryItem } = require('../../Util/useItem');
+const { getOrCreateEconomy, formatDuration } = require('../../Util/economyCore');
+const { getItemById } = require('../../Util/inventoryCatalog');
+const {
+    isEggItemId,
+    pickFirstOwnedEgg,
+    hasInventoryItem,
+    consumeFromInventory,
+    startIncubation,
+    isIncubationReady,
+    formatRemaining,
+} = require('../../Util/petSystem');
 
 function economyCategory(lang) {
     return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
@@ -79,6 +90,112 @@ module.exports = {
                     })
                 )
             );
+        }
+
+        // --- Pet incubation hook ---
+        if (resolved.itemId === 'herramientas/incubadora') {
+            try {
+                const eco = await getOrCreateEconomy(message.author.id);
+                const langNow = lang;
+
+                if (!hasInventoryItem(eco, resolved.itemId, 1)) {
+                    return message.reply(
+                        asV2MessageOptions(
+                            buildNoticeContainer({
+                                emoji: EMOJIS.cross,
+                                title: 'Incubadora',
+                                text: 'No tienes una incubadora en tu mochila.',
+                            })
+                        )
+                    );
+                }
+
+                const now = Date.now();
+                const inc = eco.petIncubation;
+                if (inc?.eggItemId && inc?.hatchAt) {
+                    if (isIncubationReady(inc, now)) {
+                        const egg = getItemById(inc.eggItemId, { lang: langNow });
+                        const eggName = egg?.name || inc.eggItemId;
+                        return message.reply(
+                            asV2MessageOptions(
+                                buildNoticeContainer({
+                                    emoji: '🥚',
+                                    title: 'Incubadora',
+                                    text: `Tu **${eggName}** ya está listo para eclosionar. Usa **.pet** para abrirlo.`,
+                                })
+                            )
+                        );
+                    }
+
+                    const rem = formatRemaining(inc, now) || formatDuration(Math.max(0, new Date(inc.hatchAt).getTime() - now));
+                    return message.reply(
+                        asV2MessageOptions(
+                            buildNoticeContainer({
+                                emoji: '⏳',
+                                title: 'Incubadora',
+                                text: `Ya tienes un huevo incubando. Tiempo restante: **${rem}**`,
+                            })
+                        )
+                    );
+                }
+
+                // Selección de huevo: si el usuario escribe algo extra y NO es un número, lo usamos como query.
+                const extra = Array.isArray(args) ? args.slice(1) : [];
+                const extraStr = extra.join(' ').trim();
+                const extraLooksNumeric = extra.length === 1 && /^\d+$/.test(String(extra[0]));
+
+                let eggItemId = null;
+                if (extraStr && !extraLooksNumeric) {
+                    const eggResolved = resolveItemFromInput({ shopId: null, query: extraStr });
+                    if (eggResolved && isEggItemId(eggResolved.itemId) && hasInventoryItem(eco, eggResolved.itemId, 1)) {
+                        eggItemId = eggResolved.itemId;
+                    }
+                }
+
+                if (!eggItemId) {
+                    eggItemId = pickFirstOwnedEgg(eco);
+                }
+
+                if (!eggItemId) {
+                    return message.reply(
+                        asV2MessageOptions(
+                            buildNoticeContainer({
+                                emoji: '🥚',
+                                title: 'Incubadora',
+                                text: 'No tienes ningún huevo para incubar. Compra uno en la tienda y vuelve a intentarlo.',
+                            })
+                        )
+                    );
+                }
+
+                // Consumir 1 huevo (se mete en la incubadora)
+                consumeFromInventory(eco, eggItemId, 1);
+
+                const started = startIncubation({ eco, eggItemId, now, lang: langNow });
+                await eco.save();
+
+                const eggName = started.egg?.name || eggItemId;
+                const when = formatDuration(started.hatchMs);
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: '🧫',
+                            title: 'Incubadora',
+                            text: `Has puesto **${eggName}** a incubar.\nTiempo estimado: **${when}**\nUsa **.pet** para ver el progreso.`,
+                        })
+                    )
+                );
+            } catch (err) {
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: 'Incubadora',
+                            text: 'No pude iniciar la incubación ahora mismo. Inténtalo de nuevo.',
+                        })
+                    )
+                );
+            }
         }
 
         try {
