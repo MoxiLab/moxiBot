@@ -16,8 +16,28 @@ const {
     getActivePet,
     ensurePetAttributes,
     checkAndMarkPetAway,
+    hasInventoryItem,
     applyPetAction,
 } = require('../../../../Util/petSystem');
+
+function getExploreZoneTier(zoneId) {
+    const id = String(zoneId || '').trim();
+    if (!id) return null;
+    const idx = (Array.isArray(EXPLORE_ZONES) ? EXPLORE_ZONES : []).findIndex(z => String(z?.id || '') === id);
+    if (idx < 0) return null;
+    // 5 zonas por “rango”
+    return 1 + Math.floor(idx / 5);
+}
+
+function ensureExploreProgress(pet) {
+    pet.attributes = pet.attributes && typeof pet.attributes === 'object' ? pet.attributes : {};
+    const a = pet.attributes;
+    a.explorationProgress = a.explorationProgress && typeof a.explorationProgress === 'object' ? a.explorationProgress : {};
+    const p = a.explorationProgress;
+    p.rank = Math.max(1, Math.trunc(Number(p.rank) || 1));
+    p.completedInRank = Math.max(0, Math.trunc(Number(p.completedInRank) || 0));
+    return p;
+}
 
 async function safeUpdateOrReply(interaction, payload) {
     if (!interaction) return;
@@ -43,8 +63,24 @@ async function replyEphemeralNotice(interaction, { emoji, title, text }) {
         components: [buildNoticeContainer({ emoji, title, text })],
         flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
     };
-    if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
-    else await interaction.reply(payload).catch(() => null);
+
+    // En interacciones de componentes, `interaction.update()` reconoce la interacción
+    // pero no siempre marca `replied/deferred` como true. Intentamos ambos caminos.
+    try {
+        if (interaction.deferred || interaction.replied) {
+            await interaction.followUp(payload);
+            return;
+        }
+    } catch { }
+
+    try {
+        await interaction.reply(payload);
+        return;
+    } catch { }
+
+    try {
+        await interaction.followUp(payload);
+    } catch { }
 }
 
 module.exports = async function petButtons(interaction) {
@@ -190,48 +226,237 @@ module.exports = async function petButtons(interaction) {
         return true;
     }
 
+    if (action === 'exploreStart') {
+        const away = pet?.attributes?.away || null;
+        if (away) {
+            await replyEphemeralNotice(interaction, {
+                emoji: EMOJIS.noEntry,
+                title: 'Exploración',
+                text: 'Tu mascota se ha ido por falta de cuidados. Usa **Ocarina del Vínculo** para que regrese.',
+            });
+            return true;
+        }
+
+        const selectedZoneId = pet?.attributes?.selectedZoneId ? String(pet.attributes.selectedZoneId) : null;
+        if (!selectedZoneId) {
+            await replyEphemeralNotice(interaction, {
+                emoji: EMOJIS.info,
+                title: 'Exploración',
+                text: 'Selecciona una zona para explorar primero.',
+            });
+            return true;
+        }
+
+        const zone = (Array.isArray(EXPLORE_ZONES) ? EXPLORE_ZONES : []).find(z => String(z?.id || '') === selectedZoneId);
+        if (!zone) {
+            await replyEphemeralNotice(interaction, {
+                emoji: EMOJIS.cross,
+                title: 'Exploración',
+                text: 'Esa zona no existe.',
+            });
+            return true;
+        }
+
+        // Si ya está explorando, explica por qué no puede iniciar otra.
+        const currentTrip = pet?.attributes?.exploration || null;
+        if (currentTrip && typeof currentTrip === 'object' && currentTrip.zoneId) {
+            const endAt = currentTrip.endAt ? new Date(currentTrip.endAt).getTime() : null;
+            const remainingMs = endAt && Number.isFinite(endAt) ? Math.max(0, endAt - now) : null;
+            const remainingMin = remainingMs != null ? Math.ceil(remainingMs / (60 * 1000)) : null;
+            await replyEphemeralNotice(interaction, {
+                emoji: EMOJIS.info,
+                title: 'Exploración',
+                text: remainingMin != null
+                    ? `Tu mascota ya está explorando. Vuelve en ~**${remainingMin} min** para finalizar.`
+                    : 'Tu mascota ya está explorando. Finaliza la exploración actual primero.',
+            });
+            return true;
+        }
+
+        // Progreso correlacionado: rangos de exploración.
+        const progress = ensureExploreProgress(pet);
+        const zoneTier = getExploreZoneTier(zone.id);
+        if (zoneTier == null) {
+            await replyEphemeralNotice(interaction, {
+                emoji: EMOJIS.cross,
+                title: 'Exploración',
+                text: 'No se pudo determinar el progreso de esa zona.',
+            });
+            return true;
+        }
+
+        if (zoneTier > progress.rank) {
+            const need = 3;
+            const left = Math.max(0, need - progress.completedInRank);
+            await replyEphemeralNotice(interaction, {
+                emoji: EMOJIS.noEntry,
+                title: 'Exploración • Bloqueado',
+                text: `Esa zona requiere más progreso.\nCompleta **${left}** exploración(es) más para desbloquear nuevas zonas.`,
+            });
+            return true;
+        }
+
+        // Correlación con la zona: requiere herramienta si la zona la define.
+        const requiredItemId = zone?.requiredItemId ? String(zone.requiredItemId) : null;
+        if (requiredItemId && !hasInventoryItem(eco, requiredItemId, 1)) {
+            await replyEphemeralNotice(interaction, {
+                emoji: EMOJIS.noEntry,
+                title: 'Exploración • Requisito',
+                text: `Necesitas el objeto requerido para explorar esta zona: **${requiredItemId}**`,
+            });
+            return true;
+        }
+
+        // Duración simple por rango
+        const baseMin = Math.max(1, Math.trunc(Number(process.env.PET_EXPLORE_MINUTES_BASE) || 5));
+        const perTierMin = Math.max(0, Math.trunc(Number(process.env.PET_EXPLORE_MINUTES_PER_RANK) || 2));
+        const minutes = baseMin + (Math.max(0, progress.rank - 1) * perTierMin);
+        const durationMs = minutes * 60 * 1000;
+        const endAt = new Date(now + durationMs);
+
+        // Estado de viaje
+        pet.attributes.exploration = {
+            zoneId: String(zone.id),
+            startedAt: new Date(now),
+            endAt,
+            rankAtStart: progress.rank,
+        };
+
+        eco.markModified('pets');
+        await eco.save().catch(() => null);
+
+        const petName = String(pet?.name || 'Tu mascota');
+        const emoji = String(zone?.emoji || '🧭');
+        const zoneName = String(zone?.name || zone?.id || 'Zona');
+
+        const payload = buildPetActionResultMessageOptions({
+            userId,
+            title: 'Exploración',
+            text: `¡${petName} ha iniciado su viaje! Su destino: ${emoji} ${zoneName}`,
+            gifUrl: null,
+            buttons: [
+                { customId: `pet:exploreFinish:${String(userId)}`, label: 'Finalizar', emoji: '✅', style: 3 },
+            ],
+        });
+
+        await safeUpdateOrReply(interaction, payload);
+        return true;
+    }
+
+    if (action === 'exploreFinish') {
+        const trip = pet?.attributes?.exploration || null;
+        if (!trip || typeof trip !== 'object' || !trip.zoneId) {
+            await replyEphemeralNotice(interaction, {
+                emoji: EMOJIS.info,
+                title: 'Exploración',
+                text: 'No hay ninguna exploración en curso.',
+            });
+            return true;
+        }
+
+        const endAt = trip.endAt ? new Date(trip.endAt).getTime() : null;
+        if (endAt && Number.isFinite(endAt) && now < endAt) {
+            const remainingMin = Math.max(1, Math.ceil((endAt - now) / (60 * 1000)));
+            await replyEphemeralNotice(interaction, {
+                emoji: EMOJIS.info,
+                title: 'Exploración',
+                text: `Aún está explorando… vuelve en ~**${remainingMin} min** para finalizar.`,
+            });
+            return true;
+        }
+
+        const zoneId = String(trip.zoneId);
+        const zone = (Array.isArray(EXPLORE_ZONES) ? EXPLORE_ZONES : []).find(z => String(z?.id || '') === zoneId);
+        const emoji = String(zone?.emoji || '🧭');
+        const zoneName = String(zone?.name || zone?.id || 'Zona');
+
+        const progress = ensureExploreProgress(pet);
+        const tier = getExploreZoneTier(zoneId) || progress.rank;
+
+        // Contabiliza progreso solo si explora su rango actual.
+        const need = 3;
+        let rankedUp = false;
+        if (tier === progress.rank) {
+            progress.completedInRank += 1;
+            if (progress.completedInRank >= need) {
+                progress.rank += 1;
+                progress.completedInRank = 0;
+                rankedUp = true;
+            }
+        }
+
+        // Limpiar viaje
+        pet.attributes.exploration = null;
+        eco.markModified('pets');
+        await eco.save().catch(() => null);
+
+        const petName = String(pet?.name || 'Tu mascota');
+        const progressText = rankedUp
+            ? '¡Has desbloqueado nuevas zonas de exploración!'
+            : `Progreso de exploración: **${progress.completedInRank}/${need}** (para desbloquear nuevas zonas)`;
+
+        const payload = buildPetActionResultMessageOptions({
+            userId,
+            title: 'Exploración',
+            text: `¡${petName} ha vuelto de su viaje! Destino: ${emoji} ${zoneName}\n\n${progressText}`,
+            gifUrl: null,
+        });
+
+        await safeUpdateOrReply(interaction, payload);
+        return true;
+    }
+
     if (action === 'zone') {
         const selected = String(interaction.values?.[0] || '').trim();
         if (selected && selected !== 'soon') {
             const zone = (Array.isArray(EXPLORE_ZONES) ? EXPLORE_ZONES : []).find(z => String(z?.id || '') === selected);
-            const required = zone && Number.isFinite(Number(zone.requiredPetLevel)) ? Math.max(1, Math.trunc(Number(zone.requiredPetLevel))) : 1;
-            const petLevel = Math.max(1, Math.trunc(Number(pet?.level) || 1));
 
             if (!zone) {
-                const payload = {
-                    content: '',
-                    components: [buildNoticeContainer({ emoji: EMOJIS.cross, title: 'Exploración', text: 'Esa zona no existe.' })],
-                    flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
-                };
-                if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
-                else await interaction.reply(payload).catch(() => null);
+                // Refresca el panel (resetea el select) y muestra aviso
+                await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet }));
+                await replyEphemeralNotice(interaction, {
+                    emoji: EMOJIS.cross,
+                    title: 'Exploración',
+                    text: 'Esa zona no existe.',
+                });
                 return true;
             }
 
-            if (petLevel < required) {
-                const payload = {
-                    content: '',
-                    components: [
-                        buildNoticeContainer({
-                            emoji: EMOJIS.noEntry,
-                            title: 'Exploración • Bloqueado',
-                            text: `Tu mascota necesita ser **nivel ${required}** para explorar **${zone.name || zone.id}**.\nNivel actual: **${petLevel}**`,
-                        }),
-                    ],
-                    flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
-                };
-                if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
-                else await interaction.reply(payload).catch(() => null);
+            // Correlación/progreso: evita seleccionar zonas aún no desbloqueadas.
+            const progress = ensureExploreProgress(pet);
+            const tier = getExploreZoneTier(zone.id);
+            if (tier != null && tier > progress.rank) {
+                const need = 3;
+                const left = Math.max(0, need - progress.completedInRank);
+
+                // Refresca el panel (sin cambiar la selección) y muestra por qué está bloqueado
+                await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet }));
+                await replyEphemeralNotice(interaction, {
+                    emoji: EMOJIS.noEntry,
+                    title: 'Exploración • Bloqueado',
+                    text: `Esa zona requiere más progreso.\nCompleta **${left}** exploración(es) más para desbloquear nuevas zonas.`,
+                });
                 return true;
             }
 
             pet.attributes.selectedZoneId = selected;
             eco.markModified('pets');
             await eco.save().catch(() => null);
+
+            // Solo refresca el panel (sin aviso) cuando la selección es válida
+            await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet }));
+            return true;
         }
 
-        const payload = buildPetPanelMessageOptions({ userId, ownerName, pet });
-        await safeUpdateOrReply(interaction, payload);
+        // Caso "soon" o vacío
+        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet }));
+        if (selected === 'soon') {
+            await replyEphemeralNotice(interaction, {
+                emoji: EMOJIS.info,
+                title: 'Exploración',
+                text: 'Exploración: Próximamente…',
+            });
+        }
         return true;
     }
 
