@@ -71,14 +71,20 @@ function slugifyKey(label) {
 
 async function getUserInventoryRows(userId, { lang = process.env.DEFAULT_LANG || 'es-ES' } = {}) {
   const { UserEconomy } = require('../Models/EconomySchema');
+  const { getOrCreateEconomy } = require('./economyCore');
 
-  if (typeof process.env.MONGODB === 'string' && process.env.MONGODB.trim()) {
-    const { ensureMongoConnection } = require('./mongoConnect');
-    await ensureMongoConnection();
+  let eco = null;
+  try {
+    eco = await getOrCreateEconomy(userId);
+  } catch {
+    // Sin DB o error de conexión: devolvemos vacío de forma segura
+    return { items: [], balance: 0 };
   }
 
-  let eco = await UserEconomy.findOne({ userId });
-  if (!eco) eco = await UserEconomy.create({ userId, balance: 0, bank: 0, sakuras: 0 });
+  // Seguridad adicional: si algo raro devolvió null
+  if (!eco) {
+    return { items: [], balance: 0 };
+  }
 
   const inv = Array.isArray(eco.inventory) ? eco.inventory : [];
   const totals = new Map();

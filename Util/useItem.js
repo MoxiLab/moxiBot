@@ -47,7 +47,8 @@ function resolveItemFromInput({ shopId, query } = {}) {
     }
 
     // 2) Match by shop name (exact/contains)
-    const needle = normalizeText(raw);
+    const needle = normalizeText(raw)
+        .replace(/\bheuvo\b/g, 'huevo');
     const exactName = allItems.find((i) => normalizeText(i.name) === needle);
     if (exactName) {
         return {

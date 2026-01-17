@@ -60,15 +60,20 @@ async function getOrCreateEconomy(userId) {
 
   const eco = await UserEconomy.findOne({ userId });
 
-  // Backfill suave: si el doc existía vacío (sin pets, sin incubación, sin inventario), le damos el huevo inicial.
+  // Backfill suave: si el usuario no tiene ningún huevo y aún no tiene mascota/incubación, le damos 1 huevo inicial.
   if (eco) {
     const inv = Array.isArray(eco.inventory) ? eco.inventory : [];
     const pets = Array.isArray(eco.pets) ? eco.pets : [];
     const hasEgg = hasAnyEgg(inv);
     const hasIncubation = Boolean(eco.petIncubation?.eggItemId);
 
-    if (!hasEgg && inv.length === 0 && pets.length === 0 && !hasIncubation) {
-      eco.inventory = starterInventory();
+    if (!hasEgg && pets.length === 0 && !hasIncubation) {
+      if (inv.length === 0) {
+        eco.inventory = starterInventory();
+      } else {
+        inv.push({ itemId: STARTER_EGG_ITEM_ID, amount: 1, obtainedAt: new Date() });
+        eco.inventory = inv;
+      }
       await eco.save();
     }
   }

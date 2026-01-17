@@ -91,7 +91,7 @@ function buildShopMessage({
         .setDescription(
             [
                 'Bienvenido/a a mi tiendita.',
-                'Puedes comprar con: `/shop buy` o `.shop buy`',
+                'Puedes comprar con: `/moxishop buy` o `.moxishop buy`',
                 '',
                 `**Lista de ítems**`,
                 '',
