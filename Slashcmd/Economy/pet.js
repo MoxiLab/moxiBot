@@ -4,10 +4,14 @@ const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notic
 const { getOrCreateEconomy, formatDuration } = require('../../Util/economyCore');
 const { getItemById } = require('../../Util/inventoryCatalog');
 const { EMOJIS } = require('../../Util/emojis');
+const { buildPetPanelMessageOptions } = require('../../Util/petPanel');
 const {
     isIncubationReady,
     incubationRemainingMs,
     buildPetFromEgg,
+    getActivePet,
+    ensurePetAttributes,
+    checkAndMarkPetAway,
 } = require('../../Util/petSystem');
 
 module.exports = {
@@ -53,31 +57,30 @@ module.exports = {
             eco.petIncubation = undefined;
             await eco.save();
 
-            return interaction.reply({
-                ...asV2MessageOptions(
-                    buildNoticeContainer({
-                        emoji: '🐾',
-                        title: '¡Huevo eclosionado!',
-                        text: `Nació tu mascota: **${pet.name}**\nRareza: **${pet.attributes?.rarity || 'common'}**`,
-                    })
-                ),
-                flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
+            ensurePetAttributes(pet, now);
+            const awayRes = checkAndMarkPetAway(pet, now);
+            if (awayRes.changed) await eco.save().catch(() => null);
+
+            const panel = buildPetPanelMessageOptions({
+                userId: interaction.user.id,
+                ownerName: interaction.user.username,
+                pet,
             });
+            return interaction.reply({ ...panel, ephemeral: true });
         }
 
-        const pets = Array.isArray(eco.pets) ? eco.pets : [];
-        if (pets.length) {
-            const last = pets[pets.length - 1];
-            return interaction.reply({
-                ...asV2MessageOptions(
-                    buildNoticeContainer({
-                        emoji: '🐾',
-                        title: 'Tu mascota',
-                        text: `Nombre: **${last?.name || 'Sin nombre'}**\nNivel: **${last?.level || 1}**`,
-                    })
-                ),
-                flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
+        const pet = getActivePet(eco);
+        if (pet) {
+            ensurePetAttributes(pet, now);
+            const awayRes = checkAndMarkPetAway(pet, now);
+            if (awayRes.changed) await eco.save().catch(() => null);
+
+            const panel = buildPetPanelMessageOptions({
+                userId: interaction.user.id,
+                ownerName: interaction.user.username,
+                pet,
             });
+            return interaction.reply({ ...panel, ephemeral: true });
         }
 
         return interaction.reply({
