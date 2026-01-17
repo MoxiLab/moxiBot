@@ -1,6 +1,9 @@
 
+const { MessageFlags } = require('discord.js');
 const debugHelper = require('./debugHelper');
 const moxi = require('../i18n');
+const Config = require('../Config');
+const { shouldBlockByTimeGate, buildBlockedMessage } = require('./timeGate');
 
 function resolveCommandName(comando) {
     if (!comando) return 'unknown';
@@ -57,6 +60,31 @@ module.exports = async function handleCommand(Moxi, ctx, args, comando) {
 
     debugHelper.log('commands', 'invoke', buildContextPayload(ctx, comando, args, isInteraction));
 
+    // --- TIME GATE (bloqueo por horario) ---
+    try {
+        const commandName = resolveCommandName(comando);
+        const gate = shouldBlockByTimeGate({ ctx, commandName, commandObj: comando, config: Config });
+        if (gate?.shouldBlock) {
+            const tz = gate?.gate?.timezone || Config?.TimeGates?.timezone;
+            const msg = buildBlockedMessage({
+                windows: gate?.gate?.windows,
+                timezone: tz,
+                publicDuringWindows: gate?.gate?.publicDuringWindows,
+            });
+
+            if (isInteraction) {
+                const payload = { content: msg, flags: MessageFlags.Ephemeral };
+                if (ctx.deferred || ctx.replied) return await ctx.followUp(payload).catch(() => null);
+                return await ctx.reply(payload).catch(() => null);
+            }
+
+            return await ctx.reply({ content: msg, allowedMentions: { repliedUser: false } }).catch(() => null);
+        }
+    } catch {
+        // no-op (si falla el gate, no bloqueamos)
+    }
+    // --- FIN TIME GATE ---
+
     // --- REGISTRO Y ENVÍO AL CANAL DE LOGS DE COMANDOS ---
     try {
         const channelId = '1459940703319625779';
@@ -71,7 +99,7 @@ module.exports = async function handleCommand(Moxi, ctx, args, comando) {
             if (ctx.guild && ctx.guild.id && moxi.guildLang) {
                 try {
                     lang = await moxi.guildLang(ctx.guild.id, 'es-ES');
-                } catch {}
+                } catch { }
             }
             const embed = {
                 color: 0xE1A6FF,
@@ -82,12 +110,12 @@ module.exports = async function handleCommand(Moxi, ctx, args, comando) {
                         user: username,
                         guild: guildName
                     }) ||
-                    '**Comando:** `' + commandName + '`\n**Usuario:** ' + username + '\n**Servidor:** ' + guildName),
+                        '**Comando:** `' + commandName + '`\n**Usuario:** ' + username + '\n**Servidor:** ' + guildName),
                 timestamp: new Date().toISOString(),
             };
-            channel.send({ embeds: [embed] }).catch(() => {});
+            channel.send({ embeds: [embed] }).catch(() => { });
         }
-    } catch {}
+    } catch { }
     // --- FIN REGISTRO ---
 
     // Preferir `execute` (API estable) y luego `run` como fallback.
