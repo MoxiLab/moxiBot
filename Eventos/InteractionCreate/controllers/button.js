@@ -1,4 +1,5 @@
 const handlers = [
+  require('./buttons/moxidex'),
   require('./buttons/shop'),
   require('./buttons/bugStatus'),
   require('./buttons/modv2'),
@@ -12,9 +13,12 @@ const handlers = [
   require('./buttons/channel'),
   require('./buttons/perms'),
   require('./buttons/bag'),
+  require('./buttons/buffs'),
   require('./buttons/balance'),
   require('./buttons/fish'),
+  require('./buttons/minePlay'),
   require('./buttons/zones'),
+  require('./buttons/crime'),
   require('./buttons/leave'), // <-- Añadido para leave
   require('./buttons/workList'),
   require('./buttons/workApply'),
