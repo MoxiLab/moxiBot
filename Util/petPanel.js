@@ -3,8 +3,6 @@ const {
     ButtonBuilder,
     ButtonStyle,
     MessageFlags,
-    MediaGalleryBuilder,
-    MediaGalleryItemBuilder,
     StringSelectMenuBuilder,
     ThumbnailBuilder,
 } = require('discord.js');
@@ -25,7 +23,8 @@ function starLine(stars) {
 
 function barLine(value) {
     const v = clampInt(value, 0, 100);
-    const filled = clampInt(Math.round(v / 20), 0, 5);
+    // 0–19:0, 20–39:1, 40–59:2, 60–79:3, 80–99:4, 100:5
+    const filled = clampInt(Math.floor(v / 20), 0, 5);
     return `${'●'.repeat(filled)}${'○'.repeat(5 - filled)}`;
 }
 
@@ -65,6 +64,119 @@ function normalizeZoneOptions(zones, selectedZoneId) {
         emoji: z?.emoji || '🧭',
         default: safeSelected ? String(z?.id || '') === safeSelected : false,
     })).filter((o) => o.value);
+}
+
+function ensurePetTrainingState(pet) {
+    if (!pet) return { stats: { attack: 0, defense: 0, resistance: 0, hunt: 0 } };
+    pet.attributes = pet.attributes && typeof pet.attributes === 'object' ? pet.attributes : {};
+    const a = pet.attributes;
+    a.stats = a.stats && typeof a.stats === 'object' ? a.stats : {};
+
+    const safeInt = (n) => {
+        const x = Number(n);
+        if (!Number.isFinite(x)) return 0;
+        return Math.max(0, Math.min(10, Math.trunc(x)));
+    };
+
+    const stats = {
+        attack: safeInt(a.stats.attack),
+        defense: safeInt(a.stats.defense),
+        resistance: safeInt(a.stats.resistance),
+        hunt: safeInt(a.stats.hunt),
+    };
+
+    a.stats.attack = stats.attack;
+    a.stats.defense = stats.defense;
+    a.stats.resistance = stats.resistance;
+    a.stats.hunt = stats.hunt;
+
+    return { stats };
+}
+
+function buildPetTrainingMessageOptions({ userId, ownerName, pet, disabled = false } = {}) {
+    const safeUserId = String(userId || '').trim();
+    const safeOwnerName = String(ownerName || 'Usuario').trim();
+    const name = String(pet?.name || 'Sin nombre');
+    const level = Math.max(1, Math.trunc(Number(pet?.level) || 1));
+
+    const { stats } = ensurePetTrainingState(pet);
+    const sumAllocated = (stats.attack + stats.defense + stats.resistance + stats.hunt);
+
+    // 1 punto por nivel (a partir de nivel 2)
+    const totalPoints = Math.max(0, level - 1);
+    const remainingPoints = Math.max(0, totalPoints - sumAllocated);
+
+    // Bases como en la captura
+    const base = { attack: 2, defense: 2, resistance: 6, hunt: 3 };
+    const totalMaxForPercent = 300;
+
+    const row = (emoji, label, key) => {
+        const alloc = stats[key];
+        const bonus = alloc;
+        const total = base[key] + bonus;
+        const pct = Math.max(0, Math.round((total / totalMaxForPercent) * 100));
+        return `${emoji} ${label}: **${alloc}/10** +${bonus}    Base **${base[key]}**    Total **${total}** (${pct}%)`;
+    };
+
+    const statsText =
+        `Te quedan **${remainingPoints}** puntos para usar.\n\n` +
+        `**Stats**\n` +
+        `${row('⚔️', 'Ataque', 'attack')}\n` +
+        `${row('🛡️', 'Defensa', 'defense')}\n` +
+        `${row('🧬', 'Resistencia', 'resistance')}\n` +
+        `${row('🏹', 'Caza', 'hunt')}`;
+
+    const container = new ContainerBuilder()
+        .setAccentColor(Bot?.AccentColor || 0xB57EDC)
+        .addTextDisplayComponents(t => t.setContent(`## Mascota de ${safeOwnerName}`))
+        .addSeparatorComponents(s => s.setDivider(true))
+        .addTextDisplayComponents(t => t.setContent(`**${name}**`))
+        .addSeparatorComponents(s => s.setDivider(true))
+        .addTextDisplayComponents(t => t.setContent(statsText));
+
+    container.addActionRowComponents(r => r.addComponents(
+        new ButtonBuilder()
+            .setCustomId(`pet:stat:${safeUserId}:attack`)
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji('⚔️')
+            .setDisabled(Boolean(disabled)),
+        new ButtonBuilder()
+            .setCustomId(`pet:stat:${safeUserId}:defense`)
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji('🛡️')
+            .setDisabled(Boolean(disabled)),
+        new ButtonBuilder()
+            .setCustomId(`pet:stat:${safeUserId}:resistance`)
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji('🧬')
+            .setDisabled(Boolean(disabled)),
+        new ButtonBuilder()
+            .setCustomId(`pet:stat:${safeUserId}:hunt`)
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji('🏹')
+            .setDisabled(Boolean(disabled))
+    ));
+
+    container.addActionRowComponents(r => r.addComponents(
+        new ButtonBuilder()
+            .setCustomId(`pet:open:${safeUserId}`)
+            .setLabel('Menú principal')
+            .setStyle(ButtonStyle.Secondary)
+            .setEmoji('📋')
+            .setDisabled(Boolean(disabled)),
+        new ButtonBuilder()
+            .setCustomId(`pet:trainHelp:${safeUserId}`)
+            .setStyle(ButtonStyle.Secondary)
+            .setEmoji('📖')
+            .setDisabled(Boolean(disabled))
+    ));
+
+    return {
+        content: '',
+        components: [container],
+        flags: MessageFlags.IsComponentsV2,
+        allowedMentions: { repliedUser: false },
+    };
 }
 
 function buildPetPanelMessageOptions({
@@ -115,16 +227,19 @@ function buildPetPanelMessageOptions({
         `• Hambre: ${barLine(hunger)}\n` +
         `• Higiene: ${barLine(hygiene)}`;
 
-    container
-        .addSeparatorComponents(s => s.setDivider(true))
-        .addSectionComponents(section => {
-            section.addTextDisplayComponents(t => t.setContent(statsText));
-            const thumbUrl = String(process.env.PET_PANEL_THUMBNAIL_URL || '').trim();
-            if (/^https?:\/\//.test(thumbUrl)) {
-                section.setThumbnailAccessory(new ThumbnailBuilder().setURL(thumbUrl));
-            }
-            return section;
-        });
+    container.addSeparatorComponents(s => s.setDivider(true));
+
+    // Nota: Section components requieren un accesorio (thumbnail o botón). Para evitar errores
+    // de validación cuando no hay thumbnail, usamos MediaGallery opcional + texto.
+    const thumbUrl = String(process.env.PET_PANEL_THUMBNAIL_URL || '').trim();
+    if (/^https?:\/\//.test(thumbUrl)) {
+        container.addMediaGalleryComponents(
+            new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(thumbUrl))
+        );
+        container.addSeparatorComponents(s => s.setDivider(true));
+    }
+
+    container.addTextDisplayComponents(t => t.setContent(statsText));
 
     if (since) {
         container
@@ -203,17 +318,18 @@ function buildPetActionResultMessageOptions({
 
     const container = new ContainerBuilder()
         .setAccentColor(Bot?.AccentColor || 0xB57EDC)
-        .addTextDisplayComponents(t => t.setContent(`## ${safeTitle}`))
-        .addSeparatorComponents(s => s.setDivider(true));
+        ;
 
+    // Layout tipo Nekotina: texto + thumbnail a la derecha cuando hay GIF.
     if (safeGif) {
-        container.addMediaGalleryComponents(
-            new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(safeGif))
+        container.addSectionComponents(section =>
+            section
+                .addTextDisplayComponents(t => t.setContent(`## ${safeTitle}\n${safeText}`))
+                .setThumbnailAccessory(new ThumbnailBuilder().setURL(safeGif))
         );
-        container.addSeparatorComponents(s => s.setDivider(true));
+    } else {
+        container.addTextDisplayComponents(t => t.setContent(`## ${safeTitle}\n${safeText}`));
     }
-
-    if (safeText) container.addTextDisplayComponents(t => t.setContent(safeText));
 
     container.addActionRowComponents(row => row.addComponents(
         new ButtonBuilder()
@@ -253,6 +369,7 @@ function parsePetCustomId(customId) {
 
 module.exports = {
     buildPetPanelMessageOptions,
+    buildPetTrainingMessageOptions,
     buildPetActionResultMessageOptions,
     parsePetCustomId,
     renderCareCircles,

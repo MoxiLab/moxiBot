@@ -29,6 +29,22 @@ function ensurePetAttributes(pet, now = Date.now()) {
         a.care = { affection: 80, hunger: 80, hygiene: 80 };
     }
 
+    // Decaimiento de cuidados con el tiempo (para que no estén siempre llenos)
+    // Usamos un marcador independiente para no romper la lógica de "neglect" (lastCareAt).
+    if (!a.careDecayAt) a.careDecayAt = new Date(now);
+    const lastDecay = a.careDecayAt ? new Date(a.careDecayAt).getTime() : null;
+    if (lastDecay && Number.isFinite(lastDecay) && now > lastDecay) {
+        const elapsedMs = now - lastDecay;
+        const hours = Math.floor(elapsedMs / (60 * 60 * 1000));
+        if (hours > 0) {
+            // Ritmo: hambre baja más rápido, luego higiene, luego cariño.
+            a.care.hunger = safeNumber(a.care.hunger, 0) - (hours * 3);
+            a.care.hygiene = safeNumber(a.care.hygiene, 0) - (hours * 2);
+            a.care.affection = safeNumber(a.care.affection, 0) - (hours * 1);
+            a.careDecayAt = new Date(now);
+        }
+    }
+
     if (!Number.isFinite(Number(a.care.affection))) a.care.affection = 80;
     if (!Number.isFinite(Number(a.care.hunger))) a.care.hunger = 80;
     if (!Number.isFinite(Number(a.care.hygiene))) a.care.hygiene = 80;
@@ -51,8 +67,12 @@ function ensurePetAttributes(pet, now = Date.now()) {
 
 function petXpToNext(pet) {
     const level = Math.max(1, Math.trunc(safeNumber(pet?.level, 1)));
-    // Simple y estable (nivel 1 => 100, etc.)
-    return 100 + Math.max(0, level - 1) * 20;
+    // Más difícil que antes (muchos niveles): curva lineal + cuadrática suave.
+    // Nivel 1 => 120
+    // Nivel 10 => ~552
+    // Nivel 20 => ~1412
+    const n = Math.max(0, level - 1);
+    return 120 + (n * 30) + Math.floor((n * n) * 2);
 }
 
 function getActivePet(eco) {
