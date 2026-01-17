@@ -5,6 +5,9 @@ const {
     ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle,
+    ContainerBuilder,
+    MediaGalleryBuilder,
+    MediaGalleryItemBuilder,
 } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
@@ -166,35 +169,35 @@ module.exports = {
             await eco.save().catch(() => null);
 
             const gifUrl = process.env.PET_RETURN_GIF_URL || await resolveUseGif();
-                const container = new ContainerBuilder()
-                    .setAccentColor(Bot?.AccentColor || 0xB57EDC)
-                    .addTextDisplayComponents(t => t.setContent('# 🎶 Ocarina del Vínculo'))
-                    .addSeparatorComponents(s => s.setDivider(true));
+            const container = new ContainerBuilder()
+                .setAccentColor(Bot?.AccentColor || 0xB57EDC)
+                .addTextDisplayComponents(t => t.setContent('# 🎶 Ocarina del Vínculo'))
+                .addSeparatorComponents(s => s.setDivider(true));
 
-                const safeGif = gifUrl && /^https?:\/\//.test(String(gifUrl)) ? String(gifUrl) : null;
-                if (safeGif) {
-                    container.addMediaGalleryComponents(
-                        new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(safeGif))
-                    );
-                    container.addSeparatorComponents(s => s.setDivider(true));
-                }
+            const safeGif = gifUrl && /^https?:\/\//.test(String(gifUrl)) ? String(gifUrl) : null;
+            if (safeGif) {
+                container.addMediaGalleryComponents(
+                    new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(safeGif))
+                );
+                container.addSeparatorComponents(s => s.setDivider(true));
+            }
 
-                container
-                    .addTextDisplayComponents(t => t.setContent(`🐾 **${pet.name || 'Tu mascota'}** ha oído el sonido… ¡y ha regresado!`))
-                    .addActionRowComponents(row => row.addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`pet:open:${interaction.user.id}`)
-                            .setLabel('Ver mascota')
-                            .setStyle(ButtonStyle.Primary)
-                            .setEmoji('🐣')
-                    ));
+            container
+                .addTextDisplayComponents(t => t.setContent(`🐾 **${pet.name || 'Tu mascota'}** ha oído el sonido… ¡y ha regresado!`))
+                .addActionRowComponents(row => row.addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`pet:open:${interaction.user.id}`)
+                        .setLabel('Ver mascota')
+                        .setStyle(ButtonStyle.Primary)
+                        .setEmoji('🐣')
+                ));
 
-                return interaction.reply({
-                    content: '',
-                    components: [container],
-                    flags: MessageFlags.IsComponentsV2,
-                    allowedMentions: { repliedUser: false },
-                });
+            return interaction.reply({
+                content: '',
+                components: [container],
+                flags: MessageFlags.IsComponentsV2,
+                allowedMentions: { repliedUser: false },
+            });
         }
 
         // --- Pet incubation hook (slash) ---
