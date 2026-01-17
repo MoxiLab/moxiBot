@@ -66,7 +66,10 @@ module.exports = {
                 ownerName: interaction.user.username,
                 pet,
             });
-            return interaction.reply({ ...panel, ephemeral: true });
+            return interaction.reply({
+                ...panel,
+                flags: MessageFlags.Ephemeral | (panel.flags ?? 0),
+            });
         }
 
         const pet = getActivePet(eco);
@@ -80,7 +83,10 @@ module.exports = {
                 ownerName: interaction.user.username,
                 pet,
             });
-            return interaction.reply({ ...panel, ephemeral: true });
+            return interaction.reply({
+                ...panel,
+                flags: MessageFlags.Ephemeral | (panel.flags ?? 0),
+            });
         }
 
         return interaction.reply({
