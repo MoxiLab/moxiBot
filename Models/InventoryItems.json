@@ -305,6 +305,76 @@
         "description": "Consumible para comprar en la tienda.",
         "rarity": "common",
         "price": 40
+      },
+      {
+        "id": "consumibles/agua-fresca",
+        "name": "Agua Fresca",
+        "description": "Te mantiene en marcha: pequeño bonus de energía.",
+        "rarity": "common",
+        "price": 25
+      },
+      {
+        "id": "consumibles/te-verde",
+        "name": "Té Verde",
+        "description": "Reduce el cansancio: bonus ligero de concentración.",
+        "rarity": "common",
+        "price": 35
+      },
+      {
+        "id": "consumibles/cafe-moxi",
+        "name": "Café Moxi",
+        "description": "Acelera un poquito tus acciones durante unos minutos.",
+        "rarity": "uncommon",
+        "price": 90
+      },
+      {
+        "id": "consumibles/chocolate-caliente",
+        "name": "Chocolate Caliente",
+        "description": "Reconforta: bonus suave en eventos fríos.",
+        "rarity": "common",
+        "price": 45
+      },
+      {
+        "id": "consumibles/sopa-caliente",
+        "name": "Sopa Caliente",
+        "description": "Recupera energía y da resistencia ligera.",
+        "rarity": "uncommon",
+        "price": 120
+      },
+      {
+        "id": "consumibles/barra-proteica",
+        "name": "Barra Proteica",
+        "description": "Energía rápida para actividades intensas.",
+        "rarity": "common",
+        "price": 55
+      },
+      {
+        "id": "consumibles/batido-prisma",
+        "name": "Batido Prisma",
+        "description": "Pequeño boost de suerte por un rato.",
+        "rarity": "uncommon",
+        "price": 160
+      },
+      {
+        "id": "consumibles/sandwich-de-aventura",
+        "name": "Sándwich de Aventura",
+        "description": "Recupera energía y mejora exploración ligeramente.",
+        "rarity": "common",
+        "price": 60
+      },
+      {
+        "id": "consumibles/sushi-marino",
+        "name": "Sushi Marino",
+        "description": "Bonus pequeño en pesca y botines marinos.",
+        "rarity": "uncommon",
+        "price": 140
+      },
+      {
+        "id": "consumibles/pan-de-ajo",
+        "name": "Pan de Ajo",
+        "description": "Mejora la resistencia: ideal para minería.",
+        "rarity": "common",
+        "price": 50
       }
     ]
   },
@@ -380,6 +450,181 @@
         "description": "Herramientas automáticas para minar/pescar.",
         "rarity": "rare",
         "price": 1200
+      },
+      {
+        "id": "herramientas/pico-de-hierro",
+        "name": "Pico de Hierro",
+        "description": "Herramienta básica para minería.",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "herramientas/pico-de-acero",
+        "name": "Pico de Acero",
+        "description": "Mejora la eficiencia al minar.",
+        "rarity": "uncommon",
+        "price": 450
+      },
+      {
+        "id": "herramientas/pico-de-diamante",
+        "name": "Pico de Diamante",
+        "description": "Ideal para vetas raras y duras.",
+        "rarity": "epic",
+        "price": 1800
+      },
+      {
+        "id": "herramientas/pico-de-obsidiana",
+        "name": "Pico de Obsidiana",
+        "description": "Herramienta legendaria para minería extrema.",
+        "rarity": "legendary",
+        "price": 4500
+      },
+      {
+        "id": "herramientas/cana-de-bambu",
+        "name": "Caña de Bambú",
+        "description": "Caña sencilla para empezar a pescar.",
+        "rarity": "common",
+        "price": 180
+      },
+      {
+        "id": "herramientas/cana-de-carbono",
+        "name": "Caña de Carbono",
+        "description": "Aumenta la probabilidad de pesca rara.",
+        "rarity": "uncommon",
+        "price": 500
+      },
+      {
+        "id": "herramientas/red-de-pesca",
+        "name": "Red de Pesca",
+        "description": "Captura más botín común en zonas marinas.",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/arpon-marino",
+        "name": "Arpón Marino",
+        "description": "Mejora el botín en pesca profunda.",
+        "rarity": "rare",
+        "price": 1100
+      },
+      {
+        "id": "herramientas/pala-de-excavacion",
+        "name": "Pala de Excavación",
+        "description": "Sirve para encontrar objetos enterrados.",
+        "rarity": "common",
+        "price": 200
+      },
+      {
+        "id": "herramientas/brujula-prisma",
+        "name": "Brújula Prisma",
+        "description": "Ayuda a orientarte y descubrir rutas.",
+        "rarity": "uncommon",
+        "price": 650
+      },
+      {
+        "id": "herramientas/mapa-arrugado",
+        "name": "Mapa Arrugado",
+        "description": "Pistas para exploración y tesoros.",
+        "rarity": "common",
+        "price": 90
+      },
+      {
+        "id": "herramientas/linterna-de-caverna",
+        "name": "Linterna de Caverna",
+        "description": "Ilumina zonas oscuras para exploración.",
+        "rarity": "uncommon",
+        "price": 400
+      },
+      {
+        "id": "herramientas/detector-de-metales",
+        "name": "Detector de Metales",
+        "description": "Encuentra objetos valiosos bajo tierra.",
+        "rarity": "rare",
+        "price": 1500
+      },
+      {
+        "id": "herramientas/cuerda-de-escalada",
+        "name": "Cuerda de Escalada",
+        "description": "Útil para rutas de montaña y rescates.",
+        "rarity": "common",
+        "price": 120
+      },
+      {
+        "id": "herramientas/kit-de-reparacion",
+        "name": "Kit de Reparación",
+        "description": "Repara herramientas y equipos (uso futuro).",
+        "rarity": "uncommon",
+        "price": 300
+      },
+      {
+        "id": "herramientas/lupa-antigua",
+        "name": "Lupa Antigua",
+        "description": "Ayuda a identificar objetos y pistas.",
+        "rarity": "uncommon",
+        "price": 300
+      },
+      {
+        "id": "herramientas/frasco-cazabichos",
+        "name": "Frasco Cazabichos",
+        "description": "Permite atrapar insectos y pequeñas criaturas.",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "herramientas/guantes-de-minero",
+        "name": "Guantes de Minero",
+        "description": "Protege tus manos en trabajos duros.",
+        "rarity": "common",
+        "price": 140
+      },
+      {
+        "id": "herramientas/sierra-de-carpintero",
+        "name": "Sierra de Carpintero",
+        "description": "Herramienta para trabajar madera (uso futuro).",
+        "rarity": "common",
+        "price": 180
+      },
+      {
+        "id": "herramientas/cuchillo-de-supervivencia",
+        "name": "Cuchillo de Supervivencia",
+        "description": "Herramienta multiusos para exploración.",
+        "rarity": "uncommon",
+        "price": 550
+      },
+      {
+        "id": "herramientas/martillo-de-forja",
+        "name": "Martillo de Forja",
+        "description": "Necesario para crafteo avanzado (uso futuro).",
+        "rarity": "rare",
+        "price": 1400
+      },
+      {
+        "id": "herramientas/anzuelo-de-lux",
+        "name": "Anzuelo de Lux",
+        "description": "Mejora pesca rara en aguas profundas.",
+        "rarity": "rare",
+        "price": 900
+      },
+      {
+        "id": "herramientas/cebo-prisma",
+        "name": "Cebo Prisma",
+        "description": "Aumenta la probabilidad de pesca rara temporalmente.",
+        "rarity": "uncommon",
+        "price": 260
+      },
+      {
+        "id": "herramientas/taladro-portatil",
+        "name": "Taladro Portátil",
+        "description": "Herramienta potente para minería rápida (uso futuro).",
+        "rarity": "epic",
+        "price": 2600
+      },
+      {
+        "id": "herramientas/bomba-de-humo",
+        "name": "Bomba de Humo",
+        "description": "Te ayuda a escapar o evitar peligros (uso futuro).",
+        "rarity": "uncommon",
+        "price": 600
       }
     ]
   },
@@ -413,6 +658,41 @@
         "description": "Llave especial para eventos de fuego.",
         "rarity": "rare",
         "price": 900
+      },
+      {
+        "id": "llaves/llave-abisal",
+        "name": "Llave Abisal",
+        "description": "Abre cofres y puertas de zonas profundas.",
+        "rarity": "epic",
+        "price": 1800
+      },
+      {
+        "id": "llaves/llave-glaciar",
+        "name": "Llave Glaciar",
+        "description": "Abre cofres de hielo y cámaras frías.",
+        "rarity": "uncommon",
+        "price": 1100
+      },
+      {
+        "id": "llaves/llave-volcanica",
+        "name": "Llave Volcánica",
+        "description": "Abre cofres y puertas en zonas calientes.",
+        "rarity": "uncommon",
+        "price": 1100
+      },
+      {
+        "id": "llaves/llave-lunar",
+        "name": "Llave Lunar",
+        "description": "Accede a cámaras nocturnas y recompensas lunares.",
+        "rarity": "epic",
+        "price": 1800
+      },
+      {
+        "id": "llaves/llave-antigua",
+        "name": "Llave Antigua",
+        "description": "Llave misteriosa para cofres antiguos.",
+        "rarity": "rare",
+        "price": 1300
       }
     ]
   },
@@ -467,6 +747,48 @@
         "description": "Canjeable por ítems en la tienda.",
         "rarity": "uncommon",
         "price": 600
+      },
+      {
+        "id": "loots/bolsa-de-materiales",
+        "name": "Bolsa de Materiales",
+        "description": "Contiene materiales aleatorios para crafteo.",
+        "rarity": "common",
+        "price": 380
+      },
+      {
+        "id": "loots/bolsa-de-gemas",
+        "name": "Bolsa de Gemas",
+        "description": "Contiene gemas o fragmentos raros.",
+        "rarity": "uncommon",
+        "price": 800
+      },
+      {
+        "id": "loots/caja-de-herramientas",
+        "name": "Caja de Herramientas",
+        "description": "Probabilidad de obtener herramientas útiles.",
+        "rarity": "uncommon",
+        "price": 900
+      },
+      {
+        "id": "loots/cofre-abisal",
+        "name": "Cofre Abisal",
+        "description": "Botín raro de zonas profundas.",
+        "rarity": "epic",
+        "price": 2400
+      },
+      {
+        "id": "loots/cofre-glaciar",
+        "name": "Cofre Glaciar",
+        "description": "Botín raro de hielo y auroras.",
+        "rarity": "epic",
+        "price": 2400
+      },
+      {
+        "id": "loots/cofre-volcanico",
+        "name": "Cofre Volcánico",
+        "description": "Botín raro de lava y minerales.",
+        "rarity": "epic",
+        "price": 2400
       }
     ]
   },
@@ -750,6 +1072,198 @@
         "description": "Material para eventos de temporada.",
         "rarity": "common",
         "price": 25
+      },
+      {
+        "id": "materiales/alga-marina",
+        "name": {
+          "es-ES": "Alga Marina",
+          "en-US": "Seaweed"
+        },
+        "description": {
+          "es-ES": "Material de pesca y crafteo marino.",
+          "en-US": "Fishing material and marine crafting ingredient."
+        },
+        "rarity": "common",
+        "price": 25
+      },
+      {
+        "id": "materiales/concha-marina",
+        "name": {
+          "es-ES": "Concha Marina",
+          "en-US": "Seashell"
+        },
+        "description": {
+          "es-ES": "Material común de zonas costeras.",
+          "en-US": "Common material from coastal areas."
+        },
+        "rarity": "common",
+        "price": 25
+      },
+      {
+        "id": "materiales/coral-prisma",
+        "name": {
+          "es-ES": "Coral Prisma",
+          "en-US": "Prism Coral"
+        },
+        "description": {
+          "es-ES": "Material raro de arrecifes y mares profundos.",
+          "en-US": "Rare material from reefs and deep seas."
+        },
+        "rarity": "uncommon",
+        "price": 60
+      },
+      {
+        "id": "materiales/perla-azur",
+        "name": {
+          "es-ES": "Perla Azur",
+          "en-US": "Azur Pearl"
+        },
+        "description": {
+          "es-ES": "Tesoro marino valioso.",
+          "en-US": "A valuable marine treasure."
+        },
+        "rarity": "rare",
+        "price": 180
+      },
+      {
+        "id": "materiales/mineral-de-cobre",
+        "name": "Mineral de Cobre",
+        "description": "Material común de minería.",
+        "rarity": "common",
+        "price": 18
+      },
+      {
+        "id": "materiales/mineral-de-hierro",
+        "name": "Mineral de Hierro",
+        "description": "Base para lingotes y herramientas.",
+        "rarity": "common",
+        "price": 22
+      },
+      {
+        "id": "materiales/mineral-de-plata",
+        "name": "Mineral de Plata",
+        "description": "Mineral valioso para crafteo.",
+        "rarity": "uncommon",
+        "price": 45
+      },
+      {
+        "id": "materiales/mineral-de-oro",
+        "name": "Mineral de Oro",
+        "description": "Mineral raro para crafteo avanzado.",
+        "rarity": "rare",
+        "price": 120
+      },
+      {
+        "id": "materiales/mineral-de-diamante",
+        "name": "Mineral de Diamante",
+        "description": "Mineral muy raro: crafteo de élite.",
+        "rarity": "epic",
+        "price": 260
+      },
+      {
+        "id": "materiales/madera-robusta",
+        "name": "Madera Robusta",
+        "description": "Buena para estructuras y herramientas.",
+        "rarity": "common",
+        "price": 15
+      },
+      {
+        "id": "materiales/madera-encantada",
+        "name": "Madera Encantada",
+        "description": "Madera rara con propiedades mágicas.",
+        "rarity": "uncommon",
+        "price": 55
+      },
+      {
+        "id": "materiales/cuero-curtido",
+        "name": "Cuero Curtido",
+        "description": "Material flexible para equipo.",
+        "rarity": "common",
+        "price": 20
+      },
+      {
+        "id": "materiales/tela-resistente",
+        "name": "Tela Resistente",
+        "description": "Material para mochilas y vestimenta.",
+        "rarity": "common",
+        "price": 20
+      },
+      {
+        "id": "materiales/hilo-fino",
+        "name": "Hilo Fino",
+        "description": "Material de costura para crafteo.",
+        "rarity": "common",
+        "price": 10
+      },
+      {
+        "id": "materiales/polvo-prisma",
+        "name": "Polvo Prisma",
+        "description": "Ingrediente mágico para mejoras.",
+        "rarity": "uncommon",
+        "price": 70
+      },
+      {
+        "id": "materiales/esencia-solar",
+        "name": "Esencia Solar",
+        "description": "Ingrediente brillante para crafteo raro.",
+        "rarity": "rare",
+        "price": 160
+      },
+      {
+        "id": "materiales/esencia-lunar",
+        "name": "Esencia Lunar",
+        "description": "Ingrediente nocturno para recetas especiales.",
+        "rarity": "rare",
+        "price": 160
+      },
+      {
+        "id": "materiales/esencia-umbria",
+        "name": "Esencia Umbría",
+        "description": "Energía oscura, muy rara.",
+        "rarity": "epic",
+        "price": 280
+      },
+      {
+        "id": "materiales/fragmento-de-cristal",
+        "name": "Fragmento de Cristal",
+        "description": "Fragmento brillante para crafteo.",
+        "rarity": "uncommon",
+        "price": 60
+      },
+      {
+        "id": "materiales/gema-rubi",
+        "name": "Gema Rubí",
+        "description": "Gema rara para intercambios y mejoras.",
+        "rarity": "rare",
+        "price": 180
+      },
+      {
+        "id": "materiales/gema-zafiro",
+        "name": "Gema Zafiro",
+        "description": "Gema rara con energía acuática.",
+        "rarity": "rare",
+        "price": 180
+      },
+      {
+        "id": "materiales/gema-esmeralda",
+        "name": "Gema Esmeralda",
+        "description": "Gema rara con energía natural.",
+        "rarity": "rare",
+        "price": 180
+      },
+      {
+        "id": "materiales/nucleo-elemental",
+        "name": "Núcleo Elemental",
+        "description": "Componente muy raro para herramientas elementales.",
+        "rarity": "epic",
+        "price": 350
+      },
+      {
+        "id": "materiales/placa-de-acero",
+        "name": "Placa de Acero",
+        "description": "Material resistente para crafteo avanzado.",
+        "rarity": "uncommon",
+        "price": 65
       }
     ]
   },
@@ -811,6 +1325,34 @@
         "description": "Cambia el color de tu perfil o club.",
         "rarity": "rare",
         "price": 1500
+      },
+      {
+        "id": "mejoras/expansion-de-banco",
+        "name": "Expansión de Banco",
+        "description": "Aumenta el espacio del banco (uso futuro).",
+        "rarity": "rare",
+        "price": 1800
+      },
+      {
+        "id": "mejoras/expansion-de-mochila-plus",
+        "name": "Expansión de Mochila Plus",
+        "description": "Aumenta aún más el espacio de inventario (uso futuro).",
+        "rarity": "epic",
+        "price": 2600
+      },
+      {
+        "id": "mejoras/sello-de-proteccion",
+        "name": "Sello de Protección",
+        "description": "Reduce pérdidas en eventos peligrosos (uso futuro).",
+        "rarity": "epic",
+        "price": 2400
+      },
+      {
+        "id": "mejoras/pase-premium-moxi",
+        "name": "Pase Premium Moxi",
+        "description": "Acceso a beneficios premium del sistema (uso futuro).",
+        "rarity": "legendary",
+        "price": 6000
       }
     ]
   },
@@ -891,6 +1433,48 @@
         "description": "Consumibles especiales.",
         "rarity": "uncommon",
         "price": 180
+      },
+      {
+        "id": "pociones/pocion-de-suerte",
+        "name": "Poción de Suerte",
+        "description": "Aumenta la suerte temporalmente.",
+        "rarity": "uncommon",
+        "price": 220
+      },
+      {
+        "id": "pociones/pocion-de-velocidad",
+        "name": "Poción de Velocidad",
+        "description": "Aumenta la velocidad temporalmente.",
+        "rarity": "uncommon",
+        "price": 220
+      },
+      {
+        "id": "pociones/pocion-del-minero",
+        "name": "Poción del Minero",
+        "description": "Mejora el botín de minería temporalmente.",
+        "rarity": "rare",
+        "price": 420
+      },
+      {
+        "id": "pociones/pocion-del-pescador",
+        "name": "Poción del Pescador",
+        "description": "Mejora el botín de pesca temporalmente.",
+        "rarity": "rare",
+        "price": 420
+      },
+      {
+        "id": "pociones/elixir-de-luz",
+        "name": "Elixir de Luz",
+        "description": "Potencia recompensas diurnas y exploración.",
+        "rarity": "epic",
+        "price": 900
+      },
+      {
+        "id": "pociones/elixir-de-sombra",
+        "name": "Elixir de Sombra",
+        "description": "Potencia recompensas nocturnas y sigilo.",
+        "rarity": "epic",
+        "price": 900
       }
     ]
   },

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const STARTER_EGG_ITEM_ID = 'mascotas/huevo-de-bosque';
+
 const ItemSchema = new mongoose.Schema({
     // Stable catalog identifier (e.g. "buffs/scroll-de-impulso-moxi")
     itemId: { type: String, required: true, unique: true },
@@ -16,11 +18,19 @@ const UserEconomySchema = new mongoose.Schema({
     balance: { type: Number, default: 0 }, // Moneda principal
     bank: { type: Number, default: 0 }, // Banco
     sakuras: { type: Number, default: 0 }, // Moneda secundaria
-    inventory: [{
-        itemId: { type: String, required: true },
-        amount: { type: Number, default: 1 },
-        obtainedAt: { type: Date, default: Date.now }
-    }],
+    inventory: {
+        type: [{
+            itemId: { type: String, required: true },
+            amount: { type: Number, default: 1 },
+            obtainedAt: { type: Date, default: Date.now }
+        }],
+        default: () => ([{ itemId: STARTER_EGG_ITEM_ID, amount: 1, obtainedAt: new Date() }]),
+    },
+    petIncubation: {
+        eggItemId: { type: String },
+        startedAt: { type: Date },
+        hatchAt: { type: Date },
+    },
     pets: [{
         petId: { type: Number },
         name: { type: String },
@@ -48,6 +58,7 @@ const UserEconomySchema = new mongoose.Schema({
     lastFish: { type: Date },
     lastMine: { type: Date },
     lastExplore: { type: Date },
+    lastCrime: { type: Date },
 });
 
 module.exports = {
