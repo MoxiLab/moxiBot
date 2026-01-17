@@ -85,7 +85,7 @@ module.exports = {
             const { UserEconomy } = require('../../Models/EconomySchema');
             const userId = message.author.id;
             let eco = await UserEconomy.findOne({ userId });
-            if (!eco) eco = await UserEconomy.create({ userId, balance: 0, inventory: [] });
+            if (!eco) eco = await UserEconomy.create({ userId, balance: 0, bank: 0, sakuras: 0 });
 
             const price = Number.isFinite(item.price) ? item.price : 0;
             const cost = price * amount;
