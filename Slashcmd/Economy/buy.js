@@ -55,7 +55,7 @@ module.exports = {
         const userId = interaction.user.id;
         let eco = await UserEconomy.findOne({ userId });
         if (!eco) {
-            eco = await UserEconomy.create({ userId, balance: 0, inventory: [] });
+            eco = await UserEconomy.create({ userId, balance: 0, bank: 0, sakuras: 0 });
         }
 
         const price = Number.isFinite(item.price) ? item.price : 0;

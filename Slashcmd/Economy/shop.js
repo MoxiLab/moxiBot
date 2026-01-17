@@ -11,7 +11,7 @@ module.exports = {
         return moxi.translate('commands:CATEGORY_ECONOMIA', lang);
     },
     data: new SlashCommandBuilder()
-        .setName('shop')
+        .setName('moxishop')
         .setDescription('Tienda: lista y compra ítems')
         .addSubcommand((sc) =>
             sc
@@ -98,7 +98,7 @@ module.exports = {
                         buildNoticeContainer({
                             emoji: EMOJIS.cross,
                             title: 'Tienda',
-                            text: `No existe un ítem con ID ${id}. Usa /shop list para ver los IDs.`,
+                            text: `No existe un ítem con ID ${id}. Usa /moxishop list para ver los IDs.`,
                         })
                     )
                 );
@@ -109,7 +109,7 @@ module.exports = {
             const userId = interaction.user.id;
             let eco = await UserEconomy.findOne({ userId });
             if (!eco) {
-                eco = await UserEconomy.create({ userId, balance: 0, inventory: [] });
+                eco = await UserEconomy.create({ userId, balance: 0, bank: 0, sakuras: 0 });
             }
 
             const price = Number.isFinite(item.price) ? item.price : 0;
