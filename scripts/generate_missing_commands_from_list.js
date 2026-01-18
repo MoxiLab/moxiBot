@@ -103,7 +103,7 @@ function economyCategory(lang) {
 
 module.exports = {
     name: '${name}',
-    alias: [],
+    alias: ['${name}'],
     Category: economyCategory,
     usage: '${name}',
     description: 'Comando en desarrollo.',
@@ -137,7 +137,7 @@ function economyCategory(lang) {
 
 module.exports = {
     name: 'balance',
-    alias: [],
+    alias: ['balance'],
     Category: economyCategory,
     usage: 'balance [@usuario]',
     description: 'Muestra tu balance (coins/banco/sakuras).',
