@@ -3,13 +3,28 @@ const { log } = require('console');
 const i18next = require('i18next');
 const Backend = require('i18next-fs-backend');
 const path = require('path');
+const fs = require('fs');
 
 const { EMOJIS, UNICODE_CODEPOINT_TO_KEY } = require('./Util/emojis');
 const debug = require('./Util/debug');
 const logger = require('./Util/logger');
 
+function uniqStrings(arr) {
+  return Array.from(new Set((arr || []).filter((x) => typeof x === 'string' && x.trim())));
+}
 
-const fs = require('fs');
+function discoverNamespacesFromDir(lang, subDir) {
+  try {
+    const dirPath = path.join(__dirname, 'Languages', lang, subDir);
+    if (!fs.existsSync(dirPath)) return [];
+    return fs
+      .readdirSync(dirPath, { withFileTypes: true })
+      .filter((e) => e.isFile() && e.name.toLowerCase().endsWith('.json'))
+      .map((e) => `${subDir}/${e.name.slice(0, -5)}`);
+  } catch {
+    return [];
+  }
+}
 let defaultLangs = ['en-US', 'es-ES', 'zh-CN'];
 try {
   const metaPath = path.join(__dirname, 'Languages', 'language-meta.json');
@@ -22,7 +37,37 @@ try {
 } catch (e) {
   console.error('Error loading language-meta.json:', e);
 }
-const defaultNamespaces = ['misc', 'commands', 'moderation', 'permissions', 'time', 'mentionPanel', 'prefix-panels', 'audit', 'utility/feedback', 'utility/bugGuidelines', 'economy/zones', 'economy/crime'];
+const baseNamespaces = [
+  'misc',
+  'commands',
+  'moderation',
+  'permissions',
+  'time',
+  'mentionPanel',
+  'prefix-panels',
+  'audit',
+  'utility/feedback',
+  'utility/bugGuidelines',
+  'economy/items',
+  'economy/zones',
+  'economy/crime',
+  'economy/buy',
+  'economy/shop',
+  'economy/balance',
+  'economy/daily',
+  'economy/deposit',
+  'economy/work',
+  'economy/roulette',
+];
+
+// Descubrir namespaces de Economy automáticamente (para que las claves funcionen
+// aunque no se añadan manualmente a la lista, siempre que exista el JSON).
+const discoveredEconomyNamespaces = uniqStrings([
+  ...discoverNamespacesFromDir('en-US', 'economy'),
+  ...discoverNamespacesFromDir('es-ES', 'economy'),
+]);
+
+const defaultNamespaces = uniqStrings([...baseNamespaces, ...discoveredEconomyNamespaces]);
 
 function isDevRuntime() {
   const lifecycle = String(process.env.npm_lifecycle_event || '').trim().toLowerCase();
@@ -33,9 +78,7 @@ function isDevRuntime() {
 }
 
 function shouldAutofillI18n() {
-  // Se puede forzar con env var.
   if (String(process.env.I18N_AUTOFILL || '').trim() === '1') return true;
-  // Por defecto: en desarrollo, sí.
   return isDevRuntime();
 }
 
@@ -125,18 +168,25 @@ i18next
     defaultNS: 'misc',
     load: 'currentOnly', // Only use the exact language code, never fallback to 'en', 'es', 'zh'
     backend: {
-      loadPath: path.join(__dirname, 'Languages', '{{lng}}', '{{ns}}.json'),
-      // Evita que falte el init por archivos de namespace inexistentes.
-      // Si el JSON no existe, tratamos el recurso como vacío y dejamos que fallbackLng haga su trabajo.
-      readFile: (filename, arg2, arg3) => {
-        const encoding = (typeof arg2 === 'string') ? arg2 : 'utf8';
-        const callback = (typeof arg2 === 'function') ? arg2 : arg3;
-        fs.readFile(filename, encoding, (err, data) => {
-          if (err && err.code === 'ENOENT') return callback(null, '{}');
-          if (err) return callback(err, data);
-          return callback(null, data);
-        });
-      }
+      // Evita errores ENOENT cuando pre-cargamos muchos idiomas pero no
+      // existen todos los namespaces para cada uno (p.ej. economy/buy).
+      // Si falta el archivo del idioma solicitado, cargamos el del fallback.
+      loadPath: (lng, ns) => {
+        const tryPaths = [
+          path.join(__dirname, 'Languages', String(lng), `${String(ns)}.json`),
+          path.join(__dirname, 'Languages', 'en-US', `${String(ns)}.json`),
+          path.join(__dirname, 'Languages', 'es-ES', `${String(ns)}.json`),
+        ];
+
+        for (const p of tryPaths) {
+          try {
+            if (fs.existsSync(p)) return p;
+          } catch {
+            // ignore
+          }
+        }
+        return tryPaths[0];
+      },
     },
     interpolation: {
       escapeValue: false
@@ -146,15 +196,12 @@ i18next
     try { __readyResolve && __readyResolve(); } catch { }
   });
 
-// Fallback extra: si por algún motivo no se llama al callback (casos raros), no bloquees.
 setTimeout(() => {
   try { __readyResolve && __readyResolve(); } catch { }
 }, 5000);
 
-// Función de traducción global segura
 function translate(key, lang, vars = {}) {
   const originalKey = String(key);
-  // Permite usar misc:KEY o KEY
   const nsKey = originalKey.includes(':') ? originalKey : `misc:${originalKey}`;
   const options = { lng: lang || 'es-ES', ...vars, emoji: EMOJIS };
   let res = i18next.t(nsKey, options);
@@ -217,7 +264,23 @@ async function getGuildLanguageCached(guildId, fallbackLang = 'es-ES') {
   try {
     const { getGuildSettingsCached } = require('./Util/guildSettings');
     const settings = await getGuildSettingsCached(gid);
-    const lang = settings?.Language ? String(settings.Language) : '';
+
+    // El proyecto históricamente ha usado varias formas de guardar el idioma.
+    // Preferimos `Language` pero aceptamos `language` y arrays.
+    const raw =
+      (settings && (settings.Language ?? settings.language ?? settings.lang ?? settings.Lang)) ??
+      null;
+
+    let lang = '';
+    if (Array.isArray(raw)) {
+      const first = raw.find((x) => typeof x === 'string' && x.trim());
+      lang = first ? String(first).trim() : '';
+    } else if (typeof raw === 'string') {
+      lang = raw.trim();
+    } else if (raw != null) {
+      lang = String(raw).trim();
+    }
+
     return lang || fallbackLang;
   } catch {
     return fallbackLang;
