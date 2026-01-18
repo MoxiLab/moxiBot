@@ -2,7 +2,7 @@
 // Este archivo debe exportar una función que maneje el cambio de idioma en un servidor (guild).
 // Implementa aquí la lógica necesaria para actualizar mensajes, notificaciones, etc.
 
-const GuildMessage = require('../../Models/GuildMessage');
+const GuildMessage = require('../../Models/GuildMessageSchema');
 const fs = require('fs');
 const path = require('path');
 const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
