@@ -19,10 +19,13 @@ module.exports = {
     },
 
     async execute(Moxi, message) {
+        const guildId = message.guildId || message.guild?.id;
+        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const t = (k, vars = {}) => moxi.translate(`economy/daily:${k}`, lang, vars);
         return message.reply({
             ...buildWipPayload({
-                title: 'Daily',
-                text: 'Este comando aún está en desarrollo. Lo añadiremos pronto.',
+                title: t('TITLE'),
+                text: t('WIP_TEXT'),
             }),
             allowedMentions: { repliedUser: false },
         });

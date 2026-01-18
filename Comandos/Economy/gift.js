@@ -19,10 +19,12 @@ module.exports = {
     },
 
     async execute(Moxi, message) {
+        const guildId = message.guild?.id;
+        const lang = message.lang || await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
         return message.reply({
             ...buildWipPayload({
+                lang,
                 title: 'Gift',
-                text: 'Este comando aún está en desarrollo. Lo añadiremos pronto.',
             }),
             allowedMentions: { repliedUser: false },
         });

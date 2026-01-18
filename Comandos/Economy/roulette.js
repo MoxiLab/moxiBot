@@ -18,6 +18,18 @@ function formatInt(n) {
     return Math.trunc(x).toLocaleString('en-US');
 }
 
+function clampStakeToBalance(balance, desiredStake) {
+    const b = Math.max(0, safeInt(balance, 0));
+    const desired = Math.max(0, safeInt(desiredStake, 0));
+    if (b <= 0 || desired <= 0) return 0;
+
+    // Evita pérdidas enormes en una sola jugada.
+    const MAX_PCT = 0.25; // 25% del saldo
+    const MAX_ABS = 5_000; // techo absoluto por jugada
+    const maxStake = Math.max(1, Math.min(Math.floor(b * MAX_PCT), MAX_ABS));
+    return Math.min(desired, maxStake);
+}
+
 const RED = new Set([1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]);
 const BLACK = new Set([2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35]);
 
@@ -32,9 +44,11 @@ function colorOf(n) {
     return 'green';
 }
 
-function normalizeBet(raw) {
+function normalizeBet(raw, lang) {
     const s = String(raw || '').trim().toLowerCase();
     if (!s) return null;
+
+    const isEs = /^es(-|$)/i.test(String(lang || ''));
 
     // number
     if (/^\d+$/.test(s)) {
@@ -44,22 +58,22 @@ function normalizeBet(raw) {
     }
 
     // colors
-    if (['red', 'rojo', 'r'].includes(s)) return { type: 'color', value: 'red', label: 'Rojo' };
-    if (['black', 'negro', 'n'].includes(s)) return { type: 'color', value: 'black', label: 'Negro' };
-    if (['green', 'verde', 'v', '0'].includes(s)) return { type: 'color', value: 'green', label: 'Verde' };
+    if (['red', 'rojo', 'r'].includes(s)) return { type: 'color', value: 'red', label: isEs ? 'Rojo' : 'Red' };
+    if (['black', 'negro', 'n'].includes(s)) return { type: 'color', value: 'black', label: isEs ? 'Negro' : 'Black' };
+    if (['green', 'verde', 'v', '0'].includes(s)) return { type: 'color', value: 'green', label: isEs ? 'Verde' : 'Green' };
 
     // parity
-    if (['even', 'par'].includes(s)) return { type: 'parity', value: 'even', label: 'Par' };
-    if (['odd', 'impar'].includes(s)) return { type: 'parity', value: 'odd', label: 'Impar' };
+    if (['even', 'par'].includes(s)) return { type: 'parity', value: 'even', label: isEs ? 'Par' : 'Even' };
+    if (['odd', 'impar'].includes(s)) return { type: 'parity', value: 'odd', label: isEs ? 'Impar' : 'Odd' };
 
     // high/low
     if (['low', 'bajo', '1-18', '1a18'].includes(s)) return { type: 'range', value: 'low', label: '1-18' };
     if (['high', 'alto', '19-36', '19a36'].includes(s)) return { type: 'range', value: 'high', label: '19-36' };
 
     // dozens
-    if (['1st', '1ra', 'primera', 'docena1', 'docena-1', '1-12', '1a12'].includes(s)) return { type: 'dozen', value: 1, label: '1ª docena (1-12)' };
-    if (['2nd', '2da', 'segunda', 'docena2', 'docena-2', '13-24', '13a24'].includes(s)) return { type: 'dozen', value: 2, label: '2ª docena (13-24)' };
-    if (['3rd', '3ra', 'tercera', 'docena3', 'docena-3', '25-36', '25a36'].includes(s)) return { type: 'dozen', value: 3, label: '3ª docena (25-36)' };
+    if (['1st', '1ra', 'primera', 'docena1', 'docena-1', '1-12', '1a12'].includes(s)) return { type: 'dozen', value: 1, label: isEs ? '1ª docena (1-12)' : '1st dozen (1-12)' };
+    if (['2nd', '2da', 'segunda', 'docena2', 'docena-2', '13-24', '13a24'].includes(s)) return { type: 'dozen', value: 2, label: isEs ? '2ª docena (13-24)' : '2nd dozen (13-24)' };
+    if (['3rd', '3ra', 'tercera', 'docena3', 'docena-3', '25-36', '25a36'].includes(s)) return { type: 'dozen', value: 3, label: isEs ? '3ª docena (25-36)' : '3rd dozen (25-36)' };
 
     return null;
 }
@@ -123,6 +137,7 @@ module.exports = {
         const guildId = message.guildId || message.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
         const prefix = await moxi.guildPrefix(guildId, process.env.PREFIX || '.');
+        const t = (k, vars = {}) => moxi.translate(`economy/roulette:${k}`, lang, vars);
 
         const amountRaw = String(args?.[0] || '').trim().toLowerCase();
         const betRaw = String(args?.slice(1).join(' ') || '').trim();
@@ -132,15 +147,8 @@ module.exports = {
                 ...asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.info || 'ℹ️',
-                        title: 'Ruleta',
-                        text: [
-                            'Uso:',
-                            `\`${prefix}roulette <cantidad|all> <apuesta>\``,
-                            '',
-                            'Apuestas: rojo/negro, par/impar, alto/bajo, docena1/2/3, o número 0-36.',
-                            '',
-                            `Ejemplos: \`${prefix}ruleta 100 rojo\` • \`${prefix}roulette all 17\``,
-                        ].join('\n'),
+                        title: t('TITLE'),
+                        text: t('USAGE', { prefix }),
                     })
                 ),
                 allowedMentions: { repliedUser: false },
@@ -156,10 +164,10 @@ module.exports = {
                 ...asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Ruleta',
+                        title: t('TITLE'),
                         text: isMongoMissing
-                            ? 'MongoDB no está configurado, el sistema de economía no está disponible.'
-                            : 'No pude acceder a tu economía ahora mismo. Inténtalo de nuevo.',
+                            ? t('MONGO_MISSING')
+                            : t('ECONOMY_UNAVAILABLE'),
                     })
                 ),
                 allowedMentions: { repliedUser: false },
@@ -167,14 +175,14 @@ module.exports = {
         }
 
         const balance = Math.max(0, safeInt(eco?.balance, 0));
-        const betSpec = normalizeBet(betRaw);
+        const betSpec = normalizeBet(betRaw, lang);
         if (!betSpec) {
             return message.reply({
                 ...asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Apuesta inválida',
-                        text: 'Apuesta no reconocida. Usa: rojo/negro, par/impar, alto/bajo, docena1/2/3 o un número 0-36.',
+                        title: t('BET_INVALID_TITLE'),
+                        text: t('BET_INVALID'),
                     })
                 ),
                 allowedMentions: { repliedUser: false },
@@ -188,8 +196,8 @@ module.exports = {
                 ...asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Cantidad inválida',
-                        text: 'La cantidad debe ser mayor que 0 (o usa `all`).',
+                        title: t('AMOUNT_INVALID_TITLE'),
+                        text: t('AMOUNT_INVALID'),
                     })
                 ),
                 allowedMentions: { repliedUser: false },
@@ -201,8 +209,8 @@ module.exports = {
                 ...asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.info,
-                        title: 'Sin fondos',
-                        text: 'No tienes coins para apostar. Consigue coins y vuelve a intentarlo.',
+                        title: t('NO_FUNDS_TITLE'),
+                        text: t('NO_FUNDS'),
                     })
                 ),
                 allowedMentions: { repliedUser: false },
@@ -214,8 +222,23 @@ module.exports = {
                 ...asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Fondos insuficientes',
-                        text: `Intentaste apostar **${formatInt(amount)}** 🪙 pero tienes **${formatInt(balance)}** 🪙.`,
+                        title: t('INSUFFICIENT_TITLE'),
+                        text: t('INSUFFICIENT', { amount: formatInt(amount), balance: formatInt(balance) }),
+                    })
+                ),
+                allowedMentions: { repliedUser: false },
+            });
+        }
+
+        const stake = clampStakeToBalance(balance, amount);
+        const stakeCapped = stake !== amount;
+        if (stake <= 0) {
+            return message.reply({
+                ...asV2MessageOptions(
+                    buildNoticeContainer({
+                        emoji: EMOJIS.cross,
+                        title: t('AMOUNT_INVALID_TITLE'),
+                        text: t('AMOUNT_INVALID'),
                     })
                 ),
                 allowedMentions: { repliedUser: false },
@@ -227,32 +250,38 @@ module.exports = {
         const outcome = evalBet(betSpec, rolled);
 
         // Apply balance change
-        const baseAfter = balance - amount;
-        const winBack = outcome.won ? amount * outcome.multiplier : 0;
+        const baseAfter = balance - stake;
+        const winBack = outcome.won ? stake * outcome.multiplier : 0;
         const newBalance = baseAfter + winBack;
 
         eco.balance = newBalance;
         await eco.save();
 
         const colorEmoji = rolledColor === 'red' ? '🔴' : (rolledColor === 'black' ? '⚫' : '🟢');
-        const net = outcome.won ? (amount * (outcome.multiplier - 1)) : -amount;
+        const net = outcome.won ? (stake * (outcome.multiplier - 1)) : -stake;
 
-        const resultTitle = outcome.won ? '🎉 ¡Ganaste!' : '💸 Perdiste';
+        const resultTitle = outcome.won ? t('RESULT_WIN') : t('RESULT_LOSE');
         const resultEmoji = outcome.won ? (EMOJIS.check || '✅') : (EMOJIS.cross || '❌');
+        const colorKey = rolledColor === 'red' ? 'COLOR_RED' : (rolledColor === 'black' ? 'COLOR_BLACK' : 'COLOR_GREEN');
 
         return message.reply({
             ...asV2MessageOptions(
                 buildNoticeContainer({
                     emoji: resultEmoji,
-                    title: `Ruleta • ${resultTitle}`,
+                    title: `${t('TITLE')} • ${resultTitle}`,
                     text: [
-                        `**Apuesta:** ${betSpec.label}`,
-                        `**Cantidad:** ${formatInt(amount)} 🪙`,
+                        t('BET_LINE', { bet: betSpec.label }),
+                        stakeCapped
+                            ? t('AMOUNT_CAPPED_LINE', { amount: formatInt(stake), requested: formatInt(amount) })
+                            : t('AMOUNT_LINE', { amount: formatInt(stake) }),
+                        stakeCapped ? t('CAP_NOTE') : '',
                         '',
-                        `**Salió:** ${colorEmoji} **${rolled}** (${rolledColor})`,
-                        outcome.won ? `**Premio:** +${formatInt(net)} 🪙` : `**Pérdida:** -${formatInt(Math.abs(net))} 🪙`,
+                        t('ROLLED_LINE', { emoji: colorEmoji, number: rolled, color: t(colorKey) }),
+                        outcome.won
+                            ? t('PRIZE_LINE', { amount: formatInt(net) })
+                            : t('LOSS_LINE', { amount: formatInt(Math.abs(net)) }),
                         '',
-                        `Balance: **${formatInt(newBalance)}** 🪙`,
+                        t('BALANCE_LINE', { balance: formatInt(newBalance) }),
                     ].join('\n'),
                 })
             ),

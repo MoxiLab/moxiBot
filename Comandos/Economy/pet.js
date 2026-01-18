@@ -70,6 +70,7 @@ module.exports = {
             if (awayRes.changed) await eco.save().catch(() => null);
 
             const panel = buildPetPanelMessageOptions({
+                lang,
                 userId: message.author.id,
                 ownerName: message.author.username,
                 pet,
@@ -84,6 +85,7 @@ module.exports = {
             if (awayRes.changed) await eco.save().catch(() => null);
 
             const panel = buildPetPanelMessageOptions({
+                lang,
                 userId: message.author.id,
                 ownerName: message.author.username,
                 pet,

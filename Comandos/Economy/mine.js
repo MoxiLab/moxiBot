@@ -3,6 +3,7 @@ const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notic
 const { EMOJIS } = require('../../Util/emojis');
 const { getItemById } = require('../../Util/inventoryCatalog');
 const { claimCooldown, awardBalance, formatDuration, getOrCreateEconomy } = require('../../Util/economyCore');
+const { claimRateLimit } = require('../../Util/actionRateLimit');
 const { buildZonesMessageOptions } = require('../../Util/zonesView');
 const { getZonesForKind } = require('../../Util/zonesView');
 const { hasInventoryItem } = require('../../Util/fishView');
@@ -11,6 +12,7 @@ const { rollMineMaterials } = require('../../Util/mineLoot');
 const { pickMineActivity } = require('../../Util/mineActivities');
 const { scaleRange, randInt, chance } = require('../../Util/activityUtils');
 const { buildMinePlayMessageOptions } = require('../../Util/minePlay');
+const { shouldShowCooldownNotice } = require('../../Util/cooldownNotice');
 
 const MINE_FAIL_CHANCE = 0.18;
 
@@ -68,7 +70,7 @@ module.exports = {
     Category: economyCategory,
     usage: 'mine zones [página]',
     description: 'Muestra las zonas de minería.',
-    cooldown: 3,
+    cooldown: 0,
     helpText: buildMineHelpText('.'),
     examples: ['mine zones', 'mine zones 2'],
     permissions: {
@@ -85,6 +87,7 @@ module.exports = {
         const guildId = message.guildId || message.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
         const prefix = await moxi.guildPrefix(guildId, process.env.PREFIX || '.');
+        const t = (k, vars = {}) => moxi.translate(`economy/mine:${k}`, lang, vars);
 
         const sub = String(args?.[0] || '').trim().toLowerCase();
         if (sub === 'zones' || sub === 'zonas') {
@@ -112,14 +115,8 @@ module.exports = {
                     asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: '⛔',
-                            title: 'Mine • Requisito',
-                            text: [
-                                `Para empezar a minar necesitas: **${requiredName}**`,
-                                'Cuando lo tengas, usa `.mine` y podrás jugar con botones.',
-                                `Si quieres el modo instantáneo: \`${prefix}mine auto\``,
-                                '',
-                                `Zonas: \`${prefix}mine zones\``,
-                            ].join('\n'),
+                            title: t('REQUIREMENT_TITLE'),
+                            text: t('REQUIREMENT_TEXT', { item: requiredName, prefix }),
                         })
                     )
                 );
@@ -127,25 +124,25 @@ module.exports = {
 
             // Modo instantáneo anterior
             if (wantsAuto) {
-                const cooldownMs = 180 * 1000;
+                const cooldownMs = 45 * 1000;
                 const requiredId = String(autoZone?.requiredItemId || '');
                 const isExplosive = requiredId.includes('dinamita');
                 const activity = pickMineActivity(autoZone);
                 const baseRange = isExplosive ? { min: 60, max: 140 } : { min: 30, max: 75 };
                 const scaled = scaleRange(baseRange.min, baseRange.max, activity?.multiplier || 1);
-                const cd = await claimCooldown({
-                    userId,
-                    field: 'lastMine',
-                    cooldownMs,
-                });
+                const cd = claimRateLimit({ userId, key: 'mine', windowMs: 35 * 1000, maxHits: 3 });
 
                 if (!cd.ok && cd.reason === 'cooldown') {
+                    if (!shouldShowCooldownNotice({ userId, key: 'mine' })) {
+                        await message.react('⏳').catch(() => null);
+                        return;
+                    }
                     return message.reply(
                         asV2MessageOptions(
                             buildNoticeContainer({
                                 emoji: '⏳',
-                                title: 'Mine • Cooldown',
-                                text: `Aún estás cansad@ de minar. Vuelve en **${formatDuration(cd.nextInMs)}**.`,
+                                title: t('COOLDOWN_TITLE'),
+                                text: t('COOLDOWN_TEXT', { time: formatDuration(cd.nextInMs) }),
                             })
                         )
                     );
@@ -156,14 +153,14 @@ module.exports = {
                         asV2MessageOptions(
                             buildNoticeContainer({
                                 emoji: '⚠️',
-                                title: 'Mine',
-                                text: cd.message || 'No pude procesar tu minería ahora mismo.',
+                                title: t('ERROR_TITLE'),
+                                text: cd.message || t('ERROR_GENERIC'),
                             })
                         )
                     );
                 }
 
-                const actionLine = activity?.phrase || 'Has minado';
+                const actionLine = (activity?.phraseKey ? t(activity.phraseKey) : activity?.phrase) || t('DEFAULT_ACTION');
                 const coin = (EMOJIS.coin || '🪙');
 
                 // Fallo: consume cooldown pero no da recompensa
@@ -173,7 +170,7 @@ module.exports = {
                             buildNoticeContainer({
                                 emoji: autoZone.emoji || '⛏️',
                                 title: `Mine • ${autoZone.name}`,
-                                text: `${actionLine}... pero hoy no has encontrado nada útil.`,
+                                text: t('FAIL_TEXT', { action: actionLine }),
                             })
                         )
                     );
@@ -183,12 +180,16 @@ module.exports = {
                 const res = await awardBalance({ userId, amount });
 
                 if (!res.ok && res.reason === 'cooldown') {
+                    if (!shouldShowCooldownNotice({ userId, key: 'mine' })) {
+                        await message.react('⏳').catch(() => null);
+                        return;
+                    }
                     return message.reply(
                         asV2MessageOptions(
                             buildNoticeContainer({
                                 emoji: '⏳',
-                                title: 'Mine • Cooldown',
-                                text: `Aún estás cansad@ de minar. Vuelve en **${formatDuration(res.nextInMs)}**.`,
+                                title: t('COOLDOWN_TITLE'),
+                                text: t('COOLDOWN_TEXT', { time: formatDuration(res.nextInMs) }),
                             })
                         )
                     );
@@ -199,8 +200,8 @@ module.exports = {
                         asV2MessageOptions(
                             buildNoticeContainer({
                                 emoji: '⚠️',
-                                title: 'Mine',
-                                text: res.message || 'No pude procesar tu minería ahora mismo.',
+                                title: t('ERROR_TITLE'),
+                                text: res.message || t('ERROR_GENERIC'),
                             })
                         )
                     );
@@ -213,7 +214,9 @@ module.exports = {
                     addManyToInventory(ecoAfter, drops);
                     await ecoAfter.save();
                 }
-                const balanceLine = Number.isFinite(res?.balance) ? `Saldo: **${res.balance}** ${coin}` : '';
+                const balanceLine = Number.isFinite(res?.balance)
+                    ? t('BALANCE_LINE', { balance: res.balance, coin })
+                    : '';
 
                 const materialLines = drops
                     .map(d => {
@@ -229,9 +232,9 @@ module.exports = {
                             emoji: autoZone.emoji || '⛏️',
                             title: `Mine • ${autoZone.name}`,
                             text: [
-                                `${actionLine} y ganaste **${res.amount}** ${coin}. ¡Buen golpe! ⛏️`,
+                                t('SUCCESS_TEXT', { action: actionLine, amount: res.amount, coin }),
                                 balanceLine,
-                                materialLines ? `\nMateriales:\n${materialLines}` : '',
+                                materialLines ? `\n${t('MATERIALS_HEADER')}\n${materialLines}` : '',
                             ].filter(Boolean).join('\n'),
                         })
                     )
@@ -239,21 +242,21 @@ module.exports = {
             }
 
             // Default: minijuego
-            return message.reply(buildMinePlayMessageOptions({ userId, zoneId: autoZone.id }));
+            return message.reply(buildMinePlayMessageOptions({ userId, zoneId: autoZone.id, lang }));
 
-            const cooldownMs = 180 * 1000;
+            const cooldownMs = 45 * 1000;
             const requiredId = String(autoZone?.requiredItemId || '');
             const isExplosive = requiredId.includes('dinamita');
             const activity = pickMineActivity(autoZone);
             const baseRange = isExplosive ? { min: 60, max: 140 } : { min: 30, max: 75 };
             const scaled = scaleRange(baseRange.min, baseRange.max, activity?.multiplier || 1);
-            const cd = await claimCooldown({
-                userId,
-                field: 'lastMine',
-                cooldownMs,
-            });
+            const cd = claimRateLimit({ userId, key: 'mine', windowMs: 35 * 1000, maxHits: 3 });
 
             if (!cd.ok && cd.reason === 'cooldown') {
+                if (!shouldShowCooldownNotice({ userId, key: 'mine' })) {
+                    await message.react('⏳').catch(() => null);
+                    return;
+                }
                 return message.reply(
                     asV2MessageOptions(
                         buildNoticeContainer({
@@ -297,6 +300,10 @@ module.exports = {
             const res = await awardBalance({ userId, amount });
 
             if (!res.ok && res.reason === 'cooldown') {
+                if (!shouldShowCooldownNotice({ userId, key: 'mine' })) {
+                    await message.react('⏳').catch(() => null);
+                    return;
+                }
                 return message.reply(
                     asV2MessageOptions(
                         buildNoticeContainer({
@@ -360,11 +367,8 @@ module.exports = {
                     asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: '⛏️',
-                            title: 'Mine',
-                            text: [
-                                `No encuentro la zona **${sub}**.`,
-                                `Usa \`${prefix}mine zones\` para ver el panel con botones.`,
-                            ].join('\n'),
+                            title: t('ZONE_NOT_FOUND_TITLE'),
+                            text: t('ZONE_NOT_FOUND_TEXT', { zone: sub, prefix }),
                         })
                     )
                 );
@@ -377,33 +381,29 @@ module.exports = {
                     asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: '⛔',
-                            title: 'Mine • Requisito',
-                            text: [
-                                `Para minar en **${zone.name}** necesitas: **${requiredName}**`,
-                                '',
-                                `Tip: revisa tus zonas con \`${prefix}mine zones\`.`,
-                            ].join('\n'),
+                            title: t('REQUIREMENT_TITLE'),
+                            text: t('ZONE_REQUIREMENT_TEXT', { zone: zone.name, item: requiredName, prefix }),
                         })
                     )
                 );
-
-                // Para zonas explícitas, también usamos minijuego por defecto.
-                return message.reply(buildMinePlayMessageOptions({ userId, zoneId: zone.id }));
             }
 
-            const cooldownMs = 180 * 1000;
+            // Para zonas explícitas, usamos minijuego por defecto.
+            return message.reply(buildMinePlayMessageOptions({ userId, zoneId: zone.id, lang }));
+
+            const cooldownMs = 45 * 1000;
             const requiredId = String(zone?.requiredItemId || '');
             const isExplosive = requiredId.includes('dinamita');
             const activity = pickMineActivity(zone);
             const baseRange = isExplosive ? { min: 60, max: 140 } : { min: 30, max: 75 };
             const scaled = scaleRange(baseRange.min, baseRange.max, activity?.multiplier || 1);
-            const cd = await claimCooldown({
-                userId,
-                field: 'lastMine',
-                cooldownMs,
-            });
+            const cd = claimRateLimit({ userId, key: 'mine', windowMs: 35 * 1000, maxHits: 3 });
 
             if (!cd.ok && cd.reason === 'cooldown') {
+                if (!shouldShowCooldownNotice({ userId, key: 'mine' })) {
+                    await message.react('⏳').catch(() => null);
+                    return;
+                }
                 return message.reply(
                     asV2MessageOptions(
                         buildNoticeContainer({
@@ -446,6 +446,10 @@ module.exports = {
             const res = await awardBalance({ userId, amount });
 
             if (!res.ok && res.reason === 'cooldown') {
+                if (!shouldShowCooldownNotice({ userId, key: 'mine' })) {
+                    await message.react('⏳').catch(() => null);
+                    return;
+                }
                 return message.reply(
                     asV2MessageOptions(
                         buildNoticeContainer({

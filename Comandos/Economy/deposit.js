@@ -43,6 +43,8 @@ module.exports = {
     async execute(Moxi, message, args) {
         const guildId = message.guildId || message.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const prefix = await moxi.guildPrefix(guildId, '.');
+        const t = (k, vars = {}) => moxi.translate(`economy/deposit:${k}`, lang, vars);
 
         const parsed = parseAmountArg(args?.[0]);
         if (parsed.kind === 'invalid') {
@@ -50,8 +52,8 @@ module.exports = {
                 ...asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Uso incorrecto',
-                        text: 'Usa: `.deposit 100` o `.deposit all`.',
+                        title: t('INVALID_USAGE_TITLE'),
+                        text: t('INVALID_USAGE_TEXT', { prefix }),
                     })
                 ),
                 allowedMentions: { repliedUser: false },
@@ -68,8 +70,8 @@ module.exports = {
                     ...asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: EMOJIS.info,
-                            title: 'Banco',
-                            text: 'No tienes coins para depositar.',
+                            title: t('BANK_TITLE'),
+                            text: t('NO_COINS'),
                         })
                     ),
                     allowedMentions: { repliedUser: false },
@@ -82,8 +84,8 @@ module.exports = {
                     ...asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: EMOJIS.cross,
-                            title: 'Cantidad inválida',
-                            text: 'La cantidad debe ser mayor que 0, o usa `all`.',
+                            title: t('INVALID_AMOUNT_TITLE'),
+                            text: t('INVALID_AMOUNT_TEXT'),
                         })
                     ),
                     allowedMentions: { repliedUser: false },
@@ -95,8 +97,8 @@ module.exports = {
                     ...asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: EMOJIS.cross,
-                            title: 'Fondos insuficientes',
-                            text: `Intentaste depositar **${formatInt(wanted)}** 🪙 pero solo tienes **${formatInt(bal)}** 🪙.`,
+                            title: t('INSUFFICIENT_FUNDS_TITLE'),
+                            text: t('INSUFFICIENT_FUNDS_TEXT', { wanted: formatInt(wanted), balance: formatInt(bal) }),
                         })
                     ),
                     allowedMentions: { repliedUser: false },
@@ -111,8 +113,8 @@ module.exports = {
                 ...asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.check,
-                        title: 'Depósito realizado',
-                        text: `Depositaste **${formatInt(wanted)}** 🪙.\nBalance: **${formatInt(eco.balance)}** 🪙\nBanco: **${formatInt(eco.bank)}** 🏦`,
+                        title: t('DEPOSIT_SUCCESS_TITLE'),
+                        text: t('DEPOSIT_SUCCESS_TEXT', { wanted: formatInt(wanted), balance: formatInt(eco.balance), bank: formatInt(eco.bank) }),
                     })
                 ),
                 allowedMentions: { repliedUser: false },
@@ -123,10 +125,8 @@ module.exports = {
                 ...asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Error',
-                        text: isMongoMissing
-                            ? 'MongoDB no está configurado, el banco no está disponible.'
-                            : 'No pude hacer el depósito ahora mismo. Inténtalo de nuevo.',
+                        title: t('ERROR_TITLE'),
+                        text: isMongoMissing ? t('ERROR_MONGO') : t('ERROR_GENERIC'),
                     })
                 ),
                 allowedMentions: { repliedUser: false },

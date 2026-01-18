@@ -11,7 +11,7 @@ module.exports = {
     Category: economyCategory,
     usage: 'crime',
     description: 'Comete un crimen para intentar ganar monedas (con riesgo).',
-    cooldown: Math.floor((5 * 60 * 1000) / 1000),
+    cooldown: 0,
     examples: ['crime'],
     command: {
         prefix: true,

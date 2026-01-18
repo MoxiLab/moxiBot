@@ -2,11 +2,13 @@ const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { getItemById } = require('../../Util/inventoryCatalog');
 const { claimCooldown, awardBalance, formatDuration, getOrCreateEconomy } = require('../../Util/economyCore');
+const { claimRateLimit } = require('../../Util/actionRateLimit');
 const { pickFishActivity } = require('../../Util/fishActivities');
 const { addManyToInventory } = require('../../Util/inventoryOps');
 const { rollFishMaterials } = require('../../Util/fishLoot');
 const { scaleRange, randInt, chance } = require('../../Util/activityUtils');
 const { buildFishPlayMessageOptions } = require('../../Util/fishPlay');
+const { shouldShowCooldownNotice } = require('../../Util/cooldownNotice');
 const {
     hasInventoryItem,
 } = require('../../Util/fishView');
@@ -80,15 +82,15 @@ module.exports = {
     usage: 'fish [zona|nivel] | fish zones',
     description: '¡Vamos a pescar! Explora zonas para encontrar peces raros y tesoros.',
     // cooldown base (normal)
-    cooldown: 120,
+    cooldown: 0,
     // Para que el help se vea como tu captura
     helpText: buildFishHelpText('.'),
     examples: ['fish zones', 'fish zones 2', 'fish muelle-moxi', 'fish bahia-sakura', 'fish ruinas-sumergidas'],
     cooldownTiers: {
-        normal: 120,
-        normalHaste: 60,
-        premium: 96,
-        premiumHaste: 48,
+        normal: 0,
+        normalHaste: 0,
+        premium: 0,
+        premiumHaste: 0,
     },
     permissions: {
         Bot: ['Ver canal', 'Enviar mensajes', 'Insertar enlaces'],
@@ -104,6 +106,7 @@ module.exports = {
         const guildId = message.guildId || message.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
         const prefix = await moxi.guildPrefix(guildId, process.env.PREFIX || '.');
+        const t = (k, vars = {}) => moxi.translate(`economy/fish:${k}`, lang, vars);
 
         // Actualiza el texto del help para que use el prefijo real del server
         if (typeof this.helpText === 'string' && this.helpText.includes('fish zones')) {
@@ -131,14 +134,8 @@ module.exports = {
                     asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: '⛔',
-                            title: 'Fish • Requisito',
-                            text: [
-                                `Para empezar a pescar necesitas: **${requiredName}**`,
-                                'Cuando la tengas, usa `.fish` y podrás jugar con botones.',
-                                `Si quieres el modo instantáneo: \`${prefix}fish auto\``,
-                                '',
-                                `Zonas: \`${prefix}fish zones\``,
-                            ].join('\n'),
+                            title: t('REQUIREMENT_TITLE'),
+                            text: t('REQUIREMENT_TEXT', { item: requiredName, prefix }),
                         })
                     )
                 );
@@ -151,19 +148,19 @@ module.exports = {
                 const maxAmount = Math.max(minAmount, safeInt(autoZone?.reward?.max, 60));
                 const activity = pickFishActivity();
                 const scaled = scaleRange(minAmount, maxAmount, activity?.multiplier || 1);
-                const cd = await claimCooldown({
-                    userId,
-                    field: 'lastFish',
-                    cooldownMs,
-                });
+                const cd = claimRateLimit({ userId, key: 'fish', windowMs: 30 * 1000, maxHits: 4 });
 
                 if (!cd.ok && cd.reason === 'cooldown') {
+                    if (!shouldShowCooldownNotice({ userId, key: 'fish' })) {
+                        await message.react('⏳').catch(() => null);
+                        return;
+                    }
                     return message.reply(
                         asV2MessageOptions(
                             buildNoticeContainer({
                                 emoji: '⏳',
-                                title: 'Fish • Cooldown',
-                                text: `Aún estás cansad@ de pescar. Vuelve en **${formatDuration(cd.nextInMs)}**.`,
+                                title: t('COOLDOWN_TITLE'),
+                                text: t('COOLDOWN_TEXT', { time: formatDuration(cd.nextInMs) }),
                             })
                         )
                     );
@@ -174,14 +171,14 @@ module.exports = {
                         asV2MessageOptions(
                             buildNoticeContainer({
                                 emoji: '⚠️',
-                                title: 'Fish',
-                                text: cd.message || 'No pude procesar tu pesca ahora mismo.',
+                                title: t('ERROR_TITLE'),
+                                text: cd.message || t('ERROR_GENERIC'),
                             })
                         )
                     );
                 }
 
-                const actionLine = activity?.phrase || 'Has pescado';
+                const actionLine = (activity?.phraseKey ? t(activity.phraseKey) : activity?.phrase) || t('DEFAULT_ACTION');
 
                 if (chance(FISH_FAIL_CHANCE)) {
                     return message.reply(
@@ -189,7 +186,7 @@ module.exports = {
                             buildNoticeContainer({
                                 emoji: autoZone.emoji || '🎣',
                                 title: `Fish • ${autoZone.name}`,
-                                text: `${actionLine}... pero no ha picado nada.`,
+                                text: t('FAIL_TEXT', { action: actionLine }),
                             })
                         )
                     );
@@ -197,15 +194,19 @@ module.exports = {
 
                 const amount = randInt(scaled.min, scaled.max);
                 const res = await awardBalance({ userId, amount });
-                const balanceLine = Number.isFinite(res?.balance) ? `Saldo: **${res.balance}** 🪙` : '';
+                const balanceLine = Number.isFinite(res?.balance) ? t('BALANCE_LINE', { balance: res.balance }) : '';
 
                 if (!res.ok && res.reason === 'cooldown') {
+                    if (!shouldShowCooldownNotice({ userId, key: 'fish' })) {
+                        await message.react('⏳').catch(() => null);
+                        return;
+                    }
                     return message.reply(
                         asV2MessageOptions(
                             buildNoticeContainer({
                                 emoji: '⏳',
-                                title: 'Fish • Cooldown',
-                                text: `Aún estás cansad@ de pescar. Vuelve en **${formatDuration(res.nextInMs)}**.`,
+                                title: t('COOLDOWN_TITLE'),
+                                text: t('COOLDOWN_TEXT', { time: formatDuration(res.nextInMs) }),
                             })
                         )
                     );
@@ -216,8 +217,8 @@ module.exports = {
                         asV2MessageOptions(
                             buildNoticeContainer({
                                 emoji: '⚠️',
-                                title: 'Fish',
-                                text: res.message || 'No pude procesar tu pesca ahora mismo.',
+                                title: t('ERROR_TITLE'),
+                                text: res.message || t('ERROR_GENERIC'),
                             })
                         )
                     );
@@ -245,9 +246,9 @@ module.exports = {
                             emoji: autoZone.emoji || '🎣',
                             title: `Fish • ${autoZone.name}`,
                             text: [
-                                `${actionLine} y ganaste **${res.amount}** 🪙. ¡Buen lance! 🎣`,
+                                t('SUCCESS_TEXT', { action: actionLine, amount: res.amount }),
                                 balanceLine,
-                                materialLines ? `\nMateriales:\n${materialLines}` : '',
+                                materialLines ? `\n${t('MATERIALS_HEADER')}\n${materialLines}` : '',
                             ].filter(Boolean).join('\n'),
                         })
                     )
@@ -255,7 +256,7 @@ module.exports = {
             }
 
             // Default: minijuego
-            return message.reply(buildFishPlayMessageOptions({ userId, zoneId: autoZone.id }));
+            return message.reply(buildFishPlayMessageOptions({ userId, zoneId: autoZone.id, lang }));
 
         }
 
@@ -270,11 +271,8 @@ module.exports = {
                 asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: '🎣',
-                        title: 'Fish',
-                        text: [
-                            `No encuentro la zona **${sub}**.`,
-                            `Usa \`${prefix}fish zones\` para ver el panel con botones.`,
-                        ].join('\n'),
+                        title: t('ZONE_NOT_FOUND_TITLE'),
+                        text: t('ZONE_NOT_FOUND_TEXT', { zone: sub, prefix }),
                     })
                 )
             );
@@ -287,19 +285,15 @@ module.exports = {
                 asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: '⛔',
-                        title: 'Fish • Requisito',
-                        text: [
-                            `Para pescar en **${zone.name}** necesitas: **${requiredName}**`,
-                            '',
-                            `Tip: revisa tus zonas con \`${prefix}fish zones\`.`,
-                        ].join('\n'),
+                        title: t('REQUIREMENT_TITLE'),
+                        text: t('ZONE_REQUIREMENT_TEXT', { zone: zone.name, item: requiredName, prefix }),
                     })
                 )
             );
         }
 
         // Para zonas explícitas, también usamos minijuego por defecto.
-        return message.reply(buildFishPlayMessageOptions({ userId, zoneId: zone.id }));
+        return message.reply(buildFishPlayMessageOptions({ userId, zoneId: zone.id, lang }));
 
         const cooldownMs = Math.max(1, safeInt(this.cooldown, 300)) * 1000;
         const minAmount = Math.max(1, safeInt(zone?.reward?.min, 25));
