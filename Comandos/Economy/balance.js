@@ -7,7 +7,7 @@ function economyCategory(lang) {
 
 module.exports = {
     name: 'balance',
-    alias: [],
+    alias: ['balance'],
     Category: economyCategory,
     usage: 'balance [@usuario]',
     description: 'Muestra tu balance (coins/banco/sakuras).',

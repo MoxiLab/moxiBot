@@ -107,7 +107,7 @@ function evalBet(bet, rolled) {
 
 module.exports = {
     name: 'roulette',
-    alias: ['ruleta', 'rlt', 'rul', 'roul', 'rleta'],
+    alias: ['ruleta', 'rlt', 'rul', 'roul', 'rleta', 'rt'],
     Category: economyCategory,
     usage: 'roulette <cantidad|all> <rojo|negro|par|impar|alto|bajo|docena1|docena2|docena3|0-36>',
     description: 'Juega a la ruleta y apuesta coins.',

@@ -7,7 +7,7 @@ function economyCategory(lang) {
 
 module.exports = {
     name: 'daily',
-    alias: [],
+    alias: ['daily'],
     Category: economyCategory,
     usage: 'daily',
     description: 'Comando en desarrollo.',

@@ -7,7 +7,7 @@ function economyCategory(lang) {
 
 module.exports = {
     name: 'slots',
-    alias: [],
+    alias: ['slots'],
     Category: economyCategory,
     usage: 'slots',
     description: 'Comando en desarrollo.',

@@ -7,7 +7,7 @@ function economyCategory(lang) {
 
 module.exports = {
     name: 'chop',
-    alias: [],
+    alias: ['chop'],
     Category: economyCategory,
     usage: 'chop',
     description: 'Comando en desarrollo.',

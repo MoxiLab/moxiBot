@@ -7,7 +7,7 @@ function economyCategory(lang) {
 
 module.exports = {
     name: 'claimcode',
-    alias: [],
+    alias: ['claimcode'],
     Category: economyCategory,
     usage: 'claimcode',
     description: 'Comando en desarrollo.',

@@ -20,7 +20,7 @@ function economyCategory(lang) {
 
 module.exports = {
     name: 'pet',
-    alias: [],
+    alias: ['pet'],
     Category: economyCategory,
     usage: 'pet',
     description: 'Gestiona tu mascota y la incubación de huevos.',

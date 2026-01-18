@@ -7,7 +7,7 @@ function economyCategory(lang) {
 
 module.exports = {
     name: 'leaderboard',
-    alias: [],
+    alias: ['leaderboard'],
     Category: economyCategory,
     usage: 'leaderboard',
     description: 'Comando en desarrollo.',

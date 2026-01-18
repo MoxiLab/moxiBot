@@ -7,7 +7,7 @@ function economyCategory(lang) {
 
 module.exports = {
     name: 'share',
-    alias: [],
+    alias: ['share'],
     Category: economyCategory,
     usage: 'share',
     description: 'Comando en desarrollo.',
