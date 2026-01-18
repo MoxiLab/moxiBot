@@ -16,6 +16,8 @@ module.exports = {
             return message.reply('No tienes permisos de administrador.');
         }
         const guild = message.guild;
+        const guildId = message.guildId || guild?.id;
+        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
         const tipo = (args[0] || '').toLowerCase();
         if (!tipo) return message.reply(`Uso: ${module.exports.usage}`);
 
@@ -83,7 +85,7 @@ module.exports = {
         if (tipo === 'canales') {
             const accion = (args[1] || '').toLowerCase();
             if (accion !== 'ver') return message.reply(`Uso: ${module.exports.usage}`);
-            const payload = buildPermsBrowserMessage({ guild, userId: message.author.id, page: 0 });
+            const payload = buildPermsBrowserMessage({ guild, userId: message.author.id, lang, page: 0 });
             await message.reply(payload);
             return;
         }
@@ -93,7 +95,7 @@ module.exports = {
             if (['todos', 'todo', 'all'].includes((args[1] || '').toLowerCase())) {
                 const accion = (args[2] || '').toLowerCase();
                 if (accion !== 'ver') return message.reply(`Uso: ${module.exports.usage}`);
-                const payload = buildPermsBrowserMessage({ guild, userId: message.author.id, page: 0 });
+                const payload = buildPermsBrowserMessage({ guild, userId: message.author.id, lang, page: 0 });
                 await message.reply(payload);
                 return;
             }

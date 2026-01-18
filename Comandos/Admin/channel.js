@@ -2,6 +2,7 @@
 const { PermissionsBitField, ContainerBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle, MessageFlags, TextInputBuilder, ActionRowBuilder, ModalBuilder } = require('discord.js');
 const { Bot } = require('../../Config');
 const { EMOJIS } = require('../../Util/emojis');
+const moxi = require('../../i18n');
 
 module.exports = {
     name: 'channel',
@@ -27,7 +28,8 @@ module.exports = {
         }
 
         // COMPONENTS V2: Menú interactivo
-        const lang = message.guild?.preferredLocale || 'es-ES';
+        const guildId = message.guildId || message.guild?.id;
+        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
         const container = new ContainerBuilder().setAccentColor(Bot.AccentColor);
         container.addTextDisplayComponents(c => c.setContent(`# ${EMOJIS.folder || '📁'} Gestión de canales`));
         container.addSeparatorComponents(s => s.setDivider(true));
@@ -36,22 +38,22 @@ module.exports = {
         // Select de acción
         const actionSelect = new StringSelectMenuBuilder()
             .setCustomId('channel_action')
-            .setPlaceholder('Selecciona una acción')
+            .setPlaceholder(moxi.translate('SELECT_ACTION', lang) || 'Selecciona una acción')
             .addOptions([
-                { label: 'Crear', value: 'crear', emoji: EMOJIS.greenCircle || '🟢' },
-                { label: 'Borrar', value: 'borrar', emoji: EMOJIS.redCircle || '🔴' },
-                { label: 'Renombrar', value: 'renombrar', emoji: EMOJIS.orangeCircle || '🟠' },
-                { label: 'Mover', value: 'mover', emoji: EMOJIS.folder || '📁' },
+                { label: moxi.translate('CREATE', lang) || 'Crear', value: 'crear', emoji: EMOJIS.greenCircle || '🟢' },
+                { label: moxi.translate('DELETE', lang) || 'Borrar', value: 'borrar', emoji: EMOJIS.redCircle || '🔴' },
+                { label: moxi.translate('RENAME', lang) || 'Renombrar', value: 'renombrar', emoji: EMOJIS.orangeCircle || '🟠' },
+                { label: moxi.translate('MOVE', lang) || 'Mover', value: 'mover', emoji: EMOJIS.folder || '📁' },
             ]);
 
         // Select de tipo
         const typeSelect = new StringSelectMenuBuilder()
             .setCustomId('channel_type')
-            .setPlaceholder('Selecciona el tipo de canal')
+            .setPlaceholder(moxi.translate('SELECT_CHANNEL_TYPE', lang) || 'Selecciona el tipo de canal')
             .addOptions([
-                { label: 'Texto', value: 'texto', emoji: EMOJIS.book || '📖' },
-                { label: 'Voz', value: 'voz', emoji: EMOJIS.musicNotes || '🎶' },
-                { label: 'Categoría', value: 'categoria', emoji: EMOJIS.folder || '📁' },
+                { label: moxi.translate('TEXT', lang) || 'Texto', value: 'texto', emoji: EMOJIS.book || '📖' },
+                { label: moxi.translate('VOICE', lang) || 'Voz', value: 'voz', emoji: EMOJIS.musicNotes || '🎶' },
+                { label: moxi.translate('CATEGORY', lang) || 'Categoría', value: 'categoria', emoji: EMOJIS.folder || '📁' },
             ]);
 
         container.addActionRowComponents(row => row.addComponents(actionSelect));
@@ -60,12 +62,12 @@ module.exports = {
         // Botón de continuar
         const continueButton = new ButtonBuilder()
             .setCustomId('channel_continue')
-            .setLabel('Continuar')
+            .setLabel(moxi.translate('CONTINUE', lang) || 'Continuar')
             .setStyle(ButtonStyle.Primary)
             .setEmoji(EMOJIS.arrowRight || '➡️');
         const cancelButton = new ButtonBuilder()
             .setCustomId('channel_cancel')
-            .setLabel('Cancelar')
+            .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
             .setStyle(ButtonStyle.Secondary)
             .setEmoji(EMOJIS.cross || '❌');
 

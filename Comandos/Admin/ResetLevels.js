@@ -2,6 +2,7 @@ const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ContainerB
 const LevelSystem = require('../../Global/Helpers/LevelSystem');
 const { Bot } = require('../../Config');
 const debugHelper = require('../../Util/debugHelper');
+const moxi = require('../../i18n');
 
 module.exports = {
     name: 'resetlevels',
@@ -40,6 +41,7 @@ module.exports = {
             });
             const target = message.mentions.users.first() || (args[0] ? await Moxi.users.fetch(args[0]).catch(() => null) : null);
             const guildID = message.guildId;
+            const lang = await moxi.guildLang(guildID, process.env.DEFAULT_LANG || 'es-ES');
 
             if (target) {
                 const user = await LevelSystem.resetUser(guildID, target.id);
@@ -77,11 +79,11 @@ module.exports = {
                     );
                 const confirmBtn = new ButtonBuilder()
                     .setCustomId('confirm_server_reset')
-                    .setLabel('Confirmar')
+                    .setLabel(moxi.translate('CONFIRM', lang) || 'Confirmar')
                     .setStyle(ButtonStyle.Danger);
                 const cancelBtn = new ButtonBuilder()
                     .setCustomId('cancel_server_reset')
-                    .setLabel('Cancelar')
+                    .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
                     .setStyle(ButtonStyle.Secondary);
                 const row = new ActionRowBuilder().addComponents(confirmBtn, cancelBtn);
                 container.addActionRowComponents(row);
@@ -187,8 +189,8 @@ module.exports = {
                     .addTextDisplayComponents(c => c.setContent('¿Estás seguro de que quieres resetear todos los niveles del servidor?'));
 
                 const row = new ActionRowBuilder().addComponents(
-                    new ButtonBuilder().setCustomId('confirm_server_reset').setLabel('Confirmar').setStyle(ButtonStyle.Danger),
-                    new ButtonBuilder().setCustomId('cancel_server_reset').setLabel('Cancelar').setStyle(ButtonStyle.Secondary)
+                    new ButtonBuilder().setCustomId('confirm_server_reset').setLabel(moxi.translate('CONFIRM', lang) || 'Confirmar').setStyle(ButtonStyle.Danger),
+                    new ButtonBuilder().setCustomId('cancel_server_reset').setLabel(moxi.translate('CANCEL', lang) || 'Cancelar').setStyle(ButtonStyle.Secondary)
                 );
                 container.addActionRowComponents(row);
 
