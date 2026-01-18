@@ -12,7 +12,7 @@ const { crimeActivityTitle, crimeOptionLabel, crimeDoorLabel, crimeRiskLabel, cr
 const CRIME_COOLDOWN_MS = 5 * 60 * 1000;
 
 async function takeBalance({ userId, amount } = {}) {
-    const { UserEconomy } = require('../../../../Models/EconomySchema');
+    const { Economy } = require('../../../../Models/EconomySchema');
 
     const eco = await getOrCreateEconomy(userId);
     const current = Number.isFinite(eco?.balance) ? eco.balance : 0;
@@ -22,7 +22,7 @@ async function takeBalance({ userId, amount } = {}) {
         return { ok: true, amount: 0, balance: current };
     }
 
-    const updated = await UserEconomy.findOneAndUpdate(
+    const updated = await Economy.findOneAndUpdate(
         { userId },
         { $inc: { balance: -loss } },
         { new: true }

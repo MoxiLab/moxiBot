@@ -43,8 +43,8 @@ module.exports = async function craftSelectMenu(interaction, Moxi, logger) {
     }
 
     await ensureMongoConnection();
-    const { UserEconomy } = require('../../../../Models/EconomySchema');
-    const eco = await UserEconomy.findOne({ userId: interaction.user.id });
+    const { Economy } = require('../../../../Models/EconomySchema');
+    const eco = await Economy.findOne({ userId: interaction.user.id });
 
     const recipe = resolveRecipe(value);
     if (!recipe) {
