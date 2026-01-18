@@ -1,0 +1,13 @@
+{
+    "TITLE": "Balance de {{user}}",
+    "COINS": "Coins",
+    "BANK": "Banco",
+    "SAKURAS": "Sakuras",
+    "GLOBAL_RANK": "Rango Global",
+    "BTN_DEPOSIT": "Depositar",
+    "BTN_WITHDRAW": "Retirar",
+    "ONLY_AUTHOR": "Solo el autor puede usar estos botones.",
+    "ONLY_OWN_BALANCE": "Solo puedes gestionar tu propio balance.",
+    "NO_COINS_TO_DEPOSIT": "No tienes coins para depositar.",
+    "NO_COINS_TO_WITHDRAW": "No tienes coins en el banco para retirar."
+}

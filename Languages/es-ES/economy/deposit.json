@@ -1,0 +1,15 @@
+{
+    "INVALID_USAGE_TITLE": "Uso incorrecto",
+    "INVALID_USAGE_TEXT": "Usa: `{{prefix}}deposit 100` o `{{prefix}}deposit all`. ",
+    "BANK_TITLE": "Banco",
+    "NO_COINS": "No tienes coins para depositar.",
+    "INVALID_AMOUNT_TITLE": "Cantidad inválida",
+    "INVALID_AMOUNT_TEXT": "La cantidad debe ser mayor que 0, o usa `all`.",
+    "INSUFFICIENT_FUNDS_TITLE": "Fondos insuficientes",
+    "INSUFFICIENT_FUNDS_TEXT": "Intentaste depositar **{{wanted}}** 🪙 pero solo tienes **{{balance}}** 🪙.",
+    "DEPOSIT_SUCCESS_TITLE": "Depósito realizado",
+    "DEPOSIT_SUCCESS_TEXT": "Depositaste **{{wanted}}** 🪙.\nBalance: **{{balance}}** 🪙\nBanco: **{{bank}}** 🏦",
+    "ERROR_TITLE": "Error",
+    "ERROR_MONGO": "MongoDB no está configurado, el banco no está disponible.",
+    "ERROR_GENERIC": "No pude hacer el depósito ahora mismo. Inténtalo de nuevo."
+}

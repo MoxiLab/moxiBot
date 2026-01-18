@@ -1,0 +1,16 @@
+{
+    "TITLE_PUBLIC": "🎒 Tu mochila",
+    "TITLE_PRIVATE": "🎒 Tu mochila (privada)",
+    "CATEGORY_OTHER": "Otros",
+    "HELP_USE": "Puedes consumir un ítem con: {{use}}",
+    "HELP_BUFFS": "Puedes mirar tus potenciadores activos con: {{buffs}}",
+    "EMBED_EMPTY": "_No tienes ítems en esta categoría._",
+    "FOOTER_PAGE": "Página {{page}} de {{total}}",
+    "SELECT_PLACEHOLDER": "Elige una categoría",
+    "SELECT_DESC": "{{types}} tipos • {{total}} total",
+    "SELECT_EMPTY_OPTION": "No tienes ítems",
+    "ONLY_AUTHOR_BUTTONS": "Solo quien abrió la mochila puede usar estos botones.",
+    "ONLY_AUTHOR_MENU": "Solo quien abrió la mochila puede usar este menú.",
+    "INFO_TEXT": "Usa el selector para cambiar de categoría. Navega páginas con ◀ ▶. Cierra con ❌.",
+    "CLOSED_TEXT": "Mochila cerrada."
+}

@@ -1,0 +1,51 @@
+{
+    "REQUIREMENT_TITLE": "صيد السمك • المتطلبات",
+    "REQUIREMENT_TEXT": "لبدء الصيد تحتاج إلى: **{{item}}**\nبعد الحصول عليه، استخدم `{{prefix}}fish` ويمكنك اللعب بالأزرار.\nإذا أردت الوضع الفوري: `{{prefix}}fish auto`\n\nالمناطق: `{{prefix}}fish zones`",
+    "COOLDOWN_TITLE": "صيد السمك • فترة انتظار",
+    "COOLDOWN_TEXT": "ما زلت متعبًا من الصيد. عد بعد **{{time}}**.",
+    "ERROR_TITLE": "صيد السمك",
+    "ERROR_GENERIC": "لم أستطع معالجة الصيد الآن.",
+    "DEFAULT_ACTION": "قمت بالصيد",
+    "FAIL_TEXT": "{{action}}... لكن لم يعض شيء.",
+    "SUCCESS_TEXT": "{{action}} وربحت **{{amount}}** 🪙. رمية موفقة! 🎣",
+    "BALANCE_LINE": "الرصيد: **{{balance}}** 🪙",
+    "MATERIALS_HEADER": "مواد:",
+    "PLAY_PANEL_HEADER": "صيد السمك",
+    "ZONE_FALLBACK": "منطقة",
+    "PLAY_SCENE_METHODS_TITLE": "صيد السمك",
+    "PLAY_SCENE_METHODS_PROMPT": "كيف ستحاول؟",
+    "PLAY_SCENE_DOORS_TITLE": "صناديق العُدد",
+    "PLAY_SCENE_DOORS_PROMPT": "ثلاثة صناديق. أحدها يحتوي على الطُعم المثالي. اختر بسرعة.",
+    "PLAY_SCENE_WIRES_TITLE": "سنارات",
+    "PLAY_SCENE_WIRES_PROMPT": "هناك أربع سنارات. إحداها «المحظوظة». أيّها تختار؟",
+    "PLAY_DOOR_A": "صندوق A",
+    "PLAY_DOOR_B": "صندوق B",
+    "PLAY_DOOR_C": "صندوق C",
+    "PLAY_WIRE_RED": "أحمر",
+    "PLAY_WIRE_BLUE": "أزرق",
+    "PLAY_WIRE_YELLOW": "أصفر",
+    "PLAY_WIRE_GREEN": "أخضر",
+    "PLAY_ACTION_BOXES": "تفقدت الصناديق",
+    "PLAY_ACTION_HOOK": "بدّلت السنارة",
+    "INVALID_ZONE": "منطقة غير صالحة.",
+    "PLAY_REQUIREMENT_MESSAGE": "للصيد في **{{zone}}** تحتاج إلى: **{{item}}**",
+    "HELP_TITLE": "صيد السمك",
+    "HELP_TEXT": "اضغط على منطقة للصيد.\nتحتاج إلى العنصر المطلوب في مخزونك.\nالأمر يعمل أيضًا كتابيًا: **.fish <zone>**",
+    "PANEL_ZONE_NOT_FOUND_TEXT": "هذه المنطقة غير موجودة في هذه الصفحة.",
+    "SLASH_VIEW_ZONES": "عرض المناطق: {{zones}}",
+    "SLASH_NEED_ITEM": "لبدء الصيد تحتاج إلى: **{{item}}**",
+    "SLASH_NEED_ITEM_HERE": "للصيد هنا تحتاج إلى: **{{item}}**",
+    "ACTIVITY_LANZAR_CANA_NAME": "إلقاء السنارة",
+    "ACTIVITY_CAMBIAR_CEBO_NAME": "تغيير الطُعم",
+    "ACTIVITY_PESCA_PROFUNDA_NAME": "صيد أعماق",
+    "ACTIVITY_ARRASTRAR_RED_NAME": "سحب الشبكة",
+    "ACTIVITY_PACIENCIA_NAME": "الانتظار بصبر",
+    "ZONE_NOT_FOUND_TITLE": "صيد السمك",
+    "ZONE_NOT_FOUND_TEXT": "لا أستطيع العثور على منطقة **{{zone}}**.\nاستخدم `{{prefix}}fish zones` لعرض لوحة الأزرار.",
+    "ZONE_REQUIREMENT_TEXT": "للصيد في **{{zone}}** تحتاج إلى: **{{item}}**\n\nنصيحة: راجع مناطقك عبر `{{prefix}}fish zones`.",
+    "ACTIVITY_LANZAR_CANA_PHRASE": "ألقيت السنارة",
+    "ACTIVITY_CAMBIAR_CEBO_PHRASE": "غيّرت الطُعم",
+    "ACTIVITY_PESCA_PROFUNDA_PHRASE": "قمت بصيد الأعماق",
+    "ACTIVITY_ARRASTRAR_RED_PHRASE": "سحبت الشبكة",
+    "ACTIVITY_PACIENCIA_PHRASE": "انتظرت بصبر"
+}
