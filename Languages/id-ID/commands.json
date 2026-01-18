@@ -1,4 +1,6 @@
 {
+    "LOG_COMMAND_TITLE": "📥 Perintah dijalankan",
+    "LOG_COMMAND_DESC": "**Perintah:** `{{command}}`\n**Pengguna:** {{user}}\n**Server:** {{guild}}",
     "CATEGORY_MODERATION": "Moderasi",
     "CATEGORY_ADMIN": "Admin",
     "CATEGORY_HERRAMIENTAS": "Alat",

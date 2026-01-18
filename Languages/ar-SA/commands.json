@@ -1,4 +1,6 @@
 {
+    "LOG_COMMAND_TITLE": "📥 تم تنفيذ أمر",
+    "LOG_COMMAND_DESC": "**الأمر:** `{{command}}`\n**المستخدم:** {{user}}\n**الخادم:** {{guild}}",
     "CATEGORY_MODERATION": "الإشراف",
     "CATEGORY_ADMIN": "الإدارة",
     "CATEGORY_HERRAMIENTAS": "الأدوات",
