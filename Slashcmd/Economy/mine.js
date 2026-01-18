@@ -72,7 +72,8 @@ module.exports = {
 
         if (!zone) {
             const required = getItemById('herramientas/pico-prisma', { lang });
-            const requiredName = required?.name || 'herramientas/pico-prisma';
+            const requiredFallback = 'herramientas/pico-prisma';
+            const requiredName = required?.name || requiredFallback.split('/').pop() || requiredFallback;
             return interaction.reply({
                 ...asV2MessageOptions(
                     buildNoticeContainer({
@@ -87,7 +88,7 @@ module.exports = {
 
         if (!hasInventoryItem(eco, zone.requiredItemId)) {
             const required = getItemById(zone.requiredItemId, { lang });
-            const requiredName = required?.name || zone.requiredItemId;
+            const requiredName = required?.name || String(zone.requiredItemId).split('/').pop() || zone.requiredItemId;
             return interaction.reply({
                 ...asV2MessageOptions(
                     buildNoticeContainer({

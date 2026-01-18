@@ -81,7 +81,8 @@ module.exports = {
 
         if (!zone) {
             const required = getItemById('herramientas/cana-de-pesca-moxi', { lang });
-            const requiredName = required?.name || 'herramientas/cana-de-pesca-moxi';
+            const requiredFallback = 'herramientas/cana-de-pesca-moxi';
+            const requiredName = required?.name || requiredFallback.split('/').pop() || requiredFallback;
             return interaction.reply({
                 ...asV2MessageOptions(
                     buildNoticeContainer({
@@ -96,7 +97,7 @@ module.exports = {
 
         if (!hasInventoryItem(eco, zone.requiredItemId)) {
             const required = getItemById(zone.requiredItemId, { lang });
-            const requiredName = required?.name || zone.requiredItemId;
+            const requiredName = required?.name || String(zone.requiredItemId).split('/').pop() || zone.requiredItemId;
             return interaction.reply({
                 ...asV2MessageOptions(
                     buildNoticeContainer({
