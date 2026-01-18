@@ -174,11 +174,11 @@ async function resolveMinePlay({ userId, zoneId, mode, choiceId, seedOrMult, lan
     const eco = await getOrCreateEconomy(userId);
     if (!hasInventoryItem(eco, zone.requiredItemId)) {
         const required = getItemById(zone.requiredItemId, { lang });
-        const requiredName = required?.name || zone.requiredItemId;
+        const requiredName = required?.name || String(zone.requiredItemId).split('/').pop() || zone.requiredItemId;
         return {
             ok: false,
             reason: 'requirement',
-            message: `Para minar en **${zone.name}** necesitas: **${requiredName}**\nID: \`${zone.requiredItemId}\``,
+            message: `Para minar en **${zone.name}** necesitas: **${requiredName}**`,
         };
     }
 
