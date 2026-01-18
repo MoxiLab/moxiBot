@@ -4,6 +4,7 @@ const { ContainerBuilder, MessageFlags, ButtonBuilder, ButtonStyle, ActionRowBui
 const debugHelper = require('../../Util/debugHelper');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
+const moxi = require('../../i18n');
 
 module.exports = {
     name: 'amls',
@@ -25,6 +26,7 @@ module.exports = {
     },
     execute: async (Moxi, message) => {
         const guildId = message.guild.id;
+        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
         debugHelper.log('autorulelist', 'execute start', { guildId });
         const url = `https://discord.com/api/v10/guilds/${guildId}/auto-moderation/rules`;
         try {
@@ -59,8 +61,8 @@ module.exports = {
             };
             const makeContainer = (p) => new ContainerBuilder()
                 .addTextDisplayComponents(c => c.setContent(`# 📋 Reglas de auto-moderación (${p + 1}/${totalPages}):\n${getPage(p)}`));
-            const prevBtn = new ButtonBuilder().setCustomId('prev').setLabel('⏪ Anterior').setStyle(ButtonStyle.Secondary).setDisabled(page === 0);
-            const nextBtn = new ButtonBuilder().setCustomId('next').setLabel('Siguiente ⏩').setStyle(ButtonStyle.Secondary).setDisabled(page === totalPages - 1);
+            const prevBtn = new ButtonBuilder().setCustomId('prev').setLabel(`⏪ ${moxi.translate('PREVIOUS', lang) || 'Anterior'}`).setStyle(ButtonStyle.Secondary).setDisabled(page === 0);
+            const nextBtn = new ButtonBuilder().setCustomId('next').setLabel(`${moxi.translate('NEXT', lang) || 'Siguiente'} ⏩`).setStyle(ButtonStyle.Secondary).setDisabled(page === totalPages - 1);
             const row = new ActionRowBuilder().addComponents(prevBtn, nextBtn);
             let msg = await message.reply({ components: [makeContainer(page), row], flags: MessageFlags.IsComponentsV2, reply: true, allowedMentions: { repliedUser: false } });
             debugHelper.log('autorulelist', 'panel sent', { guildId, totalPages, page });
@@ -73,15 +75,15 @@ module.exports = {
                 }
                 if (i.customId === 'prev' && page > 0) page--;
                 if (i.customId === 'next' && page < totalPages - 1) page++;
-                const prevBtn = new ButtonBuilder().setCustomId('prev').setLabel('⏪ Anterior').setStyle(ButtonStyle.Secondary).setDisabled(page === 0);
-                const nextBtn = new ButtonBuilder().setCustomId('next').setLabel('Siguiente ⏩').setStyle(ButtonStyle.Secondary).setDisabled(page === totalPages - 1);
+                const prevBtn = new ButtonBuilder().setCustomId('prev').setLabel(`⏪ ${moxi.translate('PREVIOUS', lang) || 'Anterior'}`).setStyle(ButtonStyle.Secondary).setDisabled(page === 0);
+                const nextBtn = new ButtonBuilder().setCustomId('next').setLabel(`${moxi.translate('NEXT', lang) || 'Siguiente'} ⏩`).setStyle(ButtonStyle.Secondary).setDisabled(page === totalPages - 1);
                 const row = new ActionRowBuilder().addComponents(prevBtn, nextBtn);
                 await i.update({ components: [makeContainer(page), row], flags: MessageFlags.IsComponentsV2 });
                 debugHelper.log('autorulelist', 'collector nav', { guildId, action: i.customId, page });
             });
             collector.on('end', async () => {
-                const prevBtn = new ButtonBuilder().setCustomId('prev').setLabel('⏪ Anterior').setStyle(ButtonStyle.Secondary).setDisabled(true);
-                const nextBtn = new ButtonBuilder().setCustomId('next').setLabel('Siguiente ⏩').setStyle(ButtonStyle.Secondary).setDisabled(true);
+                const prevBtn = new ButtonBuilder().setCustomId('prev').setLabel(`⏪ ${moxi.translate('PREVIOUS', lang) || 'Anterior'}`).setStyle(ButtonStyle.Secondary).setDisabled(true);
+                const nextBtn = new ButtonBuilder().setCustomId('next').setLabel(`${moxi.translate('NEXT', lang) || 'Siguiente'} ⏩`).setStyle(ButtonStyle.Secondary).setDisabled(true);
                 const row = new ActionRowBuilder().addComponents(prevBtn, nextBtn);
                 await msg.edit({ components: [makeContainer(page), row], flags: MessageFlags.IsComponentsV2 });
                 debugHelper.log('autorulelist', 'collector ended', { guildId, page });
