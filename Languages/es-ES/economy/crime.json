@@ -1,4 +1,4 @@
-﻿{
+{
     "ui": {
         "panelTitle": "Crimen",
         "selectActivity": "Elige una actividad",
@@ -26,5 +26,398 @@
         "yellow": "Cable amarillo",
         "green": "Cable verde"
     },
-    "activities": {}
+    "activities": {
+        "pickpocket": {
+            "title": "Pickpocket",
+            "prompt": "You spot someone distracted with their bag open. How do you try?"
+        },
+        "market-swipe": {
+            "title": "Crowded market",
+            "prompt": "Between stalls and people, a wallet peeks out. What do you do?"
+        },
+        "metro-bump": {
+            "title": "Subway shove",
+            "prompt": "A sudden brake, bodies collide… and an easy pocket appears."
+        },
+        "festival-confetti": {
+            "title": "Festival",
+            "prompt": "Music, confetti and distractions. What's your play?"
+        },
+        "hotel-lobby": {
+            "title": "Hotel lobby",
+            "prompt": "People let their guard down. How do you try?"
+        },
+        "arcade-tokens": {
+            "title": "Arcade",
+            "prompt": "Someone is counting tokens. No one is watching. What do you do?"
+        },
+        "library-silence": {
+            "title": "Library",
+            "prompt": "Total silence. An open bag. What's your method?"
+        },
+        "park-bench": {
+            "title": "Park bench",
+            "prompt": "A backpack sits aside. How do you approach?"
+        },
+        "street-magician": {
+            "title": "Street magician",
+            "prompt": "Everyone watches the trick. You watch the pockets."
+        },
+        "coffee-queue": {
+            "title": "Coffee line",
+            "prompt": "The line moves slowly. Attention is low."
+        },
+        "cinema-dark": {
+            "title": "Dark cinema",
+            "prompt": "Lights out. Do you take the moment?"
+        },
+        "museum-exhibit": {
+            "title": "Museum",
+            "prompt": "People are hypnotized by a display case."
+        },
+        "food-truck": {
+            "title": "Food truck",
+            "prompt": "Wallets out and people rushing to pay."
+        },
+        "crosswalk-rush": {
+            "title": "Busy crosswalk",
+            "prompt": "Green light. Controlled chaos."
+        },
+        "gym-lockers": {
+            "title": "Gym lockers",
+            "prompt": "Loose locks and distracted people."
+        },
+        "pier-crowd": {
+            "title": "Pier",
+            "prompt": "Tourists with backpacks and maps open."
+        },
+        "station-platform": {
+            "title": "Platform",
+            "prompt": "The train arrives. Nerves. Opportunity."
+        },
+        "night-market": {
+            "title": "Night market",
+            "prompt": "Warm lights. Fast hands."
+        },
+        "street-performer": {
+            "title": "Street performer",
+            "prompt": "The sound covers footsteps and whispers."
+        },
+        "salon-wait": {
+            "title": "Waiting room",
+            "prompt": "Phones out. Wallets out. Hmm."
+        },
+        "bank-atm": {
+            "title": "ATM",
+            "prompt": "Someone withdraws cash and pockets the receipt."
+        },
+        "taxi-backseat": {
+            "title": "Taxi",
+            "prompt": "A wallet slips onto the back seat."
+        },
+        "train-sleeper": {
+            "title": "Sleeper car",
+            "prompt": "Heads down, pockets unguarded."
+        },
+        "snow-coats": {
+            "title": "Winter coats",
+            "prompt": "Deep pockets… and tempting."
+        },
+        "rain-umbrella": {
+            "title": "Rainy day",
+            "prompt": "Umbrellas bump. No one sees anything."
+        },
+        "beach-towels": {
+            "title": "Beach",
+            "prompt": "Towels, bags, distractions. What do you do?"
+        },
+        "concert-mosh": {
+            "title": "Concert",
+            "prompt": "The crowd moves. So do you."
+        },
+        "market-auction": {
+            "title": "Auction",
+            "prompt": "High bids. Split attention."
+        },
+        "fashion-store": {
+            "title": "Fashion store",
+            "prompt": "Fitting rooms busy. Staff distracted."
+        },
+        "electronics-demo": {
+            "title": "Gadget demo",
+            "prompt": "Bright screens. Bright pockets."
+        },
+        "pet-parade": {
+            "title": "Pet parade",
+            "prompt": "People watch puppies. You… well."
+        },
+        "street-food": {
+            "title": "Street food",
+            "prompt": "Hands full, pockets unguarded."
+        },
+        "bus-crowd": {
+            "title": "Packed bus",
+            "prompt": "Quick stops. Quick moves."
+        },
+        "book-fair": {
+            "title": "Book fair",
+            "prompt": "Signings, lines and perfect distractions."
+        },
+        "flower-stall": {
+            "title": "Flower stall",
+            "prompt": "A romantic gift. A visible wallet."
+        },
+        "campus-hall": {
+            "title": "Campus hallway",
+            "prompt": "Open backpacks and rushing to class."
+        },
+        "airport-gate": {
+            "title": "Boarding gate",
+            "prompt": "Docs, tickets, chaos. Easy."
+        },
+        "theme-park": {
+            "title": "Theme park",
+            "prompt": "Screams, laughter and dangling bags."
+        },
+        "harbor-ferry": {
+            "title": "Ferry",
+            "prompt": "Wind, seasickness… and a slip-up."
+        },
+        "stadium-queue": {
+            "title": "Stadium queue",
+            "prompt": "Everyone watches the entrance. Pockets, not so much."
+        },
+        "vault": {
+            "title": "Three doors",
+            "prompt": "You're in. There are three doors. One has quick loot; the others, trouble."
+        },
+        "storage-doors": {
+            "title": "Storage",
+            "prompt": "Three metal doors. One hides an easy haul. Choose."
+        },
+        "office-doors": {
+            "title": "Offices",
+            "prompt": "Empty hallway. Three unmarked doors. Which one pays?"
+        },
+        "basement-doors": {
+            "title": "Basement",
+            "prompt": "Damp and silent. Three doors: noise, calm, luck."
+        },
+        "backstage-doors": {
+            "title": "Backstage",
+            "prompt": "Behind the stage are three access points. One leads to loot."
+        },
+        "dock-doors": {
+            "title": "Docks",
+            "prompt": "Containers and three warehouse doors. Choose fast."
+        },
+        "subway-doors": {
+            "title": "Tunnel",
+            "prompt": "Three maintenance doors. One has supplies."
+        },
+        "library-doors": {
+            "title": "Archive",
+            "prompt": "Three doors to the restricted archive. One has envelopes."
+        },
+        "casino-doors": {
+            "title": "Casino",
+            "prompt": "Three doors behind VIP. One is the good one."
+        },
+        "hotel-doors": {
+            "title": "Private floor",
+            "prompt": "Three identical doors. One isn't fully latched."
+        },
+        "museum-doors": {
+            "title": "Restricted area",
+            "prompt": "Three doors with sketchy alarms. One fails."
+        },
+        "trainyard-doors": {
+            "title": "Depot",
+            "prompt": "Three rusty doors. One opens easily."
+        },
+        "lab-doors": {
+            "title": "Laboratory",
+            "prompt": "Three doors with panels. One is in test mode."
+        },
+        "sewers-doors": {
+            "title": "Sewers",
+            "prompt": "Three hatches. One leads to a hideout."
+        },
+        "attic-doors": {
+            "title": "Attic",
+            "prompt": "Three old doors. One creaks… but gives."
+        },
+        "theater-doors": {
+            "title": "Theater",
+            "prompt": "Three doors backstage. One has a cashbox."
+        },
+        "warehouse-doors": {
+            "title": "Industrial bay",
+            "prompt": "Three hand-numbered doors. One holds the good stuff."
+        },
+        "ship-doors": {
+            "title": "Ship hold",
+            "prompt": "Three doors to the hold. Choose before someone returns."
+        },
+        "castle-doors": {
+            "title": "Passage",
+            "prompt": "Three stone doors. One is a shortcut to treasure."
+        },
+        "clinic-doors": {
+            "title": "Clinic",
+            "prompt": "Three storage doors. One has a small safe."
+        },
+        "stadium-doors": {
+            "title": "Stadium",
+            "prompt": "Three locker room doors. One has lost-and-found."
+        },
+        "mall-doors": {
+            "title": "Mall",
+            "prompt": "Three service doors. One leads to the register."
+        },
+        "garage-doors": {
+            "title": "Garage",
+            "prompt": "Three metal doors. One has no lock."
+        },
+        "serverroom-doors": {
+            "title": "Server room",
+            "prompt": "Three doors. One has resellable gear."
+        },
+        "kitchen-doors": {
+            "title": "Kitchen",
+            "prompt": "Three doors to storage. One has pricey supplies."
+        },
+        "bakery-doors": {
+            "title": "Bakery",
+            "prompt": "Three back doors. One leads to the till."
+        },
+        "gallery-doors": {
+            "title": "Gallery",
+            "prompt": "Three doors to the back room. One is poorly shut."
+        },
+        "station-doors": {
+            "title": "Station",
+            "prompt": "Three cleaning doors. One hides a bag."
+        },
+        "factory-doors": {
+            "title": "Factory",
+            "prompt": "Three doors. One opens into a parts warehouse."
+        },
+        "dockyard-doors": {
+            "title": "Shipyard",
+            "prompt": "Three tool doors. One has new crates."
+        },
+        "getaway": {
+            "title": "Getaway",
+            "prompt": "Loot in hand. How much risk do you take to escape?"
+        },
+        "alley-chase": {
+            "title": "Alley",
+            "prompt": "Footsteps behind. Sirens far. How do you escape?"
+        },
+        "rooftops": {
+            "title": "Rooftops",
+            "prompt": "Up the fire stairs. How much do you risk?"
+        },
+        "crowd-vanish": {
+            "title": "Disappear in the crowd",
+            "prompt": "The crowd can save you… or expose you."
+        },
+        "river-cross": {
+            "title": "Cross the river",
+            "prompt": "There's a bridge, a boat and a jump. Risk?"
+        },
+        "night-scooter": {
+            "title": "Night scooter",
+            "prompt": "The night is ally. Or enemy. Decide."
+        },
+        "smoke-bomb": {
+            "title": "Smoke screen",
+            "prompt": "You can vanish… if it works."
+        },
+        "subway-hop": {
+            "title": "Subway hop",
+            "prompt": "The train arrives. Do you rush in or play it calm?"
+        },
+        "taxi-dash": {
+            "title": "Fast taxi",
+            "prompt": "A free cab. Pay and go, or bolt?"
+        },
+        "crowbar-route": {
+            "title": "Emergency route",
+            "prompt": "Locked doors. You could force one."
+        },
+        "rain-cover": {
+            "title": "Rain cover",
+            "prompt": "Rain hides tracks… and vision."
+        },
+        "market-escape": {
+            "title": "Market escape",
+            "prompt": "Tight stalls. One mistake is expensive."
+        },
+        "stairs-sprint": {
+            "title": "Stairs",
+            "prompt": "Up or down. Every second counts."
+        },
+        "dock-fog": {
+            "title": "Dock fog",
+            "prompt": "Fog hides… but confuses too."
+        },
+        "warehouse-run": {
+            "title": "Between warehouses",
+            "prompt": "Indoor shortcuts. Risk of guards."
+        },
+        "festival-hide": {
+            "title": "Hide in the festival",
+            "prompt": "Costumes and masks. How exposed are you?"
+        },
+        "parking-garage": {
+            "title": "Parking garage",
+            "prompt": "Ramps, cars, cameras. Pick your risk."
+        },
+        "canal-walk": {
+            "title": "Canal",
+            "prompt": "You can follow the canal edge. Slippery."
+        },
+        "construction-site": {
+            "title": "Construction site",
+            "prompt": "Scaffolds and gaps. You can vanish… or fall."
+        },
+        "mall-exit": {
+            "title": "Mall exit",
+            "prompt": "Three exits, two guards. What do you do?"
+        },
+        "hotel-elevator": {
+            "title": "Elevator",
+            "prompt": "Slow elevator or fast stairs. Risk."
+        },
+        "station-cameras": {
+            "title": "Cameras",
+            "prompt": "Cameras track you. Do you try to dodge them?"
+        },
+        "rooftop-jump": {
+            "title": "Jump",
+            "prompt": "There's a jump between buildings. Your call."
+        },
+        "sewer-drop": {
+            "title": "Manhole",
+            "prompt": "You can drop into the sewers. Or not."
+        },
+        "forest-edge": {
+            "title": "Forest edge",
+            "prompt": "Darkness and branches. Safe path or shortcut."
+        },
+        "bridge-crossing": {
+            "title": "Bridge",
+            "prompt": "Fast but visible. Risk?"
+        },
+        "crowd-metro": {
+            "title": "Station crowd",
+            "prompt": "Blend in… or sprint."
+        },
+        "harbor-boat": {
+            "title": "Harbor boat",
+            "prompt": "A boat breaks loose. Do you use it?"
+        }
+    }
 }
