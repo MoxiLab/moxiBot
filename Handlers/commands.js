@@ -11,6 +11,74 @@ module.exports = async (Moxi) => {
 
   const logger = require("../Util/logger");
 
+  const normalizeKey = (value) => {
+    if (value === undefined || value === null) return '';
+    return String(value)
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+  };
+
+  const ensurePrefixAliases = (commands) => {
+    // Reservados: nombres de comandos + alias existentes (para evitar colisiones al autogenerar)
+    const reserved = new Set();
+    for (const c of commands.values()) {
+      const name = normalizeKey(c?.name);
+      if (name) reserved.add(name);
+      const aliasArr = Array.isArray(c?.alias)
+        ? c.alias
+        : (Array.isArray(c?.aliases) ? c.aliases : []);
+      for (const a of aliasArr) {
+        const n = normalizeKey(a);
+        if (n) reserved.add(n);
+      }
+    }
+
+    for (const c of commands.values()) {
+      if (!c || !c.name) continue;
+      const name = normalizeKey(c.name);
+
+      const existing = Array.isArray(c.alias)
+        ? c.alias
+        : (Array.isArray(c.aliases) ? c.aliases : []);
+
+      const cleaned = Array.from(new Set((existing || []).map(normalizeKey).filter(Boolean)));
+
+      // Si el comando tiene nombre con diacríticos (raro), agregar variante sin diacríticos.
+      // (normalizeKey ya quita diacríticos; si cambia respecto al lower original, se notará aquí)
+      // Nota: el nombre principal ya se resuelve por name exacto; esto es solo para alias.
+      const nextAliases = [...cleaned];
+
+      const hadAliases = nextAliases.length > 0;
+
+      if (nextAliases.length === 0) {
+        // Autogeneración: intentar prefijo único (2..6 chars). Si no, caer a name.
+        for (let len = 2; len <= Math.min(6, name.length); len++) {
+          const cand = name.slice(0, len);
+          if (!cand) continue;
+          if (cand === name) continue;
+          if (reserved.has(cand)) continue;
+          nextAliases.push(cand);
+          reserved.add(cand);
+          break;
+        }
+      }
+
+      if (nextAliases.length === 0) {
+        // Garantía mínima: que exista al menos 1 alias.
+        nextAliases.push(name);
+      }
+
+      // Persistir en el formato principal del bot (alias)
+      c.alias = Array.from(new Set(nextAliases.map(normalizeKey).filter(Boolean)));
+
+      if (!hadAliases) {
+        c.__autoAliasGenerated = true;
+      }
+    }
+  };
+
   const normalizeCommandModule = (mod, filePath) => {
     if (!mod || typeof mod !== 'object') return null;
 
@@ -86,6 +154,25 @@ module.exports = async (Moxi) => {
       logger.error(`[Commands] Error cargando comando: ${files}`);
       logger.error(err);
     }
+  }
+
+  // Asegurar que todos los comandos prefix tienen alias (aunque sea autogenerado)
+  try {
+    ensurePrefixAliases(Moxi.commands);
+
+    const autoFixed = Moxi.commands
+      .filter((c) => c && c.__autoAliasGenerated)
+      .map((c) => ({ name: c.name, alias: c.alias, file: c.__sourceFile }))
+      .slice(0, 25);
+    if (autoFixed.length) {
+      logger.warn(`[Commands] Se autogeneraron alias en ${autoFixed.length} comando(s). Añade alias manualmente en sus archivos.`);
+      for (const it of autoFixed) {
+        logger.warn(`- ${it.name} -> alias: ${(it.alias || []).join(', ')} (${it.file || 'unknown file'})`);
+      }
+    }
+  } catch (err) {
+    logger.warn('[Commands] ensurePrefixAliases falló (best-effort)');
+    logger.warn(err);
   }
 
   for (const file of slashcommandsFiles) {
