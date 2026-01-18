@@ -372,7 +372,7 @@ module.exports = {
 
             if (!hasInventoryItem(eco, zone.requiredItemId)) {
                 const required = getItemById(zone.requiredItemId, { lang });
-                const requiredName = required?.name || zone.requiredItemId;
+                const requiredName = required?.name || String(zone.requiredItemId).split('/').pop() || zone.requiredItemId;
                 return message.reply(
                     asV2MessageOptions(
                         buildNoticeContainer({
@@ -380,7 +380,6 @@ module.exports = {
                             title: 'Mine • Requisito',
                             text: [
                                 `Para minar en **${zone.name}** necesitas: **${requiredName}**`,
-                                `ID: \`${zone.requiredItemId}\``,
                                 '',
                                 `Tip: revisa tus zonas con \`${prefix}mine zones\`.`,
                             ].join('\n'),

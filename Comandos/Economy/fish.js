@@ -282,7 +282,7 @@ module.exports = {
 
         if (!hasInventoryItem(eco, zone.requiredItemId)) {
             const required = getItemById(zone.requiredItemId, { lang });
-            const requiredName = required?.name || zone.requiredItemId;
+            const requiredName = required?.name || String(zone.requiredItemId).split('/').pop() || zone.requiredItemId;
             return message.reply(
                 asV2MessageOptions(
                     buildNoticeContainer({
@@ -290,7 +290,6 @@ module.exports = {
                         title: 'Fish • Requisito',
                         text: [
                             `Para pescar en **${zone.name}** necesitas: **${requiredName}**`,
-                            `ID: \`${zone.requiredItemId}\``,
                             '',
                             `Tip: revisa tus zonas con \`${prefix}fish zones\`.`,
                         ].join('\n'),
