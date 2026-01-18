@@ -3,7 +3,7 @@
 
 
 const timers = {};
-const TimerModel = require('../Models/Timer');
+const TimerModel = require('../Models/TimerSchema');
 
 async function restoreTimers(onFinish) {
     try {

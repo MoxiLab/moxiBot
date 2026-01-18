@@ -418,10 +418,10 @@ async function ensureEconomyUser(userId) {
     }
 
     await ensureMongoConnection();
-    const { UserEconomy } = require('../Models/EconomySchema');
+    const { Economy } = require('../Models/EconomySchema');
 
     try {
-        await UserEconomy.updateOne(
+        await Economy.updateOne(
             { userId },
             { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [] } },
             { upsert: true }
@@ -430,7 +430,7 @@ async function ensureEconomyUser(userId) {
         if (e?.code !== 11000) throw e;
     }
 
-    return UserEconomy.findOne({ userId });
+    return Economy.findOne({ userId });
 }
 
 function addToInventory(eco, itemId, amount) {

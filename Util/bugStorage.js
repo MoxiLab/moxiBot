@@ -1,4 +1,4 @@
-const Bug = require('../Models/Bug');
+const Bug = require('../Models/BugSchema');
 
 function buildSettingsUpdate(values = {}) {
     const update = { type: 'settings' };

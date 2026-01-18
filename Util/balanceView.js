@@ -56,10 +56,10 @@ function parseBalanceCustomId(customId) {
 async function getOrCreateEconomyRaw(userId) {
     if (!process.env.MONGODB) throw new Error('MongoDB no está configurado (MONGODB vacío).');
     await ensureMongoConnection();
-    const { UserEconomy } = require('../Models/EconomySchema');
+    const { Economy } = require('../Models/EconomySchema');
 
     try {
-        await UserEconomy.updateOne(
+        await Economy.updateOne(
             { userId },
             { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [] } },
             { upsert: true }
@@ -68,15 +68,15 @@ async function getOrCreateEconomyRaw(userId) {
         if (e?.code !== 11000) throw e;
     }
 
-    return UserEconomy.findOne({ userId });
+    return Economy.findOne({ userId });
 }
 
 async function getGlobalBalanceRank(balance) {
     await ensureMongoConnection();
-    const { UserEconomy } = require('../Models/EconomySchema');
+    const { Economy } = require('../Models/EconomySchema');
     const b = Number(balance);
     const safe = Number.isFinite(b) ? b : 0;
-    const higher = await UserEconomy.countDocuments({ balance: { $gt: safe } });
+    const higher = await Economy.countDocuments({ balance: { $gt: safe } });
     return Math.max(1, (higher || 0) + 1);
 }
 

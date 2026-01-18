@@ -251,12 +251,22 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
     return (categoriaTraducida && categoriaTraducida !== categoriaKey) ? categoriaTraducida : String(cat);
   };
 
-  const renderGrid = (items, cols = 6) => {
+  // Discord móvil rompe fácil las cuadrículas con muchas columnas dentro de ```.
+  // Ajustamos columnas según un ancho de línea "seguro" para evitar cortes raros.
+  const renderGrid = (items, cols = 6, opts = {}) => {
     const values = Array.from(new Set((items || []).map(v => String(v).trim()).filter(Boolean)));
     if (!values.length) return '';
     if (isRtl) return values.join('\n');
 
     const width = Math.max(12, ...values.map(v => v.length));
+
+    const maxLineWidth = Number(opts?.maxLineWidth) || 0;
+    if (maxLineWidth > 0) {
+      const cellWidth = (width + 2);
+      const fitCols = Math.max(1, Math.floor(maxLineWidth / cellWidth));
+      cols = Math.max(1, Math.min(cols, fitCols || 1));
+    }
+
     const rows = [];
     for (let i = 0; i < values.length; i += cols) rows.push(values.slice(i, i + cols));
     return rows
@@ -371,7 +381,7 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
     const header = `${emoji ? `${emoji} ` : ''}**${categoriaLabel}**`;
 
     const tip = isSpanish
-      ? `¿Quieres más info de un comando? Usa \`${prefix}help <comando>\`.`
+      ? `¿Quieres más info de un comando? Usa: **${prefix}help** comando`
       : `${moxi.translate('HELP_HOME_DESCRIPTION', lang).replace('{{prefix}}', prefix)}`;
 
     const prefixLabels = [];
@@ -392,12 +402,12 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
 
     if (prefixList.length) {
       desc += `\n\n${EMOJIS.book} **${moxi.translate('HELP_PREFIX_COMMANDS', lang)}**\n` +
-        `\`\`\`\n${renderGrid(prefixList, 4)}\n\`\`\``;
+        `\`\`\`\n${renderGrid(prefixList, 4, { maxLineWidth: 34 })}\n\`\`\``;
     }
 
     if (slashList.length) {
       desc += `\n\n${EMOJIS.package} **${moxi.translate('HELP_SLASH_COMMANDS', lang)}**\n` +
-        `\`\`\`\n${renderGrid(slashList, 3)}\n\`\`\``;
+        `\`\`\`\n${renderGrid(slashList, 3, { maxLineWidth: 34 })}\n\`\`\``;
     }
 
     if (!prefixList.length && !slashList.length) {

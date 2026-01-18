@@ -100,10 +100,10 @@ async function getOrCreateEconomy(userId) {
     }
 
     await ensureMongoConnection();
-    const { UserEconomy } = require('../Models/EconomySchema');
+    const { Economy } = require('../Models/EconomySchema');
 
     try {
-        await UserEconomy.updateOne(
+        await Economy.updateOne(
             { userId },
             { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [], workTotalEarned: 0, workShifts: 0 } },
             { upsert: true }
@@ -112,7 +112,7 @@ async function getOrCreateEconomy(userId) {
         if (e?.code !== 11000) throw e;
     }
 
-    return UserEconomy.findOne({ userId });
+    return Economy.findOne({ userId });
 }
 
 async function applyJob({ userId, jobId }) {
@@ -121,13 +121,13 @@ async function applyJob({ userId, jobId }) {
     }
 
     await ensureMongoConnection();
-    const { UserEconomy } = require('../Models/EconomySchema');
+    const { Economy } = require('../Models/EconomySchema');
 
     const now = new Date();
 
     // Asegurar doc
     try {
-        await UserEconomy.updateOne(
+        await Economy.updateOne(
             { userId },
             { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [], workTotalEarned: 0, workShifts: 0 } },
             { upsert: true }
@@ -136,7 +136,7 @@ async function applyJob({ userId, jobId }) {
         if (e?.code !== 11000) throw e;
     }
 
-    const updated = await UserEconomy.findOneAndUpdate(
+    const updated = await Economy.findOneAndUpdate(
         { userId },
         { $set: { workJobId: jobId, workStartedAt: now } },
         { new: true }
@@ -151,9 +151,9 @@ async function leaveJob({ userId }) {
     }
 
     await ensureMongoConnection();
-    const { UserEconomy } = require('../Models/EconomySchema');
+    const { Economy } = require('../Models/EconomySchema');
 
-    const updated = await UserEconomy.findOneAndUpdate(
+    const updated = await Economy.findOneAndUpdate(
         { userId },
         { $unset: { workJobId: 1, workStartedAt: 1 } },
         { new: true }
@@ -175,11 +175,11 @@ async function doShift({ userId }) {
     }
 
     await ensureMongoConnection();
-    const { UserEconomy } = require('../Models/EconomySchema');
+    const { Economy } = require('../Models/EconomySchema');
 
     // Asegurar doc
     try {
-        await UserEconomy.updateOne(
+        await Economy.updateOne(
             { userId },
             { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [], workTotalEarned: 0, workShifts: 0 } },
             { upsert: true }
@@ -188,7 +188,7 @@ async function doShift({ userId }) {
         if (e?.code !== 11000) throw e;
     }
 
-    const existing = await UserEconomy.findOne({ userId });
+    const existing = await Economy.findOne({ userId });
     const jobId = existing?.workJobId;
     if (!jobId) {
         return { ok: false, reason: 'no-job', message: 'No tienes trabajo. Usa `work apply <trabajo>`.' };
@@ -214,7 +214,7 @@ async function doShift({ userId }) {
         ],
     };
 
-    const updated = await UserEconomy.findOneAndUpdate(
+    const updated = await Economy.findOneAndUpdate(
         claimFilter,
         {
             $inc: { balance: amount, workTotalEarned: amount, workShifts: 1 },
@@ -268,10 +268,10 @@ async function getTopBalances({ limit = 10 } = {}) {
     }
 
     await ensureMongoConnection();
-    const { UserEconomy } = require('../Models/EconomySchema');
+    const { Economy } = require('../Models/EconomySchema');
 
     const n = Math.max(1, Math.min(25, safeInt(limit, 10)));
-    const rows = await UserEconomy.find({}, { userId: 1, balance: 1 })
+    const rows = await Economy.find({}, { userId: 1, balance: 1 })
         .sort({ balance: -1 })
         .limit(n);
 
@@ -292,10 +292,10 @@ async function getTopByJob({ jobId, limit = 10 } = {}) {
     }
 
     await ensureMongoConnection();
-    const { UserEconomy } = require('../Models/EconomySchema');
+    const { Economy } = require('../Models/EconomySchema');
 
     const n = Math.max(1, Math.min(25, safeInt(limit, 10)));
-    const rows = await UserEconomy.find(
+    const rows = await Economy.find(
         { workJobId: id },
         { userId: 1, workTotalEarned: 1, workShifts: 1, balance: 1 }
     )

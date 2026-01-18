@@ -1,4 +1,4 @@
-const { UserEconomy } = require('../Models/EconomySchema');
+const { Economy } = require('../Models/EconomySchema');
 
 function normalizeText(s) {
     return String(s || '')
@@ -112,8 +112,8 @@ async function ensureEconomyUser(userId) {
         await ensureMongoConnection();
     }
 
-    let eco = await UserEconomy.findOne({ userId });
-    if (!eco) eco = await UserEconomy.create({ userId, balance: 0, bank: 0, sakuras: 0 });
+    let eco = await Economy.findOne({ userId });
+    if (!eco) eco = await Economy.create({ userId, balance: 0, bank: 0, sakuras: 0 });
     return eco;
 }
 

@@ -69,8 +69,8 @@ function slugifyKey(label) {
     .replace(/(^-|-$)/g, '') || 'otros';
 }
 
-async function getUserInventoryRows(userId, { lang = process.env.DEFAULT_LANG || 'es-ES' } = {}) {
-  const { UserEconomy } = require('../Models/EconomySchema');
+async function getIventoryRows(userId, { lang = process.env.DEFAULT_LANG || 'es-ES' } = {}) {
+  const { Economy } = require('../Models/EconomySchema');
   const { getOrCreateEconomy } = require('./economyCore');
 
   let eco = null;
@@ -145,7 +145,7 @@ function buildBagEmbed({ title, categoryLabel, itemsTotal, pageItems, page, tota
 }
 
 async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey = null, isPrivate = false, pageSize = 10, lang = process.env.DEFAULT_LANG || 'es-ES' } = {}) {
-  const { items } = await getUserInventoryRows(userId, { lang });
+  const { items } = await getIventoryRows(userId, { lang });
 
   const applicationId = process.env.CLIENT_ID;
   let useMention = '/use';

@@ -85,15 +85,15 @@ function paginate(items, page, pageSize) {
 }
 
 async function getUserPets(userId) {
-    const { UserEconomy } = require('../Models/EconomySchema');
+    const { Economy } = require('../Models/EconomySchema');
 
     if (typeof process.env.MONGODB === 'string' && process.env.MONGODB.trim()) {
         const { ensureMongoConnection } = require('./mongoConnect');
         await ensureMongoConnection();
     }
 
-    let eco = await UserEconomy.findOne({ userId });
-    if (!eco) eco = await UserEconomy.create({ userId, balance: 0, bank: 0, sakuras: 0 });
+    let eco = await Economy.findOne({ userId });
+    if (!eco) eco = await Economy.create({ userId, balance: 0, bank: 0, sakuras: 0 });
 
     const pets = Array.isArray(eco.pets) ? eco.pets : [];
     const incubation = eco.petIncubation || null;

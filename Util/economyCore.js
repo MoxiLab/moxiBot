@@ -44,11 +44,11 @@ async function getOrCreateEconomy(userId) {
 
   await ensureMongoConnection();
 
-  const { UserEconomy } = require('../Models/EconomySchema');
+  const { Economy } = require('../Models/EconomySchema');
 
   // Upsert atómico para evitar carreras (shards / comandos simultáneos)
   try {
-    await UserEconomy.updateOne(
+    await Economy.updateOne(
       { userId },
       { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
       { upsert: true }
@@ -58,7 +58,7 @@ async function getOrCreateEconomy(userId) {
     if (e?.code !== 11000) throw e;
   }
 
-  const eco = await UserEconomy.findOne({ userId });
+  const eco = await Economy.findOne({ userId });
 
   // Backfill suave: si el usuario no tiene ningún huevo y aún no tiene mascota/incubación, le damos 1 huevo inicial.
   if (eco) {
@@ -94,7 +94,7 @@ async function claimCooldownReward({
 
   await ensureMongoConnection();
 
-  const { UserEconomy } = require('../Models/EconomySchema');
+  const { Economy } = require('../Models/EconomySchema');
 
   const now = new Date();
   const cutoff = new Date(Date.now() - cooldownMs);
@@ -102,7 +102,7 @@ async function claimCooldownReward({
 
   // 1) Asegura que el documento existe (sin depender del cooldown en el filtro)
   try {
-    await UserEconomy.updateOne(
+    await Economy.updateOne(
       { userId },
       { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
       { upsert: true }
@@ -121,7 +121,7 @@ async function claimCooldownReward({
     ],
   };
 
-  const updated = await UserEconomy.findOneAndUpdate(
+  const updated = await Economy.findOneAndUpdate(
     claimFilter,
     {
       $inc: { balance: amount },
@@ -160,13 +160,13 @@ async function claimCooldown({
 
   await ensureMongoConnection();
 
-  const { UserEconomy } = require('../Models/EconomySchema');
+  const { Economy } = require('../Models/EconomySchema');
 
   const now = new Date();
   const cutoff = new Date(Date.now() - cooldownMs);
 
   try {
-    await UserEconomy.updateOne(
+    await Economy.updateOne(
       { userId },
       { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
       { upsert: true }
@@ -184,7 +184,7 @@ async function claimCooldown({
     ],
   };
 
-  const updated = await UserEconomy.findOneAndUpdate(
+  const updated = await Economy.findOneAndUpdate(
     claimFilter,
     { $set: { [field]: now } },
     { new: true }
@@ -211,11 +211,11 @@ async function awardBalance({ userId, amount } = {}) {
   }
 
   await ensureMongoConnection();
-  const { UserEconomy } = require('../Models/EconomySchema');
+  const { Economy } = require('../Models/EconomySchema');
 
   // Asegura doc
   try {
-    await UserEconomy.updateOne(
+    await Economy.updateOne(
       { userId },
       { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
       { upsert: true }
@@ -224,7 +224,7 @@ async function awardBalance({ userId, amount } = {}) {
     if (e?.code !== 11000) throw e;
   }
 
-  const updated = await UserEconomy.findOneAndUpdate(
+  const updated = await Economy.findOneAndUpdate(
     { userId },
     { $inc: { balance: inc } },
     { new: true }
