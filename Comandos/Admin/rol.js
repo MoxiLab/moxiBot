@@ -2,6 +2,7 @@ const { PermissionsBitField } = require('discord.js');
 
 module.exports = {
     name: 'rol',
+    alias: ['rol'],
     Category: function (lang) {
         lang = lang || 'es-ES';
         return moxi.translate('commands:CATEGORY_ADMIN', lang);

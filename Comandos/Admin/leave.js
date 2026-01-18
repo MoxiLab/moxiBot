@@ -4,6 +4,7 @@ const { ownerPermissions } = require('../../Util/ownerPermissions');
 
 module.exports = {
   name: 'leave',
+  alias: ['leave'],
   description: 'Hace que el bot abandone el servidor actual',
   category: 'Admin',
   async execute(client, message, args) {
