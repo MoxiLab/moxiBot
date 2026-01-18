@@ -104,7 +104,7 @@ module.exports = async function zonesButtons(interaction) {
         const eco = await getOrCreateEconomy(userId);
         if (!hasInventoryItem(eco, zone.requiredItemId)) {
             const required = getItemById(zone.requiredItemId, { lang });
-            const requiredName = required?.name || zone.requiredItemId;
+            const requiredName = required?.name || String(zone.requiredItemId).split('/').pop() || zone.requiredItemId;
 
             const titlePrefix = kind === 'fish' ? 'Fish' : (kind === 'mine' ? 'Minería' : 'Exploración');
             const payload = {
@@ -115,10 +115,10 @@ module.exports = async function zonesButtons(interaction) {
                         title: `${titlePrefix} • Requisito`,
                         text:
                             (kind === 'fish'
-                                ? `Para pescar en **${zone.name}** necesitas: **${requiredName}**\nID: \`${zone.requiredItemId}\``
+                                ? `Para pescar en **${zone.name}** necesitas: **${requiredName}**`
                                 : kind === 'mine'
-                                    ? `Para minar en **${zone.name}** necesitas: **${requiredName}**\nID: \`${zone.requiredItemId}\``
-                                    : `Para explorar **${zone.name}** necesitas: **${requiredName}**\nID: \`${zone.requiredItemId}\``),
+                                    ? `Para minar en **${zone.name}** necesitas: **${requiredName}**`
+                                    : `Para explorar **${zone.name}** necesitas: **${requiredName}**`),
                     }),
                 ],
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,

@@ -10,6 +10,7 @@ const moxi = require('../../../../i18n');
 const { EMOJIS } = require('../../../../Util/emojis');
 const { buildNoticeContainer } = require('../../../../Util/v2Notice');
 const { getOrCreateEconomy, formatDuration, claimCooldown } = require('../../../../Util/economyCore');
+const { getItemById } = require('../../../../Util/inventoryCatalog');
 const { buildPetPanelMessageOptions, buildPetTrainingMessageOptions, buildPetActionResultMessageOptions, parsePetCustomId, renderCareCircles } = require('../../../../Util/petPanel');
 const { EXPLORE_ZONES } = require('../../../../Util/zonesView');
 const {
@@ -138,11 +139,13 @@ async function startPetExploration({ interaction, eco, pet, userId, ownerName, z
     // Requisito por herramienta
     const requiredItemId = zone?.requiredItemId ? String(zone.requiredItemId) : null;
     if (requiredItemId && !hasInventoryItem(eco, requiredItemId, 1)) {
+        const required = getItemById(requiredItemId, { lang });
+        const requiredName = required?.name || String(requiredItemId).split('/').pop() || requiredItemId;
         await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet }));
         await replyEphemeralNotice(interaction, {
             emoji: EMOJIS.noEntry,
             title: 'Exploración • Requisito',
-            text: `Necesitas **${requiredItemId}**.`,
+            text: `Necesitas **${requiredName}**.`,
         });
         return true;
     }

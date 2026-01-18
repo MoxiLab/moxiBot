@@ -143,14 +143,14 @@ module.exports = async function fishButtons(interaction) {
         const eco = await getOrCreateEconomy(userId);
         if (!hasInventoryItem(eco, zone.requiredItemId)) {
             const required = getItemById(zone.requiredItemId, { lang });
-            const requiredName = required?.name || zone.requiredItemId;
+            const requiredName = required?.name || String(zone.requiredItemId).split('/').pop() || zone.requiredItemId;
             const payload = {
                 content: '',
                 components: [
                     buildNoticeContainer({
                         emoji: EMOJIS.noEntry,
                         title: 'Fish • Requisito',
-                        text: `Para pescar en **${zone.name}** necesitas: **${requiredName}**\nID: \`${zone.requiredItemId}\``,
+                        text: `Para pescar en **${zone.name}** necesitas: **${requiredName}**`,
                     }),
                 ],
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
