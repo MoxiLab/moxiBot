@@ -76,8 +76,8 @@ module.exports = {
         }
 
         await ensureMongoConnection();
-        const { UserEconomy } = require('../../Models/EconomySchema');
-        const eco = await UserEconomy.findOne({ userId: message.author.id });
+        const { Economy } = require('../../Models/EconomySchema');
+        const eco = await Economy.findOne({ userId: message.author.id });
 
         const recipe = resolveRecipe(query);
         if (!recipe) {
