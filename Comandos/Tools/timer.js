@@ -5,7 +5,7 @@ const { EMOJIS } = require('../../Util/emojis');
 const { Bot } = require('../../Config');
 const timerStorage = require('../../Util/timerStorage');
 
-function buildListContainer(Moxi, message, allTimers) {
+function buildListContainer(Moxi, message, allTimers, lang = 'es-ES') {
     const container = new ContainerBuilder()
         .setAccentColor(Bot.AccentColor)
         .addTextDisplayComponents(c =>
@@ -36,14 +36,14 @@ function buildListContainer(Moxi, message, allTimers) {
             row.addComponents(
                 new ButtonBuilder()
                     .setCustomId(`cancel_timer_${t.guildId}_${t.channelId}`)
-                    .setLabel('Cancelar')
+                    .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
                     .setStyle(ButtonStyle.Danger),
                 new ButtonBuilder()
                     .setCustomId(`refresh_timer_list_${t.guildId}_${t.channelId}`)
-                    .setLabel('Refrescar')
+                    .setLabel(moxi.translate('REFRESH', lang) || 'Refrescar')
                     .setStyle(ButtonStyle.Secondary),
                 new ButtonBuilder()
-                    .setLabel('Ir al server')
+                    .setLabel(moxi.translate('GO_TO_SERVER', lang) || 'Ir al servidor')
                     .setStyle(ButtonStyle.Link)
                     .setURL(`https://discord.com/channels/${t.guildId}`)
             )
@@ -73,12 +73,13 @@ module.exports = {
     cooldown: 5,
     buildListContainer,
     async execute(Moxi, message, args) {
-            const TIMER_DEBUG = isFlagEnabled('timer');
+        const TIMER_DEBUG = isFlagEnabled('timer');
+        const lang = await moxi.guildLang(message.guildId || message.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
         // Mostrar lista de temporizadores activos
-            if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Comando timer ejecutado con args:', args);
+        if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Comando timer ejecutado con args:', args);
         if (args[0] && args[0].toLowerCase() === 'list') {
             const allTimers = timerStorage.getAllTimers();
-                if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Lista de temporizadores:', allTimers);
+            if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Lista de temporizadores:', allTimers);
             if (allTimers.length === 0) {
                 if (message && message.reply) {
                     return message.reply('No hay temporizadores activos en el bot.');
@@ -86,14 +87,13 @@ module.exports = {
                     return message.send('No hay temporizadores activos en el bot.');
                 }
             }
-            const container = buildListContainer(Moxi, message, allTimers);
+            const container = buildListContainer(Moxi, message, allTimers, lang);
             if (message && message.reply) {
                 return message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
             } else if (message && message.send) {
                 return message.send({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
             }
         }
-        const lang = await moxi.guildLang(message.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
         const guildId = message.guild?.id;
         const channelId = message.channel?.id;
         const userId = message.author?.id;
@@ -101,11 +101,11 @@ module.exports = {
         // Mostrar cuántos temporizadores hay activos en el bot
         const allTimers = timerStorage.getAllTimers();
         const totalTimers = allTimers.length;
-            if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Total temporizadores activos:', totalTimers);
+        if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Total temporizadores activos:', totalTimers);
 
         // Si hay un temporizador activo en este canal, mostrar cuánto falta
         const current = timerStorage.getTimer(guildId, channelId);
-            if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Temporizador actual en canal:', current);
+        if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Temporizador actual en canal:', current);
         if (!args[0] || args[0].toLowerCase() === 'help' || args[0] === '?') {
             if (args[0] && (args[0].toLowerCase() === 'help' || args[0] === '?')) {
                 const helpContainer = new ContainerBuilder()
@@ -209,7 +209,7 @@ module.exports = {
                 row.addComponents(
                     new ButtonBuilder()
                         .setCustomId('cancel_timer')
-                        .setLabel('Cancelar')
+                        .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
                         .setStyle(ButtonStyle.Danger)
                 )
             )
@@ -219,7 +219,7 @@ module.exports = {
             );
 
         timerStorage.setTimer(guildId, channelId, userId, minutos, async () => {
-                if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Temporizador finalizado para canal:', channelId);
+            if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Temporizador finalizado para canal:', channelId);
             try {
                 await message.channel.send(`⏰ ¡Tu temporizador de **${minutos} minutos** ha terminado!`);
             } catch { }
