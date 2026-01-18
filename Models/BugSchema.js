@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { ensureMongoConnection } = require('../Util/mongoConnect');
 
-const bugSchema = new mongoose.Schema({
+const BugSchema = new mongoose.Schema({
     guildID: { type: String, required: true, index: true },
     type: { type: String, enum: ['report', 'settings'], default: 'report', index: true },
     userId: { type: String, default: null },
@@ -26,8 +26,6 @@ const bugSchema = new mongoose.Schema({
     collection: 'bugs'
 });
 
-// Evitar side-effects (conexión a Mongo) cuando el archivo se carga desde scripts/CLI.
-// El bot conecta en `Eventos/Client/ready.js` y los helpers llaman `ensureMongoConnection` cuando toca.
 try {
     const path = require('path');
     const mainFile = require.main && require.main.filename ? String(require.main.filename) : '';
@@ -39,4 +37,4 @@ try {
     ensureMongoConnection().catch(() => null);
 }
 
-module.exports = mongoose.model('Bug', bugSchema);
+module.exports = mongoose.model('Bug', BugSchema);

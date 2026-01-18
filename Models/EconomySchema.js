@@ -13,7 +13,7 @@ const ItemSchema = new mongoose.Schema({
     attributes: { type: Object }, // Para stats extra, efectos, etc.
 });
 
-const UserEconomySchema = new mongoose.Schema({
+const EconomySchema = new mongoose.Schema({
     userId: { type: String, required: true, unique: true },
     balance: { type: Number, default: 0 }, // Moneda principal
     bank: { type: Number, default: 0 }, // Banco
@@ -63,5 +63,5 @@ const UserEconomySchema = new mongoose.Schema({
 
 module.exports = {
     Item: mongoose.model('Item', ItemSchema),
-    UserEconomy: mongoose.model('UserEconomy', UserEconomySchema)
+    Economy: mongoose.model('Economy', EconomySchema)
 };

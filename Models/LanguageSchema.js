@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const languageSchema = new mongoose.Schema({
+const LanguageSchema = new mongoose.Schema({
     guildID: {
         type: String,
         required: true
@@ -9,6 +9,6 @@ const languageSchema = new mongoose.Schema({
     updatedAt: { type: Date, default: Date.now }
 });
 
-languageSchema.index({ guildID: 1 });
+LanguageSchema.index({ guildID: 1 });
 
-module.exports = mongoose.model('Languages', languageSchema);
+module.exports = mongoose.model('Languages', LanguageSchema);

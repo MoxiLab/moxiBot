@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const suggestionsSchema = new mongoose.Schema({
+const SuggestionsSchema = new mongoose.Schema({
     type: {
         type: String,
         enum: ['config', 'suggestion'],
@@ -42,9 +42,9 @@ const suggestionsSchema = new mongoose.Schema({
     collection: 'suggestions',
 });
 
-suggestionsSchema.index({ guildID: 1, type: 1 });
+SuggestionsSchema.index({ guildID: 1, type: 1 });
 // Unique per guild for suggestion docs only (sparse avoids config docs)
-suggestionsSchema.index({ guildID: 1, type: 1, suggestionId: 1 }, { unique: true, sparse: true });
-suggestionsSchema.index({ guildID: 1, type: 1, messageID: 1 }, { sparse: true });
+SuggestionsSchema.index({ guildID: 1, type: 1, suggestionId: 1 }, { unique: true, sparse: true });
+SuggestionsSchema.index({ guildID: 1, type: 1, messageID: 1 }, { sparse: true });
 
-module.exports = mongoose.model('Suggestions', suggestionsSchema);
+module.exports = mongoose.model('Suggestions', SuggestionsSchema);

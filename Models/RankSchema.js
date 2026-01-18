@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const rankSchema = new mongoose.Schema({
+const RankSchema = new mongoose.Schema({
     guildID: {
         type: String,
         required: true
@@ -9,6 +9,6 @@ const rankSchema = new mongoose.Schema({
     updatedAt: { type: Date, default: Date.now }
 });
 
-rankSchema.index({ guildID: 1 });
+RankSchema.index({ guildID: 1 });
 
-module.exports = mongoose.model('Rank', rankSchema);
+module.exports = mongoose.model('Rank', RankSchema);

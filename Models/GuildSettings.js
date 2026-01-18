@@ -13,7 +13,6 @@ try {
 
 const collectionName = 'prefixes';
 
-// Guarda el prefijo SOLO en la colección prefixes (MongoDB) usando la conexión global.
 async function setGuildPrefix(guildId, prefix) {
   const connection = await ensureMongoConnection();
   const db = connection.db;

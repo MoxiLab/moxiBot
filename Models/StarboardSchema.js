@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const starboardSchema = new mongoose.Schema({
+const StarboardSchema = new mongoose.Schema({
     guildID: { type: String, required: true, index: true },
     channelID: { type: String, default: null },
     emoji: { type: String, default: '⭐' },
@@ -14,9 +14,9 @@ const starboardSchema = new mongoose.Schema({
     collection: 'starboards'
 });
 
-starboardSchema.pre('save', function (next) {
+StarboardSchema.pre('save', function (next) {
     this.updatedAt = new Date();
     next();
 });
 
-module.exports = mongoose.model('Starboard', starboardSchema);
+module.exports = mongoose.model('Starboard', StarboardSchema);

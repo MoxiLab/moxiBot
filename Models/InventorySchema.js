@@ -11,10 +11,10 @@ const InventoryItemSchema = new mongoose.Schema({
     attributes: { type: Object },
 });
 
-const UserInventorySchema = new mongoose.Schema({
+const InventorySchema = new mongoose.Schema({
     userId: { type: String, required: true, unique: true },
     items: [InventoryItemSchema],
     lastUpdated: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('UserInventory', UserInventorySchema);
+module.exports = mongoose.model('Inventory', InventorySchema);

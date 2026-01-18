@@ -10,7 +10,6 @@ function resolveMongoDbName(mongoUri) {
         const path = (parsed.pathname || '').replace(/^\//, '');
         if (path) return decodeURIComponent(path);
     } catch (_) {
-        // ignore invalid URIs and fall back to default
     }
     return 'admin';
 }

@@ -2,7 +2,7 @@
 // This file provides a single entry point for importing any model from the Models directory
 
 const AuditSchema = require('./AuditSchema');
-const Bug = require('./Bug');
+const Bug = require('./BugSchema');
 const ByesSchema = require('./ByesSchema');
 const ClvlsSchema = require('./ClvlsSchema');
 const GuildModels = require('./GuildModels');
@@ -12,9 +12,9 @@ const LanguageSchema = require('./LanguageSchema');
 const RankSchema = require('./RankSchema');
 const UserSchema = require('./UserSchema');
 const WelcomeSchema = require('./WelcomeSchema');
-const UserInventory = require('./InventorySchema');
+const Iventory = require('./InventorySchema');
 const Economy = require('./EconomySchema');
-const SlashCommandId = require('./SlashCommandId');
+const SlashCommandId = require('./SlashCommandIdSchema');
 const SuggestionsSchema = require('./SuggestionsSchema');
 
 // Export all models individually
@@ -29,7 +29,7 @@ module.exports = {
     LanguageSchema,
     RankSchema,
     UserSchema,
-    UserInventory,
+    Iventory,
     Economy,
     SlashCommandId,
     WelcomeSchema,
@@ -45,7 +45,7 @@ module.exports = {
     Language: LanguageSchema,
     Rank: RankSchema,
     User: UserSchema,
-    Inventory: UserInventory,
+    Inventory: Iventory,
     EconomyModels: Economy,
     SlashCommandIds: SlashCommandId,
     Welcome: WelcomeSchema,

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const byesSchema = new mongoose.Schema({
+const ByesSchema = new mongoose.Schema({
     type: {
         type: String,
         enum: ['config', 'member'],
@@ -25,4 +25,4 @@ const byesSchema = new mongoose.Schema({
     collection: 'byes'
 });
 
-module.exports = mongoose.model('Byes', byesSchema);
+module.exports = mongoose.model('Byes', ByesSchema);

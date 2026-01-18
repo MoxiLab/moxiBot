@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const welcomeSchema = new mongoose.Schema({
+const WelcomeSchema = new mongoose.Schema({
     type: {
         type: String,
         enum: ['config', 'member'],
@@ -26,8 +26,8 @@ const welcomeSchema = new mongoose.Schema({
 });
 
 // Index for efficient queries
-welcomeSchema.index({ guildID: 1, type: 1 });
-welcomeSchema.index({ guildID: 1, createdAt: -1 });
+WelcomeSchema.index({ guildID: 1, type: 1 });
+WelcomeSchema.index({ guildID: 1, createdAt: -1 });
 
-module.exports = mongoose.model('welcms', welcomeSchema);
+module.exports = mongoose.model('welcms', WelcomeSchema);
 
