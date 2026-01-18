@@ -1,5 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } = require('discord.js');
 const { Bot } = require('../Config');
+const moxi = require('../i18n');
 const { loadCatalog, resolveLocalizedString, resolveCategoryFromLanguages, normalizeItemForLang } = require('./inventoryCatalog');
 const { EMOJIS } = require('./emojis');
 
@@ -66,6 +67,8 @@ function buildShopMessage({
     pageSize = 5,
     lang = process.env.DEFAULT_LANG || 'es-ES',
 } = {}) {
+    const t = (k, vars = {}) => moxi.translate(`economy/shop:${k}`, lang, vars);
+
     const { categories, allItems, categoryKeyToLabel } = buildShopData({ catalogPath, lang });
 
     const filtered = categoryKey === 'all'
@@ -75,8 +78,8 @@ function buildShopMessage({
     const { slice, page: safePage, totalPages } = paginate(filtered, page, pageSize);
 
     const categoryLabel = categoryKey === 'all'
-        ? 'Todos los ítems'
-        : (categoryKeyToLabel.get(categoryKey) || 'Categoría');
+        ? t('SHOP_ALL_ITEMS')
+        : (categoryKeyToLabel.get(categoryKey) || t('SHOP_CATEGORY'));
 
     const lines = slice.map((i) => {
         const price = Number.isFinite(i.price) ? i.price : 0;
@@ -87,18 +90,18 @@ function buildShopMessage({
 
     const embed = new EmbedBuilder()
         .setColor(Bot.AccentColor)
-        .setTitle('�️ Tienda de Moxi')
+        .setTitle(t('SHOP_EMBED_TITLE'))
         .setDescription(
             [
-                'Bienvenido/a a mi tiendita.',
-                'Puedes comprar con: `/moxishop buy` o `.moxishop buy`',
+                t('SHOP_WELCOME'),
+                t('SHOP_INSTRUCTIONS', { prefix: process.env.PREFIX || '.' }),
                 '',
-                `**Lista de ítems**`,
+                t('SHOP_LIST_TITLE'),
                 '',
-                lines.length ? lines.join('\n\n') : '_No hay ítems en esta categoría._',
+                lines.length ? lines.join('\n\n') : t('SHOP_NO_ITEMS'),
             ].join('\n')
         )
-        .setFooter({ text: `Página ${safePage + 1} de ${totalPages}` });
+        .setFooter({ text: t('SHOP_FOOTER_PAGE', { page: safePage + 1, total: totalPages }) });
 
     const prevDisabled = safePage <= 0;
     const nextDisabled = safePage >= totalPages - 1;
@@ -130,9 +133,9 @@ function buildShopMessage({
 
     const select = new StringSelectMenuBuilder()
         .setCustomId(`shop:cat:${userId}:${safePage}`)
-        .setPlaceholder('Todos los ítems')
+        .setPlaceholder(t('SHOP_ALL_ITEMS'))
         .addOptions([
-            { label: 'Todos los ítems', value: 'all', default: categoryKey === 'all' },
+            { label: t('SHOP_ALL_ITEMS'), value: 'all', default: categoryKey === 'all' },
             ...categories.map((c) => ({
                 label: c.label,
                 value: c.key,

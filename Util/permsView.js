@@ -6,6 +6,8 @@ const {
     StringSelectMenuBuilder,
 } = require('discord.js');
 
+const moxi = require('../i18n');
+
 function fmtPerms(arr) {
     return arr && arr.length ? arr.join(', ') : '—';
 }
@@ -90,7 +92,7 @@ function listBrowsableChannels(guild) {
         });
 }
 
-function buildPermsBrowserMessage({ guild, userId, page = 0, selectedChannelId }) {
+function buildPermsBrowserMessage({ guild, userId, lang = 'es-ES', page = 0, selectedChannelId }) {
     const pageSize = 25;
     const channels = listBrowsableChannels(guild);
     const totalPages = Math.max(1, Math.ceil(channels.length / pageSize));
@@ -125,7 +127,7 @@ function buildPermsBrowserMessage({ guild, userId, page = 0, selectedChannelId }
 
     const select = new StringSelectMenuBuilder()
         .setCustomId(`perms:select:${userId}:${safePage}`)
-        .setPlaceholder('Selecciona un canal')
+        .setPlaceholder(moxi.translate('SELECT_CHANNEL', lang) || 'Selecciona un canal')
         .addOptions(options);
 
     const rowSelect = new ActionRowBuilder().addComponents(select);
@@ -143,7 +145,7 @@ function buildPermsBrowserMessage({ guild, userId, page = 0, selectedChannelId }
     const btnClose = new ButtonBuilder()
         .setCustomId(`perms:nav:${userId}:${safePage}:close`)
         .setStyle(ButtonStyle.Danger)
-        .setLabel('Cerrar');
+        .setLabel(moxi.translate('CLOSE', lang) || 'Cerrar');
 
     const rowBtns = new ActionRowBuilder().addComponents(btnPrev, btnClose, btnNext);
 

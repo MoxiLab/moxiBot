@@ -1,9 +1,11 @@
 const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 
 const { Bot } = require('../Config');
+const moxi = require('../i18n');
 const { EMOJIS } = require('./emojis');
 const { getItemById } = require('./inventoryCatalog');
-const { claimCooldown, awardBalance, formatDuration, getOrCreateEconomy } = require('./economyCore');
+const { awardBalance, formatDuration, getOrCreateEconomy } = require('./economyCore');
+const { claimRateLimit } = require('./actionRateLimit');
 const { addManyToInventory } = require('./inventoryOps');
 const { rollMineMaterials } = require('./mineLoot');
 const { pickMineActivity } = require('./mineActivities');
@@ -12,7 +14,9 @@ const { hasInventoryItem } = require('./fishView');
 const { scaleRange, randInt, chance } = require('./activityUtils');
 const { buildNoticeContainer } = require('./v2Notice');
 
-const MINE_COOLDOWN_MS = 180 * 1000;
+// Anti-spam: no hay cooldown fijo por ejecución; solo se bloquea si se spamea.
+const MINE_WINDOW_MS = 35 * 1000;
+const MINE_MAX_HITS = 3;
 const BASE_FAIL_CHANCE = 0.18;
 
 function getZoneById(kind, zoneId) {
@@ -21,7 +25,12 @@ function getZoneById(kind, zoneId) {
     return zones.find(z => String(z?.id || '').trim().toLowerCase() === key) || null;
 }
 
-function pickMineScene(zone) {
+function trMine(lang, key, vars) {
+    const safeLang = lang || process.env.DEFAULT_LANG || 'es-ES';
+    return moxi.translate(`economy/mine:${key}`, safeLang, vars);
+}
+
+function pickMineScene(zone, lang) {
     const requiredId = String(zone?.requiredItemId || '');
     const isExplosive = requiredId.includes('dinamita');
 
@@ -29,20 +38,20 @@ function pickMineScene(zone) {
     if (roll < 0.55) {
         const methods = isExplosive
             ? [
-                { id: 'dinamita', name: 'Dinamita', emoji: '🧨', multiplier: 1.25 },
-                { id: 'palanca', name: 'Palanca', emoji: '🧰', multiplier: 1.05 },
-                { id: 'sigilo', name: 'Sigilo', emoji: '🕶️', multiplier: 0.95 },
+                { id: 'dinamita', name: trMine(lang, 'PLAY_METHOD_DYNAMITE'), emoji: '🧨', multiplier: 1.25 },
+                { id: 'palanca', name: trMine(lang, 'PLAY_METHOD_LEVER'), emoji: '🧰', multiplier: 1.05 },
+                { id: 'sigilo', name: trMine(lang, 'PLAY_METHOD_STEALTH'), emoji: '🕶️', multiplier: 0.95 },
             ]
             : [
-                { id: 'pico', name: 'Pico', emoji: '⛏️', multiplier: 1.0 },
-                { id: 'precision', name: 'Precisión', emoji: '🎯', multiplier: 1.15 },
-                { id: 'rapido', name: 'Rápido', emoji: '⚡', multiplier: 1.05 },
+                { id: 'pico', name: trMine(lang, 'PLAY_METHOD_PICKAXE'), emoji: '⛏️', multiplier: 1.0 },
+                { id: 'precision', name: trMine(lang, 'PLAY_METHOD_PRECISION'), emoji: '🎯', multiplier: 1.15 },
+                { id: 'rapido', name: trMine(lang, 'PLAY_METHOD_FAST'), emoji: '⚡', multiplier: 1.05 },
             ];
         return {
             kind: 'methods',
             emoji: zone?.emoji || '⛏️',
-            title: 'Minería',
-            prompt: 'Elige tu método.',
+            title: trMine(lang, 'PLAY_SCENE_METHODS_TITLE'),
+            prompt: trMine(lang, 'PLAY_SCENE_METHODS_PROMPT'),
             methods,
         };
     }
@@ -52,13 +61,13 @@ function pickMineScene(zone) {
         return {
             kind: 'doors',
             emoji: '🕳️',
-            title: 'Túneles',
-            prompt: 'Tres túneles. Uno está lleno de vetas buenas. ¿Cuál tomas?',
+            title: trMine(lang, 'PLAY_SCENE_DOORS_TITLE'),
+            prompt: trMine(lang, 'PLAY_SCENE_DOORS_PROMPT'),
             seed,
             doors: [
-                { id: 'a', emoji: '🅰️', label: 'Túnel A' },
-                { id: 'b', emoji: '🅱️', label: 'Túnel B' },
-                { id: 'c', emoji: '🆑', label: 'Túnel C' },
+                { id: 'a', emoji: '🅰️', label: trMine(lang, 'PLAY_DOOR_A') },
+                { id: 'b', emoji: '🅱️', label: trMine(lang, 'PLAY_DOOR_B') },
+                { id: 'c', emoji: '🆑', label: trMine(lang, 'PLAY_DOOR_C') },
             ],
         };
     }
@@ -67,26 +76,27 @@ function pickMineScene(zone) {
     return {
         kind: 'wires',
         emoji: '🧨',
-        title: 'Detonador',
-        prompt: 'Tienes un detonador con 4 cables. Uno es el correcto. ¿Cuál cortas?',
+        title: trMine(lang, 'PLAY_SCENE_WIRES_TITLE'),
+        prompt: trMine(lang, 'PLAY_SCENE_WIRES_PROMPT'),
         seed,
         wires: [
-            { id: 'red', emoji: '🔴', label: 'Rojo' },
-            { id: 'blue', emoji: '🔵', label: 'Azul' },
-            { id: 'yellow', emoji: '🟡', label: 'Amarillo' },
-            { id: 'green', emoji: '🟢', label: 'Verde' },
+            { id: 'red', emoji: '🔴', label: trMine(lang, 'PLAY_WIRE_RED') },
+            { id: 'blue', emoji: '🔵', label: trMine(lang, 'PLAY_WIRE_BLUE') },
+            { id: 'yellow', emoji: '🟡', label: trMine(lang, 'PLAY_WIRE_YELLOW') },
+            { id: 'green', emoji: '🟢', label: trMine(lang, 'PLAY_WIRE_GREEN') },
         ],
     };
 }
 
-function buildMinePlayMessageOptions({ userId, zoneId, scene, disabled = false } = {}) {
+function buildMinePlayMessageOptions({ userId, zoneId, scene, disabled = false, lang } = {}) {
     const zone = getZoneById('mine', zoneId);
     const safeUserId = String(userId || '').trim();
     const zId = String(zone?.id || zoneId || '').trim();
-    const sc = scene || pickMineScene(zone || {});
+    const safeLang = lang || process.env.DEFAULT_LANG || 'es-ES';
+    const sc = scene || pickMineScene(zone || {}, safeLang);
 
     const container = new ContainerBuilder().setAccentColor(Bot.AccentColor);
-    container.addTextDisplayComponents(c => c.setContent(`## ${sc.emoji || '⛏️'} Mine • ${zone?.name || zId || 'Zona'}`));
+    container.addTextDisplayComponents(c => c.setContent(`## ${sc.emoji || '⛏️'} ${trMine(safeLang, 'PLAY_PANEL_HEADER')} • ${zone?.name || zId || trMine(safeLang, 'ZONE_FALLBACK')}`));
     container.addSeparatorComponents(s => s.setDivider(true));
     container.addTextDisplayComponents(c => c.setContent([`**${sc.title || 'Minería'}**`, sc.prompt || '¿Qué haces?'].join('\n')));
 
@@ -169,7 +179,7 @@ function methodSuccessChance(multiplier) {
 
 async function resolveMinePlay({ userId, zoneId, mode, choiceId, seedOrMult, lang } = {}) {
     const zone = getZoneById('mine', zoneId);
-    if (!zone) return { ok: false, message: 'Zona inválida.' };
+    if (!zone) return { ok: false, message: trMine(lang, 'INVALID_ZONE') };
 
     const eco = await getOrCreateEconomy(userId);
     if (!hasInventoryItem(eco, zone.requiredItemId)) {
@@ -178,11 +188,11 @@ async function resolveMinePlay({ userId, zoneId, mode, choiceId, seedOrMult, lan
         return {
             ok: false,
             reason: 'requirement',
-            message: `Para minar en **${zone.name}** necesitas: **${requiredName}**`,
+            message: trMine(lang, 'PLAY_REQUIREMENT_MESSAGE', { zone: zone.name, item: requiredName }),
         };
     }
 
-    const cd = await claimCooldown({ userId, field: 'lastMine', cooldownMs: MINE_COOLDOWN_MS });
+    const cd = claimRateLimit({ userId, key: 'mine', windowMs: MINE_WINDOW_MS, maxHits: MINE_MAX_HITS });
     if (!cd.ok) return cd;
 
     const requiredId = String(zone?.requiredItemId || '');
@@ -191,7 +201,7 @@ async function resolveMinePlay({ userId, zoneId, mode, choiceId, seedOrMult, lan
     const baseRange = isExplosive ? { min: 60, max: 140 } : { min: 30, max: 75 };
 
     let success = false;
-    let actionLine = activity?.phrase || 'Has minado';
+    let actionLine = activity?.phraseKey ? trMine(lang, String(activity.phraseKey)) : (activity?.phrase || trMine(lang, 'DEFAULT_ACTION'));
     let multiplier = activity?.multiplier || 1;
 
     if (mode === 'm') {
@@ -203,14 +213,14 @@ async function resolveMinePlay({ userId, zoneId, mode, choiceId, seedOrMult, lan
         const goodIdx = Number.isFinite(s) ? Math.max(0, Math.min(2, s)) : 0;
         const good = ['a', 'b', 'c'][goodIdx];
         multiplier *= 1.1;
-        actionLine = 'Has tomado un túnel';
+        actionLine = trMine(lang, 'PLAY_ACTION_TUNNEL');
         success = String(choiceId) === String(good);
     } else if (mode === 'w') {
         const s = Number.parseInt(seedOrMult, 10);
         const goodIdx = Number.isFinite(s) ? Math.max(0, Math.min(3, s)) : 0;
         const good = ['red', 'blue', 'yellow', 'green'][goodIdx];
         multiplier *= 1.2;
-        actionLine = 'Has ajustado el detonador';
+        actionLine = trMine(lang, 'PLAY_ACTION_DETONATOR');
         success = String(choiceId) === String(good);
     } else {
         success = !chance(BASE_FAIL_CHANCE);
@@ -243,11 +253,12 @@ async function resolveMinePlay({ userId, zoneId, mode, choiceId, seedOrMult, lan
 
 function buildMineResultPayload({ zone, res, lang } = {}) {
     const emoji = zone?.emoji || '⛏️';
+    const t = (k, vars) => trMine(lang, k, vars);
 
     if (!res?.ok && res?.reason === 'cooldown') {
         return {
             content: '',
-            components: [buildNoticeContainer({ emoji: '⏳', title: 'Mine • Cooldown', text: `Vuelve en **${formatDuration(res.nextInMs)}**.` })],
+            components: [buildNoticeContainer({ emoji: '⏳', title: t('COOLDOWN_TITLE'), text: t('COOLDOWN_TEXT', { time: formatDuration(res.nextInMs) }) })],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
         };
     }
@@ -255,7 +266,7 @@ function buildMineResultPayload({ zone, res, lang } = {}) {
     if (!res?.ok) {
         return {
             content: '',
-            components: [buildNoticeContainer({ emoji: '⚠️', title: 'Mine', text: res.message || 'No pude procesar tu minería ahora mismo.' })],
+            components: [buildNoticeContainer({ emoji: '⚠️', title: t('ERROR_TITLE'), text: res.message || t('ERROR_GENERIC') })],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
         };
     }
@@ -263,13 +274,13 @@ function buildMineResultPayload({ zone, res, lang } = {}) {
     if (res.failed) {
         return {
             content: '',
-            components: [buildNoticeContainer({ emoji, title: `Mine • ${zone?.name || 'Zona'}`, text: `${res.actionLine}... pero hoy no has encontrado nada útil.` })],
+            components: [buildNoticeContainer({ emoji, title: `${t('PLAY_PANEL_HEADER')} • ${zone?.name || t('ZONE_FALLBACK')}`, text: t('FAIL_TEXT', { action: res.actionLine }) })],
             flags: MessageFlags.IsComponentsV2,
         };
     }
 
     const coin = EMOJIS.coin || '🪙';
-    const balanceLine = Number.isFinite(res?.balance) ? `Saldo: **${res.balance}** ${coin}` : '';
+    const balanceLine = Number.isFinite(res?.balance) ? t('BALANCE_LINE', { balance: res.balance, coin }) : '';
 
     const materialLines = (Array.isArray(res?.drops) ? res.drops : [])
         .map(d => {
@@ -284,11 +295,11 @@ function buildMineResultPayload({ zone, res, lang } = {}) {
         components: [
             buildNoticeContainer({
                 emoji,
-                title: `Mine • ${zone?.name || 'Zona'}`,
+                title: `${t('PLAY_PANEL_HEADER')} • ${zone?.name || t('ZONE_FALLBACK')}`,
                 text: [
-                    `${res.actionLine} y ganaste **${res.amount}** ${coin}. ¡Buen golpe! ⛏️`,
+                    t('SUCCESS_TEXT', { action: res.actionLine, amount: res.amount, coin }),
                     balanceLine,
-                    materialLines ? `\nMateriales:\n${materialLines}` : '',
+                    materialLines ? `\n${t('MATERIALS_HEADER')}\n${materialLines}` : '',
                 ].filter(Boolean).join('\n'),
             }),
         ],

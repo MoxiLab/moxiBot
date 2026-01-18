@@ -9,6 +9,7 @@ const {
 const { Bot } = require('../Config');
 const { EMOJIS } = require('./emojis');
 const { getJobDisplayName } = require('./workSystem');
+const moxi = require('../i18n');
 
 const COIN = EMOJIS.coin || '\u{1FA99}'; // 🪙
 
@@ -32,23 +33,25 @@ function salaryText(job) {
     return `**${min}–${max}** ${COIN}`;
 }
 
-function requirementsText(job) {
+function requirementsText(job, noneText = 'Ninguno') {
     const req = Array.isArray(job?.requirements) ? job.requirements : [];
-    return req.length ? req.map(r => String(r)).join(', ') : 'Ninguno';
+    return req.length ? req.map(r => String(r)).join(', ') : String(noneText);
 }
 
 function buildWorkApplyContainer({ lang = 'es-ES', userId, job } = {}) {
-    const shiftsRequired = Number.isFinite(Number(job?.shiftsRequired)) ? Math.max(0, Math.trunc(job.shiftsRequired)) : 0;
+    const t = (k, vars = {}) => moxi.translate(`economy/work:${k}`, lang, vars);
+
+    const shiftsRequired = Number.isFinite(Number(job?.shiftsRequired)) ? Math.max(0, Math.trunc(job.shiftsRequired)) : 8;
     const deathRisk = (typeof job?.deathRisk === 'boolean') ? job.deathRisk : false;
 
-    const title = `🪪 Postulación a ${getJobDisplayName(job, lang)}`;
+    const title = t('APPLY_TITLE', { job: getJobDisplayName(job, lang) });
     const details = [
-        `• Trabajos requeridos por día: **${shiftsRequired}**`,
-        `• Riesgo de muerte: **${deathRisk ? 'Sí' : 'No'}**`,
-        `• Salario: **${salaryText(job)}**`,
-        `• Requerimientos: **${requirementsText(job)}**`,
+        `• ${t('SHIFTS_REQUIRED')}: **${shiftsRequired}**`,
+        `• ${t('DEATH_RISK')}: **${deathRisk ? t('YES') : t('NO')}**`,
+        `• ${t('SALARY')}: **${salaryText(job)}**`,
+        `• ${t('REQUIREMENTS')}: **${requirementsText(job, t('NONE'))}**`,
         '',
-        `Solicitante: <@${String(userId || '').trim()}>`,
+        `${t('APPLICANT')}: <@${String(userId || '').trim()}>`,
     ].join('\n');
 
     const container = new ContainerBuilder()
@@ -64,12 +67,12 @@ function buildWorkApplyContainer({ lang = 'es-ES', userId, job } = {}) {
             new ButtonBuilder()
                 .setCustomId(`work_apply:confirm:${String(userId || '').trim()}:${String(job?.id || '').trim()}`)
                 .setStyle(ButtonStyle.Success)
-                .setLabel('📝 Postular al trabajo'),
+                .setLabel(t('APPLY_CONFIRM')),
             new ButtonBuilder()
                 .setCustomId(`work_apply:cancel:${String(userId || '').trim()}:${String(job?.id || '').trim()}`)
                 .setStyle(ButtonStyle.Secondary)
                 .setEmoji(EMOJIS.cross)
-                .setLabel('Cancelar')
+                .setLabel(t('CANCEL'))
         )
     );
 
@@ -88,12 +91,13 @@ function buildWorkApplyMessageOptions({ lang = 'es-ES', userId, job } = {}) {
 
 function buildWorkHiredContainer({ lang = 'es-ES', userId, job } = {}) {
     const jobName = getJobDisplayName(job, lang);
+    const t = (k, vars = {}) => moxi.translate(`economy/work:${k}`, lang, vars);
 
     const text = [
-        '## ¡Contratado/a!',
-        `${job?.emoji || '🐾'} ¡Felicidades! Has sido aceptado/a como **${jobName}**.`,
+        t('HIRED_TITLE'),
+        t('HIRED_TEXT', { emoji: job?.emoji || '🐾', job: jobName }),
         '',
-        'Ahora puedes comenzar a trabajar con el comando `work`.',
+        t('HIRED_FOOTER'),
     ].join('\n');
 
     return new ContainerBuilder()

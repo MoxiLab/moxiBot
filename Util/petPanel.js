@@ -12,6 +12,7 @@ const {
 
 const { Bot } = require('../Config');
 const { EXPLORE_ZONES } = require('./zonesView');
+const moxi = require('../i18n');
 
 function clampInt(n, min, max) {
     const x = Number(n);
@@ -96,7 +97,7 @@ function ensurePetTrainingState(pet) {
     return { stats };
 }
 
-function buildPetTrainingMessageOptions({ userId, ownerName, pet, disabled = false } = {}) {
+function buildPetTrainingMessageOptions({ lang = 'es-ES', userId, ownerName, pet, disabled = false } = {}) {
     const safeUserId = String(userId || '').trim();
     const safeOwnerName = String(ownerName || 'Usuario').trim();
     const name = String(pet?.name || 'Sin nombre');
@@ -164,7 +165,7 @@ function buildPetTrainingMessageOptions({ userId, ownerName, pet, disabled = fal
             .setDisabled(Boolean(disabled)),
         new ButtonBuilder()
             .setCustomId(`pet:open:${safeUserId}`)
-            .setLabel('Menú principal')
+            .setLabel(moxi.translate('MAIN_MENU', lang) || 'Menú principal')
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('📋')
             .setDisabled(Boolean(disabled)),
@@ -184,6 +185,7 @@ function buildPetTrainingMessageOptions({ userId, ownerName, pet, disabled = fal
 }
 
 function buildPetPanelMessageOptions({
+    lang = 'es-ES',
     userId,
     ownerName,
     pet,
@@ -256,7 +258,7 @@ function buildPetPanelMessageOptions({
 
     const zoneSelect = new StringSelectMenuBuilder()
         .setCustomId(`pet:zone:${safeUserId}`)
-        .setPlaceholder('Selecciona una zona mejor')
+        .setPlaceholder(moxi.translate('SELECT_BETTER_ZONE', lang) || 'Selecciona una zona mejor')
         .setMinValues(1)
         .setMaxValues(1)
         .setDisabled(disableZoneSelect)
@@ -268,19 +270,19 @@ function buildPetPanelMessageOptions({
     const actionRowMain = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:play`)
-            .setLabel('Jugar')
+            .setLabel(moxi.translate('PLAY', lang) || 'Jugar')
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('🎮')
             .setDisabled(disabled || Boolean(away)),
         new ButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:feed`)
-            .setLabel('Alimentar')
+            .setLabel(moxi.translate('FEED', lang) || 'Alimentar')
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('🍎')
             .setDisabled(disabled || Boolean(away)),
         new ButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:clean`)
-            .setLabel('Limpiar')
+            .setLabel(moxi.translate('CLEAN', lang) || 'Limpiar')
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('🧼')
             .setDisabled(disabled || Boolean(away))
@@ -289,13 +291,13 @@ function buildPetPanelMessageOptions({
     const actionRowSecondary = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:train`)
-            .setLabel('Entrenar')
+            .setLabel(moxi.translate('TRAIN', lang) || 'Entrenar')
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('🏋️')
             .setDisabled(disabled || Boolean(away)),
         new ButtonBuilder()
             .setCustomId(`pet:renameModal:${safeUserId}`)
-            .setLabel('Cambiar nombre')
+            .setLabel(moxi.translate('CHANGE_NAME', lang) || 'Cambiar nombre')
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('📝')
             .setDisabled(disabled || Boolean(away))
@@ -310,6 +312,7 @@ function buildPetPanelMessageOptions({
 }
 
 function buildPetActionResultMessageOptions({
+    lang = 'es-ES',
     userId,
     title,
     text,
@@ -363,7 +366,7 @@ function buildPetActionResultMessageOptions({
     built.push(
         new ButtonBuilder()
             .setCustomId(`pet:open:${safeUserId}`)
-            .setLabel('Menú')
+            .setLabel(moxi.translate('MENU', lang) || 'Menú')
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('⬅️')
             .setDisabled(Boolean(disabled))

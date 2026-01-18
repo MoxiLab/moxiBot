@@ -16,19 +16,20 @@ function formatInt(n) {
     return Math.trunc(x).toLocaleString('en-US');
 }
 
-function buildBalanceButtons({ viewerId, targetId } = {}) {
+function buildBalanceButtons({ lang = 'es-ES', viewerId, targetId } = {}) {
+    const t = (k, vars = {}) => moxi.translate(`economy/balance:${k}`, lang, vars);
     const canAct = String(viewerId) === String(targetId);
 
     const deposit = new ButtonBuilder()
         .setCustomId(`bal:deposit:${viewerId}:${targetId}`)
-        .setLabel('Depositar')
+        .setLabel(t('BTN_DEPOSIT'))
         .setStyle(ButtonStyle.Secondary)
         .setEmoji('📥')
         .setDisabled(!canAct);
 
     const withdraw = new ButtonBuilder()
         .setCustomId(`bal:withdraw:${viewerId}:${targetId}`)
-        .setLabel('Retirar')
+        .setLabel(t('BTN_WITHDRAW'))
         .setStyle(ButtonStyle.Secondary)
         .setEmoji('📤')
         .setDisabled(!canAct);
@@ -82,6 +83,7 @@ async function getGlobalBalanceRank(balance) {
 
 async function buildBalanceMessage({ guildId, lang, viewerId, targetUser } = {}) {
     const language = lang || (await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES'));
+    const tr = (k, vars = {}) => moxi.translate(`economy/balance:${k}`, language, vars);
 
     const targetId = targetUser?.id;
     const eco = await getOrCreateEconomyRaw(targetId);
@@ -92,20 +94,20 @@ async function buildBalanceMessage({ guildId, lang, viewerId, targetUser } = {})
     const rank = await getGlobalBalanceRank(balance);
 
     const titleName = targetUser?.username || 'Usuario';
-    const title = `Balance de ${titleName}`;
+    const title = tr('TITLE', { user: titleName });
 
     const container = new ContainerBuilder()
         .setAccentColor(Bot.AccentColor)
-        .addTextDisplayComponents(t =>
-            t.setContent(
+        .addTextDisplayComponents(text =>
+            text.setContent(
                 `# ${title}\n\n` +
-                `${EMOJIS.coin || '🪙'} **Coins:** ${formatInt(balance)}\n` +
-                `🏦 **Banco:** ${formatInt(bank)}\n` +
-                `🌸 **Sakuras:** ${formatInt(sakuras)}\n\n` +
-                `Rango Global: **#${formatInt(rank)}**`
+                `${EMOJIS.coin || '🪙'} **${tr('COINS')}:** ${formatInt(balance)}\n` +
+                `🏦 **${tr('BANK')}:** ${formatInt(bank)}\n` +
+                `🌸 **${tr('SAKURAS')}:** ${formatInt(sakuras)}\n\n` +
+                `${tr('GLOBAL_RANK')}: **#${formatInt(rank)}**`
             )
         )
-        .addActionRowComponents(row => row.addComponents(...buildBalanceButtons({ viewerId, targetId })));
+        .addActionRowComponents(row => row.addComponents(...buildBalanceButtons({ lang: language, viewerId, targetId })));
 
     return {
         content: '',

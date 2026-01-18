@@ -11,7 +11,10 @@ const DEFAULT_MIN_ITEMS_PER_CATEGORY = (() => {
     return Number.isFinite(n) ? Math.max(0, Math.trunc(n)) : 600;
 })();
 
-let _inventoryLocaleCache = new Map();
+// Cachea archivos individuales por idioma (no por idioma solicitado)
+let _inventoryLocaleFileCache = new Map();
+// Cachea la cadena de fallbacks por idioma solicitado
+let _inventoryLocaleChainCache = new Map();
 
 function safeJsonRead(filePath) {
     try {
@@ -23,27 +26,53 @@ function safeJsonRead(filePath) {
     }
 }
 
-function getInventoryLocale(lang) {
-    const l = normalizeLang(lang) || (process.env.DEFAULT_LANG || 'es-ES');
-    if (_inventoryLocaleCache.has(l)) return _inventoryLocaleCache.get(l);
+function getInventoryLocaleData(lang) {
+    const l = normalizeLang(lang);
+    if (!l) return null;
+    if (_inventoryLocaleFileCache.has(l)) return _inventoryLocaleFileCache.get(l);
 
-    const base = langBase(l);
-    const candidates = [l];
-    if (base && base !== l) candidates.push(base);
-    candidates.push(process.env.DEFAULT_LANG || 'es-ES');
+    // Nuevo: Languages/<lang>/economy/items.json
+    // Compat: Languages/<lang>/economy/inventory/items.json (ruta anterior)
+    // Compat legacy: Languages/<lang>/inventory/items.json
+    const fpNew = path.join(INVENTORY_I18N_DIR, l, 'economy', 'items.json');
+    const fpPrev = path.join(INVENTORY_I18N_DIR, l, 'economy', 'inventory', 'items.json');
+    const fpOld = path.join(INVENTORY_I18N_DIR, l, 'inventory', 'items.json');
+
+    const data = safeJsonRead(fpNew) || safeJsonRead(fpPrev) || safeJsonRead(fpOld);
+    const out = data && typeof data === 'object' ? data : null;
+    _inventoryLocaleFileCache.set(l, out);
+    return out;
+}
+
+function getInventoryLocaleChain(lang) {
+    const requested = normalizeLang(lang) || (process.env.DEFAULT_LANG || 'es-ES');
+    if (_inventoryLocaleChainCache.has(requested)) return _inventoryLocaleChainCache.get(requested);
+
+    const base = langBase(requested);
+    const defaultLang = normalizeLang(process.env.DEFAULT_LANG) || 'es-ES';
+    const candidates = [requested];
+    if (base && base !== requested) candidates.push(base);
     candidates.push('en-US');
+    candidates.push(defaultLang);
 
+    const seen = new Set();
+    const chain = [];
     for (const cand of candidates) {
-        const fp = path.join(INVENTORY_I18N_DIR, cand, 'inventory', 'items.json');
-        const data = safeJsonRead(fp);
-        if (data && typeof data === 'object') {
-            _inventoryLocaleCache.set(l, data);
-            return data;
-        }
+        const c = normalizeLang(cand);
+        if (!c || seen.has(c)) continue;
+        seen.add(c);
+        const data = getInventoryLocaleData(c);
+        if (data) chain.push({ lang: c, data });
     }
 
-    _inventoryLocaleCache.set(l, null);
-    return null;
+    _inventoryLocaleChainCache.set(requested, chain);
+    return chain;
+}
+
+function getInventoryLocale(lang) {
+    // Compat: devuelve el primer locale existente según la cadena
+    const chain = getInventoryLocaleChain(lang);
+    return chain.length ? chain[0].data : null;
 }
 
 function normalizeLang(lang) {
@@ -84,32 +113,50 @@ function resolveLocalizedString(value, lang, { fallbackLang = 'es-ES' } = {}) {
 }
 
 function resolveItemTextFromLanguages(itemId, lang) {
-    const locale = getInventoryLocale(lang);
-    const entry = locale?.items?.[String(itemId || '')];
-    if (!entry || typeof entry !== 'object') return null;
-    const name = typeof entry.name === 'string' ? entry.name : '';
-    const description = typeof entry.description === 'string' ? entry.description : '';
-    return { name, description };
+    const id = String(itemId || '');
+    if (!id) return null;
+
+    const chain = getInventoryLocaleChain(lang);
+    for (const { data } of chain) {
+        const entry = data?.items?.[id];
+        if (!entry || typeof entry !== 'object') continue;
+        const name = typeof entry.name === 'string' ? entry.name : '';
+        const description = typeof entry.description === 'string' ? entry.description : '';
+        if (name || description) return { name, description };
+    }
+
+    return null;
 }
 
 function resolveCategoryFromLanguages(categoryLabel, lang) {
-    const locale = getInventoryLocale(lang);
     const label = String(categoryLabel || '');
-    const translated = locale?.categories?.[label];
-    return typeof translated === 'string' && translated.trim() ? translated : '';
+    if (!label) return '';
+
+    const chain = getInventoryLocaleChain(lang);
+    for (const { data } of chain) {
+        const translated = data?.categories?.[label];
+        if (typeof translated === 'string' && translated.trim()) return translated;
+    }
+
+    return '';
 }
 
 function normalizeItemForLang(item, lang) {
     if (!item || typeof item !== 'object') return item;
 
-    // Prioridad (opción 2): Languages/<lang>/inventory/items.json por itemId
+    // Prioridad (opción 2): Languages/<lang>/economy/items.json por itemId
     const fromLang = resolveItemTextFromLanguages(item.id, lang);
     const name = fromLang?.name || resolveLocalizedString(item.name, lang);
     const description = fromLang?.description || resolveLocalizedString(item.description, lang);
 
+    const safeName =
+        name ||
+        (typeof item.name === 'string' ? item.name : '') ||
+        (item.id ? String(item.id) : '');
+
     return {
         ...item,
-        name: name || (typeof item.name === 'string' ? item.name : ''),
+        name: safeName,
         description: description || (typeof item.description === 'string' ? item.description : ''),
     };
 }
@@ -228,8 +275,14 @@ function expandCatalogToMinItems(catalog, minPerCategory) {
 
             cat.items.push({
                 id,
-                name: `${safeLabel} (Auto) ${id.slice(id.lastIndexOf('-') + 1)}`,
-                description: 'Ítem autogenerado para ampliar el catálogo.',
+                name: {
+                    'es-ES': `${safeLabel} (Auto) ${id.slice(id.lastIndexOf('-') + 1)}`,
+                    'en-US': `${safeLabel} (Auto) ${id.slice(id.lastIndexOf('-') + 1)}`,
+                },
+                description: {
+                    'es-ES': 'Ítem autogenerado para ampliar el catálogo.',
+                    'en-US': 'Auto-generated item to expand the catalog.',
+                },
                 rarity,
                 price: priceForRarity(basePrice, rarity),
             });

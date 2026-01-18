@@ -7,6 +7,7 @@ const {
 } = require('discord.js');
 
 const { Bot } = require('../Config');
+const moxi = require('../i18n');
 const { EMOJIS } = require('./emojis');
 const { loadCatalog, buildItemIndex, resolveLocalizedString, resolveCategoryFromLanguages, normalizeItemForLang } = require('./inventoryCatalog');
 
@@ -70,6 +71,7 @@ function slugifyKey(label) {
 }
 
 async function getIventoryRows(userId, { lang = process.env.DEFAULT_LANG || 'es-ES' } = {}) {
+  const t = (k, vars) => moxi.translate(`economy/bag:${k}`, lang, vars);
   const { Economy } = require('../Models/EconomySchema');
   const { getOrCreateEconomy } = require('./economyCore');
 
@@ -103,7 +105,7 @@ async function getIventoryRows(userId, { lang = process.env.DEFAULT_LANG || 'es-
       const rawItem = byId.get(itemId) || null;
       const item = rawItem ? normalizeItemForLang(rawItem, lang) : null;
       const shop = shopByItemId.get(itemId) || null;
-      const rawCategory = categoryByItemId.get(itemId) || 'Otros';
+      const rawCategory = categoryByItemId.get(itemId) || null;
       return {
         itemId,
         amount,
@@ -111,7 +113,7 @@ async function getIventoryRows(userId, { lang = process.env.DEFAULT_LANG || 'es-
         name: resolveLocalizedString(item?.name, lang) || itemId,
         description: resolveLocalizedString(item?.description, lang) || '',
         rarity: item?.rarity || 'comun',
-        category: resolveCategoryFromLanguages(rawCategory, lang) || resolveLocalizedString(rawCategory, lang) || String(rawCategory || 'Otros'),
+        category: resolveCategoryFromLanguages(rawCategory, lang) || resolveLocalizedString(rawCategory, lang) || t('CATEGORY_OTHER'),
       };
     })
     .sort((a, b) => {
@@ -126,7 +128,8 @@ async function getIventoryRows(userId, { lang = process.env.DEFAULT_LANG || 'es-
   return { items, balance: safeInt(eco.balance, 0) };
 }
 
-function buildBagEmbed({ title, categoryLabel, itemsTotal, pageItems, page, totalPages, helpLines = [] }) {
+function buildBagEmbed({ title, categoryLabel, itemsTotal, pageItems, page, totalPages, helpLines = [], lang = process.env.DEFAULT_LANG || 'es-ES' }) {
+  const t = (k, vars) => moxi.translate(`economy/bag:${k}`, lang, vars);
   const lines = pageItems.map((it) => {
     const idPart = safeInt(it.shopId, 0) ? `\`${safeInt(it.shopId, 0)}\` ` : '';
     return `${idPart}${it.name} (x${safeInt(it.amount, 0)})`;
@@ -134,17 +137,18 @@ function buildBagEmbed({ title, categoryLabel, itemsTotal, pageItems, page, tota
 
   const desc = [
     ...helpLines,
-    lines.length ? lines.join('\n') : '_No tienes items en esta categoría._',
+    lines.length ? lines.join('\n') : t('EMBED_EMPTY'),
   ].join('\n');
 
   return new EmbedBuilder()
     .setColor(Bot.AccentColor)
     .setTitle(title)
     .setDescription(desc)
-    .setFooter({ text: `Página ${page + 1} de ${totalPages}` });
+    .setFooter({ text: t('FOOTER_PAGE', { page: page + 1, total: totalPages }) });
 }
 
 async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey = null, isPrivate = false, pageSize = 10, lang = process.env.DEFAULT_LANG || 'es-ES' } = {}) {
+  const t = (k, vars) => moxi.translate(`economy/bag:${k}`, lang, vars);
   const { items } = await getIventoryRows(userId, { lang });
 
   const applicationId = process.env.CLIENT_ID;
@@ -163,14 +167,14 @@ async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey
   }
 
   const helpLines = [
-    `Puedes consumir un item con: ${useMention}`,
-    `Puedes mirar tus potenciadores activos con: ${buffsMention}`,
+    t('HELP_USE', { use: useMention }),
+    t('HELP_BUFFS', { buffs: buffsMention }),
     '',
   ];
 
   const categoriesMap = new Map();
   for (const it of items) {
-    const label = String(it.category || 'Otros');
+    const label = String(it.category || t('CATEGORY_OTHER'));
     const key = slugifyKey(label);
     if (!categoriesMap.has(key)) {
       categoriesMap.set(key, { key, label, items: [], uniqueCount: 0, totalQty: 0 });
@@ -195,16 +199,17 @@ async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey
 
   const { slice, page: safePage, totalPages } = paginate(activeItems, page, pageSize);
 
-  const title = isPrivate ? '🎒 Tu mochila (privada)' : '🎒 Tu mochila';
+  const title = isPrivate ? t('TITLE_PRIVATE') : t('TITLE_PUBLIC');
 
   const embed = buildBagEmbed({
     title,
-    categoryLabel: activeCategory?.label || 'Otros',
+    categoryLabel: activeCategory?.label || t('CATEGORY_OTHER'),
     itemsTotal: activeItems.length,
     pageItems: slice,
     page: safePage,
     totalPages,
     helpLines,
+    lang,
   });
 
   const prevDisabled = safePage <= 0;
@@ -212,16 +217,16 @@ async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey
 
   const select = new StringSelectMenuBuilder()
     .setCustomId(`bag:sel:${viewerId}:${safePage}`)
-    .setPlaceholder(activeCategory?.label || 'Elige una categoría')
+    .setPlaceholder(activeCategory?.label || t('SELECT_PLACEHOLDER'))
     .addOptions(
       categories.length
         ? categories.slice(0, 25).map((c) => ({
           label: c.label.length > 90 ? c.label.slice(0, 90) : c.label,
           value: c.key,
-          description: `${safeInt(c.uniqueCount, 0)} tipos • ${safeInt(c.totalQty, 0)} total`.slice(0, 100),
+          description: t('SELECT_DESC', { types: safeInt(c.uniqueCount, 0), total: safeInt(c.totalQty, 0) }).slice(0, 100),
           default: activeCategoryKey ? c.key === activeCategoryKey : false,
         }))
-        : [{ label: 'No tienes items', value: 'none', default: true }]
+        : [{ label: t('SELECT_EMPTY_OPTION'), value: 'none', default: true }]
     );
 
   const selectRow = new ActionRowBuilder().addComponents(select);

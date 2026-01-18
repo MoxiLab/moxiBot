@@ -12,14 +12,14 @@ function isPositiveInt(n) {
     return Number.isInteger(n) && n > 0;
 }
 
-function resolveItemFromInput({ shopId, query } = {}) {
+function resolveItemFromInput({ shopId, query, lang } = {}) {
     // Lazy requires to reduce load + avoid cycles
     // eslint-disable-next-line global-require
     const { buildShopData } = require('./shopView');
     // eslint-disable-next-line global-require
-    const { loadCatalog, buildItemIndex } = require('./inventoryCatalog');
+    const { loadCatalog, buildItemIndex, normalizeItemForLang, resolveLocalizedString } = require('./inventoryCatalog');
 
-    const { allItems, byShopId, byItemId } = buildShopData();
+    const { allItems, byShopId, byItemId } = buildShopData({ lang });
 
     if (isPositiveInt(shopId)) {
         const it = byShopId.get(shopId);
@@ -80,24 +80,30 @@ function resolveItemFromInput({ shopId, query } = {}) {
 
     for (const [itemId, item] of byId.entries()) {
         if (!item) continue;
-        if (normalizeText(item.name) === needle) {
+        const normalized = normalizeItemForLang(item, lang);
+        const displayName = resolveLocalizedString(normalized?.name, lang) || itemId;
+        const displayDesc = resolveLocalizedString(normalized?.description, lang) || '';
+        if (normalizeText(displayName) === needle) {
             return {
                 itemId,
-                name: item.name || itemId,
+                name: displayName || itemId,
                 shopId: null,
-                description: item.description || '',
+                description: displayDesc,
             };
         }
     }
 
     for (const [itemId, item] of byId.entries()) {
         if (!item) continue;
-        if (normalizeText(item.name).includes(needle)) {
+        const normalized = normalizeItemForLang(item, lang);
+        const displayName = resolveLocalizedString(normalized?.name, lang) || itemId;
+        const displayDesc = resolveLocalizedString(normalized?.description, lang) || '';
+        if (normalizeText(displayName).includes(needle)) {
             return {
                 itemId,
-                name: item.name || itemId,
+                name: displayName || itemId,
                 shopId: null,
-                description: item.description || '',
+                description: displayDesc,
             };
         }
     }

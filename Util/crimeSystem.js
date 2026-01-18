@@ -1,8 +1,11 @@
-const { claimCooldown, awardBalance, formatDuration, getOrCreateEconomy } = require('./economyCore');
+const { awardBalance, formatDuration, getOrCreateEconomy } = require('./economyCore');
+const { claimRateLimit } = require('./actionRateLimit');
 const { randInt, chance, pickRandom } = require('./activityUtils');
 const { pickRandomCrimeActivity } = require('./crimeActivities');
 
-const CRIME_COOLDOWN_MS = 5 * 60 * 1000;
+// Anti-spam: sin cooldown fijo; se bloquea solo si se insiste.
+const CRIME_WINDOW_MS = 60 * 1000;
+const CRIME_MAX_HITS = 3;
 
 async function takeBalance({ userId, amount } = {}) {
     const { Economy } = require('../Models/EconomySchema');
@@ -79,12 +82,9 @@ async function doCrime({ userId } = {}) {
     const uid = String(userId || '').trim();
     if (!uid) return { ok: false, message: 'Falta userId.' };
 
-    const cd = await claimCooldown({ userId: uid, field: 'lastCrime', cooldownMs: CRIME_COOLDOWN_MS });
+    const cd = claimRateLimit({ userId: uid, key: 'crime', windowMs: CRIME_WINDOW_MS, maxHits: CRIME_MAX_HITS });
     if (!cd.ok && cd.reason === 'cooldown') {
-        return { ok: false, reason: 'cooldown', nextInMs: cd.nextInMs, message: `Aún es muy pronto. Vuelve en **${formatDuration(cd.nextInMs)}**.` };
-    }
-    if (!cd.ok) {
-        return { ok: false, message: cd.message || 'No pude procesarlo ahora mismo.' };
+        return { ok: false, reason: 'cooldown', nextInMs: cd.nextInMs, message: `Vuelve en **${formatDuration(cd.nextInMs)}**.` };
     }
 
     const outcome = pickCrimeOutcome(pickRandomCrimeActivity());
@@ -127,6 +127,7 @@ async function doCrime({ userId } = {}) {
 }
 
 module.exports = {
-    CRIME_COOLDOWN_MS,
+    CRIME_WINDOW_MS,
+    CRIME_MAX_HITS,
     doCrime,
 };

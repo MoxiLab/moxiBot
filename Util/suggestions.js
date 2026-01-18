@@ -6,6 +6,7 @@ const {
 } = require('discord.js');
 
 const { Bot } = require('../Config');
+const moxi = require('../i18n');
 
 function isStaff(member) {
     const perms = member?.permissions;
@@ -26,10 +27,11 @@ function statusIcon(status) {
     return '💡';
 }
 
-function buildSuggestionCard({ suggestionId = null, content, status = 'pending', linkUrl = null, withButtons = false, authorName = null, footerText = null } = {}) {
+function buildSuggestionCard({ lang = 'es-ES', suggestionId = null, content, status = 'pending', linkUrl = null, withButtons = false, authorName = null, footerText = null } = {}) {
     const container = new ContainerBuilder().setAccentColor(Bot.AccentColor ?? 0x00d9ff);
 
-    container.addTextDisplayComponents(c => c.setContent(`# ${statusIcon(status)} Sugerencia`));
+    const title = moxi.translate('misc:SUGGESTIONS_TITLE', lang) || (lang === 'en-US' ? 'Suggestion' : 'Sugerencia');
+    container.addTextDisplayComponents(c => c.setContent(`# ${statusIcon(status)} ${title}`));
     container.addSeparatorComponents(s => s.setDivider(true));
 
     if (linkUrl) {
@@ -49,12 +51,12 @@ function buildSuggestionCard({ suggestionId = null, content, status = 'pending',
             row.addComponents(
                 new ButtonBuilder()
                     .setCustomId(`suggest:approve:${suggestionId}`)
-                    .setLabel('Aprobar')
+                    .setLabel(moxi.translate('APPROVE', lang) || 'Aprobar')
                     .setStyle(ButtonStyle.Success)
                     .setDisabled(isDone),
                 new ButtonBuilder()
                     .setCustomId(`suggest:deny:${suggestionId}`)
-                    .setLabel('Rechazar')
+                    .setLabel(moxi.translate('REJECT', lang) || 'Rechazar')
                     .setStyle(ButtonStyle.Danger)
                     .setDisabled(isDone),
             )

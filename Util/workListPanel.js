@@ -87,6 +87,8 @@ function buildWorkListButtons({ userId, page, totalPages, disabled = false } = {
 }
 
 function buildWorkListContainer({ lang = 'es-ES', page = 0, userId, perPage = DEFAULT_PER_PAGE, disabledButtons = false } = {}) {
+    const tr = (k, vars = {}) => moxi.translate(`economy/work:${k}`, lang, vars);
+
     const jobs = listJobs();
     const safePerPage = Math.max(1, Math.min(5, Number(perPage) || DEFAULT_PER_PAGE));
     const totalPages = Math.max(1, Math.ceil(jobs.length / safePerPage));
@@ -99,15 +101,15 @@ function buildWorkListContainer({ lang = 'es-ES', page = 0, userId, perPage = DE
 
     const container = new ContainerBuilder()
         .setAccentColor(Bot.AccentColor)
-        .addTextDisplayComponents(t => t.setContent(`Página ${p + 1} de ${totalPages}`))
+        .addTextDisplayComponents(td => td.setContent(tr('PAGE', { page: p + 1, total: totalPages })))
         .addSeparatorComponents(s => s.setDivider(true))
-        .addTextDisplayComponents(t => t.setContent('## Lista de profesiones disponibles'));
+        .addTextDisplayComponents(td => td.setContent(tr('LIST_TITLE')));
 
     if (featured) {
         container
-            .addTextDisplayComponents(t =>
-                t.setContent(
-                    `${EMOJIS.star || '⭐'} Trabajo destacado: ${featured.emoji || '💼'} **${getJobDisplayName(featured, lang)}**\n` +
+            .addTextDisplayComponents(td =>
+                td.setContent(
+                    `${EMOJIS.star || '⭐'} ${tr('FEATURED')}: ${featured.emoji || '💼'} **${getJobDisplayName(featured, lang)}**\n` +
                     `_${getJobTagline(featured, lang)}_`
                 )
             )
@@ -129,18 +131,18 @@ function buildWorkListContainer({ lang = 'es-ES', page = 0, userId, perPage = DE
         const req = Array.isArray(job?.requirements) ? job.requirements : [];
         const reqText = req.length
             ? req.map(r => String(r)).join(', ')
-            : 'Ninguno';
+            : tr('NONE');
 
         container
             .addSectionComponents(section =>
                 section
-                    .addTextDisplayComponents(t =>
-                        t.setContent(
+                    .addTextDisplayComponents(td =>
+                        td.setContent(
                             `${job.emoji || '💼'} **${getJobDisplayName(job, lang)}**\n` +
-                            `• Turnos requeridos: **${shiftsRequired}**\n` +
-                            `• Riesgo de muerte: **${deathRisk ? 'Sí' : 'No'}**\n` +
-                            `• Salario: **${salaryText}**\n` +
-                            `• Requerimientos: **${reqText}**`
+                            `• ${tr('SHIFTS_REQUIRED')}: **${shiftsRequired}**\n` +
+                            `• ${tr('DEATH_RISK')}: **${deathRisk ? tr('YES') : tr('NO')}**\n` +
+                            `• ${tr('SALARY')}: **${salaryText}**\n` +
+                            `• ${tr('REQUIREMENTS')}: **${reqText}**`
                         )
                     )
                     .setThumbnailAccessory(new ThumbnailBuilder().setURL(getJobImageUrl(job)))
@@ -148,7 +150,7 @@ function buildWorkListContainer({ lang = 'es-ES', page = 0, userId, perPage = DE
             .addSeparatorComponents(s => s.setDivider(true));
     }
 
-    container.addTextDisplayComponents(t => t.setContent('Puedes aplicar a una profesión con **/work apply**'));
+    container.addTextDisplayComponents(td => td.setContent(tr('APPLY_HINT')));
 
     container.addActionRowComponents(row => row.addComponents(
         ...buildWorkListButtons({ userId, page: p, totalPages, disabled: disabledButtons })
