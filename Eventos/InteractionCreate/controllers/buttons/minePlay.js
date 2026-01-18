@@ -9,6 +9,7 @@ const {
     resolveMinePlay,
     buildMineResultPayload,
 } = require('../../../../Util/minePlay');
+const { shouldShowCooldownNotice } = require('../../../../Util/cooldownNotice');
 
 module.exports = async function minePlayButtons(interaction) {
     if (!interaction.isButton?.()) return false;
@@ -23,7 +24,7 @@ module.exports = async function minePlayButtons(interaction) {
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
         const payload = {
             content: '',
-            components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: 'Solo el autor puede usar estos botones.' })],
+            components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: moxi.translate('misc:ONLY_AUTHOR_BUTTONS', lang) })],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
         };
         if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
@@ -33,14 +34,18 @@ module.exports = async function minePlayButtons(interaction) {
 
     if (action === 'play') {
         const zoneId = parts?.[3];
-        const payload = buildMinePlayMessageOptions({ userId, zoneId });
+        const guildId = interaction.guildId || interaction.guild?.id;
+        const lang = interaction.lang || await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const payload = buildMinePlayMessageOptions({ userId, zoneId, lang });
         await interaction.update(payload).catch(() => null);
         return true;
     }
 
     if (action === 'closeplay') {
         const zoneId = parts?.[3];
-        const payload = buildMinePlayMessageOptions({ userId, zoneId, disabled: true });
+        const guildId = interaction.guildId || interaction.guild?.id;
+        const lang = interaction.lang || await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const payload = buildMinePlayMessageOptions({ userId, zoneId, disabled: true, lang });
         await interaction.update(payload).catch(() => null);
         return true;
     }
@@ -63,6 +68,9 @@ module.exports = async function minePlayButtons(interaction) {
 
         // Cooldown / errores -> ephemeral
         if (!res?.ok || res?.reason === 'cooldown' || res?.reason === 'requirement') {
+            if (res?.reason === 'cooldown' && !shouldShowCooldownNotice({ userId, key: 'mine' })) {
+                return true;
+            }
             const payload = buildMineResultPayload({ zone, res, lang });
             await interaction.followUp({ ...payload, flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2 }).catch(() => null);
             return true;

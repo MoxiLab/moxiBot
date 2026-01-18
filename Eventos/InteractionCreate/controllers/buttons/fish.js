@@ -4,7 +4,8 @@ const moxi = require('../../../../i18n');
 const { EMOJIS } = require('../../../../Util/emojis');
 const { buildNoticeContainer } = require('../../../../Util/v2Notice');
 const { getItemById } = require('../../../../Util/inventoryCatalog');
-const { claimCooldown, awardBalance, formatDuration, getOrCreateEconomy } = require('../../../../Util/economyCore');
+const { awardBalance, formatDuration, getOrCreateEconomy } = require('../../../../Util/economyCore');
+const { claimRateLimit } = require('../../../../Util/actionRateLimit');
 const { addManyToInventory } = require('../../../../Util/inventoryOps');
 const { rollFishMaterials } = require('../../../../Util/fishLoot');
 const { pickFishActivity } = require('../../../../Util/fishActivities');
@@ -20,6 +21,7 @@ const {
     resolveFishPlay,
     buildFishResultPayload,
 } = require('../../../../Util/fishPlay');
+const { shouldShowCooldownNotice } = require('../../../../Util/cooldownNotice');
 
 function safeInt(n, fallback = 0) {
     const x = Number(n);
@@ -40,7 +42,7 @@ module.exports = async function fishButtons(interaction) {
         const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
         const payload = {
             content: '',
-            components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: 'Solo el autor puede usar estos botones.' })],
+            components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: moxi.translate('misc:ONLY_AUTHOR_BUTTONS', lang) })],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
         };
         if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
@@ -50,11 +52,12 @@ module.exports = async function fishButtons(interaction) {
 
     const guildId = interaction.guildId || interaction.guild?.id;
     const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+    const t = (k, vars) => moxi.translate(`economy/fish:${k}`, lang, vars);
 
     // --- Minijuego: fish:play:<userId>:<zoneId>
     if (action === 'play') {
         const zoneId = parts?.[3];
-        const payload = buildFishPlayMessageOptions({ userId, zoneId });
+        const payload = buildFishPlayMessageOptions({ userId, zoneId, lang });
         await interaction.update(payload).catch(() => null);
         return true;
     }
@@ -62,7 +65,7 @@ module.exports = async function fishButtons(interaction) {
     // --- Minijuego: fish:closeplay:<userId>:<zoneId>
     if (action === 'closeplay') {
         const zoneId = parts?.[3];
-        const payload = buildFishPlayMessageOptions({ userId, zoneId, disabled: true });
+        const payload = buildFishPlayMessageOptions({ userId, zoneId, disabled: true, lang });
         await interaction.update(payload).catch(() => null);
         return true;
     }
@@ -84,6 +87,9 @@ module.exports = async function fishButtons(interaction) {
 
         // Cooldown / errores -> ephemeral
         if (!res?.ok || res?.reason === 'cooldown' || res?.reason === 'requirement') {
+            if (res?.reason === 'cooldown' && !shouldShowCooldownNotice({ userId, key: 'fish' })) {
+                return true;
+            }
             const payload = buildFishResultPayload({ zone, res, lang });
             await interaction.followUp({ ...payload, flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2 }).catch(() => null);
             return true;
@@ -101,8 +107,8 @@ module.exports = async function fishButtons(interaction) {
             components: [
                 buildNoticeContainer({
                     emoji: EMOJIS.question,
-                    title: 'Fish',
-                    text: 'Pulsa una zona para pescar.\nNecesitas el ítem requerido en tu inventario.\nEl comando también funciona por texto: **.fish <zona>**',
+                    title: moxi.translate('economy/fish:HELP_TITLE', lang),
+                    text: moxi.translate('economy/fish:HELP_TEXT', lang),
                 }),
             ],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
@@ -132,7 +138,7 @@ module.exports = async function fishButtons(interaction) {
         if (!zone) {
             const payload = {
                 content: '',
-                components: [buildNoticeContainer({ emoji: EMOJIS.cross, text: 'Esa zona no existe en esta página.' })],
+                components: [buildNoticeContainer({ emoji: EMOJIS.cross, text: t('PANEL_ZONE_NOT_FOUND_TEXT') })],
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
             };
             if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
@@ -149,8 +155,8 @@ module.exports = async function fishButtons(interaction) {
                 components: [
                     buildNoticeContainer({
                         emoji: EMOJIS.noEntry,
-                        title: 'Fish • Requisito',
-                        text: `Para pescar en **${zone.name}** necesitas: **${requiredName}**`,
+                        title: t('REQUIREMENT_TITLE'),
+                        text: t('PLAY_REQUIREMENT_MESSAGE', { zone: zone.name, item: requiredName }),
                     }),
                 ],
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
@@ -165,41 +171,31 @@ module.exports = async function fishButtons(interaction) {
             await interaction.deferUpdate().catch(() => null);
         }
 
-        const cooldownMs = Math.max(1, safeInt(120, 120)) * 1000; // default; el comando puede ajustar su cooldown por texto
+        const cooldownMs = Math.max(1, safeInt(30, 30)) * 1000; // compat: se usa solo para mostrar tiempo
         const minAmount = Math.max(1, safeInt(zone?.reward?.min, 25));
         const maxAmount = Math.max(minAmount, safeInt(zone?.reward?.max, 60));
         const activity = pickFishActivity();
         const scaled = scaleRange(minAmount, maxAmount, activity?.multiplier || 1);
-        const cd = await claimCooldown({
-            userId,
-            field: 'lastFish',
-            cooldownMs,
-        });
+        const cd = claimRateLimit({ userId, key: 'fish', windowMs: 30 * 1000, maxHits: 4 });
 
         if (!cd.ok && cd.reason === 'cooldown') {
+            if (!shouldShowCooldownNotice({ userId, key: 'fish' })) {
+                return true;
+            }
             await interaction.followUp({
                 content: '',
-                components: [buildNoticeContainer({ emoji: '⏳', title: 'Fish • Cooldown', text: `Vuelve en **${formatDuration(cd.nextInMs)}**.` })],
+                components: [buildNoticeContainer({ emoji: '⏳', title: t('COOLDOWN_TITLE'), text: t('COOLDOWN_TEXT', { time: formatDuration(cd.nextInMs) }) })],
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
             }).catch(() => null);
             return true;
         }
 
-        if (!cd.ok) {
-            await interaction.followUp({
-                content: '',
-                components: [buildNoticeContainer({ emoji: '⚠️', title: 'Fish', text: cd.message || 'No pude procesar tu pesca ahora mismo.' })],
-                flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
-            }).catch(() => null);
-            return true;
-        }
-
-        const actionLine = activity?.phrase || 'Has pescado';
+        const actionLine = activity?.phraseKey ? t(String(activity.phraseKey)) : (activity?.phrase || t('DEFAULT_ACTION'));
 
         if (chance(FISH_FAIL_CHANCE)) {
             await interaction.followUp({
                 content: '',
-                components: [buildNoticeContainer({ emoji: zone.emoji || '🎣', title: `Fish • ${zone.name}`, text: `${actionLine}... pero no ha picado nada.` })],
+                components: [buildNoticeContainer({ emoji: zone.emoji || '🎣', title: `${t('PLAY_PANEL_HEADER')} • ${zone.name}`, text: t('FAIL_TEXT', { action: actionLine }) })],
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
             }).catch(() => null);
             return true;
@@ -207,12 +203,15 @@ module.exports = async function fishButtons(interaction) {
 
         const amount = randInt(scaled.min, scaled.max);
         const res = await awardBalance({ userId, amount });
-        const balanceLine = Number.isFinite(res?.balance) ? `Saldo: **${res.balance}** 🪙` : '';
+        const balanceLine = Number.isFinite(res?.balance) ? t('BALANCE_LINE', { balance: res.balance }) : '';
 
         if (!res.ok && res.reason === 'cooldown') {
+            if (!shouldShowCooldownNotice({ userId, key: 'fish' })) {
+                return true;
+            }
             await interaction.followUp({
                 content: '',
-                components: [buildNoticeContainer({ emoji: '⏳', title: 'Fish • Cooldown', text: `Vuelve en **${formatDuration(res.nextInMs)}**.` })],
+                components: [buildNoticeContainer({ emoji: '⏳', title: t('COOLDOWN_TITLE'), text: t('COOLDOWN_TEXT', { time: formatDuration(res.nextInMs) }) })],
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
             }).catch(() => null);
             return true;
@@ -221,7 +220,7 @@ module.exports = async function fishButtons(interaction) {
         if (!res.ok) {
             await interaction.followUp({
                 content: '',
-                components: [buildNoticeContainer({ emoji: '⚠️', title: 'Fish', text: res.message || 'No pude procesar tu pesca ahora mismo.' })],
+                components: [buildNoticeContainer({ emoji: '⚠️', title: t('ERROR_TITLE'), text: res.message || t('ERROR_GENERIC') })],
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
             }).catch(() => null);
             return true;
@@ -248,11 +247,11 @@ module.exports = async function fishButtons(interaction) {
             components: [
                 buildNoticeContainer({
                     emoji: zone.emoji || '🎣',
-                    title: `Fish • ${zone.name}`,
+                    title: `${t('PLAY_PANEL_HEADER')} • ${zone.name}`,
                     text: [
-                        `${actionLine} y ganaste **${res.amount}** 🪙. ¡Buen lance! 🎣`,
+                        t('SUCCESS_TEXT', { action: actionLine, amount: res.amount }),
                         balanceLine,
-                        materialLines ? `\nMateriales:\n${materialLines}` : '',
+                        materialLines ? `\n${t('MATERIALS_HEADER')}\n${materialLines}` : '',
                     ].filter(Boolean).join('\n'),
                 }),
             ],

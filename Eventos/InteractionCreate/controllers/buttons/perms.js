@@ -1,4 +1,5 @@
 const { buildPermsBrowserMessage } = require('../../../../Util/permsView');
+const moxi = require('../../../../i18n');
 
 module.exports = async function permsButtons(interaction, Moxi, logger) {
   if (!interaction.isButton()) return false;
@@ -17,7 +18,7 @@ module.exports = async function permsButtons(interaction, Moxi, logger) {
   }
 
   if (action === 'close') {
-    await interaction.message.delete().catch(() => {});
+    await interaction.message.delete().catch(() => { });
     return true;
   }
 
@@ -27,8 +28,10 @@ module.exports = async function permsButtons(interaction, Moxi, logger) {
     return true;
   }
 
+  const lang = await moxi.guildLang(interaction.guildId || guild?.id, process.env.DEFAULT_LANG || 'es-ES');
+
   const nextPage = action === 'prev' ? Math.max(0, page - 1) : page + 1;
-  const payload = buildPermsBrowserMessage({ guild, userId, page: nextPage });
+  const payload = buildPermsBrowserMessage({ guild, userId, lang, page: nextPage });
   await interaction.update(payload);
   return true;
 };

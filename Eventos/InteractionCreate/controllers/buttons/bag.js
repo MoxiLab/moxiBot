@@ -1,10 +1,15 @@
 const { MessageFlags } = require('discord.js');
+const moxi = require('../../../../i18n');
 const { buildBagMessage } = require('../../../../Util/bagView');
 
 module.exports = async function bagButtons(interaction, Moxi, logger) {
   if (!interaction.isButton()) return false;
   const id = String(interaction.customId || '');
   if (!id.startsWith('bag:nav:')) return false;
+
+  const guildId = interaction.guildId || interaction.guild?.id;
+  const lang = Moxi?.guildLang ? await Moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES') : (process.env.DEFAULT_LANG || 'es-ES');
+  const t = (k, vars) => moxi.translate(`economy/bag:${k}`, lang, vars);
 
   // Formatos soportados:
   // - Antiguo: bag:nav:<viewerId>:<page>:action
@@ -17,13 +22,13 @@ module.exports = async function bagButtons(interaction, Moxi, logger) {
   const action = (hasCategory ? parts[5] : parts[4]) || '';
 
   if (interaction.user?.id !== viewerId) {
-    await interaction.reply({ content: 'Solo quien abrió la mochila puede usar estos botones.', flags: MessageFlags.Ephemeral });
+    await interaction.reply({ content: t('ONLY_AUTHOR_BUTTONS'), flags: MessageFlags.Ephemeral });
     return true;
   }
 
   if (action === 'info') {
     await interaction.reply({
-      content: 'Usa el selector para cambiar de categoría. Navega páginas con ◀ ▶. Cierra con ❌.',
+      content: t('INFO_TEXT'),
       flags: MessageFlags.Ephemeral,
     });
     return true;
@@ -34,11 +39,11 @@ module.exports = async function bagButtons(interaction, Moxi, logger) {
       if (interaction.message?.deletable) {
         await interaction.message.delete();
       } else {
-        await interaction.update({ content: 'Mochila cerrada.', embeds: [], components: [] });
+        await interaction.update({ content: t('CLOSED_TEXT'), embeds: [], components: [] });
       }
     } catch {
       try {
-        await interaction.update({ content: 'Mochila cerrada.', embeds: [], components: [] });
+        await interaction.update({ content: t('CLOSED_TEXT'), embeds: [], components: [] });
       } catch { }
     }
     return true;
@@ -50,10 +55,6 @@ module.exports = async function bagButtons(interaction, Moxi, logger) {
       : action === 'home'
         ? 0
         : page + 1;
-
-  const guildId = interaction.guildId || interaction.guild?.id;
-  // Lazy: Moxi puede venir undefined en algunos routers, pero el handler recibe (interaction, Moxi, logger)
-  const lang = Moxi?.guildLang ? await Moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES') : (process.env.DEFAULT_LANG || 'es-ES');
 
   const payload = await buildBagMessage({
     userId: viewerId,

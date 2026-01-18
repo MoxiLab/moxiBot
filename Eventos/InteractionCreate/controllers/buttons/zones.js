@@ -5,12 +5,14 @@ const { EMOJIS } = require('../../../../Util/emojis');
 const { buildNoticeContainer } = require('../../../../Util/v2Notice');
 const { getItemById } = require('../../../../Util/inventoryCatalog');
 const { claimCooldown, awardBalance, formatDuration, getOrCreateEconomy } = require('../../../../Util/economyCore');
+const { claimRateLimit } = require('../../../../Util/actionRateLimit');
 const { addManyToInventory } = require('../../../../Util/inventoryOps');
 const { rollMineMaterials } = require('../../../../Util/mineLoot');
 const { rollFishMaterials } = require('../../../../Util/fishLoot');
 const { pickMineActivity } = require('../../../../Util/mineActivities');
 const { pickFishActivity } = require('../../../../Util/fishActivities');
 const { scaleRange, randInt, chance } = require('../../../../Util/activityUtils');
+const { shouldShowCooldownNotice } = require('../../../../Util/cooldownNotice');
 const {
     parseZonesCustomId,
     buildZonesContainer,
@@ -134,7 +136,7 @@ module.exports = async function zonesButtons(interaction) {
         }
 
         const field = kind === 'fish' ? 'lastFish' : (kind === 'mine' ? 'lastMine' : 'lastExplore');
-        const cooldownSec = kind === 'fish' ? 120 : (kind === 'mine' ? 180 : 600);
+        const cooldownSec = kind === 'fish' ? 30 : (kind === 'mine' ? 35 : 600);
         const cooldownMs = Math.max(1, safeInt(cooldownSec, 300)) * 1000;
 
         let res;
@@ -144,7 +146,7 @@ module.exports = async function zonesButtons(interaction) {
             const maxAmount = Math.max(minAmount, safeInt(zone?.reward?.max, 60));
             activity = pickFishActivity();
             const scaled = scaleRange(minAmount, maxAmount, activity?.multiplier || 1);
-            const cd = await claimCooldown({ userId, field, cooldownMs });
+            const cd = claimRateLimit({ userId, key: 'fish', windowMs: 30 * 1000, maxHits: 4 });
             if (!cd.ok) res = cd;
             else {
                 const actionLine = activity?.phrase || 'Has pescado';
@@ -162,7 +164,7 @@ module.exports = async function zonesButtons(interaction) {
             activity = pickMineActivity(zone);
             const base = isExplosive ? { min: 60, max: 140 } : { min: 30, max: 75 };
             const scaled = scaleRange(base.min, base.max, activity?.multiplier || 1);
-            const cd = await claimCooldown({ userId, field, cooldownMs });
+            const cd = claimRateLimit({ userId, key: 'mine', windowMs: 35 * 1000, maxHits: 3 });
             if (!cd.ok) res = cd;
             else {
                 const actionLine = activity?.phrase || 'Has minado';
@@ -179,6 +181,9 @@ module.exports = async function zonesButtons(interaction) {
         }
 
         if (!res.ok && res.reason === 'cooldown') {
+            if (!shouldShowCooldownNotice({ userId, key: `zones:${kind}` })) {
+                return true;
+            }
             await interaction.followUp({
                 content: '',
                 components: [buildNoticeContainer({ emoji: '⏳', title: 'Zonas • Cooldown', text: `Vuelve en **${formatDuration(res.nextInMs)}**.` })],

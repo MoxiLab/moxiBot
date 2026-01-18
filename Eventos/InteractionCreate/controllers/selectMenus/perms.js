@@ -1,4 +1,5 @@
 const { buildPermsBrowserMessage } = require('../../../../Util/permsView');
+const moxi = require('../../../../i18n');
 
 module.exports = async function permsSelectMenu(interaction, Moxi, logger) {
   if (!interaction.isStringSelectMenu()) return false;
@@ -22,7 +23,9 @@ module.exports = async function permsSelectMenu(interaction, Moxi, logger) {
     return true;
   }
 
-  const payload = buildPermsBrowserMessage({ guild, userId, page, selectedChannelId });
+  const lang = await moxi.guildLang(interaction.guildId || guild?.id, process.env.DEFAULT_LANG || 'es-ES');
+
+  const payload = buildPermsBrowserMessage({ guild, userId, lang, page, selectedChannelId });
   await interaction.update(payload);
   return true;
 };

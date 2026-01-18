@@ -11,12 +11,13 @@ module.exports = async function petModal(interaction) {
     const id = String(interaction?.customId || '');
     if (!id.startsWith('pet:rename:')) return false;
 
+    const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
+
     const parts = id.split(':');
     const userId = parts[2];
 
     // Solo el autor
     if (interaction.user?.id !== String(userId)) {
-        const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
         const payload = {
             content: '',
             components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: 'Solo el autor puede cambiar el nombre.' })],
@@ -54,7 +55,7 @@ module.exports = async function petModal(interaction) {
 
     // Intentar refrescar el panel si viene desde un mensaje
     const ownerName = interaction.user?.username || 'Usuario';
-    const panel = buildPetPanelMessageOptions({ userId, ownerName, pet });
+    const panel = buildPetPanelMessageOptions({ lang, userId, ownerName, pet });
 
     try {
         if (interaction.message && typeof interaction.message.edit === 'function') {

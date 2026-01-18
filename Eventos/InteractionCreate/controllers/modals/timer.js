@@ -58,7 +58,7 @@ module.exports = async function timerModalHandler(interaction, Moxi, logger) {
             row.addComponents(
                 new ButtonBuilder()
                     .setCustomId('cancel_timer')
-                    .setLabel('Cancelar')
+                    .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
                     .setStyle(ButtonStyle.Danger)
             )
         )

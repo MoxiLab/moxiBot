@@ -56,11 +56,14 @@ Moxi.on("interactionCreate", async (interaction) => {
     if (guildId) {
       const settings = await getGuildSettingsCached(guildId);
       if (interaction.guild) interaction.guild.settings = settings;
-      if (settings?.Language) lang = String(settings.Language);
+      const dbLang = settings?.Language ?? settings?.language ?? settings?.LANGUAGE ?? settings?.lang;
+      if (dbLang) lang = String(dbLang);
     }
+    interaction.lang = lang;
     interaction.translate = (key, vars = {}) => moxi.translate(key, lang, vars);
   } catch {
     const lang = process.env.DEFAULT_LANG || 'es-ES';
+    interaction.lang = lang;
     interaction.translate = (key, vars = {}) => moxi.translate(key, lang, vars);
   }
 

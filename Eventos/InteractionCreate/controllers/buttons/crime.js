@@ -3,13 +3,16 @@ const { MessageFlags } = require('discord.js');
 const moxi = require('../../../../i18n');
 const { EMOJIS } = require('../../../../Util/emojis');
 const { buildNoticeContainer } = require('../../../../Util/v2Notice');
-const { claimCooldown, awardBalance, formatDuration, getOrCreateEconomy } = require('../../../../Util/economyCore');
+const { awardBalance, formatDuration, getOrCreateEconomy } = require('../../../../Util/economyCore');
+const { claimRateLimit } = require('../../../../Util/actionRateLimit');
 const { randInt, chance } = require('../../../../Util/activityUtils');
 const { getCrimeActivity } = require('../../../../Util/crimeActivities');
 const { parseCrimeCustomId, buildCrimeMessageOptions } = require('../../../../Util/crimeView');
 const { crimeActivityTitle, crimeOptionLabel, crimeDoorLabel, crimeRiskLabel, crimeWireLabel } = require('../../../../Util/crimeI18n');
+const { shouldShowCooldownNotice } = require('../../../../Util/cooldownNotice');
 
-const CRIME_COOLDOWN_MS = 5 * 60 * 1000;
+const CRIME_WINDOW_MS = 60 * 1000;
+const CRIME_MAX_HITS = 3;
 
 async function takeBalance({ userId, amount } = {}) {
     const { Economy } = require('../../../../Models/EconomySchema');
@@ -97,8 +100,11 @@ module.exports = async function crimeButtons(interaction, Moxi, logger) {
         await interaction.deferUpdate().catch(() => null);
     }
 
-    const cd = await claimCooldown({ userId, field: 'lastCrime', cooldownMs: CRIME_COOLDOWN_MS });
+    const cd = claimRateLimit({ userId, key: 'crime', windowMs: CRIME_WINDOW_MS, maxHits: CRIME_MAX_HITS });
     if (!cd.ok && cd.reason === 'cooldown') {
+        if (!shouldShowCooldownNotice({ userId, key: 'crime' })) {
+            return true;
+        }
         const payload = {
             content: '',
             components: [buildNoticeContainer({
@@ -110,20 +116,6 @@ module.exports = async function crimeButtons(interaction, Moxi, logger) {
             allowedMentions: { repliedUser: false },
         };
         await interaction.followUp(payload).catch(() => null);
-        return true;
-    }
-
-    if (!cd.ok) {
-        const payload = buildCrimeMessageOptions({
-            lang,
-            userId,
-            activityId,
-            state: {
-                notice: { emoji: '⚠️', title: 'Crime', text: cd.message || 'No pude procesarlo ahora mismo.' },
-                seed: Number.isFinite(Number.parseInt(seedRaw, 10)) ? Number.parseInt(seedRaw, 10) : undefined,
-            },
-        });
-        await interaction.editReply(payload).catch(() => null);
         return true;
     }
 

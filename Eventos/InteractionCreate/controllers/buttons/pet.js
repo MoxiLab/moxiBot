@@ -84,9 +84,9 @@ async function replyEphemeralNotice(interaction, { emoji, title, text }) {
     } catch { }
 }
 
-async function startPetExploration({ interaction, eco, pet, userId, ownerName, zone, now }) {
+async function startPetExploration({ interaction, eco, pet, userId, ownerName, lang = 'es-ES', zone, now }) {
     if (!zone) {
-        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet }));
+        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ lang, userId, ownerName, pet }));
         await replyEphemeralNotice(interaction, {
             emoji: EMOJIS.cross,
             title: 'Exploración',
@@ -101,7 +101,7 @@ async function startPetExploration({ interaction, eco, pet, userId, ownerName, z
         const endAt = currentTrip.endAt ? new Date(currentTrip.endAt).getTime() : null;
         const remainingMs = endAt && Number.isFinite(endAt) ? Math.max(0, endAt - now) : null;
 
-        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet }));
+        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ lang, userId, ownerName, pet }));
         await replyEphemeralNotice(interaction, {
             emoji: EMOJIS.info,
             title: 'Exploración • En curso',
@@ -114,7 +114,7 @@ async function startPetExploration({ interaction, eco, pet, userId, ownerName, z
     const progress = ensureExploreProgress(pet);
     const zoneTier = getExploreZoneTier(zone.id);
     if (zoneTier == null) {
-        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet }));
+        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet, lang }));
         await replyEphemeralNotice(interaction, {
             emoji: EMOJIS.cross,
             title: 'Exploración',
@@ -127,7 +127,7 @@ async function startPetExploration({ interaction, eco, pet, userId, ownerName, z
         const need = 3;
         const left = Math.max(0, need - progress.completedInRank);
 
-        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet }));
+        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet, lang }));
         await replyEphemeralNotice(interaction, {
             emoji: EMOJIS.noEntry,
             title: 'Exploración • Bloqueado',
@@ -141,7 +141,7 @@ async function startPetExploration({ interaction, eco, pet, userId, ownerName, z
     if (requiredItemId && !hasInventoryItem(eco, requiredItemId, 1)) {
         const required = getItemById(requiredItemId, { lang });
         const requiredName = required?.name || String(requiredItemId).split('/').pop() || requiredItemId;
-        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet }));
+        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet, lang }));
         await replyEphemeralNotice(interaction, {
             emoji: EMOJIS.noEntry,
             title: 'Exploración • Requisito',
@@ -154,7 +154,7 @@ async function startPetExploration({ interaction, eco, pet, userId, ownerName, z
     const cooldownSec = Math.max(1, Math.trunc(Number(process.env.PET_EXPLORE_COOLDOWN_SECONDS) || 600));
     const cd = await claimCooldown({ userId, field: 'lastExplore', cooldownMs: cooldownSec * 1000 });
     if (!cd.ok && cd.reason === 'cooldown') {
-        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet }));
+        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet, lang }));
         await replyEphemeralNotice(interaction, {
             emoji: '⏳',
             title: 'Exploración • Cooldown',
@@ -164,7 +164,7 @@ async function startPetExploration({ interaction, eco, pet, userId, ownerName, z
     }
 
     if (!cd.ok) {
-        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet }));
+        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet, lang }));
         await replyEphemeralNotice(interaction, {
             emoji: '⚠️',
             title: 'Exploración',
@@ -199,12 +199,13 @@ async function startPetExploration({ interaction, eco, pet, userId, ownerName, z
     const zoneName = String(zone?.name || zone?.id || 'Zona');
 
     const payload = buildPetActionResultMessageOptions({
+        lang,
         userId,
         title: 'Exploración',
         text: `¡${petName} ha iniciado su viaje! Su destino: ${emoji} ${zoneName}`,
         gifUrl: null,
         buttons: [
-            { customId: `pet:exploreFinish:${String(userId)}`, label: 'Finalizar', emoji: '✅', style: 3 },
+            { customId: `pet:exploreFinish:${String(userId)}`, label: moxi.translate('FINISH', lang) || 'Finalizar', emoji: '✅', style: 3 },
         ],
     });
 
@@ -262,13 +263,13 @@ module.exports = async function petButtons(interaction) {
     const ownerName = interaction.user?.username || 'Usuario';
 
     if (action === 'open') {
-        const payload = buildPetPanelMessageOptions({ userId, ownerName, pet });
+        const payload = buildPetPanelMessageOptions({ lang, userId, ownerName, pet });
         await safeUpdateOrReply(interaction, payload);
         return true;
     }
 
     if (action === 'train') {
-        const payload = buildPetTrainingMessageOptions({ userId, ownerName, pet });
+        const payload = buildPetTrainingMessageOptions({ lang, userId, ownerName, pet });
         await safeUpdateOrReply(interaction, payload);
         return true;
     }
@@ -331,7 +332,7 @@ module.exports = async function petButtons(interaction) {
         eco.markModified('pets');
         await eco.save().catch(() => null);
 
-        const payload = buildPetTrainingMessageOptions({ userId, ownerName, pet });
+        const payload = buildPetTrainingMessageOptions({ userId, ownerName, pet, lang });
         await safeUpdateOrReply(interaction, payload);
         return true;
     }
@@ -377,7 +378,7 @@ module.exports = async function petButtons(interaction) {
         }
 
         const zone = (Array.isArray(EXPLORE_ZONES) ? EXPLORE_ZONES : []).find(z => String(z?.id || '') === selectedZoneId);
-        return startPetExploration({ interaction, eco, pet, userId, ownerName, zone, now });
+        return startPetExploration({ interaction, eco, pet, userId, ownerName, lang, zone, now });
     }
 
     if (action === 'exploreFinish') {
@@ -434,6 +435,7 @@ module.exports = async function petButtons(interaction) {
 
         const payload = buildPetActionResultMessageOptions({
             userId,
+            lang,
             title: 'Exploración',
             text: `¡${petName} ha vuelto de su viaje! Destino: ${emoji} ${zoneName}\n\n${progressText}`,
             gifUrl: null,
@@ -449,11 +451,11 @@ module.exports = async function petButtons(interaction) {
             const zone = (Array.isArray(EXPLORE_ZONES) ? EXPLORE_ZONES : []).find(z => String(z?.id || '') === selected);
 
             // Seleccionar una zona inicia la exploración directamente
-            return startPetExploration({ interaction, eco, pet, userId, ownerName, zone, now });
+            return startPetExploration({ interaction, eco, pet, userId, ownerName, lang, zone, now });
         }
 
         // Caso "soon" o vacío
-        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet }));
+        await safeUpdateOrReply(interaction, buildPetPanelMessageOptions({ userId, ownerName, pet, lang }));
         if (selected === 'soon') {
             await replyEphemeralNotice(interaction, {
                 emoji: EMOJIS.info,
@@ -469,7 +471,7 @@ module.exports = async function petButtons(interaction) {
 
         // Entrenar abre el panel de stats (tipo Nekotina)
         if (act === 'train') {
-            const payload = buildPetTrainingMessageOptions({ userId, ownerName, pet });
+            const payload = buildPetTrainingMessageOptions({ userId, ownerName, pet, lang });
             await safeUpdateOrReply(interaction, payload);
             return true;
         }
@@ -536,6 +538,7 @@ module.exports = async function petButtons(interaction) {
 
             const payload = buildPetActionResultMessageOptions({
                 userId,
+                lang,
                 title,
                 text,
                 gifUrl,
@@ -573,7 +576,7 @@ module.exports = async function petButtons(interaction) {
             }
         }
 
-        const payload = buildPetPanelMessageOptions({ userId, ownerName, pet });
+        const payload = buildPetPanelMessageOptions({ userId, ownerName, pet, lang });
         await safeUpdateOrReply(interaction, payload);
         return true;
     }

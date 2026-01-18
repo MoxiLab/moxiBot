@@ -18,9 +18,10 @@ module.exports = async function balanceButtons(interaction) {
     // Solo el viewer puede tocar el panel
     if (interaction.user?.id !== String(viewerId)) {
         const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
+        const t = (k, vars = {}) => moxi.translate(`economy/balance:${k}`, lang, vars);
         const payload = {
             content: '',
-            components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: 'Solo el autor puede usar estos botones.' })],
+            components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: t('ONLY_AUTHOR') })],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
         };
         if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
@@ -32,9 +33,11 @@ module.exports = async function balanceButtons(interaction) {
     const canAct = String(viewerId) === String(targetId);
 
     if ((action === 'deposit' || action === 'withdraw') && !canAct) {
+        const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
+        const t = (k, vars = {}) => moxi.translate(`economy/balance:${k}`, lang, vars);
         const payload = {
             content: '',
-            components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: 'Solo puedes gestionar tu propio balance.' })],
+            components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: t('ONLY_OWN_BALANCE') })],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
         };
         if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
@@ -46,9 +49,11 @@ module.exports = async function balanceButtons(interaction) {
         const eco = await getOrCreateEconomyRaw(targetId);
         const bal = Math.max(0, Math.trunc(Number(eco?.balance) || 0));
         if (bal <= 0) {
+            const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
+            const t = (k, vars = {}) => moxi.translate(`economy/balance:${k}`, lang, vars);
             const payload = {
                 content: '',
-                components: [buildNoticeContainer({ emoji: EMOJIS.info, text: 'No tienes coins para depositar.' })],
+                components: [buildNoticeContainer({ emoji: EMOJIS.info, text: t('NO_COINS_TO_DEPOSIT') })],
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
             };
             if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
@@ -66,9 +71,11 @@ module.exports = async function balanceButtons(interaction) {
         const eco = await getOrCreateEconomyRaw(targetId);
         const bank = Math.max(0, Math.trunc(Number(eco?.bank) || 0));
         if (bank <= 0) {
+            const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
+            const t = (k, vars = {}) => moxi.translate(`economy/balance:${k}`, lang, vars);
             const payload = {
                 content: '',
-                components: [buildNoticeContainer({ emoji: EMOJIS.info, text: 'No tienes coins en el banco para retirar.' })],
+                components: [buildNoticeContainer({ emoji: EMOJIS.info, text: t('NO_COINS_TO_WITHDRAW') })],
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
             };
             if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
