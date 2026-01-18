@@ -38,6 +38,21 @@ function buildCrimePanel({ lang = 'es-ES', userId, activityId, state = {} } = {}
 
     container.addTextDisplayComponents(c => c.setContent([header, body].join('\n')));
 
+    const notice = state?.notice;
+    if (notice && (notice.title || notice.text)) {
+        container.addSeparatorComponents(s => s.setDivider(true));
+
+        if (notice.title) {
+            const titleLine = notice.emoji ? `# ${notice.emoji} ${notice.title}` : `# ${notice.title}`;
+            container.addTextDisplayComponents(c => c.setContent(titleLine));
+            container.addSeparatorComponents(s => s.setDivider(true));
+        }
+
+        if (notice.text) {
+            container.addTextDisplayComponents(c => c.setContent(String(notice.text)));
+        }
+    }
+
     const disabled = Boolean(state.disabled);
 
     // Acciones según tipo

@@ -1,10 +1,13 @@
 const {
     ContainerBuilder,
+    ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle,
     MessageFlags,
     StringSelectMenuBuilder,
     ThumbnailBuilder,
+    MediaGalleryBuilder,
+    MediaGalleryItemBuilder,
 } = require('discord.js');
 
 const { Bot } = require('../Config');
@@ -134,30 +137,29 @@ function buildPetTrainingMessageOptions({ userId, ownerName, pet, disabled = fal
         .addSeparatorComponents(s => s.setDivider(true))
         .addTextDisplayComponents(t => t.setContent(statsText));
 
-    // Botones azules en hilera (3 por fila) como el estilo que quieres.
-    container.addActionRowComponents(r => r.addComponents(
+    // Botones fuera del container (a nivel de mensaje)
+    const row1 = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
             .setCustomId(`pet:stat:${safeUserId}:attack`)
-            .setStyle(ButtonStyle.Primary)
+            .setStyle(ButtonStyle.Secondary)
             .setEmoji('⚔️')
             .setDisabled(Boolean(disabled)),
         new ButtonBuilder()
             .setCustomId(`pet:stat:${safeUserId}:defense`)
-            .setStyle(ButtonStyle.Primary)
+            .setStyle(ButtonStyle.Secondary)
             .setEmoji('🛡️')
             .setDisabled(Boolean(disabled)),
         new ButtonBuilder()
             .setCustomId(`pet:stat:${safeUserId}:resistance`)
-            .setStyle(ButtonStyle.Primary)
+            .setStyle(ButtonStyle.Secondary)
             .setEmoji('🧬')
             .setDisabled(Boolean(disabled))
-    ));
+    );
 
-    // El cuarto stat pasa a la segunda fila junto al menú/ayuda.
-    container.addActionRowComponents(r => r.addComponents(
+    const row2 = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
             .setCustomId(`pet:stat:${safeUserId}:hunt`)
-            .setStyle(ButtonStyle.Primary)
+            .setStyle(ButtonStyle.Secondary)
             .setEmoji('🏹')
             .setDisabled(Boolean(disabled)),
         new ButtonBuilder()
@@ -171,11 +173,11 @@ function buildPetTrainingMessageOptions({ userId, ownerName, pet, disabled = fal
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('📖')
             .setDisabled(Boolean(disabled))
-    ));
+    );
 
     return {
         content: '',
-        components: [container],
+        components: [container, row1, row2],
         flags: MessageFlags.IsComponentsV2,
         allowedMentions: { repliedUser: false },
     };
@@ -205,6 +207,7 @@ function buildPetPanelMessageOptions({
 
     const away = attrs?.away || null;
     const selectedZoneId = attrs?.selectedZoneId ? String(attrs.selectedZoneId) : null;
+    const exploring = Boolean(attrs?.exploration && typeof attrs.exploration === 'object' && attrs.exploration.zoneId);
 
     const createdAt = attrs?.createdAt ? new Date(attrs.createdAt).getTime() : null;
     const since = createdAt && Number.isFinite(createdAt) ? formatSince(Date.now() - createdAt) : null;
@@ -249,7 +252,7 @@ function buildPetPanelMessageOptions({
     }
 
     const zoneOptions = normalizeZoneOptions(EXPLORE_ZONES, selectedZoneId);
-    const disableZoneSelect = (disabled || Boolean(away) || zoneOptions.length === 1 && zoneOptions[0]?.value === 'soon');
+    const disableZoneSelect = (disabled || Boolean(away) || exploring || zoneOptions.length === 1 && zoneOptions[0]?.value === 'soon');
 
     const zoneSelect = new StringSelectMenuBuilder()
         .setCustomId(`pet:zone:${safeUserId}`)
@@ -259,30 +262,31 @@ function buildPetPanelMessageOptions({
         .setDisabled(disableZoneSelect)
         .addOptions(...zoneOptions);
 
-    container.addActionRowComponents(row => row.addComponents(zoneSelect));
+    // El select va dentro del container (dentro del “embed”)
+    container.addActionRowComponents(r => r.addComponents(zoneSelect));
 
-    container.addActionRowComponents(row => row.addComponents(
+    const actionRowMain = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:play`)
             .setLabel('Jugar')
-            .setStyle(ButtonStyle.Primary)
+            .setStyle(ButtonStyle.Secondary)
             .setEmoji('🎮')
             .setDisabled(disabled || Boolean(away)),
         new ButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:feed`)
             .setLabel('Alimentar')
-            .setStyle(ButtonStyle.Primary)
+            .setStyle(ButtonStyle.Secondary)
             .setEmoji('🍎')
             .setDisabled(disabled || Boolean(away)),
         new ButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:clean`)
             .setLabel('Limpiar')
-            .setStyle(ButtonStyle.Primary)
+            .setStyle(ButtonStyle.Secondary)
             .setEmoji('🧼')
             .setDisabled(disabled || Boolean(away))
-    ));
+    );
 
-    container.addActionRowComponents(row => row.addComponents(
+    const actionRowSecondary = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:train`)
             .setLabel('Entrenar')
@@ -290,22 +294,16 @@ function buildPetPanelMessageOptions({
             .setEmoji('🏋️')
             .setDisabled(disabled || Boolean(away)),
         new ButtonBuilder()
-            .setCustomId(`pet:exploreStart:${safeUserId}`)
-            .setLabel('Explorar')
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('🧭')
-            .setDisabled(disabled || Boolean(away)),
-        new ButtonBuilder()
             .setCustomId(`pet:renameModal:${safeUserId}`)
             .setLabel('Cambiar nombre')
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('📝')
             .setDisabled(disabled || Boolean(away))
-    ));
+    );
 
     return {
         content: '',
-        components: [container],
+        components: [container, actionRowMain, actionRowSecondary],
         flags: MessageFlags.IsComponentsV2,
         allowedMentions: { repliedUser: false },
     };
@@ -341,42 +339,41 @@ function buildPetActionResultMessageOptions({
         container.addTextDisplayComponents(t => t.setContent(`## ${safeTitle}\n${safeText}`));
     }
 
-    container.addActionRowComponents(row => {
-        const built = [];
+    const built = [];
 
-        for (const b of extraButtons.slice(0, 4)) {
-            const customId = String(b?.customId || '').trim();
-            if (!customId) continue;
-            const label = b?.label != null ? String(b.label) : null;
-            const emoji = b?.emoji != null ? String(b.emoji) : null;
-            const style = Number.isFinite(Number(b?.style)) ? Number(b.style) : ButtonStyle.Secondary;
+    for (const b of extraButtons.slice(0, 4)) {
+        const customId = String(b?.customId || '').trim();
+        if (!customId) continue;
+        const label = b?.label != null ? String(b.label) : null;
+        const emoji = b?.emoji != null ? String(b.emoji) : null;
+        const style = Number.isFinite(Number(b?.style)) ? Number(b.style) : ButtonStyle.Secondary;
 
-            const btn = new ButtonBuilder()
-                .setCustomId(customId)
-                .setStyle(style)
-                .setDisabled(Boolean(disabled));
+        const btn = new ButtonBuilder()
+            .setCustomId(customId)
+            .setStyle(style)
+            .setDisabled(Boolean(disabled));
 
-            if (label) btn.setLabel(label);
-            if (emoji) btn.setEmoji(emoji);
+        if (label) btn.setLabel(label);
+        if (emoji) btn.setEmoji(emoji);
 
-            built.push(btn);
-        }
+        built.push(btn);
+    }
 
-        built.push(
-            new ButtonBuilder()
-                .setCustomId(`pet:open:${safeUserId}`)
-                .setLabel('Menú')
-                .setStyle(ButtonStyle.Primary)
-                .setEmoji('⬅️')
-                .setDisabled(Boolean(disabled))
-        );
+    // Botón de vuelta al menú
+    built.push(
+        new ButtonBuilder()
+            .setCustomId(`pet:open:${safeUserId}`)
+            .setLabel('Menú')
+            .setStyle(ButtonStyle.Secondary)
+            .setEmoji('⬅️')
+            .setDisabled(Boolean(disabled))
+    );
 
-        return row.addComponents(...built);
-    });
+    const actionRow = new ActionRowBuilder().addComponents(...built);
 
     return {
         content: '',
-        components: [container],
+        components: [container, actionRow],
         flags: MessageFlags.IsComponentsV2,
         allowedMentions: { repliedUser: false },
     };
