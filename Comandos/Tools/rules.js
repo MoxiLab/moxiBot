@@ -93,7 +93,7 @@ module.exports = {
       const sent = await message.channel.send({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
       // Guardar en MongoDB el canal y mensaje de reglas
       try {
-        const GuildMessage = require('../../Models/GuildMessage');
+        const GuildMessage = require('../../Models/GuildMessageSchema');
         await GuildMessage.findOneAndUpdate(
           { guildId: message.guild.id, type: 'rules' },
           {
