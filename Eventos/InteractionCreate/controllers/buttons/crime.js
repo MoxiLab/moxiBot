@@ -31,11 +31,12 @@ async function takeBalance({ userId, amount } = {}) {
     return { ok: true, amount: loss, balance: Number.isFinite(updated?.balance) ? updated.balance : Math.max(0, current - loss) };
 }
 
-function ephemeralNotice({ emoji, title, text }) {
+function noticeMessage({ emoji, title, text }) {
     return {
         content: '',
         components: [buildNoticeContainer({ emoji, title, text })],
-        flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
+        flags: MessageFlags.IsComponentsV2,
+        allowedMentions: { repliedUser: false },
     };
 }
 
@@ -87,27 +88,42 @@ module.exports = async function crimeButtons(interaction, Moxi, logger) {
 
     const activity = getCrimeActivity(activityId);
     if (!activity) {
-        await interaction.reply(ephemeralNotice({ emoji: EMOJIS.cross, title: 'Crime', text: 'Esa actividad ya no existe.' })).catch(() => null);
+        await interaction.update(noticeMessage({ emoji: EMOJIS.cross, title: 'Crime', text: 'Esa actividad ya no existe.' })).catch(() => null);
         return true;
     }
 
-    // Mantener el panel: deferUpdate y contestar resultado en ephemeral
+    // Mantener el panel: deferUpdate y actualizar el mismo mensaje (sin ephemeral)
     if (!interaction.deferred && !interaction.replied) {
         await interaction.deferUpdate().catch(() => null);
     }
 
     const cd = await claimCooldown({ userId, field: 'lastCrime', cooldownMs: CRIME_COOLDOWN_MS });
     if (!cd.ok && cd.reason === 'cooldown') {
-        await interaction.followUp(ephemeralNotice({
-            emoji: '⏳',
-            title: 'Crime • Cooldown',
-            text: `Aún es muy pronto. Vuelve en **${formatDuration(cd.nextInMs)}**.`,
-        })).catch(() => null);
+        const payload = {
+            content: '',
+            components: [buildNoticeContainer({
+                emoji: '⏳',
+                title: 'Crime • Cooldown',
+                text: `Aún es muy pronto. Vuelve en **${formatDuration(cd.nextInMs)}**.`,
+            })],
+            flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
+            allowedMentions: { repliedUser: false },
+        };
+        await interaction.followUp(payload).catch(() => null);
         return true;
     }
 
     if (!cd.ok) {
-        await interaction.followUp(ephemeralNotice({ emoji: '⚠️', title: 'Crime', text: cd.message || 'No pude procesarlo ahora mismo.' })).catch(() => null);
+        const payload = buildCrimeMessageOptions({
+            lang,
+            userId,
+            activityId,
+            state: {
+                notice: { emoji: '⚠️', title: 'Crime', text: cd.message || 'No pude procesarlo ahora mismo.' },
+                seed: Number.isFinite(Number.parseInt(seedRaw, 10)) ? Number.parseInt(seedRaw, 10) : undefined,
+            },
+        });
+        await interaction.editReply(payload).catch(() => null);
         return true;
     }
 
@@ -120,7 +136,15 @@ module.exports = async function crimeButtons(interaction, Moxi, logger) {
     if (activity.kind === 'buttons') {
         const opt = (activity.options || []).find(o => String(o.id) === String(choice));
         if (!opt) {
-            await interaction.followUp(ephemeralNotice({ emoji: EMOJIS.cross, title: 'Crime', text: 'Opción inválida.' })).catch(() => null);
+            const payload = buildCrimeMessageOptions({
+                lang,
+                userId,
+                activityId,
+                state: {
+                    notice: { emoji: EMOJIS.cross, title: 'Crime', text: 'Opción inválida.' },
+                },
+            });
+            await interaction.editReply(payload).catch(() => null);
             return true;
         }
         successChance = opt.successChance;
@@ -140,7 +164,15 @@ module.exports = async function crimeButtons(interaction, Moxi, logger) {
     } else if (activity.kind === 'risk') {
         const r = (activity.risks || []).find(x => String(x.id) === String(choice));
         if (!r) {
-            await interaction.followUp(ephemeralNotice({ emoji: EMOJIS.cross, title: 'Crime', text: 'Riesgo inválido.' })).catch(() => null);
+            const payload = buildCrimeMessageOptions({
+                lang,
+                userId,
+                activityId,
+                state: {
+                    notice: { emoji: EMOJIS.cross, title: 'Crime', text: 'Riesgo inválido.' },
+                },
+            });
+            await interaction.editReply(payload).catch(() => null);
             return true;
         }
         successChance = r.successChance;
@@ -158,7 +190,16 @@ module.exports = async function crimeButtons(interaction, Moxi, logger) {
         extraTitle = crimeWireLabel(lang, choice);
         success = String(choice) === String(goodWireId);
     } else {
-        await interaction.followUp(ephemeralNotice({ emoji: EMOJIS.cross, title: 'Crime', text: 'Actividad no soportada.' })).catch(() => null);
+        const payload = buildCrimeMessageOptions({
+            lang,
+            userId,
+            activityId,
+            state: {
+                notice: { emoji: EMOJIS.cross, title: 'Crime', text: 'Actividad no soportada.' },
+                seed: Number.isFinite(Number.parseInt(seedRaw, 10)) ? Number.parseInt(seedRaw, 10) : undefined,
+            },
+        });
+        await interaction.editReply(payload).catch(() => null);
         return true;
     }
 
@@ -168,7 +209,16 @@ module.exports = async function crimeButtons(interaction, Moxi, logger) {
         const amount = randInt(rewardRange?.min ?? 40, rewardRange?.max ?? 150);
         const res = await awardBalance({ userId, amount });
         if (!res.ok) {
-            await interaction.followUp(ephemeralNotice({ emoji: '⚠️', title: 'Crime', text: res.message || 'No pude darte la recompensa.' })).catch(() => null);
+            const payload = buildCrimeMessageOptions({
+                lang,
+                userId,
+                activityId,
+                state: {
+                    notice: { emoji: '⚠️', title: 'Crime', text: res.message || 'No pude darte la recompensa.' },
+                    seed: Number.isFinite(Number.parseInt(seedRaw, 10)) ? Number.parseInt(seedRaw, 10) : undefined,
+                },
+            });
+            await interaction.editReply(payload).catch(() => null);
             return true;
         }
 
@@ -179,7 +229,18 @@ module.exports = async function crimeButtons(interaction, Moxi, logger) {
             Number.isFinite(res?.balance) ? `Saldo: **${res.balance}** ${coin}` : '',
         ].filter(Boolean);
 
-        await interaction.followUp(ephemeralNotice({ emoji: '✅', title: 'Crime • Éxito', text: lines.join('\n') })).catch(() => null);
+        const disabledPanel = buildCrimeMessageOptions({
+            lang,
+            userId,
+            activityId: activity.id,
+            state: {
+                disabled: true,
+                seed: Number.isFinite(Number.parseInt(seedRaw, 10)) ? Number.parseInt(seedRaw, 10) : undefined,
+                notice: { emoji: '✅', title: 'Crime • Éxito', text: lines.join('\n') },
+            },
+        });
+
+        await interaction.editReply(disabledPanel).catch(() => null);
     } else {
         const fine = randInt(fineRange?.min ?? 20, fineRange?.max ?? 120);
         const res = await takeBalance({ userId, amount: fine });
@@ -191,20 +252,18 @@ module.exports = async function crimeButtons(interaction, Moxi, logger) {
             Number.isFinite(res?.balance) ? `Saldo: **${res.balance}** ${coin}` : '',
         ].filter(Boolean);
 
-        await interaction.followUp(ephemeralNotice({ emoji: '🚓', title: 'Crime • Fallo', text: lines.join('\n') })).catch(() => null);
+        const disabledPanel = buildCrimeMessageOptions({
+            lang,
+            userId,
+            activityId: activity.id,
+            state: {
+                disabled: true,
+                seed: Number.isFinite(Number.parseInt(seedRaw, 10)) ? Number.parseInt(seedRaw, 10) : undefined,
+                notice: { emoji: '🚓', title: 'Crime • Fallo', text: lines.join('\n') },
+            },
+        });
+
+        await interaction.editReply(disabledPanel).catch(() => null);
     }
-
-    // Deshabilita el panel para que no se reuse (el cooldown también protege)
-    const disabledPanel = buildCrimeMessageOptions({
-        lang,
-        userId,
-        activityId: activity.id,
-        state: {
-            disabled: true,
-            seed: Number.isFinite(Number.parseInt(seedRaw, 10)) ? Number.parseInt(seedRaw, 10) : undefined,
-        },
-    });
-
-    await interaction.message?.edit?.(disabledPanel).catch(() => null);
     return true;
 };

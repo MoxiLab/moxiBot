@@ -42,9 +42,9 @@ module.exports = async function crimeSelectMenus(interaction, Moxi, logger) {
     const payload = {
         content: '',
         components: [buildNoticeContainer({ emoji: EMOJIS.cross, title: 'Crime', text: 'Menú no reconocido.' })],
-        flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
+        flags: MessageFlags.IsComponentsV2,
     };
-    if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
-    else await interaction.reply(payload).catch(() => null);
+    if (interaction.deferred) await interaction.editReply(payload).catch(() => null);
+    else await interaction.update(payload).catch(() => null);
     return true;
 };
