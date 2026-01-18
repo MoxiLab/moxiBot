@@ -154,7 +154,8 @@ Moxi.on("messageCreate", async (message) => {
     settings = await getGuildSettingsCached(message.guild.id);
     message.guild.settings = settings;
     // Compat: algunos comandos nuevos usan message.translate('misc:KEY', vars)
-    const langForTranslate = settings?.Language ? String(settings.Language) : (process.env.DEFAULT_LANG || 'es-ES');
+    const dbLang = settings?.Language ?? settings?.language ?? settings?.LANGUAGE ?? settings?.lang;
+    const langForTranslate = dbLang ? String(dbLang) : (process.env.DEFAULT_LANG || 'es-ES');
     message.lang = langForTranslate;
     message.translate = (key, vars = {}) => moxi.translate(key, langForTranslate, vars);
     // Prefijo principal centralizado (sin depender de cómo venga settings.Prefix)
