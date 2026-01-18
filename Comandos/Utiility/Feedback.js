@@ -10,7 +10,7 @@ const debugHelper = require('../../Util/debugHelper');
 
 module.exports = {
     name: 'feedback',
-    alias: [],
+    alias: ['feedback'],
     description: 'Share your thoughts about the bot',
     usage: 'feedback <text>',
     category: 'Utility',
