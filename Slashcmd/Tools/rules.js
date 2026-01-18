@@ -56,7 +56,7 @@ module.exports = {
 
     // Guardar en MongoDB el canal y mensaje de reglas
     try {
-      const GuildMessage = require('../../Models/GuildMessage');
+      const GuildMessage = require('../../Models/GuildMessageSchema');
       await GuildMessage.findOneAndUpdate(
         { guildId: interaction.guild.id, type: 'rules' },
         {

@@ -8,7 +8,7 @@ function economyCategory(lang) {
 }
 
 function buildHelpText() {
-    const cmd = (subName) => `\`/auction ${subName}\``;
+    const cmd = (subName) => `/auction ${subName}`;
     return (
         'Subasta y puja por items en el mercado de subastas de Moxi.\n\n' +
         '**Puedes hacer uso de los siguientes subcomandos:**\n\n' +
@@ -66,7 +66,7 @@ module.exports = {
                 buildNoticeContainer({
                     emoji: EMOJIS.info,
                     title: `Auction • ${sub}`,
-                    text: 'Este subcomando está en construcción.\nUsa `/auction help` para ver los subcomandos.',
+                    text: 'Este subcomando está en construcción.\nUsa /auction help para ver los subcomandos.',
                 })
             )
         );

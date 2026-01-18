@@ -6,6 +6,7 @@ const { getOrCreateEconomy } = require('../../Util/economyCore');
 const { getZonesForKind } = require('../../Util/zonesView');
 const { hasInventoryItem } = require('../../Util/fishView');
 const { buildFishPlayMessageOptions } = require('../../Util/fishPlay');
+const { slashMention } = require('../../Util/slashCommandMentions');
 
 function normalizeKey(input) {
     return String(input || '')
@@ -55,6 +56,16 @@ module.exports = {
         const guildId = interaction.guildId || interaction.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
 
+        const applicationId = process.env.CLIENT_ID || interaction.client?.application?.id;
+        let zonesMention = '/zones';
+        if (applicationId) {
+            try {
+                zonesMention = await slashMention({ name: 'zones', applicationId, guildId });
+            } catch {
+                // keep fallback
+            }
+        }
+
         const zoneInput = interaction.options.getString('zona');
         const userId = interaction.user.id;
 
@@ -69,7 +80,7 @@ module.exports = {
                         buildNoticeContainer({
                             emoji: '⚠️',
                             title: 'Fish',
-                            text: 'Zona inválida. Usa `/zones tipo: Pesca` para ver las zonas disponibles.',
+                            text: `Zona inválida.\nVer zonas: ${zonesMention}\nTipo: Pesca`,
                         })
                     ),
                     flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
@@ -88,7 +99,7 @@ module.exports = {
                     buildNoticeContainer({
                         emoji: '⛔',
                         title: 'Fish • Requisito',
-                        text: `Para empezar a pescar necesitas: **${requiredName}**\nZonas: \`/zones tipo: Pesca\``,
+                        text: `Para empezar a pescar necesitas: **${requiredName}**\nVer zonas: ${zonesMention}\nTipo: Pesca`,
                     })
                 ),
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,

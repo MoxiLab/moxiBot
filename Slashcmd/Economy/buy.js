@@ -50,12 +50,12 @@ module.exports = {
             );
         }
 
-        const { UserEconomy } = require('../../Models/EconomySchema');
+        const { Economy } = require('../../Models/EconomySchema');
 
         const userId = interaction.user.id;
-        let eco = await UserEconomy.findOne({ userId });
+        let eco = await Economy.findOne({ userId });
         if (!eco) {
-            eco = await UserEconomy.create({ userId, balance: 0, bank: 0, sakuras: 0 });
+            eco = await Economy.create({ userId, balance: 0, bank: 0, sakuras: 0 });
         }
 
         const price = Number.isFinite(item.price) ? item.price : 0;

@@ -16,6 +16,7 @@ const {
 const { formatDuration } = require('../../Util/economyCore');
 const { buildWorkListMessageOptions } = require('../../Util/workListPanel');
 const { buildWorkApplyMessageOptions } = require('../../Util/workApplyPanel');
+const { slashMention } = require('../../Util/slashCommandMentions');
 
 function economyCategory(lang) {
     lang = lang || 'es-ES';
@@ -136,6 +137,18 @@ module.exports = {
         const guildId = interaction.guildId || interaction.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
 
+        const applicationId = process.env.CLIENT_ID || interaction.client?.application?.id;
+        let workListMention = '/work list';
+        let workApplyMention = '/work apply';
+        if (applicationId) {
+            try {
+                workListMention = await slashMention({ name: 'work', subcommand: 'list', applicationId, guildId });
+                workApplyMention = await slashMention({ name: 'work', subcommand: 'apply', applicationId, guildId });
+            } catch {
+                // keep fallbacks
+            }
+        }
+
         const sub = interaction.options.getSubcommand();
 
         if (sub === 'list') {
@@ -151,7 +164,7 @@ module.exports = {
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
                         title: 'Trabajo no encontrado',
-                        text: `No encontré el trabajo **${query}**. Usa \`/work list\`.`,
+                        text: `No encontré el trabajo **${query}**.\nVer lista: ${workListMention}`,
                     })
                 );
                 return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
@@ -179,7 +192,7 @@ module.exports = {
                 buildNoticeContainer({
                     emoji: '👋',
                     title: 'Trabajo eliminado',
-                    text: 'Has dejado tu trabajo. Usa `/work apply` para elegir otro.',
+                    text: `Has dejado tu trabajo.\nElegir otro: ${workApplyMention}`,
                 })
             );
             return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
@@ -251,7 +264,7 @@ module.exports = {
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
                         title: 'Sin trabajo',
-                        text: 'No tienes un trabajo activo. Usa `/work apply` primero.',
+                        text: `No tienes un trabajo activo.\nEmpieza aquí: ${workApplyMention}`,
                     })
                 );
                 return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });

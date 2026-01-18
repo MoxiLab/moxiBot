@@ -115,7 +115,7 @@ module.exports = {
                 }
                 // Guardar en GuildMessage el hilo guía
                 try {
-                    const GuildMessage = require('../../Models/GuildMessage');
+                    const GuildMessage = require('../../Models/GuildMessageSchema');
                     await GuildMessage.findOneAndUpdate(
                         { guildId: guild.id, type: 'bugGuide' },
                         {
