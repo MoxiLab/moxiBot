@@ -35,17 +35,18 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('mine')
-        .setDescription('Minería (minijuego con botones)')
+        .setDescription('Mining (button minigame)')
         .addStringOption((opt) =>
             opt
                 .setName('zona')
-                .setDescription('Zona de minería (id o alias). Si se omite, elige una disponible.')
+                .setDescription('Mining zone (id or alias). If omitted, picks an available one.')
                 .setRequired(false)
         ),
 
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const t = (k, vars) => moxi.translate(`economy/mine:${k}`, lang, vars);
 
         const applicationId = process.env.CLIENT_ID || interaction.client?.application?.id;
         let zonesMention = '/zones';
@@ -70,8 +71,8 @@ module.exports = {
                     ...asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: '⚠️',
-                            title: 'Mine',
-                            text: `Zona inválida.\nVer zonas: ${zonesMention}\nTipo: Minería`,
+                            title: t('ERROR_TITLE'),
+                            text: [t('INVALID_ZONE'), t('SLASH_VIEW_ZONES', { zones: zonesMention })].filter(Boolean).join('\n'),
                         })
                     ),
                     flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
@@ -89,8 +90,8 @@ module.exports = {
                 ...asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: '⛔',
-                        title: 'Mine • Requisito',
-                        text: `Para empezar a minar necesitas: **${requiredName}**\nVer zonas: ${zonesMention}\nTipo: Minería`,
+                        title: t('REQUIREMENT_TITLE'),
+                        text: [t('SLASH_NEED_ITEM', { item: requiredName }), t('SLASH_VIEW_ZONES', { zones: zonesMention })].filter(Boolean).join('\n'),
                     })
                 ),
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
@@ -105,14 +106,14 @@ module.exports = {
                     buildNoticeContainer({
                         emoji: '⛔',
                         title: `Mine • ${zone.name}`,
-                        text: `Para minar aquí necesitas: **${requiredName}**`,
+                        text: t('SLASH_NEED_ITEM_HERE', { item: requiredName }),
                     })
                 ),
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
             });
         }
 
-        const payload = buildMinePlayMessageOptions({ userId, zoneId: zone.id });
+        const payload = buildMinePlayMessageOptions({ userId, zoneId: zone.id, lang });
         return interaction.reply({
             ...payload,
             flags: payload.flags & ~MessageFlags.Ephemeral,

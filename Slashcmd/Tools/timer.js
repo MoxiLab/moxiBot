@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 const fetch = require('node-fetch');
+const moxi = require('../../i18n');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,6 +12,7 @@ module.exports = {
                 .setRequired(true)
         ),
     async run(Moxi, interaction) {
+        const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
         const minutos = interaction.options.getInteger('minutos');
         if (minutos < 1 || minutos > 1440) {
             return interaction.reply({ content: 'Elige entre 1 y 1440 minutos.', ephemeral: true });
@@ -39,7 +41,7 @@ module.exports = {
             row.addComponents(
                 new ButtonBuilder()
                     .setCustomId('cancel_timer')
-                    .setLabel('Cancelar')
+                    .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
                     .setStyle(ButtonStyle.Danger)
             )
         );

@@ -3,6 +3,7 @@ const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildShopData, buildShopMessage } = require('../../Util/shopView');
+const { resolveItemFromInput } = require('../../Util/useItem');
 
 module.exports = {
     cooldown: 0,
@@ -34,12 +35,18 @@ module.exports = {
         .addSubcommand((sc) =>
             sc
                 .setName('buy')
-                .setDescription('Compra un ítem por su ID de la tienda')
+                .setDescription('Compra un ítem por su ID, nombre o itemId de la tienda')
+                .addStringOption((opt) =>
+                    opt
+                        .setName('item')
+                        .setDescription('Nombre o itemId (ej: "Hacha elemental" o "herramientas/hacha-elemental")')
+                        .setRequired(false)
+                )
                 .addIntegerOption((opt) =>
                     opt
                         .setName('id')
                         .setDescription('ID del ítem (se ve en /shop list)')
-                        .setRequired(true)
+                        .setRequired(false)
                         .setMinValue(1)
                 )
                 .addIntegerOption((opt) =>
@@ -55,6 +62,7 @@ module.exports = {
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const t = (k, vars = {}) => moxi.translate(`economy/shop:${k}`, lang, vars);
 
         const sub = interaction.options.getSubcommand();
 
@@ -66,7 +74,7 @@ module.exports = {
             // Resolver categoria por key/label (tolerante)
             let categoryKey = 'all';
             if (rawCategoria) {
-                const { categories } = buildShopData();
+                const { categories } = buildShopData({ lang });
                 const needle = String(rawCategoria).trim().toLowerCase();
                 const match = categories.find((c) =>
                     c.key === needle || c.label.toLowerCase() === needle
@@ -78,6 +86,7 @@ module.exports = {
                 userId: interaction.user.id,
                 categoryKey,
                 page,
+                lang,
             });
 
             return await interaction.reply(payload);
@@ -86,19 +95,45 @@ module.exports = {
         if (sub === 'buy') {
             await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-            const id = interaction.options.getInteger('id', true);
+            const rawItem = interaction.options.getString('item');
+            const id = interaction.options.getInteger('id');
             const amount = interaction.options.getInteger('cantidad') || 1;
 
-            const { byShopId } = buildShopData();
-            const item = byShopId.get(id);
+            if (!rawItem && !id) {
+                return await interaction.editReply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: t('SHOP_TITLE'),
+                            text: 'Debes indicar `item` o `id`.',
+                        })
+                    )
+                );
+            }
+
+            const { byShopId, byItemId } = buildShopData({ lang });
+            let item = null;
+
+            if (Number.isInteger(id) && id > 0) {
+                item = byShopId.get(id) || null;
+            } else {
+                const resolved = resolveItemFromInput({ query: rawItem, lang });
+                if (resolved?.shopId) {
+                    item = byShopId.get(resolved.shopId) || null;
+                } else if (resolved?.itemId) {
+                    item = byItemId.get(resolved.itemId) || null;
+                }
+            }
 
             if (!item) {
                 return await interaction.editReply(
                     asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: EMOJIS.cross,
-                            title: 'Tienda',
-                            text: `No existe un ítem con ID ${id}. Usa /moxishop list para ver los IDs.`,
+                            title: t('SHOP_TITLE'),
+                            text: Number.isInteger(id) && id > 0
+                                ? t('NOT_FOUND_BY_ID', { id })
+                                : t('NOT_FOUND_GENERIC'),
                         })
                     )
                 );
@@ -120,8 +155,8 @@ module.exports = {
                     asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: EMOJIS.cross,
-                            title: 'Tienda',
-                            text: 'Este ítem no se puede comprar (precio inválido).',
+                            title: t('SHOP_TITLE'),
+                            text: t('INVALID_PRICE'),
                         })
                     )
                 );
@@ -132,8 +167,8 @@ module.exports = {
                     asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: EMOJIS.cross,
-                            title: 'Fondos insuficientes',
-                            text: `Necesitas ${cost} 🪙 y tienes ${eco.balance || 0} 🪙.`,
+                            title: t('INSUFFICIENT_FUNDS_TITLE'),
+                            text: t('INSUFFICIENT_FUNDS', { cost, balance: eco.balance || 0 }),
                         })
                     )
                 );
@@ -154,8 +189,8 @@ module.exports = {
                 asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.check,
-                        title: 'Compra realizada',
-                        text: `Compraste **${amount}x ${item.name}** por **${cost}** 🪙.`,
+                        title: t('PURCHASE_SUCCESS_TITLE'),
+                        text: t('PURCHASE_SUCCESS', { amount, name: item.name, cost }),
                     })
                 )
             );

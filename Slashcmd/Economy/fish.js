@@ -44,17 +44,18 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('fish')
-        .setDescription('Pesca (minijuego con botones)')
+        .setDescription('Fishing (button minigame)')
         .addStringOption((opt) =>
             opt
                 .setName('zona')
-                .setDescription('Zona de pesca (id o alias). Si se omite, elige una disponible.')
+                .setDescription('Fishing zone (id or alias). If omitted, picks an available one.')
                 .setRequired(false)
         ),
 
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const t = (k, vars) => moxi.translate(`economy/fish:${k}`, lang, vars);
 
         const applicationId = process.env.CLIENT_ID || interaction.client?.application?.id;
         let zonesMention = '/zones';
@@ -79,8 +80,8 @@ module.exports = {
                     ...asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: '⚠️',
-                            title: 'Fish',
-                            text: `Zona inválida.\nVer zonas: ${zonesMention}\nTipo: Pesca`,
+                            title: t('ERROR_TITLE'),
+                            text: [t('INVALID_ZONE'), t('SLASH_VIEW_ZONES', { zones: zonesMention })].filter(Boolean).join('\n'),
                         })
                     ),
                     flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
@@ -98,8 +99,8 @@ module.exports = {
                 ...asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: '⛔',
-                        title: 'Fish • Requisito',
-                        text: `Para empezar a pescar necesitas: **${requiredName}**\nVer zonas: ${zonesMention}\nTipo: Pesca`,
+                        title: t('REQUIREMENT_TITLE'),
+                        text: [t('SLASH_NEED_ITEM', { item: requiredName }), t('SLASH_VIEW_ZONES', { zones: zonesMention })].filter(Boolean).join('\n'),
                     })
                 ),
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
@@ -114,14 +115,14 @@ module.exports = {
                     buildNoticeContainer({
                         emoji: '⛔',
                         title: `Fish • ${zone.name}`,
-                        text: `Para pescar aquí necesitas: **${requiredName}**`,
+                        text: t('SLASH_NEED_ITEM_HERE', { item: requiredName }),
                     })
                 ),
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
             });
         }
 
-        const payload = buildFishPlayMessageOptions({ userId, zoneId: zone.id });
+        const payload = buildFishPlayMessageOptions({ userId, zoneId: zone.id, lang });
         return interaction.reply({
             ...payload,
             flags: payload.flags & ~MessageFlags.Ephemeral,

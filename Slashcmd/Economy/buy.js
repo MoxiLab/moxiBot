@@ -3,6 +3,7 @@ const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildShopData } = require('../../Util/shopView');
+const { resolveItemFromInput } = require('../../Util/useItem');
 
 module.exports = {
     cooldown: 0,
@@ -12,12 +13,18 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('buy')
-        .setDescription('Compra un ítem por su ID de la tienda')
+        .setDescription('Compra un ítem por su ID, nombre o itemId de la tienda')
+        .addStringOption((opt) =>
+            opt
+                .setName('item')
+                .setDescription('Nombre o itemId (ej: "Hacha elemental" o "herramientas/hacha-elemental")')
+                .setRequired(false)
+        )
         .addIntegerOption((opt) =>
             opt
                 .setName('id')
                 .setDescription('ID del ítem (se ve en /shop list)')
-                .setRequired(true)
+                .setRequired(false)
                 .setMinValue(1)
         )
         .addIntegerOption((opt) =>
@@ -32,19 +39,49 @@ module.exports = {
     async run(Moxi, interaction) {
         await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-        const id = interaction.options.getInteger('id', true);
+        const guildId = interaction.guildId || interaction.guild?.id;
+        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const t = (k, vars = {}) => moxi.translate(`economy/buy:${k}`, lang, vars);
+
+        const rawItem = interaction.options.getString('item');
+        const id = interaction.options.getInteger('id');
         const amount = interaction.options.getInteger('cantidad') || 1;
 
-        const { byShopId } = buildShopData();
-        const item = byShopId.get(id);
+        if (!rawItem && !id) {
+            return await interaction.editReply(
+                asV2MessageOptions(
+                    buildNoticeContainer({
+                        emoji: EMOJIS.cross,
+                        title: t('SHOP_TITLE'),
+                        text: t('ITEM_NOT_SPECIFIED_TEXT'),
+                    })
+                )
+            );
+        }
+
+        const { byShopId, byItemId } = buildShopData({ lang });
+        let item = null;
+
+        if (Number.isInteger(id) && id > 0) {
+            item = byShopId.get(id) || null;
+        } else {
+            const resolved = resolveItemFromInput({ query: rawItem, lang });
+            if (resolved?.shopId) {
+                item = byShopId.get(resolved.shopId) || null;
+            } else if (resolved?.itemId) {
+                item = byItemId.get(resolved.itemId) || null;
+            }
+        }
 
         if (!item) {
             return await interaction.editReply(
                 asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Tienda',
-                        text: `No existe un ítem con ID ${id}. Usa /shop list para ver los IDs.`,
+                        title: t('SHOP_TITLE'),
+                        text: Number.isInteger(id) && id > 0
+                            ? t('NOT_FOUND_BY_ID', { id })
+                            : t('NOT_FOUND_GENERIC'),
                     })
                 )
             );
@@ -66,8 +103,8 @@ module.exports = {
                 asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Tienda',
-                        text: 'Este ítem no se puede comprar (precio inválido).',
+                        title: t('SHOP_TITLE'),
+                        text: t('INVALID_PRICE'),
                     })
                 )
             );
@@ -78,8 +115,8 @@ module.exports = {
                 asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Fondos insuficientes',
-                        text: `Necesitas ${cost} 🪙 y tienes ${eco.balance || 0} 🪙.`,
+                        title: t('INSUFFICIENT_FUNDS_TITLE'),
+                        text: t('INSUFFICIENT_FUNDS', { cost, balance: eco.balance || 0 }),
                     })
                 )
             );
@@ -101,8 +138,8 @@ module.exports = {
             asV2MessageOptions(
                 buildNoticeContainer({
                     emoji: EMOJIS.check,
-                    title: 'Compra realizada',
-                    text: `Compraste **${amount}x ${item.name}** por **${cost}** 🪙.`,
+                    title: t('PURCHASE_SUCCESS_TITLE'),
+                    text: t('PURCHASE_SUCCESS', { amount, name: item.name, cost }),
                 })
             )
         );

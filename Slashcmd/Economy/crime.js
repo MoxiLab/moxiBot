@@ -8,7 +8,7 @@ function economyCategory(lang) {
 }
 
 module.exports = {
-    cooldown: Math.floor((5 * 60 * 1000) / 1000),
+    cooldown: 0,
     Category: economyCategory,
     data: new SlashCommandBuilder()
         .setName('crime')

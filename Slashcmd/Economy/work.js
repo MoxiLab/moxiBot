@@ -2,6 +2,7 @@ const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
+const { shouldShowCooldownNotice } = require('../../Util/cooldownNotice');
 const {
     listJobs,
     resolveJob,
@@ -24,12 +25,20 @@ function economyCategory(lang) {
 }
 
 function formatJobsList(lang) {
+    const t = (k, vars = {}) => moxi.translate(`economy/work:${k}`, lang, vars);
     const jobs = listJobs();
-    const lines = jobs.map(j => `${j.emoji || '💼'} **${getJobDisplayName(j, lang)}** — id: \`${j.id}\` — paga: **${j.min}–${j.max}**`);
+    const lines = jobs.map(j => t('JOB_LINE', {
+        emoji: j.emoji || '💼',
+        job: getJobDisplayName(j, lang),
+        id: j.id,
+        min: j.min,
+        max: j.max,
+    }));
     return lines.join('\n');
 }
 
-async function renderTop({ client, rows }) {
+async function renderTop({ client, rows, lang }) {
+    const t = (k, vars = {}) => moxi.translate(`economy/work:${k}`, lang, vars);
     const resolved = await Promise.allSettled(
         rows.map(async (r) => {
             try {
@@ -43,7 +52,7 @@ async function renderTop({ client, rows }) {
 
     const lines = resolved.map((p, idx) => {
         const v = p.status === 'fulfilled' ? p.value : { label: 'Unknown', userId: 'unknown', totalEarned: 0, shifts: 0 };
-        return `**${idx + 1}.** ${v.label} — Ganado: **${v.totalEarned}** • Turnos: **${v.shifts}**`;
+        return t('TOP_LINE', { rank: idx + 1, user: v.label, earned: v.totalEarned, shifts: v.shifts });
     });
 
     return lines.join('\n');
@@ -136,6 +145,7 @@ module.exports = {
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const t = (k, vars = {}) => moxi.translate(`economy/work:${k}`, lang, vars);
 
         const applicationId = process.env.CLIENT_ID || interaction.client?.application?.id;
         let workListMention = '/work list';
@@ -163,8 +173,8 @@ module.exports = {
                 const payload = asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Trabajo no encontrado',
-                        text: `No encontré el trabajo **${query}**.\nVer lista: ${workListMention}`,
+                        title: t('JOB_NOT_FOUND_TITLE'),
+                        text: `${t('JOB_NOT_FOUND_TEXT', { query })}\n${workListMention}`,
                     })
                 );
                 return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
@@ -181,8 +191,8 @@ module.exports = {
                 const payload = asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Error',
-                        text: res.message || 'No se pudo dejar el trabajo.',
+                        title: t('ERROR_TITLE'),
+                        text: res.message || t('UNKNOWN_ERROR'),
                     })
                 );
                 return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
@@ -191,8 +201,8 @@ module.exports = {
             const payload = asV2MessageOptions(
                 buildNoticeContainer({
                     emoji: '👋',
-                    title: 'Trabajo eliminado',
-                    text: `Has dejado tu trabajo.\nElegir otro: ${workApplyMention}`,
+                    title: t('LEAVE_TITLE'),
+                    text: t('LEAVE_TEXT_SLASH', { apply: workApplyMention }),
                 })
             );
             return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
@@ -203,11 +213,14 @@ module.exports = {
 
             if (!res.ok) {
                 if (res.reason === 'cooldown') {
+                    const show = shouldShowCooldownNotice({ userId: interaction.user.id, key: 'work', windowMs: 15_000, threshold: 3 });
                     const payload = asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: EMOJIS.hourglass,
-                            title: 'Aún no puedes trabajar',
-                            text: `Te falta **${res.nextInText}** para tu próximo turno.\nSaldo: **${res.balance}**`,
+                            title: t('COOLDOWN_TITLE'),
+                            text: show
+                                ? t('COOLDOWN_TEXT', { next: res.nextInText, balance: res.balance })
+                                : t('COOLDOWN_SOFT_TEXT', { balance: res.balance }),
                         })
                     );
                     return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
@@ -216,8 +229,8 @@ module.exports = {
                 const payload = asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'No se pudo hacer el turno',
-                        text: res.message || 'Error desconocido.',
+                        title: t('SHIFT_ERROR_TITLE'),
+                        text: res.message || t('UNKNOWN_ERROR'),
                     })
                 );
                 return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
@@ -226,8 +239,13 @@ module.exports = {
             const payload = asV2MessageOptions(
                 buildNoticeContainer({
                     emoji: '💰',
-                    title: 'Turno completado',
-                    text: `Trabajo: **${getJobDisplayName(res.job, lang)}** ${res.job.emoji || ''}\nGanaste: **+${res.amount}**\nSaldo: **${res.balance}**`,
+                    title: t('SHIFT_DONE_TITLE'),
+                    text: t('SHIFT_DONE_TEXT', {
+                        job: getJobDisplayName(res.job, lang),
+                        emoji: res.job.emoji || '',
+                        amount: res.amount,
+                        balance: res.balance,
+                    }),
                 })
             );
             return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
@@ -243,15 +261,15 @@ module.exports = {
             const payload = asV2MessageOptions(
                 buildNoticeContainer({
                     emoji: '📊',
-                    title: 'Work • Stats',
+                    title: t('STATS_TITLE'),
                     text:
-                        `**Trabajo:** ${jobLine}\n` +
-                        `**Turnos:** ${st.shifts}\n` +
-                        `**Ganado total:** ${st.totalEarned}\n` +
-                        `**Saldo:** ${st.balance}\n\n` +
-                        `**Último turno:** ${last}\n` +
-                        `**Siguiente turno:** ${next}\n` +
-                        `**Cooldown:** ${cd}`,
+                        `**${t('STATS_JOB')}:** ${jobLine}\n` +
+                        `**${t('STATS_SHIFTS')}:** ${st.shifts}\n` +
+                        `**${t('STATS_TOTAL_EARNED')}:** ${st.totalEarned}\n` +
+                        `**${t('STATS_BALANCE')}:** ${st.balance}\n\n` +
+                        `**${t('STATS_LAST_SHIFT')}:** ${last}\n` +
+                        `**${t('STATS_NEXT_SHIFT')}:** ${next}\n` +
+                        `**${t('STATS_COOLDOWN')}:** ${cd}`,
                 })
             );
             return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
@@ -263,8 +281,8 @@ module.exports = {
                 const payload = asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Sin trabajo',
-                        text: `No tienes un trabajo activo.\nEmpieza aquí: ${workApplyMention}`,
+                        title: t('NO_JOB_FOR_TOP_TITLE'),
+                        text: t('NO_JOB_FOR_TOP_TEXT', { apply: workApplyMention }),
                     })
                 );
                 return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
@@ -275,16 +293,16 @@ module.exports = {
                 const payload = asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Error',
-                        text: top.message || 'No se pudo obtener el ranking.',
+                        title: t('ERROR_TITLE'),
+                        text: top.message || t('RANKING_ERROR'),
                     })
                 );
                 return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
             }
 
             const body = top.rows.length
-                ? await renderTop({ client: Moxi, rows: top.rows })
-                : 'Sin datos todavía.';
+                ? await renderTop({ client: Moxi, rows: top.rows, lang })
+                : t('TOP_EMPTY');
 
             const payload = asV2MessageOptions(
                 buildNoticeContainer({
@@ -299,8 +317,8 @@ module.exports = {
         const payload = asV2MessageOptions(
             buildNoticeContainer({
                 emoji: EMOJIS.cross,
-                title: 'Error',
-                text: 'Subcomando inválido.',
+                title: t('ERROR_TITLE'),
+                text: t('INVALID_SUBCOMMAND_TEXT'),
             })
         );
         return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });

@@ -35,6 +35,7 @@ module.exports = {
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const t = (k, vars = {}) => moxi.translate(`economy/deposit:${k}`, lang, vars);
 
         const amount = interaction.options.getInteger('cantidad');
 
@@ -48,8 +49,8 @@ module.exports = {
                     ...asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: EMOJIS.info,
-                            title: 'Banco',
-                            text: 'No tienes coins para depositar.',
+                            title: t('BANK_TITLE'),
+                            text: t('NO_COINS'),
                         })
                     ),
                     flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
@@ -63,8 +64,8 @@ module.exports = {
                     ...asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: EMOJIS.cross,
-                            title: 'Fondos insuficientes',
-                            text: `Intentaste depositar **${formatInt(wanted)}** 🪙 pero solo tienes **${formatInt(bal)}** 🪙.`,
+                            title: t('INSUFFICIENT_FUNDS_TITLE'),
+                            text: t('INSUFFICIENT_FUNDS_TEXT', { wanted: formatInt(wanted), balance: formatInt(bal) }),
                         })
                     ),
                     flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
@@ -79,8 +80,8 @@ module.exports = {
                 ...asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.check,
-                        title: 'Depósito realizado',
-                        text: `Depositaste **${formatInt(wanted)}** 🪙.\nBalance: **${formatInt(eco.balance)}** 🪙\nBanco: **${formatInt(eco.bank)}** 🏦`,
+                        title: t('DEPOSIT_SUCCESS_TITLE'),
+                        text: t('DEPOSIT_SUCCESS_TEXT', { wanted: formatInt(wanted), balance: formatInt(eco.balance), bank: formatInt(eco.bank) }),
                     })
                 ),
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
@@ -91,10 +92,8 @@ module.exports = {
                 ...asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Error',
-                        text: isMongoMissing
-                            ? 'MongoDB no está configurado, el banco no está disponible.'
-                            : 'No pude hacer el depósito ahora mismo. Inténtalo de nuevo.',
+                        title: t('ERROR_TITLE'),
+                        text: isMongoMissing ? t('ERROR_MONGO') : t('ERROR_GENERIC'),
                     })
                 ),
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
