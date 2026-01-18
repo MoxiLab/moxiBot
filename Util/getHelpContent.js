@@ -251,17 +251,31 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
     return (categoriaTraducida && categoriaTraducida !== categoriaKey) ? categoriaTraducida : String(cat);
   };
 
-  // Discord móvil rompe fácil las cuadrículas con muchas columnas dentro de ```.
-  // Ajustamos columnas según un ancho de línea "seguro" para evitar cortes raros.
   const renderGrid = (items, cols = 6, opts = {}) => {
     const values = Array.from(new Set((items || []).map(v => String(v).trim()).filter(Boolean)));
     if (!values.length) return '';
     if (isRtl) return values.join('\n');
 
-    const width = Math.max(12, ...values.map(v => v.length));
+    let width = Math.max(12, ...values.map(v => v.length));
+
+    const maxCellWidth = Number(opts?.maxCellWidth) || 0;
+    if (maxCellWidth > 0) {
+      width = Math.max(8, Math.min(width, maxCellWidth));
+    }
+
+    const forceCols = Number(opts?.forceCols) || 0;
+    if (forceCols > 0) {
+      cols = Math.max(1, forceCols);
+    }
 
     const maxLineWidth = Number(opts?.maxLineWidth) || 0;
-    if (maxLineWidth > 0) {
+    // Si forzamos columnas y conocemos el ancho de línea, limita el ancho de cada celda
+    // para evitar wrap en móvil (que visualmente parece 1 columna).
+    if (maxLineWidth > 0 && forceCols > 0 && maxCellWidth <= 0) {
+      const derived = Math.floor(maxLineWidth / cols) - 2; // -2 por padding entre columnas
+      width = Math.max(8, Math.min(width, derived));
+    }
+    if (maxLineWidth > 0 && forceCols <= 0) {
       const cellWidth = (width + 2);
       const fitCols = Math.max(1, Math.floor(maxLineWidth / cellWidth));
       cols = Math.max(1, Math.min(cols, fitCols || 1));
@@ -270,7 +284,11 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
     const rows = [];
     for (let i = 0; i < values.length; i += cols) rows.push(values.slice(i, i + cols));
     return rows
-      .map((r) => r.map((cell) => cell.padEnd(width + 2, ' ')).join('').trimEnd())
+      .map((r) => r.map((cell) => {
+        let out = String(cell);
+        if (out.length > width) out = out.slice(0, Math.max(1, width - 1)) + '…';
+        return out.padEnd(width + 2, ' ');
+      }).join('').trimEnd())
       .join('\n');
   };
 
@@ -406,8 +424,12 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
     }
 
     if (slashList.length) {
+      const slashCols = categoria === 'Economy' ? 2 : 3;
+      const slashOpts = (categoria === 'Economy')
+        ? { maxLineWidth: 34, forceCols: 2 }
+        : { maxLineWidth: 34 };
       desc += `\n\n${EMOJIS.package} **${moxi.translate('HELP_SLASH_COMMANDS', lang)}**\n` +
-        `\`\`\`\n${renderGrid(slashList, 3, { maxLineWidth: 34 })}\n\`\`\``;
+        `\`\`\`\n${renderGrid(slashList, slashCols, slashOpts)}\n\`\`\``;
     }
 
     if (!prefixList.length && !slashList.length) {
