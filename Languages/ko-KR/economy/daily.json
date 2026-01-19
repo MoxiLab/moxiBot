@@ -1,4 +1,13 @@
 {
     "TITLE": "일일",
-    "WIP_TEXT": "이 명령어는 아직 개발 중입니다. 곧 추가할게요."
+    "DESC": "매일 보상을 받습니다.",
+    "CLAIMED_TITLE": "일일 보상",
+    "CLAIMED_TEXT": "**{{amount}}** 🪙 를 받았어요.\n현재 잔액: **{{balance}}** 🪙.",
+    "COOLDOWN_TITLE": "일일 쿨다운",
+    "COOLDOWN_TEXT": "이미 일일 보상을 받았어요. **{{next}}** 후에 다시 시도하세요.\n현재 잔액: **{{balance}}** 🪙.",
+    "COOLDOWN_SOFT_TEXT": "아직 쿨다운 중이에요.\n현재 잔액: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "데이터베이스 미설정",
+    "NO_DB_TEXT": "MongoDB가 설정되지 않아 경제 보상이 비활성화되었습니다.",
+    "ERROR_TITLE": "오류",
+    "UNKNOWN_ERROR": "문제가 발생했습니다."
 }

@@ -1,4 +1,13 @@
 {
     "TITLE": "每日",
-    "WIP_TEXT": "该命令仍在开发中，我们会尽快加入。"
+    "DESC": "领取你的每日奖励。",
+    "CLAIMED_TITLE": "每日奖励",
+    "CLAIMED_TEXT": "你获得了 **{{amount}}** 🪙。\n当前余额：**{{balance}}** 🪙。",
+    "COOLDOWN_TITLE": "每日冷却",
+    "COOLDOWN_TEXT": "你已经领取过每日奖励了。请在 **{{next}}** 后再试。\n当前余额：**{{balance}}** 🪙。",
+    "COOLDOWN_SOFT_TEXT": "仍在冷却中。\n当前余额：**{{balance}}** 🪙。",
+    "NO_DB_TITLE": "数据库未配置",
+    "NO_DB_TEXT": "MongoDB 未配置，因此经济奖励已禁用。",
+    "ERROR_TITLE": "错误",
+    "UNKNOWN_ERROR": "发生了一些错误。"
 }

@@ -1,4 +1,13 @@
 {
     "TITLE": "Daily",
-    "WIP_TEXT": "This command is still in development. We'll add it soon."
+    "DESC": "Claim your daily reward.",
+    "CLAIMED_TITLE": "Daily claimed",
+    "CLAIMED_TEXT": "You received **{{amount}}** 🪙.\nNew balance: **{{balance}}** 🪙.",
+    "COOLDOWN_TITLE": "Daily cooldown",
+    "COOLDOWN_TEXT": "You already claimed your daily. Try again in **{{next}}**.\nCurrent balance: **{{balance}}** 🪙.",
+    "COOLDOWN_SOFT_TEXT": "Still on cooldown.\nCurrent balance: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "Database not configured",
+    "NO_DB_TEXT": "MongoDB is not configured, so economy rewards are disabled.",
+    "ERROR_TITLE": "Error",
+    "UNKNOWN_ERROR": "Something went wrong."
 }

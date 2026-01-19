@@ -67,6 +67,8 @@
     "CMD_CRIME_DESC": "Commit a crime to try to earn coins (with risk).",
     "CMD_CRAFT_DESC": "Craft items or view the craft list.",
     "CMD_DEPOSIT_DESC": "Deposit coins from your balance into the bank.",
+    "CMD_GIVE_DESC": "Give coins to another user.",
+    "CMD_DAILY_DESC": "Claim your daily coins reward.",
     "CMD_FISH_DESC": "Go fishing! Explore zones to find rare fish and treasures.",
     "CMD_ITEMINFO_DESC": "Shows item info by ID, name, or itemId.",
     "CMD_MINE_DESC": "Shows the mining zones.",

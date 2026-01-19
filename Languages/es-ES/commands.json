@@ -67,6 +67,8 @@
     "CMD_CRIME_DESC": "Comete un crimen para intentar ganar monedas (con riesgo).",
     "CMD_CRAFT_DESC": "Crea items o revisa la lista.",
     "CMD_DEPOSIT_DESC": "Deposita coins desde tu balance al banco.",
+    "CMD_GIVE_DESC": "Da coins a otro usuario.",
+    "CMD_DAILY_DESC": "Reclama tu recompensa diaria de coins.",
     "CMD_FISH_DESC": "¡Vamos a pescar! Explora zonas para encontrar peces raros y tesoros.",
     "CMD_ITEMINFO_DESC": "Muestra información de un ítem por ID, nombre o itemId.",
     "CMD_MINE_DESC": "Muestra las zonas de minería.",

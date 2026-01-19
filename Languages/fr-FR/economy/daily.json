@@ -1,4 +1,13 @@
 {
     "TITLE": "Quotidien",
-    "WIP_TEXT": "Cette commande est encore en développement. Nous l'ajouterons bientôt."
+    "DESC": "Récupère ta récompense quotidienne.",
+    "CLAIMED_TITLE": "Récompense quotidienne",
+    "CLAIMED_TEXT": "Tu as reçu **{{amount}}** 🪙.\nNouveau solde : **{{balance}}** 🪙.",
+    "COOLDOWN_TITLE": "Quotidien en attente",
+    "COOLDOWN_TEXT": "Tu as déjà récupéré ton quotidien. Réessaie dans **{{next}}**.\nSolde actuel : **{{balance}}** 🪙.",
+    "COOLDOWN_SOFT_TEXT": "Toujours en attente.\nSolde actuel : **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "Base de données non configurée",
+    "NO_DB_TEXT": "MongoDB n'est pas configuré, donc les récompenses d'économie sont désactivées.",
+    "ERROR_TITLE": "Erreur",
+    "UNKNOWN_ERROR": "Une erreur est survenue."
 }
