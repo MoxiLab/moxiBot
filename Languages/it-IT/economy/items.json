@@ -176,7 +176,7 @@
             "description": "Conferisce un bonus difesa."
         },
         "consumibles/electrolito": {
-            "name": "Electrolyte",
+            "name": "Elettrolita",
             "description": "Ripristina energia istantaneamente."
         },
         "consumibles/monedas-de-oro": {
@@ -224,360 +224,360 @@
             "description": "Migliora la resistenza: ideale per la miniera."
         },
         "herramientas/pico-prisma": {
-            "name": "Pickaxe Prism",
-            "description": "Allows you to mine rare minerals."
+            "name": "Piccone Prisma",
+            "description": "Ti permette di minare minerali rari."
         },
         "herramientas/cana-de-pesca-moxi": {
-            "name": "Rod of Fishing Moxi",
-            "description": "Increases the chance of catching rare items."
+            "name": "Canna da Pesca Moxi",
+            "description": "Aumenta la probabilità di pescare oggetti rari."
         },
         "herramientas/llave-multiusos": {
-            "name": "Key Multi-tool",
-            "description": "Tool for repairing and building."
+            "name": "Chiave Multiuso",
+            "description": "Strumento per riparare e costruire."
         },
         "herramientas/varita-solar": {
-            "name": "Wand Solar",
-            "description": "Allows you to perform magical actions."
+            "name": "Bacchetta Solare",
+            "description": "Ti permette di compiere azioni magiche."
         },
         "herramientas/hacha-elemental": {
-            "name": "Axe Elemental",
-            "description": "Tool for gathering special wood."
+            "name": "Ascia Elementale",
+            "description": "Strumento per raccogliere legni speciali."
         },
         "herramientas/incubadora": {
-            "name": "Incubator",
-            "description": "Allows you to hatch eggs."
+            "name": "Incubatrice",
+            "description": "Permette di schiudere le uova."
         },
         "herramientas/revelador-prisma": {
-            "name": "Revealer Prism",
-            "description": "Tool for discovering hidden treasures."
+            "name": "Rivelatore Prisma",
+            "description": "Strumento per scoprire tesori nascosti."
         },
         "herramientas/barco-moxi": {
-            "name": "Boat Moxi",
-            "description": "Allows you to explore sea regions."
+            "name": "Barca Moxi",
+            "description": "Permette di esplorare regioni marine."
         },
         "herramientas/dinamita": {
-            "name": "Dynamite",
-            "description": "Allows you to open blocked paths."
+            "name": "Dinamite",
+            "description": "Permette di aprire passaggi bloccati."
         },
         "herramientas/golem-minero-pescador": {
-            "name": "Golem Miner/Fisher",
-            "description": "Automated tools for mining/fishing."
+            "name": "Golem Minatore/Pescatore",
+            "description": "Strumenti automatizzati per minare/pescare."
         },
         "herramientas/pico-de-hierro": {
-            "name": "Pickaxe of Iron",
-            "description": "Basic mining tool."
+            "name": "Piccone di Ferro",
+            "description": "Strumento base per la miniera."
         },
         "herramientas/pico-de-acero": {
-            "name": "Pickaxe of Steel",
-            "description": "Improves mining efficiency."
+            "name": "Piccone d'Acciaio",
+            "description": "Migliora l'efficienza di estrazione."
         },
         "herramientas/pico-de-diamante": {
-            "name": "Pickaxe of Diamond",
-            "description": "Ideal for rare and tough veins."
+            "name": "Piccone di Diamante",
+            "description": "Ideale per vene rare e resistenti."
         },
         "herramientas/pico-de-obsidiana": {
-            "name": "Pickaxe of Obsidian",
-            "description": "Legendary tool for extreme mining."
+            "name": "Piccone d'Ossidiana",
+            "description": "Strumento leggendario per l'estrazione estrema."
         },
         "herramientas/cana-de-bambu": {
-            "name": "Rod of Bamboo",
-            "description": "A simple rod to start fishing."
+            "name": "Canna di Bambù",
+            "description": "Una canna semplice per iniziare a pescare."
         },
         "herramientas/cana-de-carbono": {
-            "name": "Rod of Carbon",
-            "description": "Increases the chance of rare fishing."
+            "name": "Canna in Carbonio",
+            "description": "Aumenta le probabilità di pesca rara."
         },
         "herramientas/red-de-pesca": {
-            "name": "Fishing Net",
-            "description": "Catches more common loot in marine areas."
+            "name": "Rete da Pesca",
+            "description": "Cattura più bottino comune nelle aree marine."
         },
         "herramientas/arpon-marino": {
-            "name": "Harpoon Marine",
-            "description": "Improves loot in deep-sea fishing."
+            "name": "Arpione Marino",
+            "description": "Migliora il bottino nella pesca d'altura."
         },
         "herramientas/pala-de-excavacion": {
-            "name": "Shovel of Excavation",
-            "description": "Used to find buried objects."
+            "name": "Pala da Scavo",
+            "description": "Usata per trovare oggetti sepolti."
         },
         "herramientas/brujula-prisma": {
-            "name": "Compass Prism",
-            "description": "Helps you navigate and discover routes."
+            "name": "Bussola Prisma",
+            "description": "Ti aiuta a orientarti e scoprire percorsi."
         },
         "herramientas/mapa-arrugado": {
-            "name": "Map Crumpled",
-            "description": "Clues for exploration and treasures."
+            "name": "Mappa Stropicciata",
+            "description": "Indizi per esplorazione e tesori."
         },
         "herramientas/linterna-de-caverna": {
-            "name": "Cave Lantern",
-            "description": "Lights up dark areas while exploring."
+            "name": "Lanterna da Caverna",
+            "description": "Illumina le aree buie durante l'esplorazione."
         },
         "herramientas/detector-de-metales": {
-            "name": "Detector of Metals",
-            "description": "Finds valuable objects underground."
+            "name": "Rilevatore di Metalli",
+            "description": "Trova oggetti di valore sottoterra."
         },
         "herramientas/cuerda-de-escalada": {
-            "name": "Rope of Climbing",
-            "description": "Useful for mountain routes and rescues."
+            "name": "Corda da Arrampicata",
+            "description": "Utile per percorsi montani e salvataggi."
         },
         "herramientas/kit-de-reparacion": {
-            "name": "Kit of Repair",
-            "description": "Repairs tools and equipment (future use)."
+            "name": "Kit di Riparazione",
+            "description": "Ripara strumenti ed equipaggiamento (uso futuro)."
         },
         "herramientas/lupa-antigua": {
-            "name": "Magnifying glass Ancient",
-            "description": "Helps identify objects and clues."
+            "name": "Lente d'Ingrandimento Antica",
+            "description": "Aiuta a identificare oggetti e indizi."
         },
         "herramientas/frasco-cazabichos": {
-            "name": "Jar Bug catcher",
-            "description": "Allows you to catch insects and small creatures."
+            "name": "Barattolo Acchiappainsetti",
+            "description": "Permette di catturare insetti e piccole creature."
         },
         "herramientas/guantes-de-minero": {
-            "name": "Gloves of Miner",
-            "description": "Protects your hands during tough work."
+            "name": "Guanti da Minatore",
+            "description": "Protegge le mani durante lavori duri."
         },
         "herramientas/sierra-de-carpintero": {
             "name": "Carpenter's Saw",
-            "description": "A woodworking tool (future use)."
+            "description": "Strumento per lavorare il legno (uso futuro)."
         },
         "herramientas/cuchillo-de-supervivencia": {
-            "name": "Knife of Survival",
-            "description": "tool multiusos for exploration."
+            "name": "Coltello da Sopravvivenza",
+            "description": "Strumento multiuso per l'esplorazione."
         },
         "herramientas/martillo-de-forja": {
-            "name": "Forge Hammer",
-            "description": "Required for advanced crafting (future use)."
+            "name": "Martello da Forgia",
+            "description": "Richiesto per creazioni avanzate (uso futuro)."
         },
         "herramientas/anzuelo-de-lux": {
-            "name": "Hook of Lux",
-            "description": "Improves rare fishing in deep waters."
+            "name": "Amo di Lux",
+            "description": "Migliora la pesca rara in acque profonde."
         },
         "herramientas/cebo-prisma": {
-            "name": "Bait Prism",
-            "description": "Temporarily increases the chance of rare catches."
+            "name": "Esca Prisma",
+            "description": "Aumenta temporaneamente la probabilità di catture rare."
         },
         "herramientas/taladro-portatil": {
-            "name": "Portable Drill",
-            "description": "A powerful tool for fast mining (future use)."
+            "name": "Trapano Portatile",
+            "description": "Strumento potente per minare velocemente (uso futuro)."
         },
         "herramientas/bomba-de-humo": {
-            "name": "Smoke Bomb",
-            "description": "Helps you escape or avoid danger (future use)."
+            "name": "Bomba Fumogena",
+            "description": "Aiuta a fuggire o evitare pericoli (uso futuro)."
         },
         "llaves/llave-prisma": {
-            "name": "Key Prism",
-            "description": "Opens special chests."
+            "name": "Chiave Prisma",
+            "description": "Apre scrigni speciali."
         },
         "llaves/llave-elemental": {
-            "name": "Elemental Key",
-            "description": "Opens event areas and chests."
+            "name": "Chiave Elementale",
+            "description": "Apre aree e scrigni degli eventi."
         },
         "llaves/talisman-solar": {
-            "name": "Solar Talisman",
-            "description": "Allows access to magical areas."
+            "name": "Talismano Solare",
+            "description": "Permette l'accesso ad aree magiche."
         },
         "llaves/anillo-de-fuego": {
-            "name": "Ring of Fire",
-            "description": "Special key for fire-themed events."
+            "name": "Anello di Fuoco",
+            "description": "Chiave speciale per eventi a tema fuoco."
         },
         "llaves/llave-abisal": {
-            "name": "Abyssal Key",
-            "description": "Opens chests and doors in deep areas."
+            "name": "Chiave Abissale",
+            "description": "Apre scrigni e porte nelle aree profonde."
         },
         "llaves/llave-glaciar": {
-            "name": "Key Glaciar",
-            "description": "Opens ice chests and cold chambers."
+            "name": "Chiave Glaciale",
+            "description": "Apre scrigni di ghiaccio e camere fredde."
         },
         "llaves/llave-volcanica": {
-            "name": "Volcanic Key",
-            "description": "Opens chests and doors in hot areas."
+            "name": "Chiave Vulcanica",
+            "description": "Apre scrigni e porte nelle aree calde."
         },
         "llaves/llave-lunar": {
-            "name": "Key Lunar",
-            "description": "Access a chambers night and rewards lunar."
+            "name": "Chiave Lunare",
+            "description": "Dà accesso a camere notturne e ricompense lunari."
         },
         "llaves/llave-antigua": {
-            "name": "Key Ancient",
-            "description": "A mysterious key for ancient chests."
+            "name": "Chiave Antica",
+            "description": "Una chiave misteriosa per scrigni antichi."
         },
         "loots/caja-misteriosa": {
-            "name": "Box Mystery",
-            "description": "Contains random items."
+            "name": "Scatola Misteriosa",
+            "description": "Contiene oggetti casuali."
         },
         "loots/cofre-de-fortuna": {
-            "name": "Cofre of Fortune",
-            "description": "Contains coins, materials, or rare items."
+            "name": "Scrigno della Fortuna",
+            "description": "Contiene monete, materiali o oggetti rari."
         },
         "loots/caja-marina": {
-            "name": "Box Marina",
-            "description": "Contains items from aquatic events."
+            "name": "Scatola Marina",
+            "description": "Contiene oggetti di eventi acquatici."
         },
         "loots/caja-premium-diamante-platino": {
-            "name": "Caja Premium/Diamond/Platino",
-            "description": "Contains high-quality items."
+            "name": "Scatola Premium/Diamante/Platino",
+            "description": "Contiene oggetti di alta qualità."
         },
         "loots/pack-de-celebracion": {
-            "name": "Pack of Celebration",
-            "description": "Packs with event items."
+            "name": "Pacco della Celebrazione",
+            "description": "Pacchi con oggetti evento."
         },
         "loots/caja-de-suerte": {
-            "name": "Caja of Luck",
-            "description": "A box with a high chance of rare items."
+            "name": "Scatola della Fortuna",
+            "description": "Una scatola con un'alta probabilità di oggetti rari."
         },
         "loots/tarjeta-de-regalo": {
-            "name": "Tarjeta of Regalo",
-            "description": "Redeemable for items in the shop."
+            "name": "Carta Regalo",
+            "description": "Riscattabile per oggetti nel negozio."
         },
         "loots/bolsa-de-materiales": {
-            "name": "Bag of Materials",
-            "description": "Contains random materials for crafting."
+            "name": "Sacca di Materiali",
+            "description": "Contiene materiali casuali per la creazione."
         },
         "loots/bolsa-de-gemas": {
-            "name": "Bag of Gems",
-            "description": "Contains gems or rare fragments."
+            "name": "Sacca di Gemme",
+            "description": "Contiene gemme o frammenti rari."
         },
         "loots/caja-de-herramientas": {
-            "name": "Caja of Herramientas",
-            "description": "Chance to get useful tools."
+            "name": "Scatola di Strumenti",
+            "description": "Possibilità di ottenere strumenti utili."
         },
         "loots/cofre-abisal": {
-            "name": "Abyssal Chest",
-            "description": "Rare loot from deep areas."
+            "name": "Scrigno Abissale",
+            "description": "Bottino raro dalle aree profonde."
         },
         "loots/cofre-glaciar": {
-            "name": "Glacial Chest",
-            "description": "Rare loot from ice and aurora regions."
+            "name": "Scrigno Glaciale",
+            "description": "Bottino raro da regioni di ghiaccio e aurora."
         },
         "loots/cofre-volcanico": {
-            "name": "Volcanic Chest",
-            "description": "Rare loot from lava and minerals."
+            "name": "Scrigno Vulcanico",
+            "description": "Bottino raro da lava e minerali."
         },
         "mascotas/huevo-prisma": {
-            "name": "Egg Prism",
-            "description": "Lets you obtain pets with unique abilities."
+            "name": "Uovo Prisma",
+            "description": "Ti permette di ottenere animali con abilità uniche."
         },
         "mascotas/huevo-festivo": {
-            "name": "Egg Festive",
-            "description": "Pets from special events."
+            "name": "Uovo Festivo",
+            "description": "Animali provenienti da eventi speciali."
         },
         "mascotas/huevo-elemental": {
-            "name": "Egg Elemental",
-            "description": "Pets with elemental powers."
+            "name": "Uovo Elementale",
+            "description": "Animali con poteri elementali."
         },
         "mascotas/huevo-legendario": {
-            "name": "Legendary Egg",
-            "description": "Rare and powerful pets."
+            "name": "Uovo Leggendario",
+            "description": "Animali rari e potenti."
         },
         "mascotas/huevo-magico": {
-            "name": "Magic Egg",
-            "description": "Hatches into a pet with magical traits and special abilities."
+            "name": "Uovo Magico",
+            "description": "Si schiude in un animale con tratti magici e abilità speciali."
         },
         "mascotas/huevo-abisal": {
-            "name": "Abyssal Egg",
-            "description": "Hatches from deep areas; affinity with water and shadow."
+            "name": "Uovo Abissale",
+            "description": "Si schiude nelle aree profonde; affinità con acqua e ombra."
         },
         "mascotas/huevo-solar": {
-            "name": "Egg Solar",
-            "description": "Light-aligned hatchling; improves daytime rewards."
+            "name": "Uovo Solare",
+            "description": "Pulcino allineato alla luce; migliora le ricompense diurne."
         },
         "mascotas/huevo-brumoso": {
-            "name": "Egg Brumoso",
-            "description": "Mist-aligned hatchling; bonus to stealth exploration."
+            "name": "Uovo Brumoso",
+            "description": "Pulcino allineato alla bruma; bonus all'esplorazione furtiva."
         },
         "mascotas/huevo-de-bosque": {
-            "name": "Egg of Bosque",
-            "description": "Nature hatchling; bonus to gathering."
+            "name": "Uovo del Bosco",
+            "description": "Pulcino della natura; bonus alla raccolta."
         },
         "mascotas/huevo-de-montana": {
-            "name": "Mountain Egg",
-            "description": "Sturdy hatchling; bonus to mining and steep routes."
+            "name": "Uovo di Montagna",
+            "description": "Pulcino robusto; bonus alla miniera e ai percorsi ripidi."
         },
         "mascotas/huevo-de-tormenta": {
-            "name": "Egg of Tormenta",
-            "description": "Electric hatchling; bonus during weather events."
+            "name": "Uovo di Tempesta",
+            "description": "Pulcino elettrico; bonus durante eventi meteo."
         },
         "mascotas/huevo-aurora": {
-            "name": "Egg Aurora",
-            "description": "Rare winter hatchling; bonus during cold seasons."
+            "name": "Uovo Aurora",
+            "description": "Pulcino invernale raro; bonus durante le stagioni fredde."
         },
         "mascotas/huevo-jardin": {
-            "name": "Garden Egg",
-            "description": "Friendly hatchling; bonus to social tasks and care."
+            "name": "Uovo del Giardino",
+            "description": "Pulcino amichevole; bonus alle attività sociali e alla cura."
         },
         "mascotas/huevo-de-cristal": {
-            "name": "Egg of Crystal",
-            "description": "Prismatic hatchling; small luck bonus."
+            "name": "Uovo di Cristallo",
+            "description": "Pulcino prismatico; piccolo bonus fortuna."
         },
         "mascotas/huevo-meteoro": {
-            "name": "Egg Meteoro",
-            "description": "Very rare hatchling; bonus to loot and special materials."
+            "name": "Uovo Meteora",
+            "description": "Pulcino molto raro; bonus a bottino e materiali speciali."
         },
         "mascotas/huevo-volcanico": {
-            "name": "Volcanic Egg",
-            "description": "Hatches from hot areas; bonus to mining and heat resistance."
+            "name": "Uovo Vulcanico",
+            "description": "Si schiude nelle aree calde; bonus alla miniera e resistenza al calore."
         },
         "mascotas/huevo-glaciar": {
-            "name": "Glacial Egg",
-            "description": "Hatches from cold areas; bonus to survival and winter exploration."
+            "name": "Uovo Glaciale",
+            "description": "Si schiude nelle aree fredde; bonus alla sopravvivenza e all'esplorazione invernale."
         },
         "mascotas/huevo-marino": {
-            "name": "Egg Marine",
-            "description": "Aquatic hatchling; bonus to fishing and sea routes."
+            "name": "Uovo Marino",
+            "description": "Pulcino acquatico; bonus alla pesca e ai percorsi marini."
         },
         "mascotas/huevo-selvatico": {
-            "name": "Wild Egg",
-            "description": "Jungle hatchling; bonus to gathering rare plants."
+            "name": "Uovo Selvatico",
+            "description": "Pulcino della giungla; bonus alla raccolta di piante rare."
         },
         "mascotas/huevo-umbrio": {
-            "name": "Umbral Egg",
-            "description": "Shadow hatchling; bonus during night events."
+            "name": "Uovo Ombroso",
+            "description": "Pulcino d'ombra; bonus durante eventi notturni."
         },
         "mascotas/huevo-radiante": {
-            "name": "Egg Radiante",
-            "description": "Light hatchling; a light luck bonus for chests."
+            "name": "Uovo Radiante",
+            "description": "Pulcino di luce; lieve bonus fortuna per gli scrigni."
         },
         "mascotas/ocarina-del-vinculo": {
-            "name": "Bond Ocarina",
-            "description": "An ancient melody that calls your pet back if it left due to lack of care."
+            "name": "Ocarina del Legame",
+            "description": "Un'antica melodia che richiama il tuo animale se se n'è andato per mancanza di cura."
         },
         "mascotas/huevo-torbellino": {
-            "name": "Egg Torbellino",
-            "description": "Wind hatchling; improves travel and fast quests."
+            "name": "Uovo Turbine",
+            "description": "Pulcino del vento; migliora gli spostamenti e le missioni rapide."
         },
         "mascotas/huevo-fertil": {
-            "name": "Fertile Egg",
-            "description": "Meadow hatchling; bonus to common gathering."
+            "name": "Uovo Fertile",
+            "description": "Pulcino dei prati; bonus alla raccolta comune."
         },
         "mascotas/huevo-coral": {
-            "name": "Egg Coral",
-            "description": "Reef hatchling; bonus to marine loot."
+            "name": "Uovo di Corallo",
+            "description": "Pulcino della barriera; bonus al bottino marino."
         },
         "mascotas/huevo-relampago": {
-            "name": "Lightning Egg",
-            "description": "Rare electric hatchling; bonus to timed challenges."
+            "name": "Uovo Fulmine",
+            "description": "Pulcino elettrico raro; bonus alle sfide a tempo."
         },
         "mascotas/huevo-lunar": {
-            "name": "Egg Lunar",
-            "description": "Rare night hatchling; bonus to night quests."
+            "name": "Uovo Lunare",
+            "description": "Pulcino notturno raro; bonus alle missioni notturne."
         },
         "mascotas/huevo-solar-real": {
-            "name": "Egg Solar Real",
-            "description": "Rare version of the Solar Egg; improved daytime bonus."
+            "name": "Uovo Solare Reale",
+            "description": "Versione rara dell'Uovo Solare; bonus diurno migliorato."
         },
         "mascotas/huevo-prisma-antiguo": {
-            "name": "Egg Prism Antiguo",
-            "description": "Very rare hatchling; bonus during special events."
+            "name": "Uovo Prisma Antico",
+            "description": "Pulcino molto raro; bonus durante eventi speciali."
         },
         "mascotas/huevo-cometa": {
-            "name": "Egg Cometa",
-            "description": "Ultra-rare hatchling; extra chance of rare items."
+            "name": "Uovo Cometa",
+            "description": "Pulcino ultra-raro; probabilità extra di oggetti rari."
         },
         "mascotas/huevo-encantado": {
-            "name": "Egg Encantado",
-            "description": "Magical hatchling; bonus to temporary buff effects."
+            "name": "Uovo Incantato",
+            "description": "Pulcino magico; bonus agli effetti dei buff temporanei."
         },
         "mascotas/huevo-guardian": {
-            "name": "Guardian Egg",
-            "description": "Defensive hatchling; reduces penalties during events."
+            "name": "Uovo Guardiano",
+            "description": "Pulcino difensivo; riduce le penalità durante gli eventi."
         },
         "materiales/hierba-prisma": {
             "name": "Hierba Prism",
