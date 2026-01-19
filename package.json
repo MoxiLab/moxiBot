@@ -5,9 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:clean": "node index.js 2>&1 | findstr /V \"Multiple Resolves\" | findstr /V \"AbortError\" | findstr /V \"DeprecationWarning\"",
-    "dev": "set NODE_ENV=development&& set DEBUG=1&& nodemon index.js",
-    "check:command-aliases": "node scripts/check-command-aliases.js",
-    "check:i18n-economy": "node scripts/sync_economy_locales.js"
+    "dev": "set NODE_ENV=development&& set DEBUG=1&& nodemon index.js"
   },
   "keywords": [
     "discord.js",
