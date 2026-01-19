@@ -22,6 +22,7 @@ module.exports = {
 
     async execute(Moxi, message, args = []) {
         const guildId = message.guildId || message.guild?.id;
+        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
         const prefix = await moxi.guildPrefix(guildId, process.env.PREFIX || '.');
 
         const { Bot } = require('../../Config');
@@ -70,14 +71,14 @@ module.exports = {
                 const n = Number.parseInt(String(cleaned[1]), 10);
                 if (Number.isFinite(n) && n > 0) page = n - 1;
             }
-            return message.reply({ ...buildCraftMessage({ userId: message.author.id, page, pageSize: 4 }), allowedMentions: { repliedUser: false } });
+            return message.reply({ ...buildCraftMessage({ userId: message.author.id, page, pageSize: 4, lang }), allowedMentions: { repliedUser: false } });
         }
 
         await ensureMongoConnection();
         const { Economy } = require('../../Models/EconomySchema');
         const eco = await Economy.findOne({ userId: message.author.id });
 
-        const recipe = resolveRecipe(query);
+        const recipe = resolveRecipe(query, lang);
         if (!recipe) {
             return message.reply({
                 content: `${EMOJIS.cross} No encontré esa receta. Usa \`${prefix}craft list\` para ver las disponibles.`,
@@ -90,7 +91,7 @@ module.exports = {
             if (result.reason === 'missing') {
                 const missing = Array.isArray(result.missing) ? result.missing : [];
                 const lines = missing.map(m => {
-                    const it = getItemById(m.itemId);
+                    const it = getItemById(m.itemId, { lang });
                     const name = it?.name || m.itemId;
                     return `• **${name}**: tienes **${m.have}**, necesitas **${m.need}**`;
                 });
@@ -99,7 +100,7 @@ module.exports = {
                 const embed = new EmbedBuilder()
                     .setColor(Bot.AccentColor)
                     .setTitle(`${EMOJIS.cross} Materiales insuficientes`)
-                    .setDescription(`No puedes craftear **${getRecipeDisplayName(recipe)}**.\n\n${lines.join('\n')}`);
+                    .setDescription(`No puedes craftear **${getRecipeDisplayName(recipe, lang)}**.\n\n${lines.join('\n')}`);
 
                 return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
             }
@@ -120,7 +121,7 @@ module.exports = {
             });
         }
 
-        const outName = getRecipeDisplayName(recipe);
+        const outName = getRecipeDisplayName(recipe, lang);
         const { EmbedBuilder } = require('discord.js');
         const embed = new EmbedBuilder()
             .setColor(Bot.AccentColor)
