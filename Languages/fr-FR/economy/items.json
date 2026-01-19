@@ -1,223 +1,223 @@
 {
     "categories": {
-        "Buffs": "Buffs",
-        "Collectibles": "Collectibles",
-        "Consumables": "Consumables",
-        "Tools": "Tools",
-        "Keys": "Keys",
-        "Loot": "Loot",
-        "Pets": "Pets",
-        "Materials": "Materials",
-        "Upgrades": "Upgrades",
-        "Quests": "Quests",
+        "Buffs": "Bonus",
+        "Collectibles": "Objets de collection",
+        "Consumables": "Consommables",
+        "Tools": "Outils",
+        "Keys": "Clés",
+        "Loot": "Butin",
+        "Pets": "Familiers",
+        "Materials": "Matériaux",
+        "Upgrades": "Améliorations",
+        "Quests": "Quêtes",
         "Potions": "Potions",
-        "Scrolls": "Scrolls",
+        "Scrolls": "Parchemins",
         "Protection": "Protection"
     },
     "items": {
         "buffs/scroll-de-impulso-moxi": {
-            "name": "Scroll of Boost Moxi",
-            "description": "Increases the speed of all your actions for 1 hour."
+            "name": "Parchemin d'impulsion Moxi",
+            "description": "Augmente la vitesse de toutes tes actions pendant 1 heure."
         },
         "buffs/pez-lumina": {
-            "name": "Fish Lumina",
-            "description": "Experience bonus for aquatic activities."
+            "name": "Poisson Lumina",
+            "description": "Bonus d'expérience pour les activités aquatiques."
         },
         "buffs/gusano-brillo": {
-            "name": "Worm Glow",
-            "description": "Improves the chance of finding rare resources."
+            "name": "Ver luisant",
+            "description": "Améliore les chances de trouver des ressources rares."
         },
         "buffs/linterna-solar": {
-            "name": "Solar Lantern",
-            "description": "Allows you to explore dark areas and discover hidden treasures."
+            "name": "Lanterne solaire",
+            "description": "Te permet d'explorer des zones sombres et de découvrir des trésors cachés."
         },
         "buffs/fruta-vital": {
-            "name": "Fruit Vital",
-            "description": "Restores energy and gives a small speed boost."
+            "name": "Fruit vital",
+            "description": "Restaure de l'énergie et donne un petit bonus de vitesse."
         },
         "buffs/scroll-mascota-veloz": {
-            "name": "Scroll Pet Swift",
-            "description": "Your pet gains extra speed temporarily."
+            "name": "Parchemin de familier véloce",
+            "description": "Ton familier gagne temporairement de la vitesse."
         },
         "buffs/fruta-mutante": {
-            "name": "Fruit Mutant",
-            "description": "Gives a random effect; it can be positive or negative."
+            "name": "Fruit mutant",
+            "description": "Donne un effet aléatoire ; il peut être positif ou négatif."
         },
         "buffs/holly-prisma": {
-            "name": "Holly Prism",
-            "description": "Special bonus in seasonal events."
+            "name": "Houx Prisma",
+            "description": "Bonus spécial lors des événements saisonniers."
         },
         "buffs/pan-dulce-moxi": {
-            "name": "Bread Candy Moxi",
-            "description": "Doubles quest rewards for 10 minutes."
+            "name": "Pain sucré Moxi",
+            "description": "Double les récompenses de quêtes pendant 10 minutes."
         },
         "buffs/pase-de-evento": {
-            "name": "Event Pass",
-            "description": "Access to rewards and exclusive areas (expired and current)."
+            "name": "Pass événement",
+            "description": "Accès à des récompenses et des zones exclusives (anciennes et actuelles)."
         },
         "buffs/fogata-elemental": {
-            "name": "Campfire Elemental",
-            "description": "Allows you to camp and gain temporary buffs depending on the type of wood."
+            "name": "Feu de camp élémentaire",
+            "description": "Te permet de camper et d'obtenir des bonus temporaires selon le type de bois."
         },
         "buffs/scroll-gelido": {
-            "name": "Glacial Scroll",
-            "description": "Increases defense in cold areas."
+            "name": "Parchemin glacial",
+            "description": "Augmente la défense dans les zones froides."
         },
         "buffs/corona-de-invierno": {
-            "name": "Crown of Winter",
-            "description": "Special bonus in winter events."
+            "name": "Couronne d'hiver",
+            "description": "Bonus spécial lors des événements d'hiver."
         },
         "buffs/dulce-de-fresa": {
-            "name": "Candy of Strawberry",
-            "description": "Restores energy and grants a luck bonus."
+            "name": "Bonbon à la fraise",
+            "description": "Restaure de l'énergie et accorde un bonus de chance."
         },
         "buffs/trebol-de-fortuna": {
-            "name": "Clover of Fortune",
-            "description": "Increases the chance of getting rare items."
+            "name": "Trèfle de fortune",
+            "description": "Augmente les chances d'obtenir des objets rares."
         },
         "buffs/cascanueces-moxi": {
-            "name": "Nutcracker Moxi",
-            "description": "Defense bonus during winter events."
+            "name": "Casse-noisette Moxi",
+            "description": "Bonus de défense pendant les événements d'hiver."
         },
         "coleccionables/medalla-de-nieve": {
-            "name": "Medal of Snow",
-            "description": "Winter season collectible."
+            "name": "Médaille de neige",
+            "description": "Objet de collection de la saison d'hiver."
         },
         "coleccionables/medalla-prisma": {
-            "name": "Medal Prism",
-            "description": "Special event collectible."
+            "name": "Médaille Prisma",
+            "description": "Objet de collection d'événement spécial."
         },
         "coleccionables/medalla-lunar": {
-            "name": "Medal Lunar",
-            "description": "Obtained in night missions."
+            "name": "Médaille lunaire",
+            "description": "Obtenue lors de missions nocturnes."
         },
         "coleccionables/token-festivo": {
-            "name": "Token Festive",
-            "description": "Redeemable for rewards in the event shop."
+            "name": "Jeton festif",
+            "description": "Échangeable contre des récompenses dans la boutique d'événement."
         },
         "coleccionables/carta-de-amistad": {
-            "name": "Letter of Friendship",
-            "description": "Collectible of events sociales."
+            "name": "Lettre d'amitié",
+            "description": "Objet de collection d'événements sociaux."
         },
         "coleccionables/moneda-de-fortuna": {
-            "name": "Coin of Fortune",
-            "description": "Grants a luck bonus while you have it."
+            "name": "Pièce de fortune",
+            "description": "Accorde un bonus de chance tant que tu l'as sur toi."
         },
         "coleccionables/gema-de-espiritu": {
-            "name": "Gem of Spirit",
-            "description": "Required for advanced quests."
+            "name": "Gemme d'esprit",
+            "description": "Requise pour les quêtes avancées."
         },
         "coleccionables/corazon-prisma": {
-            "name": "Heart Prism",
-            "description": "Collectible of events romantic."
+            "name": "Cœur Prisma",
+            "description": "Objet de collection d'événements romantiques."
         },
         "coleccionables/petalo-de-sakura": {
-            "name": "Petal of Sakura",
-            "description": "Spring collectible."
+            "name": "Pétale de sakura",
+            "description": "Objet de collection du printemps."
         },
         "coleccionables/bouquet-festivo": {
-            "name": "Bouquet Festive",
-            "description": "Collectible of events florales."
+            "name": "Bouquet festif",
+            "description": "Objet de collection d'événements floraux."
         },
         "coleccionables/ticket-de-temporada": {
-            "name": "Ticket of Season",
-            "description": "Access to special events."
+            "name": "Ticket de saison",
+            "description": "Accès à des événements spéciaux."
         },
         "coleccionables/varita-de-luz": {
-            "name": "Wand of Light",
-            "description": "Magical collectible."
+            "name": "Baguette de lumière",
+            "description": "Objet de collection magique."
         },
         "coleccionables/cascabel-festivo": {
-            "name": "Jingle bell Festive",
-            "description": "Winter collectible."
+            "name": "Grelot festif",
+            "description": "Objet de collection d'hiver."
         },
         "coleccionables/flor-de-espiritu": {
-            "name": "Flower of Spirit",
-            "description": "Collectible of events of flores."
+            "name": "Fleur d'esprit",
+            "description": "Objet de collection d'événements floraux."
         },
         "coleccionables/fantasmita-moxi": {
-            "name": "Little ghost Moxi",
-            "description": "Halloween collectible."
+            "name": "Petit fantôme Moxi",
+            "description": "Objet de collection d'Halloween."
         },
         "coleccionables/gato-sombrio": {
-            "name": "Cat Dark",
-            "description": "Collectible of events oscuros."
+            "name": "Chat sombre",
+            "description": "Objet de collection d'événements sombres."
         },
         "coleccionables/copa-de-campeon": {
-            "name": "Cup of Champion",
-            "description": "Earned by completing special challenges."
+            "name": "Coupe du champion",
+            "description": "Obtenue en terminant des défis spéciaux."
         },
         "consumibles/galleta-energetica": {
-            "name": "Cookie Energy",
-            "description": "Restores energy."
+            "name": "Biscuit énergétique",
+            "description": "Restaure de l'énergie."
         },
         "consumibles/pastel-de-celebracion": {
-            "name": "Cake of Celebration",
-            "description": "Gives an experience bonus."
+            "name": "Gâteau de célébration",
+            "description": "Donne un bonus d'expérience."
         },
         "consumibles/fruta-magica": {
-            "name": "Magic Fruit",
-            "description": "Gives a random effect."
+            "name": "Fruit magique",
+            "description": "Donne un effet aléatoire."
         },
         "consumibles/ensalada-refrescante": {
-            "name": "Refreshing Salad",
-            "description": "Restores energy and health."
+            "name": "Salade rafraîchissante",
+            "description": "Restaure l'énergie et la santé."
         },
         "consumibles/fuegos-artificiales": {
-            "name": "Fireworks",
-            "description": "Gives a luck bonus in events."
+            "name": "Feux d'artifice",
+            "description": "Donne un bonus de chance pendant les événements."
         },
         "consumibles/calabaza-festiva": {
-            "name": "Pumpkin Festiva",
-            "description": "Halloween consumable."
+            "name": "Citrouille festive",
+            "description": "Consommable d'Halloween."
         },
         "consumibles/nuez-dorada": {
-            "name": "Nut Golden",
-            "description": "Grants a defense bonus."
+            "name": "Noix dorée",
+            "description": "Accorde un bonus de défense."
         },
         "consumibles/electrolito": {
-            "name": "Electrolyte",
-            "description": "Restores energy instantly."
+            "name": "Électrolyte",
+            "description": "Restaure immédiatement de l'énergie."
         },
         "consumibles/monedas-de-oro": {
-            "name": "Gold Coins",
-            "description": "Consumable used to buy items in the shop."
+            "name": "Pièces d'or",
+            "description": "Consommable utilisé pour acheter des objets dans la boutique."
         },
         "consumibles/agua-fresca": {
-            "name": "Fresh Water",
-            "description": "Keeps you going: a small energy bonus."
+            "name": "Eau fraîche",
+            "description": "Pour tenir le coup : un petit bonus d'énergie."
         },
         "consumibles/te-verde": {
-            "name": "Green Tea",
-            "description": "Reduces fatigue: a light focus bonus."
+            "name": "Thé vert",
+            "description": "Réduit la fatigue : un léger bonus de concentration."
         },
         "consumibles/cafe-moxi": {
-            "name": "Coffee Moxi",
-            "description": "Slightly speeds up your actions for a few minutes."
+            "name": "Café Moxi",
+            "description": "Accélère légèrement tes actions pendant quelques minutes."
         },
         "consumibles/chocolate-caliente": {
-            "name": "Hot Chocolate",
-            "description": "Comforting: a gentle bonus during cold events."
+            "name": "Chocolat chaud",
+            "description": "Réconfortant : un petit bonus pendant les événements froids."
         },
         "consumibles/sopa-caliente": {
-            "name": "Hot Soup",
-            "description": "Restores energy and grants a light endurance boost."
+            "name": "Soupe chaude",
+            "description": "Restaure l'énergie et accorde un léger bonus d'endurance."
         },
         "consumibles/barra-proteica": {
-            "name": "Protein Bar",
-            "description": "Quick energy for intense activities."
+            "name": "Barre protéinée",
+            "description": "Énergie rapide pour les activités intenses."
         },
         "consumibles/batido-prisma": {
-            "name": "Shake Prism",
-            "description": "A small luck boost for a while."
+            "name": "Shake Prisma",
+            "description": "Un petit bonus de chance pendant un moment."
         },
         "consumibles/sandwich-de-aventura": {
-            "name": "Adventure Sandwich",
-            "description": "Restores energy and slightly improves exploration."
+            "name": "Sandwich d'aventure",
+            "description": "Restaure l'énergie et améliore légèrement l'exploration."
         },
         "consumibles/sushi-marino": {
-            "name": "Sushi Marine",
-            "description": "A small bonus to fishing and marine loot."
+            "name": "Sushi marin",
+            "description": "Un petit bonus à la pêche et au butin marin."
         },
         "consumibles/pan-de-ajo": {
             "name": "Bread of Garlic",

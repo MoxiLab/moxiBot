@@ -1,423 +1,423 @@
 {
     "ui": {
         "panelTitle": "Crime",
-        "selectActivity": "Choose an activity",
-        "riskPlaceholder": "Risk level",
-        "btnRun": "Run"
+        "selectActivity": "Choisis une activité",
+        "riskPlaceholder": "Niveau de risque",
+        "btnRun": "Lancer"
     },
     "options": {
-        "stealth": "Stealth",
-        "talk": "Distraction",
-        "rush": "Snatch"
+        "stealth": "Discrétion",
+        "talk": "Diversion",
+        "rush": "Arracher"
     },
     "doors": {
-        "a": "Door A",
-        "b": "Door B",
-        "c": "Door C"
+        "a": "Porte A",
+        "b": "Porte B",
+        "c": "Porte C"
     },
     "risks": {
-        "safe": "Safe",
+        "safe": "Sûr",
         "normal": "Normal",
-        "risky": "Risky"
+        "risky": "Risqué"
     },
     "wires": {
-        "red": "Red wire",
-        "blue": "Blue wire",
-        "yellow": "Yellow wire",
-        "green": "Green wire"
+        "red": "Fil rouge",
+        "blue": "Fil bleu",
+        "yellow": "Fil jaune",
+        "green": "Fil vert"
     },
     "activities": {
         "pickpocket": {
             "title": "Pickpocket",
-            "prompt": "You spot someone distracted with their bag open. How do you try?"
+            "prompt": "Tu repères quelqu'un de distrait, sac ouvert. Comment t'y prends-tu ?"
         },
         "market-swipe": {
-            "title": "Crowded market",
-            "prompt": "Between stalls and people, a wallet peeks out. What do you do?"
+            "title": "Marché bondé",
+            "prompt": "Entre les stands et la foule, un portefeuille dépasse. Tu fais quoi ?"
         },
         "metro-bump": {
-            "title": "Subway shove",
-            "prompt": "A sudden brake, bodies collide… and an easy pocket appears."
+            "title": "Bousculade dans le métro",
+            "prompt": "Freinage brusque, les corps se heurtent… et une poche facile apparaît."
         },
         "festival-confetti": {
             "title": "Festival",
-            "prompt": "Music, confetti and distractions. What's your play?"
+            "prompt": "Musique, confettis et distractions. Quel est ton plan ?"
         },
         "hotel-lobby": {
-            "title": "Hotel lobby",
-            "prompt": "People let their guard down. How do you try?"
+            "title": "Hall d'hôtel",
+            "prompt": "Les gens baissent leur garde. Comment t'y prends-tu ?"
         },
         "arcade-tokens": {
-            "title": "Arcade",
-            "prompt": "Someone is counting tokens. No one is watching. What do you do?"
+            "title": "Salle d'arcade",
+            "prompt": "Quelqu'un compte des jetons. Personne ne regarde. Tu fais quoi ?"
         },
         "library-silence": {
-            "title": "Library",
-            "prompt": "Total silence. An open bag. What's your method?"
+            "title": "Bibliothèque",
+            "prompt": "Silence total. Un sac ouvert. Quelle est ta méthode ?"
         },
         "park-bench": {
-            "title": "Park bench",
-            "prompt": "A backpack sits aside. How do you approach?"
+            "title": "Banc du parc",
+            "prompt": "Un sac à dos est posé à côté. Comment tu t'approches ?"
         },
         "street-magician": {
-            "title": "Street magician",
-            "prompt": "Everyone watches the trick. You watch the pockets."
+            "title": "Magicien de rue",
+            "prompt": "Tout le monde regarde le tour. Toi, tu regardes les poches."
         },
         "coffee-queue": {
-            "title": "Coffee line",
-            "prompt": "The line moves slowly. Attention is low."
+            "title": "File du café",
+            "prompt": "La file avance lentement. L'attention est basse."
         },
         "cinema-dark": {
-            "title": "Dark cinema",
-            "prompt": "Lights out. Do you take the moment?"
+            "title": "Cinéma sombre",
+            "prompt": "Lumières éteintes. Tu profites du moment ?"
         },
         "museum-exhibit": {
-            "title": "Museum",
-            "prompt": "People are hypnotized by a display case."
+            "title": "Musée",
+            "prompt": "Les gens sont hypnotisés par une vitrine."
         },
         "food-truck": {
             "title": "Food truck",
-            "prompt": "Wallets out and people rushing to pay."
+            "prompt": "Portefeuilles sortis et gens pressés de payer."
         },
         "crosswalk-rush": {
-            "title": "Busy crosswalk",
-            "prompt": "Green light. Controlled chaos."
+            "title": "Passage piéton bondé",
+            "prompt": "Feu vert. Chaos contrôlé."
         },
         "gym-lockers": {
-            "title": "Gym lockers",
-            "prompt": "Loose locks and distracted people."
+            "title": "Casiers de gym",
+            "prompt": "Cadenas mal fermés et gens distraits."
         },
         "pier-crowd": {
-            "title": "Pier",
-            "prompt": "Tourists with backpacks and maps open."
+            "title": "Jetée",
+            "prompt": "Des touristes avec sacs à dos et cartes dépliées."
         },
         "station-platform": {
-            "title": "Platform",
-            "prompt": "The train arrives. Nerves. Opportunity."
+            "title": "Quai",
+            "prompt": "Le train arrive. Stress. Opportunité."
         },
         "night-market": {
-            "title": "Night market",
-            "prompt": "Warm lights. Fast hands."
+            "title": "Marché de nuit",
+            "prompt": "Lumières chaudes. Mains rapides."
         },
         "street-performer": {
-            "title": "Street performer",
-            "prompt": "The sound covers footsteps and whispers."
+            "title": "Artiste de rue",
+            "prompt": "Le bruit couvre les pas et les chuchotements."
         },
         "salon-wait": {
-            "title": "Waiting room",
-            "prompt": "Phones out. Wallets out. Hmm."
+            "title": "Salle d'attente",
+            "prompt": "Téléphones sortis. Portefeuilles sortis. Hmm."
         },
         "bank-atm": {
-            "title": "ATM",
-            "prompt": "Someone withdraws cash and pockets the receipt."
+            "title": "Distributeur",
+            "prompt": "Quelqu'un retire de l'argent et range le reçu."
         },
         "taxi-backseat": {
             "title": "Taxi",
-            "prompt": "A wallet slips onto the back seat."
+            "prompt": "Un portefeuille glisse sur la banquette arrière."
         },
         "train-sleeper": {
-            "title": "Sleeper car",
-            "prompt": "Heads down, pockets unguarded."
+            "title": "Wagon couchettes",
+            "prompt": "Têtes baissées, poches sans surveillance."
         },
         "snow-coats": {
-            "title": "Winter coats",
-            "prompt": "Deep pockets… and tempting."
+            "title": "Manteaux d'hiver",
+            "prompt": "Des poches profondes… et tentantes."
         },
         "rain-umbrella": {
-            "title": "Rainy day",
-            "prompt": "Umbrellas bump. No one sees anything."
+            "title": "Jour de pluie",
+            "prompt": "Les parapluies se cognent. Personne ne voit rien."
         },
         "beach-towels": {
-            "title": "Beach",
-            "prompt": "Towels, bags, distractions. What do you do?"
+            "title": "Plage",
+            "prompt": "Serviettes, sacs, distractions. Tu fais quoi ?"
         },
         "concert-mosh": {
             "title": "Concert",
-            "prompt": "The crowd moves. So do you."
+            "prompt": "La foule bouge. Toi aussi."
         },
         "market-auction": {
-            "title": "Auction",
-            "prompt": "High bids. Split attention."
+            "title": "Enchères",
+            "prompt": "Mises élevées. Attention divisée."
         },
         "fashion-store": {
-            "title": "Fashion store",
-            "prompt": "Fitting rooms busy. Staff distracted."
+            "title": "Boutique de mode",
+            "prompt": "Cabines d'essayage pleines. Personnel distrait."
         },
         "electronics-demo": {
-            "title": "Gadget demo",
-            "prompt": "Bright screens. Bright pockets."
+            "title": "Démo de gadgets",
+            "prompt": "Écrans lumineux. Poches bien remplies."
         },
         "pet-parade": {
-            "title": "Pet parade",
-            "prompt": "People watch puppies. You… well."
+            "title": "Défilé d'animaux",
+            "prompt": "Les gens regardent les chiots. Toi… enfin."
         },
         "street-food": {
             "title": "Street food",
-            "prompt": "Hands full, pockets unguarded."
+            "prompt": "Mains occupées, poches sans surveillance."
         },
         "bus-crowd": {
-            "title": "Packed bus",
-            "prompt": "Quick stops. Quick moves."
+            "title": "Bus bondé",
+            "prompt": "Arrêts rapides. Gestes rapides."
         },
         "book-fair": {
-            "title": "Book fair",
-            "prompt": "Signings, lines and perfect distractions."
+            "title": "Salon du livre",
+            "prompt": "Dédicaces, files et distractions parfaites."
         },
         "flower-stall": {
-            "title": "Flower stall",
-            "prompt": "A romantic gift. A visible wallet."
+            "title": "Stand de fleurs",
+            "prompt": "Un cadeau romantique. Un portefeuille bien visible."
         },
         "campus-hall": {
-            "title": "Campus hallway",
-            "prompt": "Open backpacks and rushing to class."
+            "title": "Couloir du campus",
+            "prompt": "Sacs ouverts et gens pressés d'aller en cours."
         },
         "airport-gate": {
-            "title": "Boarding gate",
-            "prompt": "Docs, tickets, chaos. Easy."
+            "title": "Porte d'embarquement",
+            "prompt": "Papiers, billets, chaos. Facile."
         },
         "theme-park": {
-            "title": "Theme park",
-            "prompt": "Screams, laughter and dangling bags."
+            "title": "Parc d'attractions",
+            "prompt": "Cris, rires et sacs qui pendent."
         },
         "harbor-ferry": {
             "title": "Ferry",
-            "prompt": "Wind, seasickness… and a slip-up."
+            "prompt": "Vent, mal de mer… et une erreur d'inattention."
         },
         "stadium-queue": {
-            "title": "Stadium queue",
-            "prompt": "Everyone watches the entrance. Pockets, not so much."
+            "title": "File du stade",
+            "prompt": "Tout le monde regarde l'entrée. Les poches, beaucoup moins."
         },
         "vault": {
-            "title": "Three doors",
-            "prompt": "You're in. There are three doors. One has quick loot; the others, trouble."
+            "title": "Trois portes",
+            "prompt": "Tu es à l'intérieur. Il y a trois portes. Une a du butin rapide ; les autres, des ennuis."
         },
         "storage-doors": {
-            "title": "Storage",
-            "prompt": "Three metal doors. One hides an easy haul. Choose."
+            "title": "Entrepôt",
+            "prompt": "Trois portes métalliques. L'une cache un butin facile. Choisis."
         },
         "office-doors": {
-            "title": "Offices",
-            "prompt": "Empty hallway. Three unmarked doors. Which one pays?"
+            "title": "Bureaux",
+            "prompt": "Couloir vide. Trois portes sans plaque. Laquelle rapporte ?"
         },
         "basement-doors": {
-            "title": "Basement",
-            "prompt": "Damp and silent. Three doors: noise, calm, luck."
+            "title": "Sous-sol",
+            "prompt": "Humide et silencieux. Trois portes : bruit, calme, chance."
         },
         "backstage-doors": {
-            "title": "Backstage",
-            "prompt": "Behind the stage are three access points. One leads to loot."
+            "title": "Coulisses",
+            "prompt": "Derrière la scène, trois accès. L'un mène au butin."
         },
         "dock-doors": {
             "title": "Docks",
-            "prompt": "Containers and three warehouse doors. Choose fast."
+            "prompt": "Des conteneurs et trois portes d'entrepôt. Choisis vite."
         },
         "subway-doors": {
             "title": "Tunnel",
-            "prompt": "Three maintenance doors. One has supplies."
+            "prompt": "Trois portes de maintenance. L'une contient des fournitures."
         },
         "library-doors": {
-            "title": "Archive",
-            "prompt": "Three doors to the restricted archive. One has envelopes."
+            "title": "Archives",
+            "prompt": "Trois portes vers les archives interdites. L'une a des enveloppes."
         },
         "casino-doors": {
             "title": "Casino",
-            "prompt": "Three doors behind VIP. One is the good one."
+            "prompt": "Trois portes derrière le VIP. L'une est la bonne."
         },
         "hotel-doors": {
-            "title": "Private floor",
-            "prompt": "Three identical doors. One isn't fully latched."
+            "title": "Étage privé",
+            "prompt": "Trois portes identiques. L'une n'est pas bien verrouillée."
         },
         "museum-doors": {
-            "title": "Restricted area",
-            "prompt": "Three doors with sketchy alarms. One fails."
+            "title": "Zone interdite",
+            "prompt": "Trois portes avec des alarmes douteuses. L'une lâche."
         },
         "trainyard-doors": {
-            "title": "Depot",
-            "prompt": "Three rusty doors. One opens easily."
+            "title": "Dépôt",
+            "prompt": "Trois portes rouillées. L'une s'ouvre facilement."
         },
         "lab-doors": {
-            "title": "Laboratory",
-            "prompt": "Three doors with panels. One is in test mode."
+            "title": "Laboratoire",
+            "prompt": "Trois portes avec des panneaux. L'une est en mode test."
         },
         "sewers-doors": {
-            "title": "Sewers",
-            "prompt": "Three hatches. One leads to a hideout."
+            "title": "Égouts",
+            "prompt": "Trois trappes. L'une mène à une planque."
         },
         "attic-doors": {
-            "title": "Attic",
-            "prompt": "Three old doors. One creaks… but gives."
+            "title": "Grenier",
+            "prompt": "Trois vieilles portes. L'une grince… mais cède."
         },
         "theater-doors": {
             "title": "Theater",
-            "prompt": "Three doors backstage. One has a cashbox."
+            "prompt": "Trois portes en coulisses. L'une a une caisse."
         },
         "warehouse-doors": {
-            "title": "Industrial bay",
-            "prompt": "Three hand-numbered doors. One holds the good stuff."
+            "title": "Hangar industriel",
+            "prompt": "Trois portes numérotées à la main. L'une cache le bon stuff."
         },
         "ship-doors": {
-            "title": "Ship hold",
-            "prompt": "Three doors to the hold. Choose before someone returns."
+            "title": "Cale du navire",
+            "prompt": "Trois portes vers la cale. Choisis avant que quelqu'un ne revienne."
         },
         "castle-doors": {
             "title": "Passage",
-            "prompt": "Three stone doors. One is a shortcut to treasure."
+            "prompt": "Trois portes en pierre. L'une est un raccourci vers un trésor."
         },
         "clinic-doors": {
             "title": "Clinic",
-            "prompt": "Three storage doors. One has a small safe."
+            "prompt": "Trois portes de réserve. L'une a un petit coffre."
         },
         "stadium-doors": {
             "title": "Stadium",
-            "prompt": "Three locker room doors. One has lost-and-found."
+            "prompt": "Trois portes de vestiaires. L'une mène aux objets trouvés."
         },
         "mall-doors": {
-            "title": "Mall",
-            "prompt": "Three service doors. One leads to the register."
+            "title": "Centre commercial",
+            "prompt": "Trois portes de service. L'une mène aux caisses."
         },
         "garage-doors": {
             "title": "Garage",
-            "prompt": "Three metal doors. One has no lock."
+            "prompt": "Trois portes métalliques. L'une n'a pas de serrure."
         },
         "serverroom-doors": {
-            "title": "Server room",
-            "prompt": "Three doors. One has resellable gear."
+            "title": "Salle des serveurs",
+            "prompt": "Trois portes. L'une contient du matériel revendable."
         },
         "kitchen-doors": {
             "title": "Kitchen",
-            "prompt": "Three doors to storage. One has pricey supplies."
+            "prompt": "Trois portes vers la réserve. L'une a des produits coûteux."
         },
         "bakery-doors": {
-            "title": "Bakery",
-            "prompt": "Three back doors. One leads to the till."
+            "title": "Boulangerie",
+            "prompt": "Trois portes à l'arrière. L'une mène à la caisse."
         },
         "gallery-doors": {
             "title": "Gallery",
-            "prompt": "Three doors to the back room. One is poorly shut."
+            "prompt": "Trois portes vers l'arrière-boutique. L'une est mal fermée."
         },
         "station-doors": {
             "title": "Station",
-            "prompt": "Three cleaning doors. One hides a bag."
+            "prompt": "Trois portes de ménage. L'une cache un sac."
         },
         "factory-doors": {
-            "title": "Factory",
-            "prompt": "Three doors. One opens into a parts warehouse."
+            "title": "Usine",
+            "prompt": "Trois portes. L'une donne sur un stock de pièces."
         },
         "dockyard-doors": {
-            "title": "Shipyard",
-            "prompt": "Three tool doors. One has new crates."
+            "title": "Chantier naval",
+            "prompt": "Trois portes d'outillage. L'une a de nouvelles caisses."
         },
         "getaway": {
-            "title": "Getaway",
-            "prompt": "Loot in hand. How much risk do you take to escape?"
+            "title": "Évasion",
+            "prompt": "Butin en main. Jusqu'où prends-tu des risques pour t'échapper ?"
         },
         "alley-chase": {
-            "title": "Alley",
-            "prompt": "Footsteps behind. Sirens far. How do you escape?"
+            "title": "Ruelle",
+            "prompt": "Des pas derrière. Des sirènes au loin. Comment tu t'échappes ?"
         },
         "rooftops": {
-            "title": "Rooftops",
-            "prompt": "Up the fire stairs. How much do you risk?"
+            "title": "Toits",
+            "prompt": "Par l'escalier de secours. Jusqu'où prends-tu des risques ?"
         },
         "crowd-vanish": {
-            "title": "Disappear in the crowd",
-            "prompt": "The crowd can save you… or expose you."
+            "title": "Disparaître dans la foule",
+            "prompt": "La foule peut te sauver… ou t'exposer."
         },
         "river-cross": {
-            "title": "Cross the river",
-            "prompt": "There's a bridge, a boat and a jump. Risk?"
+            "title": "Traverser la rivière",
+            "prompt": "Il y a un pont, un bateau et un saut. Risque ?"
         },
         "night-scooter": {
-            "title": "Night scooter",
-            "prompt": "The night is ally. Or enemy. Decide."
+            "title": "Trottinette nocturne",
+            "prompt": "La nuit est une alliée. Ou une ennemie. Décide."
         },
         "smoke-bomb": {
-            "title": "Smoke screen",
-            "prompt": "You can vanish… if it works."
+            "title": "Écran de fumée",
+            "prompt": "Tu peux disparaître… si ça marche."
         },
         "subway-hop": {
-            "title": "Subway hop",
-            "prompt": "The train arrives. Do you rush in or play it calm?"
+            "title": "Saut dans le métro",
+            "prompt": "Le train arrive. Tu fonces ou tu restes calme ?"
         },
         "taxi-dash": {
-            "title": "Fast taxi",
-            "prompt": "A free cab. Pay and go, or bolt?"
+            "title": "Taxi rapide",
+            "prompt": "Un taxi libre. Tu payes et tu pars, ou tu te barres ?"
         },
         "crowbar-route": {
-            "title": "Emergency route",
-            "prompt": "Locked doors. You could force one."
+            "title": "Issue de secours",
+            "prompt": "Des portes verrouillées. Tu peux en forcer une."
         },
         "rain-cover": {
-            "title": "Rain cover",
-            "prompt": "Rain hides tracks… and vision."
+            "title": "Couverture de pluie",
+            "prompt": "La pluie efface les traces… et brouille la vue."
         },
         "market-escape": {
-            "title": "Market escape",
-            "prompt": "Tight stalls. One mistake is expensive."
+            "title": "Fuite au marché",
+            "prompt": "Des stands serrés. Une erreur coûte cher."
         },
         "stairs-sprint": {
-            "title": "Stairs",
-            "prompt": "Up or down. Every second counts."
+            "title": "Escaliers",
+            "prompt": "Monter ou descendre. Chaque seconde compte."
         },
         "dock-fog": {
-            "title": "Dock fog",
-            "prompt": "Fog hides… but confuses too."
+            "title": "Brouillard aux docks",
+            "prompt": "Le brouillard cache… mais désoriente aussi."
         },
         "warehouse-run": {
-            "title": "Between warehouses",
-            "prompt": "Indoor shortcuts. Risk of guards."
+            "title": "Entre les entrepôts",
+            "prompt": "Raccourcis à l'intérieur. Risque de gardes."
         },
         "festival-hide": {
-            "title": "Hide in the festival",
-            "prompt": "Costumes and masks. How exposed are you?"
+            "title": "Se cacher au festival",
+            "prompt": "Costumes et masques. À quel point es-tu exposé(e) ?"
         },
         "parking-garage": {
-            "title": "Parking garage",
-            "prompt": "Ramps, cars, cameras. Pick your risk."
+            "title": "Parking",
+            "prompt": "Rampes, voitures, caméras. Choisis ton risque."
         },
         "canal-walk": {
             "title": "Canal",
-            "prompt": "You can follow the canal edge. Slippery."
+            "prompt": "Tu peux longer le bord du canal. C'est glissant."
         },
         "construction-site": {
-            "title": "Construction site",
-            "prompt": "Scaffolds and gaps. You can vanish… or fall."
+            "title": "Chantier",
+            "prompt": "Échafaudages et trous. Tu peux disparaître… ou tomber."
         },
         "mall-exit": {
-            "title": "Mall exit",
-            "prompt": "Three exits, two guards. What do you do?"
+            "title": "Sortie du centre commercial",
+            "prompt": "Trois sorties, deux gardes. Tu fais quoi ?"
         },
         "hotel-elevator": {
-            "title": "Elevator",
-            "prompt": "Slow elevator or fast stairs. Risk."
+            "title": "Ascenseur",
+            "prompt": "Ascenseur lent ou escaliers rapides. Risque."
         },
         "station-cameras": {
-            "title": "Cameras",
-            "prompt": "Cameras track you. Do you try to dodge them?"
+            "title": "Caméras",
+            "prompt": "Les caméras te suivent. Tu essaies de les éviter ?"
         },
         "rooftop-jump": {
             "title": "Jump",
-            "prompt": "There's a jump between buildings. Your call."
+            "prompt": "Il y a un saut entre deux bâtiments. À toi de voir."
         },
         "sewer-drop": {
-            "title": "Manhole",
-            "prompt": "You can drop into the sewers. Or not."
+            "title": "Bouche d'égout",
+            "prompt": "Tu peux descendre dans les égouts. Ou pas."
         },
         "forest-edge": {
-            "title": "Forest edge",
-            "prompt": "Darkness and branches. Safe path or shortcut."
+            "title": "Lisière de forêt",
+            "prompt": "Obscurité et branches. Chemin sûr ou raccourci."
         },
         "bridge-crossing": {
-            "title": "Bridge",
-            "prompt": "Fast but visible. Risk?"
+            "title": "Pont",
+            "prompt": "Rapide mais visible. Risque ?"
         },
         "crowd-metro": {
-            "title": "Station crowd",
-            "prompt": "Blend in… or sprint."
+            "title": "Foule à la gare",
+            "prompt": "Te fondre dans la masse… ou sprinter."
         },
         "harbor-boat": {
-            "title": "Harbor boat",
-            "prompt": "A boat breaks loose. Do you use it?"
+            "title": "Bateau du port",
+            "prompt": "Un bateau se détache. Tu l'utilises ?"
         }
     }
 }

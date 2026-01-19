@@ -1,19 +1,19 @@
 {
     "ui": {
-        "page": "Page {{page}} of {{total}}",
-        "selectCategory": "Select a category…",
-        "fishTitle": "## Fish • Zones",
+        "page": "Page {{page}} sur {{total}}",
+        "selectCategory": "Sélectionne une catégorie…",
+        "fishTitle": "## Pêche • Zones",
         "kindTitle": "## {{icon}} Zones • {{label}}",
-        "availableFish": "Available fishing zones: **{{count}}**",
-        "availableMine": "Available mining zones: **{{count}}**",
-        "availableExplore": "Available exploration zones: **{{count}}**",
-        "pickHintFish": "Press a zone button to fish.",
-        "pickHintOther": "Press a zone to perform the action.",
-        "requires": "Requires: {{item}}"
+        "availableFish": "Zones de pêche disponibles : **{{count}}**",
+        "availableMine": "Zones de minage disponibles : **{{count}}**",
+        "availableExplore": "Zones d’exploration disponibles : **{{count}}**",
+        "pickHintFish": "Appuie sur une zone pour pêcher.",
+        "pickHintOther": "Appuie sur une zone pour effectuer l’action.",
+        "requires": "Requis : {{item}}"
     },
     "kinds": {
-        "fish": "Fishing",
-        "mine": "Mining",
+        "fish": "Pêche",
+        "mine": "Minage",
         "explore": "Exploration"
     },
     "mine": {
