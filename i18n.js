@@ -9,6 +9,60 @@ const { EMOJIS, UNICODE_CODEPOINT_TO_KEY } = require('./Util/emojis');
 const debug = require('./Util/debug');
 const logger = require('./Util/logger');
 
+function buildLocaleResolver() {
+  try {
+    const languagesDir = path.join(__dirname, 'Languages');
+    const entries = fs.existsSync(languagesDir)
+      ? fs.readdirSync(languagesDir, { withFileTypes: true })
+      : [];
+    const dirs = entries
+      .filter((e) => e.isDirectory())
+      .map((e) => e.name)
+      .filter((n) => n && n !== '.' && n !== '..');
+
+    const normalizedToDir = new Map();
+    const baseToPreferred = new Map();
+    for (const d of dirs) {
+      const key = String(d).trim();
+      if (!key) continue;
+      const lower = key.toLowerCase();
+      normalizedToDir.set(lower, key);
+      normalizedToDir.set(lower.replace(/_/g, '-'), key);
+      normalizedToDir.set(lower.replace(/-/g, '_'), key);
+
+      const base = lower.split(/[-_]/)[0];
+      if (!base) continue;
+      if (!baseToPreferred.has(base)) {
+        baseToPreferred.set(base, key);
+      } else {
+        // Preferir locales completos sobre bases sueltas, y mantener una opción estable
+        const prev = String(baseToPreferred.get(base));
+        if (prev.length < key.length) baseToPreferred.set(base, key);
+      }
+    }
+
+    return function resolveLocale(input, fallbackLang = 'es-ES') {
+      const raw = String(input || '').trim();
+      if (!raw) return fallbackLang;
+      const normalized = raw.replace(/_/g, '-').toLowerCase();
+
+      const direct = normalizedToDir.get(normalized);
+      if (direct) return direct;
+
+      // Intentar con base (ej: zh -> zh-CN)
+      const base = normalized.split('-')[0];
+      const preferred = baseToPreferred.get(base);
+      if (preferred) return preferred;
+
+      return raw || fallbackLang;
+    };
+  } catch {
+    return (input, fallbackLang = 'es-ES') => String(input || '').trim() || fallbackLang;
+  }
+}
+
+const resolveLocaleFromWorkspace = buildLocaleResolver();
+
 function uniqStrings(arr) {
   return Array.from(new Set((arr || []).filter((x) => typeof x === 'string' && x.trim())));
 }
@@ -283,7 +337,7 @@ async function getGuildLanguageCached(guildId, fallbackLang = 'es-ES') {
       lang = String(raw).trim();
     }
 
-    return lang || fallbackLang;
+    return resolveLocaleFromWorkspace(lang, fallbackLang);
   } catch {
     return fallbackLang;
   }
