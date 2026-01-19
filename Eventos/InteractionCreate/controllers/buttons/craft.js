@@ -17,7 +17,8 @@ module.exports = async function craftButtons(interaction, Moxi, logger) {
     const userId = parts[2];
 
     const guildId = interaction.guildId || interaction.guild?.id;
-    const lang = Moxi?.guildLang ? await Moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES') : await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+    const fallbackLang = interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
+    const lang = await moxi.guildLang(guildId, fallbackLang);
 
     if (interaction.user?.id !== userId) {
         await interaction.reply({ content: 'Solo quien abrió el craft puede usar estos botones.', flags: MessageFlags.Ephemeral });

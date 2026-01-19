@@ -48,7 +48,8 @@ module.exports = async function craftSelectMenu(interaction, Moxi, logger) {
     const eco = await Economy.findOne({ userId: interaction.user.id });
 
     const guildId = interaction.guildId || interaction.guild?.id;
-    const lang = Moxi?.guildLang ? await Moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES') : await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+    const fallbackLang = interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
+    const lang = await moxi.guildLang(guildId, fallbackLang);
 
     const recipe = resolveRecipe(value, lang);
     if (!recipe) {
