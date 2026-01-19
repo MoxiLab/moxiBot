@@ -27,6 +27,7 @@ async function setGuildPrefix(guildId, prefix) {
 }
 
 async function setGuildLanguage(guildId, lang, ownerId) {
+  const langCode = String(lang).trim();
   if (LanguagesModel && typeof LanguagesModel.updateOne === 'function') {
     try {
       let useMongoose = false;
@@ -39,10 +40,10 @@ async function setGuildLanguage(guildId, lang, ownerId) {
       if (useMongoose) {
         const res = await LanguagesModel.updateOne(
           { guildID: guildId },
-          { $set: { language: String(lang) }, $setOnInsert: { guildID: guildId } },
+          { $set: { language: langCode }, $setOnInsert: { guildID: guildId } },
           { upsert: true }
         );
-        return !!(res.matchedCount > 0 || res.upsertedCount > 0 || res.modifiedCount > 0);
+        // seguimos abajo para también sincronizar GuildSchema/guilds
       }
     } catch (err) {
       // fall back to the helper-backed path below if Mongoose fails.
@@ -53,11 +54,25 @@ async function setGuildLanguage(guildId, lang, ownerId) {
   const db = connection.db;
   const query = { $or: [{ guildID: guildId }, { guildId: guildId }, { id: guildId }] };
   const update = {
-    $set: { language: String(lang) },
+    $set: { language: langCode },
     $setOnInsert: { guildID: guildId, id: guildId },
   };
   const options = { upsert: true };
   const result = await db.collection('languages').updateOne(query, update, options);
+
+  // Mantener compatibilidad: el bot también guarda/lee el idioma desde `guilds.Language`.
+  // Si esto no se actualiza, el idioma se queda pegado al default (es-ES) aunque exista `languages`.
+  try {
+    const guildQuery = { guildID: guildId };
+    const guildUpdate = {
+      $set: { Language: langCode },
+      $setOnInsert: { guildID: guildId, ownerID: ownerId ?? null },
+    };
+    await db.collection('guilds').updateOne(guildQuery, guildUpdate, { upsert: true });
+  } catch (_) {
+    // ignore
+  }
+
   return result.matchedCount > 0 || result.upsertedCount > 0;
 }
 
@@ -80,16 +95,20 @@ async function getGuildSettings(guildId) {
       if (serverDoc.Rank) settings.Rank = serverDoc.Rank;
     }
   } catch (err) {
-    try {
-      const queryLang = { $or: [{ guildID: guildId }, { guildId: guildId }, { id: guildId }] };
-      const langDoc = await db.collection('languages').findOne(queryLang);
-      if (langDoc && langDoc.language) {
-        settings.Language = langDoc.language;
-        settings.language = langDoc.language;
-      }
-    } catch (_) {
-      // ignore
+    // ignore: podemos seguir usando MongoClient
+  }
+
+  // Fuente de verdad para el idioma (lo escribe el comando de idioma): colección `languages`.
+  // Se consulta SIEMPRE para que no se quede el default de `guilds.Language`.
+  try {
+    const queryLang = { $or: [{ guildID: guildId }, { guildId: guildId }, { id: guildId }] };
+    const langDoc = await db.collection('languages').findOne(queryLang);
+    if (langDoc && langDoc.language) {
+      settings.Language = langDoc.language;
+      settings.language = langDoc.language;
     }
+  } catch (_) {
+    // ignore
   }
 
   try {
