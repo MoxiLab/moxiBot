@@ -1,13 +1,13 @@
 {
-    "TITLE": "{{user}}'s balance",
-    "COINS": "Coins",
-    "BANK": "Bank",
-    "SAKURAS": "Sakuras",
-    "GLOBAL_RANK": "Global rank",
-    "BTN_DEPOSIT": "Deposit",
-    "BTN_WITHDRAW": "Withdraw",
-    "ONLY_AUTHOR": "Only the author can use these buttons.",
-    "ONLY_OWN_BALANCE": "You can only manage your own balance.",
-    "NO_COINS_TO_DEPOSIT": "You don't have coins to deposit.",
-    "NO_COINS_TO_WITHDRAW": "You don't have coins in the bank to withdraw."
+    "TITLE": "{{user}} 的余额",
+    "COINS": "金币",
+    "BANK": "银行",
+    "SAKURAS": "樱花",
+    "GLOBAL_RANK": "全球排名",
+    "BTN_DEPOSIT": "存入",
+    "BTN_WITHDRAW": "取出",
+    "ONLY_AUTHOR": "只有发起者可以使用这些按钮。",
+    "ONLY_OWN_BALANCE": "你只能管理自己的余额。",
+    "NO_COINS_TO_DEPOSIT": "你没有可以存入的金币。",
+    "NO_COINS_TO_WITHDRAW": "你的银行里没有可以取出的金币。"
 }

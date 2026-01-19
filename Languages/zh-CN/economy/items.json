@@ -1,843 +1,843 @@
 {
     "categories": {
-        "Buffs": "Buffs",
-        "Collectibles": "Collectibles",
-        "Consumables": "Consumables",
-        "Tools": "Tools",
-        "Keys": "Keys",
-        "Loot": "Loot",
-        "Pets": "Pets",
-        "Materials": "Materials",
-        "Upgrades": "Upgrades",
-        "Quests": "Quests",
-        "Potions": "Potions",
-        "Scrolls": "Scrolls",
-        "Protection": "Protection"
+        "Buffs": "增益",
+        "Collectibles": "收藏品",
+        "Consumables": "消耗品",
+        "Tools": "工具",
+        "Keys": "钥匙",
+        "Loot": "战利品",
+        "Pets": "宠物",
+        "Materials": "材料",
+        "Upgrades": "升级",
+        "Quests": "任务",
+        "Potions": "药水",
+        "Scrolls": "卷轴",
+        "Protection": "防护"
     },
     "items": {
         "buffs/scroll-de-impulso-moxi": {
-            "name": "Scroll of Boost Moxi",
-            "description": "Increases the speed of all your actions for 1 hour."
+            "name": "Moxi 加速卷轴",
+            "description": "1 小时内提升你所有行动的速度。"
         },
         "buffs/pez-lumina": {
-            "name": "Fish Lumina",
-            "description": "Experience bonus for aquatic activities."
+            "name": "光辉鱼",
+            "description": "水上活动经验加成。"
         },
         "buffs/gusano-brillo": {
-            "name": "Worm Glow",
-            "description": "Improves the chance of finding rare resources."
+            "name": "荧光虫",
+            "description": "提高发现稀有资源的概率。"
         },
         "buffs/linterna-solar": {
-            "name": "Solar Lantern",
-            "description": "Allows you to explore dark areas and discover hidden treasures."
+            "name": "太阳灯笼",
+            "description": "让你探索黑暗区域并发现隐藏宝藏。"
         },
         "buffs/fruta-vital": {
-            "name": "Fruit Vital",
-            "description": "Restores energy and gives a small speed boost."
+            "name": "活力果",
+            "description": "恢复精力并获得少量速度加成。"
         },
         "buffs/scroll-mascota-veloz": {
-            "name": "Scroll Pet Swift",
-            "description": "Your pet gains extra speed temporarily."
+            "name": "宠物疾行卷轴",
+            "description": "你的宠物暂时获得额外速度。"
         },
         "buffs/fruta-mutante": {
-            "name": "Fruit Mutant",
-            "description": "Gives a random effect; it can be positive or negative."
+            "name": "突变果",
+            "description": "产生随机效果，可能正面也可能负面。"
         },
         "buffs/holly-prisma": {
-            "name": "Holly Prism",
-            "description": "Special bonus in seasonal events."
+            "name": "棱镜冬青",
+            "description": "季节活动中的特殊加成。"
         },
         "buffs/pan-dulce-moxi": {
-            "name": "Bread Candy Moxi",
-            "description": "Doubles quest rewards for 10 minutes."
+            "name": "Moxi 甜面包",
+            "description": "10 分钟内任务奖励翻倍。"
         },
         "buffs/pase-de-evento": {
-            "name": "Event Pass",
-            "description": "Access to rewards and exclusive areas (expired and current)."
+            "name": "活动通行证",
+            "description": "可领取奖励并进入专属区域（含已结束与当前活动）。"
         },
         "buffs/fogata-elemental": {
-            "name": "Campfire Elemental",
-            "description": "Allows you to camp and gain temporary buffs depending on the type of wood."
+            "name": "元素篝火",
+            "description": "可露营，并根据木材类型获得临时增益。"
         },
         "buffs/scroll-gelido": {
-            "name": "Glacial Scroll",
-            "description": "Increases defense in cold areas."
+            "name": "冰霜卷轴",
+            "description": "在寒冷区域提高防御。"
         },
         "buffs/corona-de-invierno": {
-            "name": "Crown of Winter",
-            "description": "Special bonus in winter events."
+            "name": "冬之王冠",
+            "description": "冬季活动特殊加成。"
         },
         "buffs/dulce-de-fresa": {
-            "name": "Candy of Strawberry",
-            "description": "Restores energy and grants a luck bonus."
+            "name": "草莓糖",
+            "description": "恢复精力并获得幸运加成。"
         },
         "buffs/trebol-de-fortuna": {
-            "name": "Clover of Fortune",
-            "description": "Increases the chance of getting rare items."
+            "name": "幸运四叶草",
+            "description": "提高获得稀有物品的概率。"
         },
         "buffs/cascanueces-moxi": {
-            "name": "Nutcracker Moxi",
-            "description": "Defense bonus during winter events."
+            "name": "Moxi 胡桃夹子",
+            "description": "冬季活动防御加成。"
         },
         "coleccionables/medalla-de-nieve": {
-            "name": "Medal of Snow",
-            "description": "Winter season collectible."
+            "name": "雪之勋章",
+            "description": "冬季收藏品。"
         },
         "coleccionables/medalla-prisma": {
-            "name": "Medal Prism",
-            "description": "Special event collectible."
+            "name": "棱镜勋章",
+            "description": "特殊活动收藏品。"
         },
         "coleccionables/medalla-lunar": {
-            "name": "Medal Lunar",
-            "description": "Obtained in night missions."
+            "name": "月之勋章",
+            "description": "夜间任务获得。"
         },
         "coleccionables/token-festivo": {
-            "name": "Token Festive",
-            "description": "Redeemable for rewards in the event shop."
+            "name": "节庆代币",
+            "description": "可在活动商店兑换奖励。"
         },
         "coleccionables/carta-de-amistad": {
-            "name": "Letter of Friendship",
-            "description": "Collectible of events sociales."
+            "name": "友谊信",
+            "description": "社交活动收藏品。"
         },
         "coleccionables/moneda-de-fortuna": {
-            "name": "Coin of Fortune",
-            "description": "Grants a luck bonus while you have it."
+            "name": "幸运币",
+            "description": "持有时提供幸运加成。"
         },
         "coleccionables/gema-de-espiritu": {
-            "name": "Gem of Spirit",
-            "description": "Required for advanced quests."
+            "name": "灵魂宝石",
+            "description": "高级任务所需。"
         },
         "coleccionables/corazon-prisma": {
-            "name": "Heart Prism",
-            "description": "Collectible of events romantic."
+            "name": "棱镜之心",
+            "description": "浪漫活动收藏品。"
         },
         "coleccionables/petalo-de-sakura": {
-            "name": "Petal of Sakura",
-            "description": "Spring collectible."
+            "name": "樱花花瓣",
+            "description": "春季收藏品。"
         },
         "coleccionables/bouquet-festivo": {
-            "name": "Bouquet Festive",
-            "description": "Collectible of events florales."
+            "name": "节庆花束",
+            "description": "花卉活动收藏品。"
         },
         "coleccionables/ticket-de-temporada": {
-            "name": "Ticket of Season",
-            "description": "Access to special events."
+            "name": "季票",
+            "description": "可进入特殊活动。"
         },
         "coleccionables/varita-de-luz": {
-            "name": "Wand of Light",
-            "description": "Magical collectible."
+            "name": "光之魔杖",
+            "description": "魔法收藏品。"
         },
         "coleccionables/cascabel-festivo": {
-            "name": "Jingle bell Festive",
-            "description": "Winter collectible."
+            "name": "节庆铃铛",
+            "description": "冬季收藏品。"
         },
         "coleccionables/flor-de-espiritu": {
-            "name": "Flower of Spirit",
-            "description": "Collectible of events of flores."
+            "name": "灵魂之花",
+            "description": "花卉活动收藏品。"
         },
         "coleccionables/fantasmita-moxi": {
-            "name": "Little ghost Moxi",
-            "description": "Halloween collectible."
+            "name": "Moxi 小幽灵",
+            "description": "万圣节收藏品。"
         },
         "coleccionables/gato-sombrio": {
-            "name": "Cat Dark",
-            "description": "Collectible of events oscuros."
+            "name": "暗影猫",
+            "description": "黑暗主题活动收藏品。"
         },
         "coleccionables/copa-de-campeon": {
-            "name": "Cup of Champion",
-            "description": "Earned by completing special challenges."
+            "name": "冠军奖杯",
+            "description": "完成特殊挑战获得。"
         },
         "consumibles/galleta-energetica": {
-            "name": "Cookie Energy",
-            "description": "Restores energy."
+            "name": "能量饼干",
+            "description": "恢复精力。"
         },
         "consumibles/pastel-de-celebracion": {
-            "name": "Cake of Celebration",
-            "description": "Gives an experience bonus."
+            "name": "庆典蛋糕",
+            "description": "提供经验加成。"
         },
         "consumibles/fruta-magica": {
-            "name": "Magic Fruit",
-            "description": "Gives a random effect."
+            "name": "魔法果",
+            "description": "产生随机效果。"
         },
         "consumibles/ensalada-refrescante": {
-            "name": "Refreshing Salad",
-            "description": "Restores energy and health."
+            "name": "清爽沙拉",
+            "description": "恢复精力与生命值。"
         },
         "consumibles/fuegos-artificiales": {
-            "name": "Fireworks",
-            "description": "Gives a luck bonus in events."
+            "name": "烟花",
+            "description": "活动期间提供幸运加成。"
         },
         "consumibles/calabaza-festiva": {
-            "name": "Pumpkin Festiva",
-            "description": "Halloween consumable."
+            "name": "节庆南瓜",
+            "description": "万圣节消耗品。"
         },
         "consumibles/nuez-dorada": {
-            "name": "Nut Golden",
-            "description": "Grants a defense bonus."
+            "name": "金色坚果",
+            "description": "提供防御加成。"
         },
         "consumibles/electrolito": {
-            "name": "Electrolyte",
-            "description": "Restores energy instantly."
+            "name": "电解质",
+            "description": "立刻恢复精力。"
         },
         "consumibles/monedas-de-oro": {
-            "name": "Gold Coins",
-            "description": "Consumable used to buy items in the shop."
+            "name": "金币",
+            "description": "用于在商店购买物品的消耗品。"
         },
         "consumibles/agua-fresca": {
-            "name": "Fresh Water",
-            "description": "Keeps you going: a small energy bonus."
+            "name": "清水",
+            "description": "让你继续前进：少量精力加成。"
         },
         "consumibles/te-verde": {
-            "name": "Green Tea",
-            "description": "Reduces fatigue: a light focus bonus."
+            "name": "绿茶",
+            "description": "减轻疲劳：轻微专注加成。"
         },
         "consumibles/cafe-moxi": {
-            "name": "Coffee Moxi",
-            "description": "Slightly speeds up your actions for a few minutes."
+            "name": "Moxi 咖啡",
+            "description": "数分钟内略微加快行动。"
         },
         "consumibles/chocolate-caliente": {
-            "name": "Hot Chocolate",
-            "description": "Comforting: a gentle bonus during cold events."
+            "name": "热巧克力",
+            "description": "暖心：寒冷活动期间的小幅加成。"
         },
         "consumibles/sopa-caliente": {
-            "name": "Hot Soup",
-            "description": "Restores energy and grants a light endurance boost."
+            "name": "热汤",
+            "description": "恢复精力并提供轻微耐力加成。"
         },
         "consumibles/barra-proteica": {
-            "name": "Protein Bar",
-            "description": "Quick energy for intense activities."
+            "name": "蛋白棒",
+            "description": "高强度活动的快速能量。"
         },
         "consumibles/batido-prisma": {
-            "name": "Shake Prism",
-            "description": "A small luck boost for a while."
+            "name": "棱镜奶昔",
+            "description": "一段时间内的小幅幸运加成。"
         },
         "consumibles/sandwich-de-aventura": {
-            "name": "Adventure Sandwich",
-            "description": "Restores energy and slightly improves exploration."
+            "name": "冒险三明治",
+            "description": "恢复精力并略微提升探索表现。"
         },
         "consumibles/sushi-marino": {
-            "name": "Sushi Marine",
-            "description": "A small bonus to fishing and marine loot."
+            "name": "海鲜寿司",
+            "description": "对钓鱼与海域战利品有小幅加成。"
         },
         "consumibles/pan-de-ajo": {
-            "name": "Bread of Garlic",
-            "description": "Improves endurance: ideal for mining."
+            "name": "蒜香面包",
+            "description": "提高耐力：适合采矿。"
         },
         "herramientas/pico-prisma": {
-            "name": "Pickaxe Prism",
-            "description": "Allows you to mine rare minerals."
+            "name": "棱镜镐",
+            "description": "允许你开采稀有矿物。"
         },
         "herramientas/cana-de-pesca-moxi": {
-            "name": "Rod of Fishing Moxi",
-            "description": "Increases the chance of catching rare items."
+            "name": "Moxi 钓竿",
+            "description": "提高钓到稀有物品的概率。"
         },
         "herramientas/llave-multiusos": {
-            "name": "Key Multi-tool",
-            "description": "Tool for repairing and building."
+            "name": "多功能钥匙",
+            "description": "用于修理与建造的工具。"
         },
         "herramientas/varita-solar": {
-            "name": "Wand Solar",
-            "description": "Allows you to perform magical actions."
+            "name": "太阳法杖",
+            "description": "允许你进行魔法行动。"
         },
         "herramientas/hacha-elemental": {
-            "name": "Axe Elemental",
-            "description": "Tool for gathering special wood."
+            "name": "元素斧",
+            "description": "用于采集特殊木材的工具。"
         },
         "herramientas/incubadora": {
-            "name": "Incubator",
-            "description": "Allows you to hatch eggs."
+            "name": "孵化器",
+            "description": "允许你孵化宠物蛋。"
         },
         "herramientas/revelador-prisma": {
-            "name": "Revealer Prism",
-            "description": "Tool for discovering hidden treasures."
+            "name": "棱镜显形器",
+            "description": "用于发现隐藏宝藏的工具。"
         },
         "herramientas/barco-moxi": {
-            "name": "Boat Moxi",
-            "description": "Allows you to explore sea regions."
+            "name": "Moxi 小船",
+            "description": "允许你探索海域。"
         },
         "herramientas/dinamita": {
-            "name": "Dynamite",
-            "description": "Allows you to open blocked paths."
+            "name": "炸药",
+            "description": "允许你炸开被阻挡的道路。"
         },
         "herramientas/golem-minero-pescador": {
-            "name": "Golem Miner/Fisher",
-            "description": "Automated tools for mining/fishing."
+            "name": "矿工/渔夫傀儡",
+            "description": "用于采矿/钓鱼的自动化工具。"
         },
         "herramientas/pico-de-hierro": {
-            "name": "Pickaxe of Iron",
-            "description": "Basic mining tool."
+            "name": "铁镐",
+            "description": "基础采矿工具。"
         },
         "herramientas/pico-de-acero": {
-            "name": "Pickaxe of Steel",
-            "description": "Improves mining efficiency."
+            "name": "钢镐",
+            "description": "提高采矿效率。"
         },
         "herramientas/pico-de-diamante": {
-            "name": "Pickaxe of Diamond",
-            "description": "Ideal for rare and tough veins."
+            "name": "钻石镐",
+            "description": "适合稀有且坚硬的矿脉。"
         },
         "herramientas/pico-de-obsidiana": {
-            "name": "Pickaxe of Obsidian",
-            "description": "Legendary tool for extreme mining."
+            "name": "黑曜石镐",
+            "description": "极限采矿的传奇工具。"
         },
         "herramientas/cana-de-bambu": {
-            "name": "Rod of Bamboo",
-            "description": "A simple rod to start fishing."
+            "name": "竹竿",
+            "description": "入门用的简易钓竿。"
         },
         "herramientas/cana-de-carbono": {
-            "name": "Rod of Carbon",
-            "description": "Increases the chance of rare fishing."
+            "name": "碳纤维钓竿",
+            "description": "提高钓到稀有鱼获的概率。"
         },
         "herramientas/red-de-pesca": {
-            "name": "Fishing Net",
-            "description": "Catches more common loot in marine areas."
+            "name": "渔网",
+            "description": "在海域捕获更多常见战利品。"
         },
         "herramientas/arpon-marino": {
-            "name": "Harpoon Marine",
-            "description": "Improves loot in deep-sea fishing."
+            "name": "海洋鱼叉",
+            "description": "提升深海钓鱼的战利品。"
         },
         "herramientas/pala-de-excavacion": {
-            "name": "Shovel of Excavation",
-            "description": "Used to find buried objects."
+            "name": "挖掘铲",
+            "description": "用于寻找埋藏物品。"
         },
         "herramientas/brujula-prisma": {
-            "name": "Compass Prism",
-            "description": "Helps you navigate and discover routes."
+            "name": "棱镜罗盘",
+            "description": "帮助你导航并发现路线。"
         },
         "herramientas/mapa-arrugado": {
-            "name": "Map Crumpled",
-            "description": "Clues for exploration and treasures."
+            "name": "皱巴巴的地图",
+            "description": "提供探索与宝藏的线索。"
         },
         "herramientas/linterna-de-caverna": {
-            "name": "Cave Lantern",
-            "description": "Lights up dark areas while exploring."
+            "name": "洞穴灯",
+            "description": "探索时照亮黑暗区域。"
         },
         "herramientas/detector-de-metales": {
-            "name": "Detector of Metals",
-            "description": "Finds valuable objects underground."
+            "name": "金属探测器",
+            "description": "在地下发现有价值的物品。"
         },
         "herramientas/cuerda-de-escalada": {
-            "name": "Rope of Climbing",
-            "description": "Useful for mountain routes and rescues."
+            "name": "攀爬绳",
+            "description": "适用于山路与救援。"
         },
         "herramientas/kit-de-reparacion": {
-            "name": "Kit of Repair",
-            "description": "Repairs tools and equipment (future use)."
+            "name": "修理工具包",
+            "description": "修理工具与装备（未来用途）。"
         },
         "herramientas/lupa-antigua": {
-            "name": "Magnifying glass Ancient",
-            "description": "Helps identify objects and clues."
+            "name": "古老放大镜",
+            "description": "帮助鉴别物品与线索。"
         },
         "herramientas/frasco-cazabichos": {
-            "name": "Jar Bug catcher",
-            "description": "Allows you to catch insects and small creatures."
+            "name": "捕虫罐",
+            "description": "允许你捕捉昆虫与小生物。"
         },
         "herramientas/guantes-de-minero": {
-            "name": "Gloves of Miner",
-            "description": "Protects your hands during tough work."
+            "name": "矿工手套",
+            "description": "在艰苦工作中保护双手。"
         },
         "herramientas/sierra-de-carpintero": {
-            "name": "Carpenter's Saw",
-            "description": "A woodworking tool (future use)."
+            "name": "木工锯",
+            "description": "木工工具（未来用途）。"
         },
         "herramientas/cuchillo-de-supervivencia": {
-            "name": "Knife of Survival",
-            "description": "tool multiusos for exploration."
+            "name": "生存刀",
+            "description": "用于探索的多功能工具。"
         },
         "herramientas/martillo-de-forja": {
-            "name": "Forge Hammer",
-            "description": "Required for advanced crafting (future use)."
+            "name": "锻造锤",
+            "description": "高级制作所需（未来用途）。"
         },
         "herramientas/anzuelo-de-lux": {
-            "name": "Hook of Lux",
-            "description": "Improves rare fishing in deep waters."
+            "name": "奢华鱼钩",
+            "description": "提升深水稀有鱼获。"
         },
         "herramientas/cebo-prisma": {
-            "name": "Bait Prism",
-            "description": "Temporarily increases the chance of rare catches."
+            "name": "棱镜鱼饵",
+            "description": "短时间提升稀有上钩概率。"
         },
         "herramientas/taladro-portatil": {
-            "name": "Portable Drill",
-            "description": "A powerful tool for fast mining (future use)."
+            "name": "便携钻机",
+            "description": "用于快速采矿的强力工具（未来用途）。"
         },
         "herramientas/bomba-de-humo": {
-            "name": "Smoke Bomb",
-            "description": "Helps you escape or avoid danger (future use)."
+            "name": "烟雾弹",
+            "description": "帮助逃脱或避免危险（未来用途）。"
         },
         "llaves/llave-prisma": {
-            "name": "Key Prism",
-            "description": "Opens special chests."
+            "name": "棱镜钥匙",
+            "description": "打开特殊宝箱。"
         },
         "llaves/llave-elemental": {
-            "name": "Elemental Key",
-            "description": "Opens event areas and chests."
+            "name": "元素钥匙",
+            "description": "打开活动区域与宝箱。"
         },
         "llaves/talisman-solar": {
-            "name": "Solar Talisman",
-            "description": "Allows access to magical areas."
+            "name": "太阳护符",
+            "description": "允许进入魔法区域。"
         },
         "llaves/anillo-de-fuego": {
-            "name": "Ring of Fire",
-            "description": "Special key for fire-themed events."
+            "name": "火焰戒指",
+            "description": "火焰主题活动的特殊钥匙。"
         },
         "llaves/llave-abisal": {
-            "name": "Abyssal Key",
-            "description": "Opens chests and doors in deep areas."
+            "name": "深渊钥匙",
+            "description": "打开深处区域的宝箱与门。"
         },
         "llaves/llave-glaciar": {
-            "name": "Key Glaciar",
-            "description": "Opens ice chests and cold chambers."
+            "name": "冰川钥匙",
+            "description": "打开冰之宝箱与寒冷密室。"
         },
         "llaves/llave-volcanica": {
-            "name": "Volcanic Key",
-            "description": "Opens chests and doors in hot areas."
+            "name": "火山钥匙",
+            "description": "打开炎热区域的宝箱与门。"
         },
         "llaves/llave-lunar": {
-            "name": "Key Lunar",
-            "description": "Access a chambers night and rewards lunar."
+            "name": "月之钥匙",
+            "description": "进入夜间密室并获得月光奖励。"
         },
         "llaves/llave-antigua": {
-            "name": "Key Ancient",
-            "description": "A mysterious key for ancient chests."
+            "name": "古老钥匙",
+            "description": "神秘钥匙，用于古代宝箱。"
         },
         "loots/caja-misteriosa": {
-            "name": "Box Mystery",
-            "description": "Contains random items."
+            "name": "神秘箱",
+            "description": "包含随机物品。"
         },
         "loots/cofre-de-fortuna": {
-            "name": "Cofre of Fortune",
-            "description": "Contains coins, materials, or rare items."
+            "name": "幸运宝箱",
+            "description": "可能包含金币、材料或稀有物品。"
         },
         "loots/caja-marina": {
-            "name": "Box Marina",
-            "description": "Contains items from aquatic events."
+            "name": "海洋箱",
+            "description": "包含水上活动物品。"
         },
         "loots/caja-premium-diamante-platino": {
-            "name": "Caja Premium/Diamond/Platino",
-            "description": "Contains high-quality items."
+            "name": "高级箱（钻石/白金）",
+            "description": "包含高品质物品。"
         },
         "loots/pack-de-celebracion": {
-            "name": "Pack of Celebration",
-            "description": "Packs with event items."
+            "name": "庆典礼包",
+            "description": "包含活动物品的礼包。"
         },
         "loots/caja-de-suerte": {
-            "name": "Caja of Luck",
-            "description": "A box with a high chance of rare items."
+            "name": "好运箱",
+            "description": "稀有物品掉落概率更高的箱子。"
         },
         "loots/tarjeta-de-regalo": {
-            "name": "Tarjeta of Regalo",
-            "description": "Redeemable for items in the shop."
+            "name": "礼品卡",
+            "description": "可在商店兑换物品。"
         },
         "loots/bolsa-de-materiales": {
-            "name": "Bag of Materials",
-            "description": "Contains random materials for crafting."
+            "name": "材料袋",
+            "description": "包含随机制作材料。"
         },
         "loots/bolsa-de-gemas": {
-            "name": "Bag of Gems",
-            "description": "Contains gems or rare fragments."
+            "name": "宝石袋",
+            "description": "包含宝石或稀有碎片。"
         },
         "loots/caja-de-herramientas": {
-            "name": "Caja of Herramientas",
-            "description": "Chance to get useful tools."
+            "name": "工具箱",
+            "description": "有机会获得实用工具。"
         },
         "loots/cofre-abisal": {
-            "name": "Abyssal Chest",
-            "description": "Rare loot from deep areas."
+            "name": "深渊宝箱",
+            "description": "深处区域的稀有战利品。"
         },
         "loots/cofre-glaciar": {
-            "name": "Glacial Chest",
-            "description": "Rare loot from ice and aurora regions."
+            "name": "冰川宝箱",
+            "description": "冰雪与极光区域的稀有战利品。"
         },
         "loots/cofre-volcanico": {
-            "name": "Volcanic Chest",
-            "description": "Rare loot from lava and minerals."
+            "name": "火山宝箱",
+            "description": "熔岩与矿物区域的稀有战利品。"
         },
         "mascotas/huevo-prisma": {
-            "name": "Egg Prism",
-            "description": "Lets you obtain pets with unique abilities."
+            "name": "棱镜蛋",
+            "description": "可获得拥有独特能力的宠物。"
         },
         "mascotas/huevo-festivo": {
-            "name": "Egg Festive",
-            "description": "Pets from special events."
+            "name": "节庆蛋",
+            "description": "来自特殊活动的宠物。"
         },
         "mascotas/huevo-elemental": {
-            "name": "Egg Elemental",
-            "description": "Pets with elemental powers."
+            "name": "元素蛋",
+            "description": "拥有元素力量的宠物。"
         },
         "mascotas/huevo-legendario": {
-            "name": "Legendary Egg",
-            "description": "Rare and powerful pets."
+            "name": "传奇蛋",
+            "description": "稀有且强大的宠物。"
         },
         "mascotas/huevo-magico": {
-            "name": "Magic Egg",
-            "description": "Hatches into a pet with magical traits and special abilities."
+            "name": "魔法蛋",
+            "description": "孵化出具备魔法特质与特殊能力的宠物。"
         },
         "mascotas/huevo-abisal": {
-            "name": "Abyssal Egg",
-            "description": "Hatches from deep areas; affinity with water and shadow."
+            "name": "深渊蛋",
+            "description": "来自深处区域；亲和水与暗影。"
         },
         "mascotas/huevo-solar": {
-            "name": "Egg Solar",
-            "description": "Light-aligned hatchling; improves daytime rewards."
+            "name": "太阳蛋",
+            "description": "光属性幼体；提升白天奖励。"
         },
         "mascotas/huevo-brumoso": {
-            "name": "Egg Brumoso",
-            "description": "Mist-aligned hatchling; bonus to stealth exploration."
+            "name": "薄雾蛋",
+            "description": "雾属性幼体；潜行探索加成。"
         },
         "mascotas/huevo-de-bosque": {
-            "name": "Egg of Bosque",
-            "description": "Nature hatchling; bonus to gathering."
+            "name": "森林蛋",
+            "description": "自然幼体；采集加成。"
         },
         "mascotas/huevo-de-montana": {
-            "name": "Mountain Egg",
-            "description": "Sturdy hatchling; bonus to mining and steep routes."
+            "name": "山岳蛋",
+            "description": "强壮幼体；采矿与陡峭路线加成。"
         },
         "mascotas/huevo-de-tormenta": {
-            "name": "Egg of Tormenta",
-            "description": "Electric hatchling; bonus during weather events."
+            "name": "风暴蛋",
+            "description": "电属性幼体；天气活动加成。"
         },
         "mascotas/huevo-aurora": {
-            "name": "Egg Aurora",
-            "description": "Rare winter hatchling; bonus during cold seasons."
+            "name": "极光蛋",
+            "description": "稀有冬季幼体；寒冷季节加成。"
         },
         "mascotas/huevo-jardin": {
-            "name": "Garden Egg",
-            "description": "Friendly hatchling; bonus to social tasks and care."
+            "name": "花园蛋",
+            "description": "友善幼体；社交与照料任务加成。"
         },
         "mascotas/huevo-de-cristal": {
-            "name": "Egg of Crystal",
-            "description": "Prismatic hatchling; small luck bonus."
+            "name": "水晶蛋",
+            "description": "棱彩幼体；少量幸运加成。"
         },
         "mascotas/huevo-meteoro": {
-            "name": "Egg Meteoro",
-            "description": "Very rare hatchling; bonus to loot and special materials."
+            "name": "陨石蛋",
+            "description": "极稀有幼体；战利品与特殊材料加成。"
         },
         "mascotas/huevo-volcanico": {
-            "name": "Volcanic Egg",
-            "description": "Hatches from hot areas; bonus to mining and heat resistance."
+            "name": "火山蛋",
+            "description": "来自炎热区域；采矿与耐热加成。"
         },
         "mascotas/huevo-glaciar": {
-            "name": "Glacial Egg",
-            "description": "Hatches from cold areas; bonus to survival and winter exploration."
+            "name": "冰川蛋",
+            "description": "来自寒冷区域；生存与冬季探索加成。"
         },
         "mascotas/huevo-marino": {
-            "name": "Egg Marine",
-            "description": "Aquatic hatchling; bonus to fishing and sea routes."
+            "name": "海洋蛋",
+            "description": "水生幼体；钓鱼与海上路线加成。"
         },
         "mascotas/huevo-selvatico": {
-            "name": "Wild Egg",
-            "description": "Jungle hatchling; bonus to gathering rare plants."
+            "name": "野性蛋",
+            "description": "丛林幼体；稀有植物采集加成。"
         },
         "mascotas/huevo-umbrio": {
-            "name": "Umbral Egg",
-            "description": "Shadow hatchling; bonus during night events."
+            "name": "幽影蛋",
+            "description": "暗影幼体；夜间活动加成。"
         },
         "mascotas/huevo-radiante": {
-            "name": "Egg Radiante",
-            "description": "Light hatchling; a light luck bonus for chests."
+            "name": "辉光蛋",
+            "description": "光属性幼体；宝箱的轻微幸运加成。"
         },
         "mascotas/ocarina-del-vinculo": {
-            "name": "Bond Ocarina",
-            "description": "An ancient melody that calls your pet back if it left due to lack of care."
+            "name": "羁绊陶笛",
+            "description": "一段古老旋律：若宠物因缺乏照料离开，可将其召回。"
         },
         "mascotas/huevo-torbellino": {
-            "name": "Egg Torbellino",
-            "description": "Wind hatchling; improves travel and fast quests."
+            "name": "旋风蛋",
+            "description": "风属性幼体；提升旅行与快速任务表现。"
         },
         "mascotas/huevo-fertil": {
-            "name": "Fertile Egg",
-            "description": "Meadow hatchling; bonus to common gathering."
+            "name": "丰饶蛋",
+            "description": "草原幼体；常见采集加成。"
         },
         "mascotas/huevo-coral": {
-            "name": "Egg Coral",
-            "description": "Reef hatchling; bonus to marine loot."
+            "name": "珊瑚蛋",
+            "description": "礁石幼体；海域战利品加成。"
         },
         "mascotas/huevo-relampago": {
-            "name": "Lightning Egg",
-            "description": "Rare electric hatchling; bonus to timed challenges."
+            "name": "闪电蛋",
+            "description": "稀有电属性幼体；限时挑战加成。"
         },
         "mascotas/huevo-lunar": {
-            "name": "Egg Lunar",
-            "description": "Rare night hatchling; bonus to night quests."
+            "name": "月光蛋",
+            "description": "稀有夜属性幼体；夜间任务加成。"
         },
         "mascotas/huevo-solar-real": {
-            "name": "Egg Solar Real",
-            "description": "Rare version of the Solar Egg; improved daytime bonus."
+            "name": "皇家太阳蛋",
+            "description": "太阳蛋的稀有版本；更强白天加成。"
         },
         "mascotas/huevo-prisma-antiguo": {
-            "name": "Egg Prism Antiguo",
-            "description": "Very rare hatchling; bonus during special events."
+            "name": "古代棱镜蛋",
+            "description": "极稀有幼体；特殊活动加成。"
         },
         "mascotas/huevo-cometa": {
-            "name": "Egg Cometa",
-            "description": "Ultra-rare hatchling; extra chance of rare items."
+            "name": "彗星蛋",
+            "description": "超稀有幼体；额外稀有物品概率。"
         },
         "mascotas/huevo-encantado": {
-            "name": "Egg Encantado",
-            "description": "Magical hatchling; bonus to temporary buff effects."
+            "name": "附魔蛋",
+            "description": "魔法幼体；临时增益效果加成。"
         },
         "mascotas/huevo-guardian": {
-            "name": "Guardian Egg",
-            "description": "Defensive hatchling; reduces penalties during events."
+            "name": "守护者蛋",
+            "description": "防御型幼体；减少活动惩罚。"
         },
         "materiales/hierba-prisma": {
-            "name": "Hierba Prism",
-            "description": "Crafting material."
+            "name": "棱镜草",
+            "description": "制作材料。"
         },
         "materiales/roca-volcanica": {
-            "name": "Volcanic Rock",
-            "description": "Material for defense upgrades."
+            "name": "火山岩",
+            "description": "用于防御升级的材料。"
         },
         "materiales/barra-de-oro-acero": {
-            "name": "Bar of Oro/Steel",
-            "description": "Material for crafting avanzado."
+            "name": "金/钢锭",
+            "description": "高级制作材料。"
         },
         "materiales/fragmento-de-espiritu": {
-            "name": "Fragment of Spirit",
-            "description": "Material for quests and mejoras."
+            "name": "灵魂碎片",
+            "description": "用于任务与升级的材料。"
         },
         "materiales/mineral-elemental": {
-            "name": "Mineral Elemental",
-            "description": "Material for crafting of tools."
+            "name": "元素矿石",
+            "description": "用于制作工具的材料。"
         },
         "materiales/flor-de-amor": {
-            "name": "Flower of Amor",
-            "description": "Material for events romantic."
+            "name": "爱之花",
+            "description": "浪漫活动材料。"
         },
         "materiales/fosil": {
-            "name": "Fossil",
-            "description": "Material for quests of exploration."
+            "name": "化石",
+            "description": "探索任务材料。"
         },
         "materiales/dulce-festivo": {
-            "name": "Candy Festive",
-            "description": "Material for events of season."
+            "name": "节庆糖果",
+            "description": "季节活动材料。"
         },
         "materiales/alga-marina": {
-            "name": "Seaweed",
-            "description": "Fishing material and marine crafting ingredient."
+            "name": "海藻",
+            "description": "钓鱼材料与海洋制作原料。"
         },
         "materiales/concha-marina": {
-            "name": "Seashell",
-            "description": "Common material from coastal areas."
+            "name": "贝壳",
+            "description": "海岸地区的常见材料。"
         },
         "materiales/coral-prisma": {
-            "name": "Prism Coral",
-            "description": "Rare material from reefs and deep seas."
+            "name": "棱镜珊瑚",
+            "description": "来自礁石与深海的稀有材料。"
         },
         "materiales/perla-azur": {
-            "name": "Azur Pearl",
-            "description": "A valuable marine treasure."
+            "name": "蔚蓝珍珠",
+            "description": "珍贵的海洋宝物。"
         },
         "materiales/mineral-de-cobre": {
-            "name": "Copper Ore",
-            "description": "Common mining material."
+            "name": "铜矿石",
+            "description": "常见采矿材料。"
         },
         "materiales/mineral-de-hierro": {
-            "name": "Iron Ore",
-            "description": "Base for ingots and tools."
+            "name": "铁矿石",
+            "description": "用于锭与工具的基础材料。"
         },
         "materiales/mineral-de-plata": {
-            "name": "Silver Ore",
-            "description": "Valuable mineral for crafting."
+            "name": "银矿石",
+            "description": "用于制作的珍贵矿物。"
         },
         "materiales/mineral-de-oro": {
-            "name": "Gold Ore",
-            "description": "Rare mineral for advanced crafting."
+            "name": "金矿石",
+            "description": "高级制作所需的稀有矿物。"
         },
         "materiales/mineral-de-diamante": {
-            "name": "Diamond Ore",
-            "description": "Very rare mineral: elite crafting."
+            "name": "钻石矿石",
+            "description": "极稀有矿物：顶级制作。"
         },
         "materiales/madera-robusta": {
-            "name": "Sturdy Wood",
-            "description": "Great for structures and tools."
+            "name": "坚固木材",
+            "description": "适合建造结构与工具。"
         },
         "materiales/madera-encantada": {
-            "name": "Enchanted Wood",
-            "description": "Rare wood with magical properties."
+            "name": "附魔木材",
+            "description": "具魔法属性的稀有木材。"
         },
         "materiales/cuero-curtido": {
-            "name": "Leather Tanned",
-            "description": "Flexible material for gear."
+            "name": "鞣制皮革",
+            "description": "用于装备的柔韧材料。"
         },
         "materiales/tela-resistente": {
-            "name": "Fabric Durable",
-            "description": "Material for backpacks and clothing."
+            "name": "耐用布料",
+            "description": "用于背包与衣物的材料。"
         },
         "materiales/hilo-fino": {
-            "name": "Thread Fine",
-            "description": "Sewing material for crafting."
+            "name": "细线",
+            "description": "制作缝纫材料。"
         },
         "materiales/polvo-prisma": {
-            "name": "Dust Prism",
-            "description": "Magical ingredient for upgrades."
+            "name": "棱镜粉尘",
+            "description": "用于升级的魔法材料。"
         },
         "materiales/esencia-solar": {
-            "name": "Essence Solar",
-            "description": "Bright ingredient for rare crafting."
+            "name": "太阳精华",
+            "description": "稀有制作所需的明亮材料。"
         },
         "materiales/esencia-lunar": {
-            "name": "Essence Lunar",
-            "description": "Night ingredient for special recipes."
+            "name": "月光精华",
+            "description": "特殊配方所需的夜之材料。"
         },
         "materiales/esencia-umbria": {
-            "name": "Essence Umbral",
-            "description": "Dark energy, very rare."
+            "name": "幽影精华",
+            "description": "极稀有的暗能量。"
         },
         "materiales/fragmento-de-cristal": {
-            "name": "Fragment of Crystal",
-            "description": "Shiny fragment for crafting."
+            "name": "水晶碎片",
+            "description": "用于制作的闪亮碎片。"
         },
         "materiales/gema-rubi": {
-            "name": "Ruby Gem",
-            "description": "Rare gem for trades and upgrades."
+            "name": "红宝石",
+            "description": "用于交易与升级的稀有宝石。"
         },
         "materiales/gema-zafiro": {
-            "name": "Sapphire Gem",
-            "description": "Rare gem with aquatic energy."
+            "name": "蓝宝石",
+            "description": "带水之能量的稀有宝石。"
         },
         "materiales/gema-esmeralda": {
-            "name": "Emerald Gem",
-            "description": "Rare gem with natural energy."
+            "name": "绿宝石",
+            "description": "带自然能量的稀有宝石。"
         },
         "materiales/nucleo-elemental": {
-            "name": "Core Elemental",
-            "description": "Very rare component for elemental tools."
+            "name": "元素核心",
+            "description": "元素工具所需的极稀有部件。"
         },
         "materiales/placa-de-acero": {
-            "name": "Plate of Steel",
-            "description": "Sturdy material for advanced crafting."
+            "name": "钢板",
+            "description": "高级制作所需的坚固材料。"
         },
         "mejoras/potenciador-de-fortuna": {
-            "name": "Booster of Fortune",
-            "description": "Increases the chance of getting great rewards."
+            "name": "幸运增幅器",
+            "description": "提高获得更好奖励的概率。"
         },
         "mejoras/escudo-de-tolerancia": {
-            "name": "Shield of Tolerance",
-            "description": "Reduces penalties in events."
+            "name": "容错之盾",
+            "description": "减少活动中的惩罚。"
         },
         "mejoras/expansion-de-mochila": {
-            "name": "Expansion of Backpack",
-            "description": "Increases inventory space."
+            "name": "背包扩容",
+            "description": "增加背包空间。"
         },
         "mejoras/entrenamiento-moxi": {
-            "name": "Training Moxi",
-            "description": "Experience bonus per activity."
+            "name": "Moxi 训练",
+            "description": "每次活动获得经验加成。"
         },
         "mejoras/trabajo-en-equipo": {
-            "name": "Teamwork en Team",
-            "description": "Bonus when working in a group."
+            "name": "团队协作",
+            "description": "组队工作时获得加成。"
         },
         "mejoras/estrella-de-suerte": {
-            "name": "Star of Luck",
-            "description": "Luck bonus."
+            "name": "幸运之星",
+            "description": "幸运加成。"
         },
         "mejoras/aurora-festiva": {
-            "name": "Aurora Festiva",
-            "description": "Bonus during winter events."
+            "name": "节庆极光",
+            "description": "冬季活动加成。"
         },
         "mejoras/tinte-personalizado": {
-            "name": "Dye Custom",
-            "description": "Changes the color of your profile or club."
+            "name": "自定义染色",
+            "description": "更改你的个人资料或俱乐部颜色。"
         },
         "mejoras/expansion-de-banco": {
-            "name": "Expansion of Bank",
-            "description": "Increases bank space (future use)."
+            "name": "银行扩容",
+            "description": "增加银行容量（未来用途）。"
         },
         "mejoras/expansion-de-mochila-plus": {
-            "name": "Expansion of Backpack Plus",
-            "description": "Increases inventory space even more (future use)."
+            "name": "背包扩容 Plus",
+            "description": "进一步增加背包空间（未来用途）。"
         },
         "mejoras/sello-de-proteccion": {
-            "name": "Seal of Protection",
-            "description": "Reduces losses during dangerous events (future use)."
+            "name": "防护封印",
+            "description": "危险活动中减少损失（未来用途）。"
         },
         "mejoras/pase-premium-moxi": {
-            "name": "Pass Premium Moxi",
-            "description": "Access to premium system benefits (future use)."
+            "name": "Moxi 高级通行证",
+            "description": "获得高级系统福利（未来用途）。"
         },
         "misiones/gema-prisma": {
-            "name": "Gem Prism",
-            "description": "Required for advanced quests."
+            "name": "棱镜宝石",
+            "description": "高级任务所需。"
         },
         "misiones/conejo-de-peluche": {
-            "name": "Conejo of Peluche",
-            "description": "Special quest item."
+            "name": "毛绒兔子",
+            "description": "特殊任务物品。"
         },
         "misiones/espada-de-hielo": {
-            "name": "Ice Sword",
-            "description": "Required for exploration quests."
+            "name": "冰之剑",
+            "description": "探索任务所需。"
         },
         "misiones/katana-solar": {
-            "name": "Katana Solar",
-            "description": "Advanced quest item."
+            "name": "太阳武士刀",
+            "description": "高级任务物品。"
         },
         "misiones/mascara-de-zorro": {
-            "name": "Fox Mask",
-            "description": "Special quest item."
+            "name": "狐狸面具",
+            "description": "特殊任务物品。"
         },
         "pociones/pocion-de-regeneracion": {
-            "name": "Potion of Regeneration",
-            "description": "Restores health."
+            "name": "再生药水",
+            "description": "恢复生命值。"
         },
         "pociones/pocion-de-resistencia": {
-            "name": "Potion of Resistance",
-            "description": "Temporarily increases defense."
+            "name": "抗性药水",
+            "description": "暂时提高防御。"
         },
         "pociones/pocion-del-explorador": {
-            "name": "Potion of the Explorer",
-            "description": "Allows you to explore new areas."
+            "name": "探索者药水",
+            "description": "允许你探索新区域。"
         },
         "pociones/elixir-prisma": {
-            "name": "Elixir Prism",
-            "description": "Gives an experience and energy bonus."
+            "name": "棱镜灵药",
+            "description": "提供经验与精力加成。"
         },
         "pociones/huevito-de-energia-exploracion-regeneracion-resistencia": {
-            "name": "Little Egg of Energy/Exploration/Regeneration/Resistance",
-            "description": "Special consumables."
+            "name": "精力/探索/再生/抗性小蛋",
+            "description": "特殊消耗品。"
         },
         "pociones/pocion-de-suerte": {
-            "name": "Potion of Luck",
-            "description": "Temporarily increases luck."
+            "name": "幸运药水",
+            "description": "暂时提高幸运。"
         },
         "pociones/pocion-de-velocidad": {
-            "name": "Potion of Speed",
-            "description": "Temporarily increases speed."
+            "name": "速度药水",
+            "description": "暂时提高速度。"
         },
         "pociones/pocion-del-minero": {
-            "name": "Potion of the Miner",
-            "description": "Temporarily improves mining loot."
+            "name": "矿工药水",
+            "description": "暂时提升采矿战利品。"
         },
         "pociones/pocion-del-pescador": {
-            "name": "Potion of the Fisher",
-            "description": "Temporarily improves fishing loot."
+            "name": "渔夫药水",
+            "description": "暂时提升钓鱼战利品。"
         },
         "pociones/elixir-de-luz": {
-            "name": "Elixir of Light",
-            "description": "Boosts daytime rewards and exploration."
+            "name": "光之灵药",
+            "description": "提升白天奖励与探索。"
         },
         "pociones/elixir-de-sombra": {
-            "name": "Elixir of Shadow",
-            "description": "Boosts nighttime rewards and stealth."
+            "name": "影之灵药",
+            "description": "提升夜间奖励与潜行。"
         },
         "rollos/rollo-moxi": {
-            "name": "Scroll Moxi",
-            "description": "Grants temporary special abilities."
+            "name": "Moxi 卷轴",
+            "description": "赋予临时特殊能力。"
         },
         "rollos/rollo-de-estrategia": {
-            "name": "Scroll of Strategy",
-            "description": "Enables advanced strategies in events."
+            "name": "策略卷轴",
+            "description": "在活动中启用高级策略。"
         },
         "rollos/notas-del-explorador": {
-            "name": "Notes of the Explorer",
-            "description": "Provides clues for quests."
+            "name": "探索者笔记",
+            "description": "为任务提供线索。"
         },
         "rollos/papiro-jeroglifico": {
-            "name": "Papyrus/Hieroglyph",
-            "description": "Unlocks hidden content."
+            "name": "象形文字纸草",
+            "description": "解锁隐藏内容。"
         },
         "proteccion/vida-extra": {
-            "name": "Life Extra",
-            "description": "Lets you revive once in special events."
+            "name": "额外生命",
+            "description": "在特殊活动中允许复活一次。"
         }
     }
 }

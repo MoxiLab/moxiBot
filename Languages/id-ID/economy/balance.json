@@ -1,13 +1,13 @@
 {
-    "TITLE": "{{user}}'s balance",
-    "COINS": "Coins",
+    "TITLE": "Saldo {{user}}",
+    "COINS": "Koin",
     "BANK": "Bank",
-    "SAKURAS": "Sakuras",
-    "GLOBAL_RANK": "Global rank",
-    "BTN_DEPOSIT": "Deposit",
-    "BTN_WITHDRAW": "Withdraw",
-    "ONLY_AUTHOR": "Only the author can use these buttons.",
-    "ONLY_OWN_BALANCE": "You can only manage your own balance.",
-    "NO_COINS_TO_DEPOSIT": "You don't have coins to deposit.",
-    "NO_COINS_TO_WITHDRAW": "You don't have coins in the bank to withdraw."
+    "SAKURAS": "Sakura",
+    "GLOBAL_RANK": "Peringkat global",
+    "BTN_DEPOSIT": "Setor",
+    "BTN_WITHDRAW": "Tarik",
+    "ONLY_AUTHOR": "Hanya pembuat yang bisa memakai tombol ini.",
+    "ONLY_OWN_BALANCE": "Kamu hanya bisa mengelola saldomu sendiri.",
+    "NO_COINS_TO_DEPOSIT": "Kamu tidak punya koin untuk disetor.",
+    "NO_COINS_TO_WITHDRAW": "Kamu tidak punya koin di bank untuk ditarik."
 }

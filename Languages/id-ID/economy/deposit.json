@@ -1,15 +1,15 @@
 {
-    "INVALID_USAGE_TITLE": "Incorrect usage",
-    "INVALID_USAGE_TEXT": "Use: `{{prefix}}deposit 100` or `{{prefix}}deposit all`.",
+    "INVALID_USAGE_TITLE": "Cara pakai salah",
+    "INVALID_USAGE_TEXT": "Gunakan: `{{prefix}}deposit 100` atau `{{prefix}}deposit all`.",
     "BANK_TITLE": "Bank",
-    "NO_COINS": "You don't have any coins to deposit.",
-    "INVALID_AMOUNT_TITLE": "Invalid amount",
-    "INVALID_AMOUNT_TEXT": "Amount must be greater than 0, or use `all`.",
-    "INSUFFICIENT_FUNDS_TITLE": "Insufficient funds",
-    "INSUFFICIENT_FUNDS_TEXT": "You tried to deposit **{{wanted}}** 🪙 but you only have **{{balance}}** 🪙.",
-    "DEPOSIT_SUCCESS_TITLE": "Deposit completed",
-    "DEPOSIT_SUCCESS_TEXT": "You deposited **{{wanted}}** 🪙.\nBalance: **{{balance}}** 🪙\nBank: **{{bank}}** 🏦",
+    "NO_COINS": "Kamu tidak punya koin untuk disetor.",
+    "INVALID_AMOUNT_TITLE": "Jumlah tidak valid",
+    "INVALID_AMOUNT_TEXT": "Jumlah harus lebih dari 0, atau gunakan `all`.",
+    "INSUFFICIENT_FUNDS_TITLE": "Dana tidak cukup",
+    "INSUFFICIENT_FUNDS_TEXT": "Kamu mencoba menyetor **{{wanted}}** 🪙 tapi kamu hanya punya **{{balance}}** 🪙.",
+    "DEPOSIT_SUCCESS_TITLE": "Setor selesai",
+    "DEPOSIT_SUCCESS_TEXT": "Kamu menyetor **{{wanted}}** 🪙.\nSaldo: **{{balance}}** 🪙\nBank: **{{bank}}** 🏦",
     "ERROR_TITLE": "Error",
-    "ERROR_MONGO": "MongoDB isn't configured, the bank is unavailable.",
-    "ERROR_GENERIC": "I couldn't complete the deposit right now. Please try again."
+    "ERROR_MONGO": "MongoDB belum dikonfigurasi, bank tidak tersedia.",
+    "ERROR_GENERIC": "Aku tidak bisa menyelesaikan setoran sekarang. Coba lagi ya."
 }

@@ -1,12 +1,12 @@
 {
-    "ITEM_NOT_SPECIFIED_TITLE": "Item not specified",
-    "ITEM_NOT_SPECIFIED_TEXT": "You must type the item's `name` or `id` you want to buy.",
-    "SHOP_TITLE": "Shop",
-    "NOT_FOUND_BY_ID": "No item exists with ID {{id}}. Use the shop command to see IDs.",
-    "NOT_FOUND_GENERIC": "I couldn't find that item in the shop. Use the shop command to see IDs.",
-    "INVALID_PRICE": "This item can't be bought (invalid price).",
-    "INSUFFICIENT_FUNDS_TITLE": "Insufficient funds",
-    "INSUFFICIENT_FUNDS": "You need {{cost}} 🪙 and you have {{balance}} 🪙.",
-    "PURCHASE_SUCCESS_TITLE": "Purchase completed",
-    "PURCHASE_SUCCESS": "You bought **{{amount}}x {{name}}** for **{{cost}}** 🪙."
+    "ITEM_NOT_SPECIFIED_TITLE": "未指定物品",
+    "ITEM_NOT_SPECIFIED_TEXT": "你必须输入要购买的物品 `name` 或 `id`。",
+    "SHOP_TITLE": "商店",
+    "NOT_FOUND_BY_ID": "找不到 ID 为 {{id}} 的物品。请使用商店命令查看 ID。",
+    "NOT_FOUND_GENERIC": "我在商店里找不到该物品。请使用商店命令查看 ID。",
+    "INVALID_PRICE": "此物品无法购买（价格无效）。",
+    "INSUFFICIENT_FUNDS_TITLE": "余额不足",
+    "INSUFFICIENT_FUNDS": "你需要 {{cost}} 🪙，而你只有 {{balance}} 🪙。",
+    "PURCHASE_SUCCESS_TITLE": "购买完成",
+    "PURCHASE_SUCCESS": "你购买了 **{{amount}}x {{name}}**，花费 **{{cost}}** 🪙。"
 }

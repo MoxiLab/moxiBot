@@ -1,123 +1,123 @@
 {
     "categories": {
-        "Buffs": "Buffs",
-        "Collectibles": "Collectibles",
-        "Consumables": "Consumables",
-        "Tools": "Tools",
-        "Keys": "Keys",
+        "Buffs": "Buff",
+        "Collectibles": "Koleksi",
+        "Consumables": "Konsumsi",
+        "Tools": "Alat",
+        "Keys": "Kunci",
         "Loot": "Loot",
-        "Pets": "Pets",
-        "Materials": "Materials",
-        "Upgrades": "Upgrades",
-        "Quests": "Quests",
-        "Potions": "Potions",
-        "Scrolls": "Scrolls",
-        "Protection": "Protection"
+        "Pets": "Peliharaan",
+        "Materials": "Material",
+        "Upgrades": "Peningkatan",
+        "Quests": "Misi",
+        "Potions": "Ramuan",
+        "Scrolls": "Gulungan",
+        "Protection": "Perlindungan"
     },
     "items": {
         "buffs/scroll-de-impulso-moxi": {
-            "name": "Scroll of Boost Moxi",
-            "description": "Increases the speed of all your actions for 1 hour."
+            "name": "Gulungan Peningkat Moxi",
+            "description": "Meningkatkan kecepatan semua aksi selama 1 jam."
         },
         "buffs/pez-lumina": {
-            "name": "Fish Lumina",
-            "description": "Experience bonus for aquatic activities."
+            "name": "Ikan Lumina",
+            "description": "Bonus pengalaman untuk aktivitas air."
         },
         "buffs/gusano-brillo": {
-            "name": "Worm Glow",
-            "description": "Improves the chance of finding rare resources."
+            "name": "Cacing Berkilau",
+            "description": "Meningkatkan peluang menemukan sumber daya langka."
         },
         "buffs/linterna-solar": {
-            "name": "Solar Lantern",
-            "description": "Allows you to explore dark areas and discover hidden treasures."
+            "name": "Lentera Surya",
+            "description": "Memungkinkanmu menjelajahi area gelap dan menemukan harta tersembunyi."
         },
         "buffs/fruta-vital": {
-            "name": "Fruit Vital",
-            "description": "Restores energy and gives a small speed boost."
+            "name": "Buah Vital",
+            "description": "Memulihkan energi dan memberi sedikit peningkatan kecepatan."
         },
         "buffs/scroll-mascota-veloz": {
-            "name": "Scroll Pet Swift",
-            "description": "Your pet gains extra speed temporarily."
+            "name": "Gulungan Peliharaan Gesit",
+            "description": "Peliharaanmu mendapatkan bonus kecepatan sementara."
         },
         "buffs/fruta-mutante": {
-            "name": "Fruit Mutant",
-            "description": "Gives a random effect; it can be positive or negative."
+            "name": "Buah Mutan",
+            "description": "Memberi efek acak; bisa positif atau negatif."
         },
         "buffs/holly-prisma": {
-            "name": "Holly Prism",
-            "description": "Special bonus in seasonal events."
+            "name": "Holly Prisma",
+            "description": "Bonus khusus di event musiman."
         },
         "buffs/pan-dulce-moxi": {
-            "name": "Bread Candy Moxi",
-            "description": "Doubles quest rewards for 10 minutes."
+            "name": "Roti Manis Moxi",
+            "description": "Melipatgandakan hadiah misi selama 10 menit."
         },
         "buffs/pase-de-evento": {
-            "name": "Event Pass",
-            "description": "Access to rewards and exclusive areas (expired and current)."
+            "name": "Pass Event",
+            "description": "Akses hadiah dan area eksklusif (kadaluarsa dan yang sedang berjalan)."
         },
         "buffs/fogata-elemental": {
-            "name": "Campfire Elemental",
-            "description": "Allows you to camp and gain temporary buffs depending on the type of wood."
+            "name": "Api Unggun Elemental",
+            "description": "Memungkinkanmu berkemah dan mendapat buff sementara tergantung jenis kayu."
         },
         "buffs/scroll-gelido": {
-            "name": "Glacial Scroll",
-            "description": "Increases defense in cold areas."
+            "name": "Gulungan Gletser",
+            "description": "Meningkatkan pertahanan di area dingin."
         },
         "buffs/corona-de-invierno": {
-            "name": "Crown of Winter",
-            "description": "Special bonus in winter events."
+            "name": "Mahkota Musim Dingin",
+            "description": "Bonus khusus di event musim dingin."
         },
         "buffs/dulce-de-fresa": {
-            "name": "Candy of Strawberry",
-            "description": "Restores energy and grants a luck bonus."
+            "name": "Permen Stroberi",
+            "description": "Memulihkan energi dan memberi bonus keberuntungan."
         },
         "buffs/trebol-de-fortuna": {
-            "name": "Clover of Fortune",
-            "description": "Increases the chance of getting rare items."
+            "name": "Semanggi Keberuntungan",
+            "description": "Meningkatkan peluang mendapatkan item langka."
         },
         "buffs/cascanueces-moxi": {
-            "name": "Nutcracker Moxi",
-            "description": "Defense bonus during winter events."
+            "name": "Pemecah Kacang Moxi",
+            "description": "Bonus pertahanan selama event musim dingin."
         },
         "coleccionables/medalla-de-nieve": {
-            "name": "Medal of Snow",
-            "description": "Winter season collectible."
+            "name": "Medali Salju",
+            "description": "Koleksi musim dingin."
         },
         "coleccionables/medalla-prisma": {
-            "name": "Medal Prism",
-            "description": "Special event collectible."
+            "name": "Medali Prisma",
+            "description": "Koleksi event spesial."
         },
         "coleccionables/medalla-lunar": {
-            "name": "Medal Lunar",
-            "description": "Obtained in night missions."
+            "name": "Medali Bulan",
+            "description": "Didapat dari misi malam."
         },
         "coleccionables/token-festivo": {
-            "name": "Token Festive",
-            "description": "Redeemable for rewards in the event shop."
+            "name": "Token Festival",
+            "description": "Bisa ditukar dengan hadiah di toko event."
         },
         "coleccionables/carta-de-amistad": {
-            "name": "Letter of Friendship",
-            "description": "Collectible of events sociales."
+            "name": "Surat Persahabatan",
+            "description": "Koleksi dari event sosial."
         },
         "coleccionables/moneda-de-fortuna": {
-            "name": "Coin of Fortune",
-            "description": "Grants a luck bonus while you have it."
+            "name": "Koin Keberuntungan",
+            "description": "Memberi bonus keberuntungan selama kamu memilikinya."
         },
         "coleccionables/gema-de-espiritu": {
-            "name": "Gem of Spirit",
-            "description": "Required for advanced quests."
+            "name": "Permata Roh",
+            "description": "Dibutuhkan untuk misi tingkat lanjut."
         },
         "coleccionables/corazon-prisma": {
-            "name": "Heart Prism",
-            "description": "Collectible of events romantic."
+            "name": "Hati Prisma",
+            "description": "Koleksi dari event romantis."
         },
         "coleccionables/petalo-de-sakura": {
-            "name": "Petal of Sakura",
-            "description": "Spring collectible."
+            "name": "Kelopak Sakura",
+            "description": "Koleksi musim semi."
         },
         "coleccionables/bouquet-festivo": {
-            "name": "Bouquet Festive",
-            "description": "Collectible of events florales."
+            "name": "Buket Festival",
+            "description": "Koleksi dari event bunga."
         },
         "coleccionables/ticket-de-temporada": {
             "name": "Ticket of Season",
