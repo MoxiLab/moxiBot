@@ -233,6 +233,74 @@ async function awardBalance({ userId, amount } = {}) {
   return { ok: true, amount: inc, balance: safeInt(updated?.balance, 0) };
 }
 
+async function transferBalance({ fromUserId, toUserId, amount } = {}) {
+  const from = String(fromUserId || '').trim();
+  const to = String(toUserId || '').trim();
+  const inc = safeInt(amount, 0);
+
+  if (!process.env.MONGODB) {
+    return { ok: false, reason: 'no-db', message: 'MongoDB no está configurado (MONGODB vacío).' };
+  }
+  if (!from || !to) return { ok: false, reason: 'missing-user', message: 'Faltan userId.' };
+  if (from === to) return { ok: false, reason: 'same-user', message: 'No puedes transferirte a ti mismo.' };
+  if (inc <= 0) return { ok: false, reason: 'invalid-amount', message: 'Cantidad inválida.' };
+
+  await ensureMongoConnection();
+  const { Economy } = require('../Models/EconomySchema');
+
+  // Asegurar documentos
+  for (const uid of [from, to]) {
+    try {
+      await Economy.updateOne(
+        { userId: uid },
+        { $setOnInsert: { userId: uid, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
+        { upsert: true }
+      );
+    } catch (e) {
+      if (e?.code !== 11000) throw e;
+    }
+  }
+
+  // Debitar solo si hay balance suficiente
+  const debited = await Economy.findOneAndUpdate(
+    { userId: from, balance: { $gte: inc } },
+    { $inc: { balance: -inc } },
+    { new: true }
+  );
+
+  if (!debited) {
+    const existing = await getOrCreateEconomy(from);
+    return { ok: false, reason: 'insufficient', balance: safeInt(existing?.balance, 0) };
+  }
+
+  // Acreditar al receptor
+  let credited;
+  try {
+    credited = await Economy.findOneAndUpdate(
+      { userId: to },
+      { $inc: { balance: inc } },
+      { new: true }
+    );
+  } catch (e) {
+    // Rollback best-effort
+    try {
+      await Economy.findOneAndUpdate(
+        { userId: from },
+        { $inc: { balance: inc } },
+        { new: true }
+      );
+    } catch { }
+    throw e;
+  }
+
+  return {
+    ok: true,
+    amount: inc,
+    fromBalance: safeInt(debited?.balance, 0),
+    toBalance: safeInt(credited?.balance, 0),
+  };
+}
+
 module.exports = {
   safeInt,
   formatDuration,
@@ -241,4 +309,5 @@ module.exports = {
   claimCooldownReward,
   claimCooldown,
   awardBalance,
+  transferBalance,
 };
