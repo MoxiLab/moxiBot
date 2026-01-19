@@ -1,0 +1,17 @@
+{
+    "USAGE_BAD_TITLE": "Uso incorrecto",
+    "USAGE_BAD_TEXT": "Debes escribir el nombre o id del ítem que quieres usar.",
+    "ITEM_NOT_FOUND_TITLE": "Ítem no encontrado",
+    "ITEM_NOT_FOUND_TEXT": "No encontré ese ítem. Usa `{{prefix}}bag` para ver tu inventario o `{{prefix}}shop list` para ver IDs.",
+    "PETS_TITLE": "Mascotas",
+    "NO_PETS_TEXT_SHORT": "Aún no tienes mascotas. Incuba un huevo para conseguir una.",
+    "OCARINA_TITLE": "Ocarina del Vínculo",
+    "OCARINA_ALREADY_WITH_YOU": "Tu mascota ya está contigo. No necesitas usarla ahora.",
+    "OCARINA_NOT_OWNED": "No tienes este ítem en tu mochila.",
+    "OCARINA_HEADER": "# 🎶 Ocarina del Vínculo",
+    "PET_FALLBACK_NAME": "Tu mascota",
+    "PET_RETURN_TEXT": "🐾 **{{pet}}** ha oído el sonido… ¡y ha regresado!",
+    "PET_VIEW_BUTTON": "Ver mascota",
+    "INCUBATOR_TITLE": "Incubadora",
+    "INCUBATOR_NOT_OWNED": "No tienes una incubadora en tu mochila."
+}

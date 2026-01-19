@@ -45,5 +45,6 @@
     "ACTIVITY_CRIBAR_ESCOMBROS_PHRASE": "You sifted rubble",
     "ACTIVITY_ESPACHURRAR_ROCAS_PHRASE": "You crushed rocks",
     "ACTIVITY_SONDEAR_GRIETAS_PHRASE": "You probed cracks",
-    "ACTIVITY_DETONAR_CARGA_PHRASE": "You detonated a charge"
+    "ACTIVITY_DETONAR_CARGA_PHRASE": "You detonated a charge",
+    "HELP_TEXT": "Mining zones\n\nPanel: `{{prefix}}mine zones`\nPage: `{{prefix}}mine zones 2`"
 }

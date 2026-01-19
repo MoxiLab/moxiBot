@@ -38,6 +38,7 @@
     "PLAY_ACTION_DETONATOR": "Has ajustado el detonador",
     "INVALID_ZONE": "Zona inválida.",
     "PLAY_REQUIREMENT_MESSAGE": "Para minar en **{{zone}}** necesitas: **{{item}}**",
+    "HELP_TEXT": "Zonas de minería\n\nPanel: `{{prefix}}mine zones`\nPágina: `{{prefix}}mine zones 2`",
     "ZONE_NOT_FOUND_TITLE": "Mine",
     "ZONE_NOT_FOUND_TEXT": "No encuentro la zona **{{zone}}**.\nUsa `{{prefix}}mine zones` para ver el panel con botones.",
     "ZONE_REQUIREMENT_TEXT": "Para minar en **{{zone}}** necesitas: **{{item}}**\n\nTip: revisa tus zonas con `{{prefix}}mine zones`.",

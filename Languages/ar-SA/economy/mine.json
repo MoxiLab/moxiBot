@@ -45,5 +45,6 @@
     "ACTIVITY_CRIBAR_ESCOMBROS_PHRASE": "غربلت الركام",
     "ACTIVITY_ESPACHURRAR_ROCAS_PHRASE": "سحقت الصخور",
     "ACTIVITY_SONDEAR_GRIETAS_PHRASE": "فحصت الشقوق",
-    "ACTIVITY_DETONAR_CARGA_PHRASE": "فجّرت شحنة"
+    "ACTIVITY_DETONAR_CARGA_PHRASE": "فجّرت شحنة",
+    "HELP_TEXT": "Mining zones\n\nPanel: `{{prefix}}mine zones`\nPage: `{{prefix}}mine zones 2`"
 }

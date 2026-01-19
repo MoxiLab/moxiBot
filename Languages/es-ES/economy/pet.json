@@ -1,0 +1,5 @@
+{
+    "TITLE": "Mascotas",
+    "INCUBATING_TEXT": "Tu **{{egg}}** está incubando.\nTiempo restante: **{{time}}**\n\nTip: cuando esté listo, vuelve a usar **{{prefix}}pet** para eclosionarlo.",
+    "NO_PETS_TEXT": "Aún no tienes mascotas.\n\n1) Compra un **huevo** en `{{prefix}}shop`\n2) Compra una **incubadora**\n3) Usa: `{{prefix}}use incubadora` para incubar (consume 1 huevo)\n4) Luego usa `{{prefix}}pet` para ver el progreso / eclosionar."
+}

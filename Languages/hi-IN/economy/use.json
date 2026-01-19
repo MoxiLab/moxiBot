@@ -1,0 +1,17 @@
+{
+    "USAGE_BAD_TITLE": "Incorrect usage",
+    "USAGE_BAD_TEXT": "You must type the name or ID of the item you want to use.",
+    "ITEM_NOT_FOUND_TITLE": "Item not found",
+    "ITEM_NOT_FOUND_TEXT": "I couldn't find that item. Use `{{prefix}}bag` to see your inventory or `{{prefix}}shop list` to see IDs.",
+    "PETS_TITLE": "Pets",
+    "NO_PETS_TEXT_SHORT": "You don't have pets yet. Incubate an egg to get one.",
+    "OCARINA_TITLE": "Bond Ocarina",
+    "OCARINA_ALREADY_WITH_YOU": "Your pet is already with you. You don't need to use this right now.",
+    "OCARINA_NOT_OWNED": "You don't have this item in your bag.",
+    "OCARINA_HEADER": "# 🎶 Bond Ocarina",
+    "PET_FALLBACK_NAME": "Your pet",
+    "PET_RETURN_TEXT": "🐾 **{{pet}}** heard the sound… and returned!",
+    "PET_VIEW_BUTTON": "View pet",
+    "INCUBATOR_TITLE": "Incubator",
+    "INCUBATOR_NOT_OWNED": "You don't have an incubator in your bag."
+}
