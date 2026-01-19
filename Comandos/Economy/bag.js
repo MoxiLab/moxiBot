@@ -24,7 +24,10 @@ module.exports = {
 
     async execute(Moxi, message, args) {
         const guildId = message.guildId || message.guild?.id;
-        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const lang = await moxi.guildLang(
+            guildId,
+            message.guild?.preferredLocale || process.env.DEFAULT_LANG || 'es-ES'
+        );
         const page = args?.[0] ? safePageArg(args[0]) : 0;
 
         const payload = await buildBagMessage({
