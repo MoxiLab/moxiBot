@@ -1,5 +1,6 @@
 const { MessageFlags } = require('discord.js');
 const { buildCraftMessage } = require('../../../../Util/craftPanel');
+const moxi = require('../../../../i18n');
 
 module.exports = async function craftButtons(interaction, Moxi, logger) {
     if (!interaction.isButton()) return false;
@@ -14,6 +15,9 @@ module.exports = async function craftButtons(interaction, Moxi, logger) {
     const parts = id.split(':');
     const action = parts[1] || '';
     const userId = parts[2];
+
+    const guildId = interaction.guildId || interaction.guild?.id;
+    const lang = Moxi?.guildLang ? await Moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES') : await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
 
     if (interaction.user?.id !== userId) {
         await interaction.reply({ content: 'Solo quien abrió el craft puede usar estos botones.', flags: MessageFlags.Ephemeral });
@@ -44,7 +48,7 @@ module.exports = async function craftButtons(interaction, Moxi, logger) {
     }
 
     if (action === 'home') {
-        const payload = buildCraftMessage({ userId, page: 0, pageSize: 4 });
+        const payload = buildCraftMessage({ userId, page: 0, pageSize: 4, lang });
         await interaction.update(payload);
         return true;
     }
@@ -53,13 +57,13 @@ module.exports = async function craftButtons(interaction, Moxi, logger) {
         const page = Number(parts[3] || 0);
         const dir = parts[4] || 'next';
         const nextPage = dir === 'prev' ? Math.max(0, page - 1) : page + 1;
-        const payload = buildCraftMessage({ userId, page: nextPage, pageSize: 4 });
+        const payload = buildCraftMessage({ userId, page: nextPage, pageSize: 4, lang });
         await interaction.update(payload);
         return true;
     }
 
     // Fallback
-    const payload = buildCraftMessage({ userId, page: 0, pageSize: 4 });
+    const payload = buildCraftMessage({ userId, page: 0, pageSize: 4, lang });
     await interaction.update(payload);
     return true;
 };

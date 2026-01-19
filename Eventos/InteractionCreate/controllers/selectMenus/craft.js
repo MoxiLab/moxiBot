@@ -4,6 +4,7 @@ const { EMOJIS } = require('../../../../Util/emojis');
 const { ensureMongoConnection } = require('../../../../Util/mongoConnect');
 const { resolveRecipe, craftRecipe, getRecipeDisplayName, getMissingInputs } = require('../../../../Util/craftSystem');
 const { getItemById } = require('../../../../Util/inventoryCatalog');
+const moxi = require('../../../../i18n');
 
 function safeInt(n, fallback = 0) {
     const x = Number(n);
@@ -46,7 +47,10 @@ module.exports = async function craftSelectMenu(interaction, Moxi, logger) {
     const { Economy } = require('../../../../Models/EconomySchema');
     const eco = await Economy.findOne({ userId: interaction.user.id });
 
-    const recipe = resolveRecipe(value);
+    const guildId = interaction.guildId || interaction.guild?.id;
+    const lang = Moxi?.guildLang ? await Moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES') : await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+
+    const recipe = resolveRecipe(value, lang);
     if (!recipe) {
         await interaction.reply({ content: `${EMOJIS.cross} No encontré esa receta.`, flags: MessageFlags.Ephemeral });
         return true;
@@ -57,7 +61,7 @@ module.exports = async function craftSelectMenu(interaction, Moxi, logger) {
         if (result.reason === 'missing') {
             const missing = getMissingInputs(eco, recipe);
             const lines = missing.map((m) => {
-                const it = getItemById(m.itemId);
+                const it = getItemById(m.itemId, { lang });
                 const name = it?.name || m.itemId;
                 return `• **${name}**: tienes **${safeInt(m.have, 0)}**, necesitas **${safeInt(m.need, 0)}**`;
             });
@@ -65,7 +69,7 @@ module.exports = async function craftSelectMenu(interaction, Moxi, logger) {
             await interaction.reply({
                 embeds: [buildEmbed({
                     title: `${EMOJIS.cross} Materiales insuficientes`,
-                    text: `No puedes craftear **${getRecipeDisplayName(recipe)}**.\n\n${lines.join('\n')}`,
+                    text: `No puedes craftear **${getRecipeDisplayName(recipe, lang)}**.\n\n${lines.join('\n')}`,
                 })],
                 flags: MessageFlags.Ephemeral,
             });
@@ -93,7 +97,7 @@ module.exports = async function craftSelectMenu(interaction, Moxi, logger) {
     await interaction.reply({
         embeds: [buildEmbed({
             title: `${EMOJIS.check} ¡Crafteado/a!`,
-            text: `Has crafteado **${getRecipeDisplayName(recipe)}** (x${safeInt(result.crafted.amount, 1)}).`,
+            text: `Has crafteado **${getRecipeDisplayName(recipe, lang)}** (x${safeInt(result.crafted.amount, 1)}).`,
         })],
         flags: MessageFlags.Ephemeral,
     });
