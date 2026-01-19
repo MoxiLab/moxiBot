@@ -23,14 +23,7 @@ module.exports = {
     Category: economyCategory,
     usage: 'auction [subcomando]',
     description: 'commands:CMD_AUCTION_DESC',
-    helpText:
-        '`auction add` » Subasta un item.\n' +
-        '`auction bid` » Puja por un item.\n' +
-        '`auction bids` » Mira tus pujas en subastas.\n' +
-        '`auction cancel` » Cancela una subasta.\n' +
-        '`auction list` » Mira tus items en subasta.\n' +
-        '`auction search` » Mira y busca en la subasta.\n' +
-        '`auction upgrade` » Incrementa tu límite de subastas.',
+    helpText: (lang) => moxi.translate('economy/auction:HELP_TEXT', lang, { prefix: process.env.PREFIX || '.' }),
     examples: ['auction', 'auction list', 'auction search', 'auction add', 'auction bid'],
     cooldown: 0,
     command: {
@@ -42,6 +35,7 @@ module.exports = {
     async execute(Moxi, message, args) {
         const guildId = message.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const t = (k, vars = {}) => moxi.translate(`economy/auction:${k}`, lang, vars);
 
         const globalPrefix = (Array.isArray(Bot?.Prefix) && Bot.Prefix[0])
             ? Bot.Prefix[0]
@@ -54,21 +48,21 @@ module.exports = {
         const renderHelp = () => {
             const cmd = (subName) => `\`${formatUsage(prefix, 'auction', subName)}\``;
             const text =
-                'Subasta y puja por items en el mercado de subastas de Moxi. 🤖\n\n' +
-                '**Puedes hacer uso de los siguientes subcomandos:**\n\n' +
-                `${cmd('add')} » Subasta un item.\n` +
-                `${cmd('bid')} » Puja por un item.\n` +
-                `${cmd('bids')} » Mira tus pujas en subastas.\n` +
-                `${cmd('cancel')} » Cancela una subasta.\n` +
-                `${cmd('list')} » Mira tus items en subasta.\n` +
-                `${cmd('search')} » Mira y busca en la subasta.\n` +
-                `${cmd('upgrade')} » Incrementa tu límite de subastas.\n\n` +
-                '✨ Moxinomía';
+                `${t('INTRO')} 🤖\n\n` +
+                `${t('SUBCOMMANDS_HEADER')}\n\n` +
+                `${cmd('add')} » ${t('SUB_ADD')}\n` +
+                `${cmd('bid')} » ${t('SUB_BID')}\n` +
+                `${cmd('bids')} » ${t('SUB_BIDS')}\n` +
+                `${cmd('cancel')} » ${t('SUB_CANCEL')}\n` +
+                `${cmd('list')} » ${t('SUB_LIST')}\n` +
+                `${cmd('search')} » ${t('SUB_SEARCH')}\n` +
+                `${cmd('upgrade')} » ${t('SUB_UPGRADE')}\n\n` +
+                `${t('FOOTER')}`;
 
             return asV2MessageOptions(
                 buildNoticeContainer({
                     emoji: EMOJIS.package || '🎁',
-                    title: 'Subasta de Moxi',
+                    title: t('TITLE'),
                     text,
                 })
             );
@@ -89,8 +83,8 @@ module.exports = {
                 ...asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: '🚧',
-                        title: `Auction • ${sub}`,
-                        text: `Este subcomando está en construcción.\nUso: ${usage}`,
+                        title: t('WIP_TITLE', { sub }),
+                        text: t('WIP_TEXT_PREFIX', { usage }),
                     })
                 ),
                 allowedMentions: { repliedUser: false },
