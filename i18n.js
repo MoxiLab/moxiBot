@@ -56,6 +56,8 @@ const baseNamespaces = [
   'economy/balance',
   'economy/daily',
   'economy/deposit',
+  'economy/pet',
+  'economy/use',
   'economy/work',
   'economy/roulette',
 ];
