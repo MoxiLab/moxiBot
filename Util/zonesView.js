@@ -47,6 +47,20 @@ function zoneName({ kind, zone, lang }) {
             }
         }
     }
+
+    // Fallback: para fish no tenemos traducciones de nombres en economy/zones por defecto,
+    // así que evitamos mostrar el nombre base (español) y usamos un label derivado del id.
+    if (k === 'fish') {
+        const pretty = id
+            ? id
+                .split('-')
+                .filter(Boolean)
+                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+                .join(' ')
+            : '';
+        return pretty || id || zone?.name || '—';
+    }
+
     return zone?.name || id || '—';
 }
 
@@ -892,6 +906,7 @@ module.exports = {
     EXPLORE_ZONES,
     ZONE_KINDS,
     normalizeKind,
+    zoneName,
     getZonesForKind,
     buildZonesContainer,
     buildZonesMessageOptions,

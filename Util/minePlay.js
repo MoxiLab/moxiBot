@@ -9,7 +9,7 @@ const { claimRateLimit } = require('./actionRateLimit');
 const { addManyToInventory } = require('./inventoryOps');
 const { rollMineMaterials } = require('./mineLoot');
 const { pickMineActivity } = require('./mineActivities');
-const { getZonesForKind } = require('./zonesView');
+const { getZonesForKind, zoneName } = require('./zonesView');
 const { hasInventoryItem } = require('./fishView');
 const { scaleRange, randInt, chance } = require('./activityUtils');
 const { buildNoticeContainer } = require('./v2Notice');
@@ -94,9 +94,10 @@ function buildMinePlayMessageOptions({ userId, zoneId, scene, disabled = false, 
     const zId = String(zone?.id || zoneId || '').trim();
     const safeLang = lang || process.env.DEFAULT_LANG || 'es-ES';
     const sc = scene || pickMineScene(zone || {}, safeLang);
+    const displayZone = zone ? zoneName({ kind: 'mine', zone, lang: safeLang }) : (zId || trMine(safeLang, 'ZONE_FALLBACK'));
 
     const container = new ContainerBuilder().setAccentColor(Bot.AccentColor);
-    container.addTextDisplayComponents(c => c.setContent(`## ${sc.emoji || '⛏️'} ${trMine(safeLang, 'PLAY_PANEL_HEADER')} • ${zone?.name || zId || trMine(safeLang, 'ZONE_FALLBACK')}`));
+    container.addTextDisplayComponents(c => c.setContent(`## ${sc.emoji || '⛏️'} ${trMine(safeLang, 'PLAY_PANEL_HEADER')} • ${displayZone}`));
     container.addSeparatorComponents(s => s.setDivider(true));
     container.addTextDisplayComponents(c => c.setContent([`**${sc.title || 'Minería'}**`, sc.prompt || '¿Qué haces?'].join('\n')));
 
@@ -185,10 +186,11 @@ async function resolveMinePlay({ userId, zoneId, mode, choiceId, seedOrMult, lan
     if (!hasInventoryItem(eco, zone.requiredItemId)) {
         const required = getItemById(zone.requiredItemId, { lang });
         const requiredName = required?.name || String(zone.requiredItemId).split('/').pop() || zone.requiredItemId;
+        const displayZone = zoneName({ kind: 'mine', zone, lang: lang || process.env.DEFAULT_LANG || 'es-ES' });
         return {
             ok: false,
             reason: 'requirement',
-            message: trMine(lang, 'PLAY_REQUIREMENT_MESSAGE', { zone: zone.name, item: requiredName }),
+            message: trMine(lang, 'PLAY_REQUIREMENT_MESSAGE', { zone: displayZone, item: requiredName }),
         };
     }
 
@@ -254,6 +256,7 @@ async function resolveMinePlay({ userId, zoneId, mode, choiceId, seedOrMult, lan
 function buildMineResultPayload({ zone, res, lang } = {}) {
     const emoji = zone?.emoji || '⛏️';
     const t = (k, vars) => trMine(lang, k, vars);
+    const displayZone = zone ? zoneName({ kind: 'mine', zone, lang: lang || process.env.DEFAULT_LANG || 'es-ES' }) : t('ZONE_FALLBACK');
 
     if (!res?.ok && res?.reason === 'cooldown') {
         return {
@@ -274,7 +277,7 @@ function buildMineResultPayload({ zone, res, lang } = {}) {
     if (res.failed) {
         return {
             content: '',
-            components: [buildNoticeContainer({ emoji, title: `${t('PLAY_PANEL_HEADER')} • ${zone?.name || t('ZONE_FALLBACK')}`, text: t('FAIL_TEXT', { action: res.actionLine }) })],
+            components: [buildNoticeContainer({ emoji, title: `${t('PLAY_PANEL_HEADER')} • ${displayZone}`, text: t('FAIL_TEXT', { action: res.actionLine }) })],
             flags: MessageFlags.IsComponentsV2,
         };
     }
@@ -295,7 +298,7 @@ function buildMineResultPayload({ zone, res, lang } = {}) {
         components: [
             buildNoticeContainer({
                 emoji,
-                title: `${t('PLAY_PANEL_HEADER')} • ${zone?.name || t('ZONE_FALLBACK')}`,
+                title: `${t('PLAY_PANEL_HEADER')} • ${displayZone}`,
                 text: [
                     t('SUCCESS_TEXT', { action: res.actionLine, amount: res.amount, coin }),
                     balanceLine,

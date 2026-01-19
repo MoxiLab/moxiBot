@@ -6,6 +6,7 @@ const {
 } = require('discord.js');
 
 const { Bot } = require('../Config');
+const moxi = require('../i18n');
 const { EMOJIS } = require('./emojis');
 const { getItemById } = require('./inventoryCatalog');
 
@@ -423,25 +424,47 @@ function getZoneForPick({ page, index, perPage = 5 } = {}) {
 
 function buildFishZonesContainer({ lang = 'es-ES', userId, page = 0, perPage = 5, disabledButtons = false } = {}) {
     const { page: p, totalPages, slice } = getZonesPage({ page, perPage });
+    const safeLang = lang || process.env.DEFAULT_LANG || 'es-ES';
+    const tz = (k, vars = {}) => moxi.translate(`economy/zones:${k}`, safeLang, vars);
+
+    function fishZoneLabel(z) {
+        const id = String(z?.id || '').trim();
+        if (!id) return z?.name || '—';
+        const key = `economy/zones:fish.${id}`;
+        const res = moxi.translate(key, safeLang);
+        if (res && res !== key) {
+            const idx = key.indexOf(':');
+            const keyPath = (idx >= 0) ? key.slice(idx + 1) : '';
+            if (!keyPath || res !== keyPath) return res;
+        }
+        const pretty = id
+            .split('-')
+            .filter(Boolean)
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join(' ');
+        return pretty || z?.name || id;
+    }
 
     const container = new ContainerBuilder()
         .setAccentColor(Bot.AccentColor)
-        .addTextDisplayComponents(t => t.setContent(`Página ${p + 1} de ${totalPages}`))
+        .addTextDisplayComponents(t => t.setContent(tz('ui.page', { page: p + 1, total: totalPages }) || `Page ${p + 1} of ${totalPages}`))
         .addSeparatorComponents(s => s.setDivider(true))
-        .addTextDisplayComponents(t => t.setContent('## Fish • Zonas'));
+        .addTextDisplayComponents(t => t.setContent(tz('ui.fishTitle') || '## Fish • Zones'));
 
     for (const z of slice) {
+        const displayZone = fishZoneLabel(z);
+        const requiredLabel = tz('ui.requires', { item: itemLabel(z.requiredItemId, safeLang) }) || `Requires: ${itemLabel(z.requiredItemId, safeLang)}`;
         container
             .addTextDisplayComponents(t =>
                 t.setContent(
-                    `${z.emoji || '🎣'} **${z.id}** — ${z.name}\n` +
-                    `Requiere: ${itemLabel(z.requiredItemId, lang)}`
+                    `${z.emoji || '🎣'} **${z.id}** — ${displayZone}\n` +
+                    requiredLabel
                 )
             )
             .addSeparatorComponents(s => s.setDivider(true));
     }
 
-    container.addTextDisplayComponents(t => t.setContent('Pulsa un botón de zona para pescar.'));
+    container.addTextDisplayComponents(t => t.setContent(tz('ui.pickHintFish') || 'Press a zone button to fish.'));
 
     container.addActionRowComponents(row => row.addComponents(
         ...buildFishPickButtons({ userId, page: p, zones: slice, disabled: disabledButtons })

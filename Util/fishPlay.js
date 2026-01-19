@@ -9,7 +9,7 @@ const { claimRateLimit } = require('./actionRateLimit');
 const { addManyToInventory } = require('./inventoryOps');
 const { rollFishMaterials } = require('./fishLoot');
 const { listFishActivities } = require('./fishActivities');
-const { getZonesForKind } = require('./zonesView');
+const { getZonesForKind, zoneName } = require('./zonesView');
 const { hasInventoryItem } = require('./fishView');
 const { scaleRange, randInt, chance } = require('./activityUtils');
 const { buildNoticeContainer } = require('./v2Notice');
@@ -97,9 +97,10 @@ function buildFishPlayMessageOptions({ userId, zoneId, scene, disabled = false, 
     const zId = String(zone?.id || zoneId || '').trim();
     const safeLang = lang || process.env.DEFAULT_LANG || 'es-ES';
     const sc = scene || pickFishScene(safeLang);
+    const displayZone = zone ? zoneName({ kind: 'fish', zone, lang: safeLang }) : (zId || trFish(safeLang, 'ZONE_FALLBACK'));
 
     const container = new ContainerBuilder().setAccentColor(Bot.AccentColor);
-    container.addTextDisplayComponents(c => c.setContent(`## ${sc.emoji || '🎣'} ${trFish(safeLang, 'PLAY_PANEL_HEADER')} • ${zone?.name || zId || trFish(safeLang, 'ZONE_FALLBACK')}`));
+    container.addTextDisplayComponents(c => c.setContent(`## ${sc.emoji || '🎣'} ${trFish(safeLang, 'PLAY_PANEL_HEADER')} • ${displayZone}`));
     container.addSeparatorComponents(s => s.setDivider(true));
     container.addTextDisplayComponents(c => c.setContent([`**${sc.title || 'Pesca'}**`, sc.prompt || '¿Qué haces?'].join('\n')));
 
@@ -189,10 +190,11 @@ async function resolveFishPlay({ userId, zoneId, mode, choiceId, seed, lang } = 
     if (!hasInventoryItem(eco, zone.requiredItemId)) {
         const required = getItemById(zone.requiredItemId, { lang });
         const requiredName = required?.name || String(zone.requiredItemId).split('/').pop() || zone.requiredItemId;
+        const displayZone = zoneName({ kind: 'fish', zone, lang: lang || process.env.DEFAULT_LANG || 'es-ES' });
         return {
             ok: false,
             reason: 'requirement',
-            message: trFish(lang, 'PLAY_REQUIREMENT_MESSAGE', { zone: zone.name, item: requiredName }),
+            message: trFish(lang, 'PLAY_REQUIREMENT_MESSAGE', { zone: displayZone, item: requiredName }),
         };
     }
 
@@ -262,6 +264,7 @@ async function resolveFishPlay({ userId, zoneId, mode, choiceId, seed, lang } = 
 function buildFishResultPayload({ zone, res, lang } = {}) {
     const emoji = zone?.emoji || '🎣';
     const t = (k, vars) => trFish(lang, k, vars);
+    const displayZone = zone ? zoneName({ kind: 'fish', zone, lang: lang || process.env.DEFAULT_LANG || 'es-ES' }) : t('ZONE_FALLBACK');
     if (!res?.ok && res?.reason === 'cooldown') {
         return {
             content: '',
@@ -281,7 +284,7 @@ function buildFishResultPayload({ zone, res, lang } = {}) {
     if (res.failed) {
         return {
             content: '',
-            components: [buildNoticeContainer({ emoji, title: `${t('PLAY_PANEL_HEADER')} • ${zone?.name || t('ZONE_FALLBACK')}`, text: t('FAIL_TEXT', { action: res.actionLine }) })],
+            components: [buildNoticeContainer({ emoji, title: `${t('PLAY_PANEL_HEADER')} • ${displayZone}`, text: t('FAIL_TEXT', { action: res.actionLine }) })],
             flags: MessageFlags.IsComponentsV2,
         };
     }
@@ -301,7 +304,7 @@ function buildFishResultPayload({ zone, res, lang } = {}) {
         components: [
             buildNoticeContainer({
                 emoji,
-                title: `${t('PLAY_PANEL_HEADER')} • ${zone?.name || t('ZONE_FALLBACK')}`,
+                title: `${t('PLAY_PANEL_HEADER')} • ${displayZone}`,
                 text: [
                     t('SUCCESS_TEXT', { action: res.actionLine, amount: res.amount }),
                     balanceLine,
