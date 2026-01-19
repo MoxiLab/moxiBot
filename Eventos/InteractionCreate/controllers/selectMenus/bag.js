@@ -13,7 +13,8 @@ module.exports = async function bagSelectMenu(interaction, Moxi, logger) {
   const page = Number(parts[3] || 0);
 
   const guildId = interaction.guildId || interaction.guild?.id;
-  const lang = Moxi?.guildLang ? await Moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES') : (process.env.DEFAULT_LANG || 'es-ES');
+  const fallbackLang = interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
+  const lang = Moxi?.guildLang ? await Moxi.guildLang(guildId, fallbackLang) : fallbackLang;
   const t = (k, vars) => moxi.translate(`economy/bag:${k}`, lang, vars);
 
   if (interaction.user?.id !== viewerId) {

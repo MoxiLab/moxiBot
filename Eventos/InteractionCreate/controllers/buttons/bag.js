@@ -8,7 +8,8 @@ module.exports = async function bagButtons(interaction, Moxi, logger) {
   if (!id.startsWith('bag:nav:')) return false;
 
   const guildId = interaction.guildId || interaction.guild?.id;
-  const lang = Moxi?.guildLang ? await Moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES') : (process.env.DEFAULT_LANG || 'es-ES');
+  const fallbackLang = interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
+  const lang = Moxi?.guildLang ? await Moxi.guildLang(guildId, fallbackLang) : fallbackLang;
   const t = (k, vars) => moxi.translate(`economy/bag:${k}`, lang, vars);
 
   // Formatos soportados:
