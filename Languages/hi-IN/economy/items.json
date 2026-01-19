@@ -420,424 +420,424 @@
             "description": "इवेंट आइटम वाले पैक।"
         },
         "loots/caja-de-suerte": {
-            "name": "Caja of Luck",
-            "description": "A box with a high chance of rare items."
+            "name": "किस्मत बॉक्स",
+            "description": "दुर्लभ आइटम मिलने की उच्च संभावना वाला बॉक्स।"
         },
         "loots/tarjeta-de-regalo": {
-            "name": "Tarjeta of Regalo",
-            "description": "Redeemable for items in the shop."
+            "name": "गिफ्ट कार्ड",
+            "description": "दुकान में आइटम के लिए रिडीम किया जा सकता है।"
         },
         "loots/bolsa-de-materiales": {
-            "name": "Bag of Materials",
-            "description": "Contains random materials for crafting."
+            "name": "सामग्री की थैली",
+            "description": "क्राफ्टिंग के लिए यादृच्छिक सामग्री शामिल होती है।"
         },
         "loots/bolsa-de-gemas": {
-            "name": "Bag of Gems",
-            "description": "Contains gems or rare fragments."
+            "name": "रत्न थैली",
+            "description": "रत्न या दुर्लभ टुकड़े शामिल होते हैं।"
         },
         "loots/caja-de-herramientas": {
-            "name": "Caja of Herramientas",
-            "description": "Chance to get useful tools."
+            "name": "औज़ार बॉक्स",
+            "description": "उपयोगी औज़ार मिलने की संभावना।"
         },
         "loots/cofre-abisal": {
-            "name": "Abyssal Chest",
-            "description": "Rare loot from deep areas."
+            "name": "अथाह संदूक",
+            "description": "गहरे क्षेत्रों की दुर्लभ लूट।"
         },
         "loots/cofre-glaciar": {
-            "name": "Glacial Chest",
-            "description": "Rare loot from ice and aurora regions."
+            "name": "हिमानी संदूक",
+            "description": "बर्फ और ऑरोरा क्षेत्रों की दुर्लभ लूट।"
         },
         "loots/cofre-volcanico": {
-            "name": "Volcanic Chest",
-            "description": "Rare loot from lava and minerals."
+            "name": "ज्वालामुखीय संदूक",
+            "description": "लावा और खनिजों की दुर्लभ लूट।"
         },
         "mascotas/huevo-prisma": {
-            "name": "Egg Prism",
-            "description": "Lets you obtain pets with unique abilities."
+            "name": "प्रिज़्म अंडा",
+            "description": "अद्वितीय क्षमताओं वाले पालतू पाने देता है।"
         },
         "mascotas/huevo-festivo": {
-            "name": "Egg Festive",
-            "description": "Pets from special events."
+            "name": "उत्सव अंडा",
+            "description": "विशेष इवेंट्स के पालतू।"
         },
         "mascotas/huevo-elemental": {
-            "name": "Egg Elemental",
-            "description": "Pets with elemental powers."
+            "name": "तत्वीय अंडा",
+            "description": "तत्वीय शक्तियों वाले पालतू।"
         },
         "mascotas/huevo-legendario": {
-            "name": "Legendary Egg",
-            "description": "Rare and powerful pets."
+            "name": "लेजेंडरी अंडा",
+            "description": "दुर्लभ और शक्तिशाली पालतू।"
         },
         "mascotas/huevo-magico": {
-            "name": "Magic Egg",
-            "description": "Hatches into a pet with magical traits and special abilities."
+            "name": "जादुई अंडा",
+            "description": "जादुई गुणों और विशेष क्षमताओं वाला पालतू निकलता है।"
         },
         "mascotas/huevo-abisal": {
-            "name": "Abyssal Egg",
-            "description": "Hatches from deep areas; affinity with water and shadow."
+            "name": "अथाह अंडा",
+            "description": "गहरे क्षेत्रों से निकलता है; पानी और छाया के साथ जुड़ाव।"
         },
         "mascotas/huevo-solar": {
-            "name": "Egg Solar",
-            "description": "Light-aligned hatchling; improves daytime rewards."
+            "name": "सौर अंडा",
+            "description": "प्रकाश-समर्थक बच्चा; दिन के इनाम बेहतर करता है।"
         },
         "mascotas/huevo-brumoso": {
-            "name": "Egg Brumoso",
-            "description": "Mist-aligned hatchling; bonus to stealth exploration."
+            "name": "धुंधला अंडा",
+            "description": "धुंध-समर्थक बच्चा; चुपके अन्वेषण में बोनस।"
         },
         "mascotas/huevo-de-bosque": {
-            "name": "Egg of Bosque",
-            "description": "Nature hatchling; bonus to gathering."
+            "name": "जंगल अंडा",
+            "description": "प्रकृति-समर्थक बच्चा; गैदरिंग में बोनस।"
         },
         "mascotas/huevo-de-montana": {
-            "name": "Mountain Egg",
-            "description": "Sturdy hatchling; bonus to mining and steep routes."
+            "name": "पर्वतीय अंडा",
+            "description": "मज़बूत बच्चा; खनन और खड़ी राहों में बोनस।"
         },
         "mascotas/huevo-de-tormenta": {
-            "name": "Egg of Tormenta",
-            "description": "Electric hatchling; bonus during weather events."
+            "name": "तूफ़ानी अंडा",
+            "description": "विद्युत बच्चा; मौसम इवेंट्स में बोनस।"
         },
         "mascotas/huevo-aurora": {
-            "name": "Egg Aurora",
-            "description": "Rare winter hatchling; bonus during cold seasons."
+            "name": "ऑरोरा अंडा",
+            "description": "दुर्लभ शीत बच्चा; ठंडे मौसम में बोनस।"
         },
         "mascotas/huevo-jardin": {
-            "name": "Garden Egg",
-            "description": "Friendly hatchling; bonus to social tasks and care."
+            "name": "बगीचा अंडा",
+            "description": "मित्रवत बच्चा; सामाजिक कामों और देखभाल में बोनस।"
         },
         "mascotas/huevo-de-cristal": {
-            "name": "Egg of Crystal",
-            "description": "Prismatic hatchling; small luck bonus."
+            "name": "क्रिस्टल अंडा",
+            "description": "प्रिज़्मीय बच्चा; छोटा किस्मत बोनस।"
         },
         "mascotas/huevo-meteoro": {
-            "name": "Egg Meteoro",
-            "description": "Very rare hatchling; bonus to loot and special materials."
+            "name": "उल्का अंडा",
+            "description": "बहुत दुर्लभ बच्चा; लूट और विशेष सामग्री में बोनस।"
         },
         "mascotas/huevo-volcanico": {
-            "name": "Volcanic Egg",
-            "description": "Hatches from hot areas; bonus to mining and heat resistance."
+            "name": "ज्वालामुखीय अंडा",
+            "description": "गरम क्षेत्रों से निकलता है; खनन और गर्मी-प्रतिरोध में बोनस।"
         },
         "mascotas/huevo-glaciar": {
-            "name": "Glacial Egg",
-            "description": "Hatches from cold areas; bonus to survival and winter exploration."
+            "name": "हिमानी अंडा",
+            "description": "ठंडे क्षेत्रों से निकलता है; सर्वाइवल और शीतकालीन अन्वेषण में बोनस।"
         },
         "mascotas/huevo-marino": {
-            "name": "Egg Marine",
-            "description": "Aquatic hatchling; bonus to fishing and sea routes."
+            "name": "समुद्री अंडा",
+            "description": "जलीय बच्चा; मछली पकड़ने और समुद्री रास्तों में बोनस।"
         },
         "mascotas/huevo-selvatico": {
-            "name": "Wild Egg",
-            "description": "Jungle hatchling; bonus to gathering rare plants."
+            "name": "जंगली अंडा",
+            "description": "जंगल बच्चा; दुर्लभ पौधों की गैदरिंग में बोनस।"
         },
         "mascotas/huevo-umbrio": {
-            "name": "Umbral Egg",
-            "description": "Shadow hatchling; bonus during night events."
+            "name": "छायामय अंडा",
+            "description": "छाया बच्चा; रात के इवेंट्स में बोनस।"
         },
         "mascotas/huevo-radiante": {
-            "name": "Egg Radiante",
-            "description": "Light hatchling; a light luck bonus for chests."
+            "name": "दीप्त अंडा",
+            "description": "प्रकाश बच्चा; संदूकों के लिए हल्का किस्मत बोनस।"
         },
         "mascotas/ocarina-del-vinculo": {
-            "name": "Bond Ocarina",
-            "description": "An ancient melody that calls your pet back if it left due to lack of care."
+            "name": "बॉन्ड ओकारिना",
+            "description": "एक प्राचीन धुन जो देखभाल की कमी से पालतू चले जाने पर उसे वापस बुलाती है।"
         },
         "mascotas/huevo-torbellino": {
-            "name": "Egg Torbellino",
-            "description": "Wind hatchling; improves travel and fast quests."
+            "name": "बवंडर अंडा",
+            "description": "हवा-समर्थक बच्चा; यात्रा और तेज़ क्वेस्ट बेहतर करता है।"
         },
         "mascotas/huevo-fertil": {
-            "name": "Fertile Egg",
-            "description": "Meadow hatchling; bonus to common gathering."
+            "name": "उपजाऊ अंडा",
+            "description": "मैदान बच्चा; सामान्य गैदरिंग में बोनस।"
         },
         "mascotas/huevo-coral": {
-            "name": "Egg Coral",
-            "description": "Reef hatchling; bonus to marine loot."
+            "name": "मूंगा अंडा",
+            "description": "रीफ़ बच्चा; समुद्री लूट में बोनस।"
         },
         "mascotas/huevo-relampago": {
-            "name": "Lightning Egg",
-            "description": "Rare electric hatchling; bonus to timed challenges."
+            "name": "बिजली अंडा",
+            "description": "दुर्लभ विद्युत बच्चा; समयबद्ध चुनौतियों में बोनस।"
         },
         "mascotas/huevo-lunar": {
-            "name": "Egg Lunar",
-            "description": "Rare night hatchling; bonus to night quests."
+            "name": "चंद्र अंडा",
+            "description": "दुर्लभ रात्रि बच्चा; रात की क्वेस्ट में बोनस।"
         },
         "mascotas/huevo-solar-real": {
-            "name": "Egg Solar Real",
-            "description": "Rare version of the Solar Egg; improved daytime bonus."
+            "name": "राजसी सौर अंडा",
+            "description": "सौर अंडे का दुर्लभ रूप; बेहतर दिन-सम्बंधित बोनस।"
         },
         "mascotas/huevo-prisma-antiguo": {
-            "name": "Egg Prism Antiguo",
-            "description": "Very rare hatchling; bonus during special events."
+            "name": "प्राचीन प्रिज़्म अंडा",
+            "description": "बहुत दुर्लभ बच्चा; विशेष इवेंट्स में बोनस।"
         },
         "mascotas/huevo-cometa": {
-            "name": "Egg Cometa",
-            "description": "Ultra-rare hatchling; extra chance of rare items."
+            "name": "धूमकेतु अंडा",
+            "description": "अति-दुर्लभ बच्चा; दुर्लभ आइटम की अतिरिक्त संभावना।"
         },
         "mascotas/huevo-encantado": {
-            "name": "Egg Encantado",
-            "description": "Magical hatchling; bonus to temporary buff effects."
+            "name": "मंत्रमुग्ध अंडा",
+            "description": "जादुई बच्चा; अस्थायी बफ़ प्रभावों में बोनस।"
         },
         "mascotas/huevo-guardian": {
-            "name": "Guardian Egg",
-            "description": "Defensive hatchling; reduces penalties during events."
+            "name": "रक्षक अंडा",
+            "description": "रक्षात्मक बच्चा; इवेंट्स के दौरान दंड कम करता है।"
         },
         "materiales/hierba-prisma": {
-            "name": "Hierba Prism",
-            "description": "Crafting material."
+            "name": "प्रिज़्म घास",
+            "description": "क्राफ्टिंग सामग्री।"
         },
         "materiales/roca-volcanica": {
-            "name": "Volcanic Rock",
-            "description": "Material for defense upgrades."
+            "name": "ज्वालामुखीय पत्थर",
+            "description": "रक्षा उन्नयन के लिए सामग्री।"
         },
         "materiales/barra-de-oro-acero": {
-            "name": "Bar of Oro/Steel",
-            "description": "Material for crafting avanzado."
+            "name": "सोना/स्टील की सिल्लियाँ",
+            "description": "उन्नत क्राफ्टिंग के लिए सामग्री।"
         },
         "materiales/fragmento-de-espiritu": {
-            "name": "Fragment of Spirit",
-            "description": "Material for quests and mejoras."
+            "name": "आत्मा का टुकड़ा",
+            "description": "क्वेस्ट और उन्नयन के लिए सामग्री।"
         },
         "materiales/mineral-elemental": {
-            "name": "Mineral Elemental",
-            "description": "Material for crafting of tools."
+            "name": "तत्वीय खनिज",
+            "description": "औज़ार क्राफ्टिंग के लिए सामग्री।"
         },
         "materiales/flor-de-amor": {
-            "name": "Flower of Amor",
-            "description": "Material for events romantic."
+            "name": "प्रेम फूल",
+            "description": "रोमांटिक इवेंट्स के लिए सामग्री।"
         },
         "materiales/fosil": {
-            "name": "Fossil",
-            "description": "Material for quests of exploration."
+            "name": "जीवाश्म",
+            "description": "अन्वेषण क्वेस्ट के लिए सामग्री।"
         },
         "materiales/dulce-festivo": {
-            "name": "Candy Festive",
-            "description": "Material for events of season."
+            "name": "उत्सव कैंडी",
+            "description": "मौसमी इवेंट्स के लिए सामग्री।"
         },
         "materiales/alga-marina": {
-            "name": "Seaweed",
-            "description": "Fishing material and marine crafting ingredient."
+            "name": "समुद्री शैवाल",
+            "description": "मछली पकड़ने की सामग्री और समुद्री क्राफ्टिंग घटक।"
         },
         "materiales/concha-marina": {
-            "name": "Seashell",
-            "description": "Common material from coastal areas."
+            "name": "समुद्री सीप",
+            "description": "तटीय क्षेत्रों से मिलने वाली सामान्य सामग्री।"
         },
         "materiales/coral-prisma": {
-            "name": "Prism Coral",
-            "description": "Rare material from reefs and deep seas."
+            "name": "प्रिज़्म मूंगा",
+            "description": "रीफ़ और गहरे समुद्र से मिलने वाली दुर्लभ सामग्री।"
         },
         "materiales/perla-azur": {
-            "name": "Azur Pearl",
-            "description": "A valuable marine treasure."
+            "name": "एज़ुर मोती",
+            "description": "एक कीमती समुद्री ख़ज़ाना।"
         },
         "materiales/mineral-de-cobre": {
-            "name": "Copper Ore",
-            "description": "Common mining material."
+            "name": "तांबे का अयस्क",
+            "description": "सामान्य खनन सामग्री।"
         },
         "materiales/mineral-de-hierro": {
-            "name": "Iron Ore",
-            "description": "Base for ingots and tools."
+            "name": "लोहे का अयस्क",
+            "description": "सिल्लियों और औज़ारों के लिए आधार।"
         },
         "materiales/mineral-de-plata": {
-            "name": "Silver Ore",
-            "description": "Valuable mineral for crafting."
+            "name": "चाँदी का अयस्क",
+            "description": "क्राफ्टिंग के लिए कीमती खनिज।"
         },
         "materiales/mineral-de-oro": {
-            "name": "Gold Ore",
-            "description": "Rare mineral for advanced crafting."
+            "name": "सोने का अयस्क",
+            "description": "उन्नत क्राफ्टिंग के लिए दुर्लभ खनिज।"
         },
         "materiales/mineral-de-diamante": {
-            "name": "Diamond Ore",
-            "description": "Very rare mineral: elite crafting."
+            "name": "हीरे का अयस्क",
+            "description": "अत्यंत दुर्लभ खनिज: एलीट क्राफ्टिंग।"
         },
         "materiales/madera-robusta": {
-            "name": "Sturdy Wood",
-            "description": "Great for structures and tools."
+            "name": "मज़बूत लकड़ी",
+            "description": "ढाँचे और औज़ारों के लिए बढ़िया।"
         },
         "materiales/madera-encantada": {
-            "name": "Enchanted Wood",
-            "description": "Rare wood with magical properties."
+            "name": "मंत्रमुग्ध लकड़ी",
+            "description": "जादुई गुणों वाली दुर्लभ लकड़ी।"
         },
         "materiales/cuero-curtido": {
-            "name": "Leather Tanned",
-            "description": "Flexible material for gear."
+            "name": "टैन्ड चमड़ा",
+            "description": "गियर के लिए लचीली सामग्री।"
         },
         "materiales/tela-resistente": {
-            "name": "Fabric Durable",
-            "description": "Material for backpacks and clothing."
+            "name": "टिकाऊ कपड़ा",
+            "description": "बैग और कपड़ों के लिए सामग्री।"
         },
         "materiales/hilo-fino": {
-            "name": "Thread Fine",
-            "description": "Sewing material for crafting."
+            "name": "बारीक धागा",
+            "description": "क्राफ्टिंग के लिए सिलाई सामग्री।"
         },
         "materiales/polvo-prisma": {
-            "name": "Dust Prism",
-            "description": "Magical ingredient for upgrades."
+            "name": "प्रिज़्म धूल",
+            "description": "उन्नयन के लिए जादुई घटक।"
         },
         "materiales/esencia-solar": {
-            "name": "Essence Solar",
-            "description": "Bright ingredient for rare crafting."
+            "name": "सौर सार",
+            "description": "दुर्लभ क्राफ्टिंग के लिए चमकीला घटक।"
         },
         "materiales/esencia-lunar": {
-            "name": "Essence Lunar",
-            "description": "Night ingredient for special recipes."
+            "name": "चंद्र सार",
+            "description": "विशेष रेसिपी के लिए रात्रि घटक।"
         },
         "materiales/esencia-umbria": {
-            "name": "Essence Umbral",
-            "description": "Dark energy, very rare."
+            "name": "छायामय सार",
+            "description": "डार्क ऊर्जा, बहुत दुर्लभ।"
         },
         "materiales/fragmento-de-cristal": {
-            "name": "Fragment of Crystal",
-            "description": "Shiny fragment for crafting."
+            "name": "क्रिस्टल का टुकड़ा",
+            "description": "क्राफ्टिंग के लिए चमकदार टुकड़ा।"
         },
         "materiales/gema-rubi": {
-            "name": "Ruby Gem",
-            "description": "Rare gem for trades and upgrades."
+            "name": "रूबी रत्न",
+            "description": "व्यापार और उन्नयन के लिए दुर्लभ रत्न।"
         },
         "materiales/gema-zafiro": {
-            "name": "Sapphire Gem",
-            "description": "Rare gem with aquatic energy."
+            "name": "सैफायर रत्न",
+            "description": "जलीय ऊर्जा वाला दुर्लभ रत्न।"
         },
         "materiales/gema-esmeralda": {
-            "name": "Emerald Gem",
-            "description": "Rare gem with natural energy."
+            "name": "एमरल्ड रत्न",
+            "description": "प्राकृतिक ऊर्जा वाला दुर्लभ रत्न।"
         },
         "materiales/nucleo-elemental": {
-            "name": "Core Elemental",
-            "description": "Very rare component for elemental tools."
+            "name": "तत्वीय कोर",
+            "description": "तत्वीय औज़ारों के लिए बहुत दुर्लभ घटक।"
         },
         "materiales/placa-de-acero": {
-            "name": "Plate of Steel",
-            "description": "Sturdy material for advanced crafting."
+            "name": "स्टील प्लेट",
+            "description": "उन्नत क्राफ्टिंग के लिए मज़बूत सामग्री।"
         },
         "mejoras/potenciador-de-fortuna": {
-            "name": "Booster of Fortune",
-            "description": "Increases the chance of getting great rewards."
+            "name": "भाग्य बूस्टर",
+            "description": "बेहतरीन इनाम पाने की संभावना बढ़ाता है।"
         },
         "mejoras/escudo-de-tolerancia": {
-            "name": "Shield of Tolerance",
-            "description": "Reduces penalties in events."
+            "name": "सहनशीलता ढाल",
+            "description": "इवेंट्स में दंड कम करता है।"
         },
         "mejoras/expansion-de-mochila": {
-            "name": "Expansion of Backpack",
-            "description": "Increases inventory space."
+            "name": "बैग विस्तार",
+            "description": "इन्वेंटरी जगह बढ़ाता है।"
         },
         "mejoras/entrenamiento-moxi": {
-            "name": "Training Moxi",
-            "description": "Experience bonus per activity."
+            "name": "मॉक्सी प्रशिक्षण",
+            "description": "प्रति गतिविधि अनुभव बोनस।"
         },
         "mejoras/trabajo-en-equipo": {
-            "name": "Teamwork en Team",
-            "description": "Bonus when working in a group."
+            "name": "टीमवर्क",
+            "description": "समूह में काम करने पर बोनस।"
         },
         "mejoras/estrella-de-suerte": {
-            "name": "Star of Luck",
-            "description": "Luck bonus."
+            "name": "किस्मत का तारा",
+            "description": "किस्मत बोनस।"
         },
         "mejoras/aurora-festiva": {
-            "name": "Aurora Festiva",
-            "description": "Bonus during winter events."
+            "name": "उत्सव ऑरोरा",
+            "description": "सर्दियों के इवेंट्स में बोनस।"
         },
         "mejoras/tinte-personalizado": {
-            "name": "Dye Custom",
-            "description": "Changes the color of your profile or club."
+            "name": "कस्टम डाई",
+            "description": "आपके प्रोफ़ाइल या क्लब का रंग बदलता है।"
         },
         "mejoras/expansion-de-banco": {
-            "name": "Expansion of Bank",
-            "description": "Increases bank space (future use)."
+            "name": "बैंक विस्तार",
+            "description": "बैंक जगह बढ़ाता है (भविष्य उपयोग)।"
         },
         "mejoras/expansion-de-mochila-plus": {
-            "name": "Expansion of Backpack Plus",
-            "description": "Increases inventory space even more (future use)."
+            "name": "बैग विस्तार प्लस",
+            "description": "इन्वेंटरी जगह और भी बढ़ाता है (भविष्य उपयोग)।"
         },
         "mejoras/sello-de-proteccion": {
-            "name": "Seal of Protection",
-            "description": "Reduces losses during dangerous events (future use)."
+            "name": "सुरक्षा मुहर",
+            "description": "खतरनाक इवेंट्स में नुकसान कम करता है (भविष्य उपयोग)।"
         },
         "mejoras/pase-premium-moxi": {
-            "name": "Pass Premium Moxi",
-            "description": "Access to premium system benefits (future use)."
+            "name": "मॉक्सी प्रीमियम पास",
+            "description": "प्रीमियम सिस्टम लाभों तक पहुँच देता है (भविष्य उपयोग)।"
         },
         "misiones/gema-prisma": {
-            "name": "Gem Prism",
-            "description": "Required for advanced quests."
+            "name": "प्रिज़्म रत्न",
+            "description": "उन्नत क्वेस्ट के लिए आवश्यक।"
         },
         "misiones/conejo-de-peluche": {
-            "name": "Conejo of Peluche",
-            "description": "Special quest item."
+            "name": "प्लश खरगोश",
+            "description": "विशेष क्वेस्ट आइटम।"
         },
         "misiones/espada-de-hielo": {
-            "name": "Ice Sword",
-            "description": "Required for exploration quests."
+            "name": "बर्फ़ की तलवार",
+            "description": "अन्वेषण क्वेस्ट के लिए आवश्यक।"
         },
         "misiones/katana-solar": {
-            "name": "Katana Solar",
-            "description": "Advanced quest item."
+            "name": "सौर कटाना",
+            "description": "उन्नत क्वेस्ट आइटम।"
         },
         "misiones/mascara-de-zorro": {
-            "name": "Fox Mask",
-            "description": "Special quest item."
+            "name": "लोमड़ी मुखौटा",
+            "description": "विशेष क्वेस्ट आइटम।"
         },
         "pociones/pocion-de-regeneracion": {
-            "name": "Potion of Regeneration",
-            "description": "Restores health."
+            "name": "पुनर्जीवन पोशन",
+            "description": "स्वास्थ्य बहाल करता है।"
         },
         "pociones/pocion-de-resistencia": {
-            "name": "Potion of Resistance",
-            "description": "Temporarily increases defense."
+            "name": "प्रतिरोध पोशन",
+            "description": "अस्थायी रूप से रक्षा बढ़ाता है।"
         },
         "pociones/pocion-del-explorador": {
-            "name": "Potion of the Explorer",
-            "description": "Allows you to explore new areas."
+            "name": "अन्वेषक पोशन",
+            "description": "नए क्षेत्रों का अन्वेषण करने देता है।"
         },
         "pociones/elixir-prisma": {
-            "name": "Elixir Prism",
-            "description": "Gives an experience and energy bonus."
+            "name": "प्रिज़्म एलिक्सिर",
+            "description": "अनुभव और ऊर्जा बोनस देता है।"
         },
         "pociones/huevito-de-energia-exploracion-regeneracion-resistencia": {
-            "name": "Little Egg of Energy/Exploration/Regeneration/Resistance",
-            "description": "Special consumables."
+            "name": "ऊर्जा/अन्वेषण/पुनर्जीवन/प्रतिरोध का छोटा अंडा",
+            "description": "विशेष उपभोग्य।"
         },
         "pociones/pocion-de-suerte": {
-            "name": "Potion of Luck",
-            "description": "Temporarily increases luck."
+            "name": "किस्मत पोशन",
+            "description": "अस्थायी रूप से किस्मत बढ़ाता है।"
         },
         "pociones/pocion-de-velocidad": {
-            "name": "Potion of Speed",
-            "description": "Temporarily increases speed."
+            "name": "गति पोशन",
+            "description": "अस्थायी रूप से गति बढ़ाता है।"
         },
         "pociones/pocion-del-minero": {
-            "name": "Potion of the Miner",
-            "description": "Temporarily improves mining loot."
+            "name": "खनिक पोशन",
+            "description": "अस्थायी रूप से खनन लूट बेहतर करता है।"
         },
         "pociones/pocion-del-pescador": {
-            "name": "Potion of the Fisher",
-            "description": "Temporarily improves fishing loot."
+            "name": "मछुआरा पोशन",
+            "description": "अस्थायी रूप से मछली पकड़ने की लूट बेहतर करता है।"
         },
         "pociones/elixir-de-luz": {
-            "name": "Elixir of Light",
-            "description": "Boosts daytime rewards and exploration."
+            "name": "प्रकाश एलिक्सिर",
+            "description": "दिन के इनाम और अन्वेषण को बढ़ाता है।"
         },
         "pociones/elixir-de-sombra": {
-            "name": "Elixir of Shadow",
-            "description": "Boosts nighttime rewards and stealth."
+            "name": "छाया एलिक्सिर",
+            "description": "रात के इनाम और चुपकेपन को बढ़ाता है।"
         },
         "rollos/rollo-moxi": {
-            "name": "Scroll Moxi",
-            "description": "Grants temporary special abilities."
+            "name": "मॉक्सी स्क्रॉल",
+            "description": "अस्थायी विशेष क्षमताएँ देता है।"
         },
         "rollos/rollo-de-estrategia": {
-            "name": "Scroll of Strategy",
-            "description": "Enables advanced strategies in events."
+            "name": "रणनीति स्क्रॉल",
+            "description": "इवेंट्स में उन्नत रणनीतियाँ सक्षम करता है।"
         },
         "rollos/notas-del-explorador": {
-            "name": "Notes of the Explorer",
-            "description": "Provides clues for quests."
+            "name": "अन्वेषक के नोट्स",
+            "description": "क्वेस्ट के लिए सुराग देता है।"
         },
         "rollos/papiro-jeroglifico": {
-            "name": "Papyrus/Hieroglyph",
-            "description": "Unlocks hidden content."
+            "name": "पपीरस/चित्रलिपि",
+            "description": "छुपी सामग्री अनलॉक करता है।"
         },
         "proteccion/vida-extra": {
-            "name": "Life Extra",
-            "description": "Lets you revive once in special events."
+            "name": "अतिरिक्त जीवन",
+            "description": "विशेष इवेंट्स में एक बार पुनर्जीवित होने देता है।"
         }
     }
 }
