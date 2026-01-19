@@ -17,7 +17,7 @@ const SlashCommandIdSchema = new mongoose.Schema(
 
 SlashCommandIdSchema.index({ applicationId: 1, guildId: 1, name: 1 }, { unique: true });
 
-// Evitar side-effects (conexión a Mongo) cuando el modelo se carga desde scripts/CLI.
+// Evitar side-effects (conexión a Mongo) cuando el modelo se carga desde CLI.
 // El bot conecta en `Eventos/Client/ready.js` y los scripts que necesiten DB llaman `ensureMongoConnection` explícitamente.
 try {
     const path = require('path');
