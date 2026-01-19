@@ -1,15 +1,15 @@
 {
-    "INVALID_USAGE_TITLE": "Incorrect usage",
-    "INVALID_USAGE_TEXT": "Use: `{{prefix}}deposit 100` or `{{prefix}}deposit all`.",
-    "BANK_TITLE": "Bank",
-    "NO_COINS": "You don't have any coins to deposit.",
-    "INVALID_AMOUNT_TITLE": "Invalid amount",
-    "INVALID_AMOUNT_TEXT": "Amount must be greater than 0, or use `all`.",
-    "INSUFFICIENT_FUNDS_TITLE": "Insufficient funds",
-    "INSUFFICIENT_FUNDS_TEXT": "You tried to deposit **{{wanted}}** 🪙 but you only have **{{balance}}** 🪙.",
-    "DEPOSIT_SUCCESS_TITLE": "Deposit completed",
-    "DEPOSIT_SUCCESS_TEXT": "You deposited **{{wanted}}** 🪙.\nBalance: **{{balance}}** 🪙\nBank: **{{bank}}** 🏦",
-    "ERROR_TITLE": "Error",
-    "ERROR_MONGO": "MongoDB isn't configured, the bank is unavailable.",
-    "ERROR_GENERIC": "I couldn't complete the deposit right now. Please try again."
+    "INVALID_USAGE_TITLE": "사용 방법이 올바르지 않습니다",
+    "INVALID_USAGE_TEXT": "사용: `{{prefix}}deposit 100` 또는 `{{prefix}}deposit all`.",
+    "BANK_TITLE": "은행",
+    "NO_COINS": "입금할 코인이 없습니다.",
+    "INVALID_AMOUNT_TITLE": "금액이 올바르지 않습니다",
+    "INVALID_AMOUNT_TEXT": "금액은 0보다 커야 합니다(또는 `all` 사용).",
+    "INSUFFICIENT_FUNDS_TITLE": "잔액이 부족합니다",
+    "INSUFFICIENT_FUNDS_TEXT": "**{{wanted}}** 🪙를 입금하려 했지만 보유 코인은 **{{balance}}** 🪙입니다.",
+    "DEPOSIT_SUCCESS_TITLE": "입금 완료",
+    "DEPOSIT_SUCCESS_TEXT": "**{{wanted}}** 🪙를 입금했습니다.\n잔액: **{{balance}}** 🪙\n은행: **{{bank}}** 🏦",
+    "ERROR_TITLE": "오류",
+    "ERROR_MONGO": "MongoDB가 설정되지 않아 은행을 사용할 수 없습니다.",
+    "ERROR_GENERIC": "지금은 입금을 완료할 수 없습니다. 잠시 후 다시 시도해 주세요."
 }

@@ -1,12 +1,12 @@
 {
-    "ITEM_NOT_SPECIFIED_TITLE": "Item not specified",
-    "ITEM_NOT_SPECIFIED_TEXT": "You must type the item's `name` or `id` you want to buy.",
-    "SHOP_TITLE": "Shop",
-    "NOT_FOUND_BY_ID": "No item exists with ID {{id}}. Use the shop command to see IDs.",
-    "NOT_FOUND_GENERIC": "I couldn't find that item in the shop. Use the shop command to see IDs.",
-    "INVALID_PRICE": "This item can't be bought (invalid price).",
-    "INSUFFICIENT_FUNDS_TITLE": "Insufficient funds",
-    "INSUFFICIENT_FUNDS": "You need {{cost}} 🪙 and you have {{balance}} 🪙.",
-    "PURCHASE_SUCCESS_TITLE": "Purchase completed",
-    "PURCHASE_SUCCESS": "You bought **{{amount}}x {{name}}** for **{{cost}}** 🪙."
+    "ITEM_NOT_SPECIFIED_TITLE": "아이템이 지정되지 않았습니다",
+    "ITEM_NOT_SPECIFIED_TEXT": "구매할 아이템의 `name` 또는 `id`를 입력해야 합니다.",
+    "SHOP_TITLE": "상점",
+    "NOT_FOUND_BY_ID": "ID {{id}}인 아이템이 없습니다. 상점 명령어로 ID를 확인하세요.",
+    "NOT_FOUND_GENERIC": "상점에서 해당 아이템을 찾을 수 없습니다. 상점 명령어로 ID를 확인하세요.",
+    "INVALID_PRICE": "이 아이템은 구매할 수 없습니다(가격이 올바르지 않음).",
+    "INSUFFICIENT_FUNDS_TITLE": "잔액이 부족합니다",
+    "INSUFFICIENT_FUNDS": "필요 금액: {{cost}} 🪙 / 보유: {{balance}} 🪙",
+    "PURCHASE_SUCCESS_TITLE": "구매 완료",
+    "PURCHASE_SUCCESS": "**{{amount}}x {{name}}**를 **{{cost}}** 🪙에 구매했습니다."
 }

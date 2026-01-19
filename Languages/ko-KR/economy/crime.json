@@ -1,423 +1,423 @@
 {
     "ui": {
-        "panelTitle": "Crime",
-        "selectActivity": "Choose an activity",
-        "riskPlaceholder": "Risk level",
-        "btnRun": "Run"
+        "panelTitle": "범죄",
+        "selectActivity": "활동을 선택하세요",
+        "riskPlaceholder": "위험도",
+        "btnRun": "실행"
     },
     "options": {
-        "stealth": "Stealth",
-        "talk": "Distraction",
-        "rush": "Snatch"
+        "stealth": "은밀",
+        "talk": "교란",
+        "rush": "낚아채기"
     },
     "doors": {
-        "a": "Door A",
-        "b": "Door B",
-        "c": "Door C"
+        "a": "문 A",
+        "b": "문 B",
+        "c": "문 C"
     },
     "risks": {
-        "safe": "Safe",
-        "normal": "Normal",
-        "risky": "Risky"
+        "safe": "안전",
+        "normal": "보통",
+        "risky": "위험"
     },
     "wires": {
-        "red": "Red wire",
-        "blue": "Blue wire",
-        "yellow": "Yellow wire",
-        "green": "Green wire"
+        "red": "빨간 전선",
+        "blue": "파란 전선",
+        "yellow": "노란 전선",
+        "green": "초록 전선"
     },
     "activities": {
         "pickpocket": {
-            "title": "Pickpocket",
-            "prompt": "You spot someone distracted with their bag open. How do you try?"
+            "title": "소매치기",
+            "prompt": "가방을 열어 둔 채 한눈파는 사람이 보입니다. 어떻게 시도할까요?"
         },
         "market-swipe": {
-            "title": "Crowded market",
-            "prompt": "Between stalls and people, a wallet peeks out. What do you do?"
+            "title": "붐비는 시장",
+            "prompt": "가판대와 사람들 사이로 지갑이 살짝 보입니다. 어떻게 할까요?"
         },
         "metro-bump": {
-            "title": "Subway shove",
-            "prompt": "A sudden brake, bodies collide… and an easy pocket appears."
+            "title": "지하철 밀치기",
+            "prompt": "급정거로 몸이 부딪히고… 쉬운 주머니가 나타납니다."
         },
         "festival-confetti": {
-            "title": "Festival",
-            "prompt": "Music, confetti and distractions. What's your play?"
+            "title": "축제",
+            "prompt": "음악, 색종이, 그리고 시선 분산. 어떤 수를 쓰겠어요?"
         },
         "hotel-lobby": {
-            "title": "Hotel lobby",
-            "prompt": "People let their guard down. How do you try?"
+            "title": "호텔 로비",
+            "prompt": "사람들은 경계를 풀고 있습니다. 어떻게 시도할까요?"
         },
         "arcade-tokens": {
-            "title": "Arcade",
-            "prompt": "Someone is counting tokens. No one is watching. What do you do?"
+            "title": "오락실",
+            "prompt": "누군가 토큰을 세고 있습니다. 아무도 보지 않네요. 어떻게 할까요?"
         },
         "library-silence": {
-            "title": "Library",
-            "prompt": "Total silence. An open bag. What's your method?"
+            "title": "도서관",
+            "prompt": "완전한 정적. 열려 있는 가방. 방법은?"
         },
         "park-bench": {
-            "title": "Park bench",
-            "prompt": "A backpack sits aside. How do you approach?"
+            "title": "공원 벤치",
+            "prompt": "옆에 놓인 배낭. 어떻게 접근할까요?"
         },
         "street-magician": {
-            "title": "Street magician",
-            "prompt": "Everyone watches the trick. You watch the pockets."
+            "title": "거리 마술사",
+            "prompt": "모두가 마술을 봅니다. 당신은 주머니를 봅니다."
         },
         "coffee-queue": {
-            "title": "Coffee line",
-            "prompt": "The line moves slowly. Attention is low."
+            "title": "카페 줄",
+            "prompt": "줄이 느리게 움직입니다. 집중력은 낮아요."
         },
         "cinema-dark": {
-            "title": "Dark cinema",
-            "prompt": "Lights out. Do you take the moment?"
+            "title": "어두운 영화관",
+            "prompt": "불이 꺼졌습니다. 그 순간을 잡을까요?"
         },
         "museum-exhibit": {
-            "title": "Museum",
-            "prompt": "People are hypnotized by a display case."
+            "title": "박물관",
+            "prompt": "사람들은 진열장에 홀려 있습니다."
         },
         "food-truck": {
-            "title": "Food truck",
-            "prompt": "Wallets out and people rushing to pay."
+            "title": "푸드트럭",
+            "prompt": "지갑을 꺼내 결제하느라 다들 바쁩니다."
         },
         "crosswalk-rush": {
-            "title": "Busy crosswalk",
-            "prompt": "Green light. Controlled chaos."
+            "title": "복잡한 횡단보도",
+            "prompt": "초록불. 통제된 혼돈."
         },
         "gym-lockers": {
-            "title": "Gym lockers",
-            "prompt": "Loose locks and distracted people."
+            "title": "헬스장 라커",
+            "prompt": "헐거운 자물쇠와 딴짓하는 사람들."
         },
         "pier-crowd": {
-            "title": "Pier",
-            "prompt": "Tourists with backpacks and maps open."
+            "title": "부두",
+            "prompt": "배낭을 멘 관광객들과 펼쳐진 지도."
         },
         "station-platform": {
-            "title": "Platform",
-            "prompt": "The train arrives. Nerves. Opportunity."
+            "title": "승강장",
+            "prompt": "열차가 들어옵니다. 긴장. 기회."
         },
         "night-market": {
-            "title": "Night market",
-            "prompt": "Warm lights. Fast hands."
+            "title": "야시장",
+            "prompt": "따뜻한 불빛. 빠른 손."
         },
         "street-performer": {
-            "title": "Street performer",
-            "prompt": "The sound covers footsteps and whispers."
+            "title": "거리 공연",
+            "prompt": "소리가 발걸음과 속삭임을 덮어줍니다."
         },
         "salon-wait": {
-            "title": "Waiting room",
-            "prompt": "Phones out. Wallets out. Hmm."
+            "title": "대기실",
+            "prompt": "폰도 지갑도 다 꺼내놨네요. 흠."
         },
         "bank-atm": {
             "title": "ATM",
-            "prompt": "Someone withdraws cash and pockets the receipt."
+            "prompt": "누군가 현금을 뽑고 영수증을 주머니에 넣습니다."
         },
         "taxi-backseat": {
-            "title": "Taxi",
-            "prompt": "A wallet slips onto the back seat."
+            "title": "택시",
+            "prompt": "지갑이 뒷좌석으로 미끄러집니다."
         },
         "train-sleeper": {
-            "title": "Sleeper car",
-            "prompt": "Heads down, pockets unguarded."
+            "title": "침대칸",
+            "prompt": "고개 숙인 사람들, 무방비한 주머니."
         },
         "snow-coats": {
-            "title": "Winter coats",
-            "prompt": "Deep pockets… and tempting."
+            "title": "겨울 코트",
+            "prompt": "깊은 주머니… 유혹적이군요."
         },
         "rain-umbrella": {
-            "title": "Rainy day",
-            "prompt": "Umbrellas bump. No one sees anything."
+            "title": "비 오는 날",
+            "prompt": "우산이 부딪힙니다. 아무도 못 봐요."
         },
         "beach-towels": {
-            "title": "Beach",
-            "prompt": "Towels, bags, distractions. What do you do?"
+            "title": "해변",
+            "prompt": "수건, 가방, 시선 분산. 어떻게 할까요?"
         },
         "concert-mosh": {
-            "title": "Concert",
-            "prompt": "The crowd moves. So do you."
+            "title": "콘서트",
+            "prompt": "군중이 움직입니다. 당신도요."
         },
         "market-auction": {
-            "title": "Auction",
-            "prompt": "High bids. Split attention."
+            "title": "경매",
+            "prompt": "높은 호가. 분산된 집중."
         },
         "fashion-store": {
-            "title": "Fashion store",
-            "prompt": "Fitting rooms busy. Staff distracted."
+            "title": "패션 매장",
+            "prompt": "피팅룸이 바쁘고 직원은 한눈팝니다."
         },
         "electronics-demo": {
-            "title": "Gadget demo",
-            "prompt": "Bright screens. Bright pockets."
+            "title": "기기 시연",
+            "prompt": "밝은 화면. 밝은 주머니."
         },
         "pet-parade": {
-            "title": "Pet parade",
-            "prompt": "People watch puppies. You… well."
+            "title": "반려동물 퍼레이드",
+            "prompt": "사람들은 강아지를 봅니다. 당신은… 음."
         },
         "street-food": {
-            "title": "Street food",
-            "prompt": "Hands full, pockets unguarded."
+            "title": "길거리 음식",
+            "prompt": "손은 가득, 주머니는 무방비."
         },
         "bus-crowd": {
-            "title": "Packed bus",
-            "prompt": "Quick stops. Quick moves."
+            "title": "만원 버스",
+            "prompt": "빠른 정차. 빠른 움직임."
         },
         "book-fair": {
-            "title": "Book fair",
-            "prompt": "Signings, lines and perfect distractions."
+            "title": "도서 박람회",
+            "prompt": "사인회, 줄, 완벽한 시선 분산."
         },
         "flower-stall": {
-            "title": "Flower stall",
-            "prompt": "A romantic gift. A visible wallet."
+            "title": "꽃 가판대",
+            "prompt": "로맨틱한 선물. 눈에 띄는 지갑."
         },
         "campus-hall": {
-            "title": "Campus hallway",
-            "prompt": "Open backpacks and rushing to class."
+            "title": "캠퍼스 복도",
+            "prompt": "열려 있는 백팩, 수업에 쫓기는 발걸음."
         },
         "airport-gate": {
-            "title": "Boarding gate",
-            "prompt": "Docs, tickets, chaos. Easy."
+            "title": "탑승 게이트",
+            "prompt": "서류, 티켓, 혼잡. 쉽겠는데요."
         },
         "theme-park": {
-            "title": "Theme park",
-            "prompt": "Screams, laughter and dangling bags."
+            "title": "테마파크",
+            "prompt": "비명, 웃음, 늘어진 가방."
         },
         "harbor-ferry": {
-            "title": "Ferry",
-            "prompt": "Wind, seasickness… and a slip-up."
+            "title": "페리",
+            "prompt": "바람, 멀미… 그리고 실수."
         },
         "stadium-queue": {
-            "title": "Stadium queue",
-            "prompt": "Everyone watches the entrance. Pockets, not so much."
+            "title": "경기장 줄",
+            "prompt": "모두 입구만 봅니다. 주머니는 덜 보죠."
         },
         "vault": {
-            "title": "Three doors",
-            "prompt": "You're in. There are three doors. One has quick loot; the others, trouble."
+            "title": "세 개의 문",
+            "prompt": "침투 성공. 문이 세 개. 하나는 빠른 수확, 나머지는 문제."
         },
         "storage-doors": {
-            "title": "Storage",
-            "prompt": "Three metal doors. One hides an easy haul. Choose."
+            "title": "창고",
+            "prompt": "금속문 세 개. 하나는 쉬운 한탕. 선택하세요."
         },
         "office-doors": {
-            "title": "Offices",
-            "prompt": "Empty hallway. Three unmarked doors. Which one pays?"
+            "title": "사무실",
+            "prompt": "텅 빈 복도. 표식 없는 문 세 개. 어디가 돈이 될까요?"
         },
         "basement-doors": {
-            "title": "Basement",
-            "prompt": "Damp and silent. Three doors: noise, calm, luck."
+            "title": "지하실",
+            "prompt": "축축하고 조용합니다. 세 문: 소음, 평온, 행운."
         },
         "backstage-doors": {
-            "title": "Backstage",
-            "prompt": "Behind the stage are three access points. One leads to loot."
+            "title": "백스테이지",
+            "prompt": "무대 뒤엔 세 개의 출입구. 하나가 전리품으로 이어집니다."
         },
         "dock-doors": {
-            "title": "Docks",
-            "prompt": "Containers and three warehouse doors. Choose fast."
+            "title": "부두",
+            "prompt": "컨테이너와 창고문 세 개. 빨리 고르세요."
         },
         "subway-doors": {
-            "title": "Tunnel",
-            "prompt": "Three maintenance doors. One has supplies."
+            "title": "터널",
+            "prompt": "관리용 문 세 개. 하나에 보급품이 있습니다."
         },
         "library-doors": {
-            "title": "Archive",
-            "prompt": "Three doors to the restricted archive. One has envelopes."
+            "title": "기록 보관소",
+            "prompt": "제한 구역으로 통하는 문 세 개. 하나에 봉투가 있습니다."
         },
         "casino-doors": {
-            "title": "Casino",
-            "prompt": "Three doors behind VIP. One is the good one."
+            "title": "카지노",
+            "prompt": "VIP 뒤쪽 문 세 개. 하나가 정답."
         },
         "hotel-doors": {
-            "title": "Private floor",
-            "prompt": "Three identical doors. One isn't fully latched."
+            "title": "전용 층",
+            "prompt": "똑같은 문 세 개. 하나는 잠금이 덜 걸려 있습니다."
         },
         "museum-doors": {
-            "title": "Restricted area",
-            "prompt": "Three doors with sketchy alarms. One fails."
+            "title": "제한 구역",
+            "prompt": "수상한 경보가 달린 문 세 개. 하나는 고장."
         },
         "trainyard-doors": {
-            "title": "Depot",
-            "prompt": "Three rusty doors. One opens easily."
+            "title": "차량기지",
+            "prompt": "녹슨 문 세 개. 하나는 쉽게 열립니다."
         },
         "lab-doors": {
-            "title": "Laboratory",
-            "prompt": "Three doors with panels. One is in test mode."
+            "title": "실험실",
+            "prompt": "패널이 달린 문 세 개. 하나는 테스트 모드."
         },
         "sewers-doors": {
-            "title": "Sewers",
-            "prompt": "Three hatches. One leads to a hideout."
+            "title": "하수도",
+            "prompt": "해치 세 개. 하나는 은신처로 이어집니다."
         },
         "attic-doors": {
-            "title": "Attic",
-            "prompt": "Three old doors. One creaks… but gives."
+            "title": "다락",
+            "prompt": "오래된 문 세 개. 하나는 삐걱대지만… 얻을 수 있어요."
         },
         "theater-doors": {
-            "title": "Theater",
-            "prompt": "Three doors backstage. One has a cashbox."
+            "title": "극장",
+            "prompt": "백스테이지 문 세 개. 하나에 금전함."
         },
         "warehouse-doors": {
-            "title": "Industrial bay",
-            "prompt": "Three hand-numbered doors. One holds the good stuff."
+            "title": "산업 구역",
+            "prompt": "손으로 번호 매긴 문 세 개. 하나에 좋은 물건."
         },
         "ship-doors": {
-            "title": "Ship hold",
-            "prompt": "Three doors to the hold. Choose before someone returns."
+            "title": "선창",
+            "prompt": "선창으로 통하는 문 세 개. 누가 돌아오기 전에 선택."
         },
         "castle-doors": {
-            "title": "Passage",
-            "prompt": "Three stone doors. One is a shortcut to treasure."
+            "title": "통로",
+            "prompt": "돌문 세 개. 하나는 보물로 가는 지름길."
         },
         "clinic-doors": {
-            "title": "Clinic",
-            "prompt": "Three storage doors. One has a small safe."
+            "title": "진료소",
+            "prompt": "보관실 문 세 개. 하나에 작은 금고."
         },
         "stadium-doors": {
-            "title": "Stadium",
-            "prompt": "Three locker room doors. One has lost-and-found."
+            "title": "경기장",
+            "prompt": "라커룸 문 세 개. 하나에 분실물."
         },
         "mall-doors": {
-            "title": "Mall",
-            "prompt": "Three service doors. One leads to the register."
+            "title": "쇼핑몰",
+            "prompt": "서비스 문 세 개. 하나는 계산대로 이어집니다."
         },
         "garage-doors": {
-            "title": "Garage",
-            "prompt": "Three metal doors. One has no lock."
+            "title": "차고",
+            "prompt": "금속문 세 개. 하나는 자물쇠가 없습니다."
         },
         "serverroom-doors": {
-            "title": "Server room",
-            "prompt": "Three doors. One has resellable gear."
+            "title": "서버실",
+            "prompt": "문 세 개. 하나에 되팔기 좋은 장비."
         },
         "kitchen-doors": {
-            "title": "Kitchen",
-            "prompt": "Three doors to storage. One has pricey supplies."
+            "title": "주방",
+            "prompt": "창고로 통하는 문 세 개. 하나에 비싼 재료."
         },
         "bakery-doors": {
-            "title": "Bakery",
-            "prompt": "Three back doors. One leads to the till."
+            "title": "빵집",
+            "prompt": "뒷문 세 개. 하나는 금전함으로."
         },
         "gallery-doors": {
-            "title": "Gallery",
-            "prompt": "Three doors to the back room. One is poorly shut."
+            "title": "갤러리",
+            "prompt": "뒷방 문 세 개. 하나는 제대로 안 닫혔습니다."
         },
         "station-doors": {
-            "title": "Station",
-            "prompt": "Three cleaning doors. One hides a bag."
+            "title": "역",
+            "prompt": "청소용 문 세 개. 하나에 가방이 숨겨져."
         },
         "factory-doors": {
-            "title": "Factory",
-            "prompt": "Three doors. One opens into a parts warehouse."
+            "title": "공장",
+            "prompt": "문 세 개. 하나는 부품 창고로."
         },
         "dockyard-doors": {
-            "title": "Shipyard",
-            "prompt": "Three tool doors. One has new crates."
+            "title": "조선소",
+            "prompt": "도구 보관문 세 개. 하나에 새 상자."
         },
         "getaway": {
-            "title": "Getaway",
-            "prompt": "Loot in hand. How much risk do you take to escape?"
+            "title": "도주",
+            "prompt": "전리품을 들고 있습니다. 탈출에 얼마나 위험을 감수할까요?"
         },
         "alley-chase": {
-            "title": "Alley",
-            "prompt": "Footsteps behind. Sirens far. How do you escape?"
+            "title": "골목",
+            "prompt": "뒤에서 발소리. 멀리 사이렌. 어떻게 도망칠까요?"
         },
         "rooftops": {
-            "title": "Rooftops",
-            "prompt": "Up the fire stairs. How much do you risk?"
+            "title": "옥상",
+            "prompt": "비상계단 위로. 얼마나 위험을 감수할까요?"
         },
         "crowd-vanish": {
-            "title": "Disappear in the crowd",
-            "prompt": "The crowd can save you… or expose you."
+            "title": "군중 속으로 사라지기",
+            "prompt": "군중이 구해줄 수도… 들킬 수도."
         },
         "river-cross": {
-            "title": "Cross the river",
-            "prompt": "There's a bridge, a boat and a jump. Risk?"
+            "title": "강 건너기",
+            "prompt": "다리, 배, 점프가 있습니다. 위험도는?"
         },
         "night-scooter": {
-            "title": "Night scooter",
-            "prompt": "The night is ally. Or enemy. Decide."
+            "title": "밤 스쿠터",
+            "prompt": "밤은 아군일 수도, 적일 수도. 결정하세요."
         },
         "smoke-bomb": {
-            "title": "Smoke screen",
-            "prompt": "You can vanish… if it works."
+            "title": "연막",
+            "prompt": "사라질 수 있습니다… 된다면."
         },
         "subway-hop": {
-            "title": "Subway hop",
-            "prompt": "The train arrives. Do you rush in or play it calm?"
+            "title": "지하철 뛰어들기",
+            "prompt": "열차가 도착합니다. 돌진할까요, 침착하게 갈까요?"
         },
         "taxi-dash": {
-            "title": "Fast taxi",
-            "prompt": "A free cab. Pay and go, or bolt?"
+            "title": "빠른 택시",
+            "prompt": "빈 택시. 돈 내고 갈까요, 그냥 튈까요?"
         },
         "crowbar-route": {
-            "title": "Emergency route",
-            "prompt": "Locked doors. You could force one."
+            "title": "비상 경로",
+            "prompt": "잠긴 문들. 하나를 억지로 열 수도 있습니다."
         },
         "rain-cover": {
-            "title": "Rain cover",
-            "prompt": "Rain hides tracks… and vision."
+            "title": "비를 이용하기",
+            "prompt": "비가 흔적을… 시야도 가립니다."
         },
         "market-escape": {
-            "title": "Market escape",
-            "prompt": "Tight stalls. One mistake is expensive."
+            "title": "시장 탈출",
+            "prompt": "좁은 가판대 사이. 한 번 실수는 비싸요."
         },
         "stairs-sprint": {
-            "title": "Stairs",
-            "prompt": "Up or down. Every second counts."
+            "title": "계단",
+            "prompt": "위로? 아래로? 매 초가 중요합니다."
         },
         "dock-fog": {
-            "title": "Dock fog",
-            "prompt": "Fog hides… but confuses too."
+            "title": "부두 안개",
+            "prompt": "안개가 가려주지만… 헷갈리게도 합니다."
         },
         "warehouse-run": {
-            "title": "Between warehouses",
-            "prompt": "Indoor shortcuts. Risk of guards."
+            "title": "창고 사이",
+            "prompt": "실내 지름길. 경비 위험."
         },
         "festival-hide": {
-            "title": "Hide in the festival",
-            "prompt": "Costumes and masks. How exposed are you?"
+            "title": "축제에 숨기",
+            "prompt": "의상과 가면. 얼마나 노출될까요?"
         },
         "parking-garage": {
-            "title": "Parking garage",
-            "prompt": "Ramps, cars, cameras. Pick your risk."
+            "title": "주차장",
+            "prompt": "램프, 차, 카메라. 위험을 고르세요."
         },
         "canal-walk": {
-            "title": "Canal",
-            "prompt": "You can follow the canal edge. Slippery."
+            "title": "운하",
+            "prompt": "운하 가장자리를 따라갈 수 있어요. 미끄럽습니다."
         },
         "construction-site": {
-            "title": "Construction site",
-            "prompt": "Scaffolds and gaps. You can vanish… or fall."
+            "title": "공사장",
+            "prompt": "비계와 틈. 사라질 수도… 떨어질 수도."
         },
         "mall-exit": {
-            "title": "Mall exit",
-            "prompt": "Three exits, two guards. What do you do?"
+            "title": "쇼핑몰 출구",
+            "prompt": "출구 셋, 경비 둘. 어떻게 할까요?"
         },
         "hotel-elevator": {
-            "title": "Elevator",
-            "prompt": "Slow elevator or fast stairs. Risk."
+            "title": "엘리베이터",
+            "prompt": "느린 엘리베이터 vs 빠른 계단. 위험도는?"
         },
         "station-cameras": {
-            "title": "Cameras",
-            "prompt": "Cameras track you. Do you try to dodge them?"
+            "title": "카메라",
+            "prompt": "카메라가 당신을 추적합니다. 피하려고 해볼까요?"
         },
         "rooftop-jump": {
-            "title": "Jump",
-            "prompt": "There's a jump between buildings. Your call."
+            "title": "점프",
+            "prompt": "건물 사이에 점프 구간이 있습니다. 결정은 당신."
         },
         "sewer-drop": {
-            "title": "Manhole",
-            "prompt": "You can drop into the sewers. Or not."
+            "title": "맨홀",
+            "prompt": "하수도로 내려갈 수도… 아닐 수도."
         },
         "forest-edge": {
-            "title": "Forest edge",
-            "prompt": "Darkness and branches. Safe path or shortcut."
+            "title": "숲 가장자리",
+            "prompt": "어둠과 가지. 안전한 길? 지름길?"
         },
         "bridge-crossing": {
-            "title": "Bridge",
-            "prompt": "Fast but visible. Risk?"
+            "title": "다리",
+            "prompt": "빠르지만 눈에 띕니다. 위험할까요?"
         },
         "crowd-metro": {
-            "title": "Station crowd",
-            "prompt": "Blend in… or sprint."
+            "title": "역 인파",
+            "prompt": "섞일까요… 전력질주할까요?"
         },
         "harbor-boat": {
-            "title": "Harbor boat",
-            "prompt": "A boat breaks loose. Do you use it?"
+            "title": "항구 보트",
+            "prompt": "보트가 풀려 떠납니다. 이용할까요?"
         }
     }
 }

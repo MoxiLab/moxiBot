@@ -1,843 +1,843 @@
 {
     "categories": {
-        "Buffs": "Buffs",
-        "Collectibles": "Collectibles",
-        "Consumables": "Consumables",
-        "Tools": "Tools",
-        "Keys": "Keys",
-        "Loot": "Loot",
-        "Pets": "Pets",
-        "Materials": "Materials",
-        "Upgrades": "Upgrades",
-        "Quests": "Quests",
-        "Potions": "Potions",
-        "Scrolls": "Scrolls",
-        "Protection": "Protection"
+        "Buffs": "버프",
+        "Collectibles": "수집품",
+        "Consumables": "소모품",
+        "Tools": "도구",
+        "Keys": "열쇠",
+        "Loot": "전리품",
+        "Pets": "반려동물",
+        "Materials": "재료",
+        "Upgrades": "업그레이드",
+        "Quests": "퀘스트",
+        "Potions": "물약",
+        "Scrolls": "두루마리",
+        "Protection": "보호"
     },
     "items": {
         "buffs/scroll-de-impulso-moxi": {
-            "name": "Scroll of Boost Moxi",
-            "description": "Increases the speed of all your actions for 1 hour."
+            "name": "모시 가속 두루마리",
+            "description": "1시간 동안 모든 행동 속도가 증가합니다."
         },
         "buffs/pez-lumina": {
-            "name": "Fish Lumina",
-            "description": "Experience bonus for aquatic activities."
+            "name": "루미나 물고기",
+            "description": "수중 활동 경험치 보너스."
         },
         "buffs/gusano-brillo": {
-            "name": "Worm Glow",
-            "description": "Improves the chance of finding rare resources."
+            "name": "빛나는 지렁이",
+            "description": "희귀 자원 발견 확률을 높입니다."
         },
         "buffs/linterna-solar": {
-            "name": "Solar Lantern",
-            "description": "Allows you to explore dark areas and discover hidden treasures."
+            "name": "태양 랜턴",
+            "description": "어두운 지역을 탐험하고 숨겨진 보물을 발견할 수 있습니다."
         },
         "buffs/fruta-vital": {
-            "name": "Fruit Vital",
-            "description": "Restores energy and gives a small speed boost."
+            "name": "생명력 과일",
+            "description": "에너지를 회복하고 약간의 속도 보너스를 줍니다."
         },
         "buffs/scroll-mascota-veloz": {
-            "name": "Scroll Pet Swift",
-            "description": "Your pet gains extra speed temporarily."
+            "name": "반려동물 신속 두루마리",
+            "description": "반려동물이 일시적으로 추가 속도를 얻습니다."
         },
         "buffs/fruta-mutante": {
-            "name": "Fruit Mutant",
-            "description": "Gives a random effect; it can be positive or negative."
+            "name": "변이 과일",
+            "description": "무작위 효과가 발생합니다(긍정/부정)."
         },
         "buffs/holly-prisma": {
-            "name": "Holly Prism",
-            "description": "Special bonus in seasonal events."
+            "name": "프리즘 홀리",
+            "description": "시즌 이벤트에서 특별 보너스를 제공합니다."
         },
         "buffs/pan-dulce-moxi": {
-            "name": "Bread Candy Moxi",
-            "description": "Doubles quest rewards for 10 minutes."
+            "name": "모시 달콤빵",
+            "description": "10분 동안 퀘스트 보상이 2배가 됩니다."
         },
         "buffs/pase-de-evento": {
-            "name": "Event Pass",
-            "description": "Access to rewards and exclusive areas (expired and current)."
+            "name": "이벤트 패스",
+            "description": "보상과 전용 구역에 접근할 수 있습니다(만료/현재 포함)."
         },
         "buffs/fogata-elemental": {
-            "name": "Campfire Elemental",
-            "description": "Allows you to camp and gain temporary buffs depending on the type of wood."
+            "name": "원소 모닥불",
+            "description": "캠핑을 하고 나무 종류에 따라 임시 버프를 얻을 수 있습니다."
         },
         "buffs/scroll-gelido": {
-            "name": "Glacial Scroll",
-            "description": "Increases defense in cold areas."
+            "name": "빙결 두루마리",
+            "description": "추운 지역에서 방어력이 증가합니다."
         },
         "buffs/corona-de-invierno": {
-            "name": "Crown of Winter",
-            "description": "Special bonus in winter events."
+            "name": "겨울의 왕관",
+            "description": "겨울 이벤트에서 특별 보너스를 제공합니다."
         },
         "buffs/dulce-de-fresa": {
-            "name": "Candy of Strawberry",
-            "description": "Restores energy and grants a luck bonus."
+            "name": "딸기 사탕",
+            "description": "에너지를 회복하고 행운 보너스를 부여합니다."
         },
         "buffs/trebol-de-fortuna": {
-            "name": "Clover of Fortune",
-            "description": "Increases the chance of getting rare items."
+            "name": "행운의 클로버",
+            "description": "희귀 아이템 획득 확률을 높입니다."
         },
         "buffs/cascanueces-moxi": {
-            "name": "Nutcracker Moxi",
-            "description": "Defense bonus during winter events."
+            "name": "모시 호두까기",
+            "description": "겨울 이벤트 동안 방어 보너스를 제공합니다."
         },
         "coleccionables/medalla-de-nieve": {
-            "name": "Medal of Snow",
-            "description": "Winter season collectible."
+            "name": "눈의 메달",
+            "description": "겨울 시즌 수집품."
         },
         "coleccionables/medalla-prisma": {
-            "name": "Medal Prism",
-            "description": "Special event collectible."
+            "name": "프리즘 메달",
+            "description": "특별 이벤트 수집품."
         },
         "coleccionables/medalla-lunar": {
-            "name": "Medal Lunar",
-            "description": "Obtained in night missions."
+            "name": "달의 메달",
+            "description": "야간 미션에서 획득합니다."
         },
         "coleccionables/token-festivo": {
-            "name": "Token Festive",
-            "description": "Redeemable for rewards in the event shop."
+            "name": "축제 토큰",
+            "description": "이벤트 상점에서 보상으로 교환할 수 있습니다."
         },
         "coleccionables/carta-de-amistad": {
-            "name": "Letter of Friendship",
-            "description": "Collectible of events sociales."
+            "name": "우정의 편지",
+            "description": "소셜 이벤트 수집품."
         },
         "coleccionables/moneda-de-fortuna": {
-            "name": "Coin of Fortune",
-            "description": "Grants a luck bonus while you have it."
+            "name": "행운의 동전",
+            "description": "소지하고 있는 동안 행운 보너스를 제공합니다."
         },
         "coleccionables/gema-de-espiritu": {
-            "name": "Gem of Spirit",
-            "description": "Required for advanced quests."
+            "name": "영혼의 보석",
+            "description": "고급 퀘스트에 필요합니다."
         },
         "coleccionables/corazon-prisma": {
-            "name": "Heart Prism",
-            "description": "Collectible of events romantic."
+            "name": "프리즘 하트",
+            "description": "로맨틱 이벤트 수집품."
         },
         "coleccionables/petalo-de-sakura": {
-            "name": "Petal of Sakura",
-            "description": "Spring collectible."
+            "name": "사쿠라 꽃잎",
+            "description": "봄 수집품."
         },
         "coleccionables/bouquet-festivo": {
-            "name": "Bouquet Festive",
-            "description": "Collectible of events florales."
+            "name": "축제 꽃다발",
+            "description": "꽃 이벤트 수집품."
         },
         "coleccionables/ticket-de-temporada": {
-            "name": "Ticket of Season",
-            "description": "Access to special events."
+            "name": "시즌 티켓",
+            "description": "특별 이벤트에 참여할 수 있습니다."
         },
         "coleccionables/varita-de-luz": {
-            "name": "Wand of Light",
-            "description": "Magical collectible."
+            "name": "빛의 지팡이",
+            "description": "마법 수집품."
         },
         "coleccionables/cascabel-festivo": {
-            "name": "Jingle bell Festive",
-            "description": "Winter collectible."
+            "name": "축제 방울",
+            "description": "겨울 수집품."
         },
         "coleccionables/flor-de-espiritu": {
-            "name": "Flower of Spirit",
-            "description": "Collectible of events of flores."
+            "name": "영혼의 꽃",
+            "description": "꽃 이벤트 수집품."
         },
         "coleccionables/fantasmita-moxi": {
-            "name": "Little ghost Moxi",
-            "description": "Halloween collectible."
+            "name": "꼬마 유령 모시",
+            "description": "할로윈 수집품."
         },
         "coleccionables/gato-sombrio": {
-            "name": "Cat Dark",
-            "description": "Collectible of events oscuros."
+            "name": "어둠 고양이",
+            "description": "어두운 테마 이벤트 수집품."
         },
         "coleccionables/copa-de-campeon": {
-            "name": "Cup of Champion",
-            "description": "Earned by completing special challenges."
+            "name": "챔피언 컵",
+            "description": "특별 도전을 완료하면 획득합니다."
         },
         "consumibles/galleta-energetica": {
-            "name": "Cookie Energy",
-            "description": "Restores energy."
+            "name": "에너지 쿠키",
+            "description": "에너지를 회복합니다."
         },
         "consumibles/pastel-de-celebracion": {
-            "name": "Cake of Celebration",
-            "description": "Gives an experience bonus."
+            "name": "축하 케이크",
+            "description": "경험치 보너스를 제공합니다."
         },
         "consumibles/fruta-magica": {
-            "name": "Magic Fruit",
-            "description": "Gives a random effect."
+            "name": "마법 과일",
+            "description": "무작위 효과를 제공합니다."
         },
         "consumibles/ensalada-refrescante": {
-            "name": "Refreshing Salad",
-            "description": "Restores energy and health."
+            "name": "상쾌한 샐러드",
+            "description": "에너지와 체력을 회복합니다."
         },
         "consumibles/fuegos-artificiales": {
-            "name": "Fireworks",
-            "description": "Gives a luck bonus in events."
+            "name": "불꽃놀이",
+            "description": "이벤트에서 행운 보너스를 제공합니다."
         },
         "consumibles/calabaza-festiva": {
-            "name": "Pumpkin Festiva",
-            "description": "Halloween consumable."
+            "name": "축제 호박",
+            "description": "할로윈 소모품."
         },
         "consumibles/nuez-dorada": {
-            "name": "Nut Golden",
-            "description": "Grants a defense bonus."
+            "name": "황금 견과",
+            "description": "방어 보너스를 부여합니다."
         },
         "consumibles/electrolito": {
-            "name": "Electrolyte",
-            "description": "Restores energy instantly."
+            "name": "전해질",
+            "description": "에너지를 즉시 회복합니다."
         },
         "consumibles/monedas-de-oro": {
-            "name": "Gold Coins",
-            "description": "Consumable used to buy items in the shop."
+            "name": "금화",
+            "description": "상점에서 아이템을 구매할 때 사용하는 소모품입니다."
         },
         "consumibles/agua-fresca": {
-            "name": "Fresh Water",
-            "description": "Keeps you going: a small energy bonus."
+            "name": "시원한 물",
+            "description": "활력을 유지합니다: 소량의 에너지 보너스."
         },
         "consumibles/te-verde": {
-            "name": "Green Tea",
-            "description": "Reduces fatigue: a light focus bonus."
+            "name": "녹차",
+            "description": "피로를 줄입니다: 약간의 집중 보너스."
         },
         "consumibles/cafe-moxi": {
-            "name": "Coffee Moxi",
-            "description": "Slightly speeds up your actions for a few minutes."
+            "name": "모시 커피",
+            "description": "몇 분 동안 행동 속도가 약간 빨라집니다."
         },
         "consumibles/chocolate-caliente": {
-            "name": "Hot Chocolate",
-            "description": "Comforting: a gentle bonus during cold events."
+            "name": "핫초코",
+            "description": "따뜻함: 추운 이벤트 동안 부드러운 보너스."
         },
         "consumibles/sopa-caliente": {
-            "name": "Hot Soup",
-            "description": "Restores energy and grants a light endurance boost."
+            "name": "따뜻한 수프",
+            "description": "에너지를 회복하고 약간의 지구력 보너스를 부여합니다."
         },
         "consumibles/barra-proteica": {
-            "name": "Protein Bar",
-            "description": "Quick energy for intense activities."
+            "name": "단백질 바",
+            "description": "격한 활동을 위한 빠른 에너지."
         },
         "consumibles/batido-prisma": {
-            "name": "Shake Prism",
-            "description": "A small luck boost for a while."
+            "name": "프리즘 쉐이크",
+            "description": "잠시 동안 작은 행운 증가."
         },
         "consumibles/sandwich-de-aventura": {
-            "name": "Adventure Sandwich",
-            "description": "Restores energy and slightly improves exploration."
+            "name": "모험 샌드위치",
+            "description": "에너지를 회복하고 탐험을 약간 향상시킵니다."
         },
         "consumibles/sushi-marino": {
-            "name": "Sushi Marine",
-            "description": "A small bonus to fishing and marine loot."
+            "name": "해양 스시",
+            "description": "낚시와 해양 전리품에 작은 보너스를 제공합니다."
         },
         "consumibles/pan-de-ajo": {
-            "name": "Bread of Garlic",
-            "description": "Improves endurance: ideal for mining."
+            "name": "마늘빵",
+            "description": "지구력을 높입니다: 채굴에 이상적입니다."
         },
         "herramientas/pico-prisma": {
-            "name": "Pickaxe Prism",
-            "description": "Allows you to mine rare minerals."
+            "name": "프리즘 곡괭이",
+            "description": "희귀 광물을 채굴할 수 있습니다."
         },
         "herramientas/cana-de-pesca-moxi": {
-            "name": "Rod of Fishing Moxi",
-            "description": "Increases the chance of catching rare items."
+            "name": "모시 낚싯대",
+            "description": "희귀 아이템을 낚을 확률이 증가합니다."
         },
         "herramientas/llave-multiusos": {
-            "name": "Key Multi-tool",
-            "description": "Tool for repairing and building."
+            "name": "다용도 멀티툴",
+            "description": "수리와 건설에 사용하는 도구입니다."
         },
         "herramientas/varita-solar": {
-            "name": "Wand Solar",
-            "description": "Allows you to perform magical actions."
+            "name": "태양 지팡이",
+            "description": "마법 행동을 수행할 수 있습니다."
         },
         "herramientas/hacha-elemental": {
-            "name": "Axe Elemental",
-            "description": "Tool for gathering special wood."
+            "name": "원소 도끼",
+            "description": "특별한 목재를 채집하는 도구입니다."
         },
         "herramientas/incubadora": {
-            "name": "Incubator",
-            "description": "Allows you to hatch eggs."
+            "name": "인큐베이터",
+            "description": "알을 부화시킬 수 있습니다."
         },
         "herramientas/revelador-prisma": {
-            "name": "Revealer Prism",
-            "description": "Tool for discovering hidden treasures."
+            "name": "프리즘 발견기",
+            "description": "숨겨진 보물을 찾는 도구입니다."
         },
         "herramientas/barco-moxi": {
-            "name": "Boat Moxi",
-            "description": "Allows you to explore sea regions."
+            "name": "모시 보트",
+            "description": "바다 지역을 탐험할 수 있습니다."
         },
         "herramientas/dinamita": {
-            "name": "Dynamite",
-            "description": "Allows you to open blocked paths."
+            "name": "다이너마이트",
+            "description": "막힌 길을 열 수 있습니다."
         },
         "herramientas/golem-minero-pescador": {
-            "name": "Golem Miner/Fisher",
-            "description": "Automated tools for mining/fishing."
+            "name": "채굴/낚시 골렘",
+            "description": "채굴/낚시를 자동화하는 도구입니다."
         },
         "herramientas/pico-de-hierro": {
-            "name": "Pickaxe of Iron",
-            "description": "Basic mining tool."
+            "name": "철 곡괭이",
+            "description": "기본 채굴 도구입니다."
         },
         "herramientas/pico-de-acero": {
-            "name": "Pickaxe of Steel",
-            "description": "Improves mining efficiency."
+            "name": "강철 곡괭이",
+            "description": "채굴 효율을 향상시킵니다."
         },
         "herramientas/pico-de-diamante": {
-            "name": "Pickaxe of Diamond",
-            "description": "Ideal for rare and tough veins."
+            "name": "다이아 곡괭이",
+            "description": "희귀하고 단단한 광맥에 이상적입니다."
         },
         "herramientas/pico-de-obsidiana": {
-            "name": "Pickaxe of Obsidian",
-            "description": "Legendary tool for extreme mining."
+            "name": "흑요석 곡괭이",
+            "description": "극한 채굴을 위한 전설급 도구입니다."
         },
         "herramientas/cana-de-bambu": {
-            "name": "Rod of Bamboo",
-            "description": "A simple rod to start fishing."
+            "name": "대나무 낚싯대",
+            "description": "낚시를 시작하기 좋은 간단한 낚싯대입니다."
         },
         "herramientas/cana-de-carbono": {
-            "name": "Rod of Carbon",
-            "description": "Increases the chance of rare fishing."
+            "name": "카본 낚싯대",
+            "description": "희귀 낚시 확률을 높입니다."
         },
         "herramientas/red-de-pesca": {
-            "name": "Fishing Net",
-            "description": "Catches more common loot in marine areas."
+            "name": "낚시 그물",
+            "description": "해양 지역에서 더 많은 일반 전리품을 잡습니다."
         },
         "herramientas/arpon-marino": {
-            "name": "Harpoon Marine",
-            "description": "Improves loot in deep-sea fishing."
+            "name": "해양 작살",
+            "description": "심해 낚시 전리품을 향상시킵니다."
         },
         "herramientas/pala-de-excavacion": {
-            "name": "Shovel of Excavation",
-            "description": "Used to find buried objects."
+            "name": "발굴 삽",
+            "description": "묻힌 물건을 찾는 데 사용합니다."
         },
         "herramientas/brujula-prisma": {
-            "name": "Compass Prism",
-            "description": "Helps you navigate and discover routes."
+            "name": "프리즘 나침반",
+            "description": "길을 찾고 새로운 경로를 발견하는 데 도움이 됩니다."
         },
         "herramientas/mapa-arrugado": {
-            "name": "Map Crumpled",
-            "description": "Clues for exploration and treasures."
+            "name": "구겨진 지도",
+            "description": "탐험과 보물에 대한 단서입니다."
         },
         "herramientas/linterna-de-caverna": {
-            "name": "Cave Lantern",
-            "description": "Lights up dark areas while exploring."
+            "name": "동굴 랜턴",
+            "description": "탐험 중 어두운 곳을 밝혀줍니다."
         },
         "herramientas/detector-de-metales": {
-            "name": "Detector of Metals",
-            "description": "Finds valuable objects underground."
+            "name": "금속 탐지기",
+            "description": "지하의 귀중품을 찾아냅니다."
         },
         "herramientas/cuerda-de-escalada": {
-            "name": "Rope of Climbing",
-            "description": "Useful for mountain routes and rescues."
+            "name": "등반 로프",
+            "description": "산악 루트와 구조에 유용합니다."
         },
         "herramientas/kit-de-reparacion": {
-            "name": "Kit of Repair",
-            "description": "Repairs tools and equipment (future use)."
+            "name": "수리 키트",
+            "description": "도구와 장비를 수리합니다(추후 사용)."
         },
         "herramientas/lupa-antigua": {
-            "name": "Magnifying glass Ancient",
-            "description": "Helps identify objects and clues."
+            "name": "고대 돋보기",
+            "description": "물건과 단서를 식별하는 데 도움이 됩니다."
         },
         "herramientas/frasco-cazabichos": {
-            "name": "Jar Bug catcher",
-            "description": "Allows you to catch insects and small creatures."
+            "name": "벌레잡이 병",
+            "description": "곤충과 작은 생물을 잡을 수 있습니다."
         },
         "herramientas/guantes-de-minero": {
-            "name": "Gloves of Miner",
-            "description": "Protects your hands during tough work."
+            "name": "광부 장갑",
+            "description": "힘든 작업 중 손을 보호합니다."
         },
         "herramientas/sierra-de-carpintero": {
-            "name": "Carpenter's Saw",
-            "description": "A woodworking tool (future use)."
+            "name": "목수의 톱",
+            "description": "목공 도구입니다(추후 사용)."
         },
         "herramientas/cuchillo-de-supervivencia": {
-            "name": "Knife of Survival",
-            "description": "tool multiusos for exploration."
+            "name": "생존용 칼",
+            "description": "탐험을 위한 다용도 도구입니다."
         },
         "herramientas/martillo-de-forja": {
-            "name": "Forge Hammer",
-            "description": "Required for advanced crafting (future use)."
+            "name": "단조 망치",
+            "description": "고급 제작에 필요합니다(추후 사용)."
         },
         "herramientas/anzuelo-de-lux": {
-            "name": "Hook of Lux",
-            "description": "Improves rare fishing in deep waters."
+            "name": "럭스 낚싯바늘",
+            "description": "깊은 물에서 희귀 낚시 효율을 높입니다."
         },
         "herramientas/cebo-prisma": {
-            "name": "Bait Prism",
-            "description": "Temporarily increases the chance of rare catches."
+            "name": "프리즘 미끼",
+            "description": "일시적으로 희귀 어획 확률을 높입니다."
         },
         "herramientas/taladro-portatil": {
-            "name": "Portable Drill",
-            "description": "A powerful tool for fast mining (future use)."
+            "name": "휴대용 드릴",
+            "description": "빠른 채굴을 위한 강력한 도구입니다(추후 사용)."
         },
         "herramientas/bomba-de-humo": {
-            "name": "Smoke Bomb",
-            "description": "Helps you escape or avoid danger (future use)."
+            "name": "연막탄",
+            "description": "도주하거나 위험을 피하는 데 도움이 됩니다(추후 사용)."
         },
         "llaves/llave-prisma": {
-            "name": "Key Prism",
-            "description": "Opens special chests."
+            "name": "프리즘 열쇠",
+            "description": "특별한 보물상자를 엽니다."
         },
         "llaves/llave-elemental": {
-            "name": "Elemental Key",
-            "description": "Opens event areas and chests."
+            "name": "원소 열쇠",
+            "description": "이벤트 구역과 보물상자를 엽니다."
         },
         "llaves/talisman-solar": {
-            "name": "Solar Talisman",
-            "description": "Allows access to magical areas."
+            "name": "태양 부적",
+            "description": "마법 구역에 접근할 수 있게 합니다."
         },
         "llaves/anillo-de-fuego": {
-            "name": "Ring of Fire",
-            "description": "Special key for fire-themed events."
+            "name": "불의 반지",
+            "description": "불 테마 이벤트를 위한 특별 열쇠입니다."
         },
         "llaves/llave-abisal": {
-            "name": "Abyssal Key",
-            "description": "Opens chests and doors in deep areas."
+            "name": "심연 열쇠",
+            "description": "깊은 지역의 보물상자와 문을 엽니다."
         },
         "llaves/llave-glaciar": {
-            "name": "Key Glaciar",
-            "description": "Opens ice chests and cold chambers."
+            "name": "빙하 열쇠",
+            "description": "얼음 보물상자와 차가운 방을 엽니다."
         },
         "llaves/llave-volcanica": {
-            "name": "Volcanic Key",
-            "description": "Opens chests and doors in hot areas."
+            "name": "화산 열쇠",
+            "description": "뜨거운 지역의 보물상자와 문을 엽니다."
         },
         "llaves/llave-lunar": {
-            "name": "Key Lunar",
-            "description": "Access a chambers night and rewards lunar."
+            "name": "달 열쇠",
+            "description": "야간 방과 달 보상에 접근할 수 있습니다."
         },
         "llaves/llave-antigua": {
-            "name": "Key Ancient",
-            "description": "A mysterious key for ancient chests."
+            "name": "고대 열쇠",
+            "description": "고대 보물상자를 여는 신비한 열쇠입니다."
         },
         "loots/caja-misteriosa": {
-            "name": "Box Mystery",
-            "description": "Contains random items."
+            "name": "미스터리 상자",
+            "description": "무작위 아이템이 들어 있습니다."
         },
         "loots/cofre-de-fortuna": {
-            "name": "Cofre of Fortune",
-            "description": "Contains coins, materials, or rare items."
+            "name": "행운의 보물상자",
+            "description": "코인, 재료 또는 희귀 아이템이 들어 있습니다."
         },
         "loots/caja-marina": {
-            "name": "Box Marina",
-            "description": "Contains items from aquatic events."
+            "name": "해양 상자",
+            "description": "수중 이벤트 아이템이 들어 있습니다."
         },
         "loots/caja-premium-diamante-platino": {
-            "name": "Caja Premium/Diamond/Platino",
-            "description": "Contains high-quality items."
+            "name": "프리미엄/다이아/플래티넘 상자",
+            "description": "고급 아이템이 들어 있습니다."
         },
         "loots/pack-de-celebracion": {
-            "name": "Pack of Celebration",
-            "description": "Packs with event items."
+            "name": "축하 패키지",
+            "description": "이벤트 아이템이 들어 있는 패키지입니다."
         },
         "loots/caja-de-suerte": {
-            "name": "Caja of Luck",
-            "description": "A box with a high chance of rare items."
+            "name": "행운의 상자",
+            "description": "희귀 아이템이 나올 확률이 높은 상자입니다."
         },
         "loots/tarjeta-de-regalo": {
-            "name": "Tarjeta of Regalo",
-            "description": "Redeemable for items in the shop."
+            "name": "기프트 카드",
+            "description": "상점에서 아이템으로 교환할 수 있습니다."
         },
         "loots/bolsa-de-materiales": {
-            "name": "Bag of Materials",
-            "description": "Contains random materials for crafting."
+            "name": "재료 주머니",
+            "description": "제작용 무작위 재료가 들어 있습니다."
         },
         "loots/bolsa-de-gemas": {
-            "name": "Bag of Gems",
-            "description": "Contains gems or rare fragments."
+            "name": "보석 주머니",
+            "description": "보석 또는 희귀 조각이 들어 있습니다."
         },
         "loots/caja-de-herramientas": {
-            "name": "Caja of Herramientas",
-            "description": "Chance to get useful tools."
+            "name": "도구 상자",
+            "description": "유용한 도구를 얻을 수 있는 기회가 있습니다."
         },
         "loots/cofre-abisal": {
-            "name": "Abyssal Chest",
-            "description": "Rare loot from deep areas."
+            "name": "심연 보물상자",
+            "description": "깊은 지역의 희귀 전리품이 들어 있습니다."
         },
         "loots/cofre-glaciar": {
-            "name": "Glacial Chest",
-            "description": "Rare loot from ice and aurora regions."
+            "name": "빙하 보물상자",
+            "description": "얼음과 오로라 지역의 희귀 전리품이 들어 있습니다."
         },
         "loots/cofre-volcanico": {
-            "name": "Volcanic Chest",
-            "description": "Rare loot from lava and minerals."
+            "name": "화산 보물상자",
+            "description": "용암과 광물에서 나온 희귀 전리품이 들어 있습니다."
         },
         "mascotas/huevo-prisma": {
-            "name": "Egg Prism",
-            "description": "Lets you obtain pets with unique abilities."
+            "name": "프리즘 알",
+            "description": "고유한 능력을 가진 반려동물을 얻을 수 있습니다."
         },
         "mascotas/huevo-festivo": {
-            "name": "Egg Festive",
-            "description": "Pets from special events."
+            "name": "축제 알",
+            "description": "특별 이벤트에서 얻는 반려동물입니다."
         },
         "mascotas/huevo-elemental": {
-            "name": "Egg Elemental",
-            "description": "Pets with elemental powers."
+            "name": "원소 알",
+            "description": "원소의 힘을 지닌 반려동물입니다."
         },
         "mascotas/huevo-legendario": {
-            "name": "Legendary Egg",
-            "description": "Rare and powerful pets."
+            "name": "전설 알",
+            "description": "희귀하고 강력한 반려동물입니다."
         },
         "mascotas/huevo-magico": {
-            "name": "Magic Egg",
-            "description": "Hatches into a pet with magical traits and special abilities."
+            "name": "마법 알",
+            "description": "마법적 특성과 특별한 능력을 가진 반려동물로 부화합니다."
         },
         "mascotas/huevo-abisal": {
-            "name": "Abyssal Egg",
-            "description": "Hatches from deep areas; affinity with water and shadow."
+            "name": "심연 알",
+            "description": "깊은 지역에서 부화하며 물과 그림자에 친화적입니다."
         },
         "mascotas/huevo-solar": {
-            "name": "Egg Solar",
-            "description": "Light-aligned hatchling; improves daytime rewards."
+            "name": "태양 알",
+            "description": "빛 계열 부화체로, 낮 보상을 향상시킵니다."
         },
         "mascotas/huevo-brumoso": {
-            "name": "Egg Brumoso",
-            "description": "Mist-aligned hatchling; bonus to stealth exploration."
+            "name": "안개 알",
+            "description": "안개 계열 부화체로, 은밀 탐험 보너스를 제공합니다."
         },
         "mascotas/huevo-de-bosque": {
-            "name": "Egg of Bosque",
-            "description": "Nature hatchling; bonus to gathering."
+            "name": "숲 알",
+            "description": "자연 계열 부화체로, 채집 보너스를 제공합니다."
         },
         "mascotas/huevo-de-montana": {
-            "name": "Mountain Egg",
-            "description": "Sturdy hatchling; bonus to mining and steep routes."
+            "name": "산 알",
+            "description": "단단한 부화체로, 채굴과 험한 길에 보너스를 제공합니다."
         },
         "mascotas/huevo-de-tormenta": {
-            "name": "Egg of Tormenta",
-            "description": "Electric hatchling; bonus during weather events."
+            "name": "폭풍 알",
+            "description": "전기 계열 부화체로, 날씨 이벤트 동안 보너스를 제공합니다."
         },
         "mascotas/huevo-aurora": {
-            "name": "Egg Aurora",
-            "description": "Rare winter hatchling; bonus during cold seasons."
+            "name": "오로라 알",
+            "description": "희귀한 겨울 부화체로, 추운 시즌에 보너스를 제공합니다."
         },
         "mascotas/huevo-jardin": {
-            "name": "Garden Egg",
-            "description": "Friendly hatchling; bonus to social tasks and care."
+            "name": "정원 알",
+            "description": "친근한 부화체로, 소셜 활동과 돌봄에 보너스를 제공합니다."
         },
         "mascotas/huevo-de-cristal": {
-            "name": "Egg of Crystal",
-            "description": "Prismatic hatchling; small luck bonus."
+            "name": "수정 알",
+            "description": "프리즘 부화체로, 작은 행운 보너스를 제공합니다."
         },
         "mascotas/huevo-meteoro": {
-            "name": "Egg Meteoro",
-            "description": "Very rare hatchling; bonus to loot and special materials."
+            "name": "유성 알",
+            "description": "매우 희귀한 부화체로, 전리품과 특별 재료에 보너스를 제공합니다."
         },
         "mascotas/huevo-volcanico": {
-            "name": "Volcanic Egg",
-            "description": "Hatches from hot areas; bonus to mining and heat resistance."
+            "name": "화산 알",
+            "description": "뜨거운 지역에서 부화하며 채굴과 내열에 보너스를 제공합니다."
         },
         "mascotas/huevo-glaciar": {
-            "name": "Glacial Egg",
-            "description": "Hatches from cold areas; bonus to survival and winter exploration."
+            "name": "빙하 알",
+            "description": "추운 지역에서 부화하며 생존과 겨울 탐험에 보너스를 제공합니다."
         },
         "mascotas/huevo-marino": {
-            "name": "Egg Marine",
-            "description": "Aquatic hatchling; bonus to fishing and sea routes."
+            "name": "해양 알",
+            "description": "수중 부화체로, 낚시와 해상 루트에 보너스를 제공합니다."
         },
         "mascotas/huevo-selvatico": {
-            "name": "Wild Egg",
-            "description": "Jungle hatchling; bonus to gathering rare plants."
+            "name": "야생 알",
+            "description": "정글 부화체로, 희귀 식물 채집에 보너스를 제공합니다."
         },
         "mascotas/huevo-umbrio": {
-            "name": "Umbral Egg",
-            "description": "Shadow hatchling; bonus during night events."
+            "name": "암영 알",
+            "description": "그림자 부화체로, 야간 이벤트 동안 보너스를 제공합니다."
         },
         "mascotas/huevo-radiante": {
-            "name": "Egg Radiante",
-            "description": "Light hatchling; a light luck bonus for chests."
+            "name": "광휘 알",
+            "description": "빛 부화체로, 보물상자에 작은 행운 보너스를 제공합니다."
         },
         "mascotas/ocarina-del-vinculo": {
-            "name": "Bond Ocarina",
-            "description": "An ancient melody that calls your pet back if it left due to lack of care."
+            "name": "유대의 오카리나",
+            "description": "돌봄 부족으로 떠난 반려동물을 고대의 선율로 다시 불러옵니다."
         },
         "mascotas/huevo-torbellino": {
-            "name": "Egg Torbellino",
-            "description": "Wind hatchling; improves travel and fast quests."
+            "name": "소용돌이 알",
+            "description": "바람 부화체로, 이동과 빠른 퀘스트를 향상시킵니다."
         },
         "mascotas/huevo-fertil": {
-            "name": "Fertile Egg",
-            "description": "Meadow hatchling; bonus to common gathering."
+            "name": "비옥한 알",
+            "description": "초원 부화체로, 일반 채집에 보너스를 제공합니다."
         },
         "mascotas/huevo-coral": {
-            "name": "Egg Coral",
-            "description": "Reef hatchling; bonus to marine loot."
+            "name": "산호 알",
+            "description": "산호초 부화체로, 해양 전리품에 보너스를 제공합니다."
         },
         "mascotas/huevo-relampago": {
-            "name": "Lightning Egg",
-            "description": "Rare electric hatchling; bonus to timed challenges."
+            "name": "번개 알",
+            "description": "희귀한 전기 부화체로, 시간 제한 도전에 보너스를 제공합니다."
         },
         "mascotas/huevo-lunar": {
-            "name": "Egg Lunar",
-            "description": "Rare night hatchling; bonus to night quests."
+            "name": "달 알",
+            "description": "희귀한 야간 부화체로, 야간 퀘스트에 보너스를 제공합니다."
         },
         "mascotas/huevo-solar-real": {
-            "name": "Egg Solar Real",
-            "description": "Rare version of the Solar Egg; improved daytime bonus."
+            "name": "로열 태양 알",
+            "description": "태양 알의 희귀 버전으로, 낮 보너스가 강화됩니다."
         },
         "mascotas/huevo-prisma-antiguo": {
-            "name": "Egg Prism Antiguo",
-            "description": "Very rare hatchling; bonus during special events."
+            "name": "고대 프리즘 알",
+            "description": "매우 희귀한 부화체로, 특별 이벤트 동안 보너스를 제공합니다."
         },
         "mascotas/huevo-cometa": {
-            "name": "Egg Cometa",
-            "description": "Ultra-rare hatchling; extra chance of rare items."
+            "name": "혜성 알",
+            "description": "초희귀 부화체로, 희귀 아이템 추가 확률을 제공합니다."
         },
         "mascotas/huevo-encantado": {
-            "name": "Egg Encantado",
-            "description": "Magical hatchling; bonus to temporary buff effects."
+            "name": "마력의 알",
+            "description": "마법 부화체로, 임시 버프 효과에 보너스를 제공합니다."
         },
         "mascotas/huevo-guardian": {
-            "name": "Guardian Egg",
-            "description": "Defensive hatchling; reduces penalties during events."
+            "name": "수호자 알",
+            "description": "방어형 부화체로, 이벤트 동안 페널티를 줄입니다."
         },
         "materiales/hierba-prisma": {
-            "name": "Hierba Prism",
-            "description": "Crafting material."
+            "name": "프리즘 약초",
+            "description": "제작 재료입니다."
         },
         "materiales/roca-volcanica": {
-            "name": "Volcanic Rock",
-            "description": "Material for defense upgrades."
+            "name": "화산암",
+            "description": "방어 업그레이드에 쓰이는 재료입니다."
         },
         "materiales/barra-de-oro-acero": {
-            "name": "Bar of Oro/Steel",
-            "description": "Material for crafting avanzado."
+            "name": "금/강철 주괴",
+            "description": "고급 제작용 재료입니다."
         },
         "materiales/fragmento-de-espiritu": {
-            "name": "Fragment of Spirit",
-            "description": "Material for quests and mejoras."
+            "name": "영혼 조각",
+            "description": "퀘스트와 업그레이드에 쓰이는 재료입니다."
         },
         "materiales/mineral-elemental": {
-            "name": "Mineral Elemental",
-            "description": "Material for crafting of tools."
+            "name": "원소 광물",
+            "description": "도구 제작에 쓰이는 재료입니다."
         },
         "materiales/flor-de-amor": {
-            "name": "Flower of Amor",
-            "description": "Material for events romantic."
+            "name": "사랑의 꽃",
+            "description": "로맨틱 이벤트 재료입니다."
         },
         "materiales/fosil": {
-            "name": "Fossil",
-            "description": "Material for quests of exploration."
+            "name": "화석",
+            "description": "탐험 퀘스트 재료입니다."
         },
         "materiales/dulce-festivo": {
-            "name": "Candy Festive",
-            "description": "Material for events of season."
+            "name": "축제 사탕",
+            "description": "시즌 이벤트 재료입니다."
         },
         "materiales/alga-marina": {
-            "name": "Seaweed",
-            "description": "Fishing material and marine crafting ingredient."
+            "name": "해초",
+            "description": "낚시 재료이자 해양 제작 재료입니다."
         },
         "materiales/concha-marina": {
-            "name": "Seashell",
-            "description": "Common material from coastal areas."
+            "name": "조개껍데기",
+            "description": "해안 지역에서 얻는 흔한 재료입니다."
         },
         "materiales/coral-prisma": {
-            "name": "Prism Coral",
-            "description": "Rare material from reefs and deep seas."
+            "name": "프리즘 산호",
+            "description": "산호초와 심해에서 얻는 희귀 재료입니다."
         },
         "materiales/perla-azur": {
-            "name": "Azur Pearl",
-            "description": "A valuable marine treasure."
+            "name": "아주르 진주",
+            "description": "값진 해양 보물입니다."
         },
         "materiales/mineral-de-cobre": {
-            "name": "Copper Ore",
-            "description": "Common mining material."
+            "name": "구리 광석",
+            "description": "흔한 채굴 재료입니다."
         },
         "materiales/mineral-de-hierro": {
-            "name": "Iron Ore",
-            "description": "Base for ingots and tools."
+            "name": "철 광석",
+            "description": "주괴와 도구의 기본 재료입니다."
         },
         "materiales/mineral-de-plata": {
-            "name": "Silver Ore",
-            "description": "Valuable mineral for crafting."
+            "name": "은 광석",
+            "description": "제작에 쓰이는 귀중한 광물입니다."
         },
         "materiales/mineral-de-oro": {
-            "name": "Gold Ore",
-            "description": "Rare mineral for advanced crafting."
+            "name": "금 광석",
+            "description": "고급 제작에 쓰이는 희귀 광물입니다."
         },
         "materiales/mineral-de-diamante": {
-            "name": "Diamond Ore",
-            "description": "Very rare mineral: elite crafting."
+            "name": "다이아 광석",
+            "description": "매우 희귀한 광물: 최고급 제작 재료입니다."
         },
         "materiales/madera-robusta": {
-            "name": "Sturdy Wood",
-            "description": "Great for structures and tools."
+            "name": "단단한 목재",
+            "description": "구조물과 도구 제작에 좋습니다."
         },
         "materiales/madera-encantada": {
-            "name": "Enchanted Wood",
-            "description": "Rare wood with magical properties."
+            "name": "마법 목재",
+            "description": "마법적 성질을 지닌 희귀 목재입니다."
         },
         "materiales/cuero-curtido": {
-            "name": "Leather Tanned",
-            "description": "Flexible material for gear."
+            "name": "무두질 가죽",
+            "description": "장비 제작에 쓰이는 유연한 재료입니다."
         },
         "materiales/tela-resistente": {
-            "name": "Fabric Durable",
-            "description": "Material for backpacks and clothing."
+            "name": "튼튼한 천",
+            "description": "배낭과 의복 재료입니다."
         },
         "materiales/hilo-fino": {
-            "name": "Thread Fine",
-            "description": "Sewing material for crafting."
+            "name": "고급 실",
+            "description": "제작에 쓰이는 봉제 재료입니다."
         },
         "materiales/polvo-prisma": {
-            "name": "Dust Prism",
-            "description": "Magical ingredient for upgrades."
+            "name": "프리즘 가루",
+            "description": "업그레이드에 쓰이는 마법 재료입니다."
         },
         "materiales/esencia-solar": {
-            "name": "Essence Solar",
-            "description": "Bright ingredient for rare crafting."
+            "name": "태양의 정수",
+            "description": "희귀 제작에 쓰이는 밝은 재료입니다."
         },
         "materiales/esencia-lunar": {
-            "name": "Essence Lunar",
-            "description": "Night ingredient for special recipes."
+            "name": "달의 정수",
+            "description": "특별 레시피에 쓰이는 밤의 재료입니다."
         },
         "materiales/esencia-umbria": {
-            "name": "Essence Umbral",
-            "description": "Dark energy, very rare."
+            "name": "암영 정수",
+            "description": "어둠의 에너지로, 매우 희귀합니다."
         },
         "materiales/fragmento-de-cristal": {
-            "name": "Fragment of Crystal",
-            "description": "Shiny fragment for crafting."
+            "name": "수정 조각",
+            "description": "제작에 쓰이는 반짝이는 조각입니다."
         },
         "materiales/gema-rubi": {
-            "name": "Ruby Gem",
-            "description": "Rare gem for trades and upgrades."
+            "name": "루비 보석",
+            "description": "거래와 업그레이드에 쓰이는 희귀 보석입니다."
         },
         "materiales/gema-zafiro": {
-            "name": "Sapphire Gem",
-            "description": "Rare gem with aquatic energy."
+            "name": "사파이어 보석",
+            "description": "수중 에너지를 지닌 희귀 보석입니다."
         },
         "materiales/gema-esmeralda": {
-            "name": "Emerald Gem",
-            "description": "Rare gem with natural energy."
+            "name": "에메랄드 보석",
+            "description": "자연 에너지를 지닌 희귀 보석입니다."
         },
         "materiales/nucleo-elemental": {
-            "name": "Core Elemental",
-            "description": "Very rare component for elemental tools."
+            "name": "원소 코어",
+            "description": "원소 도구에 쓰이는 매우 희귀한 부품입니다."
         },
         "materiales/placa-de-acero": {
-            "name": "Plate of Steel",
-            "description": "Sturdy material for advanced crafting."
+            "name": "강철 판",
+            "description": "고급 제작용 튼튼한 재료입니다."
         },
         "mejoras/potenciador-de-fortuna": {
-            "name": "Booster of Fortune",
-            "description": "Increases the chance of getting great rewards."
+            "name": "행운 부스터",
+            "description": "더 좋은 보상을 얻을 확률이 증가합니다."
         },
         "mejoras/escudo-de-tolerancia": {
-            "name": "Shield of Tolerance",
-            "description": "Reduces penalties in events."
+            "name": "관용의 방패",
+            "description": "이벤트에서 페널티를 줄입니다."
         },
         "mejoras/expansion-de-mochila": {
-            "name": "Expansion of Backpack",
-            "description": "Increases inventory space."
+            "name": "배낭 확장",
+            "description": "인벤토리 공간이 증가합니다."
         },
         "mejoras/entrenamiento-moxi": {
-            "name": "Training Moxi",
-            "description": "Experience bonus per activity."
+            "name": "모시 훈련",
+            "description": "활동당 경험치 보너스."
         },
         "mejoras/trabajo-en-equipo": {
-            "name": "Teamwork en Team",
-            "description": "Bonus when working in a group."
+            "name": "팀워크",
+            "description": "그룹으로 활동할 때 보너스를 제공합니다."
         },
         "mejoras/estrella-de-suerte": {
-            "name": "Star of Luck",
-            "description": "Luck bonus."
+            "name": "행운의 별",
+            "description": "행운 보너스."
         },
         "mejoras/aurora-festiva": {
-            "name": "Aurora Festiva",
-            "description": "Bonus during winter events."
+            "name": "축제 오로라",
+            "description": "겨울 이벤트 동안 보너스를 제공합니다."
         },
         "mejoras/tinte-personalizado": {
-            "name": "Dye Custom",
-            "description": "Changes the color of your profile or club."
+            "name": "맞춤 염색약",
+            "description": "프로필 또는 클럽의 색상을 변경합니다."
         },
         "mejoras/expansion-de-banco": {
-            "name": "Expansion of Bank",
-            "description": "Increases bank space (future use)."
+            "name": "은행 확장",
+            "description": "은행 공간이 증가합니다(추후 사용)."
         },
         "mejoras/expansion-de-mochila-plus": {
-            "name": "Expansion of Backpack Plus",
-            "description": "Increases inventory space even more (future use)."
+            "name": "배낭 확장 플러스",
+            "description": "인벤토리 공간이 더 크게 증가합니다(추후 사용)."
         },
         "mejoras/sello-de-proteccion": {
-            "name": "Seal of Protection",
-            "description": "Reduces losses during dangerous events (future use)."
+            "name": "보호의 인장",
+            "description": "위험한 이벤트 중 손실을 줄입니다(추후 사용)."
         },
         "mejoras/pase-premium-moxi": {
-            "name": "Pass Premium Moxi",
-            "description": "Access to premium system benefits (future use)."
+            "name": "모시 프리미엄 패스",
+            "description": "프리미엄 시스템 혜택에 접근할 수 있습니다(추후 사용)."
         },
         "misiones/gema-prisma": {
-            "name": "Gem Prism",
-            "description": "Required for advanced quests."
+            "name": "프리즘 보석",
+            "description": "고급 퀘스트에 필요합니다."
         },
         "misiones/conejo-de-peluche": {
-            "name": "Conejo of Peluche",
-            "description": "Special quest item."
+            "name": "봉제 인형 토끼",
+            "description": "특별 퀘스트 아이템입니다."
         },
         "misiones/espada-de-hielo": {
-            "name": "Ice Sword",
-            "description": "Required for exploration quests."
+            "name": "얼음 검",
+            "description": "탐험 퀘스트에 필요합니다."
         },
         "misiones/katana-solar": {
-            "name": "Katana Solar",
-            "description": "Advanced quest item."
+            "name": "태양 카타나",
+            "description": "고급 퀘스트 아이템입니다."
         },
         "misiones/mascara-de-zorro": {
-            "name": "Fox Mask",
-            "description": "Special quest item."
+            "name": "여우 가면",
+            "description": "특별 퀘스트 아이템입니다."
         },
         "pociones/pocion-de-regeneracion": {
-            "name": "Potion of Regeneration",
-            "description": "Restores health."
+            "name": "재생 물약",
+            "description": "체력을 회복합니다."
         },
         "pociones/pocion-de-resistencia": {
-            "name": "Potion of Resistance",
-            "description": "Temporarily increases defense."
+            "name": "저항 물약",
+            "description": "일시적으로 방어력이 증가합니다."
         },
         "pociones/pocion-del-explorador": {
-            "name": "Potion of the Explorer",
-            "description": "Allows you to explore new areas."
+            "name": "탐험가 물약",
+            "description": "새로운 지역을 탐험할 수 있게 합니다."
         },
         "pociones/elixir-prisma": {
-            "name": "Elixir Prism",
-            "description": "Gives an experience and energy bonus."
+            "name": "프리즘 엘릭서",
+            "description": "경험치와 에너지 보너스를 제공합니다."
         },
         "pociones/huevito-de-energia-exploracion-regeneracion-resistencia": {
-            "name": "Little Egg of Energy/Exploration/Regeneration/Resistance",
-            "description": "Special consumables."
+            "name": "에너지/탐험/재생/저항 작은 알",
+            "description": "특별 소모품입니다."
         },
         "pociones/pocion-de-suerte": {
-            "name": "Potion of Luck",
-            "description": "Temporarily increases luck."
+            "name": "행운 물약",
+            "description": "일시적으로 행운이 증가합니다."
         },
         "pociones/pocion-de-velocidad": {
-            "name": "Potion of Speed",
-            "description": "Temporarily increases speed."
+            "name": "속도 물약",
+            "description": "일시적으로 속도가 증가합니다."
         },
         "pociones/pocion-del-minero": {
-            "name": "Potion of the Miner",
-            "description": "Temporarily improves mining loot."
+            "name": "광부 물약",
+            "description": "일시적으로 채굴 전리품이 향상됩니다."
         },
         "pociones/pocion-del-pescador": {
-            "name": "Potion of the Fisher",
-            "description": "Temporarily improves fishing loot."
+            "name": "어부 물약",
+            "description": "일시적으로 낚시 전리품이 향상됩니다."
         },
         "pociones/elixir-de-luz": {
-            "name": "Elixir of Light",
-            "description": "Boosts daytime rewards and exploration."
+            "name": "빛의 엘릭서",
+            "description": "낮 보상과 탐험을 강화합니다."
         },
         "pociones/elixir-de-sombra": {
-            "name": "Elixir of Shadow",
-            "description": "Boosts nighttime rewards and stealth."
+            "name": "그림자의 엘릭서",
+            "description": "야간 보상과 은밀함을 강화합니다."
         },
         "rollos/rollo-moxi": {
-            "name": "Scroll Moxi",
-            "description": "Grants temporary special abilities."
+            "name": "모시 두루마리",
+            "description": "일시적인 특별 능력을 부여합니다."
         },
         "rollos/rollo-de-estrategia": {
-            "name": "Scroll of Strategy",
-            "description": "Enables advanced strategies in events."
+            "name": "전략 두루마리",
+            "description": "이벤트에서 고급 전략을 사용할 수 있게 합니다."
         },
         "rollos/notas-del-explorador": {
-            "name": "Notes of the Explorer",
-            "description": "Provides clues for quests."
+            "name": "탐험가의 노트",
+            "description": "퀘스트에 대한 단서를 제공합니다."
         },
         "rollos/papiro-jeroglifico": {
-            "name": "Papyrus/Hieroglyph",
-            "description": "Unlocks hidden content."
+            "name": "파피루스/상형문자",
+            "description": "숨겨진 콘텐츠를 해금합니다."
         },
         "proteccion/vida-extra": {
-            "name": "Life Extra",
-            "description": "Lets you revive once in special events."
+            "name": "추가 생명",
+            "description": "특별 이벤트에서 한 번 부활할 수 있습니다."
         }
     }
 }
