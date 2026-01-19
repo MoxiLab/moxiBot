@@ -220,204 +220,204 @@
             "description": "Ein kleiner Bonus auf Angeln und marinen Loot."
         },
         "consumibles/pan-de-ajo": {
-            "name": "Bread of Garlic",
-            "description": "Improves endurance: ideal for mining."
+            "name": "Knoblauchbrot",
+            "description": "Verbessert die Ausdauer: ideal für Bergbau."
         },
         "herramientas/pico-prisma": {
-            "name": "Pickaxe Prism",
-            "description": "Allows you to mine rare minerals."
+            "name": "Prisma-Spitzhacke",
+            "description": "Ermöglicht dir, seltene Mineralien abzubauen."
         },
         "herramientas/cana-de-pesca-moxi": {
-            "name": "Rod of Fishing Moxi",
-            "description": "Increases the chance of catching rare items."
+            "name": "Moxi-Angelrute",
+            "description": "Erhöht die Chance, seltene Items zu fangen."
         },
         "herramientas/llave-multiusos": {
-            "name": "Key Multi-tool",
-            "description": "Tool for repairing and building."
+            "name": "Multifunktionsschlüssel",
+            "description": "Werkzeug zum Reparieren und Bauen."
         },
         "herramientas/varita-solar": {
-            "name": "Wand Solar",
-            "description": "Allows you to perform magical actions."
+            "name": "Solarstab",
+            "description": "Ermöglicht dir, magische Aktionen auszuführen."
         },
         "herramientas/hacha-elemental": {
-            "name": "Axe Elemental",
-            "description": "Tool for gathering special wood."
+            "name": "Elementaraxt",
+            "description": "Werkzeug zum Sammeln besonderer Hölzer."
         },
         "herramientas/incubadora": {
             "name": "Incubator",
-            "description": "Allows you to hatch eggs."
+            "description": "Ermöglicht dir, Eier auszubrüten."
         },
         "herramientas/revelador-prisma": {
-            "name": "Revealer Prism",
-            "description": "Tool for discovering hidden treasures."
+            "name": "Prisma-Detektor",
+            "description": "Werkzeug zum Entdecken versteckter Schätze."
         },
         "herramientas/barco-moxi": {
-            "name": "Boat Moxi",
-            "description": "Allows you to explore sea regions."
+            "name": "Moxi-Boot",
+            "description": "Ermöglicht dir, Meeresregionen zu erkunden."
         },
         "herramientas/dinamita": {
             "name": "Dynamite",
-            "description": "Allows you to open blocked paths."
+            "description": "Ermöglicht dir, blockierte Wege zu öffnen."
         },
         "herramientas/golem-minero-pescador": {
-            "name": "Golem Miner/Fisher",
-            "description": "Automated tools for mining/fishing."
+            "name": "Bergbau-/Angel-Golem",
+            "description": "Automatisierte Werkzeuge fürs Abbauen/Angeln."
         },
         "herramientas/pico-de-hierro": {
-            "name": "Pickaxe of Iron",
-            "description": "Basic mining tool."
+            "name": "Eisenspitzhacke",
+            "description": "Einfaches Bergbauwerkzeug."
         },
         "herramientas/pico-de-acero": {
-            "name": "Pickaxe of Steel",
-            "description": "Improves mining efficiency."
+            "name": "Stahlspitzhacke",
+            "description": "Verbessert die Abbau-Effizienz."
         },
         "herramientas/pico-de-diamante": {
-            "name": "Pickaxe of Diamond",
-            "description": "Ideal for rare and tough veins."
+            "name": "Diamantspitzhacke",
+            "description": "Ideal für seltene und harte Adern."
         },
         "herramientas/pico-de-obsidiana": {
-            "name": "Pickaxe of Obsidian",
-            "description": "Legendary tool for extreme mining."
+            "name": "Obsidian-Spitzhacke",
+            "description": "Legendäres Werkzeug für extremes Abbauen."
         },
         "herramientas/cana-de-bambu": {
-            "name": "Rod of Bamboo",
-            "description": "A simple rod to start fishing."
+            "name": "Bambus-Angelrute",
+            "description": "Eine einfache Rute für den Einstieg ins Angeln."
         },
         "herramientas/cana-de-carbono": {
-            "name": "Rod of Carbon",
-            "description": "Increases the chance of rare fishing."
+            "name": "Carbon-Angelrute",
+            "description": "Erhöht die Chance auf seltene Fänge."
         },
         "herramientas/red-de-pesca": {
-            "name": "Fishing Net",
-            "description": "Catches more common loot in marine areas."
+            "name": "Fischernetz",
+            "description": "Fängt mehr gewöhnliche Beute in Meeresgebieten."
         },
         "herramientas/arpon-marino": {
-            "name": "Harpoon Marine",
-            "description": "Improves loot in deep-sea fishing."
+            "name": "Meeres-Harpune",
+            "description": "Verbessert die Beute beim Tiefseeangeln."
         },
         "herramientas/pala-de-excavacion": {
-            "name": "Shovel of Excavation",
-            "description": "Used to find buried objects."
+            "name": "Ausgrabungsschaufel",
+            "description": "Wird benutzt, um vergrabene Objekte zu finden."
         },
         "herramientas/brujula-prisma": {
-            "name": "Compass Prism",
-            "description": "Helps you navigate and discover routes."
+            "name": "Prisma-Kompass",
+            "description": "Hilft dir bei der Navigation und beim Entdecken von Routen."
         },
         "herramientas/mapa-arrugado": {
-            "name": "Map Crumpled",
-            "description": "Clues for exploration and treasures."
+            "name": "Zerknitterte Karte",
+            "description": "Hinweise für Erkundung und Schätze."
         },
         "herramientas/linterna-de-caverna": {
-            "name": "Cave Lantern",
-            "description": "Lights up dark areas while exploring."
+            "name": "Höhlenlaterne",
+            "description": "Beleuchtet dunkle Bereiche bei der Erkundung."
         },
         "herramientas/detector-de-metales": {
-            "name": "Detector of Metals",
-            "description": "Finds valuable objects underground."
+            "name": "Metalldetektor",
+            "description": "Findet wertvolle Objekte unter der Erde."
         },
         "herramientas/cuerda-de-escalada": {
-            "name": "Rope of Climbing",
-            "description": "Useful for mountain routes and rescues."
+            "name": "Kletterseil",
+            "description": "Nützlich für Bergrouten und Rettungen."
         },
         "herramientas/kit-de-reparacion": {
-            "name": "Kit of Repair",
-            "description": "Repairs tools and equipment (future use)."
+            "name": "Reparaturkit",
+            "description": "Repariert Werkzeuge und Ausrüstung (zukünftige Nutzung)."
         },
         "herramientas/lupa-antigua": {
-            "name": "Magnifying glass Ancient",
-            "description": "Helps identify objects and clues."
+            "name": "Alte Lupe",
+            "description": "Hilft dabei, Objekte und Hinweise zu identifizieren."
         },
         "herramientas/frasco-cazabichos": {
-            "name": "Jar Bug catcher",
-            "description": "Allows you to catch insects and small creatures."
+            "name": "Insektenfänger-Glas",
+            "description": "Ermöglicht dir, Insekten und kleine Kreaturen zu fangen."
         },
         "herramientas/guantes-de-minero": {
-            "name": "Gloves of Miner",
-            "description": "Protects your hands during tough work."
+            "name": "Bergbauhandschuhe",
+            "description": "Schützt deine Hände bei harter Arbeit."
         },
         "herramientas/sierra-de-carpintero": {
-            "name": "Carpenter's Saw",
-            "description": "A woodworking tool (future use)."
+            "name": "Zimmermannssäge",
+            "description": "Ein Werkzeug für Holzarbeiten (zukünftige Nutzung)."
         },
         "herramientas/cuchillo-de-supervivencia": {
-            "name": "Knife of Survival",
-            "description": "tool multiusos for exploration."
+            "name": "Überlebensmesser",
+            "description": "Multifunktionswerkzeug für die Erkundung."
         },
         "herramientas/martillo-de-forja": {
-            "name": "Forge Hammer",
-            "description": "Required for advanced crafting (future use)."
+            "name": "Schmiedehammer",
+            "description": "Erforderlich für fortgeschrittenes Crafting (zukünftige Nutzung)."
         },
         "herramientas/anzuelo-de-lux": {
-            "name": "Hook of Lux",
-            "description": "Improves rare fishing in deep waters."
+            "name": "Lux-Haken",
+            "description": "Verbessert seltenes Angeln in tiefen Gewässern."
         },
         "herramientas/cebo-prisma": {
-            "name": "Bait Prism",
-            "description": "Temporarily increases the chance of rare catches."
+            "name": "Prisma-Köder",
+            "description": "Erhöht vorübergehend die Chance auf seltene Fänge."
         },
         "herramientas/taladro-portatil": {
-            "name": "Portable Drill",
-            "description": "A powerful tool for fast mining (future use)."
+            "name": "Tragbarer Bohrer",
+            "description": "Ein leistungsstarkes Werkzeug für schnelles Abbauen (zukünftige Nutzung)."
         },
         "herramientas/bomba-de-humo": {
-            "name": "Smoke Bomb",
-            "description": "Helps you escape or avoid danger (future use)."
+            "name": "Rauchbombe",
+            "description": "Hilft beim Entkommen oder beim Vermeiden von Gefahr (zukünftige Nutzung)."
         },
         "llaves/llave-prisma": {
-            "name": "Key Prism",
-            "description": "Opens special chests."
+            "name": "Prismaschlüssel",
+            "description": "Öffnet spezielle Truhen."
         },
         "llaves/llave-elemental": {
-            "name": "Elemental Key",
-            "description": "Opens event areas and chests."
+            "name": "Elementarschlüssel",
+            "description": "Öffnet Event-Gebiete und Truhen."
         },
         "llaves/talisman-solar": {
-            "name": "Solar Talisman",
-            "description": "Allows access to magical areas."
+            "name": "Solartalisman",
+            "description": "Ermöglicht Zugang zu magischen Bereichen."
         },
         "llaves/anillo-de-fuego": {
-            "name": "Ring of Fire",
-            "description": "Special key for fire-themed events."
+            "name": "Feuerring",
+            "description": "Spezialschlüssel für feuerbasierte Events."
         },
         "llaves/llave-abisal": {
-            "name": "Abyssal Key",
-            "description": "Opens chests and doors in deep areas."
+            "name": "Abyss-Schlüssel",
+            "description": "Öffnet Truhen und Türen in tiefen Gebieten."
         },
         "llaves/llave-glaciar": {
-            "name": "Key Glaciar",
-            "description": "Opens ice chests and cold chambers."
+            "name": "Gletscherschlüssel",
+            "description": "Öffnet Eistruhen und kalte Kammern."
         },
         "llaves/llave-volcanica": {
-            "name": "Volcanic Key",
-            "description": "Opens chests and doors in hot areas."
+            "name": "Vulkanschlüssel",
+            "description": "Öffnet Truhen und Türen in heißen Gebieten."
         },
         "llaves/llave-lunar": {
-            "name": "Key Lunar",
-            "description": "Access a chambers night and rewards lunar."
+            "name": "Mondschlüssel",
+            "description": "Gibt Zugang zu nächtlichen Kammern und Mond-Belohnungen."
         },
         "llaves/llave-antigua": {
-            "name": "Key Ancient",
-            "description": "A mysterious key for ancient chests."
+            "name": "Alter Schlüssel",
+            "description": "Ein mysteriöser Schlüssel für antike Truhen."
         },
         "loots/caja-misteriosa": {
-            "name": "Box Mystery",
-            "description": "Contains random items."
+            "name": "Mysteriöse Kiste",
+            "description": "Enthält zufällige Items."
         },
         "loots/cofre-de-fortuna": {
-            "name": "Cofre of Fortune",
-            "description": "Contains coins, materials, or rare items."
+            "name": "Glückstruhe",
+            "description": "Enthält Münzen, Materialien oder seltene Items."
         },
         "loots/caja-marina": {
-            "name": "Box Marina",
-            "description": "Contains items from aquatic events."
+            "name": "Meereskiste",
+            "description": "Enthält Items aus aquatischen Events."
         },
         "loots/caja-premium-diamante-platino": {
-            "name": "Caja Premium/Diamond/Platino",
-            "description": "Contains high-quality items."
+            "name": "Premium-/Diamant-/Platin-Kiste",
+            "description": "Enthält hochwertige Items."
         },
         "loots/pack-de-celebracion": {
-            "name": "Pack of Celebration",
-            "description": "Packs with event items."
+            "name": "Feierpaket",
+            "description": "Pakete mit Event-Items."
         },
         "loots/caja-de-suerte": {
             "name": "Caja of Luck",
