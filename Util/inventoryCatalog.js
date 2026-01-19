@@ -19,11 +19,13 @@ function langBase(lang) {
 const DEFAULT_CATALOG_PATH = null;
 
 const DEFAULT_MIN_ITEMS_PER_CATEGORY = (() => {
-    // Con items.json no queremos autogenerar cientos de ítems por defecto.
+    // Antes el proyecto inflaba el catálogo (p.ej. ~600 por categoría -> ~7-8k items).
+    // Mantener ese comportamiento por defecto para que el shop/bag tengan “muchos” ítems
+    // aunque economy/items.json solo defina los textos reales.
     const raw = process.env.INVENTORY_MIN_ITEMS_PER_CATEGORY;
-    if (raw == null || String(raw).trim() === '') return 0;
+    if (raw == null || String(raw).trim() === '') return 600;
     const n = Number(raw);
-    return Number.isFinite(n) ? Math.max(0, Math.trunc(n)) : 0;
+    return Number.isFinite(n) ? Math.max(0, Math.trunc(n)) : 600;
 })();
 
 // Cachea archivos individuales por idioma (no por idioma solicitado)
@@ -272,6 +274,17 @@ function rarityForItemId(itemId) {
     return 'common';
 }
 
+function prettyNameFromItemId(itemId) {
+    const id = String(itemId || '');
+    if (!id) return '';
+    const last = id.includes('/') ? id.slice(id.indexOf('/') + 1) : id;
+    return last
+        .split('-')
+        .filter(Boolean)
+        .map((w) => (w.length ? w[0].toUpperCase() + w.slice(1) : w))
+        .join(' ');
+}
+
 function rarityForIndex(i) {
     // Distribución simple y determinista (sirve para “relleno” de catálogo)
     if (i % 200 === 0) return 'legendary';
@@ -443,8 +456,25 @@ function getItemById(itemId, { catalogPath, lang } = {}) {
     const catalog = loadCatalog({ lang: lang || process.env.DEFAULT_LANG || 'es-ES' });
     const { byId } = buildItemIndex(catalog);
     const item = byId.get(itemId) || null;
+
+    // Si el itemId no está en economy/items.json (o no entró al catálogo), devolvemos un ítem
+    // sintético para evitar “faltan items” / crashes.
+    if (!item) {
+        const effectiveLang = lang || process.env.DEFAULT_LANG || 'es-ES';
+        const fromLang = resolveItemTextFromLanguages(itemId, effectiveLang);
+        const prefix = String(itemId || '').includes('/') ? String(itemId).split('/')[0] : 'other';
+        const rarity = rarityForItemId(itemId);
+        return {
+            id: String(itemId),
+            name: (fromLang?.name || '').trim() || prettyNameFromItemId(itemId) || String(itemId),
+            description: (fromLang?.description || '').trim(),
+            rarity,
+            price: priceForRarity(basePriceForPrefix(prefix), rarity),
+        };
+    }
+
     // Importante: devolvemos name/description como string aunque en JSON sean objetos.
-    return item ? normalizeItemForLang(item, lang || process.env.DEFAULT_LANG || 'es-ES') : null;
+    return normalizeItemForLang(item, lang || process.env.DEFAULT_LANG || 'es-ES');
 }
 
 function assertValidItemId(itemId, { catalogPath } = {}) {
