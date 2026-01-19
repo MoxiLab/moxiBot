@@ -25,7 +25,10 @@ module.exports = {
 
   async run(Moxi, interaction) {
     const guildId = interaction.guildId || interaction.guild?.id;
-    const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+    const lang = await moxi.guildLang(
+      guildId,
+      interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES'
+    );
     const rawPage = interaction.options.getInteger('pagina');
     const page = rawPage ? Math.max(0, rawPage - 1) : 0;
 
