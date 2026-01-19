@@ -337,7 +337,6 @@
     "AFK_DEFAULT_MESSAGE": "Sedang tidak di tempat. Aku akan membalas segera.",
     "AFK_DURATION": "AFK selama {{duration}}",
     "AFK_MENTION_TITLE": "Pengguna AFK",
-    "AFK_MESSAGE_LINE": "Message: {{message}}",
     "AFK_MESSAGE_LINE": "Pesan: {{message}}",
     "AFK_SCOPE_GLOBAL": "Cakupan: Global",
     "AFK_SCOPE_GUILD": "Cakupan: Server",
