@@ -1,0 +1,1110 @@
+[
+  {
+    "categoryKey": "Buffs",
+    "category": "Buffs",
+    "items": [
+      {
+        "id": "buffs/cascanueces-moxi",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "buffs/corona-de-invierno",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "buffs/dulce-de-fresa",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "buffs/fogata-elemental",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "buffs/fruta-mutante",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "buffs/fruta-vital",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "buffs/gusano-brillo",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "buffs/holly-prisma",
+        "rarity": "uncommon",
+        "price": 400
+      },
+      {
+        "id": "buffs/linterna-solar",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "buffs/pan-dulce-moxi",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "buffs/pase-de-evento",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "buffs/pez-lumina",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "buffs/scroll-de-impulso-moxi",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "buffs/scroll-gelido",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "buffs/scroll-mascota-veloz",
+        "rarity": "common",
+        "price": 250
+      },
+      {
+        "id": "buffs/trebol-de-fortuna",
+        "rarity": "uncommon",
+        "price": 400
+      }
+    ]
+  },
+  {
+    "categoryKey": "Collectibles",
+    "category": "Collectibles",
+    "items": [
+      {
+        "id": "coleccionables/bouquet-festivo",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/carta-de-amistad",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/cascabel-festivo",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/copa-de-campeon",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/corazon-prisma",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/fantasmita-moxi",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/flor-de-espiritu",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/gato-sombrio",
+        "rarity": "uncommon",
+        "price": 128
+      },
+      {
+        "id": "coleccionables/gema-de-espiritu",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/medalla-de-nieve",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/medalla-lunar",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/medalla-prisma",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/moneda-de-fortuna",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/petalo-de-sakura",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/ticket-de-temporada",
+        "rarity": "common",
+        "price": 80
+      },
+      {
+        "id": "coleccionables/token-festivo",
+        "rarity": "uncommon",
+        "price": 128
+      },
+      {
+        "id": "coleccionables/varita-de-luz",
+        "rarity": "common",
+        "price": 80
+      }
+    ]
+  },
+  {
+    "categoryKey": "Consumables",
+    "category": "Consumables",
+    "items": [
+      {
+        "id": "consumibles/agua-fresca",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/barra-proteica",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/batido-prisma",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/cafe-moxi",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/calabaza-festiva",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/chocolate-caliente",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/electrolito",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/ensalada-refrescante",
+        "rarity": "uncommon",
+        "price": 48
+      },
+      {
+        "id": "consumibles/fruta-magica",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/fuegos-artificiales",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/galleta-energetica",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/monedas-de-oro",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/nuez-dorada",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/pan-de-ajo",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/pastel-de-celebracion",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/sandwich-de-aventura",
+        "rarity": "uncommon",
+        "price": 48
+      },
+      {
+        "id": "consumibles/sopa-caliente",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/sushi-marino",
+        "rarity": "common",
+        "price": 30
+      },
+      {
+        "id": "consumibles/te-verde",
+        "rarity": "common",
+        "price": 30
+      }
+    ]
+  },
+  {
+    "categoryKey": "Tools",
+    "category": "Tools",
+    "items": [
+      {
+        "id": "herramientas/anzuelo-de-lux",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/arpon-marino",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/barco-moxi",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/bomba-de-humo",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/brujula-prisma",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/cana-de-bambu",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/cana-de-carbono",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/cana-de-pesca-moxi",
+        "rarity": "uncommon",
+        "price": 352
+      },
+      {
+        "id": "herramientas/cebo-prisma",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/cuchillo-de-supervivencia",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/cuerda-de-escalada",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/detector-de-metales",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/dinamita",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/frasco-cazabichos",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/golem-minero-pescador",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/guantes-de-minero",
+        "rarity": "uncommon",
+        "price": 352
+      },
+      {
+        "id": "herramientas/hacha-elemental",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/incubadora",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/kit-de-reparacion",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/linterna-de-caverna",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/llave-multiusos",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/lupa-antigua",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/mapa-arrugado",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/martillo-de-forja",
+        "rarity": "uncommon",
+        "price": 352
+      },
+      {
+        "id": "herramientas/pala-de-excavacion",
+        "rarity": "rare",
+        "price": 792
+      },
+      {
+        "id": "herramientas/pico-de-acero",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/pico-de-diamante",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/pico-de-hierro",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/pico-de-obsidiana",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/pico-prisma",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/red-de-pesca",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/revelador-prisma",
+        "rarity": "uncommon",
+        "price": 352
+      },
+      {
+        "id": "herramientas/sierra-de-carpintero",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/taladro-portatil",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "herramientas/varita-solar",
+        "rarity": "common",
+        "price": 220
+      }
+    ]
+  },
+  {
+    "categoryKey": "Keys",
+    "category": "Keys",
+    "items": [
+      {
+        "id": "llaves/anillo-de-fuego",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "llaves/llave-abisal",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "llaves/llave-antigua",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "llaves/llave-elemental",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "llaves/llave-glaciar",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "llaves/llave-lunar",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "llaves/llave-prisma",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "llaves/llave-volcanica",
+        "rarity": "uncommon",
+        "price": 1440
+      },
+      {
+        "id": "llaves/talisman-solar",
+        "rarity": "common",
+        "price": 900
+      }
+    ]
+  },
+  {
+    "categoryKey": "Loot",
+    "category": "Loot",
+    "items": [
+      {
+        "id": "loots/bolsa-de-gemas",
+        "rarity": "common",
+        "price": 600
+      },
+      {
+        "id": "loots/bolsa-de-materiales",
+        "rarity": "common",
+        "price": 600
+      },
+      {
+        "id": "loots/caja-de-herramientas",
+        "rarity": "common",
+        "price": 600
+      },
+      {
+        "id": "loots/caja-de-suerte",
+        "rarity": "common",
+        "price": 600
+      },
+      {
+        "id": "loots/caja-marina",
+        "rarity": "common",
+        "price": 600
+      },
+      {
+        "id": "loots/caja-misteriosa",
+        "rarity": "common",
+        "price": 600
+      },
+      {
+        "id": "loots/caja-premium-diamante-platino",
+        "rarity": "common",
+        "price": 600
+      },
+      {
+        "id": "loots/cofre-abisal",
+        "rarity": "uncommon",
+        "price": 960
+      },
+      {
+        "id": "loots/cofre-de-fortuna",
+        "rarity": "common",
+        "price": 600
+      },
+      {
+        "id": "loots/cofre-glaciar",
+        "rarity": "common",
+        "price": 600
+      },
+      {
+        "id": "loots/cofre-volcanico",
+        "rarity": "common",
+        "price": 600
+      },
+      {
+        "id": "loots/pack-de-celebracion",
+        "rarity": "common",
+        "price": 600
+      },
+      {
+        "id": "loots/tarjeta-de-regalo",
+        "rarity": "common",
+        "price": 600
+      }
+    ]
+  },
+  {
+    "categoryKey": "Pets",
+    "category": "Pets",
+    "items": [
+      {
+        "id": "mascotas/huevo-abisal",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-aurora",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-brumoso",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-cometa",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-coral",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-de-bosque",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-de-cristal",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-de-montana",
+        "rarity": "uncommon",
+        "price": 1440
+      },
+      {
+        "id": "mascotas/huevo-de-tormenta",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-elemental",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-encantado",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-fertil",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-festivo",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-glaciar",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-guardian",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-jardin",
+        "rarity": "uncommon",
+        "price": 1440
+      },
+      {
+        "id": "mascotas/huevo-legendario",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-lunar",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-magico",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-marino",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-meteoro",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-prisma",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-prisma-antiguo",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-radiante",
+        "rarity": "uncommon",
+        "price": 1440
+      },
+      {
+        "id": "mascotas/huevo-relampago",
+        "rarity": "rare",
+        "price": 3240
+      },
+      {
+        "id": "mascotas/huevo-selvatico",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-solar",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-solar-real",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-torbellino",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-umbrio",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/huevo-volcanico",
+        "rarity": "common",
+        "price": 900
+      },
+      {
+        "id": "mascotas/ocarina-del-vinculo",
+        "rarity": "uncommon",
+        "price": 1440
+      }
+    ]
+  },
+  {
+    "categoryKey": "Materials",
+    "category": "Materials",
+    "items": [
+      {
+        "id": "materiales/alga-marina",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/barra-de-oro-acero",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/concha-marina",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/coral-prisma",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/cuero-curtido",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/dulce-festivo",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/esencia-lunar",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/esencia-solar",
+        "rarity": "uncommon",
+        "price": 19
+      },
+      {
+        "id": "materiales/esencia-umbria",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/flor-de-amor",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/fosil",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/fragmento-de-cristal",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/fragmento-de-espiritu",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/gema-esmeralda",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/gema-rubi",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/gema-zafiro",
+        "rarity": "uncommon",
+        "price": 19
+      },
+      {
+        "id": "materiales/hierba-prisma",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/hilo-fino",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/madera-encantada",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/madera-robusta",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/mineral-de-cobre",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/mineral-de-diamante",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/mineral-de-hierro",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/mineral-de-oro",
+        "rarity": "uncommon",
+        "price": 19
+      },
+      {
+        "id": "materiales/mineral-de-plata",
+        "rarity": "rare",
+        "price": 43
+      },
+      {
+        "id": "materiales/mineral-elemental",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/nucleo-elemental",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/perla-azur",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/placa-de-acero",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/polvo-prisma",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/roca-volcanica",
+        "rarity": "common",
+        "price": 12
+      },
+      {
+        "id": "materiales/tela-resistente",
+        "rarity": "uncommon",
+        "price": 19
+      }
+    ]
+  },
+  {
+    "categoryKey": "Upgrades",
+    "category": "Upgrades",
+    "items": [
+      {
+        "id": "mejoras/aurora-festiva",
+        "rarity": "common",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/entrenamiento-moxi",
+        "rarity": "common",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/escudo-de-tolerancia",
+        "rarity": "common",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/estrella-de-suerte",
+        "rarity": "common",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/expansion-de-banco",
+        "rarity": "common",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/expansion-de-mochila",
+        "rarity": "common",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/expansion-de-mochila-plus",
+        "rarity": "common",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/pase-premium-moxi",
+        "rarity": "uncommon",
+        "price": 2400
+      },
+      {
+        "id": "mejoras/potenciador-de-fortuna",
+        "rarity": "common",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/sello-de-proteccion",
+        "rarity": "common",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/tinte-personalizado",
+        "rarity": "common",
+        "price": 1500
+      },
+      {
+        "id": "mejoras/trabajo-en-equipo",
+        "rarity": "common",
+        "price": 1500
+      }
+    ]
+  },
+  {
+    "categoryKey": "Quests",
+    "category": "Quests",
+    "items": [
+      {
+        "id": "misiones/conejo-de-peluche",
+        "rarity": "common",
+        "price": 200
+      },
+      {
+        "id": "misiones/espada-de-hielo",
+        "rarity": "common",
+        "price": 200
+      },
+      {
+        "id": "misiones/gema-prisma",
+        "rarity": "common",
+        "price": 200
+      },
+      {
+        "id": "misiones/katana-solar",
+        "rarity": "common",
+        "price": 200
+      },
+      {
+        "id": "misiones/mascara-de-zorro",
+        "rarity": "common",
+        "price": 200
+      }
+    ]
+  },
+  {
+    "categoryKey": "Potions",
+    "category": "Potions",
+    "items": [
+      {
+        "id": "pociones/elixir-de-luz",
+        "rarity": "common",
+        "price": 180
+      },
+      {
+        "id": "pociones/elixir-de-sombra",
+        "rarity": "common",
+        "price": 180
+      },
+      {
+        "id": "pociones/elixir-prisma",
+        "rarity": "common",
+        "price": 180
+      },
+      {
+        "id": "pociones/huevito-de-energia-exploracion-regeneracion-resistencia",
+        "rarity": "common",
+        "price": 180
+      },
+      {
+        "id": "pociones/pocion-de-regeneracion",
+        "rarity": "common",
+        "price": 180
+      },
+      {
+        "id": "pociones/pocion-de-resistencia",
+        "rarity": "common",
+        "price": 180
+      },
+      {
+        "id": "pociones/pocion-de-suerte",
+        "rarity": "common",
+        "price": 180
+      },
+      {
+        "id": "pociones/pocion-de-velocidad",
+        "rarity": "uncommon",
+        "price": 288
+      },
+      {
+        "id": "pociones/pocion-del-explorador",
+        "rarity": "common",
+        "price": 180
+      },
+      {
+        "id": "pociones/pocion-del-minero",
+        "rarity": "common",
+        "price": 180
+      },
+      {
+        "id": "pociones/pocion-del-pescador",
+        "rarity": "common",
+        "price": 180
+      }
+    ]
+  },
+  {
+    "categoryKey": "Scrolls",
+    "category": "Scrolls",
+    "items": [
+      {
+        "id": "rollos/notas-del-explorador",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "rollos/papiro-jeroglifico",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "rollos/rollo-de-estrategia",
+        "rarity": "common",
+        "price": 220
+      },
+      {
+        "id": "rollos/rollo-moxi",
+        "rarity": "common",
+        "price": 220
+      }
+    ]
+  },
+  {
+    "categoryKey": "Protection",
+    "category": "Protection",
+    "items": [
+      {
+        "id": "proteccion/vida-extra",
+        "rarity": "common",
+        "price": 2500
+      }
+    ]
+  }
+]
