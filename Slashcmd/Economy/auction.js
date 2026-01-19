@@ -3,6 +3,7 @@ const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
 const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+const { getSlashNamespaceString } = require('../../Util/slashNamespaceI18n');
 
 function economyCategory(lang) {
     lang = lang || 'es-ES';
@@ -10,22 +11,20 @@ function economyCategory(lang) {
 }
 
 function buildHelpText() {
-    const cmd = (subName) => `/auction ${subName}`;
-    return (
-        'Subasta y puja por items en el mercado de subastas de Moxi.\n\n' +
-        '**Puedes hacer uso de los siguientes subcomandos:**\n\n' +
-        `${cmd('add')} » Subasta un item.\n` +
-        `${cmd('bid')} » Puja por un item.\n` +
-        `${cmd('bids')} » Mira tus pujas en subastas.\n` +
-        `${cmd('cancel')} » Cancela una subasta.\n` +
-        `${cmd('list')} » Mira tus items en subasta.\n` +
-        `${cmd('search')} » Mira y busca en la subasta.\n` +
-        `${cmd('upgrade')} » Incrementa tu limite de subastas.\n\n` +
-        '✨ Moxinomía'
-    );
+    return '';
 }
 
 const { description, localizations } = getSlashCommandDescription('auction');
+const NS = 'economy/auction';
+
+const helpDesc = getSlashNamespaceString(NS, 'SLASH_HELP_DESC');
+const addDesc = getSlashNamespaceString(NS, 'SLASH_ADD_DESC');
+const bidDesc = getSlashNamespaceString(NS, 'SLASH_BID_DESC');
+const bidsDesc = getSlashNamespaceString(NS, 'SLASH_BIDS_DESC');
+const cancelDesc = getSlashNamespaceString(NS, 'SLASH_CANCEL_DESC');
+const listDesc = getSlashNamespaceString(NS, 'SLASH_LIST_DESC');
+const searchDesc = getSlashNamespaceString(NS, 'SLASH_SEARCH_DESC');
+const upgradeDesc = getSlashNamespaceString(NS, 'SLASH_UPGRADE_DESC');
 
 module.exports = {
     cooldown: 0,
@@ -35,18 +34,59 @@ module.exports = {
         .setName('auction')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addSubcommand((sc) => sc.setName('help').setDescription('Muestra ayuda de subastas'))
-        .addSubcommand((sc) => sc.setName('add').setDescription('Subasta un item (proximamente)'))
-        .addSubcommand((sc) => sc.setName('bid').setDescription('Puja por un item (proximamente)'))
-        .addSubcommand((sc) => sc.setName('bids').setDescription('Mira tus pujas (proximamente)'))
-        .addSubcommand((sc) => sc.setName('cancel').setDescription('Cancela una subasta (proximamente)'))
-        .addSubcommand((sc) => sc.setName('list').setDescription('Mira tus items en subasta (proximamente)'))
-        .addSubcommand((sc) => sc.setName('search').setDescription('Busca en subastas (proximamente)'))
-        .addSubcommand((sc) => sc.setName('upgrade').setDescription('Mejora tu limite (proximamente)')),
+        .addSubcommand((sc) => sc
+            .setName('help')
+            .setDescription(helpDesc.description)
+            .setDescriptionLocalizations(helpDesc.localizations))
+        .addSubcommand((sc) => sc
+            .setName('add')
+            .setDescription(addDesc.description)
+            .setDescriptionLocalizations(addDesc.localizations))
+        .addSubcommand((sc) => sc
+            .setName('bid')
+            .setDescription(bidDesc.description)
+            .setDescriptionLocalizations(bidDesc.localizations))
+        .addSubcommand((sc) => sc
+            .setName('bids')
+            .setDescription(bidsDesc.description)
+            .setDescriptionLocalizations(bidsDesc.localizations))
+        .addSubcommand((sc) => sc
+            .setName('cancel')
+            .setDescription(cancelDesc.description)
+            .setDescriptionLocalizations(cancelDesc.localizations))
+        .addSubcommand((sc) => sc
+            .setName('list')
+            .setDescription(listDesc.description)
+            .setDescriptionLocalizations(listDesc.localizations))
+        .addSubcommand((sc) => sc
+            .setName('search')
+            .setDescription(searchDesc.description)
+            .setDescriptionLocalizations(searchDesc.localizations))
+        .addSubcommand((sc) => sc
+            .setName('upgrade')
+            .setDescription(upgradeDesc.description)
+            .setDescriptionLocalizations(upgradeDesc.localizations)),
 
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;
-        await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const t = (k, vars = {}) => moxi.translate(`economy/auction:${k}`, lang, vars);
+
+        const buildHelpTextLocalized = () => {
+            const cmd = (subName) => `/auction ${subName}`;
+            return (
+                `${t('INTRO')}\n\n` +
+                `${t('SUBCOMMANDS_HEADER')}\n\n` +
+                `${cmd('add')} » ${t('SUB_ADD')}\n` +
+                `${cmd('bid')} » ${t('SUB_BID')}\n` +
+                `${cmd('bids')} » ${t('SUB_BIDS')}\n` +
+                `${cmd('cancel')} » ${t('SUB_CANCEL')}\n` +
+                `${cmd('list')} » ${t('SUB_LIST')}\n` +
+                `${cmd('search')} » ${t('SUB_SEARCH')}\n` +
+                `${cmd('upgrade')} » ${t('SUB_UPGRADE')}\n\n` +
+                `${t('FOOTER')}`
+            );
+        };
 
         // Si el comando aún está registrado sin subcomandos en Discord,
         // getSubcommand() lanzará error. Con required=false devolvemos null.
@@ -57,8 +97,8 @@ module.exports = {
                 asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.package,
-                        title: 'Subasta de Moxi',
-                        text: buildHelpText(),
+                        title: t('TITLE'),
+                        text: buildHelpTextLocalized(),
                     })
                 )
             );
@@ -70,8 +110,8 @@ module.exports = {
             asV2MessageOptions(
                 buildNoticeContainer({
                     emoji: EMOJIS.info,
-                    title: `Auction • ${sub}`,
-                    text: 'Este subcomando está en construcción.\nUsa /auction help para ver los subcomandos.',
+                    title: t('WIP_TITLE', { sub }),
+                    text: t('WIP_TEXT_SLASH', { helpCmd: '/auction help' }),
                 })
             )
         );
