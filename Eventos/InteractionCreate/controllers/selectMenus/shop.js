@@ -1,5 +1,6 @@
 const { MessageFlags } = require('discord.js');
 const { buildShopMessage } = require('../../../../Util/shopView');
+const moxi = require('../../../../i18n');
 
 module.exports = async function shopSelectMenu(interaction, Moxi, logger) {
     if (!interaction.isStringSelectMenu()) return false;
@@ -18,7 +19,11 @@ module.exports = async function shopSelectMenu(interaction, Moxi, logger) {
     const value = Array.isArray(interaction.values) ? interaction.values[0] : 'all';
     const categoryKey = value || 'all';
 
-    const payload = buildShopMessage({ userId, categoryKey, page: 0 });
+    const guildId = interaction.guildId || interaction.guild?.id;
+    const fallbackLang = interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
+    const lang = await moxi.guildLang(guildId, fallbackLang);
+
+    const payload = buildShopMessage({ userId, categoryKey, page: 0, lang });
     await interaction.update(payload);
     return true;
 };

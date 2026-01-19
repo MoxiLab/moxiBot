@@ -17,6 +17,7 @@ const {
     parseZonesCustomId,
     buildZonesContainer,
     getZoneForPick,
+    zoneName,
 } = require('../../../../Util/zonesView');
 const { hasInventoryItem } = require('../../../../Util/fishView');
 
@@ -37,10 +38,10 @@ module.exports = async function zonesButtons(interaction) {
 
     // Solo el autor puede usar el panel
     if (interaction.user?.id !== String(userId)) {
-        const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
+        const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES');
         const payload = {
             content: '',
-            components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: 'Solo el autor puede usar estos botones.' })],
+            components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: moxi.translate('misc:ONLY_AUTHOR_BUTTONS', lang) })],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
         };
         if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
@@ -49,7 +50,12 @@ module.exports = async function zonesButtons(interaction) {
     }
 
     const guildId = interaction.guildId || interaction.guild?.id;
-    const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+    const fallbackLang = interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
+    const lang = await moxi.guildLang(guildId, fallbackLang);
+
+    const tZones = (k, vars = {}) => moxi.translate(`economy/zones:${k}`, lang, vars);
+    const tFish = (k, vars = {}) => moxi.translate(`economy/fish:${k}`, lang, vars);
+    const tMine = (k, vars = {}) => moxi.translate(`economy/mine:${k}`, lang, vars);
 
     if (action === 'help') {
         const payload = {
@@ -57,8 +63,11 @@ module.exports = async function zonesButtons(interaction) {
             components: [
                 buildNoticeContainer({
                     emoji: EMOJIS.question,
-                    title: 'Zonas',
-                    text: 'Usa los botones para cambiar de categoría (Pesca / Minería / Exploración).\nPulsa una zona para ejecutar la acción.',
+                    title: tZones('ui.selectCategory') || 'Zones',
+                    text: [
+                        tZones('ui.pickHintFish') || 'Press a zone button to fish.',
+                        tZones('ui.pickHintOther') || 'Press a zone to perform the action.',
+                    ].join('\n'),
                 }),
             ],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
@@ -95,7 +104,7 @@ module.exports = async function zonesButtons(interaction) {
         if (!zone) {
             const payload = {
                 content: '',
-                components: [buildNoticeContainer({ emoji: EMOJIS.cross, text: 'Esa zona no existe en esta página.' })],
+                components: [buildNoticeContainer({ emoji: EMOJIS.cross, text: (kind === 'fish' ? tFish('PANEL_ZONE_NOT_FOUND_TEXT') : (kind === 'mine' ? tMine('INVALID_ZONE') : 'Invalid zone.')) })],
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
             };
             if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
@@ -108,19 +117,28 @@ module.exports = async function zonesButtons(interaction) {
             const required = getItemById(zone.requiredItemId, { lang });
             const requiredName = required?.name || String(zone.requiredItemId).split('/').pop() || zone.requiredItemId;
 
-            const titlePrefix = kind === 'fish' ? 'Fish' : (kind === 'mine' ? 'Minería' : 'Exploración');
+            const displayZone = zoneName({ kind, zone, lang }) || zone.name;
+
+            const titlePrefix = kind === 'fish'
+                ? (tFish('PLAY_PANEL_HEADER') || 'Fish')
+                : (kind === 'mine'
+                    ? (tMine('PLAY_PANEL_HEADER') || 'Mine')
+                    : (tZones(`kinds.${kind}`) || 'Exploration'));
             const payload = {
                 content: '',
                 components: [
                     buildNoticeContainer({
                         emoji: EMOJIS.noEntry,
-                        title: `${titlePrefix} • Requisito`,
-                        text:
-                            (kind === 'fish'
-                                ? `Para pescar en **${zone.name}** necesitas: **${requiredName}**`
-                                : kind === 'mine'
-                                    ? `Para minar en **${zone.name}** necesitas: **${requiredName}**`
-                                    : `Para explorar **${zone.name}** necesitas: **${requiredName}**`),
+                        title: kind === 'fish'
+                            ? (tFish('REQUIREMENT_TITLE') || `${titlePrefix} • Requirement`)
+                            : (kind === 'mine'
+                                ? (tMine('REQUIREMENT_TITLE') || `${titlePrefix} • Requirement`)
+                                : `${titlePrefix} • Requirement`),
+                        text: kind === 'fish'
+                            ? (tFish('PLAY_REQUIREMENT_MESSAGE', { zone: displayZone, item: requiredName }) || `To fish in **${displayZone}** you need: **${requiredName}**`)
+                            : (kind === 'mine'
+                                ? (tMine('PLAY_REQUIREMENT_MESSAGE', { zone: displayZone, item: requiredName }) || `To mine in **${displayZone}** you need: **${requiredName}**`)
+                                : `To explore **${displayZone}** you need: **${requiredName}**`),
                     }),
                 ],
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
@@ -186,7 +204,15 @@ module.exports = async function zonesButtons(interaction) {
             }
             await interaction.followUp({
                 content: '',
-                components: [buildNoticeContainer({ emoji: '⏳', title: 'Zonas • Cooldown', text: `Vuelve en **${formatDuration(res.nextInMs)}**.` })],
+                components: [buildNoticeContainer({
+                    emoji: '⏳',
+                    title: kind === 'fish' ? (tFish('COOLDOWN_TITLE') || 'Fish • Cooldown') : (kind === 'mine' ? (tMine('COOLDOWN_TITLE') || 'Mine • Cooldown') : 'Zones • Cooldown'),
+                    text: kind === 'fish'
+                        ? (tFish('COOLDOWN_TEXT', { time: formatDuration(res.nextInMs) }) || `Come back in **${formatDuration(res.nextInMs)}**.`)
+                        : (kind === 'mine'
+                            ? (tMine('COOLDOWN_TEXT', { time: formatDuration(res.nextInMs) }) || `Come back in **${formatDuration(res.nextInMs)}**.`)
+                            : `Come back in **${formatDuration(res.nextInMs)}**.`),
+                })],
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
             }).catch(() => null);
             return true;
@@ -195,23 +221,33 @@ module.exports = async function zonesButtons(interaction) {
         if (!res.ok) {
             await interaction.followUp({
                 content: '',
-                components: [buildNoticeContainer({ emoji: '⚠️', title: 'Zonas', text: res.message || 'No pude procesar tu acción ahora mismo.' })],
+                components: [buildNoticeContainer({
+                    emoji: '⚠️',
+                    title: kind === 'fish' ? (tFish('ERROR_TITLE') || 'Fish') : (kind === 'mine' ? (tMine('ERROR_TITLE') || 'Mine') : 'Zones'),
+                    text: res.message || (kind === 'fish' ? (tFish('ERROR_GENERIC') || 'I could not process that right now.') : (kind === 'mine' ? (tMine('ERROR_GENERIC') || 'I could not process that right now.') : 'I could not process that right now.')),
+                })],
                 flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
             }).catch(() => null);
             return true;
         }
 
-        const titlePrefix = kind === 'fish' ? 'Fish' : (kind === 'mine' ? 'Minería' : 'Exploración');
-        const actionText = kind === 'fish' ? 'Has pescado' : (kind === 'mine' ? 'Has minado' : 'Has explorado');
-        const actionLine = (kind === 'fish' || kind === 'mine') ? (res?.actionLine || activity?.phrase || actionText) : actionText;
+        const displayZone = zoneName({ kind, zone, lang }) || zone.name;
+        const titlePrefix = kind === 'fish'
+            ? (tFish('PLAY_PANEL_HEADER') || 'Fish')
+            : (kind === 'mine'
+                ? (tMine('PLAY_PANEL_HEADER') || 'Mine')
+                : (tZones(`kinds.${kind}`) || 'Exploration'));
+        const defaultActionText = kind === 'fish'
+            ? (tFish('DEFAULT_ACTION') || 'You fished')
+            : (kind === 'mine'
+                ? (tMine('DEFAULT_ACTION') || 'You mined')
+                : 'You explored');
+        const actionLine = (kind === 'fish' || kind === 'mine')
+            ? (res?.actionLine || activity?.phrase || defaultActionText)
+            : defaultActionText;
         const coin = EMOJIS.coin || '🪙';
-        let rewardText = (kind === 'fish' || kind === 'mine') && Number.isFinite(res?.amount)
-            ? `\n+ Ganaste **${res.amount}** ${coin}`
-            : '';
 
-        if ((kind === 'fish' || kind === 'mine') && Number.isFinite(res?.balance)) {
-            rewardText += `\nSaldo: **${res.balance}** ${coin}`;
-        }
+        let materialsLines = '';
 
         // Materiales extra por minería
         if (kind === 'mine' && res?.ok && !res?.failed) {
@@ -228,7 +264,7 @@ module.exports = async function zonesButtons(interaction) {
                         return `+${d.amount} ${name}`;
                     })
                     .join('\n');
-                if (lines) rewardText += `\n\nMateriales:\n${lines}`;
+                if (lines) materialsLines = lines;
             }
         }
 
@@ -247,8 +283,42 @@ module.exports = async function zonesButtons(interaction) {
                         return `+${d.amount} ${name}`;
                     })
                     .join('\n');
-                if (lines) rewardText += `\n\nMateriales:\n${lines}`;
+                if (lines) materialsLines = lines;
             }
+        }
+
+        let text = '';
+        if (kind === 'fish') {
+            if (res?.failed) {
+                text = tFish('FAIL_TEXT', { action: actionLine }) || `${actionLine}... but nothing bit.`;
+            } else {
+                const successLine = Number.isFinite(res?.amount)
+                    ? (tFish('SUCCESS_TEXT', { action: actionLine, amount: res.amount }) || `${actionLine} and you earned **${res.amount}** 🪙.`)
+                    : actionLine;
+                const balanceLine = Number.isFinite(res?.balance)
+                    ? (tFish('BALANCE_LINE', { balance: res.balance }) || '')
+                    : '';
+                const matsHeader = tFish('MATERIALS_HEADER') || 'Materials:';
+                const matsBlock = materialsLines ? `\n\n${matsHeader}\n${materialsLines}` : '';
+                text = [successLine, balanceLine].filter(Boolean).join('\n') + matsBlock;
+            }
+        } else if (kind === 'mine') {
+            if (res?.failed) {
+                text = tMine('FAIL_TEXT', { action: actionLine }) || `${actionLine}... but you found nothing useful.`;
+            } else {
+                const successLine = Number.isFinite(res?.amount)
+                    ? (tMine('SUCCESS_TEXT', { action: actionLine, amount: res.amount, coin }) || `${actionLine} and you earned **${res.amount}** ${coin}.`)
+                    : actionLine;
+                const balanceLine = Number.isFinite(res?.balance)
+                    ? (tMine('BALANCE_LINE', { balance: res.balance, coin }) || '')
+                    : '';
+                const matsHeader = tMine('MATERIALS_HEADER') || 'Materials:';
+                const matsBlock = materialsLines ? `\n\n${matsHeader}\n${materialsLines}` : '';
+                text = [successLine, balanceLine].filter(Boolean).join('\n') + matsBlock;
+            }
+        } else {
+            // Explore (sin i18n dedicado)
+            text = res?.failed ? `${actionLine}...` : `${actionLine}.`;
         }
 
         await interaction.followUp({
@@ -256,10 +326,8 @@ module.exports = async function zonesButtons(interaction) {
             components: [
                 buildNoticeContainer({
                     emoji: zone.emoji || (kind === 'mine' ? '⛏️' : (kind === 'explore' ? '🧭' : '🎣')),
-                    title: `${titlePrefix} • ${zone.name}`,
-                    text: kind === 'fish'
-                        ? (res?.failed ? `${actionLine}... pero no ha picado nada.` : `${actionLine}. ¡Buen lance! 🎣${rewardText}`)
-                        : (kind === 'mine' && res?.failed ? `${actionLine}... pero no has encontrado nada útil.` : `${actionLine}. ¡Hecho!${rewardText}`),
+                    title: `${titlePrefix} • ${displayZone}`,
+                    text,
                 }),
             ],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,

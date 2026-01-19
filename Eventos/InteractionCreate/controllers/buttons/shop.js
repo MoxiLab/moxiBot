@@ -1,5 +1,6 @@
 const { MessageFlags } = require('discord.js');
 const { buildShopMessage } = require('../../../../Util/shopView');
+const moxi = require('../../../../i18n');
 
 module.exports = async function shopButtons(interaction, Moxi, logger) {
     if (!interaction.isButton()) return false;
@@ -16,6 +17,10 @@ module.exports = async function shopButtons(interaction, Moxi, logger) {
     const userId = parts[2];
     const categoryKey = parts[3] || 'all';
 
+    const guildId = interaction.guildId || interaction.guild?.id;
+    const fallbackLang = interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
+    const lang = await moxi.guildLang(guildId, fallbackLang);
+
     if (interaction.user?.id !== userId) {
         await interaction.reply({ content: 'Solo quien abrió la tienda puede usar estos botones.', flags: MessageFlags.Ephemeral });
         return true;
@@ -27,7 +32,7 @@ module.exports = async function shopButtons(interaction, Moxi, logger) {
     }
 
     if (action === 'home') {
-        const payload = buildShopMessage({ userId, categoryKey, page: 0 });
+        const payload = buildShopMessage({ userId, categoryKey, page: 0, lang });
         await interaction.update(payload);
         return true;
     }
@@ -56,13 +61,13 @@ module.exports = async function shopButtons(interaction, Moxi, logger) {
         const page = Number(parts[4] || 0);
         const dir = parts[5] || 'next';
         const nextPage = dir === 'prev' ? Math.max(0, page - 1) : page + 1;
-        const payload = buildShopMessage({ userId, categoryKey, page: nextPage });
+        const payload = buildShopMessage({ userId, categoryKey, page: nextPage, lang });
         await interaction.update(payload);
         return true;
     }
 
     // Fallback seguro: vuelve al inicio de la categoría
-    const payload = buildShopMessage({ userId, categoryKey, page: 0 });
+    const payload = buildShopMessage({ userId, categoryKey, page: 0, lang });
     await interaction.update(payload);
     return true;
 };

@@ -39,7 +39,8 @@ module.exports = async function fishButtons(interaction) {
 
     // Solo el autor puede usar el panel
     if (interaction.user?.id !== String(userId)) {
-        const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
+        const fallbackLang = interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
+        const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, fallbackLang);
         const payload = {
             content: '',
             components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: moxi.translate('misc:ONLY_AUTHOR_BUTTONS', lang) })],
@@ -51,7 +52,8 @@ module.exports = async function fishButtons(interaction) {
     }
 
     const guildId = interaction.guildId || interaction.guild?.id;
-    const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+    const fallbackLang = interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
+    const lang = await moxi.guildLang(guildId, fallbackLang);
     const t = (k, vars) => moxi.translate(`economy/fish:${k}`, lang, vars);
 
     // --- Minijuego: fish:play:<userId>:<zoneId>

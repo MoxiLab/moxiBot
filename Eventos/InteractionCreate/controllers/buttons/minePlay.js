@@ -21,7 +21,8 @@ module.exports = async function minePlayButtons(interaction) {
 
     if (interaction.user?.id !== String(userId)) {
         const guildId = interaction.guildId || interaction.guild?.id;
-        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const fallbackLang = interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
+        const lang = await moxi.guildLang(guildId, fallbackLang);
         const payload = {
             content: '',
             components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: moxi.translate('misc:ONLY_AUTHOR_BUTTONS', lang) })],
@@ -35,7 +36,8 @@ module.exports = async function minePlayButtons(interaction) {
     if (action === 'play') {
         const zoneId = parts?.[3];
         const guildId = interaction.guildId || interaction.guild?.id;
-        const lang = interaction.lang || await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const fallbackLang = interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
+        const lang = await moxi.guildLang(guildId, fallbackLang);
         const payload = buildMinePlayMessageOptions({ userId, zoneId, lang });
         await interaction.update(payload).catch(() => null);
         return true;
@@ -44,7 +46,8 @@ module.exports = async function minePlayButtons(interaction) {
     if (action === 'closeplay') {
         const zoneId = parts?.[3];
         const guildId = interaction.guildId || interaction.guild?.id;
-        const lang = interaction.lang || await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const fallbackLang = interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
+        const lang = await moxi.guildLang(guildId, fallbackLang);
         const payload = buildMinePlayMessageOptions({ userId, zoneId, disabled: true, lang });
         await interaction.update(payload).catch(() => null);
         return true;
@@ -61,7 +64,8 @@ module.exports = async function minePlayButtons(interaction) {
         }
 
         const guildId = interaction.guildId || interaction.guild?.id;
-        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const fallbackLang = interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
+        const lang = await moxi.guildLang(guildId, fallbackLang);
 
         const res = await resolveMinePlay({ userId, zoneId, mode, choiceId, seedOrMult, lang });
         const zone = res?.zone;
