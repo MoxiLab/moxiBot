@@ -72,7 +72,8 @@ module.exports = {
 
     async execute(Moxi, message, args) {
         const guildId = message.guildId || message.guild?.id;
-        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const fallbackLang = message.guild?.preferredLocale || process.env.DEFAULT_LANG || 'es-ES';
+        const lang = await moxi.guildLang(guildId, fallbackLang);
         const prefix = await moxi.guildPrefix(guildId, process.env.PREFIX || '.');
         const t = (k, vars = {}) => moxi.translate(`economy/mine:${k}`, lang, vars);
 
