@@ -17,6 +17,7 @@ const { resolveItemFromInput, consumeInventoryItem } = require('../../Util/useIt
 const { getOrCreateEconomy, formatDuration } = require('../../Util/economyCore');
 const { getItemById } = require('../../Util/inventoryCatalog');
 const { Bot } = require('../../Config');
+const { economyCategory } = require('../../Util/commandCategories');
 const {
     isEggItemId,
     pickFirstOwnedEgg,
@@ -32,10 +33,6 @@ const {
 } = require('../../Util/petSystem');
 
 const PET_RETURN_ITEM_ID = 'mascotas/ocarina-del-vinculo';
-
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
 
 function parsePositiveInt(value) {
     const n = Number(value);
@@ -62,7 +59,7 @@ module.exports = {
     alias: ['usar', 'consumir'],
     Category: economyCategory,
     usage: 'use <id|nombre> [cantidad]',
-    description: 'Usa (consume) un ítem de tu mochila.',
+    description: 'commands:CMD_USE_DESC',
     cooldown: 0,
     command: {
         prefix: true,
@@ -73,6 +70,8 @@ module.exports = {
     async execute(Moxi, message, args) {
         const guildId = message.guildId || message.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const prefix = await moxi.guildPrefix(guildId, process.env.PREFIX || '.');
+        const t = (k, vars = {}) => moxi.translate(`economy/use:${k}`, lang, { prefix, ...vars });
 
         const raw = args?.length ? args.join(' ').trim() : '';
         if (!raw) {
@@ -80,8 +79,8 @@ module.exports = {
                 asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Uso incorrecto',
-                        text: 'Debes escribir el nombre o id del item que quieres usar.',
+                        title: t('USAGE_BAD_TITLE'),
+                        text: t('USAGE_BAD_TEXT'),
                     })
                 )
             );
@@ -101,8 +100,8 @@ module.exports = {
                 asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
-                        title: 'Ítem no encontrado',
-                        text: 'No encontré ese ítem. Usa .bag para ver tu inventario o .shop list para ver IDs.',
+                        title: t('ITEM_NOT_FOUND_TITLE'),
+                        text: t('ITEM_NOT_FOUND_TEXT'),
                     })
                 )
             );
@@ -119,8 +118,8 @@ module.exports = {
                     asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: EMOJIS.info,
-                            title: 'Mascotas',
-                            text: 'Aún no tienes mascotas. Incuba un huevo para conseguir una.',
+                            title: t('PETS_TITLE'),
+                            text: t('NO_PETS_TEXT_SHORT'),
                         })
                     )
                 );
@@ -135,8 +134,8 @@ module.exports = {
                     asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: '🐾',
-                            title: 'Ocarina del Vínculo',
-                            text: 'Tu mascota ya está contigo. No necesitas usarla ahora.',
+                            title: t('OCARINA_TITLE'),
+                            text: t('OCARINA_ALREADY_WITH_YOU'),
                         })
                     )
                 );
@@ -150,8 +149,8 @@ module.exports = {
                         asV2MessageOptions(
                             buildNoticeContainer({
                                 emoji: EMOJIS.cross,
-                                title: 'Ocarina del Vínculo',
-                                text: 'No tienes este ítem en tu mochila.',
+                                title: t('OCARINA_TITLE'),
+                                text: t('OCARINA_NOT_OWNED'),
                             })
                         )
                     );
@@ -166,7 +165,7 @@ module.exports = {
             const gifUrl = process.env.PET_RETURN_GIF_URL || await resolveUseGif();
             const container = new ContainerBuilder()
                 .setAccentColor(Bot?.AccentColor || 0xB57EDC)
-                .addTextDisplayComponents(t => t.setContent('# 🎶 Ocarina del Vínculo'))
+                .addTextDisplayComponents(td => td.setContent(t('OCARINA_HEADER')))
                 .addSeparatorComponents(s => s.setDivider(true));
 
             const safeGif = gifUrl && /^https?:\/\//.test(String(gifUrl)) ? String(gifUrl) : null;
@@ -178,11 +177,11 @@ module.exports = {
             }
 
             container
-                .addTextDisplayComponents(t => t.setContent(`🐾 **${pet.name || 'Tu mascota'}** ha oído el sonido… ¡y ha regresado!`))
+                .addTextDisplayComponents(td => td.setContent(t('PET_RETURN_TEXT', { pet: pet.name || moxi.translate('economy/use:PET_FALLBACK_NAME', lang) })))
                 .addActionRowComponents(row => row.addComponents(
                     new ButtonBuilder()
                         .setCustomId(`pet:open:${message.author.id}`)
-                        .setLabel('Ver mascota')
+                        .setLabel(t('PET_VIEW_BUTTON'))
                         .setStyle(ButtonStyle.Primary)
                         .setEmoji('🐣')
                 ));
@@ -206,8 +205,8 @@ module.exports = {
                         asV2MessageOptions(
                             buildNoticeContainer({
                                 emoji: EMOJIS.cross,
-                                title: 'Incubadora',
-                                text: 'No tienes una incubadora en tu mochila.',
+                                title: t('INCUBATOR_TITLE'),
+                                text: t('INCUBATOR_NOT_OWNED'),
                             })
                         )
                     );

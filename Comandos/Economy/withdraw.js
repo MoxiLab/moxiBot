@@ -2,10 +2,7 @@ const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
 const { getOrCreateEconomyRaw } = require('../../Util/balanceView');
-
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
+const { economyCategory } = require('../../Util/commandCategories');
 
 function safeInt(n, fallback = 0) {
     const x = Number(n);
@@ -31,7 +28,7 @@ module.exports = {
     alias: ['retirar', 'wd'],
     Category: economyCategory,
     usage: 'withdraw [cantidad]',
-    description: 'Retira coins desde tu banco al balance.',
+    description: 'commands:CMD_WITHDRAW_DESC',
     examples: ['withdraw', 'withdraw 100', 'withdraw all'],
     cooldown: 0,
     command: {

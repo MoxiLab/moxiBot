@@ -1,9 +1,6 @@
 const moxi = require('../../i18n');
 const { buildBagMessage } = require('../../Util/bagView');
-
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
+const { economyCategory } = require('../../Util/commandCategories');
 
 function safePageArg(arg) {
     const n = Number(arg);
@@ -17,7 +14,7 @@ module.exports = {
     alias: ['mochila', 'inventario', 'inv'],
     Category: economyCategory,
     usage: 'bag [pagina]',
-    description: 'Muestra tu mochila (inventario).',
+    description: 'commands:CMD_BAG_DESC',
     cooldown: 0,
     command: {
         prefix: true,

@@ -4,10 +4,7 @@ const { EMOJIS } = require('../../Util/emojis');
 const { buildShopData } = require('../../Util/shopView');
 const { resolveItemFromInput } = require('../../Util/useItem');
 
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
-
+const { economyCategory } = require('../../Util/commandCategories');
 function safeInt(n, fallback = 0) {
     const x = Number(n);
     return Number.isFinite(x) ? Math.trunc(x) : fallback;
@@ -18,7 +15,7 @@ module.exports = {
     alias: ['comprar'],
     Category: economyCategory,
     usage: 'buy <id|nombre|itemId> [cantidad]',
-    description: 'Compra un ítem de la tienda por su ID, nombre o itemId.',
+    description: 'commands:CMD_BUY_DESC',
     examples: ['buy 1', 'buy 10 2', 'buy pocion 2', 'buy hacha elemental 1', 'buy herramientas/hacha-elemental 1'],
     cooldown: 0,
     command: {

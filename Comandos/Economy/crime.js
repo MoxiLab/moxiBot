@@ -1,16 +1,14 @@
 const moxi = require('../../i18n');
 const { buildCrimeMessageOptions } = require('../../Util/crimeView');
 
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
+const { economyCategory } = require('../../Util/commandCategories');
 
 module.exports = {
     name: 'crime',
     alias: ['crimen', 'robo', 'rob', 'steal'],
     Category: economyCategory,
     usage: 'crime',
-    description: 'Comete un crimen para intentar ganar monedas (con riesgo).',
+    description: 'commands:CMD_CRIME_DESC',
     cooldown: 0,
     examples: ['crime'],
     command: {

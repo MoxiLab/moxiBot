@@ -3,6 +3,8 @@ const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notic
 const { EMOJIS } = require('../../Util/emojis');
 const { resolveItemFromInput } = require('../../Util/useItem');
 
+const { economyCategory } = require('../../Util/commandCategories');
+
 function parsePositiveInt(value) {
     const n = Number.parseInt(String(value || '').trim(), 10);
     if (!Number.isFinite(n)) return null;
@@ -45,10 +47,6 @@ async function getOwnedAmountSafe(userId, itemId) {
     }
 }
 
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
-
 module.exports = {
     name: 'iteminfo',
     alias: [
@@ -63,7 +61,7 @@ module.exports = {
     ],
     Category: economyCategory,
     usage: 'iteminfo <id|nombre|itemId>',
-    description: 'Muestra información de un ítem por ID, nombre o itemId.',
+    description: 'commands:CMD_ITEMINFO_DESC',
     cooldown: 0,
     command: {
         prefix: true,

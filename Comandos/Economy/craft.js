@@ -1,15 +1,13 @@
 const moxi = require('../../i18n');
 
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
+const { economyCategory } = require('../../Util/commandCategories');
 
 module.exports = {
     name: 'craft',
     alias: ['forge', 'craftear'],
     Category: economyCategory,
     usage: 'craft [-p página] <item> [anvil]',
-    description: 'Crea items o revisa la lista.',
+    description: 'commands:CMD_CRAFT_DESC',
     cooldown: 0,
     examples: ['craft', 'craft -p 2', 'craft barra de oro', 'craft nyan -o', 'craft --steel --acero -s -a'],
     permissions: {

@@ -1,16 +1,14 @@
 const moxi = require('../../i18n');
 const { buildBalanceMessage } = require('../../Util/balanceView');
 
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
+const { economyCategory } = require('../../Util/commandCategories');
 
 module.exports = {
     name: 'balance',
     alias: ['balance'],
     Category: economyCategory,
     usage: 'balance [@usuario]',
-    description: 'Muestra tu balance (coins/banco/sakuras).',
+    description: 'commands:CMD_BALANCE_DESC',
     cooldown: 0,
     command: {
         prefix: true,

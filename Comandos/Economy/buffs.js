@@ -1,16 +1,12 @@
 const moxi = require('../../i18n');
 const { buildBuffsMessage } = require('../../Util/buffsView');
-
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
-
+const { economyCategory } = require('../../Util/commandCategories');
 module.exports = {
     name: 'buffs',
     alias: ['potenciadores', 'boosts'],
     Category: economyCategory,
     usage: 'buffs',
-    description: 'Muestra tus potenciadores y bonos de botín.',
+    description: 'commands:CMD_BUFFS_DESC',
     cooldown: 0,
     command: {
         prefix: true,

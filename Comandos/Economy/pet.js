@@ -5,6 +5,7 @@ const { getOrCreateEconomy, formatDuration } = require('../../Util/economyCore')
 const { getItemById } = require('../../Util/inventoryCatalog');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildPetPanelMessageOptions } = require('../../Util/petPanel');
+const { economyCategory } = require('../../Util/commandCategories');
 const {
     isIncubationReady,
     incubationRemainingMs,
@@ -14,16 +15,12 @@ const {
     checkAndMarkPetAway,
 } = require('../../Util/petSystem');
 
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
-
 module.exports = {
     name: 'pet',
     alias: ['pet'],
     Category: economyCategory,
     usage: 'pet',
-    description: 'Gestiona tu mascota y la incubación de huevos.',
+    description: 'commands:CMD_PET_DESC',
     cooldown: 0,
     command: {
         prefix: true,
@@ -34,6 +31,8 @@ module.exports = {
     async execute(Moxi, message) {
         const guildId = message.guildId || message.guild?.id;
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const prefix = await moxi.guildPrefix(guildId, process.env.PREFIX || '.');
+        const t = (k, vars = {}) => moxi.translate(`economy/pet:${k}`, lang, { prefix, ...vars });
 
         const eco = await getOrCreateEconomy(message.author.id);
         const now = Date.now();
@@ -50,8 +49,8 @@ module.exports = {
                     ...asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: '🥚',
-                            title: 'Mascotas',
-                            text: `Tu **${eggName}** está incubando.\nTiempo restante: **${rem || '...'}**\n\nTip: cuando esté listo, vuelve a usar **.pet** para eclosionarlo.`,
+                            title: t('TITLE'),
+                            text: t('INCUBATING_TEXT', { egg: eggName, time: rem || '...' }),
                         })
                     ),
                     allowedMentions: { repliedUser: false },
@@ -97,8 +96,8 @@ module.exports = {
             ...asV2MessageOptions(
                 buildNoticeContainer({
                     emoji: EMOJIS.info,
-                    title: 'Mascotas',
-                    text: 'Aún no tienes mascotas.\n\n1) Compra un **huevo** en `.shop`\n2) Compra una **incubadora**\n3) Usa: `.use incubadora` para incubar (consume 1 huevo)\n4) Luego usa `.pet` para ver el progreso / eclosionar.',
+                    title: t('TITLE'),
+                    text: t('NO_PETS_TEXT'),
                 })
             ),
             allowedMentions: { repliedUser: false },

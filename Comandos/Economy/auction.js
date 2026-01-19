@@ -3,9 +3,7 @@ const { Bot } = require('../../Config');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
+const { economyCategory } = require('../../Util/commandCategories');
 
 function formatUsage(prefix, commandName, rest = '') {
     const p = String(prefix || '').trim();
@@ -24,7 +22,7 @@ module.exports = {
     alias: ['subasta', 'subastas'],
     Category: economyCategory,
     usage: 'auction [subcomando]',
-    description: 'Subasta y puja por items en el mercado de subastas.',
+    description: 'commands:CMD_AUCTION_DESC',
     helpText:
         '`auction add` » Subasta un item.\n' +
         '`auction bid` » Puja por un item.\n' +

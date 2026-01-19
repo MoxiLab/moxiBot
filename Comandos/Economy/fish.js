@@ -14,12 +14,9 @@ const {
 } = require('../../Util/fishView');
 const { buildZonesMessageOptions, getZonesForKind } = require('../../Util/zonesView');
 
+const { economyCategory } = require('../../Util/commandCategories');
+
 const FISH_FAIL_CHANCE = 0.22;
-
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
-
 function safeInt(n, fallback = 0) {
     const x = Number(n);
     if (!Number.isFinite(x)) return fallback;
@@ -64,27 +61,16 @@ function pickBestUsableFishZone(eco) {
     return usable[Math.floor(Math.random() * usable.length)] || usable[0];
 }
 
-function buildFishHelpText(prefix) {
-    const p = String(prefix || '.');
-    return [
-        '¡Vamos a pescar! 🎣',
-        'Explora diferentes zonas para encontrar peces raros y tesoros nya.',
-        'Cada zona necesita una herramienta específica.',
-        '',
-        `Empieza aquí: \`${p}fish zones\``,
-    ].join('\n');
-}
-
 module.exports = {
     name: 'fish',
     alias: ['pescar', 'fishing'],
     Category: economyCategory,
     usage: 'fish [zona|nivel] | fish zones',
-    description: '¡Vamos a pescar! Explora zonas para encontrar peces raros y tesoros.',
+    description: 'commands:CMD_FISH_DESC',
     // cooldown base (normal)
     cooldown: 0,
     // Para que el help se vea como tu captura
-    helpText: buildFishHelpText('.'),
+    helpText: (lang) => moxi.translate('economy/fish:HELP_TEXT', lang),
     examples: ['fish zones', 'fish zones 2', 'fish muelle-moxi', 'fish bahia-sakura', 'fish ruinas-sumergidas'],
     cooldownTiers: {
         normal: 0,
@@ -107,11 +93,6 @@ module.exports = {
         const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
         const prefix = await moxi.guildPrefix(guildId, process.env.PREFIX || '.');
         const t = (k, vars = {}) => moxi.translate(`economy/fish:${k}`, lang, vars);
-
-        // Actualiza el texto del help para que use el prefijo real del server
-        if (typeof this.helpText === 'string' && this.helpText.includes('fish zones')) {
-            // no-op (compat)
-        }
 
         const sub = String(args?.[0] || '').trim().toLowerCase();
         if (sub === 'zones' || sub === 'zonas') {

@@ -1,10 +1,7 @@
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
-
-function toolsCategory(lang) {
-    return moxi.translate('commands:CATEGORY_HERRAMIENTAS', lang || 'es-ES');
-}
+const { toolsCategory } = require('../../Util/commandCategories');
 
 async function safeDeleteMessage(message) {
     try {

@@ -17,10 +17,7 @@ const {
 const { formatDuration } = require('../../Util/economyCore');
 const { buildWorkListMessageOptions } = require('../../Util/workListPanel');
 const { buildWorkApplyMessageOptions } = require('../../Util/workApplyPanel');
-
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
+const { economyCategory } = require('../../Util/commandCategories');
 
 function normalizeSubcommand(v) {
     return String(v || '').trim().toLowerCase();
@@ -65,7 +62,7 @@ module.exports = {
     alias: ['w', 'trabajo', 'job'],
     Category: economyCategory,
     usage: 'work list | work apply <id|nombre> | work leave | work shift | work stats | work top',
-    description: 'Trabaja para ganar monedas y experiencia.',
+    description: 'commands:CMD_WORK_DESC',
     cooldown: Math.floor(getWorkCooldownMs() / 1000),
     permissions: {
         Bot: ['Ver canal', 'Enviar mensajes', 'Insertar enlaces'],

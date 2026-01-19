@@ -1,16 +1,14 @@
 const moxi = require('../../i18n');
 const { buildWipPayload } = require('../../Util/wip');
 
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
+const { economyCategory } = require('../../Util/commandCategories');
 
 module.exports = {
     name: 'daily',
     alias: ['daily'],
     Category: economyCategory,
     usage: 'daily',
-    description: 'Comando en desarrollo.',
+    description: 'economy/daily:WIP_TEXT',
     cooldown: 0,
     command: {
         prefix: true,

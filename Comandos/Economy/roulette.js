@@ -2,10 +2,7 @@ const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
 const { getOrCreateEconomyRaw } = require('../../Util/balanceView');
-
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
+const { economyCategory } = require('../../Util/commandCategories');
 
 function safeInt(n, fallback = 0) {
     const x = Number(n);
@@ -124,7 +121,7 @@ module.exports = {
     alias: ['ruleta', 'rlt', 'rul', 'roul', 'rleta', 'rt'],
     Category: economyCategory,
     usage: 'roulette <cantidad|all> <rojo|negro|par|impar|alto|bajo|docena1|docena2|docena3|0-36>',
-    description: 'Juega a la ruleta y apuesta coins.',
+    description: 'commands:CMD_ROULETTE_DESC',
     examples: ['roulette 100 rojo', 'ruleta all negro', 'roulette 50 17', 'ruleta 200 docena2'],
     cooldown: 2,
     command: {

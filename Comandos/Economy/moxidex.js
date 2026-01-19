@@ -1,9 +1,7 @@
 const moxi = require('../../i18n');
 const { buildMoxidexMessage } = require('../../Util/moxidexView');
 
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
+const { economyCategory } = require('../../Util/commandCategories');
 
 module.exports = {
     name: 'moxidex',
@@ -11,7 +9,7 @@ module.exports = {
     alias: ['nekodex', 'dex', 'moxi-dex'],
     Category: economyCategory,
     usage: 'moxidex',
-    description: 'Muestra tu Moxidex (mascotas).',
+    description: 'commands:CMD_MOXIDEX_DESC',
     cooldown: 0,
     command: {
         prefix: true,

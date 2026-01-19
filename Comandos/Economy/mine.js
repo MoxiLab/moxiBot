@@ -13,12 +13,9 @@ const { pickMineActivity } = require('../../Util/mineActivities');
 const { scaleRange, randInt, chance } = require('../../Util/activityUtils');
 const { buildMinePlayMessageOptions } = require('../../Util/minePlay');
 const { shouldShowCooldownNotice } = require('../../Util/cooldownNotice');
+const { economyCategory } = require('../../Util/commandCategories');
 
 const MINE_FAIL_CHANCE = 0.18;
-
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
 
 function parsePageArgToIndex(pageArg) {
     const raw = String(pageArg || '').trim();
@@ -54,24 +51,14 @@ function pickBestUsableMineZone(eco) {
     return usable[Math.floor(Math.random() * usable.length)] || usable[0];
 }
 
-function buildMineHelpText(prefix) {
-    const p = String(prefix || '.');
-    return [
-        '⛏️ Zonas de minería',
-        '',
-        `Panel: \`${p}mine zones\``,
-        `Página: \`${p}mine zones 2\``,
-    ].join('\n');
-}
-
 module.exports = {
     name: 'mine',
     alias: ['minar', 'mineria', 'minería', 'mining'],
     Category: economyCategory,
     usage: 'mine zones [página]',
-    description: 'Muestra las zonas de minería.',
+    description: 'commands:CMD_MINE_DESC',
     cooldown: 0,
-    helpText: buildMineHelpText('.'),
+    helpText: (lang) => moxi.translate('economy/mine:HELP_TEXT', lang, { prefix: process.env.PREFIX || '.' }),
     examples: ['mine zones', 'mine zones 2'],
     permissions: {
         Bot: ['Ver canal', 'Enviar mensajes'],

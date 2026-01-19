@@ -3,10 +3,7 @@ const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notic
 const { EMOJIS } = require('../../Util/emojis');
 const { getOrCreateEconomyRaw } = require('../../Util/balanceView');
 
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
-
+const { economyCategory } = require('../../Util/commandCategories');
 function safeInt(n, fallback = 0) {
     const x = Number(n);
     return Number.isFinite(x) ? Math.trunc(x) : fallback;
@@ -31,7 +28,7 @@ module.exports = {
     alias: ['depositar', 'dep'],
     Category: economyCategory,
     usage: 'deposit [cantidad]',
-    description: 'Deposita coins desde tu balance al banco.',
+    description: 'commands:CMD_DEPOSIT_DESC',
     examples: ['deposit', 'deposit 100', 'deposit all'],
     cooldown: 0,
     command: {

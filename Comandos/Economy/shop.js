@@ -3,10 +3,7 @@ const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notic
 const { EMOJIS } = require('../../Util/emojis');
 const { buildShopData, buildShopMessage } = require('../../Util/shopView');
 const { resolveItemFromInput } = require('../../Util/useItem');
-
-function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
-}
+const { economyCategory } = require('../../Util/commandCategories');
 
 function safeInt(n, fallback = 0) {
     const x = Number(n);
@@ -18,7 +15,7 @@ module.exports = {
     alias: ['shop', 'tienda', 'nekoshop', 'tiendamoxi', 'moxi-shop', 'shopmoxi'],
     Category: economyCategory,
     usage: 'moxishop list [categoria] [pagina] | moxishop buy <id|nombre|itemId> [cantidad]',
-    description: 'Tienda: lista y compra ítems.',
+    description: 'commands:CMD_MOXISHOP_DESC',
     cooldown: 0,
     command: {
         prefix: true,
