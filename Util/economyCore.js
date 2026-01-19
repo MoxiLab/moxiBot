@@ -301,6 +301,77 @@ async function transferBalance({ fromUserId, toUserId, amount } = {}) {
   };
 }
 
+async function transferInventoryItem({ fromUserId, toUserId, itemId, amount } = {}) {
+  const from = String(fromUserId || '').trim();
+  const to = String(toUserId || '').trim();
+  const id = String(itemId || '').trim();
+  const qty = Math.max(1, safeInt(amount, 1));
+
+  if (!process.env.MONGODB) {
+    return { ok: false, reason: 'no-db', message: 'MongoDB no está configurado (MONGODB vacío).' };
+  }
+  if (!from || !to) return { ok: false, reason: 'missing-user', message: 'Faltan userId.' };
+  if (from === to) return { ok: false, reason: 'same-user', message: 'No puedes transferirte a ti mismo.' };
+  if (!id) return { ok: false, reason: 'invalid-item', message: 'Item inválido.' };
+
+  await ensureMongoConnection();
+  const { Economy } = require('../Models/EconomySchema');
+  // eslint-disable-next-line global-require
+  const { addToInventory } = require('./inventoryOps');
+
+  // Asegurar documentos
+  for (const uid of [from, to]) {
+    try {
+      await Economy.updateOne(
+        { userId: uid },
+        { $setOnInsert: { userId: uid, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
+        { upsert: true }
+      );
+    } catch (e) {
+      if (e?.code !== 11000) throw e;
+    }
+  }
+
+  const fromDoc = await Economy.findOne({ userId: from });
+  const toDoc = await Economy.findOne({ userId: to });
+
+  if (!fromDoc || !toDoc) {
+    return { ok: false, reason: 'missing-doc', message: 'No se pudo cargar el documento de economía.' };
+  }
+
+  const fromInv = Array.isArray(fromDoc.inventory) ? fromDoc.inventory : [];
+  const row = fromInv.find((x) => x && String(x.itemId) === id);
+  const have = row ? Math.max(0, Number(row.amount) || 0) : 0;
+
+  if (!row || have <= 0) {
+    return { ok: false, reason: 'not-owned', have };
+  }
+  if (qty > have) {
+    return { ok: false, reason: 'not-enough', have, wanted: qty };
+  }
+
+  row.amount = have - qty;
+  if (row.amount <= 0) fromDoc.inventory = fromInv.filter((x) => x && String(x.itemId) !== id);
+  else fromDoc.inventory = fromInv;
+
+  await fromDoc.save();
+
+  addToInventory(toDoc, id, qty);
+  await toDoc.save();
+
+  const toInv = Array.isArray(toDoc.inventory) ? toDoc.inventory : [];
+  const toRow = toInv.find((x) => x && String(x.itemId) === id);
+  const toHave = toRow ? Math.max(0, Number(toRow.amount) || 0) : qty;
+
+  return {
+    ok: true,
+    itemId: id,
+    amount: qty,
+    fromRemaining: Math.max(0, have - qty),
+    toAmount: toHave,
+  };
+}
+
 module.exports = {
   safeInt,
   formatDuration,
@@ -310,4 +381,5 @@ module.exports = {
   claimCooldown,
   awardBalance,
   transferBalance,
+  transferInventoryItem,
 };
