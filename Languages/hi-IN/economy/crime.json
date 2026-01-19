@@ -1,423 +1,423 @@
 {
     "ui": {
-        "panelTitle": "Crime",
-        "selectActivity": "Choose an activity",
-        "riskPlaceholder": "Risk level",
-        "btnRun": "Run"
+        "panelTitle": "अपराध",
+        "selectActivity": "एक गतिविधि चुनें",
+        "riskPlaceholder": "जोखिम स्तर",
+        "btnRun": "शुरू करें"
     },
     "options": {
-        "stealth": "Stealth",
-        "talk": "Distraction",
-        "rush": "Snatch"
+        "stealth": "चुपके",
+        "talk": "ध्यान भटकाना",
+        "rush": "झपटना"
     },
     "doors": {
-        "a": "Door A",
-        "b": "Door B",
-        "c": "Door C"
+        "a": "दरवाज़ा A",
+        "b": "दरवाज़ा B",
+        "c": "दरवाज़ा C"
     },
     "risks": {
-        "safe": "Safe",
-        "normal": "Normal",
-        "risky": "Risky"
+        "safe": "सुरक्षित",
+        "normal": "सामान्य",
+        "risky": "जोखिम भरा"
     },
     "wires": {
-        "red": "Red wire",
-        "blue": "Blue wire",
-        "yellow": "Yellow wire",
-        "green": "Green wire"
+        "red": "लाल तार",
+        "blue": "नीला तार",
+        "yellow": "पीला तार",
+        "green": "हरा तार"
     },
     "activities": {
         "pickpocket": {
-            "title": "Pickpocket",
-            "prompt": "You spot someone distracted with their bag open. How do you try?"
+            "title": "जेबमारी",
+            "prompt": "आप किसी को देखते हैं जो ध्यान भटकाए हुए है और उसका बैग खुला है। आप कैसे कोशिश करते हैं?"
         },
         "market-swipe": {
-            "title": "Crowded market",
-            "prompt": "Between stalls and people, a wallet peeks out. What do you do?"
+            "title": "भीड़ भरा बाज़ार",
+            "prompt": "दुकानों और लोगों के बीच, एक बटुआ झाँक रहा है। आप क्या करते हैं?"
         },
         "metro-bump": {
-            "title": "Subway shove",
-            "prompt": "A sudden brake, bodies collide… and an easy pocket appears."
+            "title": "मेट्रो की धक्का-मुक्की",
+            "prompt": "अचानक ब्रेक, लोग टकराते हैं… और एक आसान जेब सामने आ जाती है।"
         },
         "festival-confetti": {
-            "title": "Festival",
-            "prompt": "Music, confetti and distractions. What's your play?"
+            "title": "उत्सव",
+            "prompt": "संगीत, कंफ़ेटी और ध्यान-भटकाव। आपकी चाल क्या है?"
         },
         "hotel-lobby": {
-            "title": "Hotel lobby",
-            "prompt": "People let their guard down. How do you try?"
+            "title": "होटल लॉबी",
+            "prompt": "लोग सतर्कता कम कर देते हैं। आप कैसे कोशिश करते हैं?"
         },
         "arcade-tokens": {
-            "title": "Arcade",
-            "prompt": "Someone is counting tokens. No one is watching. What do you do?"
+            "title": "आर्केड",
+            "prompt": "कोई टोकन गिन रहा है। कोई देख नहीं रहा। आप क्या करते हैं?"
         },
         "library-silence": {
-            "title": "Library",
-            "prompt": "Total silence. An open bag. What's your method?"
+            "title": "लाइब्रेरी",
+            "prompt": "पूरी ख़ामोशी। एक खुला बैग। आपका तरीका क्या है?"
         },
         "park-bench": {
-            "title": "Park bench",
-            "prompt": "A backpack sits aside. How do you approach?"
+            "title": "पार्क की बेंच",
+            "prompt": "एक बैकपैक बगल में रखा है। आप कैसे पास जाते हैं?"
         },
         "street-magician": {
-            "title": "Street magician",
-            "prompt": "Everyone watches the trick. You watch the pockets."
+            "title": "सड़क का जादूगर",
+            "prompt": "सब लोग करतब देख रहे हैं। आप जेबें देख रहे हैं।"
         },
         "coffee-queue": {
-            "title": "Coffee line",
-            "prompt": "The line moves slowly. Attention is low."
+            "title": "कॉफ़ी की लाइन",
+            "prompt": "लाइन धीरे चलती है। ध्यान कम है।"
         },
         "cinema-dark": {
-            "title": "Dark cinema",
-            "prompt": "Lights out. Do you take the moment?"
+            "title": "अँधेरा सिनेमा",
+            "prompt": "लाइटें बंद। क्या आप मौका लेते हैं?"
         },
         "museum-exhibit": {
-            "title": "Museum",
-            "prompt": "People are hypnotized by a display case."
+            "title": "संग्रहालय",
+            "prompt": "लोग एक शोकेस को देखते हुए खो जाते हैं।"
         },
         "food-truck": {
-            "title": "Food truck",
-            "prompt": "Wallets out and people rushing to pay."
+            "title": "फूड ट्रक",
+            "prompt": "बटुए बाहर हैं और लोग भुगतान के लिए जल्दी कर रहे हैं।"
         },
         "crosswalk-rush": {
-            "title": "Busy crosswalk",
-            "prompt": "Green light. Controlled chaos."
+            "title": "भीड़ भरा क्रॉसवॉक",
+            "prompt": "हरी बत्ती। नियंत्रित अफरा-तफरी।"
         },
         "gym-lockers": {
-            "title": "Gym lockers",
-            "prompt": "Loose locks and distracted people."
+            "title": "जिम लॉकर",
+            "prompt": "ढीले ताले और ध्यान भटके हुए लोग।"
         },
         "pier-crowd": {
-            "title": "Pier",
-            "prompt": "Tourists with backpacks and maps open."
+            "title": "घाट",
+            "prompt": "पर्यटक बैकपैक और खुले नक्शों के साथ।"
         },
         "station-platform": {
-            "title": "Platform",
-            "prompt": "The train arrives. Nerves. Opportunity."
+            "title": "प्लैटफ़ॉर्म",
+            "prompt": "ट्रेन आती है। घबराहट। मौका।"
         },
         "night-market": {
-            "title": "Night market",
-            "prompt": "Warm lights. Fast hands."
+            "title": "रात का बाज़ार",
+            "prompt": "गरम रोशनी। तेज़ हाथ।"
         },
         "street-performer": {
-            "title": "Street performer",
-            "prompt": "The sound covers footsteps and whispers."
+            "title": "सड़क कलाकार",
+            "prompt": "आवाज़ कदमों और फुसफुसाहट को ढक देती है।"
         },
         "salon-wait": {
-            "title": "Waiting room",
-            "prompt": "Phones out. Wallets out. Hmm."
+            "title": "प्रतीक्षालय",
+            "prompt": "फोन बाहर। बटुए बाहर। हम्म।"
         },
         "bank-atm": {
-            "title": "ATM",
-            "prompt": "Someone withdraws cash and pockets the receipt."
+            "title": "एटीएम",
+            "prompt": "कोई नकद निकालता है और रसीद जेब में रख लेता है।"
         },
         "taxi-backseat": {
-            "title": "Taxi",
-            "prompt": "A wallet slips onto the back seat."
+            "title": "टैक्सी",
+            "prompt": "एक बटुआ पिछली सीट पर फिसल जाता है।"
         },
         "train-sleeper": {
-            "title": "Sleeper car",
-            "prompt": "Heads down, pockets unguarded."
+            "title": "स्लीपर कोच",
+            "prompt": "सिर झुके हुए, जेबें बिना पहरे के।"
         },
         "snow-coats": {
-            "title": "Winter coats",
-            "prompt": "Deep pockets… and tempting."
+            "title": "सर्दियों के कोट",
+            "prompt": "गहरी जेबें… और लुभावनी।"
         },
         "rain-umbrella": {
-            "title": "Rainy day",
-            "prompt": "Umbrellas bump. No one sees anything."
+            "title": "बारिश का दिन",
+            "prompt": "छतरियाँ टकराती हैं। कोई कुछ नहीं देखता।"
         },
         "beach-towels": {
-            "title": "Beach",
-            "prompt": "Towels, bags, distractions. What do you do?"
+            "title": "समुद्र तट",
+            "prompt": "तौलिए, बैग, ध्यान-भटकाव। आप क्या करते हैं?"
         },
         "concert-mosh": {
-            "title": "Concert",
-            "prompt": "The crowd moves. So do you."
+            "title": "कॉन्सर्ट",
+            "prompt": "भीड़ हिलती है। आप भी।"
         },
         "market-auction": {
-            "title": "Auction",
-            "prompt": "High bids. Split attention."
+            "title": "नीलामी",
+            "prompt": "ऊँची बोलियाँ। बँटा हुआ ध्यान।"
         },
         "fashion-store": {
-            "title": "Fashion store",
-            "prompt": "Fitting rooms busy. Staff distracted."
+            "title": "फ़ैशन स्टोर",
+            "prompt": "ट्रायल रूम व्यस्त। स्टाफ का ध्यान भटका हुआ।"
         },
         "electronics-demo": {
-            "title": "Gadget demo",
-            "prompt": "Bright screens. Bright pockets."
+            "title": "गैजेट डेमो",
+            "prompt": "चमकती स्क्रीनें। चमकती जेबें।"
         },
         "pet-parade": {
-            "title": "Pet parade",
-            "prompt": "People watch puppies. You… well."
+            "title": "पालतू परेड",
+            "prompt": "लोग पिल्लों को देख रहे हैं। आप… खैर।"
         },
         "street-food": {
-            "title": "Street food",
-            "prompt": "Hands full, pockets unguarded."
+            "title": "सड़क का खाना",
+            "prompt": "हाथ भरे हुए, जेबें बिना पहरे के।"
         },
         "bus-crowd": {
-            "title": "Packed bus",
-            "prompt": "Quick stops. Quick moves."
+            "title": "भरी बस",
+            "prompt": "तेज़ स्टॉप। तेज़ चालें।"
         },
         "book-fair": {
-            "title": "Book fair",
-            "prompt": "Signings, lines and perfect distractions."
+            "title": "पुस्तक मेला",
+            "prompt": "साइनिंग, कतारें और परफेक्ट ध्यान-भटकाव।"
         },
         "flower-stall": {
-            "title": "Flower stall",
-            "prompt": "A romantic gift. A visible wallet."
+            "title": "फूलों की दुकान",
+            "prompt": "एक रोमांटिक तोहफ़ा। एक दिखता हुआ बटुआ।"
         },
         "campus-hall": {
-            "title": "Campus hallway",
-            "prompt": "Open backpacks and rushing to class."
+            "title": "कैंपस कॉरिडोर",
+            "prompt": "खुले बैकपैक और क्लास के लिए भागते लोग।"
         },
         "airport-gate": {
-            "title": "Boarding gate",
-            "prompt": "Docs, tickets, chaos. Easy."
+            "title": "बोर्डिंग गेट",
+            "prompt": "दस्तावेज़, टिकट, अफरा-तफरी। आसान।"
         },
         "theme-park": {
-            "title": "Theme park",
-            "prompt": "Screams, laughter and dangling bags."
+            "title": "थीम पार्क",
+            "prompt": "चीखें, हँसी और लटकते बैग।"
         },
         "harbor-ferry": {
-            "title": "Ferry",
-            "prompt": "Wind, seasickness… and a slip-up."
+            "title": "फेरी",
+            "prompt": "हवा, समुद्री बीमारी… और एक चूक।"
         },
         "stadium-queue": {
-            "title": "Stadium queue",
-            "prompt": "Everyone watches the entrance. Pockets, not so much."
+            "title": "स्टेडियम की कतार",
+            "prompt": "सब लोग प्रवेश द्वार देखते हैं। जेबें, उतनी नहीं।"
         },
         "vault": {
-            "title": "Three doors",
-            "prompt": "You're in. There are three doors. One has quick loot; the others, trouble."
+            "title": "तीन दरवाज़े",
+            "prompt": "आप अंदर हैं। तीन दरवाज़े हैं। एक में जल्दी लूट; बाकी में मुसीबत।"
         },
         "storage-doors": {
-            "title": "Storage",
-            "prompt": "Three metal doors. One hides an easy haul. Choose."
+            "title": "भंडारण",
+            "prompt": "तीन धातु के दरवाज़े। एक में आसान माल छुपा है। चुनें।"
         },
         "office-doors": {
-            "title": "Offices",
-            "prompt": "Empty hallway. Three unmarked doors. Which one pays?"
+            "title": "ऑफिस",
+            "prompt": "खाली हॉलवे। तीन बिना-निशान दरवाज़े। कौन सा फायदा देगा?"
         },
         "basement-doors": {
-            "title": "Basement",
-            "prompt": "Damp and silent. Three doors: noise, calm, luck."
+            "title": "तहखाना",
+            "prompt": "नम और शांत। तीन दरवाज़े: शोर, सुकून, किस्मत।"
         },
         "backstage-doors": {
-            "title": "Backstage",
-            "prompt": "Behind the stage are three access points. One leads to loot."
+            "title": "बैकस्टेज",
+            "prompt": "मंच के पीछे तीन रास्ते हैं। एक लूट तक ले जाता है।"
         },
         "dock-doors": {
-            "title": "Docks",
-            "prompt": "Containers and three warehouse doors. Choose fast."
+            "title": "डॉक्स",
+            "prompt": "कंटेनर और तीन वेयरहाउस दरवाज़े। जल्दी चुनें।"
         },
         "subway-doors": {
-            "title": "Tunnel",
-            "prompt": "Three maintenance doors. One has supplies."
+            "title": "सुरंग",
+            "prompt": "तीन मेंटेनेंस दरवाज़े। एक में सामान है।"
         },
         "library-doors": {
-            "title": "Archive",
-            "prompt": "Three doors to the restricted archive. One has envelopes."
+            "title": "आर्काइव",
+            "prompt": "प्रतिबंधित आर्काइव के लिए तीन दरवाज़े। एक में लिफाफे हैं।"
         },
         "casino-doors": {
-            "title": "Casino",
-            "prompt": "Three doors behind VIP. One is the good one."
+            "title": "कसीनो",
+            "prompt": "VIP के पीछे तीन दरवाज़े। एक सही है।"
         },
         "hotel-doors": {
-            "title": "Private floor",
-            "prompt": "Three identical doors. One isn't fully latched."
+            "title": "निजी मंज़िल",
+            "prompt": "तीन एक जैसे दरवाज़े। एक पूरी तरह बंद नहीं है।"
         },
         "museum-doors": {
-            "title": "Restricted area",
-            "prompt": "Three doors with sketchy alarms. One fails."
+            "title": "प्रतिबंधित क्षेत्र",
+            "prompt": "संदिग्ध अलार्म वाले तीन दरवाज़े। एक फेल हो जाता है।"
         },
         "trainyard-doors": {
-            "title": "Depot",
-            "prompt": "Three rusty doors. One opens easily."
+            "title": "डिपो",
+            "prompt": "तीन जंग लगे दरवाज़े। एक आसानी से खुलता है।"
         },
         "lab-doors": {
-            "title": "Laboratory",
-            "prompt": "Three doors with panels. One is in test mode."
+            "title": "प्रयोगशाला",
+            "prompt": "पैनल वाले तीन दरवाज़े। एक टेस्ट मोड में है।"
         },
         "sewers-doors": {
-            "title": "Sewers",
-            "prompt": "Three hatches. One leads to a hideout."
+            "title": "नालियाँ",
+            "prompt": "तीन ढक्कन। एक ठिकाने तक ले जाता है।"
         },
         "attic-doors": {
-            "title": "Attic",
-            "prompt": "Three old doors. One creaks… but gives."
+            "title": "अटारी",
+            "prompt": "तीन पुराने दरवाज़े। एक चरमराता है… लेकिन खुल जाता है।"
         },
         "theater-doors": {
-            "title": "Theater",
-            "prompt": "Three doors backstage. One has a cashbox."
+            "title": "थिएटर",
+            "prompt": "बैकस्टेज तीन दरवाज़े। एक में कैशबॉक्स है।"
         },
         "warehouse-doors": {
-            "title": "Industrial bay",
-            "prompt": "Three hand-numbered doors. One holds the good stuff."
+            "title": "औद्योगिक बे",
+            "prompt": "हाथ से नंबर किए हुए तीन दरवाज़े। एक में बढ़िया सामान है।"
         },
         "ship-doors": {
-            "title": "Ship hold",
-            "prompt": "Three doors to the hold. Choose before someone returns."
+            "title": "जहाज़ का होल्ड",
+            "prompt": "होल्ड तक तीन दरवाज़े। किसी के लौटने से पहले चुनें।"
         },
         "castle-doors": {
-            "title": "Passage",
-            "prompt": "Three stone doors. One is a shortcut to treasure."
+            "title": "रास्ता",
+            "prompt": "तीन पत्थर के दरवाज़े। एक ख़ज़ाने तक शॉर्टकट है।"
         },
         "clinic-doors": {
-            "title": "Clinic",
-            "prompt": "Three storage doors. One has a small safe."
+            "title": "क्लिनिक",
+            "prompt": "तीन स्टोरेज दरवाज़े। एक में छोटा सा सेफ़ है।"
         },
         "stadium-doors": {
-            "title": "Stadium",
-            "prompt": "Three locker room doors. One has lost-and-found."
+            "title": "स्टेडियम",
+            "prompt": "तीन लॉकर रूम दरवाज़े। एक में लॉस्ट-एंड-फाउंड है।"
         },
         "mall-doors": {
-            "title": "Mall",
-            "prompt": "Three service doors. One leads to the register."
+            "title": "मॉल",
+            "prompt": "तीन सर्विस दरवाज़े। एक काउंटर/कैश रजिस्टर तक ले जाता है।"
         },
         "garage-doors": {
-            "title": "Garage",
-            "prompt": "Three metal doors. One has no lock."
+            "title": "गैराज",
+            "prompt": "तीन धातु के दरवाज़े। एक में ताला नहीं है।"
         },
         "serverroom-doors": {
-            "title": "Server room",
-            "prompt": "Three doors. One has resellable gear."
+            "title": "सर्वर रूम",
+            "prompt": "तीन दरवाज़े। एक में दोबारा बेचने लायक गियर है।"
         },
         "kitchen-doors": {
-            "title": "Kitchen",
-            "prompt": "Three doors to storage. One has pricey supplies."
+            "title": "रसोई",
+            "prompt": "स्टोरेज के लिए तीन दरवाज़े। एक में महँगा सामान है।"
         },
         "bakery-doors": {
-            "title": "Bakery",
-            "prompt": "Three back doors. One leads to the till."
+            "title": "बेकरी",
+            "prompt": "तीन पीछे के दरवाज़े। एक कैश टिल तक ले जाता है।"
         },
         "gallery-doors": {
-            "title": "Gallery",
-            "prompt": "Three doors to the back room. One is poorly shut."
+            "title": "गैलरी",
+            "prompt": "बैक रूम तक तीन दरवाज़े। एक ठीक से बंद नहीं है।"
         },
         "station-doors": {
-            "title": "Station",
-            "prompt": "Three cleaning doors. One hides a bag."
+            "title": "स्टेशन",
+            "prompt": "तीन सफाई वाले दरवाज़े। एक में बैग छुपा है।"
         },
         "factory-doors": {
-            "title": "Factory",
-            "prompt": "Three doors. One opens into a parts warehouse."
+            "title": "कारखाना",
+            "prompt": "तीन दरवाज़े। एक पार्ट्स वेयरहाउस में खुलता है।"
         },
         "dockyard-doors": {
-            "title": "Shipyard",
-            "prompt": "Three tool doors. One has new crates."
+            "title": "शिपयार्ड",
+            "prompt": "तीन टूल रूम दरवाज़े। एक में नए क्रेट्स हैं।"
         },
         "getaway": {
-            "title": "Getaway",
-            "prompt": "Loot in hand. How much risk do you take to escape?"
+            "title": "भागने का रास्ता",
+            "prompt": "लूट हाथ में है। भागने के लिए आप कितना जोखिम लेते हैं?"
         },
         "alley-chase": {
-            "title": "Alley",
-            "prompt": "Footsteps behind. Sirens far. How do you escape?"
+            "title": "गली",
+            "prompt": "पीछे कदमों की आवाज़। दूर सायरन। आप कैसे निकलते हैं?"
         },
         "rooftops": {
-            "title": "Rooftops",
-            "prompt": "Up the fire stairs. How much do you risk?"
+            "title": "छतें",
+            "prompt": "फायर-सीढ़ियों से ऊपर। आप कितना जोखिम लेते हैं?"
         },
         "crowd-vanish": {
-            "title": "Disappear in the crowd",
-            "prompt": "The crowd can save you… or expose you."
+            "title": "भीड़ में गायब हो जाएँ",
+            "prompt": "भीड़ आपको बचा सकती है… या पकड़वा सकती है।"
         },
         "river-cross": {
-            "title": "Cross the river",
-            "prompt": "There's a bridge, a boat and a jump. Risk?"
+            "title": "नदी पार करें",
+            "prompt": "एक पुल है, एक नाव है और एक छलांग। जोखिम?"
         },
         "night-scooter": {
-            "title": "Night scooter",
-            "prompt": "The night is ally. Or enemy. Decide."
+            "title": "रात का स्कूटर",
+            "prompt": "रात दोस्त भी हो सकती है… या दुश्मन। फैसला करें।"
         },
         "smoke-bomb": {
-            "title": "Smoke screen",
-            "prompt": "You can vanish… if it works."
+            "title": "धुआँ पर्दा",
+            "prompt": "आप गायब हो सकते हैं… अगर यह काम कर गया तो।"
         },
         "subway-hop": {
-            "title": "Subway hop",
-            "prompt": "The train arrives. Do you rush in or play it calm?"
+            "title": "मेट्रो में कूदें",
+            "prompt": "ट्रेन आती है। आप दौड़कर चढ़ते हैं या शांत रहते हैं?"
         },
         "taxi-dash": {
-            "title": "Fast taxi",
-            "prompt": "A free cab. Pay and go, or bolt?"
+            "title": "तेज़ टैक्सी",
+            "prompt": "एक खाली टैक्सी। पैसे देकर जाएँ, या भाग जाएँ?"
         },
         "crowbar-route": {
-            "title": "Emergency route",
-            "prompt": "Locked doors. You could force one."
+            "title": "आपात मार्ग",
+            "prompt": "दरवाज़े बंद हैं। आप एक को ज़बरदस्ती खोल सकते हैं।"
         },
         "rain-cover": {
-            "title": "Rain cover",
-            "prompt": "Rain hides tracks… and vision."
+            "title": "बारिश की आड़",
+            "prompt": "बारिश पैरों के निशान… और नज़र दोनों छुपाती है।"
         },
         "market-escape": {
-            "title": "Market escape",
-            "prompt": "Tight stalls. One mistake is expensive."
+            "title": "बाज़ार से निकलना",
+            "prompt": "तंग गलियाँ/स्टॉल। एक गलती महँगी पड़ सकती है।"
         },
         "stairs-sprint": {
-            "title": "Stairs",
-            "prompt": "Up or down. Every second counts."
+            "title": "सीढ़ियाँ",
+            "prompt": "ऊपर या नीचे। हर सेकंड मायने रखता है।"
         },
         "dock-fog": {
-            "title": "Dock fog",
-            "prompt": "Fog hides… but confuses too."
+            "title": "घाट की धुंध",
+            "prompt": "धुंध छुपाती है… लेकिन भ्रम भी पैदा करती है।"
         },
         "warehouse-run": {
-            "title": "Between warehouses",
-            "prompt": "Indoor shortcuts. Risk of guards."
+            "title": "वेयरहाउसों के बीच",
+            "prompt": "इंडोर शॉर्टकट। गार्ड्स का जोखिम।"
         },
         "festival-hide": {
-            "title": "Hide in the festival",
-            "prompt": "Costumes and masks. How exposed are you?"
+            "title": "उत्सव में छिपें",
+            "prompt": "कॉस्ट्यूम और मास्क। आप कितना उजागर हैं?"
         },
         "parking-garage": {
-            "title": "Parking garage",
-            "prompt": "Ramps, cars, cameras. Pick your risk."
+            "title": "पार्किंग गैराज",
+            "prompt": "रैंप, गाड़ियाँ, कैमरे। अपना जोखिम चुनें।"
         },
         "canal-walk": {
-            "title": "Canal",
-            "prompt": "You can follow the canal edge. Slippery."
+            "title": "नहर",
+            "prompt": "आप नहर के किनारे-किनारे जा सकते हैं। फिसलन भरा है।"
         },
         "construction-site": {
-            "title": "Construction site",
-            "prompt": "Scaffolds and gaps. You can vanish… or fall."
+            "title": "निर्माण स्थल",
+            "prompt": "स्कैफोल्डिंग और खाली जगहें। आप गायब हो सकते हैं… या गिर सकते हैं।"
         },
         "mall-exit": {
-            "title": "Mall exit",
-            "prompt": "Three exits, two guards. What do you do?"
+            "title": "मॉल निकास",
+            "prompt": "तीन निकास, दो गार्ड। आप क्या करते हैं?"
         },
         "hotel-elevator": {
-            "title": "Elevator",
-            "prompt": "Slow elevator or fast stairs. Risk."
+            "title": "लिफ्ट",
+            "prompt": "धीमी लिफ्ट या तेज़ सीढ़ियाँ। जोखिम।"
         },
         "station-cameras": {
-            "title": "Cameras",
-            "prompt": "Cameras track you. Do you try to dodge them?"
+            "title": "कैमरे",
+            "prompt": "कैमरे आपको ट्रैक कर रहे हैं। क्या आप उन्हें चकमा देने की कोशिश करते हैं?"
         },
         "rooftop-jump": {
-            "title": "Jump",
-            "prompt": "There's a jump between buildings. Your call."
+            "title": "कूद",
+            "prompt": "इमारतों के बीच एक छलांग है। फैसला आपका।"
         },
         "sewer-drop": {
-            "title": "Manhole",
-            "prompt": "You can drop into the sewers. Or not."
+            "title": "मैनहोल",
+            "prompt": "आप नालियों में उतर सकते हैं। या नहीं।"
         },
         "forest-edge": {
-            "title": "Forest edge",
-            "prompt": "Darkness and branches. Safe path or shortcut."
+            "title": "जंगल की सीमा",
+            "prompt": "अँधेरा और टहनियाँ। सुरक्षित रास्ता या शॉर्टकट।"
         },
         "bridge-crossing": {
-            "title": "Bridge",
-            "prompt": "Fast but visible. Risk?"
+            "title": "पुल",
+            "prompt": "तेज़ लेकिन दिखाई देने वाला। जोखिम?"
         },
         "crowd-metro": {
-            "title": "Station crowd",
-            "prompt": "Blend in… or sprint."
+            "title": "स्टेशन की भीड़",
+            "prompt": "भीड़ में घुलें… या दौड़ें।"
         },
         "harbor-boat": {
-            "title": "Harbor boat",
-            "prompt": "A boat breaks loose. Do you use it?"
+            "title": "बंदरगाह की नाव",
+            "prompt": "एक नाव छूट जाती है। क्या आप इसे इस्तेमाल करते हैं?"
         }
     }
 }

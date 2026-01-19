@@ -1,13 +1,13 @@
 {
-    "TITLE": "{{user}}'s balance",
-    "COINS": "Coins",
-    "BANK": "Bank",
-    "SAKURAS": "Sakuras",
-    "GLOBAL_RANK": "Global rank",
-    "BTN_DEPOSIT": "Deposit",
-    "BTN_WITHDRAW": "Withdraw",
-    "ONLY_AUTHOR": "Only the author can use these buttons.",
-    "ONLY_OWN_BALANCE": "You can only manage your own balance.",
-    "NO_COINS_TO_DEPOSIT": "You don't have coins to deposit.",
-    "NO_COINS_TO_WITHDRAW": "You don't have coins in the bank to withdraw."
+    "TITLE": "{{user}} का बैलेंस",
+    "COINS": "कॉइन्स",
+    "BANK": "बैंक",
+    "SAKURAS": "सकुरा",
+    "GLOBAL_RANK": "ग्लोबल रैंक",
+    "BTN_DEPOSIT": "जमा",
+    "BTN_WITHDRAW": "निकालें",
+    "ONLY_AUTHOR": "सिर्फ लेखक ही इन बटनों का उपयोग कर सकता है।",
+    "ONLY_OWN_BALANCE": "आप केवल अपना ही बैलेंस मैनेज कर सकते हैं।",
+    "NO_COINS_TO_DEPOSIT": "आपके पास जमा करने के लिए कॉइन्स नहीं हैं।",
+    "NO_COINS_TO_WITHDRAW": "बैंक में निकालने के लिए आपके पास कॉइन्स नहीं हैं।"
 }

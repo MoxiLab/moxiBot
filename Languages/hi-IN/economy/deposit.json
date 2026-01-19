@@ -1,15 +1,15 @@
 {
-    "INVALID_USAGE_TITLE": "Incorrect usage",
-    "INVALID_USAGE_TEXT": "Use: `{{prefix}}deposit 100` or `{{prefix}}deposit all`.",
-    "BANK_TITLE": "Bank",
-    "NO_COINS": "You don't have any coins to deposit.",
-    "INVALID_AMOUNT_TITLE": "Invalid amount",
-    "INVALID_AMOUNT_TEXT": "Amount must be greater than 0, or use `all`.",
-    "INSUFFICIENT_FUNDS_TITLE": "Insufficient funds",
-    "INSUFFICIENT_FUNDS_TEXT": "You tried to deposit **{{wanted}}** 🪙 but you only have **{{balance}}** 🪙.",
-    "DEPOSIT_SUCCESS_TITLE": "Deposit completed",
-    "DEPOSIT_SUCCESS_TEXT": "You deposited **{{wanted}}** 🪙.\nBalance: **{{balance}}** 🪙\nBank: **{{bank}}** 🏦",
-    "ERROR_TITLE": "Error",
-    "ERROR_MONGO": "MongoDB isn't configured, the bank is unavailable.",
-    "ERROR_GENERIC": "I couldn't complete the deposit right now. Please try again."
+    "INVALID_USAGE_TITLE": "गलत उपयोग",
+    "INVALID_USAGE_TEXT": "उपयोग: `{{prefix}}deposit 100` या `{{prefix}}deposit all`.",
+    "BANK_TITLE": "बैंक",
+    "NO_COINS": "आपके पास जमा करने के लिए कोई कॉइन्स नहीं हैं।",
+    "INVALID_AMOUNT_TITLE": "अमान्य राशि",
+    "INVALID_AMOUNT_TEXT": "राशि 0 से अधिक होनी चाहिए, या `all` उपयोग करें।",
+    "INSUFFICIENT_FUNDS_TITLE": "पर्याप्त धन नहीं",
+    "INSUFFICIENT_FUNDS_TEXT": "आपने **{{wanted}}** 🪙 जमा करने की कोशिश की, लेकिन आपके पास केवल **{{balance}}** 🪙 हैं।",
+    "DEPOSIT_SUCCESS_TITLE": "जमा पूरा हुआ",
+    "DEPOSIT_SUCCESS_TEXT": "आपने **{{wanted}}** 🪙 जमा किए।\nबैलेंस: **{{balance}}** 🪙\nबैंक: **{{bank}}** 🏦",
+    "ERROR_TITLE": "त्रुटि",
+    "ERROR_MONGO": "MongoDB कॉन्फ़िगर नहीं है, बैंक उपलब्ध नहीं है।",
+    "ERROR_GENERIC": "अभी जमा पूरा नहीं हो सका। कृपया फिर से प्रयास करें।"
 }

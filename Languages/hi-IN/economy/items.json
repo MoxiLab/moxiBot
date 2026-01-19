@@ -1,163 +1,163 @@
 {
     "categories": {
-        "Buffs": "Buffs",
-        "Collectibles": "Collectibles",
-        "Consumables": "Consumables",
-        "Tools": "Tools",
-        "Keys": "Keys",
-        "Loot": "Loot",
-        "Pets": "Pets",
-        "Materials": "Materials",
-        "Upgrades": "Upgrades",
-        "Quests": "Quests",
-        "Potions": "Potions",
-        "Scrolls": "Scrolls",
-        "Protection": "Protection"
+        "Buffs": "बफ़्स",
+        "Collectibles": "संग्रहणीय",
+        "Consumables": "उपभोग्य",
+        "Tools": "औज़ार",
+        "Keys": "चाबियाँ",
+        "Loot": "लूट",
+        "Pets": "पालतू",
+        "Materials": "सामग्री",
+        "Upgrades": "उन्नयन",
+        "Quests": "क्वेस्ट",
+        "Potions": "पोषन",
+        "Scrolls": "स्क्रॉल",
+        "Protection": "सुरक्षा"
     },
     "items": {
         "buffs/scroll-de-impulso-moxi": {
-            "name": "Scroll of Boost Moxi",
-            "description": "Increases the speed of all your actions for 1 hour."
+            "name": "मॉक्सी बूस्ट स्क्रॉल",
+            "description": "1 घंटे के लिए आपके सभी कार्यों की गति बढ़ाता है।"
         },
         "buffs/pez-lumina": {
-            "name": "Fish Lumina",
-            "description": "Experience bonus for aquatic activities."
+            "name": "लुमिना मछली",
+            "description": "जल गतिविधियों के लिए अनुभव बोनस।"
         },
         "buffs/gusano-brillo": {
-            "name": "Worm Glow",
-            "description": "Improves the chance of finding rare resources."
+            "name": "चमकता कीड़ा",
+            "description": "दुर्लभ संसाधन मिलने की संभावना बढ़ाता है।"
         },
         "buffs/linterna-solar": {
-            "name": "Solar Lantern",
-            "description": "Allows you to explore dark areas and discover hidden treasures."
+            "name": "सौर लालटेन",
+            "description": "अंधेरे इलाकों का अन्वेषण करने और छुपे ख़ज़ाने खोजने में मदद करता है।"
         },
         "buffs/fruta-vital": {
-            "name": "Fruit Vital",
-            "description": "Restores energy and gives a small speed boost."
+            "name": "वाइटल फल",
+            "description": "ऊर्जा बहाल करता है और थोड़ी गति बढ़ोतरी देता है।"
         },
         "buffs/scroll-mascota-veloz": {
-            "name": "Scroll Pet Swift",
-            "description": "Your pet gains extra speed temporarily."
+            "name": "पालतू-तेज़ी स्क्रॉल",
+            "description": "आपके पालतू को अस्थायी रूप से अतिरिक्त गति मिलती है।"
         },
         "buffs/fruta-mutante": {
-            "name": "Fruit Mutant",
-            "description": "Gives a random effect; it can be positive or negative."
+            "name": "म्यूटेंट फल",
+            "description": "एक यादृच्छिक प्रभाव देता है; यह सकारात्मक या नकारात्मक हो सकता है।"
         },
         "buffs/holly-prisma": {
-            "name": "Holly Prism",
-            "description": "Special bonus in seasonal events."
+            "name": "हॉली प्रिज़्म",
+            "description": "मौसमी इवेंट्स में विशेष बोनस।"
         },
         "buffs/pan-dulce-moxi": {
-            "name": "Bread Candy Moxi",
-            "description": "Doubles quest rewards for 10 minutes."
+            "name": "मॉक्सी मीठी ब्रेड",
+            "description": "10 मिनट के लिए क्वेस्ट इनाम दोगुना करता है।"
         },
         "buffs/pase-de-evento": {
-            "name": "Event Pass",
-            "description": "Access to rewards and exclusive areas (expired and current)."
+            "name": "इवेंट पास",
+            "description": "इनाम और विशेष क्षेत्रों तक पहुँच (समाप्त और वर्तमान)।"
         },
         "buffs/fogata-elemental": {
-            "name": "Campfire Elemental",
-            "description": "Allows you to camp and gain temporary buffs depending on the type of wood."
+            "name": "तत्वीय अलाव",
+            "description": "कैम्प करने देता है और लकड़ी के प्रकार के अनुसार अस्थायी बफ़्स देता है।"
         },
         "buffs/scroll-gelido": {
-            "name": "Glacial Scroll",
-            "description": "Increases defense in cold areas."
+            "name": "हिमानी स्क्रॉल",
+            "description": "ठंडे इलाकों में रक्षा बढ़ाता है।"
         },
         "buffs/corona-de-invierno": {
-            "name": "Crown of Winter",
-            "description": "Special bonus in winter events."
+            "name": "शीत मुकुट",
+            "description": "सर्दियों के इवेंट्स में विशेष बोनस।"
         },
         "buffs/dulce-de-fresa": {
-            "name": "Candy of Strawberry",
-            "description": "Restores energy and grants a luck bonus."
+            "name": "स्ट्रॉबेरी कैंडी",
+            "description": "ऊर्जा बहाल करता है और किस्मत बोनस देता है।"
         },
         "buffs/trebol-de-fortuna": {
-            "name": "Clover of Fortune",
-            "description": "Increases the chance of getting rare items."
+            "name": "भाग्य का तिपतिया",
+            "description": "दुर्लभ आइटम मिलने की संभावना बढ़ाता है।"
         },
         "buffs/cascanueces-moxi": {
-            "name": "Nutcracker Moxi",
-            "description": "Defense bonus during winter events."
+            "name": "मॉक्सी नटक्रैकर",
+            "description": "सर्दियों के इवेंट्स में रक्षा बोनस।"
         },
         "coleccionables/medalla-de-nieve": {
-            "name": "Medal of Snow",
-            "description": "Winter season collectible."
+            "name": "बर्फ़ का पदक",
+            "description": "सर्दी मौसम का संग्रहणीय।"
         },
         "coleccionables/medalla-prisma": {
-            "name": "Medal Prism",
-            "description": "Special event collectible."
+            "name": "प्रिज़्म पदक",
+            "description": "विशेष इवेंट का संग्रहणीय।"
         },
         "coleccionables/medalla-lunar": {
-            "name": "Medal Lunar",
-            "description": "Obtained in night missions."
+            "name": "चंद्र पदक",
+            "description": "रात के मिशनों में मिलता है।"
         },
         "coleccionables/token-festivo": {
-            "name": "Token Festive",
-            "description": "Redeemable for rewards in the event shop."
+            "name": "उत्सव टोकन",
+            "description": "इवेंट शॉप में इनामों के लिए रिडीम किया जा सकता है।"
         },
         "coleccionables/carta-de-amistad": {
-            "name": "Letter of Friendship",
-            "description": "Collectible of events sociales."
+            "name": "दोस्ती का पत्र",
+            "description": "सामाजिक इवेंट्स का संग्रहणीय।"
         },
         "coleccionables/moneda-de-fortuna": {
-            "name": "Coin of Fortune",
-            "description": "Grants a luck bonus while you have it."
+            "name": "भाग्य सिक्का",
+            "description": "जब तक यह आपके पास है, किस्मत बोनस देता है।"
         },
         "coleccionables/gema-de-espiritu": {
-            "name": "Gem of Spirit",
-            "description": "Required for advanced quests."
+            "name": "आत्मा रत्न",
+            "description": "उन्नत क्वेस्ट के लिए आवश्यक।"
         },
         "coleccionables/corazon-prisma": {
-            "name": "Heart Prism",
-            "description": "Collectible of events romantic."
+            "name": "प्रिज़्म दिल",
+            "description": "रोमांटिक इवेंट्स का संग्रहणीय।"
         },
         "coleccionables/petalo-de-sakura": {
-            "name": "Petal of Sakura",
-            "description": "Spring collectible."
+            "name": "सकुरा पंखुड़ी",
+            "description": "वसंत का संग्रहणीय।"
         },
         "coleccionables/bouquet-festivo": {
-            "name": "Bouquet Festive",
-            "description": "Collectible of events florales."
+            "name": "उत्सव गुलदस्ता",
+            "description": "फूलों वाले इवेंट्स का संग्रहणीय।"
         },
         "coleccionables/ticket-de-temporada": {
-            "name": "Ticket of Season",
-            "description": "Access to special events."
+            "name": "सीज़न टिकट",
+            "description": "विशेष इवेंट्स तक पहुँच देता है।"
         },
         "coleccionables/varita-de-luz": {
-            "name": "Wand of Light",
-            "description": "Magical collectible."
+            "name": "प्रकाश की छड़ी",
+            "description": "जादुई संग्रहणीय।"
         },
         "coleccionables/cascabel-festivo": {
-            "name": "Jingle bell Festive",
-            "description": "Winter collectible."
+            "name": "उत्सव झंकार घंटी",
+            "description": "सर्दियों का संग्रहणीय।"
         },
         "coleccionables/flor-de-espiritu": {
-            "name": "Flower of Spirit",
-            "description": "Collectible of events of flores."
+            "name": "आत्मा का फूल",
+            "description": "फूलों वाले इवेंट्स का संग्रहणीय।"
         },
         "coleccionables/fantasmita-moxi": {
-            "name": "Little ghost Moxi",
-            "description": "Halloween collectible."
+            "name": "छोटा भूत मॉक्सी",
+            "description": "हैलोवीन का संग्रहणीय।"
         },
         "coleccionables/gato-sombrio": {
-            "name": "Cat Dark",
-            "description": "Collectible of events oscuros."
+            "name": "छाया बिल्ली",
+            "description": "डार्क/अंधेरे इवेंट्स का संग्रहणीय।"
         },
         "coleccionables/copa-de-campeon": {
-            "name": "Cup of Champion",
-            "description": "Earned by completing special challenges."
+            "name": "चैंपियन कप",
+            "description": "विशेष चुनौतियाँ पूरी करने पर मिलता है।"
         },
         "consumibles/galleta-energetica": {
-            "name": "Cookie Energy",
-            "description": "Restores energy."
+            "name": "ऊर्जा कुकी",
+            "description": "ऊर्जा बहाल करता है।"
         },
         "consumibles/pastel-de-celebracion": {
-            "name": "Cake of Celebration",
-            "description": "Gives an experience bonus."
+            "name": "उत्सव केक",
+            "description": "अनुभव बोनस देता है।"
         },
         "consumibles/fruta-magica": {
-            "name": "Magic Fruit",
-            "description": "Gives a random effect."
+            "name": "जादुई फल",
+            "description": "एक यादृच्छिक प्रभाव देता है।"
         },
         "consumibles/ensalada-refrescante": {
             "name": "Refreshing Salad",
