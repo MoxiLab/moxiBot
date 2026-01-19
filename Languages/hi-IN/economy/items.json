@@ -160,264 +160,264 @@
             "description": "एक यादृच्छिक प्रभाव देता है।"
         },
         "consumibles/ensalada-refrescante": {
-            "name": "Refreshing Salad",
-            "description": "Restores energy and health."
+            "name": "ताज़ा सलाद",
+            "description": "ऊर्जा और स्वास्थ्य बहाल करता है।"
         },
         "consumibles/fuegos-artificiales": {
-            "name": "Fireworks",
-            "description": "Gives a luck bonus in events."
+            "name": "आतिशबाज़ी",
+            "description": "इवेंट्स में किस्मत बोनस देता है।"
         },
         "consumibles/calabaza-festiva": {
-            "name": "Pumpkin Festiva",
-            "description": "Halloween consumable."
+            "name": "उत्सव कद्दू",
+            "description": "हैलोवीन उपभोग्य।"
         },
         "consumibles/nuez-dorada": {
-            "name": "Nut Golden",
-            "description": "Grants a defense bonus."
+            "name": "सुनहरा अखरोट",
+            "description": "रक्षा बोनस देता है।"
         },
         "consumibles/electrolito": {
-            "name": "Electrolyte",
-            "description": "Restores energy instantly."
+            "name": "इलेक्ट्रोलाइट",
+            "description": "तुरंत ऊर्जा बहाल करता है।"
         },
         "consumibles/monedas-de-oro": {
-            "name": "Gold Coins",
-            "description": "Consumable used to buy items in the shop."
+            "name": "सोने के सिक्के",
+            "description": "दुकान में आइटम खरीदने के लिए उपयोग होने वाला उपभोग्य।"
         },
         "consumibles/agua-fresca": {
-            "name": "Fresh Water",
-            "description": "Keeps you going: a small energy bonus."
+            "name": "ताज़ा पानी",
+            "description": "आपको चलता रखता है: थोड़ी ऊर्जा बढ़ोतरी।"
         },
         "consumibles/te-verde": {
-            "name": "Green Tea",
-            "description": "Reduces fatigue: a light focus bonus."
+            "name": "हरी चाय",
+            "description": "थकान कम करता है: हल्का फोकस बोनस।"
         },
         "consumibles/cafe-moxi": {
-            "name": "Coffee Moxi",
-            "description": "Slightly speeds up your actions for a few minutes."
+            "name": "मॉक्सी कॉफ़ी",
+            "description": "कुछ मिनटों के लिए आपके काम थोड़े तेज़ करता है।"
         },
         "consumibles/chocolate-caliente": {
-            "name": "Hot Chocolate",
-            "description": "Comforting: a gentle bonus during cold events."
+            "name": "गरम चॉकलेट",
+            "description": "सुकून देने वाला: ठंडे इवेंट्स में हल्का बोनस।"
         },
         "consumibles/sopa-caliente": {
-            "name": "Hot Soup",
-            "description": "Restores energy and grants a light endurance boost."
+            "name": "गरम सूप",
+            "description": "ऊर्जा बहाल करता है और हल्का सहनशक्ति बूस्ट देता है।"
         },
         "consumibles/barra-proteica": {
-            "name": "Protein Bar",
-            "description": "Quick energy for intense activities."
+            "name": "प्रोटीन बार",
+            "description": "तीव्र गतिविधियों के लिए तेज़ ऊर्जा।"
         },
         "consumibles/batido-prisma": {
-            "name": "Shake Prism",
-            "description": "A small luck boost for a while."
+            "name": "प्रिज़्म शेक",
+            "description": "कुछ समय के लिए थोड़ा किस्मत बूस्ट।"
         },
         "consumibles/sandwich-de-aventura": {
-            "name": "Adventure Sandwich",
-            "description": "Restores energy and slightly improves exploration."
+            "name": "एडवेंचर सैंडविच",
+            "description": "ऊर्जा बहाल करता है और अन्वेषण को थोड़ा बेहतर करता है।"
         },
         "consumibles/sushi-marino": {
-            "name": "Sushi Marine",
-            "description": "A small bonus to fishing and marine loot."
+            "name": "समुद्री सुशी",
+            "description": "मछली पकड़ने और समुद्री लूट में छोटा बोनस।"
         },
         "consumibles/pan-de-ajo": {
-            "name": "Bread of Garlic",
-            "description": "Improves endurance: ideal for mining."
+            "name": "लहसुन ब्रेड",
+            "description": "सहनशक्ति बढ़ाता है: खनन के लिए आदर्श।"
         },
         "herramientas/pico-prisma": {
-            "name": "Pickaxe Prism",
-            "description": "Allows you to mine rare minerals."
+            "name": "प्रिज़्म पिकऐक्स",
+            "description": "दुर्लभ खनिज खनन करने देता है।"
         },
         "herramientas/cana-de-pesca-moxi": {
-            "name": "Rod of Fishing Moxi",
-            "description": "Increases the chance of catching rare items."
+            "name": "मॉक्सी मछली पकड़ने की छड़ी",
+            "description": "दुर्लभ आइटम पकड़ने की संभावना बढ़ाता है।"
         },
         "herramientas/llave-multiusos": {
-            "name": "Key Multi-tool",
-            "description": "Tool for repairing and building."
+            "name": "मल्टी-टूल चाबी",
+            "description": "मरम्मत और निर्माण के लिए औज़ार।"
         },
         "herramientas/varita-solar": {
-            "name": "Wand Solar",
-            "description": "Allows you to perform magical actions."
+            "name": "सौर छड़ी",
+            "description": "जादुई कार्य करने देता है।"
         },
         "herramientas/hacha-elemental": {
-            "name": "Axe Elemental",
-            "description": "Tool for gathering special wood."
+            "name": "तत्वीय कुल्हाड़ी",
+            "description": "विशेष लकड़ी इकट्ठा करने का औज़ार।"
         },
         "herramientas/incubadora": {
-            "name": "Incubator",
-            "description": "Allows you to hatch eggs."
+            "name": "इनक्यूबेटर",
+            "description": "अंडे हैच/फोड़ने देता है।"
         },
         "herramientas/revelador-prisma": {
-            "name": "Revealer Prism",
-            "description": "Tool for discovering hidden treasures."
+            "name": "प्रिज़्म रिवीलर",
+            "description": "छुपे ख़ज़ाने खोजने का औज़ार।"
         },
         "herramientas/barco-moxi": {
-            "name": "Boat Moxi",
-            "description": "Allows you to explore sea regions."
+            "name": "मॉक्सी नाव",
+            "description": "समुद्री क्षेत्रों का अन्वेषण करने देता है।"
         },
         "herramientas/dinamita": {
-            "name": "Dynamite",
-            "description": "Allows you to open blocked paths."
+            "name": "डायनामाइट",
+            "description": "रुके/बंद रास्ते खोलने देता है।"
         },
         "herramientas/golem-minero-pescador": {
-            "name": "Golem Miner/Fisher",
-            "description": "Automated tools for mining/fishing."
+            "name": "खनन/मछली गोलेम",
+            "description": "खनन/मछली के लिए स्वचालित औज़ार।"
         },
         "herramientas/pico-de-hierro": {
-            "name": "Pickaxe of Iron",
-            "description": "Basic mining tool."
+            "name": "लोहे का पिकऐक्स",
+            "description": "बुनियादी खनन औज़ार।"
         },
         "herramientas/pico-de-acero": {
-            "name": "Pickaxe of Steel",
-            "description": "Improves mining efficiency."
+            "name": "स्टील पिकऐक्स",
+            "description": "खनन दक्षता बढ़ाता है।"
         },
         "herramientas/pico-de-diamante": {
-            "name": "Pickaxe of Diamond",
-            "description": "Ideal for rare and tough veins."
+            "name": "हीरे का पिकऐक्स",
+            "description": "दुर्लभ और कठोर नसों के लिए आदर्श।"
         },
         "herramientas/pico-de-obsidiana": {
-            "name": "Pickaxe of Obsidian",
-            "description": "Legendary tool for extreme mining."
+            "name": "ओब्सिडियन पिकऐक्स",
+            "description": "अत्यधिक खनन के लिए लेजेंडरी औज़ार।"
         },
         "herramientas/cana-de-bambu": {
-            "name": "Rod of Bamboo",
-            "description": "A simple rod to start fishing."
+            "name": "बाँस की छड़ी",
+            "description": "मछली पकड़ना शुरू करने के लिए एक सरल छड़ी।"
         },
         "herramientas/cana-de-carbono": {
-            "name": "Rod of Carbon",
-            "description": "Increases the chance of rare fishing."
+            "name": "कार्बन छड़ी",
+            "description": "दुर्लभ मछली पकड़ने की संभावना बढ़ाता है।"
         },
         "herramientas/red-de-pesca": {
-            "name": "Fishing Net",
-            "description": "Catches more common loot in marine areas."
+            "name": "मछली जाल",
+            "description": "समुद्री क्षेत्रों में अधिक सामान्य लूट पकड़ता है।"
         },
         "herramientas/arpon-marino": {
-            "name": "Harpoon Marine",
-            "description": "Improves loot in deep-sea fishing."
+            "name": "समुद्री हार्पून",
+            "description": "गहरे समुद्र में मछली पकड़ने की लूट बेहतर करता है।"
         },
         "herramientas/pala-de-excavacion": {
-            "name": "Shovel of Excavation",
-            "description": "Used to find buried objects."
+            "name": "खुदाई फावड़ा",
+            "description": "दबी हुई वस्तुएँ ढूँढने के लिए उपयोग होता है।"
         },
         "herramientas/brujula-prisma": {
-            "name": "Compass Prism",
-            "description": "Helps you navigate and discover routes."
+            "name": "प्रिज़्म कम्पास",
+            "description": "नेविगेट करने और नए रास्ते खोजने में मदद करता है।"
         },
         "herramientas/mapa-arrugado": {
-            "name": "Map Crumpled",
-            "description": "Clues for exploration and treasures."
+            "name": "चुन्नटदार नक्शा",
+            "description": "अन्वेषण और ख़ज़ानों के लिए सुराग।"
         },
         "herramientas/linterna-de-caverna": {
-            "name": "Cave Lantern",
-            "description": "Lights up dark areas while exploring."
+            "name": "गुफा लालटेन",
+            "description": "अन्वेषण के दौरान अंधेरे इलाकों को रोशन करता है।"
         },
         "herramientas/detector-de-metales": {
-            "name": "Detector of Metals",
-            "description": "Finds valuable objects underground."
+            "name": "धातु डिटेक्टर",
+            "description": "जमीन के नीचे कीमती वस्तुएँ ढूँढता है।"
         },
         "herramientas/cuerda-de-escalada": {
-            "name": "Rope of Climbing",
-            "description": "Useful for mountain routes and rescues."
+            "name": "चढ़ाई रस्सी",
+            "description": "पहाड़ी रास्तों और बचाव कार्यों में उपयोगी।"
         },
         "herramientas/kit-de-reparacion": {
-            "name": "Kit of Repair",
-            "description": "Repairs tools and equipment (future use)."
+            "name": "मरम्मत किट",
+            "description": "औज़ार और उपकरण की मरम्मत करता है (भविष्य उपयोग)।"
         },
         "herramientas/lupa-antigua": {
-            "name": "Magnifying glass Ancient",
-            "description": "Helps identify objects and clues."
+            "name": "प्राचीन आवर्धक काँच",
+            "description": "वस्तुएँ और सुराग पहचानने में मदद करता है।"
         },
         "herramientas/frasco-cazabichos": {
-            "name": "Jar Bug catcher",
-            "description": "Allows you to catch insects and small creatures."
+            "name": "कीट पकड़ने का जार",
+            "description": "कीड़े और छोटे जीव पकड़ने देता है।"
         },
         "herramientas/guantes-de-minero": {
-            "name": "Gloves of Miner",
-            "description": "Protects your hands during tough work."
+            "name": "खनिक के दस्ताने",
+            "description": "कठिन काम के दौरान आपके हाथों की रक्षा करता है।"
         },
         "herramientas/sierra-de-carpintero": {
-            "name": "Carpenter's Saw",
-            "description": "A woodworking tool (future use)."
+            "name": "बढ़ई की आरी",
+            "description": "लकड़ी का औज़ार (भविष्य उपयोग)।"
         },
         "herramientas/cuchillo-de-supervivencia": {
-            "name": "Knife of Survival",
-            "description": "tool multiusos for exploration."
+            "name": "सर्वाइवल चाकू",
+            "description": "अन्वेषण के लिए एक बहुउपयोगी औज़ार।"
         },
         "herramientas/martillo-de-forja": {
-            "name": "Forge Hammer",
-            "description": "Required for advanced crafting (future use)."
+            "name": "फोर्ज हथौड़ा",
+            "description": "उन्नत क्राफ्टिंग के लिए आवश्यक (भविष्य उपयोग)।"
         },
         "herramientas/anzuelo-de-lux": {
-            "name": "Hook of Lux",
-            "description": "Improves rare fishing in deep waters."
+            "name": "लक्स हुक",
+            "description": "गहरे पानी में दुर्लभ मछली पकड़ना बेहतर करता है।"
         },
         "herramientas/cebo-prisma": {
-            "name": "Bait Prism",
-            "description": "Temporarily increases the chance of rare catches."
+            "name": "प्रिज़्म चारा",
+            "description": "अस्थायी रूप से दुर्लभ पकड़ की संभावना बढ़ाता है।"
         },
         "herramientas/taladro-portatil": {
-            "name": "Portable Drill",
-            "description": "A powerful tool for fast mining (future use)."
+            "name": "पोर्टेबल ड्रिल",
+            "description": "तेज़ खनन के लिए शक्तिशाली औज़ार (भविष्य उपयोग)।"
         },
         "herramientas/bomba-de-humo": {
-            "name": "Smoke Bomb",
-            "description": "Helps you escape or avoid danger (future use)."
+            "name": "धुआँ बम",
+            "description": "भागने या खतरे से बचने में मदद करता है (भविष्य उपयोग)।"
         },
         "llaves/llave-prisma": {
-            "name": "Key Prism",
-            "description": "Opens special chests."
+            "name": "प्रिज़्म चाबी",
+            "description": "विशेष संदूक खोलती है।"
         },
         "llaves/llave-elemental": {
-            "name": "Elemental Key",
-            "description": "Opens event areas and chests."
+            "name": "तत्वीय चाबी",
+            "description": "इवेंट क्षेत्र और संदूक खोलती है।"
         },
         "llaves/talisman-solar": {
-            "name": "Solar Talisman",
-            "description": "Allows access to magical areas."
+            "name": "सौर ताबीज",
+            "description": "जादुई क्षेत्रों तक पहुँच देता है।"
         },
         "llaves/anillo-de-fuego": {
-            "name": "Ring of Fire",
-            "description": "Special key for fire-themed events."
+            "name": "अग्नि अंगूठी",
+            "description": "अग्नि-थीम इवेंट्स की विशेष चाबी।"
         },
         "llaves/llave-abisal": {
-            "name": "Abyssal Key",
-            "description": "Opens chests and doors in deep areas."
+            "name": "अथाह चाबी",
+            "description": "गहरे क्षेत्रों में संदूक और दरवाज़े खोलती है।"
         },
         "llaves/llave-glaciar": {
-            "name": "Key Glaciar",
-            "description": "Opens ice chests and cold chambers."
+            "name": "हिमानी चाबी",
+            "description": "बर्फीले संदूक और ठंडे कक्ष खोलती है।"
         },
         "llaves/llave-volcanica": {
-            "name": "Volcanic Key",
-            "description": "Opens chests and doors in hot areas."
+            "name": "ज्वालामुखीय चाबी",
+            "description": "गरम क्षेत्रों में संदूक और दरवाज़े खोलती है।"
         },
         "llaves/llave-lunar": {
-            "name": "Key Lunar",
-            "description": "Access a chambers night and rewards lunar."
+            "name": "चंद्र चाबी",
+            "description": "रात के कक्षों और चंद्र इनामों तक पहुँच देता है।"
         },
         "llaves/llave-antigua": {
-            "name": "Key Ancient",
-            "description": "A mysterious key for ancient chests."
+            "name": "प्राचीन चाबी",
+            "description": "प्राचीन संदूकों के लिए रहस्यमय चाबी।"
         },
         "loots/caja-misteriosa": {
-            "name": "Box Mystery",
-            "description": "Contains random items."
+            "name": "रहस्यमय बॉक्स",
+            "description": "यादृच्छिक आइटम होते हैं।"
         },
         "loots/cofre-de-fortuna": {
-            "name": "Cofre of Fortune",
-            "description": "Contains coins, materials, or rare items."
+            "name": "भाग्य संदूक",
+            "description": "कॉइन्स, सामग्री या दुर्लभ आइटम शामिल हो सकते हैं।"
         },
         "loots/caja-marina": {
-            "name": "Box Marina",
-            "description": "Contains items from aquatic events."
+            "name": "समुद्री बॉक्स",
+            "description": "जल/समुद्री इवेंट्स के आइटम शामिल होते हैं।"
         },
         "loots/caja-premium-diamante-platino": {
-            "name": "Caja Premium/Diamond/Platino",
-            "description": "Contains high-quality items."
+            "name": "प्रीमियम/डायमंड/प्लैटिनम बॉक्स",
+            "description": "उच्च गुणवत्ता वाले आइटम शामिल होते हैं।"
         },
         "loots/pack-de-celebracion": {
-            "name": "Pack of Celebration",
-            "description": "Packs with event items."
+            "name": "उत्सव पैक",
+            "description": "इवेंट आइटम वाले पैक।"
         },
         "loots/caja-de-suerte": {
             "name": "Caja of Luck",
