@@ -1,423 +1,423 @@
 {
     "ui": {
-        "panelTitle": "Crime",
-        "selectActivity": "Choose an activity",
-        "riskPlaceholder": "Risk level",
-        "btnRun": "Run"
+        "panelTitle": "الجريمة",
+        "selectActivity": "اختر نشاطًا",
+        "riskPlaceholder": "مستوى المخاطرة",
+        "btnRun": "ابدأ"
     },
     "options": {
-        "stealth": "Stealth",
-        "talk": "Distraction",
-        "rush": "Snatch"
+        "stealth": "تخفّي",
+        "talk": "إلهاء",
+        "rush": "انتزاع"
     },
     "doors": {
-        "a": "Door A",
-        "b": "Door B",
-        "c": "Door C"
+        "a": "الباب A",
+        "b": "الباب B",
+        "c": "الباب C"
     },
     "risks": {
-        "safe": "Safe",
-        "normal": "Normal",
-        "risky": "Risky"
+        "safe": "آمن",
+        "normal": "عادي",
+        "risky": "خطر"
     },
     "wires": {
-        "red": "Red wire",
-        "blue": "Blue wire",
-        "yellow": "Yellow wire",
-        "green": "Green wire"
+        "red": "سلك أحمر",
+        "blue": "سلك أزرق",
+        "yellow": "سلك أصفر",
+        "green": "سلك أخضر"
     },
     "activities": {
         "pickpocket": {
-            "title": "Pickpocket",
-            "prompt": "You spot someone distracted with their bag open. How do you try?"
+            "title": "نشل",
+            "prompt": "ترى شخصًا مشتتًا وحقيبته مفتوحة. كيف ستحاول؟"
         },
         "market-swipe": {
-            "title": "Crowded market",
-            "prompt": "Between stalls and people, a wallet peeks out. What do you do?"
+            "title": "سوق مزدحم",
+            "prompt": "بين الأكشاك والناس، تلمح محفظة بارزة. ماذا تفعل؟"
         },
         "metro-bump": {
-            "title": "Subway shove",
-            "prompt": "A sudden brake, bodies collide… and an easy pocket appears."
+            "title": "دفعة في المترو",
+            "prompt": "توقف مفاجئ، الأجساد تتصادم… وجيبٌ سهل يظهر."
         },
         "festival-confetti": {
-            "title": "Festival",
-            "prompt": "Music, confetti and distractions. What's your play?"
+            "title": "مهرجان",
+            "prompt": "موسيقى وكونفيتي وتشتيت. ما خطتك؟"
         },
         "hotel-lobby": {
-            "title": "Hotel lobby",
-            "prompt": "People let their guard down. How do you try?"
+            "title": "ردهة الفندق",
+            "prompt": "الناس يرخون حذرهم. كيف ستحاول؟"
         },
         "arcade-tokens": {
-            "title": "Arcade",
-            "prompt": "Someone is counting tokens. No one is watching. What do you do?"
+            "title": "صالة ألعاب",
+            "prompt": "شخص يعدّ العملات. لا أحد يراقب. ماذا تفعل؟"
         },
         "library-silence": {
-            "title": "Library",
-            "prompt": "Total silence. An open bag. What's your method?"
+            "title": "مكتبة",
+            "prompt": "صمت تام. حقيبة مفتوحة. ما طريقتك؟"
         },
         "park-bench": {
-            "title": "Park bench",
-            "prompt": "A backpack sits aside. How do you approach?"
+            "title": "مقعد الحديقة",
+            "prompt": "حقيبة ظهر موضوعة جانبًا. كيف تقترب؟"
         },
         "street-magician": {
-            "title": "Street magician",
-            "prompt": "Everyone watches the trick. You watch the pockets."
+            "title": "ساحر شارع",
+            "prompt": "الجميع يشاهد الخدعة. أنت تشاهد الجيوب."
         },
         "coffee-queue": {
-            "title": "Coffee line",
-            "prompt": "The line moves slowly. Attention is low."
+            "title": "طابور القهوة",
+            "prompt": "الطابور يتحرك ببطء. الانتباه منخفض."
         },
         "cinema-dark": {
-            "title": "Dark cinema",
-            "prompt": "Lights out. Do you take the moment?"
+            "title": "سينما مظلمة",
+            "prompt": "انطفأت الأضواء. هل تستغل اللحظة؟"
         },
         "museum-exhibit": {
-            "title": "Museum",
-            "prompt": "People are hypnotized by a display case."
+            "title": "متحف",
+            "prompt": "الناس مسحورون بواجهة عرض."
         },
         "food-truck": {
-            "title": "Food truck",
-            "prompt": "Wallets out and people rushing to pay."
+            "title": "عربة طعام",
+            "prompt": "المحافظ بالخارج والناس يسرعون للدفع."
         },
         "crosswalk-rush": {
-            "title": "Busy crosswalk",
-            "prompt": "Green light. Controlled chaos."
+            "title": "ممر مشاة مزدحم",
+            "prompt": "الضوء أخضر. فوضى مُنظمة."
         },
         "gym-lockers": {
-            "title": "Gym lockers",
-            "prompt": "Loose locks and distracted people."
+            "title": "خزائن النادي",
+            "prompt": "أقفال رخوة وأناس مشتتون."
         },
         "pier-crowd": {
-            "title": "Pier",
-            "prompt": "Tourists with backpacks and maps open."
+            "title": "الرصيف البحري",
+            "prompt": "سياح بحقائب وخرائط مفتوحة."
         },
         "station-platform": {
-            "title": "Platform",
-            "prompt": "The train arrives. Nerves. Opportunity."
+            "title": "رصيف المحطة",
+            "prompt": "القطار يصل. توتر. فرصة."
         },
         "night-market": {
-            "title": "Night market",
-            "prompt": "Warm lights. Fast hands."
+            "title": "سوق ليلي",
+            "prompt": "أضواء دافئة. أيدٍ سريعة."
         },
         "street-performer": {
-            "title": "Street performer",
-            "prompt": "The sound covers footsteps and whispers."
+            "title": "مؤدٍ في الشارع",
+            "prompt": "الصوت يغطي الخطوات والهمسات."
         },
         "salon-wait": {
-            "title": "Waiting room",
-            "prompt": "Phones out. Wallets out. Hmm."
+            "title": "غرفة انتظار",
+            "prompt": "هواتف بالخارج. محافظ بالخارج. همم."
         },
         "bank-atm": {
-            "title": "ATM",
-            "prompt": "Someone withdraws cash and pockets the receipt."
+            "title": "صراف آلي",
+            "prompt": "أحدهم يسحب نقدًا ويضع الإيصال في جيبه."
         },
         "taxi-backseat": {
-            "title": "Taxi",
-            "prompt": "A wallet slips onto the back seat."
+            "title": "تاكسي",
+            "prompt": "محفظة تنزلق إلى المقعد الخلفي."
         },
         "train-sleeper": {
-            "title": "Sleeper car",
-            "prompt": "Heads down, pockets unguarded."
+            "title": "عربة نوم",
+            "prompt": "الرؤوس للأسفل، والجيوب بلا حراسة."
         },
         "snow-coats": {
-            "title": "Winter coats",
-            "prompt": "Deep pockets… and tempting."
+            "title": "معاطف الشتاء",
+            "prompt": "جيوب عميقة… ومغرية."
         },
         "rain-umbrella": {
-            "title": "Rainy day",
-            "prompt": "Umbrellas bump. No one sees anything."
+            "title": "يوم ممطر",
+            "prompt": "المظلات تصطدم. لا أحد يرى شيئًا."
         },
         "beach-towels": {
-            "title": "Beach",
-            "prompt": "Towels, bags, distractions. What do you do?"
+            "title": "شاطئ",
+            "prompt": "مناشف وحقائب وتشتيت. ماذا تفعل؟"
         },
         "concert-mosh": {
-            "title": "Concert",
-            "prompt": "The crowd moves. So do you."
+            "title": "حفل موسيقي",
+            "prompt": "الجمهور يتحرك. وأنت كذلك."
         },
         "market-auction": {
-            "title": "Auction",
-            "prompt": "High bids. Split attention."
+            "title": "مزاد",
+            "prompt": "مزايدات عالية. انتباه منقسم."
         },
         "fashion-store": {
-            "title": "Fashion store",
-            "prompt": "Fitting rooms busy. Staff distracted."
+            "title": "متجر أزياء",
+            "prompt": "غرف القياس مشغولة. الموظفون مشتتون."
         },
         "electronics-demo": {
-            "title": "Gadget demo",
-            "prompt": "Bright screens. Bright pockets."
+            "title": "عرض أجهزة",
+            "prompt": "شاشات لامعة. جيوب لامعة."
         },
         "pet-parade": {
-            "title": "Pet parade",
-            "prompt": "People watch puppies. You… well."
+            "title": "استعراض حيوانات أليفة",
+            "prompt": "الناس يشاهدون الجِراء. وأنت… حسنًا."
         },
         "street-food": {
-            "title": "Street food",
-            "prompt": "Hands full, pockets unguarded."
+            "title": "طعام الشارع",
+            "prompt": "الأيدي مشغولة، والجيوب بلا حراسة."
         },
         "bus-crowd": {
-            "title": "Packed bus",
-            "prompt": "Quick stops. Quick moves."
+            "title": "حافلة مزدحمة",
+            "prompt": "توقفات سريعة. حركات أسرع."
         },
         "book-fair": {
-            "title": "Book fair",
-            "prompt": "Signings, lines and perfect distractions."
+            "title": "معرض كتاب",
+            "prompt": "تواقيع، طوابير، وتشتيت مثالي."
         },
         "flower-stall": {
-            "title": "Flower stall",
-            "prompt": "A romantic gift. A visible wallet."
+            "title": "كشك زهور",
+            "prompt": "هدية رومانسية. محفظة ظاهرة."
         },
         "campus-hall": {
-            "title": "Campus hallway",
-            "prompt": "Open backpacks and rushing to class."
+            "title": "ممر الجامعة",
+            "prompt": "حقائب ظهر مفتوحة والناس يسرعون إلى الدرس."
         },
         "airport-gate": {
-            "title": "Boarding gate",
-            "prompt": "Docs, tickets, chaos. Easy."
+            "title": "بوابة الصعود",
+            "prompt": "وثائق وتذاكر وفوضى. سهل."
         },
         "theme-park": {
-            "title": "Theme park",
-            "prompt": "Screams, laughter and dangling bags."
+            "title": "مدينة ملاهٍ",
+            "prompt": "صرخات وضحك وحقائب متدلية."
         },
         "harbor-ferry": {
-            "title": "Ferry",
-            "prompt": "Wind, seasickness… and a slip-up."
+            "title": "عبّارة",
+            "prompt": "رياح ودوار بحر… وهفوة."
         },
         "stadium-queue": {
-            "title": "Stadium queue",
-            "prompt": "Everyone watches the entrance. Pockets, not so much."
+            "title": "طابور الملعب",
+            "prompt": "الجميع يراقب المدخل. الجيوب؟ ليس كثيرًا."
         },
         "vault": {
-            "title": "Three doors",
-            "prompt": "You're in. There are three doors. One has quick loot; the others, trouble."
+            "title": "ثلاثة أبواب",
+            "prompt": "أنت بالداخل. هناك ثلاثة أبواب. أحدها فيه غنيمة سريعة؛ والآخران مشاكل."
         },
         "storage-doors": {
-            "title": "Storage",
-            "prompt": "Three metal doors. One hides an easy haul. Choose."
+            "title": "مخزن",
+            "prompt": "ثلاثة أبواب معدنية. أحدها يخفي غنيمة سهلة. اختر."
         },
         "office-doors": {
-            "title": "Offices",
-            "prompt": "Empty hallway. Three unmarked doors. Which one pays?"
+            "title": "مكاتب",
+            "prompt": "ممر فارغ. ثلاثة أبواب بلا علامات. أيّها يدرّ ربحًا؟"
         },
         "basement-doors": {
-            "title": "Basement",
-            "prompt": "Damp and silent. Three doors: noise, calm, luck."
+            "title": "قبو",
+            "prompt": "رطب وصامت. ثلاثة أبواب: ضجيج، هدوء، حظ."
         },
         "backstage-doors": {
-            "title": "Backstage",
-            "prompt": "Behind the stage are three access points. One leads to loot."
+            "title": "خلف الكواليس",
+            "prompt": "خلف المسرح ثلاث نقاط دخول. واحدة تقود إلى الغنيمة."
         },
         "dock-doors": {
-            "title": "Docks",
-            "prompt": "Containers and three warehouse doors. Choose fast."
+            "title": "الأرصفة",
+            "prompt": "حاويات وثلاثة أبواب مستودع. اختر بسرعة."
         },
         "subway-doors": {
-            "title": "Tunnel",
-            "prompt": "Three maintenance doors. One has supplies."
+            "title": "نفق",
+            "prompt": "ثلاثة أبواب صيانة. أحدها فيه إمدادات."
         },
         "library-doors": {
-            "title": "Archive",
-            "prompt": "Three doors to the restricted archive. One has envelopes."
+            "title": "الأرشيف",
+            "prompt": "ثلاثة أبواب للأرشيف المقيّد. أحدها فيه مظاريف."
         },
         "casino-doors": {
-            "title": "Casino",
-            "prompt": "Three doors behind VIP. One is the good one."
+            "title": "كازينو",
+            "prompt": "ثلاثة أبواب خلف منطقة VIP. أحدها هو الصحيح."
         },
         "hotel-doors": {
-            "title": "Private floor",
-            "prompt": "Three identical doors. One isn't fully latched."
+            "title": "طابق خاص",
+            "prompt": "ثلاثة أبواب متطابقة. أحدها غير مُحكم الإغلاق."
         },
         "museum-doors": {
-            "title": "Restricted area",
-            "prompt": "Three doors with sketchy alarms. One fails."
+            "title": "منطقة محظورة",
+            "prompt": "ثلاثة أبواب بإنذارات مشبوهة. واحد منها يتعطل."
         },
         "trainyard-doors": {
-            "title": "Depot",
-            "prompt": "Three rusty doors. One opens easily."
+            "title": "مستودع",
+            "prompt": "ثلاثة أبواب صدئة. أحدها يفتح بسهولة."
         },
         "lab-doors": {
-            "title": "Laboratory",
-            "prompt": "Three doors with panels. One is in test mode."
+            "title": "مختبر",
+            "prompt": "ثلاثة أبواب بلوحات. أحدها في وضع الاختبار."
         },
         "sewers-doors": {
-            "title": "Sewers",
-            "prompt": "Three hatches. One leads to a hideout."
+            "title": "مجاري",
+            "prompt": "ثلاث فتحات. إحداها تؤدي إلى مخبأ."
         },
         "attic-doors": {
-            "title": "Attic",
-            "prompt": "Three old doors. One creaks… but gives."
+            "title": "علّية",
+            "prompt": "ثلاثة أبواب قديمة. أحدها يصرّ… لكنه يفتح."
         },
         "theater-doors": {
-            "title": "Theater",
-            "prompt": "Three doors backstage. One has a cashbox."
+            "title": "مسرح",
+            "prompt": "ثلاثة أبواب خلف الكواليس. أحدها فيه صندوق نقود."
         },
         "warehouse-doors": {
-            "title": "Industrial bay",
-            "prompt": "Three hand-numbered doors. One holds the good stuff."
+            "title": "حظيرة صناعية",
+            "prompt": "ثلاثة أبواب مرقمة يدويًا. أحدها فيه الأشياء الجيدة."
         },
         "ship-doors": {
-            "title": "Ship hold",
-            "prompt": "Three doors to the hold. Choose before someone returns."
+            "title": "عنبر السفينة",
+            "prompt": "ثلاثة أبواب إلى العنبر. اختر قبل أن يعود أحدهم."
         },
         "castle-doors": {
-            "title": "Passage",
-            "prompt": "Three stone doors. One is a shortcut to treasure."
+            "title": "ممر",
+            "prompt": "ثلاثة أبواب حجرية. أحدها اختصار إلى كنز."
         },
         "clinic-doors": {
-            "title": "Clinic",
-            "prompt": "Three storage doors. One has a small safe."
+            "title": "عيادة",
+            "prompt": "ثلاثة أبواب مخزن. أحدها فيه خزنة صغيرة."
         },
         "stadium-doors": {
-            "title": "Stadium",
-            "prompt": "Three locker room doors. One has lost-and-found."
+            "title": "ملعب",
+            "prompt": "ثلاثة أبواب لغرفة تبديل الملابس. أحدها فيه المفقودات."
         },
         "mall-doors": {
-            "title": "Mall",
-            "prompt": "Three service doors. One leads to the register."
+            "title": "مركز تجاري",
+            "prompt": "ثلاثة أبواب خدمة. أحدها يؤدي إلى الصندوق."
         },
         "garage-doors": {
-            "title": "Garage",
-            "prompt": "Three metal doors. One has no lock."
+            "title": "مرآب",
+            "prompt": "ثلاثة أبواب معدنية. أحدها بلا قفل."
         },
         "serverroom-doors": {
-            "title": "Server room",
-            "prompt": "Three doors. One has resellable gear."
+            "title": "غرفة الخوادم",
+            "prompt": "ثلاثة أبواب. أحدها فيه معدات قابلة لإعادة البيع."
         },
         "kitchen-doors": {
-            "title": "Kitchen",
-            "prompt": "Three doors to storage. One has pricey supplies."
+            "title": "مطبخ",
+            "prompt": "ثلاثة أبواب للمخزن. أحدها فيه مستلزمات غالية."
         },
         "bakery-doors": {
-            "title": "Bakery",
-            "prompt": "Three back doors. One leads to the till."
+            "title": "مخبز",
+            "prompt": "ثلاثة أبواب خلفية. أحدها يؤدي إلى درج النقود."
         },
         "gallery-doors": {
-            "title": "Gallery",
-            "prompt": "Three doors to the back room. One is poorly shut."
+            "title": "معرض",
+            "prompt": "ثلاثة أبواب إلى الغرفة الخلفية. أحدها مغلق بشكل سيئ."
         },
         "station-doors": {
-            "title": "Station",
-            "prompt": "Three cleaning doors. One hides a bag."
+            "title": "محطة",
+            "prompt": "ثلاثة أبواب تنظيف. أحدها يخفي حقيبة."
         },
         "factory-doors": {
-            "title": "Factory",
-            "prompt": "Three doors. One opens into a parts warehouse."
+            "title": "مصنع",
+            "prompt": "ثلاثة أبواب. أحدها يفتح على مستودع قطع."
         },
         "dockyard-doors": {
-            "title": "Shipyard",
-            "prompt": "Three tool doors. One has new crates."
+            "title": "حوض سفن",
+            "prompt": "ثلاثة أبواب أدوات. أحدها فيه صناديق جديدة."
         },
         "getaway": {
-            "title": "Getaway",
-            "prompt": "Loot in hand. How much risk do you take to escape?"
+            "title": "الهروب",
+            "prompt": "الغنيمة بيدك. كم مخاطرة ستأخذ لتفلت؟"
         },
         "alley-chase": {
-            "title": "Alley",
-            "prompt": "Footsteps behind. Sirens far. How do you escape?"
+            "title": "زقاق",
+            "prompt": "خطوات خلفك. صفارات بعيدة. كيف تهرب؟"
         },
         "rooftops": {
-            "title": "Rooftops",
-            "prompt": "Up the fire stairs. How much do you risk?"
+            "title": "أسطح",
+            "prompt": "اصعد سلالم الطوارئ. كم ستخاطر؟"
         },
         "crowd-vanish": {
-            "title": "Disappear in the crowd",
-            "prompt": "The crowd can save you… or expose you."
+            "title": "الاختفاء وسط الحشد",
+            "prompt": "الحشد قد ينقذك… أو يفضحك."
         },
         "river-cross": {
-            "title": "Cross the river",
-            "prompt": "There's a bridge, a boat and a jump. Risk?"
+            "title": "عبور النهر",
+            "prompt": "هناك جسر وقارب وقفزة. مخاطرة؟"
         },
         "night-scooter": {
-            "title": "Night scooter",
-            "prompt": "The night is ally. Or enemy. Decide."
+            "title": "سكوتر ليلي",
+            "prompt": "الليل حليف… أو عدو. قرر."
         },
         "smoke-bomb": {
-            "title": "Smoke screen",
-            "prompt": "You can vanish… if it works."
+            "title": "ستار دخان",
+            "prompt": "يمكنك الاختفاء… إن نجح."
         },
         "subway-hop": {
-            "title": "Subway hop",
-            "prompt": "The train arrives. Do you rush in or play it calm?"
+            "title": "قفزة إلى المترو",
+            "prompt": "القطار يصل. هل تندفع أم تبقى هادئًا؟"
         },
         "taxi-dash": {
-            "title": "Fast taxi",
-            "prompt": "A free cab. Pay and go, or bolt?"
+            "title": "تاكسي سريع",
+            "prompt": "تاكسي مجاني. تدفع وتنطلق أم تفرّ؟"
         },
         "crowbar-route": {
-            "title": "Emergency route",
-            "prompt": "Locked doors. You could force one."
+            "title": "طريق طوارئ",
+            "prompt": "أبواب مقفلة. يمكنك كسر واحد."
         },
         "rain-cover": {
-            "title": "Rain cover",
-            "prompt": "Rain hides tracks… and vision."
+            "title": "ستار المطر",
+            "prompt": "المطر يخفي الآثار… والرؤية أيضًا."
         },
         "market-escape": {
-            "title": "Market escape",
-            "prompt": "Tight stalls. One mistake is expensive."
+            "title": "الهروب عبر السوق",
+            "prompt": "الأكشاك ضيقة. خطأ واحد مكلف."
         },
         "stairs-sprint": {
-            "title": "Stairs",
-            "prompt": "Up or down. Every second counts."
+            "title": "السلالم",
+            "prompt": "صعود أم نزول. كل ثانية مهمة."
         },
         "dock-fog": {
-            "title": "Dock fog",
-            "prompt": "Fog hides… but confuses too."
+            "title": "ضباب الرصيف",
+            "prompt": "الضباب يخفي… لكنه يربك أيضًا."
         },
         "warehouse-run": {
-            "title": "Between warehouses",
-            "prompt": "Indoor shortcuts. Risk of guards."
+            "title": "بين المستودعات",
+            "prompt": "اختصارات داخلية. خطر الحراس."
         },
         "festival-hide": {
-            "title": "Hide in the festival",
-            "prompt": "Costumes and masks. How exposed are you?"
+            "title": "الاختباء في المهرجان",
+            "prompt": "أزياء وأقنعة. كم أنت مكشوف؟"
         },
         "parking-garage": {
-            "title": "Parking garage",
-            "prompt": "Ramps, cars, cameras. Pick your risk."
+            "title": "موقف سيارات متعدد الطوابق",
+            "prompt": "منحدرات وسيارات وكاميرات. اختر مخاطرتك."
         },
         "canal-walk": {
-            "title": "Canal",
-            "prompt": "You can follow the canal edge. Slippery."
+            "title": "قناة",
+            "prompt": "يمكنك السير على حافة القناة. زلقة."
         },
         "construction-site": {
-            "title": "Construction site",
-            "prompt": "Scaffolds and gaps. You can vanish… or fall."
+            "title": "موقع بناء",
+            "prompt": "سقالات وفجوات. يمكنك الاختفاء… أو السقوط."
         },
         "mall-exit": {
-            "title": "Mall exit",
-            "prompt": "Three exits, two guards. What do you do?"
+            "title": "مخرج المركز التجاري",
+            "prompt": "ثلاثة مخارج وحارسان. ماذا تفعل؟"
         },
         "hotel-elevator": {
-            "title": "Elevator",
-            "prompt": "Slow elevator or fast stairs. Risk."
+            "title": "مصعد",
+            "prompt": "مصعد بطيء أم سلالم سريعة. مخاطرة."
         },
         "station-cameras": {
-            "title": "Cameras",
-            "prompt": "Cameras track you. Do you try to dodge them?"
+            "title": "كاميرات",
+            "prompt": "الكاميرات تتبعك. هل تحاول تفاديها؟"
         },
         "rooftop-jump": {
-            "title": "Jump",
-            "prompt": "There's a jump between buildings. Your call."
+            "title": "قفزة",
+            "prompt": "هناك قفزة بين مبنيين. قرارك."
         },
         "sewer-drop": {
-            "title": "Manhole",
-            "prompt": "You can drop into the sewers. Or not."
+            "title": "بالوعة",
+            "prompt": "يمكنك النزول إلى المجاري. أو لا."
         },
         "forest-edge": {
-            "title": "Forest edge",
-            "prompt": "Darkness and branches. Safe path or shortcut."
+            "title": "حافة الغابة",
+            "prompt": "ظلام وأغصان. طريق آمن أم اختصار؟"
         },
         "bridge-crossing": {
-            "title": "Bridge",
-            "prompt": "Fast but visible. Risk?"
+            "title": "جسر",
+            "prompt": "سريع لكنه مكشوف. مخاطرة؟"
         },
         "crowd-metro": {
-            "title": "Station crowd",
-            "prompt": "Blend in… or sprint."
+            "title": "حشد المحطة",
+            "prompt": "اندماج… أم اندفاع."
         },
         "harbor-boat": {
-            "title": "Harbor boat",
-            "prompt": "A boat breaks loose. Do you use it?"
+            "title": "قارب الميناء",
+            "prompt": "قارب ينفلت من رباطه. هل تستخدمه؟"
         }
     }
 }

@@ -1,5 +1,5 @@
 {
-    "TITLE": "Pets",
-    "INCUBATING_TEXT": "Your **{{egg}}** is incubating.\nTime remaining: **{{time}}**\n\nTip: when it's ready, use **{{prefix}}pet** again to hatch it.",
-    "NO_PETS_TEXT": "You don't have pets yet.\n\n1) Buy an **egg** in `{{prefix}}shop`\n2) Buy an **incubator**\n3) Use: `{{prefix}}use incubadora` to incubate (consumes 1 egg)\n4) Then use `{{prefix}}pet` to see progress / hatch."
+    "TITLE": "الحيوانات الأليفة",
+    "INCUBATING_TEXT": "يتم حضن **{{egg}}**.\nالوقت المتبقي: **{{time}}**\n\nنصيحة: عندما يصبح جاهزًا، استخدم **{{prefix}}pet** مرة أخرى لفقسه.",
+    "NO_PETS_TEXT": "ليس لديك حيوانات أليفة بعد.\n\n1) اشترِ **بيضة** من `{{prefix}}shop`\n2) اشترِ **حاضنة**\n3) استخدم: `{{prefix}}use incubadora` لبدء الحضانة (يستهلك 1 بيضة)\n4) ثم استخدم `{{prefix}}pet` لعرض التقدم / الفقس."
 }
