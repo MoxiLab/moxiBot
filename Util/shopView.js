@@ -14,7 +14,7 @@ function slugify(input) {
 }
 
 function buildShopData({ catalogPath, lang = process.env.DEFAULT_LANG || 'es-ES' } = {}) {
-    const catalog = loadCatalog(catalogPath);
+    const catalog = loadCatalog({ lang });
 
     const categories = catalog
         .filter((c) => c && c.category)

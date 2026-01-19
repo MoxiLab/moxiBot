@@ -9,7 +9,7 @@ const LEVELS = {
 // Evitar require circular
 let client = null;
 function getClient() {
-  // IMPORTANTE: no arrancar el bot desde scripts (node ./scripts/*.js)
+  // IMPORTANTE: no arrancar el bot desde scripts/CLI
   // ni desde procesos donde el cliente no está inicializado.
   return client;
 }
@@ -72,7 +72,7 @@ function log(levelName, ...msg) {
 
 async function sendLogToDiscordChannel(levelName, prefix, color, ...msg) {
   try {
-    // Evitar side-effects en scripts/CLI
+    // Evitar side-effects en CLI
     if (process.env.DISABLE_DISCORD_LOGS === '1') return;
     try {
       const mainFile = require.main && require.main.filename ? String(require.main.filename) : '';

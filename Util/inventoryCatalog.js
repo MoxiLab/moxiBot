@@ -14,39 +14,16 @@ function langBase(lang) {
     return idx > 0 ? l.slice(0, idx) : l;
 }
 
-function resolveInventoryCatalogPath(lang, explicitCatalogPath) {
-    if (explicitCatalogPath) return explicitCatalogPath;
-
-    const requested = normalizeLang(lang) || normalizeLang(process.env.DEFAULT_LANG) || 'es-ES';
-    const base = langBase(requested);
-    const defaultLang = normalizeLang(process.env.DEFAULT_LANG) || 'es-ES';
-
-    const candidates = [requested];
-    if (base && base !== requested) candidates.push(base);
-    candidates.push('en-US');
-    candidates.push(defaultLang);
-
-    const seen = new Set();
-    for (const cand of candidates) {
-        const c = normalizeLang(cand);
-        if (!c || seen.has(c)) continue;
-        seen.add(c);
-
-        const fp = path.join(INVENTORY_I18N_DIR, c, 'economy', 'InventoryItems.json');
-        if (fs.existsSync(fp)) return fp;
-    }
-
-    // Fallback final explícito
-    return path.join(INVENTORY_I18N_DIR, 'en-US', 'economy', 'InventoryItems.json');
-}
-
-const DEFAULT_CATALOG_PATH = resolveInventoryCatalogPath(process.env.DEFAULT_LANG || 'es-ES');
+// El catálogo del juego se construye desde Languages/<lang>/economy/items.json.
+// Se conserva DEFAULT_CATALOG_PATH solo por compatibilidad (ya no se usa).
+const DEFAULT_CATALOG_PATH = null;
 
 const DEFAULT_MIN_ITEMS_PER_CATEGORY = (() => {
+    // Con items.json no queremos autogenerar cientos de ítems por defecto.
     const raw = process.env.INVENTORY_MIN_ITEMS_PER_CATEGORY;
-    if (raw == null || String(raw).trim() === '') return 600;
+    if (raw == null || String(raw).trim() === '') return 0;
     const n = Number(raw);
-    return Number.isFinite(n) ? Math.max(0, Math.trunc(n)) : 600;
+    return Number.isFinite(n) ? Math.max(0, Math.trunc(n)) : 0;
 })();
 
 // Cachea archivos individuales por idioma (no por idioma solicitado)
@@ -214,6 +191,87 @@ function pickPrefixFromCategory(cat) {
     return slugify(label) || 'categoria';
 }
 
+const CATEGORY_KEY_BY_PREFIX = {
+    buffs: 'Buffs',
+    coleccionables: 'Collectibles',
+    consumibles: 'Consumables',
+    herramientas: 'Tools',
+    llaves: 'Keys',
+    loots: 'Loot',
+    mascotas: 'Pets',
+    materiales: 'Materials',
+    mejoras: 'Upgrades',
+    misiones: 'Quests',
+    pociones: 'Potions',
+    rollos: 'Scrolls',
+    proteccion: 'Protection',
+};
+
+const CATEGORY_ORDER = [
+    'Buffs',
+    'Collectibles',
+    'Consumables',
+    'Tools',
+    'Keys',
+    'Loot',
+    'Pets',
+    'Materials',
+    'Upgrades',
+    'Quests',
+    'Potions',
+    'Scrolls',
+    'Protection',
+    'Other',
+];
+
+function categoryKeyFromItemId(itemId) {
+    const id = String(itemId || '');
+    const prefix = id.includes('/') ? id.slice(0, id.indexOf('/')) : id;
+    return CATEGORY_KEY_BY_PREFIX[prefix] || 'Other';
+}
+
+function getBaseItemsData({ lang } = {}) {
+    const requested = normalizeLang(lang) || normalizeLang(process.env.DEFAULT_LANG) || 'es-ES';
+    const base = langBase(requested);
+    const defaultLang = normalizeLang(process.env.DEFAULT_LANG) || 'es-ES';
+
+    const candidates = [requested];
+    if (base && base !== requested) candidates.push(base);
+    candidates.push('en-US');
+    candidates.push(defaultLang);
+
+    const seen = new Set();
+    for (const cand of candidates) {
+        const c = normalizeLang(cand);
+        if (!c || seen.has(c)) continue;
+        seen.add(c);
+        const data = getInventoryLocaleData(c);
+        if (data && data.items && typeof data.items === 'object') return data;
+    }
+    return null;
+}
+
+function hash01(input) {
+    // Hash simple determinista (no criptográfico) para asignar rareza/precio sin archivos extra.
+    const s = String(input || '');
+    let h = 2166136261;
+    for (let i = 0; i < s.length; i += 1) {
+        h ^= s.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+    }
+    const u = (h >>> 0) / 0xffffffff;
+    return Number.isFinite(u) ? u : 0;
+}
+
+function rarityForItemId(itemId) {
+    const r = hash01(itemId);
+    if (r < 0.01) return 'legendary';
+    if (r < 0.04) return 'epic';
+    if (r < 0.12) return 'rare';
+    if (r < 0.30) return 'uncommon';
+    return 'common';
+}
+
 function rarityForIndex(i) {
     // Distribución simple y determinista (sirve para “relleno” de catálogo)
     if (i % 200 === 0) return 'legendary';
@@ -321,13 +379,52 @@ function expandCatalogToMinItems(catalog, minPerCategory) {
     return catalog;
 }
 
-function loadCatalog(catalogPath = DEFAULT_CATALOG_PATH) {
-    const raw = stripBom(fs.readFileSync(catalogPath, 'utf8'));
-    const data = JSON.parse(raw);
-    if (!Array.isArray(data)) {
-        throw new Error('InventoryItems.json must be an array of categories');
+function loadCatalog(arg = undefined) {
+    // Compat: antes recibía catalogPath. Ahora se ignora.
+    const lang = (arg && typeof arg === 'object' && arg.lang) ? arg.lang : (process.env.DEFAULT_LANG || 'es-ES');
+    const baseData = getBaseItemsData({ lang }) || { categories: {}, items: {} };
+    const itemsObj = baseData?.items && typeof baseData.items === 'object' ? baseData.items : {};
+
+    const categories = new Map();
+    const ensureCategory = (categoryKey) => {
+        if (!categories.has(categoryKey)) {
+            categories.set(categoryKey, {
+                categoryKey,
+                category: categoryKey,
+                label: categoryKey,
+                items: [],
+            });
+        }
+        return categories.get(categoryKey);
+    };
+
+    for (const itemId of Object.keys(itemsObj)) {
+        const categoryKey = categoryKeyFromItemId(itemId);
+        const cat = ensureCategory(categoryKey);
+        const prefix = String(itemId).includes('/') ? String(itemId).slice(0, String(itemId).indexOf('/')) : String(itemId);
+        const basePrice = basePriceForPrefix(prefix);
+        const rarity = rarityForItemId(itemId);
+        cat.items.push({
+            id: itemId,
+            // name/description reales se resuelven por normalizeItemForLang() desde items.json
+            name: itemId,
+            description: '',
+            rarity,
+            price: priceForRarity(basePrice, rarity),
+        });
     }
-    return expandCatalogToMinItems(data, DEFAULT_MIN_ITEMS_PER_CATEGORY);
+
+    // Orden estable por categorías conocidas
+    const out = [];
+    for (const key of CATEGORY_ORDER) {
+        if (categories.has(key)) out.push(categories.get(key));
+    }
+    // Por si apareciese alguna categoría no contemplada
+    for (const [key, cat] of categories.entries()) {
+        if (!CATEGORY_ORDER.includes(key)) out.push(cat);
+    }
+
+    return expandCatalogToMinItems(out, DEFAULT_MIN_ITEMS_PER_CATEGORY);
 }
 
 function buildItemIndex(catalog) {
@@ -343,8 +440,7 @@ function buildItemIndex(catalog) {
 }
 
 function getItemById(itemId, { catalogPath, lang } = {}) {
-    const resolvedCatalogPath = resolveInventoryCatalogPath(lang || process.env.DEFAULT_LANG || 'es-ES', catalogPath);
-    const catalog = loadCatalog(resolvedCatalogPath);
+    const catalog = loadCatalog({ lang: lang || process.env.DEFAULT_LANG || 'es-ES' });
     const { byId } = buildItemIndex(catalog);
     const item = byId.get(itemId) || null;
     // Importante: devolvemos name/description como string aunque en JSON sean objetos.
