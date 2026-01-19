@@ -3,6 +3,9 @@ const moxi = require('../../i18n');
 const { buildNoticeContainer } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
 const { resolveItemFromInput } = require('../../Util/useItem');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('iteminfo');
 
 function rarityPretty(rarity, lang = 'es-ES') {
     const r = String(rarity || '').trim().toLowerCase();
@@ -47,7 +50,8 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('iteminfo')
-        .setDescription('Muestra información de un ítem')
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations)
         .addIntegerOption((opt) =>
             opt
                 .setName('id')

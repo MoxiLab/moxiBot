@@ -1,6 +1,9 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildBalanceMessage } = require('../../Util/balanceView');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('balance');
 
 module.exports = {
     cooldown: 0,
@@ -10,7 +13,8 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('balance')
-        .setDescription('Muestra tu balance (coins/banco/sakuras)')
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations)
         .addUserOption((opt) =>
             opt
                 .setName('usuario')

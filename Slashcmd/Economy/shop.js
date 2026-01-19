@@ -4,6 +4,9 @@ const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notic
 const { EMOJIS } = require('../../Util/emojis');
 const { buildShopData, buildShopMessage } = require('../../Util/shopView');
 const { resolveItemFromInput } = require('../../Util/useItem');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('moxishop');
 
 module.exports = {
     cooldown: 0,
@@ -13,7 +16,8 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('moxishop')
-        .setDescription('Tienda: lista y compra ítems')
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations)
         .addSubcommand((sc) =>
             sc
                 .setName('list')

@@ -1,6 +1,9 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildCrimeMessageOptions } = require('../../Util/crimeView');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('crime');
 
 function economyCategory(lang) {
     lang = lang || 'es-ES';
@@ -12,7 +15,8 @@ module.exports = {
     Category: economyCategory,
     data: new SlashCommandBuilder()
         .setName('crime')
-        .setDescription('Comete un crimen para intentar ganar monedas (con riesgo)'),
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations),
 
     async run(Moxi, interaction) {
         const userId = interaction.user?.id;

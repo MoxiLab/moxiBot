@@ -4,6 +4,9 @@ const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notic
 const { EMOJIS } = require('../../Util/emojis');
 const { buildShopData } = require('../../Util/shopView');
 const { resolveItemFromInput } = require('../../Util/useItem');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('buy');
 
 module.exports = {
     cooldown: 0,
@@ -13,7 +16,8 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('buy')
-        .setDescription('Compra un ítem por su ID, nombre o itemId de la tienda')
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations)
         .addStringOption((opt) =>
             opt
                 .setName('item')

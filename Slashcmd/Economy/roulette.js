@@ -104,15 +104,20 @@ function evalBet(bet, rolled) {
 }
 
 function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
+    lang = lang || 'es-ES';
+    return moxi.translate('commands:CATEGORY_ECONOMIA', lang);
 }
+
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+const { description, localizations } = getSlashCommandDescription('roulette');
 
 module.exports = {
     cooldown: 2,
     Category: economyCategory,
     data: new SlashCommandBuilder()
         .setName('roulette')
-        .setDescription('Juega a la ruleta y apuesta coins')
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations)
         .addIntegerOption((opt) =>
             opt
                 .setName('cantidad')

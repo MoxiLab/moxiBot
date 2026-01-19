@@ -2,9 +2,11 @@ const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
 
 function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
+    lang = lang || 'es-ES';
+    return moxi.translate('commands:CATEGORY_ECONOMIA', lang);
 }
 
 function buildHelpText() {
@@ -23,13 +25,16 @@ function buildHelpText() {
     );
 }
 
+const { description, localizations } = getSlashCommandDescription('auction');
+
 module.exports = {
     cooldown: 0,
     Category: economyCategory,
     hideSubcommandsInHelp: true,
     data: new SlashCommandBuilder()
         .setName('auction')
-        .setDescription('Subastas: crea, busca y puja')
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations)
         .addSubcommand((sc) => sc.setName('help').setDescription('Muestra ayuda de subastas'))
         .addSubcommand((sc) => sc.setName('add').setDescription('Subasta un item (proximamente)'))
         .addSubcommand((sc) => sc.setName('bid').setDescription('Puja por un item (proximamente)'))

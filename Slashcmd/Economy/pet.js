@@ -13,6 +13,9 @@ const {
     ensurePetAttributes,
     checkAndMarkPetAway,
 } = require('../../Util/petSystem');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('pet');
 
 module.exports = {
     cooldown: 0,
@@ -22,7 +25,8 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('pet')
-        .setDescription('Gestiona tu mascota y la incubación de huevos'),
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations),
 
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;

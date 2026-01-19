@@ -18,6 +18,9 @@ const { formatDuration } = require('../../Util/economyCore');
 const { buildWorkListMessageOptions } = require('../../Util/workListPanel');
 const { buildWorkApplyMessageOptions } = require('../../Util/workApplyPanel');
 const { slashMention } = require('../../Util/slashCommandMentions');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('work');
 
 function economyCategory(lang) {
     lang = lang || 'es-ES';
@@ -63,7 +66,8 @@ module.exports = {
     Category: economyCategory,
     data: new SlashCommandBuilder()
         .setName('work')
-        .setDescription('Trabaja para ganar monedas y experiencia')
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations)
         .addSubcommand((s) =>
             s
                 .setName('list')

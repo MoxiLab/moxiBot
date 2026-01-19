@@ -1,6 +1,9 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildBagMessage } = require('../../Util/bagView');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('bag');
 
 module.exports = {
   cooldown: 0,
@@ -10,7 +13,8 @@ module.exports = {
   },
   data: new SlashCommandBuilder()
     .setName('bag')
-    .setDescription('Muestra tu mochila (inventario)')
+    .setDescription(description)
+    .setDescriptionLocalizations(localizations)
     .addIntegerOption((opt) =>
       opt
         .setName('pagina')

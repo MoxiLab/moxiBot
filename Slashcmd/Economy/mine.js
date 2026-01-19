@@ -7,6 +7,9 @@ const { getZonesForKind } = require('../../Util/zonesView');
 const { hasInventoryItem } = require('../../Util/fishView');
 const { buildMinePlayMessageOptions } = require('../../Util/minePlay');
 const { slashMention } = require('../../Util/slashCommandMentions');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('mine');
 
 function resolveMineZone(input) {
     const raw = String(input || '').trim().toLowerCase();
@@ -35,7 +38,8 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('mine')
-        .setDescription('Mining (button minigame)')
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations)
         .addStringOption((opt) =>
             opt
                 .setName('zona')

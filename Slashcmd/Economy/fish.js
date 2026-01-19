@@ -7,6 +7,9 @@ const { getZonesForKind } = require('../../Util/zonesView');
 const { hasInventoryItem } = require('../../Util/fishView');
 const { buildFishPlayMessageOptions } = require('../../Util/fishPlay');
 const { slashMention } = require('../../Util/slashCommandMentions');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('fish');
 
 function normalizeKey(input) {
     return String(input || '')
@@ -44,7 +47,8 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('fish')
-        .setDescription('Fishing (button minigame)')
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations)
         .addStringOption((opt) =>
             opt
                 .setName('zona')

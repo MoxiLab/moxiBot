@@ -1,6 +1,9 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildZonesMessageOptions, normalizeKind } = require('../../Util/zonesView');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('zones');
 
 module.exports = {
     cooldown: 0,
@@ -10,7 +13,8 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('zones')
-        .setDescription('Mira las zonas disponibles (pesca/minería/exploración)')
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations)
         .addStringOption((opt) =>
             opt
                 .setName('tipo')

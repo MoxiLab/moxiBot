@@ -1,6 +1,9 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildBuffsMessage } = require('../../Util/buffsView');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('buffs');
 
 module.exports = {
     cooldown: 0,
@@ -10,7 +13,8 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('buffs')
-        .setDescription('Muestra tus potenciadores y bonos de botín'),
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations),
 
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;

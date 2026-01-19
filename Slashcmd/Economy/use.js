@@ -31,6 +31,9 @@ const {
     checkAndMarkPetAway,
     returnPetFromAway,
 } = require('../../Util/petSystem');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('use');
 
 const PET_RETURN_ITEM_ID = 'mascotas/ocarina-del-vinculo';
 
@@ -57,7 +60,8 @@ module.exports = {
     Category: economyCategory,
     data: new SlashCommandBuilder()
         .setName('use')
-        .setDescription('Usa (consume) un ítem de tu mochila')
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations)
         .addIntegerOption((opt) =>
             opt
                 .setName('id')

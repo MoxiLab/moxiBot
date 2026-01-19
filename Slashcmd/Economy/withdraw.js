@@ -3,6 +3,9 @@ const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
 const { getOrCreateEconomyRaw } = require('../../Util/balanceView');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('withdraw');
 
 function safeInt(n, fallback = 0) {
     const x = Number(n);
@@ -23,7 +26,8 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('withdraw')
-        .setDescription('Retira coins desde tu banco al balance')
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations)
         .addIntegerOption((opt) =>
             opt
                 .setName('cantidad')

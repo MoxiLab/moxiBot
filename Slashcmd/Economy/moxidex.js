@@ -1,6 +1,9 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildMoxidexMessage } = require('../../Util/moxidexView');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('moxidex');
 
 module.exports = {
     cooldown: 0,
@@ -10,7 +13,8 @@ module.exports = {
     },
     data: new SlashCommandBuilder()
         .setName('moxidex')
-        .setDescription('Muestra tu Moxidex (mascotas)'),
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations),
 
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;
