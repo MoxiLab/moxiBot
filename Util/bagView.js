@@ -25,11 +25,11 @@ function getCatalogIndexes() {
 
   const categoryByItemId = new Map();
   for (const cat of _catalogCache) {
-    const categoryLabel = cat?.category || 'Otros';
+    const categoryKey = cat?.categoryKey || cat?.category || 'Other';
     const items = Array.isArray(cat?.items) ? cat.items : [];
     for (const item of items) {
       if (!item?.id) continue;
-      categoryByItemId.set(item.id, categoryLabel);
+      categoryByItemId.set(item.id, categoryKey);
     }
   }
   _categoryByItemIdCache = categoryByItemId;
@@ -113,6 +113,7 @@ async function getIventoryRows(userId, { lang = process.env.DEFAULT_LANG || 'es-
         name: resolveLocalizedString(item?.name, lang) || itemId,
         description: resolveLocalizedString(item?.description, lang) || '',
         rarity: item?.rarity || 'comun',
+        categoryKey: rawCategory || 'Other',
         category: resolveCategoryFromLanguages(rawCategory, lang) || resolveLocalizedString(rawCategory, lang) || t('CATEGORY_OTHER'),
       };
     })
@@ -175,7 +176,8 @@ async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey
   const categoriesMap = new Map();
   for (const it of items) {
     const label = String(it.category || t('CATEGORY_OTHER'));
-    const key = slugifyKey(label);
+    const stableKey = String(it.categoryKey || it.category || t('CATEGORY_OTHER'));
+    const key = slugifyKey(stableKey);
     if (!categoriesMap.has(key)) {
       categoriesMap.set(key, { key, label, items: [], uniqueCount: 0, totalQty: 0 });
     }

@@ -22,7 +22,7 @@ function zoneTier(zone) {
 
 /**
  * Devuelve drops de materiales para pesca.
- * - Usa IDs existentes del catálogo o añadidos en Models/InventoryItems.json.
+ * - Usa IDs existentes del catálogo (Languages/<locale>/economy/InventoryItems.json).
  */
 function rollFishMaterials(zone, activity) {
     const tier = zoneTier(zone);

@@ -11,7 +11,7 @@ function chance(p) {
 
 /**
  * Devuelve drops de materiales para minería.
- * - Mantiene IDs existentes del catálogo (Models/InventoryItems.json).
+ * - Mantiene IDs existentes del catálogo (Languages/<locale>/economy/InventoryItems.json).
  */
 function rollMineMaterials(zone, activity) {
     const requiredId = String(zone?.requiredItemId || '');

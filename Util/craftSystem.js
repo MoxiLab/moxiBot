@@ -360,16 +360,16 @@ function listRecipes() {
     return RECIPES.slice();
 }
 
-function getDisplayNameForItem(itemId) {
-    const item = getItemById(itemId);
+function getDisplayNameForItem(itemId, lang) {
+    const item = getItemById(itemId, { lang });
     return item?.name || itemId;
 }
 
-function getRecipeDisplayName(recipe) {
-    return getDisplayNameForItem(recipe?.output?.itemId);
+function getRecipeDisplayName(recipe, lang) {
+    return getDisplayNameForItem(recipe?.output?.itemId, lang);
 }
 
-function resolveRecipe(query) {
+function resolveRecipe(query, lang) {
     const raw = String(query || '').trim();
     if (!raw) return null;
 
@@ -389,11 +389,11 @@ function resolveRecipe(query) {
     if (!q) return null;
 
     // by item name
-    const byName = RECIPES.find(r => normalizeText(getRecipeDisplayName(r)) === q);
+    const byName = RECIPES.find(r => normalizeText(getRecipeDisplayName(r, lang)) === q);
     if (byName) return byName;
 
     // contains
-    return RECIPES.find(r => normalizeText(getRecipeDisplayName(r)).includes(q)) || null;
+    return RECIPES.find(r => normalizeText(getRecipeDisplayName(r, lang)).includes(q)) || null;
 }
 
 function getInvAmount(economyDoc, itemId) {

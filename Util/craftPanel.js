@@ -24,43 +24,43 @@ function paginate(items, page, pageSize) {
     return { slice: items.slice(start, start + size), page: safePage, totalPages, size };
 }
 
-function getOutputDescription(recipe) {
-    const item = getItemById(recipe?.output?.itemId);
+function getOutputDescription(recipe, lang) {
+    const item = getItemById(recipe?.output?.itemId, { lang });
     return item?.description || '';
 }
 
-function formatMaterials(recipe) {
+function formatMaterials(recipe, lang) {
     const inputs = Array.isArray(recipe?.inputs) ? recipe.inputs : [];
     if (!inputs.length) return '—';
     return inputs
         .map((i) => {
-            const it = getItemById(i.itemId);
+            const it = getItemById(i.itemId, { lang });
             const name = it?.name || i.itemId;
             return `${name} x${safeInt(i.amount, 1)}`;
         })
         .join('  ');
 }
 
-function buildRecipeBlock(recipe, craftId) {
+function buildRecipeBlock(recipe, craftId, lang) {
     const name = getRecipeDisplayName(recipe);
-    const desc = getOutputDescription(recipe);
+    const desc = getOutputDescription(recipe, lang);
     const cost = Math.max(0, safeInt(recipe?.cost, 0));
 
     const header = `\u{1F6E0}\u{FE0F} **${name}**  [ID: ${craftId}]`;
     const lines = [header];
     if (desc) lines.push(desc);
     lines.push(`**Costo de creación:** ${cost || 0} \u{1FA99}`);
-    lines.push(`**Materiales:** ${formatMaterials(recipe)}`);
+    lines.push(`**Materiales:** ${formatMaterials(recipe, lang)}`);
     return lines.join('\n');
 }
 
-function buildCraftMessage({ userId, page = 0, pageSize = 4 } = {}) {
+function buildCraftMessage({ userId, page = 0, pageSize = 4, lang } = {}) {
     const recipes = listRecipes();
     const indexed = recipes.map((r, idx) => ({ recipe: r, craftId: idx + 1 }));
 
     const { slice, page: safePage, totalPages } = paginate(indexed, page, pageSize);
 
-    const blocks = slice.map((x) => buildRecipeBlock(x.recipe, x.craftId));
+    const blocks = slice.map((x) => buildRecipeBlock(x.recipe, x.craftId, lang));
 
     const description = [
         'Lista de items que puedes crear.',
@@ -85,7 +85,7 @@ function buildCraftMessage({ userId, page = 0, pageSize = 4 } = {}) {
                 ? slice.slice(0, 25).map((x) => {
                     const label = getRecipeDisplayName(x.recipe);
                     const cost = Math.max(0, safeInt(x.recipe?.cost, 0));
-                    const out = getItemById(x.recipe?.output?.itemId);
+                    const out = getItemById(x.recipe?.output?.itemId, { lang });
                     const desc = (out?.description || `Costo: ${cost} 🪙`).slice(0, 100);
                     return {
                         label: label.length > 100 ? label.slice(0, 100) : label,

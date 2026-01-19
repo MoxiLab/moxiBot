@@ -19,8 +19,12 @@ function buildShopData({ catalogPath, lang = process.env.DEFAULT_LANG || 'es-ES'
     const categories = catalog
         .filter((c) => c && c.category)
         .map((c) => ({
-            label: resolveCategoryFromLanguages(c.category, lang) || resolveLocalizedString(c.category, lang) || String(c.category),
-            key: slugify(resolveCategoryFromLanguages(c.category, lang) || resolveLocalizedString(c.category, lang) || String(c.category)) || 'categoria',
+            // categoryKey es la clave estable (p.ej. "Buffs"). category puede estar traducido.
+            categoryKey: String(c.categoryKey || c.category || ''),
+            label:
+                resolveCategoryFromLanguages(c.categoryKey || c.category, lang) ||
+                String(c.label || c.category),
+            key: slugify(String(c.categoryKey || c.category)) || 'categoria',
             items: Array.isArray(c.items) ? c.items : [],
         }));
 

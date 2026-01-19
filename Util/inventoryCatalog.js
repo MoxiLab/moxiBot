@@ -1,8 +1,46 @@
 const fs = require('fs');
 const path = require('path');
 
-const DEFAULT_CATALOG_PATH = path.join(process.cwd(), 'Models', 'InventoryItems.json');
 const INVENTORY_I18N_DIR = path.join(process.cwd(), 'Languages');
+
+function normalizeLang(lang) {
+    return String(lang || '').trim();
+}
+
+function langBase(lang) {
+    const l = normalizeLang(lang);
+    if (!l) return '';
+    const idx = l.indexOf('-');
+    return idx > 0 ? l.slice(0, idx) : l;
+}
+
+function resolveInventoryCatalogPath(lang, explicitCatalogPath) {
+    if (explicitCatalogPath) return explicitCatalogPath;
+
+    const requested = normalizeLang(lang) || normalizeLang(process.env.DEFAULT_LANG) || 'es-ES';
+    const base = langBase(requested);
+    const defaultLang = normalizeLang(process.env.DEFAULT_LANG) || 'es-ES';
+
+    const candidates = [requested];
+    if (base && base !== requested) candidates.push(base);
+    candidates.push('en-US');
+    candidates.push(defaultLang);
+
+    const seen = new Set();
+    for (const cand of candidates) {
+        const c = normalizeLang(cand);
+        if (!c || seen.has(c)) continue;
+        seen.add(c);
+
+        const fp = path.join(INVENTORY_I18N_DIR, c, 'economy', 'InventoryItems.json');
+        if (fs.existsSync(fp)) return fp;
+    }
+
+    // Fallback final explícito
+    return path.join(INVENTORY_I18N_DIR, 'en-US', 'economy', 'InventoryItems.json');
+}
+
+const DEFAULT_CATALOG_PATH = resolveInventoryCatalogPath(process.env.DEFAULT_LANG || 'es-ES');
 
 const DEFAULT_MIN_ITEMS_PER_CATEGORY = (() => {
     const raw = process.env.INVENTORY_MIN_ITEMS_PER_CATEGORY;
@@ -73,17 +111,6 @@ function getInventoryLocale(lang) {
     // Compat: devuelve el primer locale existente según la cadena
     const chain = getInventoryLocaleChain(lang);
     return chain.length ? chain[0].data : null;
-}
-
-function normalizeLang(lang) {
-    return String(lang || '').trim();
-}
-
-function langBase(lang) {
-    const l = normalizeLang(lang);
-    if (!l) return '';
-    const idx = l.indexOf('-');
-    return idx > 0 ? l.slice(0, idx) : l;
 }
 
 function resolveLocalizedString(value, lang, { fallbackLang = 'es-ES' } = {}) {
@@ -181,7 +208,9 @@ function pickPrefixFromCategory(cat) {
         const slash = id.indexOf('/');
         if (slash > 0) return id.slice(0, slash);
     }
-    const label = typeof cat?.category === 'string' ? cat.category : 'categoria';
+    const label =
+        (typeof cat?.categoryKey === 'string' && cat.categoryKey.trim() ? cat.categoryKey : null) ||
+        (typeof cat?.category === 'string' ? cat.category : 'categoria');
     return slugify(label) || 'categoria';
 }
 
@@ -314,7 +343,8 @@ function buildItemIndex(catalog) {
 }
 
 function getItemById(itemId, { catalogPath, lang } = {}) {
-    const catalog = loadCatalog(catalogPath);
+    const resolvedCatalogPath = resolveInventoryCatalogPath(lang || process.env.DEFAULT_LANG || 'es-ES', catalogPath);
+    const catalog = loadCatalog(resolvedCatalogPath);
     const { byId } = buildItemIndex(catalog);
     const item = byId.get(itemId) || null;
     // Importante: devolvemos name/description como string aunque en JSON sean objetos.
