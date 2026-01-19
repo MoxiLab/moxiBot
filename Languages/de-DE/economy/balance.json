@@ -1,13 +1,13 @@
 {
-    "TITLE": "{{user}}'s balance",
-    "COINS": "Coins",
+    "TITLE": "Kontostand von {{user}}",
+    "COINS": "Münzen",
     "BANK": "Bank",
     "SAKURAS": "Sakuras",
-    "GLOBAL_RANK": "Global rank",
-    "BTN_DEPOSIT": "Deposit",
-    "BTN_WITHDRAW": "Withdraw",
-    "ONLY_AUTHOR": "Only the author can use these buttons.",
-    "ONLY_OWN_BALANCE": "You can only manage your own balance.",
-    "NO_COINS_TO_DEPOSIT": "You don't have coins to deposit.",
-    "NO_COINS_TO_WITHDRAW": "You don't have coins in the bank to withdraw."
+    "GLOBAL_RANK": "Globaler Rang",
+    "BTN_DEPOSIT": "Einzahlen",
+    "BTN_WITHDRAW": "Abheben",
+    "ONLY_AUTHOR": "Nur der Autor kann diese Buttons benutzen.",
+    "ONLY_OWN_BALANCE": "Du kannst nur deinen eigenen Kontostand verwalten.",
+    "NO_COINS_TO_DEPOSIT": "Du hast keine Münzen zum Einzahlen.",
+    "NO_COINS_TO_WITHDRAW": "Du hast keine Münzen in der Bank zum Abheben."
 }

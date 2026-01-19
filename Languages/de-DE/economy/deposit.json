@@ -1,15 +1,15 @@
 {
-    "INVALID_USAGE_TITLE": "Incorrect usage",
-    "INVALID_USAGE_TEXT": "Use: `{{prefix}}deposit 100` or `{{prefix}}deposit all`.",
+    "INVALID_USAGE_TITLE": "Falsche Nutzung",
+    "INVALID_USAGE_TEXT": "Nutze: `{{prefix}}deposit 100` oder `{{prefix}}deposit all`.",
     "BANK_TITLE": "Bank",
-    "NO_COINS": "You don't have any coins to deposit.",
-    "INVALID_AMOUNT_TITLE": "Invalid amount",
-    "INVALID_AMOUNT_TEXT": "Amount must be greater than 0, or use `all`.",
-    "INSUFFICIENT_FUNDS_TITLE": "Insufficient funds",
-    "INSUFFICIENT_FUNDS_TEXT": "You tried to deposit **{{wanted}}** 🪙 but you only have **{{balance}}** 🪙.",
-    "DEPOSIT_SUCCESS_TITLE": "Deposit completed",
-    "DEPOSIT_SUCCESS_TEXT": "You deposited **{{wanted}}** 🪙.\nBalance: **{{balance}}** 🪙\nBank: **{{bank}}** 🏦",
-    "ERROR_TITLE": "Error",
-    "ERROR_MONGO": "MongoDB isn't configured, the bank is unavailable.",
-    "ERROR_GENERIC": "I couldn't complete the deposit right now. Please try again."
+    "NO_COINS": "Du hast keine Münzen zum Einzahlen.",
+    "INVALID_AMOUNT_TITLE": "Ungültiger Betrag",
+    "INVALID_AMOUNT_TEXT": "Der Betrag muss größer als 0 sein, oder nutze `all`.",
+    "INSUFFICIENT_FUNDS_TITLE": "Nicht genug Geld",
+    "INSUFFICIENT_FUNDS_TEXT": "Du wolltest **{{wanted}}** 🪙 einzahlen, aber du hast nur **{{balance}}** 🪙.",
+    "DEPOSIT_SUCCESS_TITLE": "Einzahlung abgeschlossen",
+    "DEPOSIT_SUCCESS_TEXT": "Du hast **{{wanted}}** 🪙 eingezahlt.\nKontostand: **{{balance}}** 🪙\nBank: **{{bank}}** 🏦",
+    "ERROR_TITLE": "Fehler",
+    "ERROR_MONGO": "MongoDB ist nicht konfiguriert, die Bank ist nicht verfügbar.",
+    "ERROR_GENERIC": "Ich konnte die Einzahlung gerade nicht abschließen. Bitte versuch es erneut."
 }
