@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const filePath = 'Models/InventoryItems.json';
+const filePath = 'Languages/en-US/economy/InventoryItems.json';
 
 const slugify = (value) =>
     String(value)

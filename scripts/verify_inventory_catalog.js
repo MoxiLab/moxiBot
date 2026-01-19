@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 
-const filePath = 'Models/InventoryItems.json';
+const filePath = 'Languages/en-US/economy/InventoryItems.json';
 const raw = fs.readFileSync(filePath, 'utf8').replace(/^\uFEFF/, '');
 const data = JSON.parse(raw);
 
