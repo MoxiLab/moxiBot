@@ -1,5 +1,5 @@
 {
-    "TITLE": "Pets",
-    "INCUBATING_TEXT": "Your **{{egg}}** is incubating.\nTime remaining: **{{time}}**\n\nTip: when it's ready, use **{{prefix}}pet** again to hatch it.",
-    "NO_PETS_TEXT": "You don't have pets yet.\n\n1) Buy an **egg** in `{{prefix}}shop`\n2) Buy an **incubator**\n3) Use: `{{prefix}}use incubadora` to incubate (consumes 1 egg)\n4) Then use `{{prefix}}pet` to see progress / hatch."
+    "TITLE": "Animali",
+    "INCUBATING_TEXT": "Il tuo **{{egg}}** è in incubazione.\nTempo rimanente: **{{time}}**\n\nSuggerimento: quando è pronto, usa di nuovo **{{prefix}}pet** per farlo schiudere.",
+    "NO_PETS_TEXT": "Non hai ancora animali.\n\n1) Compra un **uovo** in `{{prefix}}shop`\n2) Compra un'**incubatrice**\n3) Usa: `{{prefix}}use incubatrice` per incubare (consuma 1 uovo)\n4) Poi usa `{{prefix}}pet` per vedere i progressi / schiudere."
 }
