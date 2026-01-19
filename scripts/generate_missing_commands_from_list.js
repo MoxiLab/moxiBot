@@ -98,7 +98,8 @@ function makePrefixStub(name) {
 const { buildWipPayload } = require('../../Util/wip');
 
 function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
+    lang = lang || 'es-ES';
+    return moxi.translate('commands:CATEGORY_ECONOMIA', lang);
 }
 
 module.exports = {
@@ -132,7 +133,8 @@ function makePrefixBalanceWrapper() {
 const { buildBalanceMessage } = require('../../Util/balanceView');
 
 function economyCategory(lang) {
-    return moxi.translate('commands:CATEGORY_ECONOMIA', lang || 'es-ES');
+    lang = lang || 'es-ES';
+    return moxi.translate('commands:CATEGORY_ECONOMIA', lang);
 }
 
 module.exports = {
