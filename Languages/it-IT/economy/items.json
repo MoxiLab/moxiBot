@@ -336,7 +336,7 @@
             "description": "Protegge le mani durante lavori duri."
         },
         "herramientas/sierra-de-carpintero": {
-            "name": "Carpenter's Saw",
+            "name": "Sega da Carpentiere",
             "description": "Strumento per lavorare il legno (uso futuro)."
         },
         "herramientas/cuchillo-de-supervivencia": {
@@ -580,264 +580,264 @@
             "description": "Pulcino difensivo; riduce le penalità durante gli eventi."
         },
         "materiales/hierba-prisma": {
-            "name": "Hierba Prism",
-            "description": "Crafting material."
+            "name": "Erba Prisma",
+            "description": "Materiale per la creazione."
         },
         "materiales/roca-volcanica": {
-            "name": "Volcanic Rock",
-            "description": "Material for defense upgrades."
+            "name": "Roccia Vulcanica",
+            "description": "Materiale per potenziamenti difensivi."
         },
         "materiales/barra-de-oro-acero": {
-            "name": "Bar of Oro/Steel",
-            "description": "Material for crafting avanzado."
+            "name": "Lingotto d'Oro/Acciaio",
+            "description": "Materiale per creazioni avanzate."
         },
         "materiales/fragmento-de-espiritu": {
-            "name": "Fragment of Spirit",
-            "description": "Material for quests and mejoras."
+            "name": "Frammento di Spirito",
+            "description": "Materiale per missioni e potenziamenti."
         },
         "materiales/mineral-elemental": {
-            "name": "Mineral Elemental",
-            "description": "Material for crafting of tools."
+            "name": "Minerale Elementale",
+            "description": "Materiale per la creazione di strumenti."
         },
         "materiales/flor-de-amor": {
-            "name": "Flower of Amor",
-            "description": "Material for events romantic."
+            "name": "Fiore dell'Amore",
+            "description": "Materiale per eventi romantici."
         },
         "materiales/fosil": {
-            "name": "Fossil",
-            "description": "Material for quests of exploration."
+            "name": "Fossile",
+            "description": "Materiale per missioni di esplorazione."
         },
         "materiales/dulce-festivo": {
-            "name": "Candy Festive",
-            "description": "Material for events of season."
+            "name": "Dolce Festivo",
+            "description": "Materiale per eventi stagionali."
         },
         "materiales/alga-marina": {
-            "name": "Seaweed",
-            "description": "Fishing material and marine crafting ingredient."
+            "name": "Alga Marina",
+            "description": "Materiale da pesca e ingrediente per creazioni marine."
         },
         "materiales/concha-marina": {
-            "name": "Seashell",
-            "description": "Common material from coastal areas."
+            "name": "Conchiglia Marina",
+            "description": "Materiale comune delle zone costiere."
         },
         "materiales/coral-prisma": {
-            "name": "Prism Coral",
-            "description": "Rare material from reefs and deep seas."
+            "name": "Corallo Prisma",
+            "description": "Materiale raro di scogliere e mari profondi."
         },
         "materiales/perla-azur": {
-            "name": "Azur Pearl",
-            "description": "A valuable marine treasure."
+            "name": "Perla Azzurra",
+            "description": "Un prezioso tesoro marino."
         },
         "materiales/mineral-de-cobre": {
-            "name": "Copper Ore",
-            "description": "Common mining material."
+            "name": "Minerale di Rame",
+            "description": "Materiale minerario comune."
         },
         "materiales/mineral-de-hierro": {
-            "name": "Iron Ore",
-            "description": "Base for ingots and tools."
+            "name": "Minerale di Ferro",
+            "description": "Base per lingotti e strumenti."
         },
         "materiales/mineral-de-plata": {
-            "name": "Silver Ore",
-            "description": "Valuable mineral for crafting."
+            "name": "Minerale d'Argento",
+            "description": "Minerale prezioso per la creazione."
         },
         "materiales/mineral-de-oro": {
-            "name": "Gold Ore",
-            "description": "Rare mineral for advanced crafting."
+            "name": "Minerale d'Oro",
+            "description": "Minerale raro per creazioni avanzate."
         },
         "materiales/mineral-de-diamante": {
-            "name": "Diamond Ore",
-            "description": "Very rare mineral: elite crafting."
+            "name": "Minerale di Diamante",
+            "description": "Minerale rarissimo: creazione d'élite."
         },
         "materiales/madera-robusta": {
-            "name": "Sturdy Wood",
-            "description": "Great for structures and tools."
+            "name": "Legno Robusto",
+            "description": "Ottimo per strutture e strumenti."
         },
         "materiales/madera-encantada": {
-            "name": "Enchanted Wood",
-            "description": "Rare wood with magical properties."
+            "name": "Legno Incantato",
+            "description": "Legno raro con proprietà magiche."
         },
         "materiales/cuero-curtido": {
-            "name": "Leather Tanned",
-            "description": "Flexible material for gear."
+            "name": "Cuio Conciato",
+            "description": "Materiale flessibile per l'equipaggiamento."
         },
         "materiales/tela-resistente": {
-            "name": "Fabric Durable",
-            "description": "Material for backpacks and clothing."
+            "name": "Tessuto Resistente",
+            "description": "Materiale per zaini e vestiti."
         },
         "materiales/hilo-fino": {
-            "name": "Thread Fine",
-            "description": "Sewing material for crafting."
+            "name": "Filo Pregiato",
+            "description": "Materiale da cucito per la creazione."
         },
         "materiales/polvo-prisma": {
-            "name": "Dust Prism",
-            "description": "Magical ingredient for upgrades."
+            "name": "Polvere Prisma",
+            "description": "Ingrediente magico per potenziamenti."
         },
         "materiales/esencia-solar": {
-            "name": "Essence Solar",
-            "description": "Bright ingredient for rare crafting."
+            "name": "Essenza Solare",
+            "description": "Ingrediente luminoso per creazioni rare."
         },
         "materiales/esencia-lunar": {
-            "name": "Essence Lunar",
-            "description": "Night ingredient for special recipes."
+            "name": "Essenza Lunare",
+            "description": "Ingrediente notturno per ricette speciali."
         },
         "materiales/esencia-umbria": {
-            "name": "Essence Umbral",
-            "description": "Dark energy, very rare."
+            "name": "Essenza Ombrosa",
+            "description": "Energia oscura, molto rara."
         },
         "materiales/fragmento-de-cristal": {
-            "name": "Fragment of Crystal",
-            "description": "Shiny fragment for crafting."
+            "name": "Frammento di Cristallo",
+            "description": "Frammento brillante per la creazione."
         },
         "materiales/gema-rubi": {
-            "name": "Ruby Gem",
-            "description": "Rare gem for trades and upgrades."
+            "name": "Gemma di Rubino",
+            "description": "Gemma rara per scambi e potenziamenti."
         },
         "materiales/gema-zafiro": {
-            "name": "Sapphire Gem",
-            "description": "Rare gem with aquatic energy."
+            "name": "Gemma di Zaffiro",
+            "description": "Gemma rara con energia acquatica."
         },
         "materiales/gema-esmeralda": {
-            "name": "Emerald Gem",
-            "description": "Rare gem with natural energy."
+            "name": "Gemma di Smeraldo",
+            "description": "Gemma rara con energia naturale."
         },
         "materiales/nucleo-elemental": {
-            "name": "Core Elemental",
-            "description": "Very rare component for elemental tools."
+            "name": "Nucleo Elementale",
+            "description": "Componente molto raro per strumenti elementali."
         },
         "materiales/placa-de-acero": {
-            "name": "Plate of Steel",
-            "description": "Sturdy material for advanced crafting."
+            "name": "Piastra d'Acciaio",
+            "description": "Materiale resistente per creazioni avanzate."
         },
         "mejoras/potenciador-de-fortuna": {
-            "name": "Booster of Fortune",
-            "description": "Increases the chance of getting great rewards."
+            "name": "Potenziatore della Fortuna",
+            "description": "Aumenta la probabilità di ottenere grandi ricompense."
         },
         "mejoras/escudo-de-tolerancia": {
-            "name": "Shield of Tolerance",
-            "description": "Reduces penalties in events."
+            "name": "Scudo della Tolleranza",
+            "description": "Riduce le penalità negli eventi."
         },
         "mejoras/expansion-de-mochila": {
-            "name": "Expansion of Backpack",
-            "description": "Increases inventory space."
+            "name": "Espansione dello Zaino",
+            "description": "Aumenta lo spazio dell'inventario."
         },
         "mejoras/entrenamiento-moxi": {
-            "name": "Training Moxi",
-            "description": "Experience bonus per activity."
+            "name": "Allenamento Moxi",
+            "description": "Bonus esperienza per attività."
         },
         "mejoras/trabajo-en-equipo": {
-            "name": "Teamwork en Team",
-            "description": "Bonus when working in a group."
+            "name": "Lavoro di Squadra",
+            "description": "Bonus quando lavori in gruppo."
         },
         "mejoras/estrella-de-suerte": {
-            "name": "Star of Luck",
-            "description": "Luck bonus."
+            "name": "Stella della Fortuna",
+            "description": "Bonus fortuna."
         },
         "mejoras/aurora-festiva": {
             "name": "Aurora Festiva",
-            "description": "Bonus during winter events."
+            "description": "Bonus durante gli eventi invernali."
         },
         "mejoras/tinte-personalizado": {
-            "name": "Dye Custom",
-            "description": "Changes the color of your profile or club."
+            "name": "Tintura Personalizzata",
+            "description": "Cambia il colore del tuo profilo o del tuo club."
         },
         "mejoras/expansion-de-banco": {
-            "name": "Expansion of Bank",
-            "description": "Increases bank space (future use)."
+            "name": "Espansione della Banca",
+            "description": "Aumenta lo spazio in banca (uso futuro)."
         },
         "mejoras/expansion-de-mochila-plus": {
-            "name": "Expansion of Backpack Plus",
-            "description": "Increases inventory space even more (future use)."
+            "name": "Espansione dello Zaino Plus",
+            "description": "Aumenta ancora di più lo spazio dell'inventario (uso futuro)."
         },
         "mejoras/sello-de-proteccion": {
-            "name": "Seal of Protection",
-            "description": "Reduces losses during dangerous events (future use)."
+            "name": "Sigillo di Protezione",
+            "description": "Riduce le perdite durante eventi pericolosi (uso futuro)."
         },
         "mejoras/pase-premium-moxi": {
             "name": "Pass Premium Moxi",
-            "description": "Access to premium system benefits (future use)."
+            "description": "Accesso ai vantaggi del sistema premium (uso futuro)."
         },
         "misiones/gema-prisma": {
-            "name": "Gem Prism",
-            "description": "Required for advanced quests."
+            "name": "Gemma Prisma",
+            "description": "Richiesta per missioni avanzate."
         },
         "misiones/conejo-de-peluche": {
-            "name": "Conejo of Peluche",
-            "description": "Special quest item."
+            "name": "Coniglio di Peluche",
+            "description": "Oggetto speciale per missioni."
         },
         "misiones/espada-de-hielo": {
-            "name": "Ice Sword",
-            "description": "Required for exploration quests."
+            "name": "Spada di Ghiaccio",
+            "description": "Richiesta per missioni di esplorazione."
         },
         "misiones/katana-solar": {
-            "name": "Katana Solar",
-            "description": "Advanced quest item."
+            "name": "Katana Solare",
+            "description": "Oggetto avanzato per missioni."
         },
         "misiones/mascara-de-zorro": {
-            "name": "Fox Mask",
-            "description": "Special quest item."
+            "name": "Maschera da Volpe",
+            "description": "Oggetto speciale per missioni."
         },
         "pociones/pocion-de-regeneracion": {
-            "name": "Potion of Regeneration",
-            "description": "Restores health."
+            "name": "Pozione di Rigenerazione",
+            "description": "Ripristina la salute."
         },
         "pociones/pocion-de-resistencia": {
-            "name": "Potion of Resistance",
-            "description": "Temporarily increases defense."
+            "name": "Pozione di Resistenza",
+            "description": "Aumenta temporaneamente la difesa."
         },
         "pociones/pocion-del-explorador": {
-            "name": "Potion of the Explorer",
-            "description": "Allows you to explore new areas."
+            "name": "Pozione dell'Esploratore",
+            "description": "Ti permette di esplorare nuove aree."
         },
         "pociones/elixir-prisma": {
-            "name": "Elixir Prism",
-            "description": "Gives an experience and energy bonus."
+            "name": "Elisir Prisma",
+            "description": "Dà un bonus esperienza ed energia."
         },
         "pociones/huevito-de-energia-exploracion-regeneracion-resistencia": {
-            "name": "Little Egg of Energy/Exploration/Regeneration/Resistance",
-            "description": "Special consumables."
+            "name": "Uovetto di Energia/Esplorazione/Rigenerazione/Resistenza",
+            "description": "Consumabili speciali."
         },
         "pociones/pocion-de-suerte": {
-            "name": "Potion of Luck",
-            "description": "Temporarily increases luck."
+            "name": "Pozione della Fortuna",
+            "description": "Aumenta temporaneamente la fortuna."
         },
         "pociones/pocion-de-velocidad": {
-            "name": "Potion of Speed",
-            "description": "Temporarily increases speed."
+            "name": "Pozione della Velocità",
+            "description": "Aumenta temporaneamente la velocità."
         },
         "pociones/pocion-del-minero": {
-            "name": "Potion of the Miner",
-            "description": "Temporarily improves mining loot."
+            "name": "Pozione del Minatore",
+            "description": "Migliora temporaneamente il bottino di miniera."
         },
         "pociones/pocion-del-pescador": {
-            "name": "Potion of the Fisher",
-            "description": "Temporarily improves fishing loot."
+            "name": "Pozione del Pescatore",
+            "description": "Migliora temporaneamente il bottino di pesca."
         },
         "pociones/elixir-de-luz": {
-            "name": "Elixir of Light",
-            "description": "Boosts daytime rewards and exploration."
+            "name": "Elisir della Luce",
+            "description": "Potenzia ricompense diurne ed esplorazione."
         },
         "pociones/elixir-de-sombra": {
-            "name": "Elixir of Shadow",
-            "description": "Boosts nighttime rewards and stealth."
+            "name": "Elisir dell'Ombra",
+            "description": "Potenzia ricompense notturne e furtività."
         },
         "rollos/rollo-moxi": {
-            "name": "Scroll Moxi",
-            "description": "Grants temporary special abilities."
+            "name": "Pergamena di Moxi",
+            "description": "Conferisce abilità speciali temporanee."
         },
         "rollos/rollo-de-estrategia": {
-            "name": "Scroll of Strategy",
-            "description": "Enables advanced strategies in events."
+            "name": "Pergamena della Strategia",
+            "description": "Abilita strategie avanzate negli eventi."
         },
         "rollos/notas-del-explorador": {
-            "name": "Notes of the Explorer",
-            "description": "Provides clues for quests."
+            "name": "Note dell'Esploratore",
+            "description": "Fornisce indizi per le missioni."
         },
         "rollos/papiro-jeroglifico": {
-            "name": "Papyrus/Hieroglyph",
-            "description": "Unlocks hidden content."
+            "name": "Papiro/Geroglifico",
+            "description": "Sblocca contenuti nascosti."
         },
         "proteccion/vida-extra": {
-            "name": "Life Extra",
-            "description": "Lets you revive once in special events."
+            "name": "Vita Extra",
+            "description": "Ti permette di rianimarti una volta negli eventi speciali."
         }
     }
 }
