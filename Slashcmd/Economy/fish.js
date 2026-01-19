@@ -58,7 +58,8 @@ module.exports = {
 
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;
-        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const fallbackLang = interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
+        const lang = await moxi.guildLang(guildId, fallbackLang);
         const t = (k, vars) => moxi.translate(`economy/fish:${k}`, lang, vars);
 
         const applicationId = process.env.CLIENT_ID || interaction.client?.application?.id;
