@@ -6,6 +6,7 @@
     "CATEGORY_HERRAMIENTAS": "도구",
     "CATEGORY_ECONOMIA": "경제",
     "CATEGORY_MUSICA": "음악",
+    "CATEGORY_FUN": "재미",
     "CATEGORY_ROOT": "소유자",
     "CMD_add_DESC": "노래를 대기열에 추가합니다",
     "CMD_add_NAME": "add",
@@ -105,5 +106,8 @@
     "CMD_QUEST_DESC": "일일 퀘스트를 보고 보상을 받습니다.",
     "CMD_EVENT_DESC": "이벤트 보상을 받습니다.",
     "CMD_CARNIVAL_DESC": "카니발 보상을 받습니다(시즌 한정).",
-    "CMD_XMAS_DESC": "크리스마스 보상을 받습니다(시즌 한정)."
+    "CMD_XMAS_DESC": "크리스마스 보상을 받습니다(시즌 한정).",
+    "CMD_COINFLIP_DESC": "동전을 던져요(앞면/뒷면).",
+    "CMD_DICE_DESC": "주사위를 굴려요(면 수 선택 가능).",
+    "CMD_8BALL_DESC": "매직 8볼에게 질문해요."
 }
