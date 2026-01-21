@@ -313,8 +313,26 @@
     "HELP_CATEGORY_ECONOMY_DESC": "أوامر الاقتصاد: المتجر والحقيبة والمخزون.",
     "HELP_CATEGORY_FUN": "مرح",
     "HELP_CATEGORY_FUN_DESC": "أوامر المرح: 8ball و dice.",
+    "HELP_CATEGORY_GAMES": "ألعاب",
+    "HELP_CATEGORY_GAMES_DESC": "ألعاب: minesweeper, rps.",
     "HELP_CATEGORY_WELCOME": "نظام الترحيب",
     "HELP_CATEGORY_WELCOME_DESC": "أوامر لإعداد رسائل الترحيب والإعدادات.",
+    "GAMES_MINESWEEPER_TITLE": "كانسة الألغام",
+    "GAMES_MINESWEEPER_HELP": "انقر للفتح • استخدم وضع 🚩 للتمييز",
+    "GAMES_MINESWEEPER_PLAYING": "اللعبة جارية.",
+    "GAMES_MINESWEEPER_WON": "لقد فزت!",
+    "GAMES_MINESWEEPER_LOST": "Boom! لقد خسرت.",
+    "GAMES_MINESWEEPER_FLAG_MODE": "تمييز",
+    "GAMES_MINESWEEPER_OPEN_MODE": "فتح",
+    "GAMES_MINESWEEPER_NEW": "جديدة",
+    "GAMES_MINESWEEPER_CLOSE": "إغلاق",
+    "GAMES_RPS_TITLE": "حجر ورقة مقص",
+    "GAMES_RPS_PROMPT": "اختر خيارًا:",
+    "GAMES_RPS_RESULT": "أنت: {{you}}  •  Bot: {{bot}}\n{{outcome}}",
+    "GAMES_RPS_ROCK": "حجر",
+    "GAMES_RPS_PAPER": "ورقة",
+    "GAMES_RPS_SCISSORS": "مقص",
+    "GAMES_RPS_NEW": "مرة أخرى",
     "FUN_COINFLIP_TITLE": "رمي عملة",
     "FUN_COINFLIP_HEADS": "وجه",
     "FUN_COINFLIP_TAILS": "كتابة",
