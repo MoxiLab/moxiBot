@@ -1,0 +1,9 @@
+{
+    "TITLE": "Chop",
+    "NO_DB": "MongoDB is not configured, so economy is disabled.",
+    "COOLDOWN_TITLE": "Chop cooldown",
+    "COOLDOWN_TEXT": "You’re tired. Come back in **{{next}}**.",
+    "SUCCESS_TITLE": "Chop completed!",
+    "SUCCESS_TEXT": "You got **{{amount}}x {{item}}** and **{{coins}}** 🪙.\nBalance: **{{balance}}** 🪙.",
+    "ERROR": "I couldn’t complete the chop."
+}

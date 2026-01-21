@@ -17,7 +17,7 @@
     "AMOUNT_LINE": "**Importo:** {{amount}} 🪙",
     "AMOUNT_CAPPED_LINE": "**Importo:** {{amount}} 🪙 (limitato; avevi richiesto {{requested}} 🪙)",
     "CAP_NOTE": "*(Limite: 25% del tuo saldo, max 5.000 per partita. Solo l'importo limitato è a rischio.)*",
-    "ROLLED_LINE": "**Uscito:** {{emoji}} **{{number}}** ({{color}})",
+    "ROLLED_LINE": "**Uscito:** {{icon}} **{{number}}** ({{color}})",
     "PRIZE_LINE": "**Vincite:** +{{amount}} 🪙",
     "LOSS_LINE": "**Perdita:** -{{amount}} 🪙",
     "BALANCE_LINE": "Saldo: **{{balance}}** 🪙",

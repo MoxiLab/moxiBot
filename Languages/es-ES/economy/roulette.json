@@ -17,7 +17,7 @@
     "AMOUNT_LINE": "**Cantidad:** {{amount}} 🪙",
     "AMOUNT_CAPPED_LINE": "**Cantidad:** {{amount}} 🪙 (limitada; pediste {{requested}} 🪙)",
     "CAP_NOTE": "*(Límite: 25% de tu saldo, máximo 5,000 por jugada. Solo se arriesga la cantidad limitada.)*",
-    "ROLLED_LINE": "**Salió:** {{emoji}} **{{number}}** ({{color}})",
+    "ROLLED_LINE": "**Salió:** {{icon}} **{{number}}** ({{color}})",
     "PRIZE_LINE": "**Premio:** +{{amount}} 🪙",
     "LOSS_LINE": "**Pérdida:** -{{amount}} 🪙",
     "BALANCE_LINE": "Balance: **{{balance}}** 🪙",

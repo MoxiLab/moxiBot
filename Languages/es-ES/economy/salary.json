@@ -1,0 +1,12 @@
+{
+    "TITLE": "Sueldo",
+    "DESC": "Reclama tu sueldo diario.",
+    "CLAIMED_TITLE": "Sueldo cobrado",
+    "CLAIMED_TEXT": "Has cobrado **{{amount}}** 🪙.\nBalance actual: **{{balance}}** 🪙.",
+    "COOLDOWN_TITLE": "Sueldo en cooldown",
+    "COOLDOWN_TEXT": "Ya cobraste tu sueldo. Vuelve en **{{next}}**.\nBalance actual: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "Base de datos no configurada",
+    "NO_DB_TEXT": "MongoDB no está configurado, así que las recompensas de economía están deshabilitadas.",
+    "ERROR_TITLE": "Error",
+    "UNKNOWN_ERROR": "Ha ocurrido un error."
+}

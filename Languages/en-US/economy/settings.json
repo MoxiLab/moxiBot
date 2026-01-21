@@ -1,0 +1,12 @@
+{
+    "TITLE": "Economy settings",
+    "LINE_PREFIX": "• Prefix: `{{prefix}}`",
+    "LINE_LANG": "• Language: `{{lang}}`",
+    "LINE_DB": "• Database: **{{status}}**",
+    "DB_ON": "ON",
+    "DB_OFF": "OFF",
+    "LINE_DAILY": "• Daily: **{{min}}–{{max}}** 🪙",
+    "LINE_WORK": "• Work: **{{min}}–{{max}}** 🪙",
+    "LINE_SALARY": "• Salary: **{{min}}–{{max}}** 🪙",
+    "FOOTER": "Some ranges are controlled by environment variables."
+}

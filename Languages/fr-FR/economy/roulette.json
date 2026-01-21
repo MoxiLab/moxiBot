@@ -17,7 +17,7 @@
     "AMOUNT_LINE": "**Montant :** {{amount}} 🪙",
     "AMOUNT_CAPPED_LINE": "**Montant :** {{amount}} 🪙 (plafonné ; tu as demandé {{requested}} 🪙)",
     "CAP_NOTE": "*(Plafond : 25% de ton solde, max 5 000 par partie. Seul le montant plafonné est en jeu.)*",
-    "ROLLED_LINE": "**Tirage :** {{emoji}} **{{number}}** ({{color}})",
+    "ROLLED_LINE": "**Tirage :** {{icon}} **{{number}}** ({{color}})",
     "PRIZE_LINE": "**Gains :** +{{amount}} 🪙",
     "LOSS_LINE": "**Perte :** -{{amount}} 🪙",
     "BALANCE_LINE": "Solde : **{{balance}}** 🪙",

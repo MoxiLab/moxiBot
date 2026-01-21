@@ -17,7 +17,7 @@
     "AMOUNT_LINE": "**금액:** {{amount}} 🪙",
     "AMOUNT_CAPPED_LINE": "**금액:** {{amount}} 🪙 (상한 적용; 요청: {{requested}} 🪙)",
     "CAP_NOTE": "*(상한: 잔액의 25%, 1회 최대 5,000. 상한 적용 금액만 위험합니다.)*",
-    "ROLLED_LINE": "**결과:** {{emoji}} **{{number}}** ({{color}})",
+    "ROLLED_LINE": "**결과:** {{icon}} **{{number}}** ({{color}})",
     "PRIZE_LINE": "**획득:** +{{amount}} 🪙",
     "LOSS_LINE": "**손실:** -{{amount}} 🪙",
     "BALANCE_LINE": "잔액: **{{balance}}** 🪙",

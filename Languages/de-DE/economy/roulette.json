@@ -17,7 +17,7 @@
     "AMOUNT_LINE": "**Einsatz:** {{amount}} 🪙",
     "AMOUNT_CAPPED_LINE": "**Einsatz:** {{amount}} 🪙 (begrenzt; du wolltest {{requested}} 🪙)",
     "CAP_NOTE": "*(Limit: 25% deines Kontostands, max. 5.000 pro Spiel. Nur der begrenzte Betrag ist im Risiko.)*",
-    "ROLLED_LINE": "**Gedreht:** {{emoji}} **{{number}}** ({{color}})",
+    "ROLLED_LINE": "**Gedreht:** {{icon}} **{{number}}** ({{color}})",
     "PRIZE_LINE": "**Gewinn:** +{{amount}} 🪙",
     "LOSS_LINE": "**Verlust:** -{{amount}} 🪙",
     "BALANCE_LINE": "Kontostand: **{{balance}}** 🪙",

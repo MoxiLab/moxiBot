@@ -1,0 +1,19 @@
+{
+    "TITLE": "Mercado negro",
+    "BALANCE": "Balance: **{{balance}}** 🪙",
+    "HINT": "Compra con: `blackmarket buy <1-3>`",
+    "OFFER_LINE": "{{slot}}) **{{name}}** ({{rarity}}) — **{{price}}** 🪙",
+    "BAD_SLOT_TITLE": "Selección inválida",
+    "BAD_SLOT_TEXT": "Elige un número del 1 al 3. Ej: `blackmarket buy 2`",
+    "NO_FUNDS_TITLE": "Fondos insuficientes",
+    "NO_FUNDS_TEXT": "Necesitas **{{price}}** 🪙. Balance actual: **{{balance}}** 🪙.",
+    "BOUGHT_TITLE": "Compra realizada",
+    "BOUGHT_TEXT": "Compraste **{{name}}** por **{{price}}** 🪙.\nBalance actual: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "Base de datos no configurada",
+    "NO_DB_TEXT": "MongoDB no está configurado, así que la economía está deshabilitada.",
+    "RARITY_COMMON": "Común",
+    "RARITY_UNCOMMON": "Poco común",
+    "RARITY_RARE": "Raro",
+    "RARITY_EPIC": "Épico",
+    "RARITY_LEGENDARY": "Legendario"
+}

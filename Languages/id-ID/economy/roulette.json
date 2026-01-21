@@ -17,7 +17,7 @@
     "AMOUNT_LINE": "**Jumlah:** {{amount}} 🪙",
     "AMOUNT_CAPPED_LINE": "**Jumlah:** {{amount}} 🪙 (dibatasi; kamu minta {{requested}} 🪙)",
     "CAP_NOTE": "*(Batas: 25% dari saldo, maks 5.000 per permainan. Hanya jumlah yang dibatasi yang berisiko.)*",
-    "ROLLED_LINE": "**Hasil:** {{emoji}} **{{number}}** ({{color}})",
+    "ROLLED_LINE": "**Hasil:** {{icon}} **{{number}}** ({{color}})",
     "PRIZE_LINE": "**Menang:** +{{amount}} 🪙",
     "LOSS_LINE": "**Kalah:** -{{amount}} 🪙",
     "BALANCE_LINE": "Saldo: **{{balance}}** 🪙",

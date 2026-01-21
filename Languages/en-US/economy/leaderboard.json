@@ -1,0 +1,7 @@
+{
+    "TITLE": "Leaderboard",
+    "NO_DB": "MongoDB is not configured, so I can’t read balances.",
+    "EMPTY": "No economy data yet.",
+    "FOOTER": "Global ranking by coins.",
+    "ERROR": "I couldn’t load the leaderboard right now."
+}

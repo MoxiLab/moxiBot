@@ -17,7 +17,7 @@
     "AMOUNT_LINE": "**Amount:** {{amount}} 🪙",
     "AMOUNT_CAPPED_LINE": "**Amount:** {{amount}} 🪙 (capped; you asked for {{requested}} 🪙)",
     "CAP_NOTE": "*(Cap: 25% of your balance, max 5,000 per play. Only the capped amount is at risk.)*",
-    "ROLLED_LINE": "**Rolled:** {{emoji}} **{{number}}** ({{color}})",
+    "ROLLED_LINE": "**Rolled:** {{icon}} **{{number}}** ({{color}})",
     "PRIZE_LINE": "**Winnings:** +{{amount}} 🪙",
     "LOSS_LINE": "**Loss:** -{{amount}} 🪙",
     "BALANCE_LINE": "Balance: **{{balance}}** 🪙",

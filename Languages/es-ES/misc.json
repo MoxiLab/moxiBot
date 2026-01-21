@@ -105,6 +105,7 @@
   "SELECT_BETTER_ZONE": "Selecciona una zona mejor",
   "WIP_TITLE": "En desarrollo",
   "WIP_TEXT": "Este comando aún está en desarrollo. Lo añadiremos pronto.",
+  "WIP_TRY_INSTEAD": "Mientras tanto, prueba: {{commands}}",
   "CURRENT_LANGUAGE": "Idioma actual",
   "CURRENT_VOLUME": "🔊 | Volumen actual del reproductor: {{volume}}%",
   "EMOJIINFO_CREATED": "Creado el",

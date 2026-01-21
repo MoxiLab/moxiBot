@@ -1,0 +1,14 @@
+{
+    "TITLE": "Repair",
+    "NO_DB": "MongoDB is not configured, so economy is disabled.",
+    "USAGE": "Usage: `{{prefix}}repair <id|name|itemId>`",
+    "NOT_FOUND_TITLE": "Not found",
+    "NOT_FOUND_TEXT": "I couldn’t find that item.",
+    "NEED_KIT_TITLE": "You need a kit",
+    "NEED_KIT_TEXT": "You need a **Repair Kit** in your inventory.",
+    "NOT_OWNED_TITLE": "You don’t have it",
+    "NOT_OWNED_TEXT": "That item is not in your backpack.",
+    "SUCCESS_TITLE": "Repaired!",
+    "SUCCESS_TEXT": "You repaired **{{item}}** using 1 kit.",
+    "ERROR": "I couldn’t repair that item."
+}

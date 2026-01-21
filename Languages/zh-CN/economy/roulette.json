@@ -17,7 +17,7 @@
     "AMOUNT_LINE": "**金额：** {{amount}} 🪙",
     "AMOUNT_CAPPED_LINE": "**金额：** {{amount}} 🪙（已封顶；你请求 {{requested}} 🪙）",
     "CAP_NOTE": "*(封顶：余额的 25%，每次最多 5,000。只有封顶后的金额会有风险。)*",
-    "ROLLED_LINE": "**结果：** {{emoji}} **{{number}}**（{{color}}）",
+    "ROLLED_LINE": "**结果：** {{icon}} **{{number}}**（{{color}}）",
     "PRIZE_LINE": "**赢得：** +{{amount}} 🪙",
     "LOSS_LINE": "**损失：** -{{amount}} 🪙",
     "BALANCE_LINE": "余额：**{{balance}}** 🪙",

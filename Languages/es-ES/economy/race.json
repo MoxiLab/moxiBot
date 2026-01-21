@@ -1,0 +1,17 @@
+{
+    "TITLE": "Carrera",
+    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
+    "COOLDOWN_TITLE": "Carrera en cooldown",
+    "COOLDOWN_TEXT": "Vuelve en **{{next}}**.",
+    "WIN_TITLE": "¡Carrera!",
+    "WIN_TEXT": "Participantes: {{racers}}\nGanador/a: **{{winner}}**\nTu premio: **{{amount}}** 🪙\nBalance: **{{balance}}** 🪙.",
+    "RACERS": [
+        "Moxi",
+        "Neko",
+        "Kitsune",
+        "Tanuki",
+        "Koi",
+        "Sakura"
+    ],
+    "ERROR": "No pude ejecutar la carrera."
+}

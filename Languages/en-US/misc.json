@@ -103,6 +103,7 @@
     "SELECT_BETTER_ZONE": "Select a better zone",
     "WIP_TITLE": "In development",
     "WIP_TEXT": "This command is still in development. We'll add it soon.",
+    "WIP_TRY_INSTEAD": "In the meantime, try: {{commands}}",
     "CURRENT_LANGUAGE": "Current Language",
     "CURRENT_VOLUME": "🔊 | Current player volume: {{volume}}%",
     "EMOJIINFO_CREATED": "Created at",
