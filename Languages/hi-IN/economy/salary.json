@@ -1,12 +1,12 @@
 {
-    "TITLE": "Sueldo",
-    "DESC": "Reclama tu sueldo diario.",
-    "CLAIMED_TITLE": "Sueldo cobrado",
-    "CLAIMED_TEXT": "Has cobrado **{{amount}}** 🪙.\nBalance actual: **{{balance}}** 🪙.{{jobLine}}",
-    "COOLDOWN_TITLE": "Sueldo en cooldown",
-    "COOLDOWN_TEXT": "Ya cobraste tu sueldo. Vuelve en **{{next}}**.\nBalance actual: **{{balance}}** 🪙.{{jobLine}}",
-    "NO_DB_TITLE": "Base de datos no configurada",
-    "NO_DB_TEXT": "MongoDB no está configurado, así que las recompensas de economía están deshabilitadas.",
-    "ERROR_TITLE": "Error",
-    "UNKNOWN_ERROR": "Ha ocurrido un error."
+    "TITLE": "सैलरी",
+    "DESC": "अपनी दैनिक सैलरी क्लेम करें।",
+    "CLAIMED_TITLE": "सैलरी मिली",
+    "CLAIMED_TEXT": "आपको **{{amount}}** 🪙 मिले।\nवर्तमान बैलेंस: **{{balance}}** 🪙.{{jobLine}}",
+    "COOLDOWN_TITLE": "सैलरी कूलडाउन",
+    "COOLDOWN_TEXT": "आपने सैलरी पहले ही ले ली है। **{{next}}** में वापस आएँ।\nवर्तमान बैलेंस: **{{balance}}** 🪙.{{jobLine}}",
+    "NO_DB_TITLE": "डेटाबेस सेट नहीं है",
+    "NO_DB_TEXT": "MongoDB सेट नहीं है, इसलिए इकोनॉमी रिवॉर्ड्स बंद हैं।",
+    "ERROR_TITLE": "त्रुटि",
+    "UNKNOWN_ERROR": "कोई त्रुटि हुई।"
 }

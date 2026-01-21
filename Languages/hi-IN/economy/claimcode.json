@@ -1,12 +1,12 @@
 {
-    "TITLE": "Canjear código",
-    "USAGE": "Uso: `{{prefix}}claimcode <codigo>`",
-    "NO_DB": "MongoDB no está configurado, así que no puedo canjear códigos.",
-    "INVALID_TITLE": "Código inválido",
-    "INVALID_TEXT": "Ese código no existe o no está disponible.",
-    "ALREADY_TITLE": "Ya canjeado",
-    "ALREADY_TEXT": "Ya canjeaste ese código.",
-    "SUCCESS_TITLE": "¡Código canjeado!",
-    "SUCCESS_TEXT": "Has recibido **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "No pude canjear el código."
+    "TITLE": "कोड रिडीम करें",
+    "USAGE": "उपयोग: `{{prefix}}claimcode <code>`",
+    "NO_DB": "MongoDB सेट नहीं है, इसलिए मैं कोड रिडीम नहीं कर सकता।",
+    "INVALID_TITLE": "अमान्य कोड",
+    "INVALID_TEXT": "यह कोड मौजूद नहीं है या उपलब्ध नहीं है।",
+    "ALREADY_TITLE": "पहले से रिडीम",
+    "ALREADY_TEXT": "आपने यह कोड पहले ही रिडीम कर लिया है।",
+    "SUCCESS_TITLE": "कोड रिडीम हो गया!",
+    "SUCCESS_TEXT": "आपको **{{amount}}** 🪙 मिले।\nबैलेंस: **{{balance}}** 🪙.",
+    "ERROR": "मैं कोड रिडीम नहीं कर पाया।"
 }

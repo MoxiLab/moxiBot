@@ -1,10 +1,10 @@
 {
-    "TITLE": "Carnaval",
-    "OUT_OF_SEASON": "Ahora mismo no hay Carnaval activo.",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "COOLDOWN_TITLE": "Carnaval en cooldown",
-    "COOLDOWN_TEXT": "Vuelve en **{{next}}**.",
-    "CLAIMED_TITLE": "Recompensa de Carnaval",
-    "CLAIMED_TEXT": "Has recibido **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "No pude reclamar la recompensa de Carnaval."
+    "TITLE": "कार्निवल",
+    "OUT_OF_SEASON": "अभी कोई कार्निवल सक्रिय नहीं है।",
+    "NO_DB": "MongoDB सेट नहीं है, इसलिए इकोनॉमी बंद है।",
+    "COOLDOWN_TITLE": "कार्निवल कूलडाउन",
+    "COOLDOWN_TEXT": "**{{next}}** में वापस आएँ।",
+    "CLAIMED_TITLE": "कार्निवल इनाम",
+    "CLAIMED_TEXT": "आपको **{{amount}}** 🪙 मिले।\nबैलेंस: **{{balance}}** 🪙.",
+    "ERROR": "मैं कार्निवल इनाम क्लेम नहीं कर पाया।"
 }

@@ -1,14 +1,14 @@
 {
-    "BAD_AMOUNT_TITLE": "Cantidad inválida",
-    "BAD_AMOUNT_TEXT": "Uso: `invest <cantidad>`",
-    "NO_DB_TITLE": "Base de datos no configurada",
-    "NO_DB_TEXT": "MongoDB no está configurado, así que la economía está deshabilitada.",
-    "NO_FUNDS_TITLE": "Fondos insuficientes",
-    "NO_FUNDS_TEXT": "No tienes suficiente balance para invertir **{{amount}}** 🪙.\nBalance actual: **{{balance}}** 🪙.",
-    "WIN_TITLE": "Inversión exitosa",
-    "WIN_TEXT": "Ganaste **{{profit}}** 🪙 de beneficio.\nBalance actual: **{{balance}}** 🪙.",
-    "LOSE_TITLE": "Inversión fallida",
-    "LOSE_TEXT": "Perdiste **{{amount}}** 🪙.\nBalance actual: **{{balance}}** 🪙.",
-    "ERROR_TITLE": "Error",
-    "UNKNOWN_ERROR": "Ha ocurrido un error."
+    "BAD_AMOUNT_TITLE": "अमान्य मात्रा",
+    "BAD_AMOUNT_TEXT": "उपयोग: `invest <amount>`",
+    "NO_DB_TITLE": "डेटाबेस सेट नहीं है",
+    "NO_DB_TEXT": "MongoDB सेट नहीं है, इसलिए इकोनॉमी बंद है।",
+    "NO_FUNDS_TITLE": "पर्याप्त बैलेंस नहीं",
+    "NO_FUNDS_TEXT": "आपके पास **{{amount}}** 🪙 निवेश करने के लिए पर्याप्त बैलेंस नहीं है।\nवर्तमान बैलेंस: **{{balance}}** 🪙.",
+    "WIN_TITLE": "निवेश सफल",
+    "WIN_TEXT": "आपने **{{profit}}** 🪙 मुनाफ़ा कमाया।\nवर्तमान बैलेंस: **{{balance}}** 🪙.",
+    "LOSE_TITLE": "निवेश असफल",
+    "LOSE_TEXT": "आपने **{{amount}}** 🪙 खो दिए।\nवर्तमान बैलेंस: **{{balance}}** 🪙.",
+    "ERROR_TITLE": "त्रुटि",
+    "UNKNOWN_ERROR": "कोई त्रुटि हुई।"
 }

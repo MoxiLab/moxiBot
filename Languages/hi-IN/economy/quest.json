@@ -1,18 +1,18 @@
 {
-    "TITLE": "Misiones",
-    "LIST_TEXT": "Misiones de hoy:\n{{list}}\n\nPara reclamar recompensa: `{{prefix}}quest claim`",
-    "FOOTER": "Las misiones se renuevan cada día.",
-    "NO_DB": "MongoDB no está configurado, así que no puedo guardar recompensas.",
-    "COOLDOWN_TITLE": "Recompensa ya reclamada",
-    "COOLDOWN_TEXT": "Ya reclamaste la recompensa. Vuelve en **{{next}}**.",
-    "CLAIMED_TITLE": "Recompensa de misión",
-    "CLAIMED_TEXT": "Has recibido **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
+    "TITLE": "क्वेस्ट्स",
+    "LIST_TEXT": "आज की क्वेस्ट्स:\n{{list}}\n\nइनाम क्लेम करने के लिए: `{{prefix}}quest claim`",
+    "FOOTER": "क्वेस्ट्स हर दिन रिफ्रेश होती हैं।",
+    "NO_DB": "MongoDB सेट नहीं है, इसलिए मैं इनाम सेव नहीं कर सकता।",
+    "COOLDOWN_TITLE": "इनाम पहले ही क्लेम किया गया",
+    "COOLDOWN_TEXT": "आपने इनाम पहले ही क्लेम कर लिया है। **{{next}}** में वापस आएँ।",
+    "CLAIMED_TITLE": "क्वेस्ट इनाम",
+    "CLAIMED_TEXT": "आपको **{{amount}}** 🪙 मिले।\nबैलेंस: **{{balance}}** 🪙.",
     "QUESTS": [
-        "Reclama tu daily",
-        "Trabaja una vez",
-        "Compra 1 objeto en la tienda",
-        "Vende 1 objeto",
-        "Juega una ronda de ruleta"
+        "अपना daily क्लेम करें",
+        "एक बार काम करें",
+        "दुकान से 1 आइटम खरीदें",
+        "1 आइटम बेचें",
+        "रूलेट का एक राउंड खेलें"
     ],
-    "ERROR": "No pude procesar la misión."
+    "ERROR": "मैं क्वेस्ट प्रोसेस नहीं कर पाया।"
 }

@@ -1,7 +1,7 @@
 {
-    "TITLE": "Leaderboard",
-    "NO_DB": "MongoDB no está configurado, así que no puedo leer tu economía.",
-    "EMPTY": "Aún no hay datos de economía para mostrar.",
-    "FOOTER": "Ranking global por riqueza total (banco + coins + sakuras).",
-    "ERROR": "No pude cargar el leaderboard en este momento."
+    "TITLE": "लीडरबोर्ड",
+    "NO_DB": "MongoDB सेट नहीं है, इसलिए मैं आपकी इकोनॉमी नहीं पढ़ सकता।",
+    "EMPTY": "अभी दिखाने के लिए इकोनॉमी डेटा नहीं है।",
+    "FOOTER": "कुल संपत्ति (बैंक + कॉइन्स + sakuras) के आधार पर ग्लोबल रैंकिंग।",
+    "ERROR": "अभी लीडरबोर्ड लोड नहीं हो पाया।"
 }

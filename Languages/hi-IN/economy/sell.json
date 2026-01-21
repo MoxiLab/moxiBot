@@ -1,12 +1,12 @@
 {
-    "TITLE": "Vender",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "USAGE": "Uso: `{{prefix}}sell <id|nombre|itemId> [cantidad]`",
-    "NOT_FOUND_TITLE": "No encontrado",
-    "NOT_FOUND_TEXT": "No encontré ese ítem.",
-    "NOT_OWNED_TITLE": "No lo tienes",
-    "NOT_OWNED_TEXT": "No tienes ese ítem en tu mochila.",
-    "SOLD_TITLE": "Venta completada",
-    "SOLD_TEXT": "Vendiste **{{amount}}x {{name}}** por **{{total}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "No pude vender ese ítem."
+    "TITLE": "बेचें",
+    "NO_DB": "MongoDB सेट नहीं है, इसलिए इकोनॉमी बंद है।",
+    "USAGE": "उपयोग: `{{prefix}}sell <id|name|itemId> [amount]`",
+    "NOT_FOUND_TITLE": "नहीं मिला",
+    "NOT_FOUND_TEXT": "मुझे वह आइटम नहीं मिला।",
+    "NOT_OWNED_TITLE": "आपके पास नहीं है",
+    "NOT_OWNED_TEXT": "आपकी बैग में वह आइटम नहीं है।",
+    "SOLD_TITLE": "बिक गया",
+    "SOLD_TEXT": "आपने **{{amount}}x {{name}}** को **{{total}}** 🪙 में बेचा।\nबैलेंस: **{{balance}}** 🪙.",
+    "ERROR": "मैं वह आइटम बेच नहीं पाया।"
 }

@@ -1,9 +1,9 @@
 {
-    "TITLE": "Recolectar",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "COOLDOWN_TITLE": "Recolectar en cooldown",
-    "COOLDOWN_TEXT": "Ya recolectaste. Vuelve en **{{next}}**.\nBalance: **{{balance}}** 🪙.",
-    "CLAIMED_TITLE": "Recolección",
-    "CLAIMED_TEXT": "Has recolectado **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "Ha ocurrido un error al recolectar."
+    "TITLE": "संग्रह करें",
+    "NO_DB": "MongoDB सेट नहीं है, इसलिए इकोनॉमी बंद है।",
+    "COOLDOWN_TITLE": "संग्रह कूलडाउन",
+    "COOLDOWN_TEXT": "आपने पहले ही संग्रह किया है। **{{next}}** में वापस आएँ।\nबैलेंस: **{{balance}}** 🪙.",
+    "CLAIMED_TITLE": "संग्रह",
+    "CLAIMED_TEXT": "आपने **{{amount}}** 🪙 संग्रह किए।\nबैलेंस: **{{balance}}** 🪙.",
+    "ERROR": "संग्रह करते समय त्रुटि हुई।"
 }

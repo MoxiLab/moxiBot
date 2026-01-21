@@ -1,10 +1,10 @@
 {
-    "TITLE": "Evento",
-    "USAGE": "Uso: `{{prefix}}event`",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "COOLDOWN_TITLE": "Evento en cooldown",
-    "COOLDOWN_TEXT": "Vuelve en **{{next}}**.",
-    "CLAIMED_TITLE": "Recompensa de evento",
-    "CLAIMED_TEXT": "Has recibido **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "No pude reclamar el evento."
+    "TITLE": "इवेंट",
+    "USAGE": "उपयोग: `{{prefix}}event`",
+    "NO_DB": "MongoDB सेट नहीं है, इसलिए इकोनॉमी बंद है।",
+    "COOLDOWN_TITLE": "इवेंट कूलडाउन",
+    "COOLDOWN_TEXT": "**{{next}}** में वापस आएँ।",
+    "CLAIMED_TITLE": "इवेंट इनाम",
+    "CLAIMED_TEXT": "आपको **{{amount}}** 🪙 मिले।\nबैलेंस: **{{balance}}** 🪙.",
+    "ERROR": "मैं इवेंट क्लेम नहीं कर पाया।"
 }

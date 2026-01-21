@@ -1,12 +1,12 @@
 {
-    "TITLE": "Ajustes de economía",
-    "LINE_PREFIX": "• Prefix: `{{prefix}}`",
-    "LINE_LANG": "• Idioma: `{{lang}}`",
-    "LINE_DB": "• Base de datos: **{{status}}**",
-    "DB_ON": "ACTIVA",
-    "DB_OFF": "DESACTIVADA",
-    "LINE_DAILY": "• Daily: **{{min}}–{{max}}** 🪙",
-    "LINE_WORK": "• Work: **{{min}}–{{max}}** 🪙",
-    "LINE_SALARY": "• Salary: **{{min}}–{{max}}** 🪙",
-    "FOOTER": "Algunos rangos se controlan por variables de entorno."
+    "TITLE": "इकोनॉमी सेटिंग्स",
+    "LINE_PREFIX": "• प्रीफिक्स: `{{prefix}}`",
+    "LINE_LANG": "• भाषा: `{{lang}}`",
+    "LINE_DB": "• डेटाबेस: **{{status}}**",
+    "DB_ON": "चालू",
+    "DB_OFF": "बंद",
+    "LINE_DAILY": "• daily: **{{min}}–{{max}}** 🪙",
+    "LINE_WORK": "• work: **{{min}}–{{max}}** 🪙",
+    "LINE_SALARY": "• salary: **{{min}}–{{max}}** 🪙",
+    "FOOTER": "कुछ रेंज एनवायरनमेंट वेरिएबल्स से नियंत्रित होती हैं।"
 }

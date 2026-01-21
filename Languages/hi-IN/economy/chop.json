@@ -1,9 +1,9 @@
 {
-    "TITLE": "Talar",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "COOLDOWN_TITLE": "Talar en cooldown",
-    "COOLDOWN_TEXT": "Estás cansado/a. Vuelve en **{{next}}**.",
-    "SUCCESS_TITLE": "¡Tala completada!",
-    "SUCCESS_TEXT": "Has conseguido **{{amount}}x {{item}}** y **{{coins}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "No pude completar la tala."
+    "TITLE": "लकड़ी काटना",
+    "NO_DB": "MongoDB सेट नहीं है, इसलिए इकोनॉमी बंद है।",
+    "COOLDOWN_TITLE": "लकड़ी काटना कूलडाउन",
+    "COOLDOWN_TEXT": "आप थक गए हैं। **{{next}}** में वापस आएँ।",
+    "SUCCESS_TITLE": "कटाई पूरी!",
+    "SUCCESS_TEXT": "आपको **{{amount}}x {{item}}** और **{{coins}}** 🪙 मिले।\nबैलेंस: **{{balance}}** 🪙.",
+    "ERROR": "मैं लकड़ी काटना पूरा नहीं कर पाया।"
 }

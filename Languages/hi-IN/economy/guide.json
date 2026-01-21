@@ -1,5 +1,5 @@
 {
-    "TITLE": "Guía de economía",
-    "BODY": "Comandos rápidos:\n• `{{prefix}}bal` — ver tus coins\n• `{{prefix}}daily` — recompensa diaria\n• `{{prefix}}work` — trabajar por coins\n• `{{prefix}}moxishop list` — ver tienda\n• `{{prefix}}moxishop buy <id> [cantidad]` — comprar\n• `{{prefix}}bag` — ver mochila\n• `{{prefix}}use <item>` — usar ítem\n• `{{prefix}}sell <item> [cantidad]` — vender ítem\n• `{{prefix}}leaderboard` — ranking\n\nExtras:\n• `{{prefix}}collect` — recolección con cooldown\n• `{{prefix}}quest` — misiones diarias\n• `{{prefix}}race` — carrera con cooldown",
-    "FOOTER": "Tip: si algo falla, revisa MongoDB (MONGODB)."
+    "TITLE": "इकोनॉमी गाइड",
+    "BODY": "क्विक कमांड्स:\n• `{{prefix}}bal` — अपना बैलेंस देखें\n• `{{prefix}}daily` — डेली रिवॉर्ड\n• `{{prefix}}work` — काम करके कॉइन्स कमाएँ\n• `{{prefix}}moxishop list` — शॉप देखें\n• `{{prefix}}moxishop buy <id> [amount]` — खरीदें\n• `{{prefix}}bag` — बैग देखें\n• `{{prefix}}use <item>` — आइटम इस्तेमाल करें\n• `{{prefix}}sell <item> [amount]` — आइटम बेचें\n• `{{prefix}}leaderboard` — लीडरबोर्ड\n\nएक्स्ट्रा:\n• `{{prefix}}collect` — कूलडाउन के साथ संग्रह\n• `{{prefix}}quest` — डेली क्वेस्ट्स\n• `{{prefix}}race` — कूलडाउन के साथ रेस",
+    "FOOTER": "टिप: अगर कुछ फेल हो, MongoDB (MONGODB) जांचें।"
 }

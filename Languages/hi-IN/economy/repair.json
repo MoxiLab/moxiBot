@@ -1,14 +1,14 @@
 {
-    "TITLE": "Reparar",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "USAGE": "Uso: `{{prefix}}repair <id|nombre|itemId>`",
-    "NOT_FOUND_TITLE": "No encontrado",
-    "NOT_FOUND_TEXT": "No encontré ese ítem.",
-    "NEED_KIT_TITLE": "Necesitas un kit",
-    "NEED_KIT_TEXT": "Necesitas **Kit de Reparación** en tu inventario.",
-    "NOT_OWNED_TITLE": "No lo tienes",
-    "NOT_OWNED_TEXT": "No tienes ese ítem en tu mochila.",
-    "SUCCESS_TITLE": "¡Reparado!",
-    "SUCCESS_TEXT": "Has reparado **{{item}}** usando 1 kit.",
-    "ERROR": "No pude reparar ese ítem."
+    "TITLE": "रिपेयर",
+    "NO_DB": "MongoDB सेट नहीं है, इसलिए इकोनॉमी बंद है।",
+    "USAGE": "उपयोग: `{{prefix}}repair <id|name|itemId>`",
+    "NOT_FOUND_TITLE": "नहीं मिला",
+    "NOT_FOUND_TEXT": "मुझे वह आइटम नहीं मिला।",
+    "NEED_KIT_TITLE": "किट चाहिए",
+    "NEED_KIT_TEXT": "आपके इन्वेंट्री में **रिपेयर किट** होना चाहिए।",
+    "NOT_OWNED_TITLE": "आपके पास नहीं है",
+    "NOT_OWNED_TEXT": "आपकी बैग में वह आइटम नहीं है।",
+    "SUCCESS_TITLE": "रिपेयर हो गया!",
+    "SUCCESS_TEXT": "आपने 1 किट इस्तेमाल करके **{{item}}** रिपेयर किया।",
+    "ERROR": "मैं उस आइटम को रिपेयर नहीं कर पाया।"
 }
