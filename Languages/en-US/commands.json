@@ -11,6 +11,7 @@
     "CATEGORY_ROOT": "Root",
     "CMD_MINESWEEPER_DESC": "Starts a Minesweeper game",
     "CMD_RPS_DESC": "Play rock, paper, scissors",
+    "CMD_TICTACTOE_DESC": "Play tic-tac-toe vs the bot",
     "CMD_add_DESC": "Adds songs to the queue",
     "CMD_add_NAME": "add",
     "CMD_AUTONUKE_DESC": "Deletes and recreates the current channel",

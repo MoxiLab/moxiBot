@@ -11,6 +11,7 @@
     "CATEGORY_ROOT": "मालिक",
     "CMD_MINESWEEPER_DESC": "माइन्सवीपर गेम शुरू करें",
     "CMD_RPS_DESC": "पत्थर-कागज़-कैंची खेलें",
+    "CMD_TICTACTOE_DESC": "बॉट के खिलाफ टिक-टैक-टो खेलें",
     "CMD_add_DESC": "गीतों को कतार में जोड़ता है",
     "CMD_add_NAME": "add",
     "CMD_AUTONUKE_DESC": "वर्तमान चैनल को हटाकर फिर से बनाता है",

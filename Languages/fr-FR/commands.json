@@ -11,6 +11,7 @@
     "CATEGORY_ROOT": "Noyau",
     "CMD_MINESWEEPER_DESC": "Démarre une partie de Démineur",
     "CMD_RPS_DESC": "Jouer à pierre-feuille-ciseaux",
+    "CMD_TICTACTOE_DESC": "Joue au morpion contre le bot",
     "CMD_add_DESC": "Ajoute des chansons à la file d’attente",
     "CMD_add_NAME": "ajouter",
     "CMD_AUTONUKE_DESC": "Supprime et recrée le salon actuel",

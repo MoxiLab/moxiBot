@@ -11,6 +11,7 @@
     "CATEGORY_ROOT": "Besitzer",
     "CMD_MINESWEEPER_DESC": "Startet ein Minesweeper-Spiel",
     "CMD_RPS_DESC": "Schere, Stein, Papier spielen",
+    "CMD_TICTACTOE_DESC": "Spiele Tic-Tac-Toe gegen den Bot",
     "CMD_add_DESC": "Fügt Songs zur Warteschlange hinzu",
     "CMD_add_NAME": "add",
     "CMD_AUTONUKE_DESC": "Löscht den aktuellen Kanal und erstellt ihn neu",

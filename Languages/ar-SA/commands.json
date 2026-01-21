@@ -11,6 +11,7 @@
     "CATEGORY_ROOT": "المالك",
     "CMD_MINESWEEPER_DESC": "ابدأ لعبة كانسة الألغام",
     "CMD_RPS_DESC": "العب حجر ورقة مقص",
+    "CMD_TICTACTOE_DESC": "العب إكس-أو ضد البوت",
     "CMD_add_DESC": "يضيف أغاني إلى قائمة الانتظار",
     "CMD_add_NAME": "أضف",
     "CMD_AUTONUKE_DESC": "يحذف القناة الحالية ويعيد إنشاءها",

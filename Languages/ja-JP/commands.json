@@ -12,6 +12,7 @@
     "CMD_MINESWEEPER_DESC": "マインスイーパーを開始します",
     "CMD_RPS_DESC": "じゃんけんで遊ぶ",
     "CMD_add_DESC": "曲をキューに追加します",
+    "CMD_TICTACTOE_DESC": "ボットと三目並べで遊ぶ",
     "CMD_add_NAME": "add",
     "CMD_AUTONUKE_DESC": "現在のチャンネルを削除して再作成します",
     "CMD_AUTONUKE_NAME": "autonuke",

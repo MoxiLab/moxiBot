@@ -11,6 +11,7 @@
     "CATEGORY_ROOT": "소유자",
     "CMD_MINESWEEPER_DESC": "지뢰찾기 게임을 시작합니다",
     "CMD_RPS_DESC": "가위바위보를 플레이합니다",
+    "CMD_TICTACTOE_DESC": "봇과 틱택토를 플레이하세요",
     "CMD_add_DESC": "노래를 대기열에 추가합니다",
     "CMD_add_NAME": "add",
     "CMD_AUTONUKE_DESC": "현재 채널을 삭제하고 다시 생성합니다",

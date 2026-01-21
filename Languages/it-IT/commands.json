@@ -11,6 +11,7 @@
     "CATEGORY_ROOT": "Proprietario",
     "CMD_MINESWEEPER_DESC": "Avvia una partita a Campo Minato",
     "CMD_RPS_DESC": "Gioca a sasso-carta-forbici",
+    "CMD_TICTACTOE_DESC": "Gioca a tris contro il bot",
     "CMD_add_DESC": "Aggiunge brani alla coda",
     "CMD_add_NAME": "add",
     "CMD_AUTONUKE_DESC": "Elimina e ricrea il canale corrente",

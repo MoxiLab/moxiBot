@@ -11,6 +11,7 @@
     "CATEGORY_ROOT": "Propietario",
     "CMD_MINESWEEPER_DESC": "Inicia una partida de buscaminas",
     "CMD_RPS_DESC": "Juega a piedra, papel o tijera",
+    "CMD_TICTACTOE_DESC": "Juega al tres en raya contra el bot",
     "CMD_add_DESC": "Añade canciones a la cola",
     "CMD_add_NAME": "add",
     "CMD_AUTONUKE_DESC": "Elimina y recrea el canal actual",

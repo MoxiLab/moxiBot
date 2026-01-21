@@ -11,6 +11,7 @@
     "CATEGORY_ROOT": "所有者",
     "CMD_MINESWEEPER_DESC": "开始一局扫雷游戏",
     "CMD_RPS_DESC": "玩石头剪刀布",
+    "CMD_TICTACTOE_DESC": "与机器人玩井字棋",
     "CMD_add_DESC": "将歌曲添加到队列",
     "CMD_add_NAME": "add",
     "CMD_AUTONUKE_DESC": "删除并重新创建当前频道",

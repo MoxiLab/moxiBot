@@ -13,6 +13,7 @@
     "CMD_RPS_DESC": "Main batu-kertas-gunting",
     "CMD_add_DESC": "Menambahkan lagu ke antrean",
     "CMD_add_NAME": "add",
+    "CMD_TICTACTOE_DESC": "Main tic-tac-toe melawan bot",
     "CMD_AUTONUKE_DESC": "Menghapus dan membuat ulang saluran saat ini",
     "CMD_AUTONUKE_NAME": "autonuke",
     "CMD_AUTOPLAY_DESC": "Mengaktifkan pemutaran otomatis",
