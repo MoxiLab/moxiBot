@@ -50,25 +50,32 @@ module.exports = {
             }
 
             if (res.reason === 'cooldown') {
-                const show = shouldShowCooldownNotice({ userId: message.author.id, key: 'daily', windowMs: 15_000, threshold: 3 });
-                if (!show) {
-                    try { await message.react(EMOJIS.hourglass || '⏳'); } catch { }
-                    return;
-                }
+                const showFull = shouldShowCooldownNotice({ userId: message.author.id, key: 'daily', windowMs: 15_000, threshold: 3 });
 
-                return message.reply({
+                const reply = await message.reply({
                     ...asV2MessageOptions(
                         buildNoticeContainer({
                             emoji: EMOJIS.hourglass,
                             title: t('COOLDOWN_TITLE'),
-                            text: t('COOLDOWN_TEXT', {
-                                next: formatDuration(res.nextInMs),
-                                balance: res.balance,
-                            }),
+                            text: showFull
+                                ? t('COOLDOWN_TEXT', {
+                                    next: formatDuration(res.nextInMs),
+                                    balance: res.balance,
+                                })
+                                : t('COOLDOWN_SOFT_TEXT', {
+                                    next: formatDuration(res.nextInMs),
+                                    balance: res.balance,
+                                }),
                         })
                     ),
                     allowedMentions: { repliedUser: false },
                 });
+
+                if (!showFull) {
+                    setTimeout(() => reply.delete().catch(() => null), 10_000);
+                }
+
+                return;
             }
 
             return message.reply(
