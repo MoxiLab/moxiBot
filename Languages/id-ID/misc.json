@@ -116,16 +116,13 @@
     "HELP_CATEGORY_FUN_DESC": "Perintah seru-seruan: 8ball, coinflip, dice.",
     "HELP_CATEGORY_WELCOME": "Sistem sambutan",
     "HELP_CATEGORY_WELCOME_DESC": "Perintah untuk mengatur pesan dan pengaturan sambutan.",
-
     "FUN_COINFLIP_TITLE": "Lempar koin",
     "FUN_COINFLIP_HEADS": "Kepala",
     "FUN_COINFLIP_TAILS": "Ekor",
     "FUN_COINFLIP_RESULT": "Hasil: **{{result}}**",
-
     "FUN_DICE_TITLE": "Dadu",
     "FUN_DICE_RESULT": "Kamu mendapat **{{roll}}** (1-{{sides}}).",
     "FUN_DICE_INVALID_SIDES": "Jumlah sisi harus bilangan bulat antara 2 dan 100.",
-
     "FUN_8BALL_TITLE": "Bola 8 ajaib",
     "FUN_8BALL_NO_QUESTION": "Tulis pertanyaan supaya aku bisa menjawab.",
     "FUN_8BALL_RESULT": "**Pertanyaan:** {{question}}\n**Jawaban:** {{answer}}",
