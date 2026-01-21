@@ -39,17 +39,45 @@ module.exports = async function minesweeperButtons(interaction) {
 
     const lang = interaction.lang || interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
 
-    const sanitizePayloadForUpdate = (payload) => {
+    const sanitizePayloadForEdit = (payload) => {
         if (!payload) return payload;
-        // `interaction.update()` does not accept `flags`.
+        // `editReply()` / `message.edit()` don't accept `flags`; the message already has ComponentsV2.
         if (Object.prototype.hasOwnProperty.call(payload, 'flags')) delete payload.flags;
         return payload;
     };
 
+    const updateGameMessage = async (payload) => {
+        const clean = sanitizePayloadForEdit(payload);
+        try {
+            // Acknowledge fast to avoid Discord timeouts.
+            if (!interaction.deferred && !interaction.replied) {
+                await interaction.deferUpdate().catch(() => null);
+            }
+            // For component interactions, this edits the message that contains the components.
+            await interaction.editReply(clean);
+            return;
+        } catch (error) {
+            // Fallback to direct message edit (some setups behave better with this).
+            try {
+                await interaction.message?.edit?.(clean);
+                return;
+            } catch (error2) {
+                // Keep a log so we can diagnose the real API error.
+                console.error('[minesweeper] failed to update message', error2 || error);
+                try {
+                    await interaction.followUp({
+                        content: moxi.translate('misc:ERROR', lang) || 'Error',
+                        flags: MessageFlags.Ephemeral,
+                    });
+                } catch { }
+            }
+        }
+    };
+
     if (action === 'n') {
         const state = { ...newGameState(), mode: 'open' };
-        const payload = sanitizePayloadForUpdate(buildMinesweeperMessageOptions({ userId, lang, state }));
-        await interaction.update(payload).catch(() => null);
+        const payload = buildMinesweeperMessageOptions({ userId, lang, state });
+        await updateGameMessage(payload);
         return true;
     }
 
@@ -57,8 +85,8 @@ module.exports = async function minesweeperButtons(interaction) {
         const stateStr = parts[3];
         const base = unpackState(stateStr);
         const state = { ...base, mode: 'open' };
-        const payload = sanitizePayloadForUpdate(buildMinesweeperMessageOptions({ userId, lang, state, disabled: true }));
-        await interaction.update(payload).catch(() => null);
+        const payload = buildMinesweeperMessageOptions({ userId, lang, state, disabled: true });
+        await updateGameMessage(payload);
         return true;
     }
 
@@ -67,8 +95,8 @@ module.exports = async function minesweeperButtons(interaction) {
         const stateStr = parts[4];
         const base = unpackState(stateStr);
         const state = { ...base, mode: nextMode };
-        const payload = sanitizePayloadForUpdate(buildMinesweeperMessageOptions({ userId, lang, state }));
-        await interaction.update(payload).catch(() => null);
+        const payload = buildMinesweeperMessageOptions({ userId, lang, state });
+        await updateGameMessage(payload);
         return true;
     }
 
@@ -88,8 +116,8 @@ module.exports = async function minesweeperButtons(interaction) {
             next.mode = 'open';
         }
 
-        const payload = sanitizePayloadForUpdate(buildMinesweeperMessageOptions({ userId, lang, state: next }));
-        await interaction.update(payload).catch(() => null);
+        const payload = buildMinesweeperMessageOptions({ userId, lang, state: next });
+        await updateGameMessage(payload);
         return true;
     }
 
