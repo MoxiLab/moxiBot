@@ -2,7 +2,7 @@
     "TITLE": "السوق السوداء",
     "BALANCE": "الرصيد: **{{balance}}** 🪙",
     "HINT": "اشترِ باستخدام: `blackmarket buy <1-3>`",
-    "OFFER_LINE": "{{slot}}) **{{name}}** ({{rarity}}) — **{{price}}** 🪙",
+    "OFFER_LINE": "{{slot}} • **{{name}}** ({{rarity}}) → **{{price}}** 🪙",
     "BAD_SLOT_TITLE": "اختيار غير صالح",
     "BAD_SLOT_TEXT": "اختر رقمًا من 1 إلى 3. مثال: `blackmarket buy 2`",
     "NO_FUNDS_TITLE": "رصيد غير كافٍ",
