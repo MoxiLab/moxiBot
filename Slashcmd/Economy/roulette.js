@@ -221,7 +221,7 @@ module.exports = {
                     : t('AMOUNT_LINE', { amount: formatInt(stake) }),
                 stakeCapped ? t('CAP_NOTE') : '',
                 '',
-                t('ROLLED_LINE', { emoji: colorEmoji, number: rolled, color: t(colorKey) }),
+                t('ROLLED_LINE', { icon: colorEmoji, number: rolled, color: t(colorKey) }),
                 outcome.won
                     ? t('PRIZE_LINE', { amount: formatInt(net) })
                     : t('LOSS_LINE', { amount: formatInt(Math.abs(net)) }),

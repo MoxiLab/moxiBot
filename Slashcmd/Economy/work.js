@@ -31,7 +31,7 @@ function formatJobsList(lang) {
     const t = (k, vars = {}) => moxi.translate(`economy/work:${k}`, lang, vars);
     const jobs = listJobs();
     const lines = jobs.map(j => t('JOB_LINE', {
-        emoji: j.emoji || '💼',
+        icon: j.emoji || '💼',
         job: getJobDisplayName(j, lang),
         id: j.id,
         min: j.min,
@@ -246,7 +246,7 @@ module.exports = {
                     title: t('SHIFT_DONE_TITLE'),
                     text: t('SHIFT_DONE_TEXT', {
                         job: getJobDisplayName(res.job, lang),
-                        emoji: res.job.emoji || '',
+                        icon: res.job.emoji || '',
                         amount: res.amount,
                         balance: res.balance,
                     }),
