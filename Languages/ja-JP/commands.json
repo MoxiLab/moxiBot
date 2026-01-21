@@ -6,6 +6,7 @@
     "CATEGORY_HERRAMIENTAS": "ツール",
     "CATEGORY_ECONOMIA": "経済",
     "CATEGORY_MUSICA": "音楽",
+    "CATEGORY_FUN": "お楽しみ",
     "CATEGORY_ROOT": "オーナー",
     "CMD_add_DESC": "曲をキューに追加します",
     "CMD_add_NAME": "add",
@@ -105,5 +106,8 @@
     "CMD_QUEST_DESC": "デイリークエストを見て報酬を受け取ります。",
     "CMD_EVENT_DESC": "イベント報酬を受け取ります。",
     "CMD_CARNIVAL_DESC": "カーニバル報酬を受け取ります（シーズン中）。",
-    "CMD_XMAS_DESC": "クリスマス報酬を受け取ります（シーズン中）。"
+    "CMD_XMAS_DESC": "クリスマス報酬を受け取ります（シーズン中）。",
+    "CMD_COINFLIP_DESC": "コイントスします（表/裏）。",
+    "CMD_DICE_DESC": "サイコロを振ります（面数は任意）。",
+    "CMD_8BALL_DESC": "マジック8ボールに質問します。"
 }
