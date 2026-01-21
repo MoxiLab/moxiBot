@@ -39,30 +39,17 @@ module.exports = async function minesweeperButtons(interaction) {
 
     const lang = interaction.lang || interaction.guildLocale || interaction.locale || process.env.DEFAULT_LANG || 'es-ES';
 
-    // Acknowledge immediately to avoid Discord timeouts (“Interacción fallida”)
-    await interaction.deferUpdate().catch(() => null);
-
-    const editGameMessage = async (payload) => {
-        // Message edits / editReply don't accept flags; the message already has the ComponentsV2 flag set.
-        if (payload && Object.prototype.hasOwnProperty.call(payload, 'flags')) delete payload.flags;
-        try {
-            await interaction.editReply(payload);
-        } catch {
-            await interaction.message?.edit?.(payload).catch(() => null);
-        }
+    const sanitizePayloadForUpdate = (payload) => {
+        if (!payload) return payload;
+        // `interaction.update()` does not accept `flags`.
+        if (Object.prototype.hasOwnProperty.call(payload, 'flags')) delete payload.flags;
+        return payload;
     };
-
-    // Actions:
-    // msw:n:<uid>
-    // msw:mode:<uid>:<open|flag>:<state>
-    // msw:o:<uid>:<x>:<y>:<state>
-    // msw:g:<uid>:<x>:<y>:<state>
-    // msw:close:<uid>:<state>
 
     if (action === 'n') {
         const state = { ...newGameState(), mode: 'open' };
-        const payload = buildMinesweeperMessageOptions({ userId, lang, state });
-        await editGameMessage(payload);
+        const payload = sanitizePayloadForUpdate(buildMinesweeperMessageOptions({ userId, lang, state }));
+        await interaction.update(payload).catch(() => null);
         return true;
     }
 
@@ -70,8 +57,8 @@ module.exports = async function minesweeperButtons(interaction) {
         const stateStr = parts[3];
         const base = unpackState(stateStr);
         const state = { ...base, mode: 'open' };
-        const payload = buildMinesweeperMessageOptions({ userId, lang, state, disabled: true });
-        await editGameMessage(payload);
+        const payload = sanitizePayloadForUpdate(buildMinesweeperMessageOptions({ userId, lang, state, disabled: true }));
+        await interaction.update(payload).catch(() => null);
         return true;
     }
 
@@ -80,8 +67,8 @@ module.exports = async function minesweeperButtons(interaction) {
         const stateStr = parts[4];
         const base = unpackState(stateStr);
         const state = { ...base, mode: nextMode };
-        const payload = buildMinesweeperMessageOptions({ userId, lang, state });
-        await editGameMessage(payload);
+        const payload = sanitizePayloadForUpdate(buildMinesweeperMessageOptions({ userId, lang, state }));
+        await interaction.update(payload).catch(() => null);
         return true;
     }
 
@@ -101,8 +88,8 @@ module.exports = async function minesweeperButtons(interaction) {
             next.mode = 'open';
         }
 
-        const payload = buildMinesweeperMessageOptions({ userId, lang, state: next });
-        await editGameMessage(payload);
+        const payload = sanitizePayloadForUpdate(buildMinesweeperMessageOptions({ userId, lang, state: next }));
+        await interaction.update(payload).catch(() => null);
         return true;
     }
 
