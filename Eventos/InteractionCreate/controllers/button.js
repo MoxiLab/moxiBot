@@ -20,6 +20,7 @@ const handlers = [
   require('./buttons/minePlay'),
   require('./buttons/minesweeper'),
   require('./buttons/rps'),
+  require('./buttons/tictactoe'),
   require('./buttons/zones'),
   require('./buttons/crime'),
   require('./buttons/leave'), // <-- Añadido para leave
