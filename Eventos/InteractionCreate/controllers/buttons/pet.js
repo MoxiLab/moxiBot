@@ -517,23 +517,18 @@ module.exports = async function petButtons(interaction) {
             const xpCompact = `\n[+${result?.xpGained || 0} exp]`;
             const xpBlock = `\n\n[+${result?.xpGained || 0} exp]`;
 
-            // Mostrar progreso con círculos (antes/después) en acciones de cuidado
-            const afterCare = pet?.attributes?.care || {};
-            const primaryAfter = primaryStatKey ? (Number(afterCare?.[primaryStatKey]) || 0) : null;
-            const circlesLine = (primaryStatKey && primaryBefore != null && primaryAfter != null)
-                ? `\n\n${renderCareCircles(primaryBefore)} → ${renderCareCircles(primaryAfter)}`
-                : '';
-
             if (act === 'play') {
                 title = 'Cariño';
                 // Como Nekotina: sin barra/círculos, texto compacto
                 text = `Has jugado con tu mascota 🤍${xpCompact}`;
             } else if (act === 'feed') {
                 title = 'Hambre';
-                text = `Has alimentado a tu mascota 🍎${xpBlock}${circlesLine}`;
+                // Misma estructura que jugar: texto compacto
+                text = `Has alimentado a tu mascota 🍎${xpCompact}`;
             } else if (act === 'clean') {
                 title = 'Higiene';
-                text = `Has limpiado a tu mascota 🧼${xpBlock}${circlesLine}`;
+                // Misma estructura que jugar: texto compacto
+                text = `Has limpiado a tu mascota 🧼${xpCompact}`;
             } else if (act === 'train') {
                 title = 'Entrenamiento';
                 text = `Has entrenado a tu mascota 🏋️${xpBlock}`;
