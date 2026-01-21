@@ -23,6 +23,14 @@ function normalizeCategoryKey(value) {
   if (upper.includes('CATEGORY_MODERATION') || upper.includes('MODERATION') || upper.includes('MODERACION')) return 'Moderation';
   if (upper.includes('CATEGORY_ROOT')) return 'Root';
 
+  // Games / Juegos
+  if (upper.includes('CATEGORY_GAMES') || upper === 'GAMES') return 'Games';
+  if (upper.includes('JUEGOS') || upper.includes('JUEGO')) return 'Games';
+  if (upper.includes('JEUX')) return 'Games';
+  if (upper.includes('SPIELE')) return 'Games';
+  if (upper.includes('GIOCHI')) return 'Games';
+  if (upper.includes('GAMES') || upper.includes('GAME')) return 'Games';
+
   // Fun / Diversión
   if (upper.includes('CATEGORY_FUN') || upper === 'FUN') return 'Fun';
   if (upper.includes('DIVERSION') || upper.includes('DIVERSIÓN')) return 'Fun';
@@ -42,6 +50,7 @@ function normalizeCategoryKey(value) {
   if (value.includes('الإشراف')) return 'Moderation';
   if (value.includes('المالك')) return 'Root';
   if (value.includes('نظام الترحيب')) return 'Welcome';
+  if (value.includes('ألعاب') || value.includes('لعبة')) return 'Games';
 
   // Inglés por si viene como etiqueta
   if (upper.includes('WELCOME')) return 'Welcome';
@@ -252,6 +261,8 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
       'Moderación': 'HELP_CATEGORY_MODERATION',
       'Music': 'HELP_CATEGORY_MUSIC',
       'Música': 'HELP_CATEGORY_MUSIC',
+      'Games': 'HELP_CATEGORY_GAMES',
+      'Juegos': 'HELP_CATEGORY_GAMES',
       'Root': 'HELP_CATEGORY_ROOT',
       'Tools': 'HELP_CATEGORY_TOOLS',
       'Herramientas': 'HELP_CATEGORY_TOOLS',
