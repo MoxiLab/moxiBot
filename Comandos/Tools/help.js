@@ -158,6 +158,12 @@ function normalizeCategoryQuery(input) {
     // Welcome
     if (raw.includes('welc') || raw.includes('bienv') || raw.includes('welcome')) return 'Welcome';
 
+    // Juegos
+    if (raw.includes('game') || raw.includes('jueg') || raw.includes('spiel') || raw.includes('jeux') || raw.includes('gioc')) return 'Games';
+
+    // Fun / Diversión
+    if (raw === 'fun' || raw.includes('diver') || raw.includes('entreten') || raw.includes('divert')) return 'Fun';
+
     return null;
 }
 
