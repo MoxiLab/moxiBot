@@ -114,16 +114,13 @@
     "HELP_CATEGORY_FUN_DESC": "재미 명령어: 8ball, coinflip, dice.",
     "HELP_CATEGORY_WELCOME": "환영 시스템",
     "HELP_CATEGORY_WELCOME_DESC": "환영 메시지 및 설정을 구성하는 명령어.",
-
     "FUN_COINFLIP_TITLE": "동전 던지기",
     "FUN_COINFLIP_HEADS": "앞면",
     "FUN_COINFLIP_TAILS": "뒷면",
     "FUN_COINFLIP_RESULT": "결과: **{{result}}**",
-
     "FUN_DICE_TITLE": "주사위",
     "FUN_DICE_RESULT": "**{{roll}}** 이(가) 나왔어요 (1-{{sides}}).",
     "FUN_DICE_INVALID_SIDES": "면 수는 2에서 100 사이의 정수여야 해요.",
-
     "FUN_8BALL_TITLE": "매직 8볼",
     "FUN_8BALL_NO_QUESTION": "질문을 입력해 주세요.",
     "FUN_8BALL_RESULT": "**질문:** {{question}}\n**답변:** {{answer}}",
