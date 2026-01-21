@@ -109,5 +109,6 @@
     "CMD_XMAS_DESC": "领取圣诞奖励（季节限定）。",
     "CMD_COINFLIP_DESC": "抛硬币（正面/反面）。",
     "CMD_DICE_DESC": "掷骰子（可选面数）。",
-    "CMD_8BALL_DESC": "向魔法8球提问。"
+    "CMD_8BALL_DESC": "向魔法8球提问。",
+    "CMD_SHIP_DESC": "计算两个人之间的匹配度。"
 }

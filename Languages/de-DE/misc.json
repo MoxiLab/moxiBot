@@ -139,6 +139,12 @@
         "Vielleicht.",
         "Besser, ich sage es dir jetzt nicht."
     ],
+    "FUN_SHIP_TITLE": "Ship",
+    "FUN_SHIP_NO_TARGET": "Erwähne jemanden oder gib zwei Namen an.",
+    "FUN_SHIP_RESULT": "**{{a}}** ❤ **{{b}}**\nKompatibilität: **{{pct}}%**\n{{bar}}\n{{rating}}",
+    "FUN_SHIP_RATING_LOW": "Nicht der richtige Moment…",
+    "FUN_SHIP_RATING_MID": "Da ist Chemie 👀",
+    "FUN_SHIP_RATING_HIGH": "Seelenverwandte! 💞",
     "HELP_CATEGORY_ROOT": "Besitzer",
     "HELP_COMMAND_NOT_FOUND": "Befehl `{{command}}` nicht gefunden.",
     "HELP_COMMAND_INFO_TITLE": "Befehlsinfo: {{name}}",

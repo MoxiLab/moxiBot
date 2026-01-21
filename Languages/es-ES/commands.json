@@ -109,5 +109,6 @@
     "CMD_XMAS_DESC": "Reclama una recompensa de Navidad (en temporada).",
     "CMD_COINFLIP_DESC": "Lanza una moneda (cara o cruz).",
     "CMD_DICE_DESC": "Tira un dado (puedes elegir lados).",
-    "CMD_8BALL_DESC": "Hazle una pregunta a la Bola 8 mágica."
+    "CMD_8BALL_DESC": "Hazle una pregunta a la Bola 8 mágica.",
+    "CMD_SHIP_DESC": "Calcula la compatibilidad entre dos personas."
 }

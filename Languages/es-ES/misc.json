@@ -167,6 +167,12 @@
     "Tal vez.",
     "Mejor no te lo digo ahora."
   ],
+  "FUN_SHIP_TITLE": "Ship",
+  "FUN_SHIP_NO_TARGET": "Menciona a alguien o escribe dos nombres.",
+  "FUN_SHIP_RESULT": "**{{a}}** ❤ **{{b}}**\nCompatibilidad: **{{pct}}%**\n{{bar}}\n{{rating}}",
+  "FUN_SHIP_RATING_LOW": "No es el momento…",
+  "FUN_SHIP_RATING_MID": "Hay química 👀",
+  "FUN_SHIP_RATING_HIGH": "¡Almas gemelas! 💞",
   "HELP_CATEGORY_MODERATION_DESC": "Comandos de moderación: banear, expulsar, silenciar, advertir y más.",
   "HELP_COMMAND_NOT_FOUND": "Comando `{{command}}` no encontrado.",
   "HELP_COMMAND_INFO_TITLE": "Información de comando: {{name}}",

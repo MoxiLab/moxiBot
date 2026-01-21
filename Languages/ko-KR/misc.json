@@ -138,6 +138,12 @@
         "아마도요.",
         "지금은 말하지 않는 게 좋겠어요."
     ],
+    "FUN_SHIP_TITLE": "Ship",
+    "FUN_SHIP_NO_TARGET": "누군가를 멘션하거나 두 이름을 입력해 주세요.",
+    "FUN_SHIP_RESULT": "**{{a}}** ❤ **{{b}}**\n궁합: **{{pct}}%**\n{{bar}}\n{{rating}}",
+    "FUN_SHIP_RATING_LOW": "지금은 때가 아니야…",
+    "FUN_SHIP_RATING_MID": "케미가 있어 👀",
+    "FUN_SHIP_RATING_HIGH": "운명의 상대! 💞",
     "HELP_CATEGORY_MODERATION": "모더레이션",
     "HELP_CATEGORY_MODERATION_DESC": "모더레이션 명령어: 밴, 킥, 뮤트, 경고 등.",
     "HELP_COMMAND_NOT_FOUND": "명령어 `{{command}}`를 찾을 수 없습니다.",

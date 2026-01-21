@@ -109,5 +109,6 @@
     "CMD_XMAS_DESC": "크리스마스 보상을 받습니다(시즌 한정).",
     "CMD_COINFLIP_DESC": "동전을 던져요(앞면/뒷면).",
     "CMD_DICE_DESC": "주사위를 굴려요(면 수 선택 가능).",
-    "CMD_8BALL_DESC": "매직 8볼에게 질문해요."
+    "CMD_8BALL_DESC": "매직 8볼에게 질문해요.",
+    "CMD_SHIP_DESC": "두 사람의 궁합을 계산해요."
 }

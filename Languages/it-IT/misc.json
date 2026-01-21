@@ -140,6 +140,12 @@
         "Forse.",
         "Meglio non dirtelo adesso."
     ],
+    "FUN_SHIP_TITLE": "Ship",
+    "FUN_SHIP_NO_TARGET": "Menziona qualcuno o inserisci due nomi.",
+    "FUN_SHIP_RESULT": "**{{a}}** ❤ **{{b}}**\nCompatibilità: **{{pct}}%**\n{{bar}}\n{{rating}}",
+    "FUN_SHIP_RATING_LOW": "Non è il momento…",
+    "FUN_SHIP_RATING_MID": "C'è chimica 👀",
+    "FUN_SHIP_RATING_HIGH": "Anime gemelle! 💞",
     "HELP_COMMAND_NOT_FOUND": "Comando `{{command}}` non trovato.",
     "HELP_COMMAND_INFO_TITLE": "Info comando: {{name}}",
     "HELP_PERMISSIONS": "Permessi",

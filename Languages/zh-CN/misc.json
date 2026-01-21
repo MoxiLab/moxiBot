@@ -140,6 +140,12 @@
         "也许。",
         "现在还是不要告诉你。"
     ],
+    "FUN_SHIP_TITLE": "Ship",
+    "FUN_SHIP_NO_TARGET": "提及一个人或输入两个名字。",
+    "FUN_SHIP_RESULT": "**{{a}}** ❤ **{{b}}**\n匹配度: **{{pct}}%**\n{{bar}}\n{{rating}}",
+    "FUN_SHIP_RATING_LOW": "现在不是时候…",
+    "FUN_SHIP_RATING_MID": "有点化学反应 👀",
+    "FUN_SHIP_RATING_HIGH": "灵魂伴侣！ 💞",
     "HELP_COMMAND_NOT_FOUND": "未找到命令 `{{command}}`。",
     "HELP_COMMAND_INFO_TITLE": "命令信息：{{name}}",
     "HELP_PERMISSIONS": "权限",

@@ -109,5 +109,6 @@
     "CMD_XMAS_DESC": "Klaim hadiah Natal (musiman).",
     "CMD_COINFLIP_DESC": "Lempar koin (kepala atau ekor).",
     "CMD_DICE_DESC": "Lempar dadu (opsional pilih sisi).",
-    "CMD_8BALL_DESC": "Tanya sesuatu ke Bola 8 ajaib."
+    "CMD_8BALL_DESC": "Tanya sesuatu ke Bola 8 ajaib.",
+    "CMD_SHIP_DESC": "Menghitung kecocokan antara dua orang."
 }

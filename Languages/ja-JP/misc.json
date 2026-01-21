@@ -342,6 +342,12 @@
         "たぶん。",
         "今は言わないほうがいいです。"
     ],
+    "FUN_SHIP_TITLE": "Ship",
+    "FUN_SHIP_NO_TARGET": "誰かをメンションするか、2つの名前を入力してね。",
+    "FUN_SHIP_RESULT": "**{{a}}** ❤ **{{b}}**\n相性: **{{pct}}%**\n{{bar}}\n{{rating}}",
+    "FUN_SHIP_RATING_LOW": "今はその時じゃない…",
+    "FUN_SHIP_RATING_MID": "いい感じかも 👀",
+    "FUN_SHIP_RATING_HIGH": "運命の相手！ 💞",
     "MUSIC_TRACK_REQUIRED": "曲を指定してください。",
     "MUSIC_VOLUME_NUMBER_REQUIRED": "音量の数値を指定してください。",
     "MUSIC_ADD_AMOUNT_REQUIRED": "有効な数を指定してください。",

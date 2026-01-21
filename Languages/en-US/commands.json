@@ -109,5 +109,6 @@
     "CMD_XMAS_DESC": "Claim a Christmas reward (in season).",
     "CMD_COINFLIP_DESC": "Flip a coin (heads or tails).",
     "CMD_DICE_DESC": "Roll a dice (optionally choose sides).",
-    "CMD_8BALL_DESC": "Ask the Magic 8-Ball a question."
+    "CMD_8BALL_DESC": "Ask the Magic 8-Ball a question.",
+    "CMD_SHIP_DESC": "Calculates compatibility between two people."
 }

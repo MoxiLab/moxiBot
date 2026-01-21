@@ -109,5 +109,6 @@
     "CMD_XMAS_DESC": "Riscatta una ricompensa di Natale (di stagione).",
     "CMD_COINFLIP_DESC": "Lancia una moneta (testa o croce).",
     "CMD_DICE_DESC": "Tira un dado (facce opzionali).",
-    "CMD_8BALL_DESC": "Fai una domanda alla sfera magica 8."
+    "CMD_8BALL_DESC": "Fai una domanda alla sfera magica 8.",
+    "CMD_SHIP_DESC": "Calcola la compatibilità tra due persone."
 }

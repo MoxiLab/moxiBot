@@ -133,6 +133,12 @@
         "Peut-être.",
         "Mieux vaut ne pas te le dire maintenant."
     ],
+    "FUN_SHIP_TITLE": "Ship",
+    "FUN_SHIP_NO_TARGET": "Mentionne quelqu'un ou donne deux noms.",
+    "FUN_SHIP_RESULT": "**{{a}}** ❤ **{{b}}**\nCompatibilité : **{{pct}}%**\n{{bar}}\n{{rating}}",
+    "FUN_SHIP_RATING_LOW": "Ce n'est pas le moment…",
+    "FUN_SHIP_RATING_MID": "Il y a de l'alchimie 👀",
+    "FUN_SHIP_RATING_HIGH": "Âmes sœurs ! 💞",
     "HELP_COMMAND_NOT_FOUND": "Commande `{{command}}` introuvable.",
     "HELP_COMMAND_INFO_TITLE": "Infos de la commande : {{name}}",
     "HELP_PERMISSIONS": "Autorisations",

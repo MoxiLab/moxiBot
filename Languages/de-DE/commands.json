@@ -109,5 +109,6 @@
     "CMD_XMAS_DESC": "Fordere eine Weihnachts-Belohnung ein (saisonal).",
     "CMD_COINFLIP_DESC": "Wirf eine Münze (Kopf oder Zahl).",
     "CMD_DICE_DESC": "Würfle (optional Seiten wählen).",
-    "CMD_8BALL_DESC": "Stelle dem magischen 8-Ball eine Frage."
+    "CMD_8BALL_DESC": "Stelle dem magischen 8-Ball eine Frage.",
+    "CMD_SHIP_DESC": "Berechnet die Kompatibilität zwischen zwei Personen."
 }

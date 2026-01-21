@@ -140,6 +140,12 @@
         "Mungkin.",
         "Lebih baik tidak kukatakan sekarang."
     ],
+    "FUN_SHIP_TITLE": "Ship",
+    "FUN_SHIP_NO_TARGET": "Sebut seseorang atau masukkan dua nama.",
+    "FUN_SHIP_RESULT": "**{{a}}** ❤ **{{b}}**\nKecocokan: **{{pct}}%**\n{{bar}}\n{{rating}}",
+    "FUN_SHIP_RATING_LOW": "Bukan saatnya…",
+    "FUN_SHIP_RATING_MID": "Ada chemistry 👀",
+    "FUN_SHIP_RATING_HIGH": "Jodoh! 💞",
     "HELP_COMMAND_NOT_FOUND": "Perintah `{{command}}` tidak ditemukan.",
     "HELP_COMMAND_INFO_TITLE": "Info perintah: {{name}}",
     "HELP_PERMISSIONS": "Izin",

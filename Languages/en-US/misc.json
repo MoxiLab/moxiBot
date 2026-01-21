@@ -168,6 +168,12 @@
         "Maybe.",
         "Better not tell you now."
     ],
+    "FUN_SHIP_TITLE": "Ship",
+    "FUN_SHIP_NO_TARGET": "Mention someone or provide two names.",
+    "FUN_SHIP_RESULT": "**{{a}}** ❤ **{{b}}**\nCompatibility: **{{pct}}%**\n{{bar}}\n{{rating}}",
+    "FUN_SHIP_RATING_LOW": "Not the moment…",
+    "FUN_SHIP_RATING_MID": "There is chemistry 👀",
+    "FUN_SHIP_RATING_HIGH": "Soulmates! 💞",
     "HELP_COMMAND_NOT_FOUND": "Command `{{command}}` not found.",
     "HELP_COMMAND_INFO_TITLE": "Command info: {{name}}",
     "HELP_COMMAND_TITLE": "Command",
