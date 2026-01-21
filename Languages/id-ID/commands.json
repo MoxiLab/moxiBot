@@ -6,6 +6,7 @@
     "CATEGORY_HERRAMIENTAS": "Alat",
     "CATEGORY_ECONOMIA": "Ekonomi",
     "CATEGORY_MUSICA": "Musik",
+    "CATEGORY_FUN": "Seru-seruan",
     "CATEGORY_ROOT": "Pemilik",
     "CMD_add_DESC": "Menambahkan lagu ke antrean",
     "CMD_add_NAME": "add",
@@ -105,5 +106,8 @@
     "CMD_QUEST_DESC": "Lihat quest harian dan klaim hadiah.",
     "CMD_EVENT_DESC": "Klaim hadiah event.",
     "CMD_CARNIVAL_DESC": "Klaim hadiah karnaval (musiman).",
-    "CMD_XMAS_DESC": "Klaim hadiah Natal (musiman)."
+    "CMD_XMAS_DESC": "Klaim hadiah Natal (musiman).",
+    "CMD_COINFLIP_DESC": "Lempar koin (kepala atau ekor).",
+    "CMD_DICE_DESC": "Lempar dadu (opsional pilih sisi).",
+    "CMD_8BALL_DESC": "Tanya sesuatu ke Bola 8 ajaib."
 }

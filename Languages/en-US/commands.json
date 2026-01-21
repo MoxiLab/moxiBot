@@ -6,6 +6,7 @@
     "CATEGORY_HERRAMIENTAS": "Tools",
     "CATEGORY_ECONOMIA": "Economy",
     "CATEGORY_MUSICA": "Music",
+    "CATEGORY_FUN": "Fun",
     "CATEGORY_ROOT": "Root",
     "CMD_add_DESC": "Adds songs to the queue",
     "CMD_add_NAME": "add",
@@ -105,5 +106,8 @@
     "CMD_QUEST_DESC": "View daily quests and claim a reward.",
     "CMD_EVENT_DESC": "Claim an event reward.",
     "CMD_CARNIVAL_DESC": "Claim a carnival reward (in season).",
-    "CMD_XMAS_DESC": "Claim a Christmas reward (in season)."
+    "CMD_XMAS_DESC": "Claim a Christmas reward (in season).",
+    "CMD_COINFLIP_DESC": "Flip a coin (heads or tails).",
+    "CMD_DICE_DESC": "Roll a dice (optionally choose sides).",
+    "CMD_8BALL_DESC": "Ask the Magic 8-Ball a question."
 }

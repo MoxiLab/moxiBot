@@ -6,6 +6,7 @@
     "CATEGORY_HERRAMIENTAS": "Outils",
     "CATEGORY_ECONOMIA": "Économie",
     "CATEGORY_MUSICA": "Musique",
+    "CATEGORY_FUN": "Fun",
     "CATEGORY_ROOT": "Noyau",
     "CMD_add_DESC": "Ajoute des chansons à la file d’attente",
     "CMD_add_NAME": "ajouter",
@@ -105,5 +106,8 @@
     "CMD_QUEST_DESC": "Voir les quêtes quotidiennes et récupérer une récompense.",
     "CMD_EVENT_DESC": "Récupère une récompense d’événement.",
     "CMD_CARNIVAL_DESC": "Récupère une récompense de carnaval (en saison).",
-    "CMD_XMAS_DESC": "Récupère une récompense de Noël (en saison)."
+    "CMD_XMAS_DESC": "Récupère une récompense de Noël (en saison).",
+    "CMD_COINFLIP_DESC": "Lance une pièce (pile ou face).",
+    "CMD_DICE_DESC": "Lance un dé (nombre de faces optionnel).",
+    "CMD_8BALL_DESC": "Pose une question à la boule magique 8."
 }

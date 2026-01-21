@@ -6,6 +6,7 @@
     "CATEGORY_HERRAMIENTAS": "Herramientas",
     "CATEGORY_ECONOMIA": "Economía",
     "CATEGORY_MUSICA": "Música",
+    "CATEGORY_FUN": "Diversión",
     "CATEGORY_ROOT": "Propietario",
     "CMD_add_DESC": "Añade canciones a la cola",
     "CMD_add_NAME": "add",
@@ -105,5 +106,8 @@
     "CMD_QUEST_DESC": "Mira misiones diarias y reclama recompensa.",
     "CMD_EVENT_DESC": "Reclama una recompensa de evento.",
     "CMD_CARNIVAL_DESC": "Reclama una recompensa de carnaval (en temporada).",
-    "CMD_XMAS_DESC": "Reclama una recompensa de Navidad (en temporada)."
+    "CMD_XMAS_DESC": "Reclama una recompensa de Navidad (en temporada).",
+    "CMD_COINFLIP_DESC": "Lanza una moneda (cara o cruz).",
+    "CMD_DICE_DESC": "Tira un dado (puedes elegir lados).",
+    "CMD_8BALL_DESC": "Hazle una pregunta a la Bola 8 mágica."
 }

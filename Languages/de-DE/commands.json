@@ -6,6 +6,7 @@
     "CATEGORY_HERRAMIENTAS": "Werkzeuge",
     "CATEGORY_ECONOMIA": "Wirtschaft",
     "CATEGORY_MUSICA": "Musik",
+    "CATEGORY_FUN": "Spaß",
     "CATEGORY_ROOT": "Besitzer",
     "CMD_add_DESC": "Fügt Songs zur Warteschlange hinzu",
     "CMD_add_NAME": "add",
@@ -105,5 +106,8 @@
     "CMD_QUEST_DESC": "Sieh dir tägliche Quests an und fordere eine Belohnung ein.",
     "CMD_EVENT_DESC": "Fordere eine Event-Belohnung ein.",
     "CMD_CARNIVAL_DESC": "Fordere eine Karnevals-Belohnung ein (saisonal).",
-    "CMD_XMAS_DESC": "Fordere eine Weihnachts-Belohnung ein (saisonal)."
+    "CMD_XMAS_DESC": "Fordere eine Weihnachts-Belohnung ein (saisonal).",
+    "CMD_COINFLIP_DESC": "Wirf eine Münze (Kopf oder Zahl).",
+    "CMD_DICE_DESC": "Würfle (optional Seiten wählen).",
+    "CMD_8BALL_DESC": "Stelle dem magischen 8-Ball eine Frage."
 }

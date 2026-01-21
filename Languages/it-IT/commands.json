@@ -6,6 +6,7 @@
     "CATEGORY_HERRAMIENTAS": "Strumenti",
     "CATEGORY_ECONOMIA": "Economia",
     "CATEGORY_MUSICA": "Musica",
+    "CATEGORY_FUN": "Divertimento",
     "CATEGORY_ROOT": "Proprietario",
     "CMD_add_DESC": "Aggiunge brani alla coda",
     "CMD_add_NAME": "add",
@@ -105,5 +106,8 @@
     "CMD_QUEST_DESC": "Vedi le missioni giornaliere e riscuoti una ricompensa.",
     "CMD_EVENT_DESC": "Riscatta una ricompensa evento.",
     "CMD_CARNIVAL_DESC": "Riscatta una ricompensa di carnevale (di stagione).",
-    "CMD_XMAS_DESC": "Riscatta una ricompensa di Natale (di stagione)."
+    "CMD_XMAS_DESC": "Riscatta una ricompensa di Natale (di stagione).",
+    "CMD_COINFLIP_DESC": "Lancia una moneta (testa o croce).",
+    "CMD_DICE_DESC": "Tira un dado (facce opzionali).",
+    "CMD_8BALL_DESC": "Fai una domanda alla sfera magica 8."
 }
