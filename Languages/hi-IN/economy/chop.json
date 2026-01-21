@@ -1,0 +1,9 @@
+{
+    "TITLE": "Talar",
+    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
+    "COOLDOWN_TITLE": "Talar en cooldown",
+    "COOLDOWN_TEXT": "Estás cansado/a. Vuelve en **{{next}}**.",
+    "SUCCESS_TITLE": "¡Tala completada!",
+    "SUCCESS_TEXT": "Has conseguido **{{amount}}x {{item}}** y **{{coins}}** 🪙.\nBalance: **{{balance}}** 🪙.",
+    "ERROR": "No pude completar la tala."
+}

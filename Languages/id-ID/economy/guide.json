@@ -1,0 +1,5 @@
+{
+    "TITLE": "Panduan ekonomi",
+    "BODY": "Perintah cepat:\n• `{{prefix}}bal` — lihat coins kamu\n• `{{prefix}}daily` — hadiah harian\n• `{{prefix}}work` — kerja untuk coins\n• `{{prefix}}moxishop list` — lihat toko\n• `{{prefix}}moxishop buy <id> [jumlah]` — beli\n• `{{prefix}}bag` — lihat tas\n• `{{prefix}}use <item>` — gunakan item\n• `{{prefix}}sell <item> [jumlah]` — jual item\n• `{{prefix}}leaderboard` — papan peringkat\n\nTambahan:\n• `{{prefix}}collect` — mengumpulkan dengan cooldown\n• `{{prefix}}quest` — misi harian\n• `{{prefix}}race` — balapan dengan cooldown",
+    "FOOTER": "Tip: kalau ada yang gagal, cek MongoDB (MONGODB)."
+}

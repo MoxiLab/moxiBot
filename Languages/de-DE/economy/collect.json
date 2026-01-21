@@ -1,0 +1,9 @@
+{
+    "TITLE": "Sammeln",
+    "NO_DB": "MongoDB ist nicht konfiguriert, daher ist die Wirtschaft deaktiviert.",
+    "COOLDOWN_TITLE": "Sammeln in Abklingzeit",
+    "COOLDOWN_TEXT": "Du hast bereits gesammelt. Komm in **{{next}}** wieder.\nKontostand: **{{balance}}** 🪙.",
+    "CLAIMED_TITLE": "Sammeln",
+    "CLAIMED_TEXT": "Du hast **{{amount}}** 🪙 gesammelt.\nKontostand: **{{balance}}** 🪙.",
+    "ERROR": "Beim Sammeln ist ein Fehler aufgetreten."
+}

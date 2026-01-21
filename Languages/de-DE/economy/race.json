@@ -1,0 +1,17 @@
+{
+    "TITLE": "Rennen",
+    "NO_DB": "MongoDB ist nicht konfiguriert, daher ist die Wirtschaft deaktiviert.",
+    "COOLDOWN_TITLE": "Rennen in Abklingzeit",
+    "COOLDOWN_TEXT": "Komm in **{{next}}** wieder.",
+    "WIN_TITLE": "Rennen!",
+    "WIN_TEXT": "Teilnehmer: {{racers}}\nGewinner: **{{winner}}**\nDein Preis: **{{amount}}** 🪙\nKontostand: **{{balance}}** 🪙.",
+    "RACERS": [
+        "Moxi",
+        "Neko",
+        "Kitsune",
+        "Tanuki",
+        "Koi",
+        "Sakura"
+    ],
+    "ERROR": "Ich konnte das Rennen nicht ausführen."
+}

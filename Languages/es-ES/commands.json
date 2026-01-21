@@ -6,7 +6,7 @@
     "CATEGORY_HERRAMIENTAS": "Herramientas",
     "CATEGORY_ECONOMIA": "Economía",
     "CATEGORY_MUSICA": "Música",
-    "CATEGORY_ROOT": "Root",
+    "CATEGORY_ROOT": "Propietario",
     "CMD_add_DESC": "Añade canciones a la cola",
     "CMD_add_NAME": "add",
     "CMD_AUTONUKE_DESC": "Elimina y recrea el canal actual",

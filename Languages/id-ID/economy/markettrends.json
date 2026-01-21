@@ -1,0 +1,17 @@
+{
+    "TITLE": "Tren pasar",
+    "FOOTER": "Tren ini berubah setiap hari (simulasi).",
+    "LINE": "{{rank}}. {{icon}} **{{topic}}** — {{trend}}",
+    "UP": "📈 Naik",
+    "FLAT": "➖ Stabil",
+    "DOWN": "📉 Turun",
+    "TOPIC_BUFFS": "Buff",
+    "TOPIC_TOOLS": "Peralatan",
+    "TOPIC_PETS": "Hewan peliharaan",
+    "TOPIC_MATERIALS": "Material",
+    "TOPIC_LOOT": "Loot",
+    "TOPIC_KEYS": "Kunci",
+    "TOPIC_COLLECTIBLES": "Koleksi",
+    "TOPIC_POTIONS": "Ramuan",
+    "TOPIC_SCROLLS": "Gulungan"
+}

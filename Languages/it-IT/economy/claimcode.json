@@ -1,0 +1,12 @@
+{
+    "TITLE": "Riscatta codice",
+    "USAGE": "Uso: `{{prefix}}claimcode <codice>`",
+    "NO_DB": "MongoDB non è configurato, quindi non posso riscattare codici.",
+    "INVALID_TITLE": "Codice non valido",
+    "INVALID_TEXT": "Quel codice non esiste o non è disponibile.",
+    "ALREADY_TITLE": "Già riscattato",
+    "ALREADY_TEXT": "Hai già riscattato quel codice.",
+    "SUCCESS_TITLE": "Codice riscattato!",
+    "SUCCESS_TEXT": "Hai ricevuto **{{amount}}** 🪙.\nSaldo: **{{balance}}** 🪙.",
+    "ERROR": "Non sono riuscito a riscattare il codice."
+}

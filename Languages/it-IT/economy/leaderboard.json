@@ -1,0 +1,7 @@
+{
+    "TITLE": "Classifica",
+    "NO_DB": "MongoDB non è configurato, quindi non posso leggere la tua economia.",
+    "EMPTY": "Non ci sono ancora dati di economia da mostrare.",
+    "FOOTER": "Classifica globale per ricchezza totale (banca + coins + sakuras).",
+    "ERROR": "Non riesco a caricare la classifica in questo momento."
+}

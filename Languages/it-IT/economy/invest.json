@@ -1,0 +1,14 @@
+{
+    "BAD_AMOUNT_TITLE": "Quantità non valida",
+    "BAD_AMOUNT_TEXT": "Uso: `invest <quantità>`",
+    "NO_DB_TITLE": "Database non configurato",
+    "NO_DB_TEXT": "MongoDB non è configurato, quindi l'economia è disabilitata.",
+    "NO_FUNDS_TITLE": "Fondi insufficienti",
+    "NO_FUNDS_TEXT": "Non hai saldo sufficiente per investire **{{amount}}** 🪙.\nSaldo attuale: **{{balance}}** 🪙.",
+    "WIN_TITLE": "Investimento riuscito",
+    "WIN_TEXT": "Hai guadagnato **{{profit}}** 🪙 di profitto.\nSaldo attuale: **{{balance}}** 🪙.",
+    "LOSE_TITLE": "Investimento fallito",
+    "LOSE_TEXT": "Hai perso **{{amount}}** 🪙.\nSaldo attuale: **{{balance}}** 🪙.",
+    "ERROR_TITLE": "Errore",
+    "UNKNOWN_ERROR": "Qualcosa è andato storto."
+}

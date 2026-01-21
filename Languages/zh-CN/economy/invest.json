@@ -1,0 +1,14 @@
+{
+    "BAD_AMOUNT_TITLE": "数量无效",
+    "BAD_AMOUNT_TEXT": "用法: `invest <amount>`",
+    "NO_DB_TITLE": "数据库未配置",
+    "NO_DB_TEXT": "MongoDB 未配置，因此经济功能已禁用。",
+    "NO_FUNDS_TITLE": "余额不足",
+    "NO_FUNDS_TEXT": "余额不足以投资 **{{amount}}** 🪙。\n当前余额: **{{balance}}** 🪙。",
+    "WIN_TITLE": "投资成功",
+    "WIN_TEXT": "你获得了 **{{profit}}** 🪙 的收益。\n当前余额: **{{balance}}** 🪙。",
+    "LOSE_TITLE": "投资失败",
+    "LOSE_TEXT": "你损失了 **{{amount}}** 🪙。\n当前余额: **{{balance}}** 🪙。",
+    "ERROR_TITLE": "错误",
+    "UNKNOWN_ERROR": "发生了一个错误。"
+}

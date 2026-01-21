@@ -1,0 +1,9 @@
+{
+    "TITLE": "Couper du bois",
+    "NO_DB": "MongoDB n'est pas configuré, donc l'économie est désactivée.",
+    "COOLDOWN_TITLE": "Coupe de bois en recharge",
+    "COOLDOWN_TEXT": "Tu es fatigué(e). Reviens dans **{{next}}**.",
+    "SUCCESS_TITLE": "Coupe terminée !",
+    "SUCCESS_TEXT": "Tu as obtenu **{{amount}}x {{item}}** et **{{coins}}** 🪙.\nSolde : **{{balance}}** 🪙.",
+    "ERROR": "Je n'ai pas pu terminer la coupe."
+}

@@ -1,0 +1,12 @@
+{
+    "TITLE": "コードを引き換え",
+    "USAGE": "使い方: `{{prefix}}claimcode <code>`",
+    "NO_DB": "MongoDB が設定されていないため、コードを引き換えできません。",
+    "INVALID_TITLE": "無効なコード",
+    "INVALID_TEXT": "そのコードは存在しないか、利用できません。",
+    "ALREADY_TITLE": "引き換え済み",
+    "ALREADY_TEXT": "そのコードはすでに引き換えています。",
+    "SUCCESS_TITLE": "引き換え完了！",
+    "SUCCESS_TEXT": "**{{amount}}** 🪙 を受け取りました。\n残高: **{{balance}}** 🪙。",
+    "ERROR": "コードを引き換えできませんでした。"
+}

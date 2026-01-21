@@ -1,0 +1,18 @@
+{
+    "TITLE": "任务",
+    "LIST_TEXT": "今日任务:\n{{list}}\n\n领取奖励: `{{prefix}}quest claim`",
+    "FOOTER": "任务每天刷新。",
+    "NO_DB": "MongoDB 未配置，因此无法保存奖励。",
+    "COOLDOWN_TITLE": "奖励已领取",
+    "COOLDOWN_TEXT": "你已经领取过奖励了。**{{next}}** 后再来。",
+    "CLAIMED_TITLE": "任务奖励",
+    "CLAIMED_TEXT": "你获得了 **{{amount}}** 🪙。\n余额: **{{balance}}** 🪙。",
+    "QUESTS": [
+        "领取一次 daily",
+        "工作一次",
+        "在商店购买 1 件物品",
+        "出售 1 件物品",
+        "玩一局轮盘"
+    ],
+    "ERROR": "无法处理任务。"
+}

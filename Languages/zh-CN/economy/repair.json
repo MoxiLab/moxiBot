@@ -1,0 +1,14 @@
+{
+    "TITLE": "修理",
+    "NO_DB": "MongoDB 未配置，因此经济功能已禁用。",
+    "USAGE": "用法: `{{prefix}}repair <id|name|itemId>`",
+    "NOT_FOUND_TITLE": "未找到",
+    "NOT_FOUND_TEXT": "找不到该物品。",
+    "NEED_KIT_TITLE": "需要修理包",
+    "NEED_KIT_TEXT": "你的背包里需要 **修理包**。",
+    "NOT_OWNED_TITLE": "你没有",
+    "NOT_OWNED_TEXT": "你的背包里没有该物品。",
+    "SUCCESS_TITLE": "已修理！",
+    "SUCCESS_TEXT": "你使用 1 个修理包修理了 **{{item}}**。",
+    "ERROR": "无法修理该物品。"
+}

@@ -1,0 +1,5 @@
+{
+    "TITLE": "经济指南",
+    "BODY": "快捷命令:\n• `{{prefix}}bal` — 查看金币\n• `{{prefix}}daily` — 每日奖励\n• `{{prefix}}work` — 打工赚金币\n• `{{prefix}}moxishop list` — 查看商店\n• `{{prefix}}moxishop buy <id> [amount]` — 购买\n• `{{prefix}}bag` — 查看背包\n• `{{prefix}}use <item>` — 使用物品\n• `{{prefix}}sell <item> [amount]` — 出售物品\n• `{{prefix}}leaderboard` — 排行榜\n\n其他:\n• `{{prefix}}collect` — 带冷却的采集\n• `{{prefix}}quest` — 每日任务\n• `{{prefix}}race` — 带冷却的竞赛",
+    "FOOTER": "提示：如果功能异常，请检查 MongoDB（MONGODB）。"
+}

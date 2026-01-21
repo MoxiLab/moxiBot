@@ -1,0 +1,14 @@
+{
+    "BAD_AMOUNT_TITLE": "無効な数量",
+    "BAD_AMOUNT_TEXT": "使い方: `invest <amount>`",
+    "NO_DB_TITLE": "データベース未設定",
+    "NO_DB_TEXT": "MongoDB が設定されていないため、経済機能は無効です。",
+    "NO_FUNDS_TITLE": "残高不足",
+    "NO_FUNDS_TEXT": "**{{amount}}** 🪙 を投資するには残高が足りません。\n現在の残高: **{{balance}}** 🪙。",
+    "WIN_TITLE": "投資成功",
+    "WIN_TEXT": "利益 **{{profit}}** 🪙 を獲得しました。\n現在の残高: **{{balance}}** 🪙。",
+    "LOSE_TITLE": "投資失敗",
+    "LOSE_TEXT": "**{{amount}}** 🪙 を失いました。\n現在の残高: **{{balance}}** 🪙。",
+    "ERROR_TITLE": "エラー",
+    "UNKNOWN_ERROR": "エラーが発生しました。"
+}

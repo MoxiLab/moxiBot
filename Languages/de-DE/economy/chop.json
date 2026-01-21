@@ -1,0 +1,9 @@
+{
+    "TITLE": "Holz fällen",
+    "NO_DB": "MongoDB ist nicht konfiguriert, daher ist die Wirtschaft deaktiviert.",
+    "COOLDOWN_TITLE": "Holzfällen in Abklingzeit",
+    "COOLDOWN_TEXT": "Du bist müde. Komm in **{{next}}** wieder.",
+    "SUCCESS_TITLE": "Fällen abgeschlossen!",
+    "SUCCESS_TEXT": "Du hast **{{amount}}x {{item}}** und **{{coins}}** 🪙 erhalten.\nKontostand: **{{balance}}** 🪙.",
+    "ERROR": "Ich konnte das Fällen nicht abschließen."
+}

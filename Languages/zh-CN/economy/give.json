@@ -1,0 +1,19 @@
+{
+    "DESC": "把金币转给其他用户。",
+    "USAGE_TITLE": "用法",
+    "USAGE_TEXT": "使用: `{{prefix}}give @user 100`",
+    "INVALID_AMOUNT_TITLE": "数量无效",
+    "INVALID_AMOUNT_TEXT": "数量必须大于 0。",
+    "SELF_TITLE": "不允许",
+    "SELF_TEXT": "你不能给自己转账。",
+    "BOT_TITLE": "不允许",
+    "BOT_TEXT": "你不能给机器人转账。",
+    "INSUFFICIENT_TITLE": "余额不足",
+    "INSUFFICIENT_TEXT": "你想给出 **{{amount}}** 🪙，但你只有 **{{balance}}** 🪙。",
+    "SUCCESS_TITLE": "已发送",
+    "SUCCESS_TEXT": "你给 {{user}} 发送了 **{{amount}}** 🪙。\n你的余额: **{{balance}}** 🪙。",
+    "NO_DB_TITLE": "数据库未配置",
+    "NO_DB_TEXT": "MongoDB 未配置，因此经济命令已禁用。",
+    "ERROR_TITLE": "错误",
+    "UNKNOWN_ERROR": "发生了一个错误。"
+}

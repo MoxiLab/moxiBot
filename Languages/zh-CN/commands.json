@@ -6,7 +6,7 @@
     "CATEGORY_HERRAMIENTAS": "工具",
     "CATEGORY_ECONOMIA": "经济",
     "CATEGORY_MUSICA": "音乐",
-    "CATEGORY_ROOT": "Root",
+    "CATEGORY_ROOT": "所有者",
     "CMD_add_DESC": "将歌曲添加到队列",
     "CMD_add_NAME": "add",
     "CMD_AUTONUKE_DESC": "删除并重新创建当前频道",

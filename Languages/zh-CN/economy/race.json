@@ -1,0 +1,17 @@
+{
+    "TITLE": "赛跑",
+    "NO_DB": "MongoDB 未配置，因此经济功能已禁用。",
+    "COOLDOWN_TITLE": "赛跑冷却中",
+    "COOLDOWN_TEXT": "**{{next}}** 后再来。",
+    "WIN_TITLE": "赛跑！",
+    "WIN_TEXT": "参赛者: {{racers}}\n获胜者: **{{winner}}**\n你的奖励: **{{amount}}** 🪙\n余额: **{{balance}}** 🪙。",
+    "RACERS": [
+        "Moxi",
+        "Neko",
+        "Kitsune",
+        "Tanuki",
+        "Koi",
+        "Sakura"
+    ],
+    "ERROR": "无法进行赛跑。"
+}

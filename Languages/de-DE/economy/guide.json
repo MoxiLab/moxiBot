@@ -1,0 +1,5 @@
+{
+    "TITLE": "Wirtschafts-Guide",
+    "BODY": "Schnellbefehle:\n• `{{prefix}}bal` — deine Coins anzeigen\n• `{{prefix}}daily` — tägliche Belohnung\n• `{{prefix}}work` — für Coins arbeiten\n• `{{prefix}}moxishop list` — Shop anzeigen\n• `{{prefix}}moxishop buy <id> [menge]` — kaufen\n• `{{prefix}}bag` — Tasche anzeigen\n• `{{prefix}}use <item>` — Item benutzen\n• `{{prefix}}sell <item> [menge]` — Item verkaufen\n• `{{prefix}}leaderboard` — Rangliste\n\nExtras:\n• `{{prefix}}collect` — Sammeln mit Abklingzeit\n• `{{prefix}}quest` — tägliche Missionen\n• `{{prefix}}race` — Rennen mit Abklingzeit",
+    "FOOTER": "Tipp: Wenn etwas nicht funktioniert, prüfe MongoDB (MONGODB)."
+}

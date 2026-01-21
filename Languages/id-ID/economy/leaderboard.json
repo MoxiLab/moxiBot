@@ -1,0 +1,7 @@
+{
+    "TITLE": "Papan peringkat",
+    "NO_DB": "MongoDB belum dikonfigurasi, jadi aku tidak bisa membaca ekonomi kamu.",
+    "EMPTY": "Belum ada data ekonomi untuk ditampilkan.",
+    "FOOTER": "Peringkat global berdasarkan total kekayaan (bank + coins + sakuras).",
+    "ERROR": "Aku tidak bisa memuat papan peringkat saat ini."
+}

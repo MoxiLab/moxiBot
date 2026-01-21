@@ -1,0 +1,14 @@
+{
+    "BAD_AMOUNT_TITLE": "Montant invalide",
+    "BAD_AMOUNT_TEXT": "Utilisation : `invest <montant>`",
+    "NO_DB_TITLE": "Base de données non configurée",
+    "NO_DB_TEXT": "MongoDB n'est pas configuré, donc l'économie est désactivée.",
+    "NO_FUNDS_TITLE": "Fonds insuffisants",
+    "NO_FUNDS_TEXT": "Tu n'as pas assez de solde pour investir **{{amount}}** 🪙.\nSolde actuel : **{{balance}}** 🪙.",
+    "WIN_TITLE": "Investissement réussi",
+    "WIN_TEXT": "Tu as gagné **{{profit}}** 🪙 de bénéfice.\nSolde actuel : **{{balance}}** 🪙.",
+    "LOSE_TITLE": "Investissement échoué",
+    "LOSE_TEXT": "Tu as perdu **{{amount}}** 🪙.\nSolde actuel : **{{balance}}** 🪙.",
+    "ERROR_TITLE": "Erreur",
+    "UNKNOWN_ERROR": "Une erreur est survenue."
+}

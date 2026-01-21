@@ -1,0 +1,5 @@
+{
+    "TITLE": "Guida all'economia",
+    "BODY": "Comandi rapidi:\n• `{{prefix}}bal` — vedi i tuoi coins\n• `{{prefix}}daily` — ricompensa giornaliera\n• `{{prefix}}work` — lavora per coins\n• `{{prefix}}moxishop list` — vedi il negozio\n• `{{prefix}}moxishop buy <id> [quantità]` — compra\n• `{{prefix}}bag` — vedi la borsa\n• `{{prefix}}use <item>` — usa un oggetto\n• `{{prefix}}sell <item> [quantità]` — vendi un oggetto\n• `{{prefix}}leaderboard` — classifica\n\nExtra:\n• `{{prefix}}collect` — raccolta con ricarica\n• `{{prefix}}quest` — missioni giornaliere\n• `{{prefix}}race` — gara con ricarica",
+    "FOOTER": "Tip: se qualcosa non va, controlla MongoDB (MONGODB)."
+}

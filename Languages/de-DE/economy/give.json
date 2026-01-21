@@ -1,0 +1,19 @@
+{
+    "DESC": "Gib einem anderen Nutzer Coins.",
+    "USAGE_TITLE": "So benutzt du es",
+    "USAGE_TEXT": "Benutze: `{{prefix}}give @benutzer 100`",
+    "INVALID_AMOUNT_TITLE": "Ungültige Menge",
+    "INVALID_AMOUNT_TEXT": "Die Menge muss größer als 0 sein.",
+    "SELF_TITLE": "Nicht erlaubt",
+    "SELF_TEXT": "Du kannst dir selbst keine Coins geben.",
+    "BOT_TITLE": "Nicht erlaubt",
+    "BOT_TEXT": "Du kannst Bots keine Coins geben.",
+    "INSUFFICIENT_TITLE": "Nicht genug Guthaben",
+    "INSUFFICIENT_TEXT": "Du wolltest **{{amount}}** 🪙 geben, hast aber nur **{{balance}}** 🪙.",
+    "SUCCESS_TITLE": "Überweisung gesendet",
+    "SUCCESS_TEXT": "Du hast {{user}} **{{amount}}** 🪙 gegeben.\nDein Kontostand: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "Datenbank nicht konfiguriert",
+    "NO_DB_TEXT": "MongoDB ist nicht konfiguriert, daher sind Wirtschafts-Befehle deaktiviert.",
+    "ERROR_TITLE": "Fehler",
+    "UNKNOWN_ERROR": "Ein Fehler ist aufgetreten."
+}

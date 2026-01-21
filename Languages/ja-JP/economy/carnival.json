@@ -1,0 +1,10 @@
+{
+    "TITLE": "Carnaval",
+    "OUT_OF_SEASON": "現在カーニバルは開催されていません。",
+    "NO_DB": "MongoDB が設定されていないため、経済機能は無効です。",
+    "COOLDOWN_TITLE": "カーニバルはクールダウン中",
+    "COOLDOWN_TEXT": "**{{next}}** 後にもう一度。",
+    "CLAIMED_TITLE": "カーニバル報酬",
+    "CLAIMED_TEXT": "**{{amount}}** 🪙 を受け取りました。\n残高: **{{balance}}** 🪙。",
+    "ERROR": "カーニバル報酬を受け取れませんでした。"
+}

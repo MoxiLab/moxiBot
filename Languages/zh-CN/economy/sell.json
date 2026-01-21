@@ -1,0 +1,12 @@
+{
+    "TITLE": "出售",
+    "NO_DB": "MongoDB 未配置，因此经济功能已禁用。",
+    "USAGE": "用法: `{{prefix}}sell <id|name|itemId> [amount]`",
+    "NOT_FOUND_TITLE": "未找到",
+    "NOT_FOUND_TEXT": "找不到该物品。",
+    "NOT_OWNED_TITLE": "你没有",
+    "NOT_OWNED_TEXT": "你的背包里没有该物品。",
+    "SOLD_TITLE": "出售完成",
+    "SOLD_TEXT": "你出售了 **{{amount}}x {{name}}**，获得 **{{total}}** 🪙。\n余额: **{{balance}}** 🪙。",
+    "ERROR": "无法出售该物品。"
+}

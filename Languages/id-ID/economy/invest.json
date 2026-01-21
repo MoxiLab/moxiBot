@@ -1,0 +1,14 @@
+{
+    "BAD_AMOUNT_TITLE": "Jumlah tidak valid",
+    "BAD_AMOUNT_TEXT": "Cara pakai: `invest <jumlah>`",
+    "NO_DB_TITLE": "Database belum dikonfigurasi",
+    "NO_DB_TEXT": "MongoDB belum dikonfigurasi, jadi ekonomi dinonaktifkan.",
+    "NO_FUNDS_TITLE": "Saldo tidak cukup",
+    "NO_FUNDS_TEXT": "Saldo kamu tidak cukup untuk investasi **{{amount}}** 🪙.\nSaldo saat ini: **{{balance}}** 🪙.",
+    "WIN_TITLE": "Investasi berhasil",
+    "WIN_TEXT": "Kamu mendapat keuntungan **{{profit}}** 🪙.\nSaldo saat ini: **{{balance}}** 🪙.",
+    "LOSE_TITLE": "Investasi gagal",
+    "LOSE_TEXT": "Kamu kehilangan **{{amount}}** 🪙.\nSaldo saat ini: **{{balance}}** 🪙.",
+    "ERROR_TITLE": "Error",
+    "UNKNOWN_ERROR": "Terjadi kesalahan."
+}

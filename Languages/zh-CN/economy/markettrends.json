@@ -1,0 +1,17 @@
+{
+    "TITLE": "市场趋势",
+    "FOOTER": "这些趋势每天都会变化（模拟）。",
+    "LINE": "{{rank}}. {{icon}} **{{topic}}** — {{trend}}",
+    "UP": "📈 上涨",
+    "FLAT": "➖ 持平",
+    "DOWN": "📉 下跌",
+    "TOPIC_BUFFS": "增益",
+    "TOPIC_TOOLS": "工具",
+    "TOPIC_PETS": "宠物",
+    "TOPIC_MATERIALS": "材料",
+    "TOPIC_LOOT": "战利品",
+    "TOPIC_KEYS": "钥匙",
+    "TOPIC_COLLECTIBLES": "收藏品",
+    "TOPIC_POTIONS": "药水",
+    "TOPIC_SCROLLS": "卷轴"
+}

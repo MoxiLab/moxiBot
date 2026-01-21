@@ -1,0 +1,12 @@
+{
+    "TITLE": "経済設定",
+    "LINE_PREFIX": "• プレフィックス: `{{prefix}}`",
+    "LINE_LANG": "• 言語: `{{lang}}`",
+    "LINE_DB": "• データベース: **{{status}}**",
+    "DB_ON": "有効",
+    "DB_OFF": "無効",
+    "LINE_DAILY": "• デイリー: **{{min}}–{{max}}** 🪙",
+    "LINE_WORK": "• 仕事: **{{min}}–{{max}}** 🪙",
+    "LINE_SALARY": "• 給与: **{{min}}–{{max}}** 🪙",
+    "FOOTER": "一部の範囲は環境変数で制御されます。"
+}

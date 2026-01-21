@@ -1,0 +1,12 @@
+{
+    "TITLE": "工资",
+    "DESC": "领取你的每日工资。",
+    "CLAIMED_TITLE": "已领取工资",
+    "CLAIMED_TEXT": "你领取了 **{{amount}}** 🪙。\n当前余额: **{{balance}}** 🪙。{{jobLine}}",
+    "COOLDOWN_TITLE": "工资冷却中",
+    "COOLDOWN_TEXT": "你已经领取过工资了。**{{next}}** 后再来。\n当前余额: **{{balance}}** 🪙。{{jobLine}}",
+    "NO_DB_TITLE": "数据库未配置",
+    "NO_DB_TEXT": "MongoDB 未配置，因此经济奖励已禁用。",
+    "ERROR_TITLE": "错误",
+    "UNKNOWN_ERROR": "发生了一个错误。"
+}

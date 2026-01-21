@@ -1,0 +1,12 @@
+{
+    "TITLE": "Pengaturan ekonomi",
+    "LINE_PREFIX": "• Prefix: `{{prefix}}`",
+    "LINE_LANG": "• Bahasa: `{{lang}}`",
+    "LINE_DB": "• Database: **{{status}}**",
+    "DB_ON": "AKTIF",
+    "DB_OFF": "NONAKTIF",
+    "LINE_DAILY": "• Daily: **{{min}}–{{max}}** 🪙",
+    "LINE_WORK": "• Work: **{{min}}–{{max}}** 🪙",
+    "LINE_SALARY": "• Salary: **{{min}}–{{max}}** 🪙",
+    "FOOTER": "Beberapa rentang diatur oleh variabel environment."
+}

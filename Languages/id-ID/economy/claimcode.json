@@ -1,0 +1,12 @@
+{
+    "TITLE": "Klaim kode",
+    "USAGE": "Cara pakai: `{{prefix}}claimcode <kode>`",
+    "NO_DB": "MongoDB belum dikonfigurasi, jadi aku tidak bisa mengklaim kode.",
+    "INVALID_TITLE": "Kode tidak valid",
+    "INVALID_TEXT": "Kode itu tidak ada atau tidak tersedia.",
+    "ALREADY_TITLE": "Sudah diklaim",
+    "ALREADY_TEXT": "Kamu sudah mengklaim kode itu.",
+    "SUCCESS_TITLE": "Kode berhasil diklaim!",
+    "SUCCESS_TEXT": "Kamu menerima **{{amount}}** 🪙.\nSaldo: **{{balance}}** 🪙.",
+    "ERROR": "Aku tidak bisa mengklaim kode itu."
+}

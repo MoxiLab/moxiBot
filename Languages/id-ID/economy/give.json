@@ -1,0 +1,19 @@
+{
+    "DESC": "Berikan coins ke pengguna lain.",
+    "USAGE_TITLE": "Cara pakai",
+    "USAGE_TEXT": "Gunakan: `{{prefix}}give @user 100`",
+    "INVALID_AMOUNT_TITLE": "Jumlah tidak valid",
+    "INVALID_AMOUNT_TEXT": "Jumlah harus lebih dari 0.",
+    "SELF_TITLE": "Tidak diizinkan",
+    "SELF_TEXT": "Kamu tidak bisa memberi coins ke diri sendiri.",
+    "BOT_TITLE": "Tidak diizinkan",
+    "BOT_TEXT": "Kamu tidak bisa memberi coins ke bot.",
+    "INSUFFICIENT_TITLE": "Saldo tidak cukup",
+    "INSUFFICIENT_TEXT": "Kamu mencoba memberi **{{amount}}** 🪙 tapi kamu hanya punya **{{balance}}** 🪙.",
+    "SUCCESS_TITLE": "Berhasil dikirim",
+    "SUCCESS_TEXT": "Kamu memberi {{user}} **{{amount}}** 🪙.\nSaldo kamu: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "Database belum dikonfigurasi",
+    "NO_DB_TEXT": "MongoDB belum dikonfigurasi, jadi perintah ekonomi dinonaktifkan.",
+    "ERROR_TITLE": "Error",
+    "UNKNOWN_ERROR": "Terjadi kesalahan."
+}

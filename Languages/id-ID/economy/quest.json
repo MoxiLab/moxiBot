@@ -1,0 +1,18 @@
+{
+    "TITLE": "Misi",
+    "LIST_TEXT": "Misi hari ini:\n{{list}}\n\nUntuk klaim hadiah: `{{prefix}}quest claim`",
+    "FOOTER": "Misi diperbarui setiap hari.",
+    "NO_DB": "MongoDB belum dikonfigurasi, jadi aku tidak bisa menyimpan hadiah.",
+    "COOLDOWN_TITLE": "Hadiah sudah diklaim",
+    "COOLDOWN_TEXT": "Kamu sudah klaim hadiahnya. Kembali dalam **{{next}}**.",
+    "CLAIMED_TITLE": "Hadiah misi",
+    "CLAIMED_TEXT": "Kamu menerima **{{amount}}** 🪙.\nSaldo: **{{balance}}** 🪙.",
+    "QUESTS": [
+        "Klaim daily kamu",
+        "Kerja sekali",
+        "Beli 1 item di toko",
+        "Jual 1 item",
+        "Main 1 putaran roulette"
+    ],
+    "ERROR": "Aku tidak bisa memproses misi."
+}

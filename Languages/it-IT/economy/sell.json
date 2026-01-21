@@ -1,0 +1,12 @@
+{
+    "TITLE": "Vendi",
+    "NO_DB": "MongoDB non è configurato, quindi l'economia è disabilitata.",
+    "USAGE": "Uso: `{{prefix}}sell <id|nome|itemId> [quantità]`",
+    "NOT_FOUND_TITLE": "Non trovato",
+    "NOT_FOUND_TEXT": "Non ho trovato quell'oggetto.",
+    "NOT_OWNED_TITLE": "Non lo hai",
+    "NOT_OWNED_TEXT": "Non hai quell'oggetto nella tua borsa.",
+    "SOLD_TITLE": "Vendita completata",
+    "SOLD_TEXT": "Hai venduto **{{amount}}x {{name}}** per **{{total}}** 🪙.\nSaldo: **{{balance}}** 🪙.",
+    "ERROR": "Non sono riuscito a vendere quell'oggetto."
+}

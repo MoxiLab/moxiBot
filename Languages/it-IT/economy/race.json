@@ -1,0 +1,17 @@
+{
+    "TITLE": "Gara",
+    "NO_DB": "MongoDB non è configurato, quindi l'economia è disabilitata.",
+    "COOLDOWN_TITLE": "Gara in ricarica",
+    "COOLDOWN_TEXT": "Torna tra **{{next}}**.",
+    "WIN_TITLE": "Gara!",
+    "WIN_TEXT": "Partecipanti: {{racers}}\nVincitore/trice: **{{winner}}**\nIl tuo premio: **{{amount}}** 🪙\nSaldo: **{{balance}}** 🪙.",
+    "RACERS": [
+        "Moxi",
+        "Neko",
+        "Kitsune",
+        "Tanuki",
+        "Koi",
+        "Sakura"
+    ],
+    "ERROR": "Non sono riuscito a eseguire la gara."
+}

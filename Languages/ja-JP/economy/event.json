@@ -1,0 +1,10 @@
+{
+    "TITLE": "イベント",
+    "USAGE": "使い方: `{{prefix}}event`",
+    "NO_DB": "MongoDB が設定されていないため、経済機能は無効です。",
+    "COOLDOWN_TITLE": "イベントはクールダウン中",
+    "COOLDOWN_TEXT": "**{{next}}** 後にもう一度。",
+    "CLAIMED_TITLE": "イベント報酬",
+    "CLAIMED_TEXT": "**{{amount}}** 🪙 を受け取りました。\n残高: **{{balance}}** 🪙。",
+    "ERROR": "イベント報酬を受け取れませんでした。"
+}

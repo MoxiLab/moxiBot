@@ -1,0 +1,10 @@
+{
+    "TITLE": "クリスマス",
+    "OUT_OF_SEASON": "現在クリスマスイベントは開催されていません。",
+    "NO_DB": "MongoDB が設定されていないため、経済機能は無効です。",
+    "COOLDOWN_TITLE": "クリスマスはクールダウン中",
+    "COOLDOWN_TEXT": "**{{next}}** 後にもう一度。",
+    "CLAIMED_TITLE": "クリスマスプレゼント",
+    "CLAIMED_TEXT": "**{{amount}}** 🪙 を受け取りました。\n残高: **{{balance}}** 🪙。",
+    "ERROR": "プレゼントを受け取れませんでした。"
+}

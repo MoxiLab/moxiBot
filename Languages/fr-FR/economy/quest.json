@@ -1,0 +1,18 @@
+{
+    "TITLE": "Quêtes",
+    "LIST_TEXT": "Quêtes du jour :\n{{list}}\n\nPour récupérer la récompense : `{{prefix}}quest claim`",
+    "FOOTER": "Les quêtes se renouvellent chaque jour.",
+    "NO_DB": "MongoDB n'est pas configuré, je ne peux pas enregistrer les récompenses.",
+    "COOLDOWN_TITLE": "Récompense déjà récupérée",
+    "COOLDOWN_TEXT": "Tu as déjà récupéré la récompense. Reviens dans **{{next}}**.",
+    "CLAIMED_TITLE": "Récompense de quête",
+    "CLAIMED_TEXT": "Tu as reçu **{{amount}}** 🪙.\nSolde : **{{balance}}** 🪙.",
+    "QUESTS": [
+        "Récupère ton daily",
+        "Travaille une fois",
+        "Achète 1 objet dans la boutique",
+        "Vends 1 objet",
+        "Joue une partie de roulette"
+    ],
+    "ERROR": "Je n'ai pas pu traiter la quête."
+}

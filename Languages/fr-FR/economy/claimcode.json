@@ -1,0 +1,12 @@
+{
+    "TITLE": "Utiliser un code",
+    "USAGE": "Utilisation : `{{prefix}}claimcode <code>`",
+    "NO_DB": "MongoDB n'est pas configuré, je ne peux pas utiliser de codes.",
+    "INVALID_TITLE": "Code invalide",
+    "INVALID_TEXT": "Ce code n'existe pas ou n'est pas disponible.",
+    "ALREADY_TITLE": "Déjà utilisé",
+    "ALREADY_TEXT": "Tu as déjà utilisé ce code.",
+    "SUCCESS_TITLE": "Code utilisé !",
+    "SUCCESS_TEXT": "Tu as reçu **{{amount}}** 🪙.\nSolde : **{{balance}}** 🪙.",
+    "ERROR": "Je n'ai pas pu utiliser le code."
+}

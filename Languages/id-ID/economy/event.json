@@ -1,0 +1,10 @@
+{
+    "TITLE": "Event",
+    "USAGE": "Cara pakai: `{{prefix}}event`",
+    "NO_DB": "MongoDB belum dikonfigurasi, jadi ekonomi dinonaktifkan.",
+    "COOLDOWN_TITLE": "Event dalam cooldown",
+    "COOLDOWN_TEXT": "Kembali dalam **{{next}}**.",
+    "CLAIMED_TITLE": "Hadiah event",
+    "CLAIMED_TEXT": "Kamu menerima **{{amount}}** 🪙.\nSaldo: **{{balance}}** 🪙.",
+    "ERROR": "Aku tidak bisa mengklaim event."
+}
