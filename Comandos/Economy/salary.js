@@ -1,7 +1,6 @@
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
-const { shouldShowCooldownNotice } = require('../../Util/cooldownNotice');
 const { claimCooldownReward, formatDuration } = require('../../Util/economyCore');
 
 const { economyCategory } = require('../../Util/commandCategories');
@@ -50,12 +49,6 @@ module.exports = {
             }
 
             if (res.reason === 'cooldown') {
-                const show = shouldShowCooldownNotice({ userId: message.author.id, key: 'salary', windowMs: 15_000, threshold: 3 });
-                if (!show) {
-                    try { await message.react(EMOJIS.hourglass || '⏳'); } catch { }
-                    return;
-                }
-
                 return message.reply({
                     ...asV2MessageOptions(
                         buildNoticeContainer({
