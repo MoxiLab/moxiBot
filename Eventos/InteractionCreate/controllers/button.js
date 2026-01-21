@@ -18,6 +18,8 @@ const handlers = [
   require('./buttons/balance'),
   require('./buttons/fish'),
   require('./buttons/minePlay'),
+  require('./buttons/minesweeper'),
+  require('./buttons/rps'),
   require('./buttons/zones'),
   require('./buttons/crime'),
   require('./buttons/leave'), // <-- Añadido para leave
