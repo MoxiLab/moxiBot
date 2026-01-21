@@ -36,34 +36,44 @@ function renderCareCircles(value) {
     return barLine(value);
 }
 
-function formatSince(ms) {
-    const days = Math.max(0, Math.floor(ms / (24 * 60 * 60 * 1000)));
-    if (days >= 365) {
-        const years = Math.floor(days / 365);
-        return `${years} año${years === 1 ? '' : 's'}`;
+function formatRelativeTime(date, locale) {
+    const now = Date.now();
+    const deltaMs = date.getTime() - now;
+    const absMs = Math.abs(deltaMs);
+
+    const units = [
+        { unit: 'year', ms: 1000 * 60 * 60 * 24 * 365 },
+        { unit: 'month', ms: 1000 * 60 * 60 * 24 * 30 },
+        { unit: 'week', ms: 1000 * 60 * 60 * 24 * 7 },
+        { unit: 'day', ms: 1000 * 60 * 60 * 24 },
+        { unit: 'hour', ms: 1000 * 60 * 60 },
+        { unit: 'minute', ms: 1000 * 60 },
+        { unit: 'second', ms: 1000 }
+    ];
+
+    const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
+    for (const { unit, ms } of units) {
+        if (absMs >= ms || unit === 'second') {
+            const value = Math.max(1, Math.floor(absMs / ms));
+            return rtf.format(deltaMs < 0 ? -value : value, unit);
+        }
     }
-    if (days >= 30) {
-        const months = Math.floor(days / 30);
-        return `${months} mes${months === 1 ? '' : 'es'}`;
-    }
-    if (days >= 7) {
-        const weeks = Math.floor(days / 7);
-        return `${weeks} semana${weeks === 1 ? '' : 's'}`;
-    }
-    return `${days} día${days === 1 ? '' : 's'}`;
+
+    return '';
 }
 
-function normalizeZoneOptions(zones, selectedZoneId) {
+function normalizeZoneOptions(zones, selectedZoneId, lang) {
     const list = Array.isArray(zones) ? zones : [];
     const safeSelected = selectedZoneId ? String(selectedZoneId) : null;
 
     if (!list.length) {
-        return [{ label: 'Próximamente…', value: 'soon', emoji: '🧭', default: true }];
+        const label = moxi.translate('misc:PET_SOON', lang) || 'Coming soon…';
+        return [{ label, value: 'soon', emoji: '🧭', default: true }];
     }
 
     // Discord limita opciones a 25
     return list.slice(0, 25).map((z) => ({
-        label: `${String(z?.name || z?.id || 'Zona')}`,
+        label: `${String(z?.name || z?.id || (moxi.translate('misc:PET_ZONE_FALLBACK', lang) || 'Zone'))}`,
         value: String(z?.id || ''),
         emoji: z?.emoji || '🧭',
         default: safeSelected ? String(z?.id || '') === safeSelected : false,
@@ -98,9 +108,10 @@ function ensurePetTrainingState(pet) {
 }
 
 function buildPetTrainingMessageOptions({ lang = 'es-ES', userId, ownerName, pet, disabled = false } = {}) {
+    const t = (key, vars = {}) => moxi.translate(`misc:${key}`, lang, vars);
     const safeUserId = String(userId || '').trim();
-    const safeOwnerName = String(ownerName || 'Usuario').trim();
-    const name = String(pet?.name || 'Sin nombre');
+    const safeOwnerName = String(ownerName || (t('PET_OWNER_FALLBACK') || 'User')).trim();
+    const name = String(pet?.name || (t('PET_NO_NAME') || 'No name'));
     const level = Math.max(1, Math.trunc(Number(pet?.level) || 1));
 
     const { stats } = ensurePetTrainingState(pet);
@@ -119,24 +130,24 @@ function buildPetTrainingMessageOptions({ lang = 'es-ES', userId, ownerName, pet
         const bonus = alloc;
         const total = base[key] + bonus;
         const pct = Math.max(0, Math.round((total / totalMaxForPercent) * 100));
-        return `${emoji} ${label}: **${alloc}/10** +${bonus}    Base **${base[key]}**    Total **${total}** (${pct}%)`;
+        return `${emoji} ${label}: **${alloc}/10** +${bonus}    ${t('PET_TRAINING_BASE') || 'Base'} **${base[key]}**    ${t('PET_TRAINING_TOTAL') || 'Total'} **${total}** (${pct}%)`;
     };
 
     const statsText =
-        `Te quedan **${remainingPoints}** puntos para usar.\n\n` +
-        `**Stats**\n` +
-        `${row('⚔️', 'Ataque', 'attack')}\n` +
-        `${row('🛡️', 'Defensa', 'defense')}\n` +
-        `${row('🧬', 'Resistencia', 'resistance')}\n` +
-        `${row('🏹', 'Caza', 'hunt')}`;
+        `${t('PET_TRAINING_POINTS_LEFT', { n: remainingPoints }) || `You have **${remainingPoints}** points left.`}\n\n` +
+        `**${t('PET_TRAINING_STATS_TITLE') || 'Stats'}**\n` +
+        `${row('⚔️', t('PET_TRAINING_ATTACK') || 'Attack', 'attack')}\n` +
+        `${row('🛡️', t('PET_TRAINING_DEFENSE') || 'Defense', 'defense')}\n` +
+        `${row('🧬', t('PET_TRAINING_RESISTANCE') || 'Resistance', 'resistance')}\n` +
+        `${row('🏹', t('PET_TRAINING_HUNT') || 'Hunt', 'hunt')}`;
 
     const container = new ContainerBuilder()
         .setAccentColor(Bot?.AccentColor || 0xB57EDC)
-        .addTextDisplayComponents(t => t.setContent(`## Mascota de ${safeOwnerName}`))
+        .addTextDisplayComponents(tComp => tComp.setContent(`## ${t('PET_PANEL_OWNER', { owner: safeOwnerName }) || `Pet of ${safeOwnerName}`}`))
         .addSeparatorComponents(s => s.setDivider(true))
-        .addTextDisplayComponents(t => t.setContent(`**${name}**`))
+        .addTextDisplayComponents(tComp => tComp.setContent(`**${name}**`))
         .addSeparatorComponents(s => s.setDivider(true))
-        .addTextDisplayComponents(t => t.setContent(statsText));
+        .addTextDisplayComponents(tComp => tComp.setContent(statsText));
 
     // Botones fuera del container (a nivel de mensaje)
     const row1 = new ActionRowBuilder().addComponents(
@@ -191,10 +202,11 @@ function buildPetPanelMessageOptions({
     pet,
     disabled = false,
 } = {}) {
+    const t = (key, vars = {}) => moxi.translate(`misc:${key}`, lang, vars);
     const safeUserId = String(userId || '').trim();
-    const safeOwnerName = String(ownerName || 'Usuario').trim();
+    const safeOwnerName = String(ownerName || (t('PET_OWNER_FALLBACK') || 'User')).trim();
 
-    const name = String(pet?.name || 'Sin nombre');
+    const name = String(pet?.name || (t('PET_NO_NAME') || 'No name'));
     const level = Number(pet?.level) || 1;
 
     const attrs = pet?.attributes || {};
@@ -213,29 +225,31 @@ function buildPetPanelMessageOptions({
     const selectedZoneId = attrs?.selectedZoneId ? String(attrs.selectedZoneId) : null;
     const exploring = Boolean(attrs?.exploration && typeof attrs.exploration === 'object' && attrs.exploration.zoneId);
 
-    const createdAt = attrs?.createdAt ? new Date(attrs.createdAt).getTime() : null;
-    const since = createdAt && Number.isFinite(createdAt) ? formatSince(Date.now() - createdAt) : null;
+    const createdAt = attrs?.createdAt ? new Date(attrs.createdAt) : null;
+    const since = createdAt instanceof Date && Number.isFinite(createdAt.getTime())
+        ? formatRelativeTime(createdAt, lang)
+        : null;
 
     const container = new ContainerBuilder()
         .setAccentColor(Bot?.AccentColor || 0xB57EDC)
-        .addTextDisplayComponents(t => t.setContent(`## Mascota de ${safeOwnerName}`))
+        .addTextDisplayComponents(tComp => tComp.setContent(`## ${t('PET_PANEL_OWNER', { owner: safeOwnerName }) || `Pet of ${safeOwnerName}`}`))
         .addSeparatorComponents(s => s.setDivider(true));
 
     if (away) {
         container
-            .addTextDisplayComponents(t => t.setContent(`**${name}** se ha ido por falta de cuidados.\nUsa **Ocarina del Vínculo** para que regrese.`))
+            .addTextDisplayComponents(tComp => tComp.setContent(t('PET_AWAY_TEXT', { name }) || `**${name}** is away due to neglect.`))
             .addSeparatorComponents(s => s.setDivider(true));
     } else {
-        container.addTextDisplayComponents(t => t.setContent(`**${name}**`));
+        container.addTextDisplayComponents(tComp => tComp.setContent(`**${name}**`));
     }
 
-    container.addTextDisplayComponents(t => t.setContent(`Nivel: **${level}**`));
+    container.addTextDisplayComponents(tComp => tComp.setContent(`${t('LEVEL_LABEL') || 'Level'}: **${level}**`));
 
     const statsText =
-        `• Estrellas: ${starLine(stars)}\n` +
-        `• Cariño: ${isNewborn ? '●●●●●' : barLine(affection)}\n` +
-        `• Hambre: ${isNewborn ? '●●●●●' : barLine(hunger)}\n` +
-        `• Higiene: ${isNewborn ? '●●●●●' : barLine(hygiene)}`;
+        `• ${t('PET_STARS') || 'Stars'}: ${starLine(stars)}\n` +
+        `• ${t('PET_AFFECTION') || 'Affection'}: ${isNewborn ? '●●●●●' : barLine(affection)}\n` +
+        `• ${t('PET_HUNGER') || 'Hunger'}: ${isNewborn ? '●●●●●' : barLine(hunger)}\n` +
+        `• ${t('PET_HYGIENE') || 'Hygiene'}: ${isNewborn ? '●●●●●' : barLine(hygiene)}`;
 
     container.addSeparatorComponents(s => s.setDivider(true));
 
@@ -254,15 +268,15 @@ function buildPetPanelMessageOptions({
     if (since) {
         container
             .addSeparatorComponents(s => s.setDivider(true))
-            .addTextDisplayComponents(t => t.setContent(`Compañeros desde hace ${since}`));
+            .addTextDisplayComponents(tComp => tComp.setContent(`${t('PET_COMPANIONS_SINCE') || 'Companions since'}: ${since}`));
     }
 
-    const zoneOptions = normalizeZoneOptions(EXPLORE_ZONES, selectedZoneId);
+    const zoneOptions = normalizeZoneOptions(EXPLORE_ZONES, selectedZoneId, lang);
     const disableZoneSelect = (disabled || Boolean(away) || exploring || zoneOptions.length === 1 && zoneOptions[0]?.value === 'soon');
 
     const zoneSelect = new StringSelectMenuBuilder()
         .setCustomId(`pet:zone:${safeUserId}`)
-        .setPlaceholder(moxi.translate('SELECT_BETTER_ZONE', lang) || 'Selecciona una zona mejor')
+        .setPlaceholder(t('SELECT_BETTER_ZONE') || moxi.translate('SELECT_BETTER_ZONE', lang) || 'Select a better zone')
         .setMinValues(1)
         .setMaxValues(1)
         .setDisabled(disableZoneSelect)
@@ -274,19 +288,19 @@ function buildPetPanelMessageOptions({
     const actionRowMain = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:play`)
-            .setLabel(moxi.translate('PLAY', lang) || 'Jugar')
+            .setLabel(t('PLAY') || moxi.translate('PLAY', lang) || 'Play')
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('🎮')
             .setDisabled(disabled || Boolean(away)),
         new ButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:feed`)
-            .setLabel(moxi.translate('FEED', lang) || 'Alimentar')
+            .setLabel(t('FEED') || moxi.translate('FEED', lang) || 'Feed')
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('🍎')
             .setDisabled(disabled || Boolean(away)),
         new ButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:clean`)
-            .setLabel(moxi.translate('CLEAN', lang) || 'Limpiar')
+            .setLabel(t('CLEAN') || moxi.translate('CLEAN', lang) || 'Clean')
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('🧼')
             .setDisabled(disabled || Boolean(away))
@@ -295,13 +309,13 @@ function buildPetPanelMessageOptions({
     const actionRowSecondary = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:train`)
-            .setLabel(moxi.translate('TRAIN', lang) || 'Entrenar')
+            .setLabel(t('TRAIN') || moxi.translate('TRAIN', lang) || 'Train')
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('🏋️')
             .setDisabled(disabled || Boolean(away)),
         new ButtonBuilder()
             .setCustomId(`pet:renameModal:${safeUserId}`)
-            .setLabel(moxi.translate('CHANGE_NAME', lang) || 'Cambiar nombre')
+            .setLabel(t('CHANGE_NAME') || moxi.translate('CHANGE_NAME', lang) || 'Change name')
             .setStyle(ButtonStyle.Secondary)
             .setEmoji('📝')
             .setDisabled(disabled || Boolean(away))
@@ -325,7 +339,7 @@ function buildPetActionResultMessageOptions({
     disabled = false,
 } = {}) {
     const safeUserId = String(userId || '').trim();
-    const safeTitle = String(title || 'Mascota');
+    const safeTitle = String(title || (moxi.translate('misc:PET_GENERIC_TITLE', lang) || 'Pet'));
     const safeText = String(text || '');
     const safeGif = gifUrl && /^https?:\/\//.test(String(gifUrl)) ? String(gifUrl) : null;
 
