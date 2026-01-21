@@ -559,6 +559,5 @@
   "PORTAL_STATUS_REUSED": "Reutilizando invitación oficial",
   "PORTAL_NO_PERMS": "No hay invitación oficial creada. Necesitas permisos para crearla.",
   "PORTAL_NO_CHANNEL": "No encontré un canal válido para crear la invitación oficial.",
-  "PORTAL_ERR": "No pude resolver la invitación oficial.",
-  "HELP_CATEGORY_GAMES": "HELP_CATEGORY_GAMES"
+  "PORTAL_ERR": "No pude resolver la invitación oficial."
 }
