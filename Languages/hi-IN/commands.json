@@ -6,6 +6,7 @@
     "CATEGORY_HERRAMIENTAS": "उपकरण",
     "CATEGORY_ECONOMIA": "अर्थव्यवस्था",
     "CATEGORY_MUSICA": "संगीत",
+    "CATEGORY_FUN": "मज़ा",
     "CATEGORY_ROOT": "मालिक",
     "CMD_add_DESC": "गीतों को कतार में जोड़ता है",
     "CMD_add_NAME": "add",
@@ -105,5 +106,8 @@
     "CMD_QUEST_DESC": "दैनिक क्वेस्ट देखें और इनाम क्लेम करें।",
     "CMD_EVENT_DESC": "इवेंट रिवॉर्ड क्लेम करें।",
     "CMD_CARNIVAL_DESC": "कार्निवल रिवॉर्ड क्लेम करें (सीज़न में)।",
-    "CMD_XMAS_DESC": "क्रिसमस रिवॉर्ड क्लेम करें (सीज़न में)।"
+    "CMD_XMAS_DESC": "क्रिसमस रिवॉर्ड क्लेम करें (सीज़न में)।",
+    "CMD_COINFLIP_DESC": "सिक्का उछालें (हेड्स/टेल्स)।",
+    "CMD_DICE_DESC": "पासा रोल करें (वैकल्पिक रूप से साइड्स चुनें)।",
+    "CMD_8BALL_DESC": "मैजिक 8-बॉल से एक सवाल पूछें।"
 }
