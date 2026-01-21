@@ -91,7 +91,7 @@
     "CMD_CLAIMCODE_DESC": "Canjea un código de recompensa.",
     "CMD_FORTUNE_DESC": "Recibe una fortuna aleatoria.",
     "CMD_GUIDE_DESC": "Guía rápida de comandos de economía.",
-    "CMD_LEADERBOARD_DESC": "Muestra el top de usuarios por coins.",
+    "CMD_LEADERBOARD_DESC": "Muestra el top de usuarios por riqueza total (banco + coins + sakuras).",
     "CMD_SETTINGS_DESC": "Muestra ajustes y rangos de recompensas de economía.",
     "CMD_MARKET_DESC": "Abre el mercado (tienda).",
     "CMD_SERVERSHOP_DESC": "Abre la tienda del servidor (por ahora, tienda normal).",

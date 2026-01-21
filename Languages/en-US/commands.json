@@ -91,7 +91,7 @@
     "CMD_CLAIMCODE_DESC": "Redeem a reward code.",
     "CMD_FORTUNE_DESC": "Get a random fortune.",
     "CMD_GUIDE_DESC": "Quick economy commands guide.",
-    "CMD_LEADERBOARD_DESC": "Shows the top users by coins.",
+    "CMD_LEADERBOARD_DESC": "Shows the top users by total wealth (bank + coins + sakuras).",
     "CMD_SETTINGS_DESC": "Shows economy settings and reward ranges.",
     "CMD_MARKET_DESC": "Open the market (shop).",
     "CMD_SERVERSHOP_DESC": "Open the server shop (currently the normal shop).",
