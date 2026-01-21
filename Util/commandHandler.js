@@ -4,6 +4,7 @@ const debugHelper = require('./debugHelper');
 const moxi = require('../i18n');
 const Config = require('../Config');
 const { shouldBlockByTimeGate, buildBlockedMessage } = require('./timeGate');
+const { runWithCommandContext } = require('./commandContext');
 
 function resolveCommandName(comando) {
     if (!comando) return 'unknown';
@@ -45,6 +46,20 @@ function buildContextPayload(ctx, comando, args, isInteraction) {
     };
     if (summaryArgs) payload.argPreview = summaryArgs;
     return payload;
+}
+
+function isEconomyCommand(comando) {
+    const source = comando && comando.__sourceFile ? String(comando.__sourceFile) : '';
+    if (!source) return false;
+    return /(?:^|[\\/])(?:Comandos|Slashcmd)(?:[\\/])Economy(?:[\\/])/i.test(source);
+}
+
+function getExecutorInfo(ctx) {
+    const user = ctx?.user || ctx?.author || (ctx?.member && ctx.member.user) || null;
+    if (!user) return { userId: null, tag: null };
+    const userId = user.id ? String(user.id) : null;
+    const tag = user.tag ? String(user.tag) : (user.username ? String(user.username) : null);
+    return { userId, tag };
 }
 
 // Handler global para comandos prefix y slash
@@ -119,8 +134,21 @@ module.exports = async function handleCommand(Moxi, ctx, args, comando) {
     // --- FIN REGISTRO ---
 
     // Preferir `execute` (API estable) y luego `run` como fallback.
-    if (typeof comando.execute === 'function') return comando.execute(Moxi, ctx, args);
-    if (typeof comando.run === 'function') return comando.run(Moxi, ctx, args);
+    const { userId, tag } = getExecutorInfo(ctx);
+    const context = {
+        command: resolveCommandName(comando),
+        sourceFile: comando && comando.__sourceFile ? String(comando.__sourceFile) : null,
+        isEconomy: isEconomyCommand(comando),
+        userId,
+        userTag: tag,
+    };
+
+    if (typeof comando.execute === 'function') {
+        return runWithCommandContext(context, () => comando.execute(Moxi, ctx, args));
+    }
+    if (typeof comando.run === 'function') {
+        return runWithCommandContext(context, () => comando.run(Moxi, ctx, args));
+    }
 
     throw new Error('El comando no tiene función ejecutable (execute o run)');
 };
