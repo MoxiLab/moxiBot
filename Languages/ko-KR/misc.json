@@ -213,6 +213,7 @@
     "PET_TRAINING_TOTAL": "총합",
     "PETS_TITLE": "반려동물",
     "PET_NO_PETS_TEXT": "아직 반려동물이 없어요. 알을 구매한 뒤 인큐베이터로 부화시켜 보세요.",
+    "PET_EXPLORATION_TITLE": "탐험",
     "PET_TRAINING_TITLE": "훈련",
     "PET_TRAINING_INVALID_STAT": "잘못된 능력치예요.",
     "PET_TRAINING_STAT_MAX": "해당 능력치는 이미 최대치예요 (**10/10**).",

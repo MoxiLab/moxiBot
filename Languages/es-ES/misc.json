@@ -318,6 +318,7 @@
   "PET_TRAINING_TOTAL": "Total",
   "PETS_TITLE": "Mascotas",
   "PET_NO_PETS_TEXT": "Aún no tienes mascotas. Compra un huevo e incúbalo con una incubadora.",
+  "PET_EXPLORATION_TITLE": "Exploración",
   "PET_TRAINING_TITLE": "Entrenamiento",
   "PET_TRAINING_INVALID_STAT": "Stat inválido.",
   "PET_TRAINING_STAT_MAX": "Ese stat ya está al máximo (**10/10**).",
