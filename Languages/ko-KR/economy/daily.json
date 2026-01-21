@@ -5,7 +5,7 @@
     "CLAIMED_TEXT": "**{{amount}}** 🪙 를 받았어요.\n현재 잔액: **{{balance}}** 🪙.",
     "COOLDOWN_TITLE": "일일 쿨다운",
     "COOLDOWN_TEXT": "이미 일일 보상을 받았어요. **{{next}}** 후에 다시 시도하세요.\n현재 잔액: **{{balance}}** 🪙.",
-    "COOLDOWN_SOFT_TEXT": "아직 쿨다운 중이에요.\n현재 잔액: **{{balance}}** 🪙.",
+    "COOLDOWN_SOFT_TEXT": "아직 쿨다운 중이에요. **{{next}}** 후에 다시 시도하세요.\n현재 잔액: **{{balance}}** 🪙.",
     "NO_DB_TITLE": "데이터베이스 미설정",
     "NO_DB_TEXT": "MongoDB가 설정되지 않아 경제 보상이 비활성화되었습니다.",
     "ERROR_TITLE": "오류",

@@ -5,7 +5,7 @@
     "CLAIMED_TEXT": "Kamu menerima **{{amount}}** 🪙.\nSaldo saat ini: **{{balance}}** 🪙.",
     "COOLDOWN_TITLE": "Cooldown harian",
     "COOLDOWN_TEXT": "Kamu sudah mengklaim hadiah harian. Coba lagi dalam **{{next}}**.\nSaldo saat ini: **{{balance}}** 🪙.",
-    "COOLDOWN_SOFT_TEXT": "Masih cooldown.\nSaldo saat ini: **{{balance}}** 🪙.",
+    "COOLDOWN_SOFT_TEXT": "Masih cooldown. Coba lagi dalam **{{next}}**.\nSaldo saat ini: **{{balance}}** 🪙.",
     "NO_DB_TITLE": "Database belum dikonfigurasi",
     "NO_DB_TEXT": "MongoDB belum dikonfigurasi, jadi hadiah ekonomi dinonaktifkan.",
     "ERROR_TITLE": "Error",

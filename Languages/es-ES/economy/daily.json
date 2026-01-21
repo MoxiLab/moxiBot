@@ -5,7 +5,7 @@
     "CLAIMED_TEXT": "Has recibido **{{amount}}** 🪙.\nBalance actual: **{{balance}}** 🪙.",
     "COOLDOWN_TITLE": "Daily en cooldown",
     "COOLDOWN_TEXT": "Ya reclamaste tu daily. Vuelve en **{{next}}**.\nBalance actual: **{{balance}}** 🪙.",
-    "COOLDOWN_SOFT_TEXT": "Aún en cooldown.\nBalance actual: **{{balance}}** 🪙.",
+    "COOLDOWN_SOFT_TEXT": "Aún en cooldown. Vuelve en **{{next}}**.\nBalance actual: **{{balance}}** 🪙.",
     "NO_DB_TITLE": "Base de datos no configurada",
     "NO_DB_TEXT": "MongoDB no está configurado, así que las recompensas de economía están deshabilitadas.",
     "ERROR_TITLE": "Error",
