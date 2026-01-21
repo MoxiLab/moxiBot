@@ -19,6 +19,15 @@ const AFK_OVERRIDE_GIF = process.env.AFK_GIF_URL;
 const AFK_MENTION_GIF_URL = process.env.AFK_MENTION_GIF_URL || AFK_OVERRIDE_GIF;
 const AFK_CLEARED_GIF_URL = process.env.AFK_CLEARED_GIF_URL || AFK_OVERRIDE_GIF;
 
+function normalizeKey(value) {
+  if (value === undefined || value === null) return '';
+  return String(value)
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
 const LOCALIZED_CMD_MAP_TTL_MS = 10 * 60 * 1000;
 const localizedCommandMapCache = new Map(); // lang -> { expiresAt, map }
 
