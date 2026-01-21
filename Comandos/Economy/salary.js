@@ -2,6 +2,7 @@ const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { claimCooldownReward, formatDuration } = require('../../Util/economyCore');
+const { getWorkStats, getJobDisplayName } = require('../../Util/workSystem');
 
 const { economyCategory } = require('../../Util/commandCategories');
 
@@ -24,8 +25,43 @@ module.exports = {
         const t = (k, vars = {}) => moxi.translate(`economy/salary:${k}`, lang, vars);
 
         const cooldownMs = 24 * 60 * 60 * 1000;
-        const minAmount = Number.isFinite(Number(process.env.SALARY_MIN)) ? Math.max(0, Math.trunc(Number(process.env.SALARY_MIN))) : 120;
-        const maxAmount = Number.isFinite(Number(process.env.SALARY_MAX)) ? Math.max(minAmount, Math.trunc(Number(process.env.SALARY_MAX))) : 260;
+        const defaultMinAmount = Number.isFinite(Number(process.env.SALARY_MIN)) ? Math.max(0, Math.trunc(Number(process.env.SALARY_MIN))) : 120;
+        const defaultMaxAmount = Number.isFinite(Number(process.env.SALARY_MAX)) ? Math.max(defaultMinAmount, Math.trunc(Number(process.env.SALARY_MAX))) : 260;
+
+        let minAmount = defaultMinAmount;
+        let maxAmount = defaultMaxAmount;
+        let job = null;
+
+        if (process.env.MONGODB) {
+            try {
+                const stats = await getWorkStats({ userId: message.author.id });
+                job = stats?.job || null;
+
+                if (job) {
+                    const fixedSalary = Number.isFinite(Number(job.salary)) ? Math.max(0, Math.trunc(Number(job.salary))) : null;
+                    if (fixedSalary !== null) {
+                        minAmount = fixedSalary;
+                        maxAmount = fixedSalary;
+                    } else {
+                        const jobMin = Number.isFinite(Number(job.min)) ? Math.max(0, Math.trunc(Number(job.min))) : null;
+                        const jobMax = Number.isFinite(Number(job.max)) ? Math.max(jobMin ?? 0, Math.trunc(Number(job.max))) : null;
+                        if (jobMin !== null && jobMax !== null) {
+                            minAmount = jobMin;
+                            maxAmount = jobMax;
+                        }
+                    }
+                }
+            } catch {
+                // Fallback silencioso a SALARY_MIN/MAX si falla la lectura del job.
+            }
+        }
+
+        const jobDisplay = job ? `${job.emoji || ''} ${getJobDisplayName(job, lang)}`.trim() : '';
+        const jobLine = jobDisplay
+            ? (String(lang || '').toLowerCase().startsWith('es')
+                ? `\nTrabajo: **${jobDisplay}**.`
+                : `\nJob: **${jobDisplay}**.`)
+            : '';
 
         const res = await claimCooldownReward({
             userId: message.author.id,
@@ -57,6 +93,7 @@ module.exports = {
                             text: t('COOLDOWN_TEXT', {
                                 next: formatDuration(res.nextInMs),
                                 balance: res.balance,
+                                jobLine,
                             }),
                         })
                     ),
@@ -80,7 +117,7 @@ module.exports = {
                 buildNoticeContainer({
                     emoji: '💵',
                     title: t('CLAIMED_TITLE'),
-                    text: t('CLAIMED_TEXT', { amount: res.amount, balance: res.balance }),
+                    text: t('CLAIMED_TEXT', { amount: res.amount, balance: res.balance, jobLine }),
                 })
             ),
             allowedMentions: { repliedUser: false },

@@ -6,7 +6,7 @@ const { economyCategory } = require('../../Util/commandCategories');
 
 module.exports = {
     name: 'leaderboard',
-    alias: ['leaderboard'],
+    alias: ['leaderboard', 'lb',],
     Category: economyCategory,
     usage: 'leaderboard',
     description: 'commands:CMD_LEADERBOARD_DESC',
@@ -42,11 +42,25 @@ module.exports = {
             // eslint-disable-next-line global-require
             const { Economy } = require('../../Models/EconomySchema');
 
-            const top = await Economy.find({})
-                .sort({ balance: -1 })
-                .limit(10)
-                .select({ userId: 1, balance: 1 })
-                .lean();
+            const top = await Economy.aggregate([
+                {
+                    $project: {
+                        userId: 1,
+                        bank: { $ifNull: ['$bank', 0] },
+                        balance: { $ifNull: ['$balance', 0] },
+                        sakuras: { $ifNull: ['$sakuras', 0] },
+                        total: {
+                            $add: [
+                                { $ifNull: ['$bank', 0] },
+                                { $ifNull: ['$balance', 0] },
+                                { $ifNull: ['$sakuras', 0] },
+                            ],
+                        },
+                    },
+                },
+                { $sort: { total: -1 } },
+                { $limit: 10 },
+            ]);
 
             if (!Array.isArray(top) || top.length === 0) {
                 return message.reply({
@@ -65,9 +79,14 @@ module.exports = {
             for (let i = 0; i < top.length; i += 1) {
                 const row = top[i];
                 const uid = String(row?.userId || '');
-                const bal = Number(row?.balance || 0);
-                const pretty = Math.trunc(bal).toLocaleString('en-US');
-                lines.push(`${i + 1}. <@${uid}> — ${pretty} 🪙`);
+                const bank = Number(row?.bank || 0);
+                const coins = Number(row?.balance || 0);
+                const sakuras = Number(row?.sakuras || 0);
+                const total = Number(row?.total || (bank + coins + sakuras) || 0);
+
+                const prettyTotal = Math.trunc(total).toLocaleString('en-US');
+
+                lines.push(`${i + 1}. <@${uid}> — ${prettyTotal} 💰`);
             }
 
             return message.reply({
@@ -75,8 +94,7 @@ module.exports = {
                     buildNoticeContainer({
                         emoji: '🏆',
                         title: t('TITLE'),
-                        text: lines.join('\n'),
-                        footerText: t('FOOTER'),
+                        text: `${lines.join('\n')}\n\n_${t('FOOTER')}_`,
                     })
                 ),
                 allowedMentions: { repliedUser: false },
