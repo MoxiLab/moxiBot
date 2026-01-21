@@ -1,10 +1,10 @@
 {
-    "TITLE": "Evento",
-    "USAGE": "Uso: `{{prefix}}event`",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "COOLDOWN_TITLE": "Evento en cooldown",
-    "COOLDOWN_TEXT": "Vuelve en **{{next}}**.",
-    "CLAIMED_TITLE": "Recompensa de evento",
-    "CLAIMED_TEXT": "Has recibido **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "No pude reclamar el evento."
+    "TITLE": "이벤트",
+    "USAGE": "사용법: `{{prefix}}event`",
+    "NO_DB": "MongoDB가 설정되지 않아 경제 기능이 비활성화되었습니다.",
+    "COOLDOWN_TITLE": "이벤트 쿨다운",
+    "COOLDOWN_TEXT": "**{{next}}** 후에 다시 시도하세요.",
+    "CLAIMED_TITLE": "이벤트 보상",
+    "CLAIMED_TEXT": "**{{amount}}** 🪙를 받았습니다.\n잔액: **{{balance}}** 🪙.",
+    "ERROR": "이벤트 보상을 받을 수 없었습니다."
 }

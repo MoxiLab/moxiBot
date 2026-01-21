@@ -1,9 +1,9 @@
 {
-    "TITLE": "Recolectar",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "COOLDOWN_TITLE": "Recolectar en cooldown",
-    "COOLDOWN_TEXT": "Ya recolectaste. Vuelve en **{{next}}**.\nBalance: **{{balance}}** 🪙.",
-    "CLAIMED_TITLE": "Recolección",
-    "CLAIMED_TEXT": "Has recolectado **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "Ha ocurrido un error al recolectar."
+    "TITLE": "جمع",
+    "NO_DB": "MongoDB غير مُعدّ، لذا تم تعطيل نظام الاقتصاد.",
+    "COOLDOWN_TITLE": "الجمع في فترة انتظار",
+    "COOLDOWN_TEXT": "لقد جمعت بالفعل. عد بعد **{{next}}**.\nالرصيد: **{{balance}}** 🪙.",
+    "CLAIMED_TITLE": "الجمع",
+    "CLAIMED_TEXT": "جمعت **{{amount}}** 🪙.\nالرصيد: **{{balance}}** 🪙.",
+    "ERROR": "حدث خطأ أثناء الجمع."
 }

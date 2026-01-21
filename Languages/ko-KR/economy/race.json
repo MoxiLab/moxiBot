@@ -1,10 +1,10 @@
 {
-    "TITLE": "Carrera",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "COOLDOWN_TITLE": "Carrera en cooldown",
-    "COOLDOWN_TEXT": "Vuelve en **{{next}}**.",
-    "WIN_TITLE": "¡Carrera!",
-    "WIN_TEXT": "Participantes: {{racers}}\nGanador/a: **{{winner}}**\nTu premio: **{{amount}}** 🪙\nBalance: **{{balance}}** 🪙.",
+    "TITLE": "레이스",
+    "NO_DB": "MongoDB가 설정되지 않아 경제 기능이 비활성화되었습니다.",
+    "COOLDOWN_TITLE": "레이스 쿨다운",
+    "COOLDOWN_TEXT": "**{{next}}** 후에 다시 시도하세요.",
+    "WIN_TITLE": "레이스!",
+    "WIN_TEXT": "참가자: {{racers}}\n우승자: **{{winner}}**\n내 보상: **{{amount}}** 🪙\n잔액: **{{balance}}** 🪙.",
     "RACERS": [
         "Moxi",
         "Neko",
@@ -13,5 +13,5 @@
         "Koi",
         "Sakura"
     ],
-    "ERROR": "No pude ejecutar la carrera."
+    "ERROR": "레이스를 실행하지 못했습니다."
 }

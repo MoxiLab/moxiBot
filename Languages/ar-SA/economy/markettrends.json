@@ -1,17 +1,17 @@
 {
-    "TITLE": "Tendencias del mercado",
-    "FOOTER": "Estas tendencias cambian cada día (simulado).",
+    "TITLE": "اتجاهات السوق",
+    "FOOTER": "تتغير هذه الاتجاهات يوميًا (محاكاة).",
     "LINE": "{{rank}}. {{icon}} **{{topic}}** — {{trend}}",
-    "UP": "📈 Subiendo",
-    "FLAT": "➖ Estable",
-    "DOWN": "📉 Bajando",
-    "TOPIC_BUFFS": "Buffs",
-    "TOPIC_TOOLS": "Herramientas",
-    "TOPIC_PETS": "Mascotas",
-    "TOPIC_MATERIALS": "Materiales",
-    "TOPIC_LOOT": "Loot",
-    "TOPIC_KEYS": "Llaves",
-    "TOPIC_COLLECTIBLES": "Coleccionables",
-    "TOPIC_POTIONS": "Pociones",
-    "TOPIC_SCROLLS": "Rollos"
+    "UP": "📈 صاعد",
+    "FLAT": "➖ ثابت",
+    "DOWN": "📉 هابط",
+    "TOPIC_BUFFS": "تعزيزات",
+    "TOPIC_TOOLS": "أدوات",
+    "TOPIC_PETS": "حيوانات أليفة",
+    "TOPIC_MATERIALS": "مواد",
+    "TOPIC_LOOT": "غنائم",
+    "TOPIC_KEYS": "مفاتيح",
+    "TOPIC_COLLECTIBLES": "مقتنيات",
+    "TOPIC_POTIONS": "جرعات",
+    "TOPIC_SCROLLS": "لفائف"
 }

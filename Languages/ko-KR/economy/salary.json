@@ -1,12 +1,12 @@
 {
-    "TITLE": "Sueldo",
-    "DESC": "Reclama tu sueldo diario.",
-    "CLAIMED_TITLE": "Sueldo cobrado",
-    "CLAIMED_TEXT": "Has cobrado **{{amount}}** 🪙.\nBalance actual: **{{balance}}** 🪙.{{jobLine}}",
-    "COOLDOWN_TITLE": "Sueldo en cooldown",
-    "COOLDOWN_TEXT": "Ya cobraste tu sueldo. Vuelve en **{{next}}**.\nBalance actual: **{{balance}}** 🪙.{{jobLine}}",
-    "NO_DB_TITLE": "Base de datos no configurada",
-    "NO_DB_TEXT": "MongoDB no está configurado, así que las recompensas de economía están deshabilitadas.",
-    "ERROR_TITLE": "Error",
-    "UNKNOWN_ERROR": "Ha ocurrido un error."
+    "TITLE": "급여",
+    "DESC": "일일 급여를 받습니다.",
+    "CLAIMED_TITLE": "급여 수령 완료",
+    "CLAIMED_TEXT": "**{{amount}}** 🪙를 받았습니다.\n현재 잔액: **{{balance}}** 🪙.{{jobLine}}",
+    "COOLDOWN_TITLE": "급여 쿨다운",
+    "COOLDOWN_TEXT": "이미 급여를 받았습니다. **{{next}}** 후에 다시 오세요.\n현재 잔액: **{{balance}}** 🪙.{{jobLine}}",
+    "NO_DB_TITLE": "데이터베이스 미설정",
+    "NO_DB_TEXT": "MongoDB가 설정되지 않아 경제 보상이 비활성화되었습니다.",
+    "ERROR_TITLE": "오류",
+    "UNKNOWN_ERROR": "오류가 발생했습니다."
 }

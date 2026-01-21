@@ -1,12 +1,12 @@
 {
-    "TITLE": "Ajustes de economía",
-    "LINE_PREFIX": "• Prefix: `{{prefix}}`",
-    "LINE_LANG": "• Idioma: `{{lang}}`",
-    "LINE_DB": "• Base de datos: **{{status}}**",
-    "DB_ON": "ACTIVA",
-    "DB_OFF": "DESACTIVADA",
-    "LINE_DAILY": "• Daily: **{{min}}–{{max}}** 🪙",
-    "LINE_WORK": "• Work: **{{min}}–{{max}}** 🪙",
-    "LINE_SALARY": "• Salary: **{{min}}–{{max}}** 🪙",
-    "FOOTER": "Algunos rangos se controlan por variables de entorno."
+    "TITLE": "경제 설정",
+    "LINE_PREFIX": "• 접두사: `{{prefix}}`",
+    "LINE_LANG": "• 언어: `{{lang}}`",
+    "LINE_DB": "• 데이터베이스: **{{status}}**",
+    "DB_ON": "활성",
+    "DB_OFF": "비활성",
+    "LINE_DAILY": "• 데일리: **{{min}}–{{max}}** 🪙",
+    "LINE_WORK": "• 작업: **{{min}}–{{max}}** 🪙",
+    "LINE_SALARY": "• 급여: **{{min}}–{{max}}** 🪙",
+    "FOOTER": "일부 범위는 환경 변수로 제어됩니다."
 }

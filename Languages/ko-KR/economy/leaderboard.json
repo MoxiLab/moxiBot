@@ -1,7 +1,7 @@
 {
-    "TITLE": "Leaderboard",
-    "NO_DB": "MongoDB no está configurado, así que no puedo leer tu economía.",
-    "EMPTY": "Aún no hay datos de economía para mostrar.",
-    "FOOTER": "Ranking global por riqueza total (banco + coins + sakuras).",
-    "ERROR": "No pude cargar el leaderboard en este momento."
+    "TITLE": "리더보드",
+    "NO_DB": "MongoDB가 설정되지 않아 경제 데이터를 읽을 수 없습니다.",
+    "EMPTY": "표시할 경제 데이터가 아직 없습니다.",
+    "FOOTER": "총 자산(은행 + 코인 + sakuras) 기준 글로벌 랭킹.",
+    "ERROR": "현재 리더보드를 불러올 수 없습니다."
 }

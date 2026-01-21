@@ -1,12 +1,12 @@
 {
-    "TITLE": "Canjear código",
-    "USAGE": "Uso: `{{prefix}}claimcode <codigo>`",
-    "NO_DB": "MongoDB no está configurado, así que no puedo canjear códigos.",
-    "INVALID_TITLE": "Código inválido",
-    "INVALID_TEXT": "Ese código no existe o no está disponible.",
-    "ALREADY_TITLE": "Ya canjeado",
-    "ALREADY_TEXT": "Ya canjeaste ese código.",
-    "SUCCESS_TITLE": "¡Código canjeado!",
-    "SUCCESS_TEXT": "Has recibido **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "No pude canjear el código."
+    "TITLE": "استرداد الكود",
+    "USAGE": "الاستخدام: `{{prefix}}claimcode <code>`",
+    "NO_DB": "MongoDB غير مُعدّ، لذا لا يمكنني استرداد الأكواد.",
+    "INVALID_TITLE": "كود غير صالح",
+    "INVALID_TEXT": "هذا الكود غير موجود أو غير متاح.",
+    "ALREADY_TITLE": "تم الاسترداد مسبقًا",
+    "ALREADY_TEXT": "لقد استرددت هذا الكود بالفعل.",
+    "SUCCESS_TITLE": "تم استرداد الكود!",
+    "SUCCESS_TEXT": "حصلت على **{{amount}}** 🪙.\nالرصيد: **{{balance}}** 🪙.",
+    "ERROR": "لم أستطع استرداد الكود."
 }

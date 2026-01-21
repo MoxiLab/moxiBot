@@ -1,18 +1,18 @@
 {
-    "TITLE": "Misiones",
-    "LIST_TEXT": "Misiones de hoy:\n{{list}}\n\nPara reclamar recompensa: `{{prefix}}quest claim`",
-    "FOOTER": "Las misiones se renuevan cada día.",
-    "NO_DB": "MongoDB no está configurado, así que no puedo guardar recompensas.",
-    "COOLDOWN_TITLE": "Recompensa ya reclamada",
-    "COOLDOWN_TEXT": "Ya reclamaste la recompensa. Vuelve en **{{next}}**.",
-    "CLAIMED_TITLE": "Recompensa de misión",
-    "CLAIMED_TEXT": "Has recibido **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
+    "TITLE": "المهام",
+    "LIST_TEXT": "مهام اليوم:\n{{list}}\n\nلاستلام المكافأة: `{{prefix}}quest claim`",
+    "FOOTER": "تتجدد المهام يوميًا.",
+    "NO_DB": "MongoDB غير مُعدّ، لذا لا يمكنني حفظ المكافآت.",
+    "COOLDOWN_TITLE": "تم استلام المكافأة",
+    "COOLDOWN_TEXT": "لقد استلمت المكافأة بالفعل. عد بعد **{{next}}**.",
+    "CLAIMED_TITLE": "مكافأة المهمة",
+    "CLAIMED_TEXT": "حصلت على **{{amount}}** 🪙.\nالرصيد: **{{balance}}** 🪙.",
     "QUESTS": [
-        "Reclama tu daily",
-        "Trabaja una vez",
-        "Compra 1 objeto en la tienda",
-        "Vende 1 objeto",
-        "Juega una ronda de ruleta"
+        "استلم daily",
+        "اعمل مرة واحدة",
+        "اشترِ عنصرًا واحدًا من المتجر",
+        "بع عنصرًا واحدًا",
+        "العب جولة واحدة من الروليت"
     ],
-    "ERROR": "No pude procesar la misión."
+    "ERROR": "لم أستطع معالجة المهمة."
 }

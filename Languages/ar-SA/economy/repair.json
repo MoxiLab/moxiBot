@@ -1,14 +1,14 @@
 {
-    "TITLE": "Reparar",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "USAGE": "Uso: `{{prefix}}repair <id|nombre|itemId>`",
-    "NOT_FOUND_TITLE": "No encontrado",
-    "NOT_FOUND_TEXT": "No encontré ese ítem.",
-    "NEED_KIT_TITLE": "Necesitas un kit",
-    "NEED_KIT_TEXT": "Necesitas **Kit de Reparación** en tu inventario.",
-    "NOT_OWNED_TITLE": "No lo tienes",
-    "NOT_OWNED_TEXT": "No tienes ese ítem en tu mochila.",
-    "SUCCESS_TITLE": "¡Reparado!",
-    "SUCCESS_TEXT": "Has reparado **{{item}}** usando 1 kit.",
-    "ERROR": "No pude reparar ese ítem."
+    "TITLE": "إصلاح",
+    "NO_DB": "MongoDB غير مُعدّ، لذا تم تعطيل نظام الاقتصاد.",
+    "USAGE": "الاستخدام: `{{prefix}}repair <id|name|itemId>`",
+    "NOT_FOUND_TITLE": "غير موجود",
+    "NOT_FOUND_TEXT": "لم أجد هذا العنصر.",
+    "NEED_KIT_TITLE": "تحتاج عدة إصلاح",
+    "NEED_KIT_TEXT": "تحتاج إلى **عدة إصلاح** في مخزونك.",
+    "NOT_OWNED_TITLE": "لا تملكه",
+    "NOT_OWNED_TEXT": "لا تملك هذا العنصر في حقيبتك.",
+    "SUCCESS_TITLE": "تم الإصلاح!",
+    "SUCCESS_TEXT": "أصلحت **{{item}}** باستخدام عدة واحدة.",
+    "ERROR": "لم أستطع إصلاح هذا العنصر."
 }

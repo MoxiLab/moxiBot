@@ -1,18 +1,18 @@
 {
-    "TITLE": "Misiones",
-    "LIST_TEXT": "Misiones de hoy:\n{{list}}\n\nPara reclamar recompensa: `{{prefix}}quest claim`",
-    "FOOTER": "Las misiones se renuevan cada día.",
-    "NO_DB": "MongoDB no está configurado, así que no puedo guardar recompensas.",
-    "COOLDOWN_TITLE": "Recompensa ya reclamada",
-    "COOLDOWN_TEXT": "Ya reclamaste la recompensa. Vuelve en **{{next}}**.",
-    "CLAIMED_TITLE": "Recompensa de misión",
-    "CLAIMED_TEXT": "Has recibido **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
+    "TITLE": "미션",
+    "LIST_TEXT": "오늘의 미션:\n{{list}}\n\n보상 받기: `{{prefix}}quest claim`",
+    "FOOTER": "미션은 매일 갱신됩니다.",
+    "NO_DB": "MongoDB가 설정되지 않아 보상을 저장할 수 없습니다.",
+    "COOLDOWN_TITLE": "이미 보상 수령",
+    "COOLDOWN_TEXT": "이미 보상을 받았습니다. **{{next}}** 후에 다시 오세요.",
+    "CLAIMED_TITLE": "미션 보상",
+    "CLAIMED_TEXT": "**{{amount}}** 🪙를 받았습니다.\n잔액: **{{balance}}** 🪙.",
     "QUESTS": [
-        "Reclama tu daily",
-        "Trabaja una vez",
-        "Compra 1 objeto en la tienda",
-        "Vende 1 objeto",
-        "Juega una ronda de ruleta"
+        "daily 받기",
+        "한 번 일하기",
+        "상점에서 아이템 1개 구매",
+        "아이템 1개 판매",
+        "룰렛 한 판 플레이"
     ],
-    "ERROR": "No pude procesar la misión."
+    "ERROR": "미션을 처리하지 못했습니다."
 }

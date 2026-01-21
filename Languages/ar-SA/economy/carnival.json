@@ -1,10 +1,10 @@
 {
-    "TITLE": "Carnaval",
-    "OUT_OF_SEASON": "Ahora mismo no hay Carnaval activo.",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "COOLDOWN_TITLE": "Carnaval en cooldown",
-    "COOLDOWN_TEXT": "Vuelve en **{{next}}**.",
-    "CLAIMED_TITLE": "Recompensa de Carnaval",
-    "CLAIMED_TEXT": "Has recibido **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "No pude reclamar la recompensa de Carnaval."
+    "TITLE": "الكرنفال",
+    "OUT_OF_SEASON": "لا يوجد كرنفال نشط الآن.",
+    "NO_DB": "MongoDB غير مُعدّ، لذا تم تعطيل نظام الاقتصاد.",
+    "COOLDOWN_TITLE": "الكرنفال في فترة انتظار",
+    "COOLDOWN_TEXT": "عد بعد **{{next}}**.",
+    "CLAIMED_TITLE": "مكافأة الكرنفال",
+    "CLAIMED_TEXT": "حصلت على **{{amount}}** 🪙.\nالرصيد: **{{balance}}** 🪙.",
+    "ERROR": "لم أستطع استلام مكافأة الكرنفال."
 }

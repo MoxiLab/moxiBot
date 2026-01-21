@@ -1,14 +1,14 @@
 {
-    "BAD_AMOUNT_TITLE": "Cantidad inválida",
-    "BAD_AMOUNT_TEXT": "Uso: `invest <cantidad>`",
-    "NO_DB_TITLE": "Base de datos no configurada",
-    "NO_DB_TEXT": "MongoDB no está configurado, así que la economía está deshabilitada.",
-    "NO_FUNDS_TITLE": "Fondos insuficientes",
-    "NO_FUNDS_TEXT": "No tienes suficiente balance para invertir **{{amount}}** 🪙.\nBalance actual: **{{balance}}** 🪙.",
-    "WIN_TITLE": "Inversión exitosa",
-    "WIN_TEXT": "Ganaste **{{profit}}** 🪙 de beneficio.\nBalance actual: **{{balance}}** 🪙.",
-    "LOSE_TITLE": "Inversión fallida",
-    "LOSE_TEXT": "Perdiste **{{amount}}** 🪙.\nBalance actual: **{{balance}}** 🪙.",
-    "ERROR_TITLE": "Error",
-    "UNKNOWN_ERROR": "Ha ocurrido un error."
+    "BAD_AMOUNT_TITLE": "잘못된 수량",
+    "BAD_AMOUNT_TEXT": "사용법: `invest <amount>`",
+    "NO_DB_TITLE": "데이터베이스 미설정",
+    "NO_DB_TEXT": "MongoDB가 설정되지 않아 경제 기능이 비활성화되었습니다.",
+    "NO_FUNDS_TITLE": "잔액 부족",
+    "NO_FUNDS_TEXT": "**{{amount}}** 🪙를 투자하기에 잔액이 부족합니다.\n현재 잔액: **{{balance}}** 🪙.",
+    "WIN_TITLE": "투자 성공",
+    "WIN_TEXT": "이익 **{{profit}}** 🪙를 얻었습니다.\n현재 잔액: **{{balance}}** 🪙.",
+    "LOSE_TITLE": "투자 실패",
+    "LOSE_TEXT": "**{{amount}}** 🪙를 잃었습니다.\n현재 잔액: **{{balance}}** 🪙.",
+    "ERROR_TITLE": "오류",
+    "UNKNOWN_ERROR": "오류가 발생했습니다."
 }

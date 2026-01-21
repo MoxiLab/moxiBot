@@ -1,10 +1,10 @@
 {
-    "TITLE": "Navidad",
-    "OUT_OF_SEASON": "Ahora mismo no hay Navidad activa.",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "COOLDOWN_TITLE": "Navidad en cooldown",
-    "COOLDOWN_TEXT": "Vuelve en **{{next}}**.",
-    "CLAIMED_TITLE": "Regalo de Navidad",
-    "CLAIMED_TEXT": "Has recibido **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "No pude reclamar el regalo."
+    "TITLE": "크리스마스",
+    "OUT_OF_SEASON": "현재 크리스마스 이벤트가 진행 중이 아닙니다.",
+    "NO_DB": "MongoDB가 설정되지 않아 경제 기능이 비활성화되었습니다.",
+    "COOLDOWN_TITLE": "크리스마스 쿨다운",
+    "COOLDOWN_TEXT": "**{{next}}** 후에 다시 시도하세요.",
+    "CLAIMED_TITLE": "크리스마스 선물",
+    "CLAIMED_TEXT": "**{{amount}}** 🪙를 받았습니다.\n잔액: **{{balance}}** 🪙.",
+    "ERROR": "선물을 받을 수 없었습니다."
 }

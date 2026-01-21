@@ -1,14 +1,14 @@
 {
-    "TITLE": "Reparar",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "USAGE": "Uso: `{{prefix}}repair <id|nombre|itemId>`",
-    "NOT_FOUND_TITLE": "No encontrado",
-    "NOT_FOUND_TEXT": "No encontré ese ítem.",
-    "NEED_KIT_TITLE": "Necesitas un kit",
-    "NEED_KIT_TEXT": "Necesitas **Kit de Reparación** en tu inventario.",
-    "NOT_OWNED_TITLE": "No lo tienes",
-    "NOT_OWNED_TEXT": "No tienes ese ítem en tu mochila.",
-    "SUCCESS_TITLE": "¡Reparado!",
-    "SUCCESS_TEXT": "Has reparado **{{item}}** usando 1 kit.",
-    "ERROR": "No pude reparar ese ítem."
+    "TITLE": "수리",
+    "NO_DB": "MongoDB가 설정되지 않아 경제 기능이 비활성화되었습니다.",
+    "USAGE": "사용법: `{{prefix}}repair <id|name|itemId>`",
+    "NOT_FOUND_TITLE": "찾을 수 없음",
+    "NOT_FOUND_TEXT": "해당 아이템을 찾지 못했습니다.",
+    "NEED_KIT_TITLE": "수리 키트 필요",
+    "NEED_KIT_TEXT": "인벤토리에 **수리 키트**가 필요합니다.",
+    "NOT_OWNED_TITLE": "보유하지 않음",
+    "NOT_OWNED_TEXT": "가방에 해당 아이템이 없습니다.",
+    "SUCCESS_TITLE": "수리 완료!",
+    "SUCCESS_TEXT": "키트 1개로 **{{item}}**을(를) 수리했습니다.",
+    "ERROR": "해당 아이템을 수리하지 못했습니다."
 }

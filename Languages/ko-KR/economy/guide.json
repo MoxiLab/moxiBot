@@ -1,5 +1,5 @@
 {
-    "TITLE": "Guía de economía",
-    "BODY": "Comandos rápidos:\n• `{{prefix}}bal` — ver tus coins\n• `{{prefix}}daily` — recompensa diaria\n• `{{prefix}}work` — trabajar por coins\n• `{{prefix}}moxishop list` — ver tienda\n• `{{prefix}}moxishop buy <id> [cantidad]` — comprar\n• `{{prefix}}bag` — ver mochila\n• `{{prefix}}use <item>` — usar ítem\n• `{{prefix}}sell <item> [cantidad]` — vender ítem\n• `{{prefix}}leaderboard` — ranking\n\nExtras:\n• `{{prefix}}collect` — recolección con cooldown\n• `{{prefix}}quest` — misiones diarias\n• `{{prefix}}race` — carrera con cooldown",
-    "FOOTER": "Tip: si algo falla, revisa MongoDB (MONGODB)."
+    "TITLE": "경제 가이드",
+    "BODY": "빠른 명령어:\n• `{{prefix}}bal` — 코인 잔액 보기\n• `{{prefix}}daily` — 일일 보상\n• `{{prefix}}work` — 일해서 코인 벌기\n• `{{prefix}}moxishop list` — 상점 보기\n• `{{prefix}}moxishop buy <id> [amount]` — 구매\n• `{{prefix}}bag` — 가방 보기\n• `{{prefix}}use <item>` — 아이템 사용\n• `{{prefix}}sell <item> [amount]` — 아이템 판매\n• `{{prefix}}leaderboard` — 랭킹\n\n추가:\n• `{{prefix}}collect` — 쿨다운 채집\n• `{{prefix}}quest` — 일일 미션\n• `{{prefix}}race` — 쿨다운 레이스",
+    "FOOTER": "팁: 문제가 있으면 MongoDB(MONGODB)를 확인하세요."
 }

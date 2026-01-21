@@ -1,9 +1,9 @@
 {
-    "TITLE": "Talar",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "COOLDOWN_TITLE": "Talar en cooldown",
-    "COOLDOWN_TEXT": "Estás cansado/a. Vuelve en **{{next}}**.",
-    "SUCCESS_TITLE": "¡Tala completada!",
-    "SUCCESS_TEXT": "Has conseguido **{{amount}}x {{item}}** y **{{coins}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "No pude completar la tala."
+    "TITLE": "قطع الخشب",
+    "NO_DB": "MongoDB غير مُعدّ، لذا تم تعطيل نظام الاقتصاد.",
+    "COOLDOWN_TITLE": "قطع الخشب في فترة انتظار",
+    "COOLDOWN_TEXT": "أنت متعب. عد بعد **{{next}}**.",
+    "SUCCESS_TITLE": "تم قطع الخشب!",
+    "SUCCESS_TEXT": "حصلت على **{{amount}}x {{item}}** و **{{coins}}** 🪙.\nالرصيد: **{{balance}}** 🪙.",
+    "ERROR": "لم أستطع إتمام قطع الخشب."
 }

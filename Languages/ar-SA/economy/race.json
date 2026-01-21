@@ -1,10 +1,10 @@
 {
-    "TITLE": "Carrera",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "COOLDOWN_TITLE": "Carrera en cooldown",
-    "COOLDOWN_TEXT": "Vuelve en **{{next}}**.",
-    "WIN_TITLE": "¡Carrera!",
-    "WIN_TEXT": "Participantes: {{racers}}\nGanador/a: **{{winner}}**\nTu premio: **{{amount}}** 🪙\nBalance: **{{balance}}** 🪙.",
+    "TITLE": "سباق",
+    "NO_DB": "MongoDB غير مُعدّ، لذا تم تعطيل نظام الاقتصاد.",
+    "COOLDOWN_TITLE": "السباق في فترة انتظار",
+    "COOLDOWN_TEXT": "عد بعد **{{next}}**.",
+    "WIN_TITLE": "سباق!",
+    "WIN_TEXT": "المشاركون: {{racers}}\nالفائز: **{{winner}}**\nجائزتك: **{{amount}}** 🪙\nالرصيد: **{{balance}}** 🪙.",
     "RACERS": [
         "Moxi",
         "Neko",
@@ -13,5 +13,5 @@
         "Koi",
         "Sakura"
     ],
-    "ERROR": "No pude ejecutar la carrera."
+    "ERROR": "لم أستطع تشغيل السباق."
 }

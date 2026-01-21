@@ -1,19 +1,19 @@
 {
-    "DESC": "Da coins a otro usuario.",
-    "USAGE_TITLE": "Cómo usar",
-    "USAGE_TEXT": "Usa: `{{prefix}}give @usuario 100`",
-    "INVALID_AMOUNT_TITLE": "Cantidad inválida",
-    "INVALID_AMOUNT_TEXT": "La cantidad debe ser mayor que 0.",
-    "SELF_TITLE": "No permitido",
-    "SELF_TEXT": "No puedes darte coins a ti mismo.",
-    "BOT_TITLE": "No permitido",
-    "BOT_TEXT": "No puedes dar coins a bots.",
-    "INSUFFICIENT_TITLE": "Fondos insuficientes",
-    "INSUFFICIENT_TEXT": "Intentaste dar **{{amount}}** 🪙 pero solo tienes **{{balance}}** 🪙.",
-    "SUCCESS_TITLE": "Regalo enviado",
-    "SUCCESS_TEXT": "Le diste a {{user}} **{{amount}}** 🪙.\nTu balance: **{{balance}}** 🪙.",
-    "NO_DB_TITLE": "Base de datos no configurada",
-    "NO_DB_TEXT": "MongoDB no está configurado, así que los comandos de economía están deshabilitados.",
-    "ERROR_TITLE": "Error",
-    "UNKNOWN_ERROR": "Ha ocurrido un error."
+    "DESC": "أرسل عملات إلى مستخدم آخر.",
+    "USAGE_TITLE": "طريقة الاستخدام",
+    "USAGE_TEXT": "استخدم: `{{prefix}}give @user 100`",
+    "INVALID_AMOUNT_TITLE": "كمية غير صالحة",
+    "INVALID_AMOUNT_TEXT": "يجب أن تكون الكمية أكبر من 0.",
+    "SELF_TITLE": "غير مسموح",
+    "SELF_TEXT": "لا يمكنك إرسال العملات لنفسك.",
+    "BOT_TITLE": "غير مسموح",
+    "BOT_TEXT": "لا يمكنك إرسال العملات للبوتات.",
+    "INSUFFICIENT_TITLE": "رصيد غير كافٍ",
+    "INSUFFICIENT_TEXT": "حاولت إرسال **{{amount}}** 🪙 لكن رصيدك **{{balance}}** 🪙 فقط.",
+    "SUCCESS_TITLE": "تم الإرسال",
+    "SUCCESS_TEXT": "أرسلت إلى {{user}} **{{amount}}** 🪙.\nرصيدك: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "قاعدة البيانات غير مهيأة",
+    "NO_DB_TEXT": "MongoDB غير مُعدّ، لذا تم تعطيل أوامر الاقتصاد.",
+    "ERROR_TITLE": "خطأ",
+    "UNKNOWN_ERROR": "حدث خطأ."
 }

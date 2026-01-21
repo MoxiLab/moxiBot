@@ -1,10 +1,10 @@
 {
-    "TITLE": "Evento",
-    "USAGE": "Uso: `{{prefix}}event`",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "COOLDOWN_TITLE": "Evento en cooldown",
-    "COOLDOWN_TEXT": "Vuelve en **{{next}}**.",
-    "CLAIMED_TITLE": "Recompensa de evento",
-    "CLAIMED_TEXT": "Has recibido **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "No pude reclamar el evento."
+    "TITLE": "الحدث",
+    "USAGE": "الاستخدام: `{{prefix}}event`",
+    "NO_DB": "MongoDB غير مُعدّ، لذا تم تعطيل نظام الاقتصاد.",
+    "COOLDOWN_TITLE": "الحدث في فترة انتظار",
+    "COOLDOWN_TEXT": "عد بعد **{{next}}**.",
+    "CLAIMED_TITLE": "مكافأة الحدث",
+    "CLAIMED_TEXT": "حصلت على **{{amount}}** 🪙.\nالرصيد: **{{balance}}** 🪙.",
+    "ERROR": "لم أستطع استلام مكافأة الحدث."
 }

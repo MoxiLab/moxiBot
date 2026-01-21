@@ -1,12 +1,12 @@
 {
-    "TITLE": "Vender",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "USAGE": "Uso: `{{prefix}}sell <id|nombre|itemId> [cantidad]`",
-    "NOT_FOUND_TITLE": "No encontrado",
-    "NOT_FOUND_TEXT": "No encontré ese ítem.",
-    "NOT_OWNED_TITLE": "No lo tienes",
-    "NOT_OWNED_TEXT": "No tienes ese ítem en tu mochila.",
-    "SOLD_TITLE": "Venta completada",
-    "SOLD_TEXT": "Vendiste **{{amount}}x {{name}}** por **{{total}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "No pude vender ese ítem."
+    "TITLE": "판매",
+    "NO_DB": "MongoDB가 설정되지 않아 경제 기능이 비활성화되었습니다.",
+    "USAGE": "사용법: `{{prefix}}sell <id|name|itemId> [amount]`",
+    "NOT_FOUND_TITLE": "찾을 수 없음",
+    "NOT_FOUND_TEXT": "해당 아이템을 찾지 못했습니다.",
+    "NOT_OWNED_TITLE": "보유하지 않음",
+    "NOT_OWNED_TEXT": "가방에 해당 아이템이 없습니다.",
+    "SOLD_TITLE": "판매 완료",
+    "SOLD_TEXT": "**{{amount}}x {{name}}**을(를) **{{total}}** 🪙에 판매했습니다.\n잔액: **{{balance}}** 🪙.",
+    "ERROR": "해당 아이템을 판매하지 못했습니다."
 }

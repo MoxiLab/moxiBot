@@ -1,10 +1,10 @@
 {
-    "TITLE": "Navidad",
-    "OUT_OF_SEASON": "Ahora mismo no hay Navidad activa.",
-    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
-    "COOLDOWN_TITLE": "Navidad en cooldown",
-    "COOLDOWN_TEXT": "Vuelve en **{{next}}**.",
-    "CLAIMED_TITLE": "Regalo de Navidad",
-    "CLAIMED_TEXT": "Has recibido **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "No pude reclamar el regalo."
+    "TITLE": "الكريسماس",
+    "OUT_OF_SEASON": "لا يوجد حدث كريسماس نشط الآن.",
+    "NO_DB": "MongoDB غير مُعدّ، لذا تم تعطيل نظام الاقتصاد.",
+    "COOLDOWN_TITLE": "الكريسماس في فترة انتظار",
+    "COOLDOWN_TEXT": "عد بعد **{{next}}**.",
+    "CLAIMED_TITLE": "هدية الكريسماس",
+    "CLAIMED_TEXT": "حصلت على **{{amount}}** 🪙.\nالرصيد: **{{balance}}** 🪙.",
+    "ERROR": "لم أستطع استلام الهدية."
 }

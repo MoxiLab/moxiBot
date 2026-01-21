@@ -1,14 +1,14 @@
 {
-    "BAD_AMOUNT_TITLE": "Cantidad inválida",
-    "BAD_AMOUNT_TEXT": "Uso: `invest <cantidad>`",
-    "NO_DB_TITLE": "Base de datos no configurada",
-    "NO_DB_TEXT": "MongoDB no está configurado, así que la economía está deshabilitada.",
-    "NO_FUNDS_TITLE": "Fondos insuficientes",
-    "NO_FUNDS_TEXT": "No tienes suficiente balance para invertir **{{amount}}** 🪙.\nBalance actual: **{{balance}}** 🪙.",
-    "WIN_TITLE": "Inversión exitosa",
-    "WIN_TEXT": "Ganaste **{{profit}}** 🪙 de beneficio.\nBalance actual: **{{balance}}** 🪙.",
-    "LOSE_TITLE": "Inversión fallida",
-    "LOSE_TEXT": "Perdiste **{{amount}}** 🪙.\nBalance actual: **{{balance}}** 🪙.",
-    "ERROR_TITLE": "Error",
-    "UNKNOWN_ERROR": "Ha ocurrido un error."
+    "BAD_AMOUNT_TITLE": "كمية غير صالحة",
+    "BAD_AMOUNT_TEXT": "الاستخدام: `invest <amount>`",
+    "NO_DB_TITLE": "قاعدة البيانات غير مهيأة",
+    "NO_DB_TEXT": "MongoDB غير مُعدّ، لذا تم تعطيل نظام الاقتصاد.",
+    "NO_FUNDS_TITLE": "رصيد غير كافٍ",
+    "NO_FUNDS_TEXT": "لا تملك رصيدًا كافيًا لاستثمار **{{amount}}** 🪙.\nالرصيد الحالي: **{{balance}}** 🪙.",
+    "WIN_TITLE": "استثمار ناجح",
+    "WIN_TEXT": "ربحت **{{profit}}** 🪙 كأرباح.\nالرصيد الحالي: **{{balance}}** 🪙.",
+    "LOSE_TITLE": "استثمار فاشل",
+    "LOSE_TEXT": "خسرت **{{amount}}** 🪙.\nالرصيد الحالي: **{{balance}}** 🪙.",
+    "ERROR_TITLE": "خطأ",
+    "UNKNOWN_ERROR": "حدث خطأ."
 }
