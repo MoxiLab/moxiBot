@@ -34,7 +34,7 @@ module.exports = {
             });
         }
 
-        const answers = moxi.translate('FUN_8BALL_ANSWERS', lang);
+        const answers = moxi.translate('FUN_8BALL_ANSWERS', lang, { returnObjects: true });
         const fallback = [
             'Sí.',
             'No.',
