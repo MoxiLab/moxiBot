@@ -1,5 +1,4 @@
 const moxi = require('../../i18n');
-const { buildWipPayload } = require('../../Util/wip');
 const { economyCategory } = require('../../Util/commandCategories');
 
 
@@ -7,8 +6,8 @@ module.exports = {
     name: 'mix',
     alias: ['mix'],
     Category: economyCategory,
-    usage: 'mix',
-    description: 'misc:WIP_TEXT',
+    usage: 'mix <receta> | mix list [-p pagina]',
+    description: 'commands:CMD_MIX_DESC',
     cooldown: 0,
     command: {
         prefix: true,
@@ -16,15 +15,12 @@ module.exports = {
         ephemeral: false,
     },
 
-    async execute(Moxi, message) {
-        const guildId = message.guild?.id;
-        const lang = message.lang || await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
-        return message.reply({
-            ...buildWipPayload({
-                lang,
-                title: 'Mix',
-            }),
-            allowedMentions: { repliedUser: false },
-        });
+    async execute(Moxi, message, args) {
+        // “mix” actúa como alias de craft.
+        // eslint-disable-next-line global-require
+        const craft = require('./craft');
+        const guildId = message.guildId || message.guild?.id;
+        await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        return craft.execute(Moxi, message, args);
     },
 };

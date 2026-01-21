@@ -1,14 +1,12 @@
 const moxi = require('../../i18n');
-const { buildWipPayload } = require('../../Util/wip');
-
 const { economyCategory } = require('../../Util/commandCategories');
 
 module.exports = {
     name: 'trade',
     alias: ['trade'],
     Category: economyCategory,
-    usage: 'trade',
-    description: 'misc:WIP_TEXT',
+    usage: 'trade <@usuario|id> <cantidad>',
+    description: 'commands:CMD_TRADE_DESC',
     cooldown: 0,
     command: {
         prefix: true,
@@ -16,15 +14,12 @@ module.exports = {
         ephemeral: false,
     },
 
-    async execute(Moxi, message) {
-        const guildId = message.guild?.id;
-        const lang = message.lang || await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
-        return message.reply({
-            ...buildWipPayload({
-                lang,
-                title: 'Trade',
-            }),
-            allowedMentions: { repliedUser: false },
-        });
+    async execute(Moxi, message, args) {
+        // “trade” por ahora equivale a transferir monedas (give).
+        // eslint-disable-next-line global-require
+        const give = require('./give');
+        const guildId = message.guildId || message.guild?.id;
+        await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        return give.execute(Moxi, message, args);
     },
 };

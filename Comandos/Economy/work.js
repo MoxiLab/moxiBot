@@ -2,7 +2,6 @@ const { MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
-const { shouldShowCooldownNotice } = require('../../Util/cooldownNotice');
 const {
     listJobs,
     resolveJob,
@@ -27,7 +26,7 @@ function formatJobsList(lang) {
     const t = (k, vars = {}) => moxi.translate(`economy/work:${k}`, lang, vars);
     const jobs = listJobs();
     const lines = jobs.map(j => t('JOB_LINE', {
-        emoji: j.emoji || '💼',
+        icon: j.emoji || '💼',
         job: getJobDisplayName(j, lang),
         id: j.id,
         min: j.min,
@@ -87,10 +86,6 @@ module.exports = {
 
             if (!res.ok) {
                 if (res.reason === 'cooldown') {
-                    if (!shouldShowCooldownNotice({ userId: message.author.id, key: 'work', windowMs: 15_000, threshold: 3 })) {
-                        try { await message.react(EMOJIS.hourglass || '⏳'); } catch { }
-                        return;
-                    }
                     return message.reply(
                         asV2MessageOptions(
                             buildNoticeContainer({
@@ -132,7 +127,7 @@ module.exports = {
                         title: t('SHIFT_DONE_TITLE'),
                         text: t('SHIFT_DONE_TEXT', {
                             job: getJobDisplayName(res.job, lang),
-                            emoji: res.job.emoji || '',
+                            icon: res.job.emoji || '',
                             amount: res.amount,
                             balance: res.balance,
                         }),
@@ -223,10 +218,6 @@ module.exports = {
 
             if (!res.ok) {
                 if (res.reason === 'cooldown') {
-                    if (!shouldShowCooldownNotice({ userId: message.author.id, key: 'work', windowMs: 15_000, threshold: 3 })) {
-                        try { await message.react(EMOJIS.hourglass || '⏳'); } catch { }
-                        return;
-                    }
                     return message.reply(
                         asV2MessageOptions(
                             buildNoticeContainer({
@@ -237,6 +228,20 @@ module.exports = {
                         )
                     );
                 }
+
+                if (res.reason === 'no-job') {
+                    const cd = formatDuration(getWorkCooldownMs());
+                    return message.reply(
+                        asV2MessageOptions(
+                            buildNoticeContainer({
+                                emoji: '💼',
+                                title: t('NO_JOB_TITLE'),
+                                text: t('NO_JOB_TEXT', { cd }),
+                            })
+                        )
+                    );
+                }
+
                 return message.reply(
                     asV2MessageOptions(
                         buildNoticeContainer({
@@ -255,7 +260,7 @@ module.exports = {
                         title: t('SHIFT_DONE_TITLE'),
                         text: t('SHIFT_DONE_TEXT', {
                             job: getJobDisplayName(res.job, lang),
-                            emoji: res.job.emoji || '',
+                            icon: res.job.emoji || '',
                             amount: res.amount,
                             balance: res.balance,
                         }),
