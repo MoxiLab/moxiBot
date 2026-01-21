@@ -98,7 +98,7 @@ async function getLangForCtx(ctx) {
     }
 }
 
-async function replyBlocked(Moxi, ctx, { content, isInteraction, autoDeleteMs }) {
+async function replyBlocked(Moxi, ctx, { content, isInteraction, autoDeleteMs, deleteUserMessage }) {
     if (isInteraction) {
         const payload = { content, flags: MessageFlags.Ephemeral };
         if (ctx.deferred || ctx.replied) return await ctx.followUp(payload).catch(() => null);
@@ -106,6 +106,17 @@ async function replyBlocked(Moxi, ctx, { content, isInteraction, autoDeleteMs })
     }
 
     const sent = await ctx.reply({ content, allowedMentions: { repliedUser: false } }).catch(() => null);
+
+    if (deleteUserMessage && ctx && typeof ctx.delete === 'function') {
+        try {
+            if (typeof ctx.deletable !== 'boolean' || ctx.deletable) {
+                await ctx.delete().catch(() => null);
+            }
+        } catch {
+            // ignore
+        }
+    }
+
     const ms = Number.isFinite(autoDeleteMs) ? autoDeleteMs : 0;
     if (sent && ms > 0) {
         setTimeout(() => {
@@ -117,6 +128,17 @@ async function replyBlocked(Moxi, ctx, { content, isInteraction, autoDeleteMs })
         }, ms);
     }
     return sent;
+}
+
+async function deleteInvokingMessageBestEffort(ctx) {
+    if (!ctx || typeof ctx.delete !== 'function') return;
+    try {
+        if (typeof ctx.deletable !== 'boolean' || ctx.deletable) {
+            await ctx.delete().catch(() => null);
+        }
+    } catch {
+        // ignore
+    }
 }
 
 async function shouldBlockByEconomyGate(ctx, comando) {
@@ -184,6 +206,12 @@ module.exports = async function handleCommand(Moxi, ctx, args, comando) {
             const channelId = ctx?.channelId || ctx?.channel?.id || null;
             const userId = ctx?.user?.id || ctx?.author?.id || (ctx?.member && ctx.member.user && ctx.member.user.id) || null;
 
+            // Para comandos con prefijo: aunque suprimamos el aviso por rate-limit,
+            // aún intentamos borrar el mensaje del usuario (si tenemos permisos).
+            if (!isInteraction && (gate.kind === 'economy-wrong-channel' || gate.kind === 'non-economy-in-econ-channel')) {
+                await deleteInvokingMessageBestEffort(ctx);
+            }
+
             if (shouldSuppressEconGateNotice({ guildId, channelId, userId, kind: gate.kind })) {
                 return null;
             }
@@ -196,11 +224,21 @@ module.exports = async function handleCommand(Moxi, ctx, args, comando) {
                 const msg = moxi.translate('misc:ECONOMY_GATE_ONLY_CHANNEL', lang, {
                     channel: gate.economyChannelId ? `<#${gate.economyChannelId}>` : '#economy',
                 }) || `Este comando solo se puede usar en ${gate.economyChannelId ? `<#${gate.economyChannelId}>` : 'el canal de economía'}.`;
-                return await replyBlocked(Moxi, ctx, { content: msg, isInteraction, autoDeleteMs: isInteraction ? 0 : ECON_GATE_AUTO_DELETE_MS });
+                return await replyBlocked(Moxi, ctx, {
+                    content: msg,
+                    isInteraction,
+                    autoDeleteMs: isInteraction ? 0 : ECON_GATE_AUTO_DELETE_MS,
+                    deleteUserMessage: !isInteraction,
+                });
             }
             if (gate.kind === 'non-economy-in-econ-channel') {
                 const msg = moxi.translate('misc:ECONOMY_GATE_ECONOMY_ONLY_CHANNEL', lang) || 'Este canal es solo para comandos de economía.';
-                return await replyBlocked(Moxi, ctx, { content: msg, isInteraction });
+                return await replyBlocked(Moxi, ctx, {
+                    content: msg,
+                    isInteraction,
+                    autoDeleteMs: isInteraction ? 0 : ECON_GATE_AUTO_DELETE_MS,
+                    deleteUserMessage: !isInteraction,
+                });
             }
         }
     } catch {
