@@ -1,12 +1,12 @@
 {
-    "TITLE": "Canjear código",
-    "USAGE": "Uso: `{{prefix}}claimcode <codigo>`",
-    "NO_DB": "MongoDB no está configurado, así que no puedo canjear códigos.",
-    "INVALID_TITLE": "Código inválido",
-    "INVALID_TEXT": "Ese código no existe o no está disponible.",
-    "ALREADY_TITLE": "Ya canjeado",
-    "ALREADY_TEXT": "Ya canjeaste ese código.",
-    "SUCCESS_TITLE": "¡Código canjeado!",
-    "SUCCESS_TEXT": "Has recibido **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
-    "ERROR": "No pude canjear el código."
+    "TITLE": "코드 교환",
+    "USAGE": "사용법: `{{prefix}}claimcode <code>`",
+    "NO_DB": "MongoDB가 설정되지 않아 코드를 교환할 수 없습니다.",
+    "INVALID_TITLE": "유효하지 않은 코드",
+    "INVALID_TEXT": "해당 코드는 존재하지 않거나 사용할 수 없습니다.",
+    "ALREADY_TITLE": "이미 교환됨",
+    "ALREADY_TEXT": "이미 이 코드를 교환했습니다.",
+    "SUCCESS_TITLE": "코드 교환 완료!",
+    "SUCCESS_TEXT": "**{{amount}}** 🪙를 받았습니다.\n잔액: **{{balance}}** 🪙.",
+    "ERROR": "코드를 교환하지 못했습니다."
 }
