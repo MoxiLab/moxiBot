@@ -224,9 +224,10 @@ module.exports = async function petButtons(interaction) {
     // Solo el autor puede usar el panel
     if (interaction.user?.id !== String(userId)) {
         const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
+        const t = (key, vars = {}) => moxi.translate(`misc:${key}`, lang, vars);
         const payload = {
             content: '',
-            components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: 'Solo el autor puede usar estos botones.' })],
+            components: [buildNoticeContainer({ emoji: EMOJIS.noEntry, text: t('ONLY_AUTHOR_BUTTONS') || 'Only the original author can use these buttons.' })],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
         };
         if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
@@ -236,13 +237,14 @@ module.exports = async function petButtons(interaction) {
 
     const guildId = interaction.guildId || interaction.guild?.id;
     const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+    const t = (key, vars = {}) => moxi.translate(`misc:${key}`, lang, vars);
 
     const eco = await getOrCreateEconomy(userId);
     const pet = getActivePet(eco);
     if (!pet) {
         const payload = {
             content: '',
-            components: [buildNoticeContainer({ emoji: EMOJIS.info, title: 'Mascotas', text: 'Aún no tienes mascotas. Compra un huevo e incúbalo con una incubadora.' })],
+            components: [buildNoticeContainer({ emoji: EMOJIS.info, title: t('PETS_TITLE') || 'Pets', text: t('PET_NO_PETS_TEXT') || 'You don\'t have any pets yet. Buy an egg and hatch it using an incubator.' })],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
         };
         if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
@@ -260,7 +262,7 @@ module.exports = async function petButtons(interaction) {
         await eco.save().catch(() => null);
     }
 
-    const ownerName = interaction.user?.username || 'Usuario';
+    const ownerName = interaction.user?.username || (t('PET_OWNER_FALLBACK') || 'User');
 
     if (action === 'open') {
         const payload = buildPetPanelMessageOptions({ lang, userId, ownerName, pet });
@@ -289,8 +291,8 @@ module.exports = async function petButtons(interaction) {
         if (!allowed.has(key)) {
             await replyEphemeralNotice(interaction, {
                 emoji: EMOJIS.cross,
-                title: 'Entrenamiento',
-                text: 'Stat inválido.',
+                title: t('PET_TRAINING_TITLE') || 'Training',
+                text: t('PET_TRAINING_INVALID_STAT') || 'Invalid stat.',
             });
             return true;
         }
@@ -313,8 +315,8 @@ module.exports = async function petButtons(interaction) {
         if (remaining <= 0) {
             await replyEphemeralNotice(interaction, {
                 emoji: EMOJIS.info,
-                title: 'Entrenamiento',
-                text: 'Te quedan **0** puntos para usar.',
+                title: t('PET_TRAINING_TITLE') || 'Training',
+                text: t('PET_TRAINING_POINTS_LEFT', { n: 0 }) || 'You have **0** points left to spend.',
             });
             return true;
         }
@@ -322,8 +324,8 @@ module.exports = async function petButtons(interaction) {
         if (stats[key] >= 10) {
             await replyEphemeralNotice(interaction, {
                 emoji: EMOJIS.info,
-                title: 'Entrenamiento',
-                text: 'Ese stat ya está al máximo (**10/10**).',
+                title: t('PET_TRAINING_TITLE') || 'Training',
+                text: t('PET_TRAINING_STAT_MAX') || 'That stat is already max (**10/10**).',
             });
             return true;
         }
@@ -340,12 +342,12 @@ module.exports = async function petButtons(interaction) {
     if (action === 'renameModal') {
         const modal = new ModalBuilder()
             .setCustomId(`pet:rename:${String(userId)}`)
-            .setTitle('Cambiar nombre');
+            .setTitle(t('CHANGE_NAME') || 'Change name');
 
         const input = new TextInputBuilder()
             .setCustomId('name')
-            .setLabel('Nuevo nombre')
-            .setPlaceholder('Ej: hikari')
+            .setLabel(t('PET_RENAME_NEW_NAME_LABEL') || 'New name')
+            .setPlaceholder(t('PET_RENAME_PLACEHOLDER') || 'e.g. hikari')
             .setStyle(TextInputStyle.Short)
             .setMinLength(1)
             .setMaxLength(20)
@@ -459,8 +461,8 @@ module.exports = async function petButtons(interaction) {
         if (selected === 'soon') {
             await replyEphemeralNotice(interaction, {
                 emoji: EMOJIS.info,
-                title: 'Exploración',
-                text: 'Exploración: Próximamente…',
+                title: t('PET_EXPLORATION_TITLE') || 'Exploration',
+                text: t('PET_SOON') || 'Coming soon…',
             });
         }
         return true;
