@@ -13,6 +13,54 @@ try {
 
 const collectionName = 'prefixes';
 
+async function setGuildEconomyEnabled(guildId, enabled) {
+  const connection = await ensureMongoConnection();
+  const db = connection.db;
+  const query = { $or: [{ guildID: guildId }, { guildId: guildId }, { id: guildId }] };
+  const update = {
+    $set: { EconomyEnabled: !!enabled },
+    $setOnInsert: { guildID: guildId, id: guildId },
+  };
+  const options = { upsert: true };
+  const result = await db.collection(collectionName).updateOne(query, update, options);
+  return result.matchedCount > 0 || result.upsertedCount > 0;
+}
+
+async function setGuildEconomyChannel(guildId, channelId) {
+  const connection = await ensureMongoConnection();
+  const db = connection.db;
+  const query = { $or: [{ guildID: guildId }, { guildId: guildId }, { id: guildId }] };
+  const cleanId = channelId ? String(channelId).trim() : '';
+
+  // Si se limpia el canal, también desactivamos el modo exclusivo.
+  const update = cleanId
+    ? {
+      $set: { EconomyChannelId: cleanId, EconomyExclusive: true },
+      $setOnInsert: { guildID: guildId, id: guildId },
+    }
+    : {
+      $unset: { EconomyChannelId: '', EconomyExclusive: '' },
+      $setOnInsert: { guildID: guildId, id: guildId },
+    };
+
+  const options = { upsert: true };
+  const result = await db.collection(collectionName).updateOne(query, update, options);
+  return result.matchedCount > 0 || result.upsertedCount > 0;
+}
+
+async function setGuildEconomyExclusive(guildId, exclusive) {
+  const connection = await ensureMongoConnection();
+  const db = connection.db;
+  const query = { $or: [{ guildID: guildId }, { guildId: guildId }, { id: guildId }] };
+  const update = {
+    $set: { EconomyExclusive: !!exclusive },
+    $setOnInsert: { guildID: guildId, id: guildId },
+  };
+  const options = { upsert: true };
+  const result = await db.collection(collectionName).updateOne(query, update, options);
+  return result.matchedCount > 0 || result.upsertedCount > 0;
+}
+
 async function setGuildPrefix(guildId, prefix) {
   const connection = await ensureMongoConnection();
   const db = connection.db;
@@ -181,4 +229,7 @@ module.exports = {
   setGuildPrefix,
   setGuildAuditChannel,
   setGuildAuditEnabled,
+  setGuildEconomyEnabled,
+  setGuildEconomyChannel,
+  setGuildEconomyExclusive,
 };
