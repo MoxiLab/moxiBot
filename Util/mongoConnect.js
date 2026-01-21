@@ -18,8 +18,7 @@ async function ensureMongoConnection(options = {}) {
     }
 
     connectionPromise = (async () => {
-        mongoose.set('strictQuery', false);
-        logger.startup(`${EMOJIS.hourglass} Conectando a MongoDB...`);
+        mongoose.set('strictQuery', false); 
         await mongoose.connect(uri, options);
         logger.startup(`${EMOJIS.waffle} MongoDB conectado (${mongoose.connection.name || 'default'})`);
         return mongoose.connection;
