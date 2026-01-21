@@ -321,6 +321,7 @@
     "PET_TRAINING_TOTAL": "Total",
     "PETS_TITLE": "Pets",
     "PET_NO_PETS_TEXT": "You don't have any pets yet. Buy an egg and hatch it using an incubator.",
+    "PET_EXPLORATION_TITLE": "Exploration",
     "PET_TRAINING_TITLE": "Training",
     "PET_TRAINING_INVALID_STAT": "Invalid stat.",
     "PET_TRAINING_STAT_MAX": "That stat is already max (**10/10**).",
