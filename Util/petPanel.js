@@ -207,6 +207,8 @@ function buildPetPanelMessageOptions({
     const hunger = Math.max(0, Number(care?.hunger) || 0);
     const hygiene = Math.max(0, Number(care?.hygiene) || 0);
 
+    const isNewborn = attrs?.newborn === true;
+
     const away = attrs?.away || null;
     const selectedZoneId = attrs?.selectedZoneId ? String(attrs.selectedZoneId) : null;
     const exploring = Boolean(attrs?.exploration && typeof attrs.exploration === 'object' && attrs.exploration.zoneId);
@@ -227,11 +229,13 @@ function buildPetPanelMessageOptions({
         container.addTextDisplayComponents(t => t.setContent(`**${name}**`));
     }
 
+    container.addTextDisplayComponents(t => t.setContent(`Nivel: **${level}**`));
+
     const statsText =
         `• Estrellas: ${starLine(stars)}\n` +
-        `• Cariño: ${barLine(affection)}\n` +
-        `• Hambre: ${barLine(hunger)}\n` +
-        `• Higiene: ${barLine(hygiene)}`;
+        `• Cariño: ${isNewborn ? '●●●●●' : barLine(affection)}\n` +
+        `• Hambre: ${isNewborn ? '●●●●●' : barLine(hunger)}\n` +
+        `• Higiene: ${isNewborn ? '●●●●●' : barLine(hygiene)}`;
 
     container.addSeparatorComponents(s => s.setDivider(true));
 

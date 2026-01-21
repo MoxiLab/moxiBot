@@ -22,11 +22,15 @@ function ensurePetAttributes(pet, now = Date.now()) {
     pet.attributes = pet.attributes && typeof pet.attributes === 'object' ? pet.attributes : {};
     const a = pet.attributes;
 
+    const isNewborn = a.newborn === true;
+
     if (!a.createdAt) a.createdAt = new Date(now);
     if (!a.lastCareAt) a.lastCareAt = new Date(now);
 
     if (!a.care || typeof a.care !== 'object') {
-        a.care = { affection: 80, hunger: 80, hygiene: 80 };
+        a.care = isNewborn
+            ? { affection: 0, hunger: 0, hygiene: 0 }
+            : { affection: 80, hunger: 80, hygiene: 80 };
     }
 
     // Decaimiento de cuidados con el tiempo (para que no estén siempre llenos)
@@ -45,9 +49,9 @@ function ensurePetAttributes(pet, now = Date.now()) {
         }
     }
 
-    if (!Number.isFinite(Number(a.care.affection))) a.care.affection = 80;
-    if (!Number.isFinite(Number(a.care.hunger))) a.care.hunger = 80;
-    if (!Number.isFinite(Number(a.care.hygiene))) a.care.hygiene = 80;
+    if (!Number.isFinite(Number(a.care.affection))) a.care.affection = isNewborn ? 0 : 80;
+    if (!Number.isFinite(Number(a.care.hunger))) a.care.hunger = isNewborn ? 0 : 80;
+    if (!Number.isFinite(Number(a.care.hygiene))) a.care.hygiene = isNewborn ? 0 : 80;
 
     a.care.affection = clamp(Math.trunc(safeNumber(a.care.affection, 0)), 0, 100);
     a.care.hunger = clamp(Math.trunc(safeNumber(a.care.hunger, 0)), 0, 100);
@@ -173,6 +177,9 @@ function applyPetAction(pet, action, now = Date.now()) {
     care.hygiene = clamp(Math.trunc(care.hygiene), 0, 100);
     a.xp = clamp(Math.trunc(a.xp), 0, 999999);
     a.lastCareAt = new Date(now);
+
+    // Al primer cuidado, deja de ser "recién nacido"
+    if (a.newborn === true) a.newborn = false;
 
     let leveledUp = false;
     let guard = 0;
@@ -328,6 +335,8 @@ function buildPetFromEgg({ eggItemId, lang } = {}) {
         attributes: {
             rarity,
             fromEgg: String(eggItemId),
+            newborn: true,
+            hatchedAt: new Date(),
         },
     };
 }
