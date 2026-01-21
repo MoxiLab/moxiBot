@@ -22,7 +22,7 @@ module.exports = {
         const lang = message.lang || await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
         const t = (k, vars = {}) => moxi.translate(`economy/fortune:${k}`, lang, vars);
 
-        const raw = moxi.translate('economy/fortune:LINES', lang);
+        const raw = moxi.translate('economy/fortune:LINES', lang, { returnObjects: true });
         const lines = Array.isArray(raw)
             ? raw.filter(Boolean).map(String)
             : String(raw || '').split('\n').map(s => s.trim()).filter(Boolean);
