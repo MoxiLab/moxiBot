@@ -23,6 +23,18 @@ function normalizeCategoryKey(value) {
   if (upper.includes('CATEGORY_MODERATION') || upper.includes('MODERATION') || upper.includes('MODERACION')) return 'Moderation';
   if (upper.includes('CATEGORY_ROOT')) return 'Root';
 
+  // Fun / Diversión
+  if (upper.includes('CATEGORY_FUN') || upper === 'FUN') return 'Fun';
+  if (upper.includes('DIVERSION') || upper.includes('DIVERSIÓN')) return 'Fun';
+  if (upper.includes('SPASS') || upper.includes('SPAß')) return 'Fun';
+  if (upper.includes('DIVERTIMENTO')) return 'Fun';
+  if (upper.includes('SERU') || upper.includes('SERU-SERUAN')) return 'Fun';
+  if (upper.includes('お楽しみ') || upper.includes('オタノシミ')) return 'Fun';
+  if (upper.includes('재미')) return 'Fun';
+  if (upper.includes('娱乐') || upper.includes('娛樂')) return 'Fun';
+  if (upper.includes('مرح')) return 'Fun';
+  if (upper.includes('मज़ा') || upper.includes('मजा')) return 'Fun';
+
   // Equivalentes árabes (por si el value viene ya traducido)
   if (value.includes('الأدوات')) return 'Tools';
   if (value.includes('الموسيقى')) return 'Music';

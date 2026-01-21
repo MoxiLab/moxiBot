@@ -19,6 +19,7 @@ const moderationCategory = makeCategory('commands:CATEGORY_MODERATION');
 const adminCategory = makeCategory('commands:CATEGORY_ADMIN');
 const toolsCategory = makeCategory('commands:CATEGORY_HERRAMIENTAS');
 const musicCategory = makeCategory('commands:CATEGORY_MUSICA');
+const funCategory = makeCategory('commands:CATEGORY_FUN');
 const rootCategory = makeCategory('commands:CATEGORY_ROOT');
 
 module.exports = {
@@ -28,5 +29,6 @@ module.exports = {
     adminCategory,
     toolsCategory,
     musicCategory,
+    funCategory,
     rootCategory,
 };
