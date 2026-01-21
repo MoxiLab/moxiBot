@@ -95,7 +95,7 @@ function buildWorkHiredContainer({ lang = 'es-ES', userId, job } = {}) {
 
     const text = [
         t('HIRED_TITLE'),
-        t('HIRED_TEXT', { emoji: job?.emoji || '🐾', job: jobName }),
+        t('HIRED_TEXT', { icon: job?.emoji || '🐾', job: jobName }),
         '',
         t('HIRED_FOOTER'),
     ].join('\n');
