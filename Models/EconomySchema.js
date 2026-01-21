@@ -59,6 +59,21 @@ const EconomySchema = new mongoose.Schema({
     lastMine: { type: Date },
     lastExplore: { type: Date },
     lastCrime: { type: Date },
+
+    // --- Cooldowns extra ---
+    lastSalary: { type: Date },
+
+    // --- Comandos extra (antes WIP) ---
+    lastCollect: { type: Date },
+    lastChop: { type: Date },
+    lastRace: { type: Date },
+    lastRepair: { type: Date },
+    lastQuest: { type: Date },
+    lastEvent: { type: Date },
+    lastCarnival: { type: Date },
+    lastXmas: { type: Date },
+
+    redeemedCodes: { type: [String], default: () => ([]) },
 });
 
 module.exports = {
