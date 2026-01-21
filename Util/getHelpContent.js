@@ -400,13 +400,15 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
         ? '🛠️'
         : (categoria === 'Music')
           ? '🎵'
-          : (categoria === 'Admin')
-            ? '🛡️'
-            : (categoria === 'Moderation')
-              ? '🧯'
-              : (categoria === 'Welcome')
-                ? '👋'
-                : '';
+          : (categoria === 'Fun')
+            ? '🎉'
+            : (categoria === 'Admin')
+              ? '🛡️'
+              : (categoria === 'Moderation')
+                ? '🧯'
+                : (categoria === 'Welcome')
+                  ? '👋'
+                  : '';
 
     const header = `${emoji ? `${emoji} ` : ''}**${categoriaLabel}**`;
 
