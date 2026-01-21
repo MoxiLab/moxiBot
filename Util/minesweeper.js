@@ -6,6 +6,17 @@ const { EMOJIS } = require('./emojis');
 
 const DEFAULT_SIZE = 5;
 const DEFAULT_MINES = 5;
+const BLANK = '\u200b';
+
+function popcountBigInt(mask) {
+    let m = BigInt(mask || 0);
+    let c = 0;
+    while (m) {
+        m &= (m - 1n);
+        c++;
+    }
+    return c;
+}
 
 function clampInt(value, min, max) {
     const v = Number.parseInt(String(value), 10);
@@ -197,6 +208,10 @@ function buildMinesweeperMessageOptions({ userId, lang, state, disabled = false 
     const title = tr(safeLang, 'GAMES_MINESWEEPER_TITLE') || 'Buscaminas';
     const helpLine = tr(safeLang, 'GAMES_MINESWEEPER_HELP') || 'Clic para abrir • Usa el modo 🚩 para marcar';
 
+    const minesTotal = popcountBigInt(mineMask);
+    const flagsPlaced = popcountBigInt(flagMask);
+    const minesLeft = Math.max(0, minesTotal - flagsPlaced);
+
     const accent = Config?.Bot?.AccentColor || 0x5865F2;
     const container = new ContainerBuilder().setAccentColor(accent);
 
@@ -209,7 +224,8 @@ function buildMinesweeperMessageOptions({ userId, lang, state, disabled = false 
     else if (status === 2) statusLine = tr(safeLang, 'GAMES_MINESWEEPER_WON') || '¡Ganaste!';
     else statusLine = tr(safeLang, 'GAMES_MINESWEEPER_PLAYING') || 'Partida en curso.';
 
-    container.addTextDisplayComponents(c => c.setContent([`**${statusLine}**`, helpLine].join('\n')));
+    const countersLine = `💣 ${minesTotal}  •  🚩 ${flagsPlaced}  •  ${EMOJIS?.target || '🎯'} ${minesLeft}`;
+    container.addTextDisplayComponents(c => c.setContent([`**${statusLine}**`, countersLine, helpLine].join('\n')));
 
     const encoded = packState({ size, mineMask, revealMask, flagMask, status });
 
@@ -229,14 +245,15 @@ function buildMinesweeperMessageOptions({ userId, lang, state, disabled = false 
                 const b = new ButtonBuilder();
 
                 if (isRevealed) {
+                    const noopId = `msw:noop:${x}:${y}`;
                     if (isMine) {
-                        b.setEmoji('💣').setStyle(ButtonStyle.Danger).setCustomId('msw:noop');
+                        b.setEmoji('💣').setStyle(ButtonStyle.Danger).setCustomId(noopId);
                     } else {
                         const adj = countAdjacentMines({ x, y, size, mineMask });
                         if (adj === 0) {
-                            b.setEmoji('⬛').setStyle(ButtonStyle.Secondary).setCustomId('msw:noop');
+                            b.setLabel(BLANK).setStyle(ButtonStyle.Secondary).setCustomId(noopId);
                         } else {
-                            b.setLabel(String(adj)).setStyle(ButtonStyle.Secondary).setCustomId('msw:noop');
+                            b.setLabel(String(adj)).setStyle(ButtonStyle.Secondary).setCustomId(noopId);
                         }
                     }
                     b.setDisabled(true);
@@ -248,7 +265,8 @@ function buildMinesweeperMessageOptions({ userId, lang, state, disabled = false 
                 if (isFlagged) {
                     b.setEmoji('🚩').setStyle(ButtonStyle.Secondary);
                 } else {
-                    b.setEmoji('⬜').setStyle(ButtonStyle.Secondary);
+                    // Discord exige label o emoji: usamos un label “invisible” para que se vea como casilla vacía.
+                    b.setLabel(BLANK).setStyle(ButtonStyle.Secondary);
                 }
 
                 // Click action depends on current mode.
