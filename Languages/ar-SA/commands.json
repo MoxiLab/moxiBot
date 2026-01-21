@@ -6,6 +6,7 @@
     "CATEGORY_HERRAMIENTAS": "الأدوات",
     "CATEGORY_ECONOMIA": "الاقتصاد",
     "CATEGORY_MUSICA": "الموسيقى",
+    "CATEGORY_FUN": "مرح",
     "CATEGORY_ROOT": "المالك",
     "CMD_add_DESC": "يضيف أغاني إلى قائمة الانتظار",
     "CMD_add_NAME": "أضف",
@@ -105,5 +106,8 @@
     "CMD_QUEST_DESC": "اعرض المهام اليومية واستلم مكافأة.",
     "CMD_EVENT_DESC": "استلم مكافأة حدث.",
     "CMD_CARNIVAL_DESC": "استلم مكافأة الكرنفال (في الموسم).",
-    "CMD_XMAS_DESC": "استلم مكافأة عيد الميلاد (في الموسم)."
+    "CMD_XMAS_DESC": "استلم مكافأة عيد الميلاد (في الموسم).",
+    "CMD_COINFLIP_DESC": "ارمِ عملة (وجه أم كتابة).",
+    "CMD_DICE_DESC": "ارمِ نردًا (يمكن اختيار عدد الأوجه).",
+    "CMD_8BALL_DESC": "اسأل كرة 8 السحرية سؤالاً."
 }
