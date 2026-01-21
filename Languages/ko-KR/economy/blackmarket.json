@@ -2,7 +2,7 @@
     "TITLE": "암시장",
     "BALANCE": "잔액: **{{balance}}** 🪙",
     "HINT": "구매: `blackmarket buy <1-3>`",
-    "OFFER_LINE": "{{slot}}) **{{name}}** ({{rarity}}) — **{{price}}** 🪙",
+    "OFFER_LINE": "{{slot}} • **{{name}}** ({{rarity}}) → **{{price}}** 🪙",
     "BAD_SLOT_TITLE": "잘못된 선택",
     "BAD_SLOT_TEXT": "1~3 중에서 숫자를 선택하세요. 예: `blackmarket buy 2`",
     "NO_FUNDS_TITLE": "잔액 부족",

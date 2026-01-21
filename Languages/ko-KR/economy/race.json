@@ -6,12 +6,12 @@
     "WIN_TITLE": "레이스!",
     "WIN_TEXT": "참가자: {{racers}}\n우승자: **{{winner}}**\n내 보상: **{{amount}}** 🪙\n잔액: **{{balance}}** 🪙.",
     "RACERS": [
-        "Moxi",
-        "Neko",
-        "Kitsune",
-        "Tanuki",
-        "Koi",
-        "Sakura"
+        "모시",
+        "네코",
+        "키츠네",
+        "타누키",
+        "코이",
+        "사쿠라"
     ],
     "ERROR": "레이스를 실행하지 못했습니다."
 }

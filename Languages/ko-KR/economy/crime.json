@@ -108,7 +108,7 @@
             "prompt": "폰도 지갑도 다 꺼내놨네요. 흠."
         },
         "bank-atm": {
-            "title": "ATM",
+            "title": "ATM기",
             "prompt": "누군가 현금을 뽑고 영수증을 주머니에 넣습니다."
         },
         "taxi-backseat": {
