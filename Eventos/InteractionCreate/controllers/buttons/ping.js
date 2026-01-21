@@ -8,9 +8,8 @@ module.exports = async function pingButtons(interaction, Moxi) {
 
     const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
 
-    const start = Date.now();
     await interaction.deferUpdate();
-    const msgPing = Date.now() - start;
+    const msgPing = Math.max(0, Date.now() - (interaction.createdTimestamp ?? Date.now()));
     const apiPing = Moxi.ws?.ping ?? 0;
     const shardId = Moxi.shard?.ids?.[0] ?? 0;
     const shardCount = Moxi.shard?.count ?? 1;
