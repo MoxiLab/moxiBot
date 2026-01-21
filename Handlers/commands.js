@@ -149,6 +149,7 @@ module.exports = async (Moxi) => {
         logger.warn(`[Commands] Ignorado (sin name/Name): ${files}`);
         continue;
       }
+      if (!command.__sourceFile) command.__sourceFile = files;
       Moxi.commands.set(command.name, command);
     } catch (err) {
       logger.error(`[Commands] Error cargando comando: ${files}`);
@@ -179,6 +180,7 @@ module.exports = async (Moxi) => {
     const slash = require(file);
     let data = slash.data || (slash.Command && slash.Command.data);
     if (data && data.name) {
+      if (!slash.__sourceFile) slash.__sourceFile = file;
       Moxi.slashcommands.set(data.name, slash);
     }
     // No warning: los subcomandos no necesitan .data
