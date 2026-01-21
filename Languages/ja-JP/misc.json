@@ -313,7 +313,7 @@
     "HELP_CATEGORY_ECONOMY": "経済",
     "HELP_CATEGORY_ECONOMY_DESC": "経済コマンド：ショップ、バッグ、インベントリ。",
     "HELP_CATEGORY_FUN": "お楽しみ",
-    "HELP_CATEGORY_FUN_DESC": "お楽しみコマンド：8ball、coinflip、dice。",
+    "HELP_CATEGORY_FUN_DESC": "お楽しみコマンド：8ball、dice。",
     "HELP_CATEGORY_WELCOME": "ウェルカムシステム",
     "HELP_CATEGORY_WELCOME_DESC": "ウェルカムメッセージや設定を構成するコマンド。",
     "HELP_CATEGORY_ROOT": "オーナー",

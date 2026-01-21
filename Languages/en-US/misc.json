@@ -141,7 +141,7 @@
     "HELP_CATEGORY_ECONOMY": "Economy",
     "HELP_CATEGORY_ECONOMY_DESC": "Economy commands: shop, bag, inventory.",
     "HELP_CATEGORY_FUN": "Fun",
-    "HELP_CATEGORY_FUN_DESC": "Fun commands: 8ball, coinflip, dice.",
+    "HELP_CATEGORY_FUN_DESC": "Fun commands: 8ball, dice.",
     "HELP_CATEGORY_WELCOME": "Welcome System",
     "HELP_CATEGORY_WELCOME_DESC": "Commands for configuring welcome messages and settings.",
     "FUN_COINFLIP_TITLE": "Coinflip",

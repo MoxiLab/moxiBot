@@ -112,7 +112,7 @@
     "HELP_CATEGORY_ECONOMY": "Wirtschaft",
     "HELP_CATEGORY_ECONOMY_DESC": "Wirtschaftsbefehle: Shop, Tasche, Inventar.",
     "HELP_CATEGORY_FUN": "Spaß",
-    "HELP_CATEGORY_FUN_DESC": "Spaßbefehle: 8ball, coinflip, dice.",
+    "HELP_CATEGORY_FUN_DESC": "Spaßbefehle: 8ball, dice.",
     "HELP_CATEGORY_WELCOME": "Willkommenssystem",
     "HELP_CATEGORY_WELCOME_DESC": "Befehle zum Konfigurieren von Willkommensnachrichten und Einstellungen.",
     "FUN_COINFLIP_TITLE": "Münzwurf",

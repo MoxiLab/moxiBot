@@ -312,7 +312,7 @@
     "HELP_CATEGORY_ECONOMY": "الاقتصاد",
     "HELP_CATEGORY_ECONOMY_DESC": "أوامر الاقتصاد: المتجر والحقيبة والمخزون.",
     "HELP_CATEGORY_FUN": "مرح",
-    "HELP_CATEGORY_FUN_DESC": "أوامر المرح: 8ball و coinflip و dice.",
+    "HELP_CATEGORY_FUN_DESC": "أوامر المرح: 8ball و dice.",
     "HELP_CATEGORY_WELCOME": "نظام الترحيب",
     "HELP_CATEGORY_WELCOME_DESC": "أوامر لإعداد رسائل الترحيب والإعدادات.",
     "FUN_COINFLIP_TITLE": "رمي عملة",

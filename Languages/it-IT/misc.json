@@ -113,7 +113,7 @@
     "HELP_CATEGORY_ECONOMY": "Economia",
     "HELP_CATEGORY_ECONOMY_DESC": "Comandi economia: negozio, borsa, inventario.",
     "HELP_CATEGORY_FUN": "Divertimento",
-    "HELP_CATEGORY_FUN_DESC": "Comandi divertimento: 8ball, coinflip, dice.",
+    "HELP_CATEGORY_FUN_DESC": "Comandi divertimento: 8ball, dice.",
     "HELP_CATEGORY_WELCOME": "Sistema di benvenuto",
     "HELP_CATEGORY_WELCOME_DESC": "Comandi per configurare messaggi e impostazioni di benvenuto.",
     "FUN_COINFLIP_TITLE": "Lancio della moneta",

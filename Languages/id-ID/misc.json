@@ -113,7 +113,7 @@
     "HELP_CATEGORY_ECONOMY": "Ekonomi",
     "HELP_CATEGORY_ECONOMY_DESC": "Perintah ekonomi: toko, tas, inventaris.",
     "HELP_CATEGORY_FUN": "Seru-seruan",
-    "HELP_CATEGORY_FUN_DESC": "Perintah seru-seruan: 8ball, coinflip, dice.",
+    "HELP_CATEGORY_FUN_DESC": "Perintah seru-seruan: 8ball, dice.",
     "HELP_CATEGORY_WELCOME": "Sistem sambutan",
     "HELP_CATEGORY_WELCOME_DESC": "Perintah untuk mengatur pesan dan pengaturan sambutan.",
     "FUN_COINFLIP_TITLE": "Lempar koin",

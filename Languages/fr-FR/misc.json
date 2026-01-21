@@ -106,7 +106,7 @@
     "HELP_CATEGORY_ECONOMY": "Économie",
     "HELP_CATEGORY_ECONOMY_DESC": "Commandes d'économie : boutique, sac, inventaire.",
     "HELP_CATEGORY_FUN": "Fun",
-    "HELP_CATEGORY_FUN_DESC": "Commandes fun : 8ball, coinflip, dice.",
+    "HELP_CATEGORY_FUN_DESC": "Commandes fun : 8ball, dice.",
     "HELP_CATEGORY_WELCOME": "Système de bienvenue",
     "HELP_CATEGORY_WELCOME_DESC": "Commandes pour configurer les messages et paramètres de bienvenue.",
     "FUN_COINFLIP_TITLE": "Pile ou face",

@@ -111,7 +111,7 @@
     "HELP_CATEGORY_ECONOMY": "अर्थव्यवस्था",
     "HELP_CATEGORY_ECONOMY_DESC": "अर्थव्यवस्था कमांड: शॉप, बैग, इन्वेंटरी।",
     "HELP_CATEGORY_FUN": "मज़ा",
-    "HELP_CATEGORY_FUN_DESC": "मज़ा कमांड: 8ball, coinflip, dice.",
+    "HELP_CATEGORY_FUN_DESC": "मज़ा कमांड: 8ball, dice.",
     "HELP_CATEGORY_WELCOME": "स्वागत प्रणाली",
     "HELP_CATEGORY_WELCOME_DESC": "स्वागत संदेश और सेटिंग्स को कॉन्फ़िगर करने के लिए कमांड।",
     "FUN_COINFLIP_TITLE": "सिक्का उछालना",

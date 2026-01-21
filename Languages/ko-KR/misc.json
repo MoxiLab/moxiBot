@@ -111,7 +111,7 @@
     "HELP_CATEGORY_ECONOMY": "경제",
     "HELP_CATEGORY_ECONOMY_DESC": "경제 명령어: 상점, 가방, 인벤토리.",
     "HELP_CATEGORY_FUN": "재미",
-    "HELP_CATEGORY_FUN_DESC": "재미 명령어: 8ball, coinflip, dice.",
+    "HELP_CATEGORY_FUN_DESC": "재미 명령어: 8ball, dice.",
     "HELP_CATEGORY_WELCOME": "환영 시스템",
     "HELP_CATEGORY_WELCOME_DESC": "환영 메시지 및 설정을 구성하는 명령어.",
     "FUN_COINFLIP_TITLE": "동전 던지기",
