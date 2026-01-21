@@ -6,6 +6,7 @@
     "CATEGORY_HERRAMIENTAS": "工具",
     "CATEGORY_ECONOMIA": "经济",
     "CATEGORY_MUSICA": "音乐",
+    "CATEGORY_FUN": "娱乐",
     "CATEGORY_ROOT": "所有者",
     "CMD_add_DESC": "将歌曲添加到队列",
     "CMD_add_NAME": "add",
@@ -105,5 +106,8 @@
     "CMD_QUEST_DESC": "查看每日任务并领取奖励。",
     "CMD_EVENT_DESC": "领取活动奖励。",
     "CMD_CARNIVAL_DESC": "领取嘉年华奖励（季节限定）。",
-    "CMD_XMAS_DESC": "领取圣诞奖励（季节限定）。"
+    "CMD_XMAS_DESC": "领取圣诞奖励（季节限定）。",
+    "CMD_COINFLIP_DESC": "抛硬币（正面/反面）。",
+    "CMD_DICE_DESC": "掷骰子（可选面数）。",
+    "CMD_8BALL_DESC": "向魔法8球提问。"
 }
