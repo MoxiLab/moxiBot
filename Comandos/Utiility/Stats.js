@@ -4,6 +4,32 @@ const LevelSystem = require('../../Global/Helpers/LevelSystem');
 const { Bot } = require('../../Config');
 const debugHelper = require('../../Util/debugHelper');
 
+function formatRelativeTime(date, locale) {
+    const now = Date.now();
+    const deltaMs = date.getTime() - now;
+    const absMs = Math.abs(deltaMs);
+
+    const units = [
+        { unit: 'year', ms: 1000 * 60 * 60 * 24 * 365 },
+        { unit: 'month', ms: 1000 * 60 * 60 * 24 * 30 },
+        { unit: 'week', ms: 1000 * 60 * 60 * 24 * 7 },
+        { unit: 'day', ms: 1000 * 60 * 60 * 24 },
+        { unit: 'hour', ms: 1000 * 60 * 60 },
+        { unit: 'minute', ms: 1000 * 60 },
+        { unit: 'second', ms: 1000 }
+    ];
+
+    const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
+    for (const { unit, ms } of units) {
+        if (absMs >= ms || unit === 'second') {
+            const value = Math.max(1, Math.floor(absMs / ms));
+            return rtf.format(deltaMs < 0 ? -value : value, unit);
+        }
+    }
+
+    return '';
+}
+
 module.exports = {
     name: 'stats',
     alias: ['estadisticas', 'profile', 'información'],
@@ -64,7 +90,7 @@ module.exports = {
                     `🏆 **${t('STATS_ACHIEVEMENTS')}**\n` +
                     `${t('STATS_BADGES')}: **${stats.badges}** | ${t('STATS_MAX_STREAK')}: **${stats.maxStreak} ${t('STATS_DAYS')}** | ${t('LEVEL_PRESTIGE')}: **${stats.prestige}**\n\n` +
                     `📅 **${t('STATS_INFO')}**\n` +
-                    `${t('STATS_MEMBER_SINCE')}: <t:${Math.floor(stats.joinedAt.getTime() / 1000)}:R>`
+                    `${t('STATS_MEMBER_SINCE')}: ${formatRelativeTime(stats.joinedAt, language)}`
                 ));
             const row = new ActionRowBuilder().addComponents(
                 new ButtonBuilder().setCustomId('stats_refresh').setLabel(t('LEVEL_REFRESH')).setStyle(ButtonStyle.Primary),
