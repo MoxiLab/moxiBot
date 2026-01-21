@@ -238,13 +238,14 @@ module.exports = async function petButtons(interaction) {
     const guildId = interaction.guildId || interaction.guild?.id;
     const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
     const t = (key, vars = {}) => moxi.translate(`misc:${key}`, lang, vars);
+    const tPet = (key, vars = {}) => moxi.translate(`economy/pet:${key}`, lang, vars);
 
     const eco = await getOrCreateEconomy(userId);
     const pet = getActivePet(eco);
     if (!pet) {
         const payload = {
             content: '',
-            components: [buildNoticeContainer({ emoji: EMOJIS.info, title: t('PETS_TITLE') || 'Pets', text: t('PET_NO_PETS_TEXT') || 'You don\'t have any pets yet. Buy an egg and hatch it using an incubator.' })],
+            components: [buildNoticeContainer({ emoji: EMOJIS.info, title: tPet('TITLE') || 'Pets', text: tPet('NO_PETS_TEXT') || 'You don\'t have pets yet.' })],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
         };
         if (interaction.deferred || interaction.replied) await interaction.followUp(payload).catch(() => null);
@@ -262,7 +263,7 @@ module.exports = async function petButtons(interaction) {
         await eco.save().catch(() => null);
     }
 
-    const ownerName = interaction.user?.username || (t('PET_OWNER_FALLBACK') || 'User');
+    const ownerName = interaction.user?.username || (tPet('OWNER_FALLBACK') || 'User');
 
     if (action === 'open') {
         const payload = buildPetPanelMessageOptions({ lang, userId, ownerName, pet });
@@ -291,8 +292,8 @@ module.exports = async function petButtons(interaction) {
         if (!allowed.has(key)) {
             await replyEphemeralNotice(interaction, {
                 emoji: EMOJIS.cross,
-                title: t('PET_TRAINING_TITLE') || 'Training',
-                text: t('PET_TRAINING_INVALID_STAT') || 'Invalid stat.',
+                title: tPet('TRAINING_TITLE') || 'Training',
+                text: tPet('TRAINING_INVALID_STAT') || 'Invalid stat.',
             });
             return true;
         }
@@ -315,8 +316,8 @@ module.exports = async function petButtons(interaction) {
         if (remaining <= 0) {
             await replyEphemeralNotice(interaction, {
                 emoji: EMOJIS.info,
-                title: t('PET_TRAINING_TITLE') || 'Training',
-                text: t('PET_TRAINING_POINTS_LEFT', { n: 0 }) || 'You have **0** points left to spend.',
+                title: tPet('TRAINING_TITLE') || 'Training',
+                text: tPet('TRAINING_POINTS_LEFT', { n: 0 }) || 'You have **0** points left to spend.',
             });
             return true;
         }
@@ -324,8 +325,8 @@ module.exports = async function petButtons(interaction) {
         if (stats[key] >= 10) {
             await replyEphemeralNotice(interaction, {
                 emoji: EMOJIS.info,
-                title: t('PET_TRAINING_TITLE') || 'Training',
-                text: t('PET_TRAINING_STAT_MAX') || 'That stat is already max (**10/10**).',
+                title: tPet('TRAINING_TITLE') || 'Training',
+                text: tPet('TRAINING_STAT_MAX') || 'That stat is already max (**10/10**).',
             });
             return true;
         }
@@ -346,8 +347,8 @@ module.exports = async function petButtons(interaction) {
 
         const input = new TextInputBuilder()
             .setCustomId('name')
-            .setLabel(t('PET_RENAME_NEW_NAME_LABEL') || 'New name')
-            .setPlaceholder(t('PET_RENAME_PLACEHOLDER') || 'e.g. hikari')
+            .setLabel(tPet('RENAME_NEW_NAME_LABEL') || 'New name')
+            .setPlaceholder(tPet('RENAME_PLACEHOLDER') || 'e.g. hikari')
             .setStyle(TextInputStyle.Short)
             .setMinLength(1)
             .setMaxLength(20)
@@ -461,8 +462,8 @@ module.exports = async function petButtons(interaction) {
         if (selected === 'soon') {
             await replyEphemeralNotice(interaction, {
                 emoji: EMOJIS.info,
-                title: t('PET_EXPLORATION_TITLE') || 'Exploration',
-                text: t('PET_SOON') || 'Coming soon…',
+                title: tPet('EXPLORATION_TITLE') || 'Exploration',
+                text: tPet('SOON') || 'Coming soon…',
             });
         }
         return true;
