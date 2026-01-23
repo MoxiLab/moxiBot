@@ -13,6 +13,7 @@ const { getZonesForKind, zoneName } = require('./zonesView');
 const { hasInventoryItem } = require('./fishView');
 const { scaleRange, randInt, chance } = require('./activityUtils');
 const { buildNoticeContainer } = require('./v2Notice');
+const { buildRemindButton } = require('./cooldownReminderUI');
 
 // Anti-spam: no hay cooldown fijo por ejecución; solo se bloquea si se spamea.
 const FISH_WINDOW_MS = 30 * 1000;
@@ -261,14 +262,26 @@ async function resolveFishPlay({ userId, zoneId, mode, choiceId, seed, lang } = 
     return { ...res, zone, actionLine, failed: false, drops };
 }
 
-function buildFishResultPayload({ zone, res, lang } = {}) {
+function buildFishResultPayload({ zone, res, lang, userId } = {}) {
     const emoji = zone?.emoji || '🎣';
     const t = (k, vars) => trFish(lang, k, vars);
     const displayZone = zone ? zoneName({ kind: 'fish', zone, lang: lang || process.env.DEFAULT_LANG || 'es-ES' }) : t('ZONE_FALLBACK');
     if (!res?.ok && res?.reason === 'cooldown') {
+        const fireAt = Date.now() + (Number(res.nextInMs) || 0);
+        const container = buildNoticeContainer({
+            emoji: '⏳',
+            title: t('COOLDOWN_TITLE'),
+            text: t('COOLDOWN_TEXT', { time: formatDuration(res.nextInMs) }),
+        });
+        if (userId) {
+            container.addSeparatorComponents(s => s.setDivider(true));
+            container.addActionRowComponents(r => r.addComponents(
+                buildRemindButton({ type: 'fish', fireAt, userId })
+            ));
+        }
         return {
             content: '',
-            components: [buildNoticeContainer({ emoji: '⏳', title: t('COOLDOWN_TITLE'), text: t('COOLDOWN_TEXT', { time: formatDuration(res.nextInMs) }) })],
+            components: [container],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
         };
     }
