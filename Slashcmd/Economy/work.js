@@ -2,6 +2,7 @@ const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
+const { buildRemindButton } = require('../../Util/cooldownReminderUI');
 const { shouldShowCooldownNotice } = require('../../Util/cooldownNotice');
 const {
     listJobs,
@@ -218,15 +219,19 @@ module.exports = {
             if (!res.ok) {
                 if (res.reason === 'cooldown') {
                     const show = shouldShowCooldownNotice({ userId: interaction.user.id, key: 'work', windowMs: 15_000, threshold: 3 });
-                    const payload = asV2MessageOptions(
-                        buildNoticeContainer({
-                            emoji: EMOJIS.hourglass,
-                            title: t('COOLDOWN_TITLE'),
-                            text: show
-                                ? t('COOLDOWN_TEXT', { next: res.nextInText, balance: res.balance })
-                                : t('COOLDOWN_SOFT_TEXT', { balance: res.balance }),
-                        })
-                    );
+                    const fireAt = Date.now() + (Number(res.nextInMs) || 0);
+                    const container = buildNoticeContainer({
+                        emoji: EMOJIS.hourglass,
+                        title: t('COOLDOWN_TITLE'),
+                        text: show
+                            ? t('COOLDOWN_TEXT', { next: res.nextInText, balance: res.balance })
+                            : t('COOLDOWN_SOFT_TEXT', { balance: res.balance }),
+                    });
+                    container.addSeparatorComponents(s => s.setDivider(true));
+                    container.addActionRowComponents(r => r.addComponents(
+                        buildRemindButton({ type: 'work', fireAt, userId: interaction.user.id })
+                    ));
+                    const payload = asV2MessageOptions(container);
                     return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
                 }
 
