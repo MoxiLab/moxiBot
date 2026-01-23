@@ -28,3 +28,6 @@ coverage-final.json
 # System
 .DS_Store
 Thumbs.db
+
+# Temporary files
+tmp/
