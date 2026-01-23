@@ -3,6 +3,7 @@ const { Bot } = require('../Config');
 const moxi = require('../i18n');
 const { loadCatalog, resolveLocalizedString, resolveCategoryFromLanguages, normalizeItemForLang } = require('./inventoryCatalog');
 const { EMOJIS } = require('./emojis');
+const { BANK_UPGRADE_ITEM_ID, getBankUpgradeCost } = require('./bankSystem');
 
 function slugify(input) {
     return String(input || '')
@@ -34,12 +35,14 @@ function buildShopData({ catalogPath, lang = process.env.DEFAULT_LANG || 'es-ES'
         for (const item of cat.items) {
             if (!item || !item.id) continue;
             const normalized = normalizeItemForLang(item, lang);
+            const computedPrice = Number.isFinite(item.price) ? item.price : 0;
+            const price = item.id === BANK_UPGRADE_ITEM_ID ? getBankUpgradeCost(0) : computedPrice;
             allItems.push({
                 shopId: index++,
                 itemId: item.id,
                 name: resolveLocalizedString(normalized?.name, lang) || item.id,
                 description: resolveLocalizedString(normalized?.description, lang) || '',
-                price: Number.isFinite(item.price) ? item.price : 0,
+                price,
                 rarity: item.rarity || 'common',
                 categoryLabel: cat.label,
                 categoryKey: cat.key,
