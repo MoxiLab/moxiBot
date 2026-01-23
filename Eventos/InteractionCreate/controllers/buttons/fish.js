@@ -92,13 +92,13 @@ module.exports = async function fishButtons(interaction) {
             if (res?.reason === 'cooldown' && !shouldShowCooldownNotice({ userId, key: 'fish' })) {
                 return true;
             }
-            const payload = buildFishResultPayload({ zone, res, lang });
+            const payload = buildFishResultPayload({ zone, res, lang, userId });
             await interaction.followUp({ ...payload, flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2 }).catch(() => null);
             return true;
         }
 
         // Resultado público editando el mensaje
-        const payload = buildFishResultPayload({ zone, res, lang });
+        const payload = buildFishResultPayload({ zone, res, lang, userId });
         await interaction.message?.edit?.(payload).catch(() => null);
         return true;
     }
