@@ -2,6 +2,7 @@ const { MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
+const { buildRemindButton } = require('../../Util/cooldownReminderUI');
 const {
     listJobs,
     resolveJob,
@@ -86,14 +87,18 @@ module.exports = {
 
             if (!res.ok) {
                 if (res.reason === 'cooldown') {
+                    const fireAt = Date.now() + (Number(res.nextInMs) || 0);
+                    const container = buildNoticeContainer({
+                        emoji: EMOJIS.hourglass,
+                        title: t('COOLDOWN_TITLE'),
+                        text: t('COOLDOWN_TEXT', { next: res.nextInText, balance: res.balance }),
+                    });
+                    container.addSeparatorComponents(s => s.setDivider(true));
+                    container.addActionRowComponents(r => r.addComponents(
+                        buildRemindButton({ type: 'work', fireAt, userId: message.author.id })
+                    ));
                     return message.reply(
-                        asV2MessageOptions(
-                            buildNoticeContainer({
-                                emoji: EMOJIS.hourglass,
-                                title: t('COOLDOWN_TITLE'),
-                                text: t('COOLDOWN_TEXT', { next: res.nextInText, balance: res.balance }),
-                            })
-                        )
+                        asV2MessageOptions(container)
                     );
                 }
                 if (res.reason === 'no-job') {
@@ -218,14 +223,18 @@ module.exports = {
 
             if (!res.ok) {
                 if (res.reason === 'cooldown') {
+                    const fireAt = Date.now() + (Number(res.nextInMs) || 0);
+                    const container = buildNoticeContainer({
+                        emoji: EMOJIS.hourglass,
+                        title: t('COOLDOWN_TITLE'),
+                        text: t('COOLDOWN_TEXT', { next: res.nextInText, balance: res.balance }),
+                    });
+                    container.addSeparatorComponents(s => s.setDivider(true));
+                    container.addActionRowComponents(r => r.addComponents(
+                        buildRemindButton({ type: 'work', fireAt, userId: message.author.id })
+                    ));
                     return message.reply(
-                        asV2MessageOptions(
-                            buildNoticeContainer({
-                                emoji: EMOJIS.hourglass,
-                                title: t('COOLDOWN_TITLE'),
-                                text: t('COOLDOWN_TEXT', { next: res.nextInText, balance: res.balance }),
-                            })
-                        )
+                        asV2MessageOptions(container)
                     );
                 }
 
