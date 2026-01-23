@@ -41,6 +41,14 @@ restoreTimers(async (guildId, channelId, userId, minutos) => {
     }
 });
 
+// Reminders de cooldown (Economy)
+try {
+    const { restoreCooldownReminders } = require('./Util/cooldownReminders');
+    restoreCooldownReminders(client).catch(() => null);
+} catch {
+    // best-effort
+}
+
 // Notificación visual de apagado (shutdown) modular
 const { setupShutdownHandler } = require("./Util/shutdownHandler");
 const channelId = process.env.ERROR_CHANNEL_ID || '1459913736050704485';
