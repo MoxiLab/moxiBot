@@ -5,10 +5,6 @@ const { getGuildSettingsCached } = require('../../Util/guildSettings');
 const debugHelper = require('../../Util/debugHelper');
 const { trackBotUserUsage } = require('../../Util/botUsageTracker');
 
-const selectMenuController = require("./controllers/selectMenu");
-const buttonController = require("./controllers/button");
-const modalController = require("./controllers/modals");
-
 Moxi.on("interactionCreate", async (interaction) => {
   if (interaction.channel.type === 'dm') return;
 
@@ -99,10 +95,13 @@ Moxi.on("interactionCreate", async (interaction) => {
           debugHelper.log('help', `[SelectRoute] received customId=${interaction.customId} values=${Array.isArray(interaction.values) ? interaction.values.join(',') : 'n/a'} guildId=${interaction.guildId || 'n/a'} userId=${interaction.user?.id || 'n/a'}`);
         }
       } catch (e) { }
+      const selectMenuController = require("./controllers/selectMenu");
       await selectMenuController(interaction, Moxi, logger);
     } else if (interaction.isButton()) {
+      const buttonController = require("./controllers/button");
       await buttonController(interaction, Moxi, logger);
     } else if (interaction.isModalSubmit && interaction.isModalSubmit()) {
+      const modalController = require("./controllers/modals");
       await modalController(interaction, Moxi, logger);
       if (interaction.customId && interaction.customId.startsWith('help2_jump_modal:')) {
         const moxi = require("../../i18n");

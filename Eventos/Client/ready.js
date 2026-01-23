@@ -17,12 +17,27 @@ module.exports = async (Moxi) => {
         if (Moxi.shard) {
             // Aggregate guild and user counts from all shards
             const guildCounts = await Moxi.shard.fetchClientValues('guilds.cache.size');
-            const userCounts = await Moxi.shard.fetchClientValues('users.cache.size');
             totalGuilds = guildCounts.reduce((a, b) => a + b, 0);
-            totalUsers = userCounts.reduce((a, b) => a + b, 0);
+            if (typeof Moxi.shard.broadcastEval === 'function') {
+                const userCounts = await Moxi.shard.broadcastEval((c) => {
+                    let users = 0;
+                    c.guilds.cache.forEach((guild) => {
+                        users += guild?.memberCount ?? 0;
+                    });
+                    return users;
+                });
+                totalUsers = Array.isArray(userCounts) ? userCounts.reduce((a, b) => a + b, 0) : 0;
+            } else {
+                const userCounts = await Moxi.shard.fetchClientValues('users.cache.size');
+                totalUsers = userCounts.reduce((a, b) => a + b, 0);
+            }
         } else {
             totalGuilds = Moxi.guilds.cache.size;
-            totalUsers = Moxi.users.cache.size;
+            let users = 0;
+            Moxi.guilds.cache.forEach((guild) => {
+                users += guild?.memberCount ?? 0;
+            });
+            totalUsers = users;
         }
         return [
             { name: moxi.translate('BOT_STATUS_VERSION', lang, { version: require('../../package.json').version }), type: ActivityType.Custom },

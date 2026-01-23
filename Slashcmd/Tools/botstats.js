@@ -93,24 +93,40 @@ function formatUptime(ms) {
 async function getShardTotals(client) {
     try {
         if (!client?.shard || typeof client.shard.fetchClientValues !== 'function') {
+            let users = 0;
+            client?.guilds?.cache?.forEach((guild) => {
+                users += guild?.memberCount ?? 0;
+            });
             return {
                 guilds: client?.guilds?.cache?.size ?? 0,
-                users: client?.users?.cache?.size ?? 0,
+                users,
                 shardCount: client?.shard?.count ?? 1,
             };
         }
 
         const guildCounts = await client.shard.fetchClientValues('guilds.cache.size');
-        const userCounts = await client.shard.fetchClientValues('users.cache.size');
+        const userCounts = typeof client.shard.broadcastEval === 'function'
+            ? await client.shard.broadcastEval((c) => {
+                let users = 0;
+                c.guilds.cache.forEach((guild) => {
+                    users += guild?.memberCount ?? 0;
+                });
+                return users;
+            })
+            : await client.shard.fetchClientValues('users.cache.size');
 
         const guilds = Array.isArray(guildCounts) ? guildCounts.reduce((a, b) => a + b, 0) : 0;
         const users = Array.isArray(userCounts) ? userCounts.reduce((a, b) => a + b, 0) : 0;
 
         return { guilds, users, shardCount: client.shard.count };
     } catch {
+        let users = 0;
+        client?.guilds?.cache?.forEach((guild) => {
+            users += guild?.memberCount ?? 0;
+        });
         return {
             guilds: client?.guilds?.cache?.size ?? 0,
-            users: client?.users?.cache?.size ?? 0,
+            users,
             shardCount: client?.shard?.count ?? 1,
         };
     }
@@ -120,7 +136,10 @@ async function getShardTotalsExtended(client) {
     try {
         if (!client?.shard || typeof client.shard.broadcastEval !== 'function') {
             const guilds = client?.guilds?.cache?.size ?? 0;
-            const users = client?.users?.cache?.size ?? 0;
+            let users = 0;
+            client?.guilds?.cache?.forEach((guild) => {
+                users += guild?.memberCount ?? 0;
+            });
             const channels = client?.guilds?.cache
                 ? client.guilds.cache.reduce((sum, g) => sum + (g.channels?.cache?.size ?? 0), 0)
                 : 0;
@@ -134,7 +153,10 @@ async function getShardTotalsExtended(client) {
 
         const results = await client.shard.broadcastEval((c) => {
             const guilds = c?.guilds?.cache?.size ?? 0;
-            const users = c?.users?.cache?.size ?? 0;
+            let users = 0;
+            c?.guilds?.cache?.forEach((guild) => {
+                users += guild?.memberCount ?? 0;
+            });
             const channels = c?.guilds?.cache
                 ? c.guilds.cache.reduce((sum, g) => sum + (g.channels?.cache?.size ?? 0), 0)
                 : 0;

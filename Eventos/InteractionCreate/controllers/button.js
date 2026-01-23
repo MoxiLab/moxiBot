@@ -23,6 +23,7 @@ const handlers = [
   require('./buttons/tictactoe'),
   require('./buttons/zones'),
   require('./buttons/crime'),
+  require('./buttons/servers'),
   require('./buttons/leave'), // <-- Añadido para leave
   require('./buttons/workList'),
   require('./buttons/workApply'),
