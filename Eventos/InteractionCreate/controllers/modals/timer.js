@@ -95,6 +95,6 @@ module.exports = async function timerModalHandler(interaction, Moxi, logger) {
         }
     });
 
-    await interaction.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
+    await interaction.reply({ components: [container], flags: MessageFlags.IsComponentsV2 });
     return true;
 };

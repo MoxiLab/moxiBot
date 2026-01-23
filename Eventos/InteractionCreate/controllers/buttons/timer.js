@@ -1,4 +1,4 @@
-const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, MessageFlags, ContainerBuilder, ButtonBuilder, ButtonStyle, MediaGalleryBuilder, MediaGalleryItemBuilder } = require('discord.js');
+const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, MessageFlags, PermissionFlagsBits, ContainerBuilder, ButtonBuilder, ButtonStyle, MediaGalleryBuilder, MediaGalleryItemBuilder } = require('discord.js');
 const moxi = require('../../../../i18n');
 const { Bot } = require('../../../../Config');
 const { EMOJIS } = require('../../../../Util/emojis');
@@ -6,6 +6,11 @@ const timerStorage = require('../../../../Util/timerStorage');
 
 module.exports = async function timerButtonHandler(interaction, Moxi, logger) {
     if (!interaction.customId) return false;
+
+    const isAdmin = Boolean(
+        interaction.memberPermissions?.has?.(PermissionFlagsBits.Administrator)
+        || interaction.member?.permissions?.has?.(PermissionFlagsBits.Administrator)
+    );
 
     // Botón para crear nuevo temporizador
     if (interaction.customId === 'nuevo_timer') {
@@ -39,41 +44,66 @@ module.exports = async function timerButtonHandler(interaction, Moxi, logger) {
         return true;
     }
 
-    // Botón para cancelar temporizador
+    async function updateTimerList() {
+        const comandos = require('../../../../Comandos/Tools/timer');
+        const allTimers = timerStorage.getAllTimers();
+        const container = comandos.buildListContainer(Moxi, interaction, allTimers);
+        await interaction.update({ components: [container], flags: MessageFlags.IsComponentsV2 });
+    }
+
+    // Botón para cancelar temporizador (desde la lista)
     if (interaction.customId.startsWith('cancel_timer_')) {
-        const [_, guildId, channelId] = interaction.customId.split('_');
-        const timer = timerStorage.getTimer(guildId, channelId);
-        if (!timer) {
-            // Actualizar el mensaje original con la lista nueva (sin ese temporizador)
-            const comandos = require('../../../../Comandos/Tools/timer');
-            const allTimers = timerStorage.getAllTimers();
-            const container = comandos.buildListContainer(Moxi, interaction, allTimers);
-            await interaction.update({ content: '', components: [container], flags: 32768 });
+        // Formato: cancel_timer_<guildId>_<channelId>
+        const parts = interaction.customId.split('_');
+        const guildId = parts[2];
+        const channelId = parts[3];
+
+        if (!guildId || !channelId) {
+            await interaction.reply({ content: 'ID de temporizador inválido.', flags: MessageFlags.Ephemeral });
             return true;
         }
-        // Solo el usuario creador puede cancelar
-        if (timer.userId !== interaction.user.id) {
-            await interaction.reply({ content: 'Solo el usuario que creó el temporizador puede cancelarlo.', flags: MessageFlags.Ephemeral });
+
+        const timer = timerStorage.getTimer(guildId, channelId);
+        if (!timer) {
+            await updateTimerList();
+            return true;
+        }
+        // Solo el usuario creador o un admin puede cancelar
+        if (timer.userId !== interaction.user.id && !isAdmin) {
+            await interaction.reply({ content: 'Solo el usuario que creó el temporizador o un admin puede cancelarlo.', flags: MessageFlags.Ephemeral });
             return true;
         }
         // Eliminar correctamente de memoria y de MongoDB
         if (typeof timerStorage.clearTimer === 'function') {
             await timerStorage.clearTimer(guildId, channelId);
         }
-        // Actualizar el mensaje original con la lista nueva
-        const comandos = require('../../../../Comandos/Tools/timer');
-        const allTimers = timerStorage.getAllTimers();
-        const container = comandos.buildListContainer(Moxi, interaction, allTimers);
-        await interaction.update({ content: '', components: [container], flags: 32768 });
+        await updateTimerList();
+        return true;
+    }
+
+    // Botón para cancelar temporizador (del canal actual)
+    if (interaction.customId === 'cancel_timer') {
+        const guildId = interaction.guildId || interaction.guild?.id;
+        const channelId = interaction.channelId || interaction.channel?.id;
+        const timer = timerStorage.getTimer(guildId, channelId);
+        if (!timer) {
+            await interaction.reply({ content: 'No hay un temporizador activo en este canal.', flags: MessageFlags.Ephemeral });
+            return true;
+        }
+        if (timer.userId !== interaction.user.id && !isAdmin) {
+            await interaction.reply({ content: 'Solo el usuario que creó el temporizador o un admin puede cancelarlo.', flags: MessageFlags.Ephemeral });
+            return true;
+        }
+        if (typeof timerStorage.clearTimer === 'function') {
+            await timerStorage.clearTimer(guildId, channelId);
+        }
+        await interaction.reply({ content: '✅ Temporizador cancelado.', flags: MessageFlags.Ephemeral });
         return true;
     }
 
     // Botón para refrescar la lista (ahora con sufijo único)
     if (interaction.customId.startsWith('refresh_timer_list')) {
-        const comandos = require('../../../../Comandos/Tools/timer');
-        const allTimers = timerStorage.getAllTimers();
-        const container = comandos.buildListContainer(Moxi, interaction, allTimers);
-        await interaction.update({ content: '', components: [container], flags: 32768 });
+        await updateTimerList();
         return true;
     }
 

@@ -46,7 +46,7 @@ module.exports = {
             )
         );
 
-        await interaction.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2, ephemeral: false });
+        await interaction.reply({ components: [container], flags: MessageFlags.IsComponentsV2, ephemeral: false });
 
         // Esperar el tiempo y avisar
         setTimeout(async () => {

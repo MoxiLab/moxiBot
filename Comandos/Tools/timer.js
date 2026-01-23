@@ -90,9 +90,9 @@ module.exports = {
             }
             const container = buildListContainer(Moxi, message, allTimers, lang);
             if (message && message.reply) {
-                return message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
+                return message.reply({ components: [container], flags: MessageFlags.IsComponentsV2 });
             } else if (message && message.send) {
-                return message.send({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
+                return message.send({ components: [container], flags: MessageFlags.IsComponentsV2 });
             }
         }
         const guildId = message.guild?.id;
@@ -137,7 +137,7 @@ module.exports = {
                     .addTextDisplayComponents(c =>
                         c.setContent(`${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`)
                     );
-                return message.reply({ content: '', components: [helpContainer], flags: MessageFlags.IsComponentsV2 });
+                return message.reply({ components: [helpContainer], flags: MessageFlags.IsComponentsV2 });
             }
             let desc = '';
             if (current) {
@@ -172,7 +172,7 @@ module.exports = {
                 .addTextDisplayComponents(c =>
                     c.setContent(`${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`)
                 );
-            return message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
+            return message.reply({ components: [container], flags: MessageFlags.IsComponentsV2 });
         }
 
         // Si el argumento es un número, crear el temporizador
@@ -243,6 +243,6 @@ module.exports = {
             }
         });
 
-        await message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
+        await message.reply({ components: [container], flags: MessageFlags.IsComponentsV2 });
     }
 };
