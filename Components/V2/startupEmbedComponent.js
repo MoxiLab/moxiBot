@@ -1,4 +1,4 @@
-const { ContainerBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { ContainerBuilder, LinkButtonBuilder } = require('discord.js');
 const { Bot } = require('../../Config');
 
 function formatUptime(ms) {
@@ -61,9 +61,8 @@ function getStartupComponentV2(client) {
         )
         .addActionRowComponents(row =>
             row.addComponents(
-                new ButtonBuilder()
+                new LinkButtonBuilder()
                     .setLabel('Ir al server')
-                    .setStyle(ButtonStyle.Link)
                     .setURL('https://panel.bernini.me/server/1e3f6120/console')
             )
         );

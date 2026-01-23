@@ -1,4 +1,5 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { ActionRowBuilder, ButtonStyle } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 
 // Componente V2 reutilizable para mensajes de autonuke y otros
 // Devuelve un ActionRowBuilder con un botón de "Refrescar" estilo V2

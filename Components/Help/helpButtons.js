@@ -1,5 +1,6 @@
 // Botones de navegación y ayuda para el menú de /help
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { ActionRowBuilder, ButtonStyle } = require("discord.js");
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const { EMOJIS } = require("../../Util/emojis");
 
 const help = new ActionRowBuilder().addComponents(
