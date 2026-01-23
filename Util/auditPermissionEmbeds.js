@@ -1,6 +1,6 @@
 // Plantilla para logs informativos de permisos
 // Plantilla V2 para logs informativos de permisos insuficientes
-const { ContainerBuilder, TextDisplayBuilder, SeparatorBuilder } = require('discord.js');
+const { ContainerBuilder, TextDisplayBuilder, SeparatorBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 const PERM_COLOR = 0xFEE75C;
 const PERM_ICON = 'https://cdn.discordapp.com/emojis/802917097851469834.png';
 

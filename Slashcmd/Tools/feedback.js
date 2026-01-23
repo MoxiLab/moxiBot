@@ -1,5 +1,5 @@
 const {
-  ChatInputCommandBuilder: SlashCommandBuilder,
+  SlashCommandBuilder,
   ContainerBuilder,
   MessageFlags,
 } = require('discord.js');
@@ -12,7 +12,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('feedback')
     .setDescription('Send feedback about the bot')
-    .addStringOptions((opt) =>
+    .addStringOption((opt) =>
       opt
         .setName('text')
         .setDescription('Your feedback')

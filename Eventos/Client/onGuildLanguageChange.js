@@ -5,7 +5,7 @@
 const GuildMessage = require('../../Models/GuildMessageSchema');
 const fs = require('fs');
 const path = require('path');
-const { ContainerBuilder, LinkButtonBuilder, MessageFlags } = require('discord.js');
+const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 const { Bot } = require('../../Config');
 const { EMOJIS } = require('../../Util/emojis');
 const { isFlagEnabled } = require('../../Util/debug');
@@ -60,11 +60,13 @@ module.exports = async (guild, newLanguage) => {
                         const discordGuidelinesUrl = 'https://discord.com/guidelines';
                         container.addActionRowComponents(row =>
                             row.addComponents(
-                                new LinkButtonBuilder()
+                                new ButtonBuilder()
                                     .setLabel('Términos de Discord')
+                                    .setStyle(ButtonStyle.Link)
                                     .setURL(discordTermsUrl),
-                                new LinkButtonBuilder()
+                                new ButtonBuilder()
                                     .setLabel('Normas de Discord')
+                                    .setStyle(ButtonStyle.Link)
                                     .setURL(discordGuidelinesUrl)
                             )
                         );

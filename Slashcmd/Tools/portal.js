@@ -1,9 +1,10 @@
 const {
-    ChatInputCommandBuilder: SlashCommandBuilder,
+    SlashCommandBuilder,
     ContainerBuilder,
     MessageFlags,
     PermissionFlagsBits,
-    LinkButtonBuilder,
+    ButtonBuilder,
+    ButtonStyle,
 } = require('discord.js');
 
 const { Bot } = require('../../Config');
@@ -15,7 +16,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('portal')
         .setDescription('Muestra el portal del servidor (enlace oficial de invitación)')
-        .addBooleanOptions((opt) =>
+        .addBooleanOption((opt) =>
             opt
                 .setName('publico')
                 .setDescription('Mostrar el portal públicamente (por defecto: oculto)')
@@ -141,7 +142,7 @@ module.exports = {
                 )
             )
             .addActionRowComponents((row) =>
-                row.addComponents(new LinkButtonBuilder().setLabel(t('PORTAL_BUTTON', 'Abrir portal')).setURL(inviteUrl))
+                row.addComponents(new ButtonBuilder().setLabel(t('PORTAL_BUTTON', 'Abrir portal')).setStyle(ButtonStyle.Link).setURL(inviteUrl))
             )
             .addSeparatorComponents((s) => s.setDivider(true))
             .addTextDisplayComponents((c) => c.setContent(`© ${Moxi.user.username} • ${year}`));

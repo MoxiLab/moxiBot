@@ -6,7 +6,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:clean": "node index.js 2>&1 | findstr /V \"Multiple Resolves\" | findstr /V \"AbortError\" | findstr /V \"DeprecationWarning\"",
     "dev": "set NODE_ENV=development&& set DEBUG=1&& nodemon index.js",
-    "dev:test": "set NODE_ENV=development&& set DEBUG=1&& set TEST_MODE=1&& nodemon index.js",
     "postinstall": "patch-package"
   },
   "keywords": [
@@ -25,7 +24,7 @@
     "color": "^5.0.3",
     "colors": "^1.4.0",
     "discord-arts": "^0.7.1",
-    "discord.js": "^15.0.0-dev.1769083302-838cd2da3",
+    "discord.js": "^14.25.1",
     "dotenv": "^17.2.3",
     "i18next": "^25.7.3",
     "i18next-fs-backend": "^2.6.1",

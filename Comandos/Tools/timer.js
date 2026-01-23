@@ -1,14 +1,5 @@
 
-const {
-    ContainerBuilder,
-    MessageFlags,
-    MediaGalleryBuilder,
-    MediaGalleryItemBuilder,
-    DangerButtonBuilder,
-    SecondaryButtonBuilder,
-    PrimaryButtonBuilder,
-    LinkButtonBuilder,
-} = require('discord.js');
+const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags, MediaGalleryBuilder, MediaGalleryItemBuilder } = require('discord.js');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { Bot } = require('../../Config');
@@ -43,16 +34,17 @@ function buildListContainer(Moxi, message, allTimers, lang = 'es-ES') {
         );
         container.addActionRowComponents(row =>
             row.addComponents(
-                new DangerButtonBuilder()
+                new ButtonBuilder()
                     .setCustomId(`cancel_timer_${t.guildId}_${t.channelId}`)
                     .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
-                    ,
-                new SecondaryButtonBuilder()
+                    .setStyle(ButtonStyle.Danger),
+                new ButtonBuilder()
                     .setCustomId(`refresh_timer_list_${t.guildId}_${t.channelId}`)
                     .setLabel(moxi.translate('REFRESH', lang) || 'Refrescar')
-                    ,
-                new LinkButtonBuilder()
+                    .setStyle(ButtonStyle.Secondary),
+                new ButtonBuilder()
                     .setLabel(moxi.translate('GO_TO_SERVER', lang) || 'Ir al servidor')
+                    .setStyle(ButtonStyle.Link)
                     .setURL(`https://discord.com/channels/${t.guildId}`)
             )
         );
@@ -134,9 +126,10 @@ module.exports = {
                     .addSeparatorComponents(s => s.setDivider(true))
                     .addActionRowComponents(row =>
                         row.addComponents(
-                            new PrimaryButtonBuilder()
+                            new ButtonBuilder()
                                 .setCustomId('nuevo_timer')
                                 .setLabel('Nuevo temporizador')
+                                .setStyle(ButtonStyle.Primary)
                         )
                     )
                     .addSeparatorComponents(s => s.setDivider(true))
@@ -168,9 +161,10 @@ module.exports = {
                 .addSeparatorComponents(s => s.setDivider(true))
                 .addActionRowComponents(row =>
                     row.addComponents(
-                        new PrimaryButtonBuilder()
+                        new ButtonBuilder()
                             .setCustomId('nuevo_timer')
                             .setLabel('Nuevo temporizador')
+                            .setStyle(ButtonStyle.Primary)
                     )
                 )
                 .addSeparatorComponents(s => s.setDivider(true))
@@ -213,9 +207,10 @@ module.exports = {
             .addSeparatorComponents(s => s.setDivider(true))
             .addActionRowComponents(row =>
                 row.addComponents(
-                    new DangerButtonBuilder()
+                    new ButtonBuilder()
                         .setCustomId('cancel_timer')
                         .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
+                        .setStyle(ButtonStyle.Danger)
                 )
             )
             .addSeparatorComponents(s => s.setDivider(true))

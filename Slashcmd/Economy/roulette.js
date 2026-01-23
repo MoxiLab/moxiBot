@@ -1,4 +1,4 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildNoticeContainer } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
@@ -118,7 +118,7 @@ module.exports = {
         .setName('roulette')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addIntegerOptions((opt) =>
+        .addIntegerOption((opt) =>
             opt
                 .setName('cantidad')
                 .setDescription('Cantidad a apostar')
@@ -126,7 +126,7 @@ module.exports = {
                 .setMinValue(1)
                 .setMaxValue(1000000)
         )
-        .addStringOptions((opt) =>
+        .addStringOption((opt) =>
             opt
                 .setName('apuesta')
                 .setDescription('rojo/negro/par/impar/alto/bajo/docena1/2/3 o número 0-36')

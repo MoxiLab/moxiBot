@@ -1,4 +1,4 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, PermissionsBitField, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, PermissionsBitField, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
@@ -18,17 +18,17 @@ module.exports = {
         .setName('moxishop')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addSubcommands((sc) =>
+        .addSubcommand((sc) =>
             sc
                 .setName('list')
                 .setDescription('Muestra la lista de ítems disponibles')
-                .addStringOptions((opt) =>
+                .addStringOption((opt) =>
                     opt
                         .setName('categoria')
                         .setDescription('Filtra por categoría (opcional)')
                         .setRequired(false)
                 )
-                .addIntegerOptions((opt) =>
+                .addIntegerOption((opt) =>
                     opt
                         .setName('pagina')
                         .setDescription('Página (opcional)')
@@ -36,24 +36,24 @@ module.exports = {
                         .setMinValue(1)
                 )
         )
-        .addSubcommands((sc) =>
+        .addSubcommand((sc) =>
             sc
                 .setName('buy')
                 .setDescription('Compra un ítem por su ID, nombre o itemId de la tienda')
-                .addStringOptions((opt) =>
+                .addStringOption((opt) =>
                     opt
                         .setName('item')
                         .setDescription('Nombre o itemId (ej: "Hacha elemental" o "herramientas/hacha-elemental")')
                         .setRequired(false)
                 )
-                .addIntegerOptions((opt) =>
+                .addIntegerOption((opt) =>
                     opt
                         .setName('id')
                         .setDescription('ID del ítem (se ve en /shop list)')
                         .setRequired(false)
                         .setMinValue(1)
                 )
-                .addIntegerOptions((opt) =>
+                .addIntegerOption((opt) =>
                     opt
                         .setName('cantidad')
                         .setDescription('Cantidad a comprar')

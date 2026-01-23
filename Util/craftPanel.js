@@ -1,13 +1,13 @@
 const {
     ActionRowBuilder,
-    DangerButtonBuilder,
+    ButtonBuilder,
+    ButtonStyle,
     EmbedBuilder,
-    SecondaryButtonBuilder,
     StringSelectMenuBuilder,
 } = require('discord.js');
 
 const { Bot } = require('../Config');
-const { EMOJIS, toEmojiObject } = require('./emojis');
+const { EMOJIS } = require('./emojis');
 const { getItemById } = require('./inventoryCatalog');
 const { listRecipes, getRecipeDisplayName } = require('./craftSystem');
 
@@ -99,22 +99,27 @@ function buildCraftMessage({ userId, page = 0, pageSize = 4, lang } = {}) {
     const selectRow = new ActionRowBuilder().addComponents(select);
 
     const buttonRow = new ActionRowBuilder().addComponents(
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`craft:nav:${userId}:${safePage}:prev`)
-            .setEmoji(toEmojiObject(EMOJIS.arrowLeft))
+            .setEmoji(EMOJIS.arrowLeft)
+            .setStyle(ButtonStyle.Secondary)
             .setDisabled(prevDisabled),
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`craft:home:${userId}`)
-            .setEmoji(toEmojiObject(EMOJIS.package)),
-        new DangerButtonBuilder()
+            .setEmoji(EMOJIS.package)
+            .setStyle(ButtonStyle.Secondary),
+        new ButtonBuilder()
             .setCustomId(`craft:close:${userId}`)
-            .setEmoji(toEmojiObject(EMOJIS.cross)),
-        new SecondaryButtonBuilder()
+            .setEmoji(EMOJIS.cross)
+            .setStyle(ButtonStyle.Danger),
+        new ButtonBuilder()
             .setCustomId(`craft:info:${userId}`)
-            .setEmoji(toEmojiObject(EMOJIS.question)),
-        new SecondaryButtonBuilder()
+            .setEmoji(EMOJIS.question)
+            .setStyle(ButtonStyle.Secondary),
+        new ButtonBuilder()
             .setCustomId(`craft:nav:${userId}:${safePage}:next`)
-            .setEmoji(toEmojiObject(EMOJIS.arrowRight))
+            .setEmoji(EMOJIS.arrowRight)
+            .setStyle(ButtonStyle.Secondary)
             .setDisabled(nextDisabled)
     );
 

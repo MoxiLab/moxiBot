@@ -7,7 +7,6 @@ const { getSettings: getBugSettings } = require('../../Util/bugStorage');
 const moxi = require('../../i18n');
 const logger = require('../../Util/logger');
 const debugHelper = require('../../Util/debugHelper');
-const { isOwnerOnlyModeEnabled, isOwnerUser, getOwnerOnlyPrefix } = require('../../Util/ownerOnlyMode');
 const { trackBotUserUsage } = require('../../Util/botUsageTracker');
 const { awardXpForMessage } = require('../../Util/levels');
 const afkStorage = require('../../Util/afkStorage');
@@ -150,13 +149,6 @@ Moxi.on("messageCreate", async (message) => {
   if (message.channel.type === 'dm') return;
   if (message.author.bot) return;
 
-  // Modo privado: solo owners pueden usar comandos y con prefijo dedicado.
-  // Importante: aquí cortamos temprano para evitar que miembros disparen handlers de comandos.
-  const ownerOnlyEnabled = isOwnerOnlyModeEnabled();
-  const requesterId = message.author?.id;
-  const requesterIsOwner = ownerOnlyEnabled ? await isOwnerUser({ client: Moxi, userId: requesterId }) : false;
-  if (ownerOnlyEnabled && !requesterIsOwner) return;
-
   const globalPrefixes = (Array.isArray(Config?.Bot?.Prefix) && Config.Bot.Prefix.length)
     ? Config.Bot.Prefix
     : [process.env.PREFIX || '.'];
@@ -192,11 +184,8 @@ Moxi.on("messageCreate", async (message) => {
   // - Si hay prefijo en DB, usar ese; si no, los globales
   // - Siempre permitir la mención del bot
   // - Siempre permitir 'moxi' y 'mx' (case-insensitive) como prefijo palabra
-  // Nota: antes se añadía '.' como prefijo "universal" por compat, lo que hacía
-  // que el bot siguiera respondiendo a '.' aunque el prefijo real fuese otro.
-  const prefixesToUse = ownerOnlyEnabled
-    ? uniqStrings([getOwnerOnlyPrefix({ fallback: globalPrefixes[0] }), ...mentionPrefixes])
-    : uniqStrings([...(settings?.Prefix ? [prefix] : globalPrefixes), ...mentionPrefixes, 'moxi', 'mx']);
+  // Nota: añadimos '.' como prefijo "universal" para comandos estilo .bag
+  const prefixesToUse = uniqStrings([...(settings?.Prefix ? [prefix] : globalPrefixes), '.', ...mentionPrefixes, 'moxi', 'mx']);
   const matched = matchPrefix(message.content, prefixesToUse);
 
   // IMPORTANTE: no queremos que ciertos comandos (p.ej. say) quiten el estado AFK del usuario.

@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require('discord.js');
+const { PermissionsBitField, ButtonStyle } = require('discord.js');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { pickMentionOrId, ensureUserAndBotPerms } = require('./_utils');
@@ -78,7 +78,7 @@ module.exports = {
                 ],
                 confirmCustomId: `modv2:confirm:${token}`,
                 cancelCustomId: `modv2:cancel:${token}`,
-                confirmStyle: 3,
+                confirmStyle: ButtonStyle.Success,
             })
         );
     },

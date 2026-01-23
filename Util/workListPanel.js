@@ -1,14 +1,14 @@
 const {
     ContainerBuilder,
-    DangerButtonBuilder,
-    SecondaryButtonBuilder,
+    ButtonBuilder,
+    ButtonStyle,
     MessageFlags,
     ThumbnailBuilder,
 } = require('discord.js');
 
 const moxi = require('../i18n');
 const { Bot } = require('../Config');
-const { EMOJIS, toEmojiObject } = require('./emojis');
+const { EMOJIS } = require('./emojis');
 const { listJobs, getJobDisplayName } = require('./workSystem');
 
 const COIN = '\u{1FA99}'; // 🪙
@@ -53,29 +53,34 @@ function buildWorkListButtons({ userId, page, totalPages, disabled = false } = {
     const safeUserId = String(userId || '').trim();
     const p = clampInt(page, 0, Math.max(0, (totalPages || 1) - 1));
 
-    const prev = new SecondaryButtonBuilder()
+    const prev = new ButtonBuilder()
         .setCustomId(`work_list:prev:${safeUserId}:${p}`)
-        .setEmoji(toEmojiObject(EMOJIS.arrowLeft))
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji(EMOJIS.arrowLeft)
         .setDisabled(disabled || p <= 0);
 
-    const refresh = new SecondaryButtonBuilder()
+    const refresh = new ButtonBuilder()
         .setCustomId(`work_list:refresh:${safeUserId}:${p}`)
-        .setEmoji(toEmojiObject('🐾'))
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji('🐾')
         .setDisabled(disabled);
 
-    const close = new DangerButtonBuilder()
+    const close = new ButtonBuilder()
         .setCustomId(`work_list:close:${safeUserId}:${p}`)
-        .setEmoji(toEmojiObject(EMOJIS.cross))
+        .setStyle(ButtonStyle.Danger)
+        .setEmoji(EMOJIS.cross)
         .setDisabled(disabled);
 
-    const help = new SecondaryButtonBuilder()
+    const help = new ButtonBuilder()
         .setCustomId(`work_list:help:${safeUserId}:${p}`)
-        .setEmoji(toEmojiObject(EMOJIS.question))
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji(EMOJIS.question)
         .setDisabled(disabled);
 
-    const next = new SecondaryButtonBuilder()
+    const next = new ButtonBuilder()
         .setCustomId(`work_list:next:${safeUserId}:${p}`)
-        .setEmoji(toEmojiObject(EMOJIS.arrowRight))
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji(EMOJIS.arrowRight)
         .setDisabled(disabled || p >= (totalPages - 1));
 
     return [prev, refresh, close, help, next];

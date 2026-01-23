@@ -1,5 +1,5 @@
 const {
-    ChatInputCommandBuilder: SlashCommandBuilder,
+    SlashCommandBuilder,
     PermissionFlagsBits,
     ContainerBuilder,
     MessageFlags,
@@ -34,23 +34,23 @@ module.exports = {
         .setName('audit')
         .setDescription('Configura el canal de auditoría (modlog)')
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
-        .addSubcommands(sub =>
+        .addSubcommand(sub =>
             sub
                 .setName('set')
                 .setDescription('Establecer el canal de auditoría')
-                .addChannelOptions(o => o.setName('canal').setDescription('Canal donde enviar los logs').setRequired(true))
+                .addChannelOption(o => o.setName('canal').setDescription('Canal donde enviar los logs').setRequired(true))
         )
-        .addSubcommands(sub =>
+        .addSubcommand(sub =>
             sub
                 .setName('status')
                 .setDescription('Ver el estado actual')
         )
-        .addSubcommands(sub =>
+        .addSubcommand(sub =>
             sub
                 .setName('on')
                 .setDescription('Activar auditoría (requiere canal configurado)')
         )
-        .addSubcommands(sub =>
+        .addSubcommand(sub =>
             sub
                 .setName('off')
                 .setDescription('Desactivar auditoría')

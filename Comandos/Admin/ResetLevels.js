@@ -1,4 +1,4 @@
-const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ContainerBuilder, MessageFlags, DangerButtonBuilder, SecondaryButtonBuilder, ActionRowBuilder } = require('discord.js');
+const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ContainerBuilder, MessageFlags, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const LevelSystem = require('../../Global/Helpers/LevelSystem');
 const { Bot } = require('../../Config');
 const debugHelper = require('../../Util/debugHelper');
@@ -77,12 +77,14 @@ module.exports = {
                     .addTextDisplayComponents(c =>
                         c.setContent(`© ${Moxi.user.username} • ${new Date().getFullYear()}`)
                     );
-                const confirmBtn = new DangerButtonBuilder()
+                const confirmBtn = new ButtonBuilder()
                     .setCustomId('confirm_server_reset')
-                    .setLabel(moxi.translate('CONFIRM', lang) || 'Confirmar');
-                const cancelBtn = new SecondaryButtonBuilder()
+                    .setLabel(moxi.translate('CONFIRM', lang) || 'Confirmar')
+                    .setStyle(ButtonStyle.Danger);
+                const cancelBtn = new ButtonBuilder()
                     .setCustomId('cancel_server_reset')
-                    .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar');
+                    .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
+                    .setStyle(ButtonStyle.Secondary);
                 const row = new ActionRowBuilder().addComponents(confirmBtn, cancelBtn);
                 container.addActionRowComponents(row);
                 const reply = await message.reply({
@@ -155,7 +157,6 @@ module.exports = {
 
             const target = interaction.options.getUser('usuario');
             const guildID = interaction.guildId;
-            const lang = await moxi.guildLang(guildID, process.env.DEFAULT_LANG || 'es-ES');
 
             if (target) {
                 const user = await LevelSystem.resetUser(guildID, target.id);
@@ -188,8 +189,8 @@ module.exports = {
                     .addTextDisplayComponents(c => c.setContent('¿Estás seguro de que quieres resetear todos los niveles del servidor?'));
 
                 const row = new ActionRowBuilder().addComponents(
-                    new DangerButtonBuilder().setCustomId('confirm_server_reset').setLabel(moxi.translate('CONFIRM', lang) || 'Confirmar'),
-                    new SecondaryButtonBuilder().setCustomId('cancel_server_reset').setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
+                    new ButtonBuilder().setCustomId('confirm_server_reset').setLabel(moxi.translate('CONFIRM', lang) || 'Confirmar').setStyle(ButtonStyle.Danger),
+                    new ButtonBuilder().setCustomId('cancel_server_reset').setLabel(moxi.translate('CANCEL', lang) || 'Cancelar').setStyle(ButtonStyle.Secondary)
                 );
                 container.addActionRowComponents(row);
 

@@ -1,4 +1,4 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');

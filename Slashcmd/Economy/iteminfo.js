@@ -1,4 +1,4 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildNoticeContainer } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
@@ -52,14 +52,14 @@ module.exports = {
         .setName('iteminfo')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addIntegerOptions((opt) =>
+        .addIntegerOption((opt) =>
             opt
                 .setName('id')
                 .setDescription('ID del ítem (se ve en /shop list y /bag)')
                 .setRequired(false)
                 .setMinValue(1)
         )
-        .addStringOptions((opt) =>
+        .addStringOption((opt) =>
             opt
                 .setName('item')
                 .setDescription('Nombre o itemId del ítem (alternativa a id)')

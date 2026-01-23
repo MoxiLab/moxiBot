@@ -1,54 +1,5 @@
 const { ContainerBuilder, MessageFlags } = require('discord.js');
 
-const FOURTEEN_DAYS_MS = 14 * 24 * 60 * 60 * 1000;
-
-async function purgeRecentMessages(channel, amount, { keepPinned = true } = {}) {
-  if (!channel?.messages?.fetch) {
-    throw new Error('Este canal no soporta fetch de mensajes.');
-  }
-
-  const fetchLimit = Math.min(100, Math.max(1, Number(amount) || 0) + 10);
-  const fetched = await channel.messages.fetch({ limit: fetchLimit });
-
-  const candidates = [];
-  for (const msg of fetched.values()) {
-    if (keepPinned && msg.pinned) continue;
-    candidates.push(msg);
-    if (candidates.length >= amount) break;
-  }
-
-  const cutoff = Date.now() - FOURTEEN_DAYS_MS;
-  const bulkIds = [];
-  const oldOnes = [];
-
-  for (const msg of candidates) {
-    const created = msg.createdTimestamp || 0;
-    if (created && created < cutoff) oldOnes.push(msg);
-    else bulkIds.push(msg.id);
-  }
-
-  let bulkCount = 0;
-  if (bulkIds.length && typeof channel.bulkDelete === 'function') {
-    const deleted = await channel.bulkDelete(bulkIds, true);
-    bulkCount = (typeof deleted === 'number') ? deleted : (deleted?.size ?? 0);
-    // En algunos casos bulkDelete borra correctamente pero devuelve 0 (p.ej. si no había cache).
-    // Como ya filtramos >14 días, el mínimo razonable es lo que intentamos borrar.
-    if (bulkCount === 0 && bulkIds.length > 0) bulkCount = bulkIds.length;
-  }
-
-  let oldCount = 0;
-  for (const msg of oldOnes) {
-    try {
-      await msg.delete();
-      oldCount++;
-    } catch {
-      // ignorar fallos individuales
-    }
-  }
-
-  return { deletedCount: bulkCount + oldCount, bulkCount, oldCount, attempted: candidates.length };
-}
-
 module.exports = {
   name: 'cls',
   alias: ['clear', 'limpiar'],
@@ -63,8 +14,8 @@ module.exports = {
       return message.reply('Debes especificar un número entre 1 y 100.');
     }
     try {
-      const result = await purgeRecentMessages(message.channel, amount, { keepPinned: true });
-      const deletedCount = (result.deletedCount === 0 && result.attempted > 0) ? result.attempted : result.deletedCount;
+      const deleted = await message.channel.bulkDelete(amount, true);
+      const deletedCount = deleted?.size ?? 0;
       // Componentes V2 para confirmación visual
       const container = new ContainerBuilder()
         .setAccentColor(0x00bfff)

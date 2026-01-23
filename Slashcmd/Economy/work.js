@@ -1,4 +1,4 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
@@ -68,16 +68,16 @@ module.exports = {
         .setName('work')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addSubcommands((s) =>
+        .addSubcommand((s) =>
             s
                 .setName('list')
                 .setDescription('Mira la lista de trabajos')
         )
-        .addSubcommands((s) =>
+        .addSubcommand((s) =>
             s
                 .setName('apply')
                 .setDescription('Aplica a un trabajo')
-                .addStringOptions((o) =>
+                .addStringOption((o) =>
                     o
                         .setName('trabajo')
                         .setDescription('ID o nombre del trabajo')
@@ -85,22 +85,22 @@ module.exports = {
                         .setRequired(true)
                 )
         )
-        .addSubcommands((s) =>
+        .addSubcommand((s) =>
             s
                 .setName('leave')
                 .setDescription('Renuncia a tu trabajo')
         )
-        .addSubcommands((s) =>
+        .addSubcommand((s) =>
             s
                 .setName('shift')
                 .setDescription('Completa un turno de trabajo')
         )
-        .addSubcommands((s) =>
+        .addSubcommand((s) =>
             s
                 .setName('stats')
                 .setDescription('Muestra tu progreso en el trabajo actual')
         )
-        .addSubcommands((s) =>
+        .addSubcommand((s) =>
             s
                 .setName('top')
                 .setDescription('Mira los mejores empleados de tu profesión')

@@ -1,5 +1,5 @@
 const {
-    ChatInputCommandBuilder: SlashCommandBuilder,
+    SlashCommandBuilder,
     ContainerBuilder,
     MessageFlags,
     PermissionFlagsBits,
@@ -14,13 +14,13 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('invite')
         .setDescription('Crea una invitación permanente del servidor')
-        .addChannelOptions((opt) =>
+        .addChannelOption((opt) =>
             opt
                 .setName('canal')
                 .setDescription('Canal donde se creará la invitación (opcional)')
                 .setRequired(false)
         )
-        .addBooleanOptions((opt) =>
+        .addBooleanOption((opt) =>
             opt
                 .setName('publico')
                 .setDescription('Enviar el enlace de forma pública (por defecto: oculto)')

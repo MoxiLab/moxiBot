@@ -1,6 +1,6 @@
 // Utilidad para construir el embed y los componentes del help
-const { ContainerBuilder, DangerButtonBuilder, MessageFlags, PrimaryButtonBuilder, SecondaryButtonBuilder } = require('discord.js');
-const { EMOJIS, toEmojiObject } = require('./emojis');
+const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { EMOJIS } = require('./emojis');
 const { Bot } = require('../Config');
 
 /**
@@ -23,29 +23,34 @@ function buildHelpEmbed({ page = 0, totalPages = 1, categoria = null, desc = 'Co
     .addSeparatorComponents(s => s.setDivider(true))
     .addTextDisplayComponents(c => c.setContent(pageFooter));
 
-  const prevButton = new PrimaryButtonBuilder()
+  const prevButton = new ButtonBuilder()
     .setCustomId('help_prev')
-    .setEmoji(toEmojiObject(EMOJIS.arrowLeft))
+    .setEmoji(EMOJIS.arrowLeft)
+    .setStyle(ButtonStyle.Primary)
     .setDisabled(totalPages <= 1 || page <= 0);
 
-  const homeButton = new SecondaryButtonBuilder()
+  const homeButton = new ButtonBuilder()
     .setCustomId('help_home')
-    .setEmoji(toEmojiObject(EMOJIS.home))
+    .setEmoji(EMOJIS.home)
+    .setStyle(ButtonStyle.Secondary)
     .setDisabled(false);
 
-  const closeButton = new DangerButtonBuilder()
+  const closeButton = new ButtonBuilder()
     .setCustomId('help_close')
-    .setEmoji(toEmojiObject(EMOJIS.cross))
+    .setEmoji(EMOJIS.cross)
+    .setStyle(ButtonStyle.Danger)
     .setDisabled(false);
 
-  const infoButton = new SecondaryButtonBuilder()
+  const infoButton = new ButtonBuilder()
     .setCustomId('help_info')
-    .setEmoji(toEmojiObject(EMOJIS.question))
+    .setEmoji(EMOJIS.question)
+    .setStyle(ButtonStyle.Secondary)
     .setDisabled(false);
 
-  const nextButton = new PrimaryButtonBuilder()
+  const nextButton = new ButtonBuilder()
     .setCustomId('help_next')
-    .setEmoji(toEmojiObject(EMOJIS.arrowRight))
+    .setEmoji(EMOJIS.arrowRight)
+    .setStyle(ButtonStyle.Primary)
     .setDisabled(totalPages <= 1 || page >= totalPages - 1);
 
   container.addActionRowComponents(row => row.addComponents(prevButton, homeButton, closeButton, infoButton, nextButton));

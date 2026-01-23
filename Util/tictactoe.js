@@ -1,8 +1,7 @@
-const { ContainerBuilder, DangerButtonBuilder, MessageFlags, PrimaryButtonBuilder, SecondaryButtonBuilder } = require('discord.js');
+const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 
 const Config = require('../Config');
 const moxi = require('../i18n');
-const { toEmojiObject } = require('./emojis');
 
 function isUntranslated(key, value) {
     if (value === undefined || value === null) return true;
@@ -105,21 +104,23 @@ function buildCellButton({ userId, pos, board, packed, disabled }) {
     const v = board[pos];
     const isEmpty = v === 0;
 
+    const btn = new ButtonBuilder();
+
     if (isEmpty) {
-        const btn = new SecondaryButtonBuilder();
         btn
             .setCustomId(`ttt:m:${userId}:${pos}:${packed}`)
             .setLabel('\u200b')
+            .setStyle(ButtonStyle.Secondary)
             .setDisabled(Boolean(disabled));
         return btn;
     }
 
     // Filled
-    const btn = (v === 1) ? new PrimaryButtonBuilder() : new DangerButtonBuilder();
     btn
         .setCustomId(`ttt:noop:${userId}:${pos}:${packed}`)
         .setLabel('\u200b')
-        .setEmoji(toEmojiObject(v === 1 ? '❌' : '⭕'))
+        .setStyle(v === 1 ? ButtonStyle.Primary : ButtonStyle.Danger)
+        .setEmoji(v === 1 ? '❌' : '⭕')
         .setDisabled(true);
 
     return btn;
@@ -160,15 +161,17 @@ function buildTttMessageOptions({ userId, lang, board, disabled = false } = {}) 
     }
 
     container.addActionRowComponents(r => r.addComponents(
-        new PrimaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`ttt:n:${safeUserId}`)
-            .setEmoji(toEmojiObject('🔄'))
+            .setEmoji('🔄')
             .setLabel(tr(safeLang, 'GAMES_TTT_NEW', 'Nueva'))
+            .setStyle(ButtonStyle.Primary)
             .setDisabled(Boolean(disabled)),
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`ttt:close:${safeUserId}:${packed}`)
-            .setEmoji(toEmojiObject('🗑️'))
+            .setEmoji('🗑️')
             .setLabel(tr(safeLang, 'GAMES_TTT_CLOSE', 'Cerrar'))
+            .setStyle(ButtonStyle.Secondary)
             .setDisabled(Boolean(disabled)),
     ));
 

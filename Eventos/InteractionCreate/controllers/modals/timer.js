@@ -1,4 +1,4 @@
-const { MessageFlags, ContainerBuilder, DangerButtonBuilder, MediaGalleryBuilder, MediaGalleryItemBuilder } = require('discord.js');
+const { MessageFlags, ContainerBuilder, ButtonBuilder, ButtonStyle, MediaGalleryBuilder, MediaGalleryItemBuilder } = require('discord.js');
 const moxi = require('../../../../i18n');
 const { Bot } = require('../../../../Config');
 const { EMOJIS } = require('../../../../Util/emojis');
@@ -56,9 +56,10 @@ module.exports = async function timerModalHandler(interaction, Moxi, logger) {
         .addSeparatorComponents(s => s.setDivider(true))
         .addActionRowComponents(row =>
             row.addComponents(
-                new DangerButtonBuilder()
+                new ButtonBuilder()
                     .setCustomId('cancel_timer')
                     .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
+                    .setStyle(ButtonStyle.Danger)
             )
         )
         .addSeparatorComponents(s => s.setDivider(true))

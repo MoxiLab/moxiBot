@@ -6,7 +6,6 @@ const Config = require('../Config');
 const { shouldBlockByTimeGate, buildBlockedMessage } = require('./timeGate');
 const { runWithCommandContext } = require('./commandContext');
 const { getGuildSettingsCached } = require('./guildSettings');
-const { isAllowedInOwnerOnlyMode } = require('./ownerOnlyMode');
 
 const ECON_GATE_NOTICE_TTL_MS = Number.parseInt(process.env.ECON_GATE_NOTICE_TTL_MS || '', 10) || 12_000;
 const ECON_GATE_AUTO_DELETE_MS = Number.parseInt(process.env.ECON_GATE_AUTO_DELETE_MS || '', 10) || 10_000;
@@ -197,21 +196,6 @@ module.exports = async function handleCommand(Moxi, ctx, args, comando) {
     if (isInteraction) ctx.isInteraction = true;
 
     debugHelper.log('commands', 'invoke', buildContextPayload(ctx, comando, args, isInteraction));
-
-    // --- OWNER ONLY MODE (bloqueo global por .env) ---
-    try {
-        const userId = ctx?.user?.id || ctx?.author?.id || (ctx?.member && ctx.member.user && ctx.member.user.id) || null;
-        const allowed = await isAllowedInOwnerOnlyMode({ client: Moxi, userId });
-        if (!allowed) {
-            const lang = await getLangForCtx(ctx);
-            const msg = moxi.translate('misc:OWNER_ONLY_MODE', lang)
-                || 'Este bot está en modo privado: solo los owners pueden usar comandos ahora.';
-            return await replyBlocked(Moxi, ctx, { content: msg, isInteraction, autoDeleteMs: 0, deleteUserMessage: false });
-        }
-    } catch {
-        // best-effort: si falla el check, no bloqueamos
-    }
-    // --- FIN OWNER ONLY MODE ---
 
     // --- ECONOMY GATE (canal dedicado / toggle) ---
     try {

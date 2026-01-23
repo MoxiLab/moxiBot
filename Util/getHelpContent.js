@@ -1,7 +1,7 @@
 // Centraliza la construcción del help (Components V2) para cualquier página/categoría
-const { StringSelectMenuBuilder, ContainerBuilder, MessageFlags, SecondaryButtonBuilder, LinkButtonBuilder } = require('discord.js');
+const { StringSelectMenuBuilder, ContainerBuilder, MessageFlags, ButtonBuilder, ButtonStyle } = require('discord.js');
 const moxi = require('../i18n');
-const { EMOJIS, toEmojiObject } = require('./emojis');
+const { EMOJIS } = require('./emojis');
 const logger = require('./logger');
 const debugHelper = require('./debugHelper');
 const Config = require('../Config');
@@ -12,10 +12,12 @@ let HELP_INDEX_CACHE = null;
 const SLASH_JSON_CACHE = new WeakMap();
 
 function normalizeCategoryKey(value) {
-  if (!value || typeof value !== 'string') return value; 
+  if (!value || typeof value !== 'string') return value;
+  // Si i18n aún no está listo, algunos comandos devuelven claves tipo "commands:CATEGORY_HERRAMIENTAS".
+  // Convertimos esas claves a categorías estables para que el help funcione en cualquier idioma.
   const upper = value.toUpperCase();
   if (upper.includes('CATEGORY_ECONOMIA') || upper.includes('ECONOMIA') || upper.includes('ECONOMÍA')) return 'Economy';
-  if (upper.includes('CATEGORY_HERRAMIENTAS') || upper.includes ('HERRAMIENTAS')) return 'Tools';
+  if (upper.includes('CATEGORY_HERRAMIENTAS') || upper.includes('HERRAMIENTAS')) return 'Tools';
   if (upper.includes('CATEGORY_MUSICA') || upper.includes('MUSICA')) return 'Music';
   if (upper.includes('CATEGORY_ADMIN')) return 'Admin';
   if (upper.includes('CATEGORY_MODERATION') || upper.includes('MODERATION') || upper.includes('MODERACION')) return 'Moderation';
@@ -536,7 +538,7 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
         return {
           label,
           value: catKey,
-          emoji: toEmojiObject(EMOJIS.package),
+          emoji: EMOJIS.package,
           default: categoria === catKey
         };
       }));
@@ -544,18 +546,19 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
 
     // Botones
     if (!categoria) {
-      const closeButton = new SecondaryButtonBuilder()
+      const closeButton = new ButtonBuilder()
         .setCustomId('help2_close')
-        .setEmoji(toEmojiObject(EMOJIS.cross))
-        ;
+        .setEmoji(EMOJIS.cross)
+        .setStyle(ButtonStyle.Secondary);
 
       const webLabel = moxi.translate('HELP_WEB_LABEL', lang);
       let webUrl = moxi.translate('HELP_WEB_URL', lang);
       if (!webUrl || typeof webUrl !== 'string' || !/^https?:\/\//.test(webUrl)) {
         webUrl = 'https://moxilab.net';
       }
-      const webButton = new LinkButtonBuilder()
+      const webButton = new ButtonBuilder()
         .setLabel(webLabel)
+        .setStyle(ButtonStyle.Link)
         .setURL(webUrl);
 
       container.addActionRowComponents(row => row.addComponents(closeButton, webButton));
@@ -563,29 +566,31 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
       const stateCat = categoria || '';
       const state = `${page}:${totalPages || 1}:${stateCat}`;
 
-      const prevButton = new SecondaryButtonBuilder()
+      const prevButton = new ButtonBuilder()
         .setCustomId(`help2_prev:${state}`)
-        .setEmoji(toEmojiObject(EMOJIS.arrowLeft))
+        .setEmoji(EMOJIS.arrowLeft)
+        .setStyle(ButtonStyle.Secondary)
         .setDisabled((totalPages || 1) <= 1 || page <= 0);
 
-      const homeButton = new SecondaryButtonBuilder()
+      const homeButton = new ButtonBuilder()
         .setCustomId(`help2_home:${state}`)
-        .setEmoji(toEmojiObject(EMOJIS.home))
-        ;
+        .setEmoji(EMOJIS.home)
+        .setStyle(ButtonStyle.Secondary);
 
-      const infoButton = new SecondaryButtonBuilder()
+      const infoButton = new ButtonBuilder()
         .setCustomId(`help2_info:${state}`)
-        .setEmoji(toEmojiObject(EMOJIS.info))
-        ;
+        .setEmoji(EMOJIS.info)
+        .setStyle(ButtonStyle.Secondary);
 
-      const closeButton = new SecondaryButtonBuilder()
+      const closeButton = new ButtonBuilder()
         .setCustomId('help2_close')
-        .setEmoji(toEmojiObject(EMOJIS.cross))
-        ;
+        .setEmoji(EMOJIS.cross)
+        .setStyle(ButtonStyle.Secondary);
 
-      const nextButton = new SecondaryButtonBuilder()
+      const nextButton = new ButtonBuilder()
         .setCustomId(`help2_next:${state}`)
-        .setEmoji(toEmojiObject(EMOJIS.arrowRight))
+        .setEmoji(EMOJIS.arrowRight)
+        .setStyle(ButtonStyle.Secondary)
         .setDisabled((totalPages || 1) <= 1 || page >= (totalPages || 1) - 1);
 
       container.addActionRowComponents(row => row.addComponents(prevButton, homeButton, infoButton, closeButton, nextButton));

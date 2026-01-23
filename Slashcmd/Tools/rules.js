@@ -1,4 +1,4 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, ContainerBuilder, PrimaryButtonBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const moxi = require('../../i18n');
@@ -41,9 +41,10 @@ module.exports = {
 
     container.addActionRowComponents(row =>
       row.addComponents(
-        new PrimaryButtonBuilder()
+        new ButtonBuilder()
           .setCustomId('refresh_rules')
           .setLabel('Refrescar')
+          .setStyle(ButtonStyle.Primary)
       )
     );
     container.addSeparatorComponents(s => s.setDivider(true));
@@ -51,8 +52,7 @@ module.exports = {
       c.setContent(`${EMOJIS.copyright} ${client.user?.username || 'Moxi Studio'} • ${new Date().getFullYear()}`)
     );
 
-    const response = await interaction.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2, withResponse: true });
-    const sentMessage = response?.resource?.message;
+    const sentMessage = await interaction.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2, fetchReply: true });
 
     // Guardar en MongoDB el canal y mensaje de reglas
     try {
@@ -63,7 +63,7 @@ module.exports = {
           guildId: interaction.guild.id,
           type: 'rules',
           channelId: interaction.channel.id,
-          messageId: sentMessage?.id || null,
+          messageId: sentMessage.id,
           lastLanguage: lang,
         },
         { upsert: true, new: true }

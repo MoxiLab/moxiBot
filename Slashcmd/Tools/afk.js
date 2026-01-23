@@ -1,4 +1,4 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const afkStorage = require('../../Util/afkStorage');
 const { buildAfkContainer, formatAfkTimestamp } = require('../../Util/afkRender');
@@ -8,13 +8,13 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('afk')
         .setDescription('Set your AFK status with a message and scope')
-        .addStringOptions(option =>
+        .addStringOption(option =>
             option
                 .setName('message')
                 .setDescription('What should others see when they mention you?')
                 .setRequired(false)
         )
-        .addStringOptions(option =>
+        .addStringOption(option =>
             option
                 .setName('scope')
                 .setDescription('Choose whether the AFK is global or only for this server')
