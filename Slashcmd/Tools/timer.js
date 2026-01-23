@@ -51,7 +51,16 @@ module.exports = {
         // Esperar el tiempo y avisar
         setTimeout(async () => {
             try {
-                await interaction.followUp({ content: `⏰ ¡Tu temporizador de **${minutos} minutos** ha terminado!`, ephemeral: false });
+                const done = new ContainerBuilder()
+                    .setAccentColor(0x2ecc71)
+                    .addTextDisplayComponents(c => c.setContent(`# ⏰ Temporizador terminado\n<@${interaction.user.id}>`))
+                    .addSeparatorComponents(s => s.setDivider(true))
+                    .addTextDisplayComponents(c => c.setContent(`Tiempo: **${minutos} minutos**`));
+
+                await interaction.channel.send({
+                    components: [done],
+                    flags: MessageFlags.IsComponentsV2,
+                });
             } catch { }
         }, minutos * 60 * 1000);
     }
