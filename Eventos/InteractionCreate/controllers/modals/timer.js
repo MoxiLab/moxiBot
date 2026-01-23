@@ -31,9 +31,6 @@ module.exports = async function timerModalHandler(interaction, Moxi, logger) {
         return true;
     }
 
-    const startTime = Date.now();
-    const endTime = startTime + minutos * 60 * 1000;
-    const msToWait = Math.max(0, endTime - Date.now());
     const timerImageUrl = `https://dummyimage.com/600x200/222/fff&text=⏰+${minutos}+minutos`;
     const container = new ContainerBuilder()
         .setAccentColor(Bot.AccentColor)
@@ -69,15 +66,34 @@ module.exports = async function timerModalHandler(interaction, Moxi, logger) {
 
     timerStorage.setTimer(guildId, channelId, userId, minutos, async () => {
         try {
-            await interaction.channel.send(`⏰ ¡Tu temporizador de **${minutos} minutos** ha terminado!`);
-        } catch { }
-    });
+            const done = new ContainerBuilder()
+                .setAccentColor(Bot.AccentColor)
+                .addTextDisplayComponents(c =>
+                    c.setContent(`# ⏰ Temporizador terminado\n<@${userId}>`)
+                )
+                .addSeparatorComponents(s => s.setDivider(true))
+                .addTextDisplayComponents(c =>
+                    c.setContent(`Tiempo: **${minutos} minutos**`)
+                )
+                .addSeparatorComponents(s => s.setDivider(true))
+                .addTextDisplayComponents(c =>
+                    c.setContent(`${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`)
+                );
 
-    setTimeout(async () => {
-        try {
-            await interaction.channel.send(`⏰ ¡Tu temporizador de **${minutos} minutos** ha terminado!`);
-        } catch { }
-    }, msToWait);
+            await interaction.channel.send({
+                components: [done],
+                flags: MessageFlags.IsComponentsV2,
+            });
+        } catch (err) {
+            try {
+                if (logger && typeof logger.error === 'function') {
+                    logger.error('timer modal: error enviando aviso de fin', err);
+                } else {
+                    console.error('[timer modal] Error enviando aviso de fin:', err);
+                }
+            } catch { }
+        }
+    });
 
     await interaction.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
     return true;
