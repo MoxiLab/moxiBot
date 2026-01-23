@@ -3,6 +3,7 @@ const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags, MediaGallery
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { Bot } = require('../../Config');
+const { isFlagEnabled } = require('../../Util/debug');
 const timerStorage = require('../../Util/timerStorage');
 
 function buildListContainer(Moxi, message, allTimers, lang = 'es-ES') {
@@ -183,8 +184,6 @@ module.exports = {
             return message.reply('Ya hay un temporizador activo en este canal. Espera a que termine o cancélalo antes de crear uno nuevo.');
         }
 
-        const endTime = Date.now() + minutos * 60 * 1000;
-        const msToWait = Math.max(0, endTime - Date.now());
         const timerImageUrl = `https://dummyimage.com/600x200/222/fff&text=⏰+${minutos}+minutos`;
         const container = new ContainerBuilder()
             .setAccentColor(Bot.AccentColor)
@@ -221,15 +220,28 @@ module.exports = {
         timerStorage.setTimer(guildId, channelId, userId, minutos, async () => {
             if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Temporizador finalizado para canal:', channelId);
             try {
-                await message.channel.send(`⏰ ¡Tu temporizador de **${minutos} minutos** ha terminado!`);
-            } catch { }
-        });
+                const done = new ContainerBuilder()
+                    .setAccentColor(Bot.AccentColor)
+                    .addTextDisplayComponents(c =>
+                        c.setContent(`# ⏰ Temporizador terminado\n<@${userId}>`)
+                    )
+                    .addSeparatorComponents(s => s.setDivider(true))
+                    .addTextDisplayComponents(c =>
+                        c.setContent(`Tiempo: **${minutos} minutos**`)
+                    )
+                    .addSeparatorComponents(s => s.setDivider(true))
+                    .addTextDisplayComponents(c =>
+                        c.setContent(`${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`)
+                    );
 
-        setTimeout(async () => {
-            try {
-                await message.channel.send(`⏰ ¡Tu temporizador de **${minutos} minutos** ha terminado!`);
-            } catch { }
-        }, msToWait);
+                await message.channel.send({
+                    components: [done],
+                    flags: MessageFlags.IsComponentsV2,
+                });
+            } catch (err) {
+                if (TIMER_DEBUG) console.error('[TIMER_DEBUG] Error enviando aviso de fin:', err);
+            }
+        });
 
         await message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
     }
