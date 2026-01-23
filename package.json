@@ -24,7 +24,7 @@
     "color": "^5.0.3",
     "colors": "^1.4.0",
     "discord-arts": "^0.7.1",
-    "discord.js": "^14.25.1",
+    "discord.js": "^15.0.0-dev.1769083302-838cd2da3",
     "dotenv": "^17.2.3",
     "i18next": "^25.7.3",
     "i18next-fs-backend": "^2.6.1",
