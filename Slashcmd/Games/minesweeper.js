@@ -1,4 +1,4 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const moxi = require('../../i18n');
 const { gamesCategory } = require('../../Util/commandCategories');
 const { buildMinesweeperMessageOptions, newGameState } = require('../../Util/minesweeper');
@@ -9,8 +9,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('minesweeper')
         .setDescription('Inicia una partida de buscaminas')
-        .setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
-        .setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall),
+        .setDMPermission(true),
 
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;

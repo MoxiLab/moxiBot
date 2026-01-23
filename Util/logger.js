@@ -108,15 +108,13 @@ async function sendLogToDiscordChannel(levelName, prefix, color, ...msg) {
     }
     // Enviar a webhook si está configurado
     if (webhookUrl) {
-      await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: botName + ' Logger',
-          avatar_url: 'https://i.imgur.com/1Q9Z1Zm.png',
-          embeds: [embed],
-        }),
-      }).catch(() => { });
+      const { WebhookClient } = require('discord.js');
+      const webhook = new WebhookClient({ url: webhookUrl });
+      await webhook.send({
+        username: botName + ' Logger',
+        avatarURL: 'https://i.imgur.com/1Q9Z1Zm.png',
+        embeds: [embed],
+      });
     }
   } catch { }
 }

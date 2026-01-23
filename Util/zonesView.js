@@ -1,15 +1,14 @@
 const {
     ContainerBuilder,
-    DangerButtonBuilder,
-    PrimaryButtonBuilder,
-    SecondaryButtonBuilder,
+    ButtonBuilder,
+    ButtonStyle,
     StringSelectMenuBuilder,
     MessageFlags,
 } = require('discord.js');
 
 const { Bot } = require('../Config');
 const moxi = require('../i18n');
-const { EMOJIS, toEmojiObject } = require('./emojis');
+const { EMOJIS } = require('./emojis');
 const { getItemById } = require('./inventoryCatalog');
 const { FISH_ZONES } = require('./fishView');
 
@@ -710,19 +709,19 @@ function buildKindSelect({ lang = 'es-ES', userId, kind, page = 0, disabled = fa
             {
                 label: tZones(lang, 'kinds.fish') || 'Pesca',
                 value: 'fish',
-                emoji: toEmojiObject(ZONE_KINDS.fish.emoji),
+                emoji: ZONE_KINDS.fish.emoji,
                 default: current === 'fish',
             },
             {
                 label: tZones(lang, 'kinds.mine') || 'Minería',
                 value: 'mine',
-                emoji: toEmojiObject(ZONE_KINDS.mine.emoji),
+                emoji: ZONE_KINDS.mine.emoji,
                 default: current === 'mine',
             },
             {
                 label: tZones(lang, 'kinds.explore') || 'Exploración',
                 value: 'explore',
-                emoji: toEmojiObject(ZONE_KINDS.explore.emoji),
+                emoji: ZONE_KINDS.explore.emoji,
                 default: current === 'explore',
             }
         );
@@ -733,29 +732,34 @@ function buildNavButtons({ userId, kind, page, totalPages, disabled = false } = 
     const k = normalizeKind(kind);
     const p = clampInt(page, 0, Math.max(0, (totalPages || 1) - 1));
 
-    const prev = new SecondaryButtonBuilder()
+    const prev = new ButtonBuilder()
         .setCustomId(`zones:prev:${safeUserId}:${k}:${p}`)
-        .setEmoji(toEmojiObject(EMOJIS.arrowLeft))
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji(EMOJIS.arrowLeft)
         .setDisabled(disabled || p <= 0);
 
-    const refresh = new SecondaryButtonBuilder()
+    const refresh = new ButtonBuilder()
         .setCustomId(`zones:refresh:${safeUserId}:${k}:${p}`)
-        .setEmoji(toEmojiObject('🔁'))
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji('🔁')
         .setDisabled(disabled);
 
-    const close = new DangerButtonBuilder()
+    const close = new ButtonBuilder()
         .setCustomId(`zones:close:${safeUserId}:${k}:${p}`)
-        .setEmoji(toEmojiObject(EMOJIS.cross))
+        .setStyle(ButtonStyle.Danger)
+        .setEmoji(EMOJIS.cross)
         .setDisabled(disabled);
 
-    const help = new SecondaryButtonBuilder()
+    const help = new ButtonBuilder()
         .setCustomId(`zones:help:${safeUserId}:${k}:${p}`)
-        .setEmoji(toEmojiObject(EMOJIS.question))
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji(EMOJIS.question)
         .setDisabled(disabled);
 
-    const next = new SecondaryButtonBuilder()
+    const next = new ButtonBuilder()
         .setCustomId(`zones:next:${safeUserId}:${k}:${p}`)
-        .setEmoji(toEmojiObject(EMOJIS.arrowRight))
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji(EMOJIS.arrowRight)
         .setDisabled(disabled || p >= (totalPages - 1));
 
     return [prev, refresh, close, help, next];
@@ -768,9 +772,10 @@ function buildPickButtons({ userId, kind, page, slice, disabled = false } = {}) 
     const zones = Array.isArray(slice) ? slice : [];
 
     return zones.map((z, index) =>
-        new PrimaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`zones:pick:${safeUserId}:${k}:${p}:${index}`)
-            .setEmoji(toEmojiObject(z?.emoji || '📍'))
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji(z?.emoji || '📍')
             .setLabel(String(z?.id || `zona-${index + 1}`))
             .setDisabled(disabled)
     );

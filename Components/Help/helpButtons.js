@@ -1,23 +1,28 @@
 // Botones de navegación y ayuda para el menú de /help
-const { ActionRowBuilder, PrimaryButtonBuilder, SecondaryButtonBuilder, DangerButtonBuilder } = require("discord.js");
-const { EMOJIS, toEmojiObject } = require("../../Util/emojis");
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { EMOJIS } = require("../../Util/emojis");
 
 const help = new ActionRowBuilder().addComponents(
-  new PrimaryButtonBuilder()
+  new ButtonBuilder()
     .setCustomId("help_prev")
-    .setEmoji(toEmojiObject(EMOJIS.arrowLeft)),
-  new SecondaryButtonBuilder()
+    .setStyle(ButtonStyle.Primary)
+    .setEmoji(EMOJIS.arrowLeft),
+  new ButtonBuilder()
     .setCustomId("help_home")
-    .setEmoji(toEmojiObject(EMOJIS.home)),
-  new SecondaryButtonBuilder()
+    .setStyle(ButtonStyle.Secondary)
+    .setEmoji(EMOJIS.home),
+  new ButtonBuilder()
     .setCustomId("help_info")
-    .setEmoji(toEmojiObject(EMOJIS.info)),
-  new DangerButtonBuilder()
+    .setStyle(ButtonStyle.Secondary)
+    .setEmoji(EMOJIS.info),
+  new ButtonBuilder()
     .setCustomId("help_close")
-    .setEmoji(toEmojiObject(EMOJIS.cross)),
-  new PrimaryButtonBuilder()
+    .setStyle(ButtonStyle.Danger)
+    .setEmoji(EMOJIS.cross),
+  new ButtonBuilder()
     .setCustomId("help_next")
-    .setEmoji(toEmojiObject(EMOJIS.arrowRight))
+    .setStyle(ButtonStyle.Primary)
+    .setEmoji(EMOJIS.arrowRight)
 );
 
 module.exports = { help };

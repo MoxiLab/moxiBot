@@ -1,4 +1,4 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, ApplicationCommandOptionType } = require('discord.js');
+const { SlashCommandBuilder, ApplicationCommandOptionType } = require('discord.js');
 const moxi = require('../../i18n');
 
 const rankCmd = require('../../Comandos/Utiility/Rank');
@@ -12,7 +12,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('rank')
         .setDescription('Muestra tu tarjeta de rango actual')
-        .addUserOptions((opt) =>
+        .addUserOption((opt) =>
             opt
                 .setName('usuario')
                 .setDescription('Usuario para ver el rango (opcional)')

@@ -1,4 +1,4 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildBagMessage } = require('../../Util/bagView');
 const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
@@ -15,7 +15,7 @@ module.exports = {
     .setName('bag')
     .setDescription(description)
     .setDescriptionLocalizations(localizations)
-    .addIntegerOptions((opt) =>
+    .addIntegerOption((opt) =>
       opt
         .setName('pagina')
         .setDescription('Página (opcional)')

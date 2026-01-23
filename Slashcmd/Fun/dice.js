@@ -1,4 +1,4 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { funCategory } = require('../../Util/commandCategories');
@@ -9,7 +9,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('dice')
         .setDescription('Tira un dado')
-        .addIntegerOptions(opt =>
+        .addIntegerOption(opt =>
             opt
                 .setName('lados')
                 .setDescription('Número de lados (2-100)')
@@ -17,8 +17,7 @@ module.exports = {
                 .setMaxValue(100)
                 .setRequired(false)
         )
-        .setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
-        .setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall),
+        .setDMPermission(true),
 
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;

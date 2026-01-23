@@ -1,6 +1,6 @@
-const { ContainerBuilder, LinkButtonBuilder } = require('discord.js');
+const { ContainerBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { Bot } = require('../Config');
-const { EMOJIS, toEmojiObject } = require('./emojis');
+const { EMOJIS } = require('./emojis');
 
 function createEmojiContainer({ header, body, detail, actionRows = [] }) {
     const container = new ContainerBuilder()
@@ -29,10 +29,11 @@ function finalizeEmojiContainer(container, client, translateFn) {
         .addSeparatorComponents((s) => s.setDivider(true))
         .addActionRowComponents((row) =>
             row.addComponents(
-                new LinkButtonBuilder()
+                new ButtonBuilder()
                     .setLabel(webLabel)
+                    .setStyle(ButtonStyle.Link)
                     .setURL(webUrl)
-                    .setEmoji(toEmojiObject(EMOJIS.globe))
+                    .setEmoji(EMOJIS.globe)
             )
         )
         .addSeparatorComponents((s) => s.setDivider(true))

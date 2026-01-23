@@ -2,14 +2,15 @@ const {
     MessageFlags,
     EmbedBuilder,
     ActionRowBuilder,
-    PrimaryButtonBuilder,
+    ButtonBuilder,
+    ButtonStyle,
     ContainerBuilder,
     MediaGalleryBuilder,
     MediaGalleryItemBuilder,
 } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
-const { EMOJIS, toEmojiObject } = require('../../Util/emojis');
+const { EMOJIS } = require('../../Util/emojis');
 const { buildAfkContainer } = require('../../Util/afkRender');
 const { getRandomNekosGif } = require('../../Util/nekosApi');
 const { resolveItemFromInput, consumeInventoryItem } = require('../../Util/useItem');
@@ -178,10 +179,11 @@ module.exports = {
             container
                 .addTextDisplayComponents(td => td.setContent(t('PET_RETURN_TEXT', { pet: pet.name || moxi.translate('economy/use:PET_FALLBACK_NAME', lang) })))
                 .addActionRowComponents(row => row.addComponents(
-                    new PrimaryButtonBuilder()
+                    new ButtonBuilder()
                         .setCustomId(`pet:open:${message.author.id}`)
                         .setLabel(t('PET_VIEW_BUTTON'))
-                        .setEmoji(toEmojiObject('🐣'))
+                        .setStyle(ButtonStyle.Primary)
+                        .setEmoji('🐣')
                 ));
 
             return message.reply({

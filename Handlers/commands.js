@@ -178,23 +178,10 @@ module.exports = async (Moxi) => {
 
   for (const file of slashcommandsFiles) {
     const slash = require(file);
-    const data = slash.data || (slash.Command && slash.Command.data);
-
-    // discord.js v15: los builders no siempre exponen .name directamente.
-    let slashName = data && typeof data.name === 'string' ? data.name : undefined;
-    if (!slashName && data && data.data && typeof data.data.name === 'string') slashName = data.data.name;
-    if (!slashName && data && typeof data.toJSON === 'function') {
-      try {
-        const json = data.toJSON();
-        if (json && typeof json.name === 'string') slashName = json.name;
-      } catch {
-        // ignore
-      }
-    }
-
-    if (slashName) {
+    let data = slash.data || (slash.Command && slash.Command.data);
+    if (data && data.name) {
       if (!slash.__sourceFile) slash.__sourceFile = file;
-      Moxi.slashcommands.set(slashName, slash);
+      Moxi.slashcommands.set(data.name, slash);
     }
     // No warning: los subcomandos no necesitan .data
   }

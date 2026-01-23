@@ -1,6 +1,7 @@
 const {
     ActionRowBuilder,
-    SecondaryButtonBuilder,
+    ButtonBuilder,
+    ButtonStyle,
     ContainerBuilder,
     MediaGalleryBuilder,
     MediaGalleryItemBuilder,
@@ -9,7 +10,7 @@ const {
 } = require('discord.js');
 
 const { Bot } = require('../../Config');
-const { EMOJIS, toEmojiObject } = require('../../Util/emojis');
+const { EMOJIS } = require('../../Util/emojis');
 
 const FALLBACK_IMG =
     'https://i.ibb.co/fdvrFrXW/Whats-App-Image-2025-12-25-at-16-02-06.jpg';
@@ -25,25 +26,30 @@ const CONTROL_EMOJIS = {
 function buildMusicControlsRow({ disabled = false } = {}) {
     const suffix = disabled ? '_d' : '';
     return new ActionRowBuilder().addComponents(
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`repit${suffix}`)
-            .setEmoji(toEmojiObject(CONTROL_EMOJIS.repit))
+            .setStyle(ButtonStyle.Secondary)
+            .setEmoji(CONTROL_EMOJIS.repit)
             .setDisabled(disabled),
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`pause${suffix}`)
-            .setEmoji(toEmojiObject(CONTROL_EMOJIS.pause))
+            .setStyle(ButtonStyle.Secondary)
+            .setEmoji(CONTROL_EMOJIS.pause)
             .setDisabled(disabled),
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`skip${suffix}`)
-            .setEmoji(toEmojiObject(CONTROL_EMOJIS.skip))
+            .setStyle(ButtonStyle.Secondary)
+            .setEmoji(CONTROL_EMOJIS.skip)
             .setDisabled(disabled),
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`queue${suffix}`)
-            .setEmoji(toEmojiObject(CONTROL_EMOJIS.queue))
+            .setStyle(ButtonStyle.Secondary)
+            .setEmoji(CONTROL_EMOJIS.queue)
             .setDisabled(disabled),
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`autoplay${suffix}`)
-            .setEmoji(toEmojiObject(CONTROL_EMOJIS.autoplay))
+            .setStyle(ButtonStyle.Secondary)
+            .setEmoji(CONTROL_EMOJIS.autoplay)
             .setDisabled(disabled)
     );
 }
@@ -51,13 +57,15 @@ function buildMusicControlsRow({ disabled = false } = {}) {
 function buildMusicVolumeRow({ disabled = false } = {}) {
     const suffix = disabled ? '_d' : '';
     return new ActionRowBuilder().addComponents(
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`vol_down${suffix}`)
-            .setEmoji(toEmojiObject(EMOJIS.volDown))
+            .setStyle(ButtonStyle.Secondary)
+            .setEmoji(EMOJIS.volDown)
             .setDisabled(disabled),
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`vol_up${suffix}`)
-            .setEmoji(toEmojiObject(EMOJIS.volUp))
+            .setStyle(ButtonStyle.Secondary)
+            .setEmoji(EMOJIS.volUp)
             .setDisabled(disabled)
     );
 }

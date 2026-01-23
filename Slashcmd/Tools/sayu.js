@@ -1,4 +1,4 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags, PermissionsBitField } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags, PermissionsBitField } = require('discord.js');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
@@ -40,7 +40,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('sayu')
         .setDescription('Envía un mensaje como si fuera el usuario (webhook / APP)')
-        .addStringOptions((opt) =>
+        .addStringOption((opt) =>
             opt
                 .setName('mensaje')
                 .setDescription('Texto a enviar')

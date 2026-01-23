@@ -1,4 +1,4 @@
-const { ContainerBuilder, PrimaryButtonBuilder, MessageFlags } = require('discord.js');
+const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const moxi = require('../../../../i18n');
@@ -34,9 +34,10 @@ module.exports = async function(interaction, Moxi, logger) {
   }
   container.addActionRowComponents(row =>
     row.addComponents(
-      new PrimaryButtonBuilder()
+      new ButtonBuilder()
         .setCustomId('refresh_rules')
         .setLabel('Refrescar')
+        .setStyle(ButtonStyle.Primary)
     )
   );
   container.addSeparatorComponents(s => s.setDivider(true));

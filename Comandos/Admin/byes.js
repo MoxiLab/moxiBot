@@ -3,8 +3,8 @@ const {
     MessageFlags,
     AttachmentBuilder,
     PermissionsBitField,
-    PrimaryButtonBuilder,
-    SuccessButtonBuilder,
+    ButtonBuilder,
+    ButtonStyle,
     MediaGalleryBuilder,
     MediaGalleryItemBuilder,
     PermissionsBitField: { Flags }
@@ -245,9 +245,10 @@ module.exports = {
                                 )
                             )
                             .setButtonAccessory(
-                                (selectedStyle === 'sylphacard' ? new SuccessButtonBuilder() : new PrimaryButtonBuilder())
+                                new ButtonBuilder()
                                     .setCustomId('byes_style_sylphacard')
                                     .setLabel('Usar Sylphacard')
+                                    .setStyle(selectedStyle === 'sylphacard' ? ButtonStyle.Success : ButtonStyle.Primary)
                                     .setDisabled(disabled)
                             )
                     );
@@ -270,9 +271,10 @@ module.exports = {
                                 )
                             )
                             .setButtonAccessory(
-                                (selectedStyle === 'discord-arts' ? new SuccessButtonBuilder() : new PrimaryButtonBuilder())
+                                new ButtonBuilder()
                                     .setCustomId('byes_style_discord-arts')
                                     .setLabel('Usar Discord-Arts')
+                                    .setStyle(selectedStyle === 'discord-arts' ? ButtonStyle.Success : ButtonStyle.Primary)
                                     .setDisabled(disabled)
                             )
                     );
@@ -295,9 +297,10 @@ module.exports = {
                                 )
                             )
                             .setButtonAccessory(
-                                (selectedStyle === 'canvacard' ? new SuccessButtonBuilder() : new PrimaryButtonBuilder())
+                                new ButtonBuilder()
                                     .setCustomId('byes_style_canvacard')
                                     .setLabel('Usar Canvacard')
+                                    .setStyle(selectedStyle === 'canvacard' ? ButtonStyle.Success : ButtonStyle.Primary)
                                     .setDisabled(disabled)
                             )
                     );

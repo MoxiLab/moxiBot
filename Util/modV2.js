@@ -1,11 +1,4 @@
-const {
-    ContainerBuilder,
-    DangerButtonBuilder,
-    PrimaryButtonBuilder,
-    SecondaryButtonBuilder,
-    SuccessButtonBuilder,
-    MessageFlags,
-} = require('discord.js');
+const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 const moxi = require('../i18n');
 const { Bot } = require('../Config');
 
@@ -33,25 +26,11 @@ function buildConfirmV2({
     lines,
     confirmCustomId,
     cancelCustomId,
-    confirmStyle = 4,
+    confirmStyle = ButtonStyle.Danger,
     ephemeral = false,
 }) {
     const confirmLabel = moxi.translate('AUTONUKE_CONFIRM', lang) || 'Confirmar';
     const cancelLabel = moxi.translate('AUTONUKE_CANCEL', lang) || 'Cancelar';
-
-    function createConfirmButtonBuilder() {
-        switch (confirmStyle) {
-            case 1:
-                return new PrimaryButtonBuilder();
-            case 2:
-                return new SecondaryButtonBuilder();
-            case 3:
-                return new SuccessButtonBuilder();
-            case 4:
-            default:
-                return new DangerButtonBuilder();
-        }
-    }
 
     const container = new ContainerBuilder()
         .setAccentColor(Bot.AccentColor)
@@ -67,8 +46,8 @@ function buildConfirmV2({
         .addSeparatorComponents((s) => s.setDivider(true))
         .addActionRowComponents((row) =>
             row.addComponents(
-                createConfirmButtonBuilder().setCustomId(confirmCustomId).setLabel(confirmLabel),
-                new SecondaryButtonBuilder().setCustomId(cancelCustomId).setLabel(cancelLabel)
+                new ButtonBuilder().setCustomId(confirmCustomId).setLabel(confirmLabel).setStyle(confirmStyle),
+                new ButtonBuilder().setCustomId(cancelCustomId).setLabel(cancelLabel).setStyle(ButtonStyle.Secondary)
             )
         );
 

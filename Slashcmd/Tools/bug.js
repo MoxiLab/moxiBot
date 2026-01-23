@@ -1,5 +1,5 @@
 const {
-    ChatInputCommandBuilder: SlashCommandBuilder,
+    SlashCommandBuilder,
     ContainerBuilder,
     MessageFlags,
     ChannelType,
@@ -14,7 +14,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('bug')
         .setDescription('Configura el foro oficial de reportes de bugs')
-        .addChannelOptions(opt =>
+        .addChannelOption(opt =>
             opt.setName('category')
                 .setDescription('Categoría en la que crear el foro')
                 .addChannelTypes(ChannelType.GuildCategory)

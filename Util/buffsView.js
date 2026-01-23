@@ -1,8 +1,8 @@
-const { ContainerBuilder, MessageFlags, SecondaryButtonBuilder } = require('discord.js');
+const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 
 const moxi = require('../i18n');
 const { Bot } = require('../Config');
-const { EMOJIS, toEmojiObject } = require('./emojis');
+const { EMOJIS } = require('./emojis');
 const { ensureMongoConnection } = require('./mongoConnect');
 
 function clampPct(n) {
@@ -97,10 +97,11 @@ function buildBuffsContainer({ lang, userId, activeLines, bonusLines, disabled =
         .addTextDisplayComponents((c) => c.setContent(`## ${subtitle}\n${bonusLines.join('\n')}`))
         .addActionRowComponents((row) =>
             row.addComponents(
-                new SecondaryButtonBuilder()
+                new ButtonBuilder()
                     .setCustomId(`buffs:refresh:${safeUserId}`)
                     .setLabel(moxi.translate('REFRESH', language) || 'Refrescar')
-                    .setEmoji(toEmojiObject(EMOJIS.refresh || '🔁'))
+                    .setStyle(ButtonStyle.Secondary)
+                    .setEmoji(EMOJIS.refresh || '🔁')
                     .setDisabled(disabled)
             )
         );
