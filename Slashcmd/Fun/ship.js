@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { ChatInputCommandBuilder: SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { funCategory } = require('../../Util/commandCategories');
@@ -52,19 +52,20 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('ship')
         .setDescription('Haz ship entre dos personas')
-        .addUserOption(opt =>
+        .addUserOptions(opt =>
             opt
                 .setName('persona1')
                 .setDescription('Primera persona')
                 .setRequired(true)
         )
-        .addUserOption(opt =>
+        .addUserOptions(opt =>
             opt
                 .setName('persona2')
                 .setDescription('Segunda persona (opcional)')
                 .setRequired(false)
         )
-        .setDMPermission(true),
+        .setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
+        .setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall),
 
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;

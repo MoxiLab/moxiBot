@@ -1,5 +1,5 @@
 
-const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ContainerBuilder, DangerButtonBuilder, MessageFlags } = require('discord.js');
 const { ownerPermissions } = require('../../Util/ownerPermissions');
 
 module.exports = {
@@ -25,10 +25,9 @@ module.exports = {
       .addSeparatorComponents(s => s.setDivider(true))
       .addActionRowComponents(row =>
         row.addComponents(
-          new ButtonBuilder()
+          new DangerButtonBuilder()
             .setCustomId('confirm_leave_guild')
             .setLabel('Salir del servidor')
-            .setStyle(ButtonStyle.Danger)
         )
       )
       .addSeparatorComponents(s => s.setDivider(true))

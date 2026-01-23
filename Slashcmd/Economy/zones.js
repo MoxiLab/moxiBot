@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildZonesMessageOptions, normalizeKind } = require('../../Util/zonesView');
 const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
@@ -15,7 +15,7 @@ module.exports = {
         .setName('zones')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addStringOption((opt) =>
+        .addStringOptions((opt) =>
             opt
                 .setName('tipo')
                 .setDescription('Tipo de zonas a mostrar')

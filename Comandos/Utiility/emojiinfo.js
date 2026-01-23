@@ -1,6 +1,6 @@
-const { ApplicationCommandOptionType: { String }, MessageFlags, ButtonBuilder, ButtonStyle, MediaGalleryBuilder, MediaGalleryItemBuilder } = require('discord.js');
+const { ApplicationCommandOptionType: { String }, MessageFlags, LinkButtonBuilder, MediaGalleryBuilder, MediaGalleryItemBuilder } = require('discord.js');
 const { Bot } = require('../../Config');
-const { EMOJIS } = require('../../Util/emojis');
+const { EMOJIS, toEmojiObject } = require('../../Util/emojis');
 const moxi = require('../../i18n');
 const { createEmojiContainer, finalizeEmojiContainer } = require('../../Util/emojiCard');
 const debugHelper = require('../../Util/debugHelper');
@@ -100,11 +100,10 @@ module.exports = {
                     )
                     .addActionRowComponents((row) =>
                         row.addComponents(
-                            new ButtonBuilder()
+                            new LinkButtonBuilder()
                                 .setLabel(t('EMOJIINFO_DOWNLOAD') || 'Download')
-                                .setStyle(ButtonStyle.Link)
                                 .setURL(emojiUrl)
-                                .setEmoji('📥')
+                                .setEmoji(toEmojiObject('📥'))
                         )
                     ),
                 Moxi,

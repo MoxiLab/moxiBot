@@ -2,12 +2,13 @@ const {
     ContainerBuilder,
     MessageFlags,
     ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
     ChannelType,
     PermissionsBitField,
     MediaGalleryBuilder,
     MediaGalleryItemBuilder,
+    SuccessButtonBuilder,
+    DangerButtonBuilder,
+    LinkButtonBuilder,
 } = require('discord.js');
 const { randomBytes } = require('crypto');
 const moxi = require('../../i18n');
@@ -154,14 +155,13 @@ module.exports = {
                     threadContainer.addMediaGalleryComponents(threadGallery);
                 }
                 const statusActionRow = new ActionRowBuilder().addComponents(
-                    new ButtonBuilder()
+                    new SuccessButtonBuilder()
                         .setCustomId('bug:mark-complete')
                         .setLabel(moxi.translate('BUG_BUTTON_COMPLETE', lang))
-                        .setStyle(ButtonStyle.Success),
-                    new ButtonBuilder()
+                        ,
+                    new DangerButtonBuilder()
                         .setCustomId('bug:delete-thread')
                         .setLabel(moxi.translate('BUG_BUTTON_DELETE', lang))
-                        .setStyle(ButtonStyle.Danger)
                 );
                 const starterMessage = {
                     components: [threadContainer, statusActionRow],
@@ -188,9 +188,8 @@ module.exports = {
                     moxi.translate('BUG_DM_NEXT_STEPS', lang, { thread: `<#${thread.id}>` }),
                 ]);
                 const dmActionRow = new ActionRowBuilder().addComponents(
-                    new ButtonBuilder()
+                    new LinkButtonBuilder()
                         .setLabel(moxi.translate('BUG_DM_BUTTON_THREAD', lang))
-                        .setStyle(ButtonStyle.Link)
                         .setURL(threadUrl)
                 );
                 message.author?.send({ content: '', components: [dmContainer, dmActionRow], flags: MessageFlags.IsComponentsV2 }).catch(() => null);
@@ -213,9 +212,8 @@ module.exports = {
                     logContainer.addMediaGalleryComponents(logGallery);
                 }
                 const logActionRow = new ActionRowBuilder().addComponents(
-                    new ButtonBuilder()
+                    new LinkButtonBuilder()
                         .setLabel(moxi.translate('BUG_THREAD_BUTTON', lang))
-                        .setStyle(ButtonStyle.Link)
                         .setURL(threadUrl)
                 );
                 await logChannel.send({ content: '', components: [logContainer, logActionRow], flags: MessageFlags.IsComponentsV2 });
@@ -226,9 +224,8 @@ module.exports = {
                 moxi.translate('BUG_DM_SOON', lang),
             ]);
             const actionRow = new ActionRowBuilder().addComponents(
-                new ButtonBuilder()
+                new LinkButtonBuilder()
                     .setLabel(moxi.translate('BUG_THREAD_BUTTON', lang))
-                    .setStyle(ButtonStyle.Link)
                     .setURL(threadUrl)
             );
             const replyResponse = await message.reply({ content: '', components: [replyContainer, actionRow], flags: MessageFlags.IsComponentsV2, allowedMentions: { repliedUser: false } });

@@ -17,9 +17,15 @@ async function ensureMongoConnection(options = {}) {
         throw err;
     }
 
+    const envDbName = (process.env.MONGODB_DB || process.env.DB_NAME || '').trim();
+    const connectOptions = {
+        ...options,
+        ...(options && options.dbName ? null : (envDbName ? { dbName: envDbName } : null)),
+    };
+
     connectionPromise = (async () => {
         mongoose.set('strictQuery', false); 
-        await mongoose.connect(uri, options);
+        await mongoose.connect(uri, connectOptions);
         logger.startup(`${EMOJIS.waffle} MongoDB conectado (${mongoose.connection.name || 'default'})`);
         return mongoose.connection;
     })();

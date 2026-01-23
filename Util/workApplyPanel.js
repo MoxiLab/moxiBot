@@ -1,13 +1,13 @@
 const {
     ContainerBuilder,
-    ButtonBuilder,
-    ButtonStyle,
+    SecondaryButtonBuilder,
+    SuccessButtonBuilder,
     MessageFlags,
     ThumbnailBuilder,
 } = require('discord.js');
 
 const { Bot } = require('../Config');
-const { EMOJIS } = require('./emojis');
+const { EMOJIS, toEmojiObject } = require('./emojis');
 const { getJobDisplayName } = require('./workSystem');
 const moxi = require('../i18n');
 
@@ -64,14 +64,12 @@ function buildWorkApplyContainer({ lang = 'es-ES', userId, job } = {}) {
 
     container.addActionRowComponents(row =>
         row.addComponents(
-            new ButtonBuilder()
+            new SuccessButtonBuilder()
                 .setCustomId(`work_apply:confirm:${String(userId || '').trim()}:${String(job?.id || '').trim()}`)
-                .setStyle(ButtonStyle.Success)
                 .setLabel(t('APPLY_CONFIRM')),
-            new ButtonBuilder()
+            new SecondaryButtonBuilder()
                 .setCustomId(`work_apply:cancel:${String(userId || '').trim()}:${String(job?.id || '').trim()}`)
-                .setStyle(ButtonStyle.Secondary)
-                .setEmoji(EMOJIS.cross)
+                .setEmoji(toEmojiObject(EMOJIS.cross))
                 .setLabel(t('CANCEL'))
         )
     );

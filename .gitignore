@@ -18,6 +18,9 @@ yarn-debug.log*
 pnpm-debug.log*
 *.pid
 
+# Nodemon
+.nodemon-restart
+
 # Build/coverage
 dist/
 build/
@@ -28,3 +31,6 @@ coverage-final.json
 # System
 .DS_Store
 Thumbs.db
+
+# Temporary files
+tmp/

@@ -2,7 +2,8 @@
 const {
     ChannelType,
     PermissionsBitField,
-    ButtonBuilder,
+    DangerButtonBuilder,
+    SecondaryButtonBuilder,
     ActionRowBuilder,
     ContainerBuilder,
     MessageFlags,
@@ -22,7 +23,12 @@ module.exports = {
     permissions: [PermissionsBitField.Flags.ManageChannels],
     async execute(Moxi, messageOrInteraction, args, prefix) {
         // Detectar si es interacción (slash) o mensaje (texto)
-        const isInteraction = !!messageOrInteraction.isCommand || !!messageOrInteraction.isButton;
+        const isInteraction = Boolean(
+            messageOrInteraction?.isChatInputCommand?.() ||
+            messageOrInteraction?.isCommand?.() ||
+            messageOrInteraction?.isContextMenuCommand?.() ||
+            messageOrInteraction?.isButton?.()
+        );
         const guild = isInteraction ? messageOrInteraction.guild : messageOrInteraction.guild;
         const channel = isInteraction ? messageOrInteraction.channel : messageOrInteraction.channel;
         const author = isInteraction ? messageOrInteraction.user : messageOrInteraction.author;
@@ -51,14 +57,14 @@ module.exports = {
         };
 
         // Todos los textos de respuesta y embeds usan el idioma del servidor
-        const confirmBtn = new ButtonBuilder()
+        const confirmBtn = new DangerButtonBuilder()
             .setCustomId('autonuke_confirm')
             .setLabel(moxi.translate('AUTONUKE_CONFIRM', lang))
-            .setStyle(4); // Danger
-        const cancelBtn = new ButtonBuilder()
+            ;
+        const cancelBtn = new SecondaryButtonBuilder()
             .setCustomId('autonuke_cancel')
             .setLabel(moxi.translate('AUTONUKE_CANCEL', lang) || moxi.translate('AUTONUKE_CANCEL', 'es-ES') || 'Cancelar')
-            .setStyle(2); // Secondary
+            ;
         const row = new ActionRowBuilder().addComponents(confirmBtn, cancelBtn);
         const buildAutonukeConfirmEmbed = require('../../Components/V2/autonukeConfirmEmbed');
         const confirmContainer = buildAutonukeConfirmEmbed({ lang, channelId: channel.id });
@@ -71,11 +77,13 @@ module.exports = {
 
         let replyMessage;
         if (isInteraction) {
-            await messageOrInteraction.reply(replyPayload);
-            replyMessage = await messageOrInteraction.fetchReply();
+            const response = await messageOrInteraction.reply({ ...replyPayload, withResponse: true });
+            replyMessage = response?.resource?.message || response?.message || null;
         } else {
             replyMessage = await messageOrInteraction.reply(replyPayload);
         }
+
+        if (!replyMessage) return;
 
         // Manejar interacción de botones
         const filter = i => ['autonuke_confirm', 'autonuke_cancel'].includes(i.customId) && i.user.id === author.id;

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ChatInputCommandBuilder: SlashCommandBuilder, ContainerBuilder, DangerButtonBuilder, MessageFlags } = require('discord.js');
 const fetch = require('node-fetch');
 const moxi = require('../../i18n');
 
@@ -6,7 +6,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('timer')
         .setDescription('Crea un temporizador visual y elegante')
-        .addIntegerOption(opt =>
+        .addIntegerOptions(opt =>
             opt.setName('minutos')
                 .setDescription('Duración en minutos')
                 .setRequired(true)
@@ -39,10 +39,9 @@ module.exports = {
         container.addTextDisplayComponents(c => c.setContent(`Duración: **${minutos} minutos**\nTe avisaré cuando termine.`));
         container.addActionRowComponents(row =>
             row.addComponents(
-                new ButtonBuilder()
+                new DangerButtonBuilder()
                     .setCustomId('cancel_timer')
                     .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
-                    .setStyle(ButtonStyle.Danger)
             )
         );
 

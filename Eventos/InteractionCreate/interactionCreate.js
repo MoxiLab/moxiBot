@@ -5,6 +5,10 @@ const { getGuildSettingsCached } = require('../../Util/guildSettings');
 const debugHelper = require('../../Util/debugHelper');
 const { trackBotUserUsage } = require('../../Util/botUsageTracker');
 
+const selectMenuController = require("./controllers/selectMenu");
+const buttonController = require("./controllers/button");
+const modalController = require("./controllers/modals");
+
 Moxi.on("interactionCreate", async (interaction) => {
   if (interaction.channel.type === 'dm') return;
 
@@ -44,6 +48,26 @@ Moxi.on("interactionCreate", async (interaction) => {
       }
     }
   }
+
+  // --- OWNER ONLY MODE (bloqueo global por .env) ---
+  try {
+    const uid = interaction.user?.id;
+    const allowed = await isAllowedInOwnerOnlyMode({ client: Moxi, userId: uid });
+    if (!allowed) {
+      // Autocomplete: no respondemos con mensaje
+      if (interaction.isAutocomplete && interaction.isAutocomplete()) return;
+
+      const lang = interaction.lang || (process.env.DEFAULT_LANG || 'es-ES');
+      const msg = moxi.translate('misc:OWNER_ONLY_MODE', lang)
+        || 'Este bot está en modo privado: solo los owners pueden usarlo ahora.';
+      const notice = buildNoticeContainer({ emoji: EMOJIS.cross, text: msg });
+      await safeRespond(interaction, { content: '', components: [notice], flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2 });
+      return;
+    }
+  } catch {
+    // best-effort
+  }
+  // --- FIN OWNER ONLY MODE ---
 
   // Compat: algunos comandos usan interaction.translate('ns:KEY', vars)
   try {

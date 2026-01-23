@@ -1,12 +1,13 @@
 const {
     ContainerBuilder,
-    ButtonBuilder,
-    ButtonStyle,
     MessageFlags,
+    DangerButtonBuilder,
+    PrimaryButtonBuilder,
+    SecondaryButtonBuilder,
 } = require('discord.js');
 
 const { Bot } = require('../Config');
-const { EMOJIS } = require('./emojis');
+const { EMOJIS, toEmojiObject } = require('./emojis');
 const { randInt } = require('./activityUtils');
 const { getCrimeActivity, pickRandomCrimeActivity } = require('./crimeActivities');
 const { tCrime, crimeActivityTitle, crimeActivityPrompt, crimeOptionLabel, crimeDoorLabel, crimeRiskLabel, crimeWireLabel } = require('./crimeI18n');
@@ -58,11 +59,10 @@ function buildCrimePanel({ lang = 'es-ES', userId, activityId, state = {} } = {}
     // Acciones según tipo
     if (activity.kind === 'buttons') {
         const row = activity.options.slice(0, 3).map(opt =>
-            new ButtonBuilder()
+            new SecondaryButtonBuilder()
                 .setCustomId(`crime:do:${userId}:${activity.id}:${opt.id}`)
                 .setLabel(crimeOptionLabel(lang, opt.id))
-                .setEmoji(opt.emoji || '🎲')
-                .setStyle(ButtonStyle.Secondary)
+                .setEmoji(toEmojiObject(opt.emoji || '🎲'))
                 .setDisabled(disabled)
         );
         container.addActionRowComponents(r => r.addComponents(...row));
@@ -71,11 +71,10 @@ function buildCrimePanel({ lang = 'es-ES', userId, activityId, state = {} } = {}
     if (activity.kind === 'doors') {
         const doors = (activity.doors || []).slice(0, 3);
         const row = doors.map((d, idx) =>
-            new ButtonBuilder()
+            (idx === 1 ? new PrimaryButtonBuilder() : new SecondaryButtonBuilder())
                 .setCustomId(`crime:do:${userId}:${activity.id}:${d.id}:${seed}`)
                 .setLabel(crimeDoorLabel(lang, d.id))
-                .setEmoji(d.emoji || '🚪')
-                .setStyle(idx === 1 ? ButtonStyle.Primary : ButtonStyle.Secondary)
+                .setEmoji(toEmojiObject(d.emoji || '🚪'))
                 .setDisabled(disabled)
         );
         container.addActionRowComponents(r => r.addComponents(...row));
@@ -84,11 +83,10 @@ function buildCrimePanel({ lang = 'es-ES', userId, activityId, state = {} } = {}
     if (activity.kind === 'risk') {
         const risks = (activity.risks || []).slice(0, 3);
         const row = risks.map((r, idx) =>
-            new ButtonBuilder()
+            (idx === 1 ? new PrimaryButtonBuilder() : new SecondaryButtonBuilder())
                 .setCustomId(`crime:do:${userId}:${activity.id}:${r.id}`)
                 .setLabel(crimeRiskLabel(lang, r.id))
-                .setEmoji(r.emoji || '🎲')
-                .setStyle(idx === 1 ? ButtonStyle.Primary : ButtonStyle.Secondary)
+                .setEmoji(toEmojiObject(r.emoji || '🎲'))
                 .setDisabled(disabled)
         );
         container.addActionRowComponents(r => r.addComponents(...row));
@@ -97,11 +95,10 @@ function buildCrimePanel({ lang = 'es-ES', userId, activityId, state = {} } = {}
     if (activity.kind === 'wires') {
         const wires = (activity.wires || []).slice(0, 4);
         const row = wires.map(w =>
-            new ButtonBuilder()
+            new SecondaryButtonBuilder()
                 .setCustomId(`crime:do:${userId}:${activity.id}:${w.id}:${seed}`)
                 .setLabel(crimeWireLabel(lang, w.id))
-                .setEmoji(w.emoji || '🧵')
-                .setStyle(ButtonStyle.Secondary)
+                .setEmoji(toEmojiObject(w.emoji || '🧵'))
                 .setDisabled(disabled)
         );
 
@@ -111,15 +108,13 @@ function buildCrimePanel({ lang = 'es-ES', userId, activityId, state = {} } = {}
 
     // Cerrar / reroll
     container.addActionRowComponents(r => r.addComponents(
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`crime:reroll:${userId}`)
-            .setEmoji(EMOJIS.refresh || '🔄')
-            .setStyle(ButtonStyle.Secondary)
+            .setEmoji(toEmojiObject(EMOJIS.refresh || '🔄'))
             .setDisabled(disabled),
-        new ButtonBuilder()
+        new DangerButtonBuilder()
             .setCustomId(`crime:close:${userId}:${activity.id}:${seed}`)
-            .setEmoji(EMOJIS.stopSign || '⛔')
-            .setStyle(ButtonStyle.Danger)
+            .setEmoji(toEmojiObject(EMOJIS.stopSign || '⛔'))
             .setDisabled(disabled)
     ));
 

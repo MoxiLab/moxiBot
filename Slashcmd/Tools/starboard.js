@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { ChatInputCommandBuilder: SlashCommandBuilder } = require('discord.js');
 const { readFileSync } = require('fs');
 const path = require('path');
 
@@ -6,7 +6,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('starboard')
     .setDescription('Configura o consulta el sistema starboard')
-    .addSubcommand(subcommand =>
+    .addSubcommands(subcommand =>
       subcommand
         .setName('help')
         .setDescription('Muestra la explicación de cómo funciona el starboard')

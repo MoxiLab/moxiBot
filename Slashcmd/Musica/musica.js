@@ -1,5 +1,5 @@
 const {
-    SlashCommandBuilder,
+    ChatInputCommandBuilder: SlashCommandBuilder,
     MessageFlags,
     ContainerBuilder,
     TextDisplayBuilder,
@@ -26,56 +26,56 @@ module.exports = {
 
         .setName("moxi")
         .setDescription(moxi.translate('commands:CMD_MOXI_DESC', 'es-ES') || 'Escucha tu música favorita')
-        .addSubcommand(subcommand => subcommand
+        .addSubcommands(subcommand => subcommand
             .setName("play")
             .setDescription(moxi.translate('commands:CMD_PLAY_DESC', 'es-ES') || `${EMOJIS.musicSingle} Reproduce una canción y deja que la música fluya`)
-            .addStringOption(p => p.setName('track')
+            .addStringOptions(p => p.setName('track')
                 .setDescription(moxi.translate('commands:OPT_TRACK_DESC', 'es-ES') || 'Reproduce una canción').setRequired(true))
-            .addStringOption(pl => pl.setName("platform")
+            .addStringOptions(pl => pl.setName("platform")
                 .setDescription(moxi.translate('commands:OPT_PLATFORM_DESC', 'es-ES') || 'Elige una plataforma para reproducir música')
                 .addChoices({ name: "YouTube", value: "youtube" })
                 .addChoices({ name: "Spotify", value: "spotify" }).setRequired(true)))
 
-        .addSubcommand(subcommand => subcommand
+        .addSubcommands(subcommand => subcommand
             .setName("pause")
             .setDescription(`${EMOJIS.wind} Pausa, deja que el viento lleve tu melodía`))
 
-        .addSubcommand(subcommand => subcommand
+        .addSubcommands(subcommand => subcommand
             .setName("resume")
             .setDescription(`${EMOJIS.star} Reanuda la música y deja que las estrellas guíen tu ritmo`))
 
-        .addSubcommand(subcommand => subcommand
+        .addSubcommands(subcommand => subcommand
             .setName("skip")
             .setDescription(`${EMOJIS.skipNext} Salta a la siguiente canción`))
 
-        .addSubcommand(subcommand => subcommand
+        .addSubcommands(subcommand => subcommand
             .setName("queue")
             .setDescription(`${EMOJIS.scroll} Muestra la cola de reproducción`))
 
-        .addSubcommand(sub => sub
+        .addSubcommands(sub => sub
             .setName("autoplay")
             .setDescription(`${EMOJIS.droplet} El flujo musical sigue, como un río eterno.`)
-            .addStringOption(pl => pl.setName("platform")
+            .addStringOptions(pl => pl.setName("platform")
                 .setDescription("Elige una plataforma para reproducir musica")
                 .addChoices({ name: "YouTube", value: "yt" })
                 .addChoices({ name: "Spotify", value: "sp" }).setRequired(true)))
 
-        .addSubcommand(sub => sub
+        .addSubcommands(sub => sub
             .setName("add")
             .setDescription(moxi.translate('commands:OPT_ADD_AMOUNT_DESC', 'es-ES') || `${EMOJIS.leaf} Canción añadida, como una hoja en el viento.`)
-            .addIntegerOption(p => p.setName('cantidad')
+            .addIntegerOptions(p => p.setName('cantidad')
                 .setDescription(moxi.translate('commands:OPT_ADD_AMOUNT_DESC', 'es-ES') || 'Introduce la cantidad de canciones que quieres')
                 .setMinValue(1)
                 .setMaxValue(30).setRequired(true)))
 
-        .addSubcommand(o => o
+        .addSubcommands(o => o
             .setName("stop")
             .setDescription(`${EMOJIS.stopSign} Detén la música y permite que el silencio reine.`))
 
-        .addSubcommand(p => p
+        .addSubcommands(p => p
             .setName("volume")
             .setDescription(`${EMOJIS.volUp} Ajusta el volumen y deja que la música llene el aire.`)
-            .addNumberOption(v => v
+            .addNumberOptions(v => v
                 .setName("amount")
                 .setDescription(moxi.translate('commands:OPT_VOLUME_AMOUNT_DESC', 'es-ES') || '¿Qué volumen quieres del 1 al 100?').setRequired(true))),
 

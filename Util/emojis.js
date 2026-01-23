@@ -173,4 +173,26 @@ const EMOJIS = Object.freeze({
     emoji_1767091260450: fmtCustom(CUSTOM.emoji_1767091260450),
 });
 
-module.exports = { EMOJIS, UNICODE_CODEPOINT_TO_KEY };
+function toEmojiObject(emoji) {
+    if (!emoji) return undefined;
+    if (typeof emoji === 'object') return emoji;
+    if (typeof emoji !== 'string') return undefined;
+
+    const trimmed = emoji.trim();
+    if (!trimmed) return undefined;
+
+    // Custom emoji token: <:name:id> o <a:name:id>
+    const m = trimmed.match(/^<(a)?:([^:]+):(\d+)>$/);
+    if (m) {
+        return {
+            animated: Boolean(m[1]),
+            name: m[2],
+            id: m[3],
+        };
+    }
+
+    // Unicode emoji (o cualquier nombre) -> Discord espera { name }
+    return { name: trimmed };
+}
+
+module.exports = { EMOJIS, UNICODE_CODEPOINT_TO_KEY, toEmojiObject };

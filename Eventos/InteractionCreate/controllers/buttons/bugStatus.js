@@ -1,4 +1,16 @@
-const { PermissionsBitField, MessageFlags, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, ContainerBuilder, SeparatorBuilder } = require('discord.js');
+const {
+    PermissionsBitField,
+    MessageFlags,
+    ActionRowBuilder,
+    ChannelType,
+    ContainerBuilder,
+    SeparatorBuilder,
+    SuccessButtonBuilder,
+    PrimaryButtonBuilder,
+    SecondaryButtonBuilder,
+    DangerButtonBuilder,
+    LinkButtonBuilder,
+} = require('discord.js');
 const { Bot } = require('../../../../Config');
 const { getSettings } = require('../../../../Util/bugStorage');
 
@@ -9,31 +21,28 @@ const DELETE_ID = 'bug:delete-thread';
 
 function buildCompleteRow(translate) {
     return new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
+        new SuccessButtonBuilder()
             .setCustomId(COMPLETE_ID)
             .setLabel(translate('BUG_BUTTON_COMPLETE'))
-            .setStyle(ButtonStyle.Success)
     );
 }
 
 function buildReopenRow(translate) {
     return new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
+        new PrimaryButtonBuilder()
             .setCustomId(REOPEN_ID)
             .setLabel(translate('BUG_BUTTON_REOPEN'))
-            .setStyle(ButtonStyle.Primary),
-        new ButtonBuilder()
+            ,
+        new SecondaryButtonBuilder()
             .setCustomId(CANCEL_ID)
             .setLabel(translate('BUG_BUTTON_CANCEL'))
-            .setStyle(ButtonStyle.Secondary)
     );
 }
 
 function buildDeleteButton(translate) {
-    return new ButtonBuilder()
+    return new DangerButtonBuilder()
         .setCustomId(DELETE_ID)
-        .setLabel(translate('BUG_BUTTON_DELETE'))
-        .setStyle(ButtonStyle.Danger);
+        .setLabel(translate('BUG_BUTTON_DELETE'));
 }
 
 function mergeWithDeleteButton(statusRow, translate) {
@@ -119,9 +128,8 @@ function buildThreadLinkRow(interaction, thread) {
     if (!thread?.id || !guildId) return null;
     const threadUrl = `https://discord.com/channels/${guildId}/${thread.id}`;
     return new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
+        new LinkButtonBuilder()
             .setLabel(interaction.translate('BUG_THREAD_BUTTON'))
-            .setStyle(ButtonStyle.Link)
             .setURL(threadUrl)
     );
 }

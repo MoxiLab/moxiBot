@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
@@ -25,17 +25,17 @@ module.exports = {
         .setName('gift')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addSubcommand((sub) =>
+        .addSubcommands((sub) =>
             sub
                 .setName('coins')
                 .setDescription('Regala coins a un usuario')
-                .addUserOption((opt) =>
+                .addUserOptions((opt) =>
                     opt
                         .setName('usuario')
                         .setDescription('Usuario que recibirá las coins')
                         .setRequired(true)
                 )
-                .addIntegerOption((opt) =>
+                .addIntegerOptions((opt) =>
                     opt
                         .setName('cantidad')
                         .setDescription('Cantidad a regalar')
@@ -43,23 +43,23 @@ module.exports = {
                         .setMinValue(1)
                 )
         )
-        .addSubcommand((sub) =>
+        .addSubcommands((sub) =>
             sub
                 .setName('item')
                 .setDescription('Regala un ítem a un usuario')
-                .addUserOption((opt) =>
+                .addUserOptions((opt) =>
                     opt
                         .setName('usuario')
                         .setDescription('Usuario que recibirá el ítem')
                         .setRequired(true)
                 )
-                .addStringOption((opt) =>
+                .addStringOptions((opt) =>
                     opt
                         .setName('item')
                         .setDescription('ID de tienda, itemId o nombre del ítem')
                         .setRequired(true)
                 )
-                .addIntegerOption((opt) =>
+                .addIntegerOptions((opt) =>
                     opt
                         .setName('cantidad')
                         .setDescription('Cantidad a regalar (por defecto 1)')
