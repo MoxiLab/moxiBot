@@ -1,5 +1,6 @@
 // Utilidad para construir el embed y los componentes del help
-const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('./compatButtonBuilder');
 const { EMOJIS } = require('./emojis');
 const { Bot } = require('../Config');
 

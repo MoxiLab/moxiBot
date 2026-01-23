@@ -1,10 +1,11 @@
 const {
     ContainerBuilder,
-    ButtonBuilder,
     ButtonStyle,
     StringSelectMenuBuilder,
     MessageFlags,
 } = require('discord.js');
+
+const { ButtonBuilder } = require('./compatButtonBuilder');
 
 const { Bot } = require('../Config');
 const moxi = require('../i18n');
@@ -698,6 +699,7 @@ function buildKindSelect({ lang = 'es-ES', userId, kind, page = 0, disabled = fa
     const safeUserId = String(userId || '').trim();
     const current = normalizeKind(kind);
     const p = clampInt(page, 0, 999);
+    const { toComponentEmoji } = require('./discordEmoji');
 
     return new StringSelectMenuBuilder()
         .setCustomId(`zones:select:${safeUserId}:${current}:${p}`)
@@ -709,19 +711,19 @@ function buildKindSelect({ lang = 'es-ES', userId, kind, page = 0, disabled = fa
             {
                 label: tZones(lang, 'kinds.fish') || 'Pesca',
                 value: 'fish',
-                emoji: ZONE_KINDS.fish.emoji,
+                emoji: toComponentEmoji(ZONE_KINDS.fish.emoji),
                 default: current === 'fish',
             },
             {
                 label: tZones(lang, 'kinds.mine') || 'Minería',
                 value: 'mine',
-                emoji: ZONE_KINDS.mine.emoji,
+                emoji: toComponentEmoji(ZONE_KINDS.mine.emoji),
                 default: current === 'mine',
             },
             {
                 label: tZones(lang, 'kinds.explore') || 'Exploración',
                 value: 'explore',
-                emoji: ZONE_KINDS.explore.emoji,
+                emoji: toComponentEmoji(ZONE_KINDS.explore.emoji),
                 default: current === 'explore',
             }
         );

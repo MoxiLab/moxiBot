@@ -1,4 +1,5 @@
-const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('./compatButtonBuilder');
 const moxi = require('../i18n');
 const { Bot } = require('../Config');
 
@@ -52,7 +53,7 @@ function buildConfirmV2({
         );
 
     const payload = { content: '', components: [container], flags: MessageFlags.IsComponentsV2 };
-    if (ephemeral) payload.ephemeral = true;
+    if (ephemeral) payload.flags |= MessageFlags.Ephemeral;
     return payload;
 }
 

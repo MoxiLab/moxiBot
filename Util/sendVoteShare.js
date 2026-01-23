@@ -1,12 +1,13 @@
 const {
     ActionRowBuilder,
-    ButtonBuilder,
     ButtonStyle,
     ContainerBuilder,
     SeparatorBuilder,
     TextDisplayBuilder,
     MessageFlags
 } = require('discord.js');
+
+const { ButtonBuilder } = require('./compatButtonBuilder');
 const { Bot } = require('../Config');
 const { EMOJIS } = require('../Util/emojis');
 const logger = require('../Util/logger');

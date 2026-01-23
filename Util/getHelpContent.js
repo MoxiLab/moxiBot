@@ -1,5 +1,5 @@
 // Centraliza la construcción del help (Components V2) para cualquier página/categoría
-const { StringSelectMenuBuilder, ContainerBuilder, MessageFlags, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { StringSelectMenuBuilder, ContainerBuilder, MessageFlags, SecondaryButtonBuilder, LinkButtonBuilder } = require('discord.js');
 const moxi = require('../i18n');
 const { EMOJIS } = require('./emojis');
 const logger = require('./logger');
@@ -511,6 +511,7 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
   // Components V2 mode
   // -------------------------
   if (useComponentsV2) {
+    const { toComponentEmoji } = require('./discordEmoji');
     const container = new ContainerBuilder().setAccentColor(Bot.AccentColor);
     const safeDesc = desc || moxi.translate('HELP_NO_CONTENT', lang);
 
@@ -538,7 +539,7 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
         return {
           label,
           value: catKey,
-          emoji: EMOJIS.package,
+          emoji: toComponentEmoji(EMOJIS.package),
           default: categoria === catKey
         };
       }));
@@ -546,19 +547,17 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
 
     // Botones
     if (!categoria) {
-      const closeButton = new ButtonBuilder()
+      const closeButton = new SecondaryButtonBuilder()
         .setCustomId('help2_close')
-        .setEmoji(EMOJIS.cross)
-        .setStyle(ButtonStyle.Secondary);
+        .setEmoji(toComponentEmoji(EMOJIS.cross));
 
       const webLabel = moxi.translate('HELP_WEB_LABEL', lang);
       let webUrl = moxi.translate('HELP_WEB_URL', lang);
       if (!webUrl || typeof webUrl !== 'string' || !/^https?:\/\//.test(webUrl)) {
         webUrl = 'https://moxilab.net';
       }
-      const webButton = new ButtonBuilder()
+      const webButton = new LinkButtonBuilder()
         .setLabel(webLabel)
-        .setStyle(ButtonStyle.Link)
         .setURL(webUrl);
 
       container.addActionRowComponents(row => row.addComponents(closeButton, webButton));
@@ -566,31 +565,26 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
       const stateCat = categoria || '';
       const state = `${page}:${totalPages || 1}:${stateCat}`;
 
-      const prevButton = new ButtonBuilder()
+      const prevButton = new SecondaryButtonBuilder()
         .setCustomId(`help2_prev:${state}`)
-        .setEmoji(EMOJIS.arrowLeft)
-        .setStyle(ButtonStyle.Secondary)
+        .setEmoji(toComponentEmoji(EMOJIS.arrowLeft))
         .setDisabled((totalPages || 1) <= 1 || page <= 0);
 
-      const homeButton = new ButtonBuilder()
+      const homeButton = new SecondaryButtonBuilder()
         .setCustomId(`help2_home:${state}`)
-        .setEmoji(EMOJIS.home)
-        .setStyle(ButtonStyle.Secondary);
+        .setEmoji(toComponentEmoji(EMOJIS.home));
 
-      const infoButton = new ButtonBuilder()
+      const infoButton = new SecondaryButtonBuilder()
         .setCustomId(`help2_info:${state}`)
-        .setEmoji(EMOJIS.info)
-        .setStyle(ButtonStyle.Secondary);
+        .setEmoji(toComponentEmoji(EMOJIS.info));
 
-      const closeButton = new ButtonBuilder()
+      const closeButton = new SecondaryButtonBuilder()
         .setCustomId('help2_close')
-        .setEmoji(EMOJIS.cross)
-        .setStyle(ButtonStyle.Secondary);
+        .setEmoji(toComponentEmoji(EMOJIS.cross));
 
-      const nextButton = new ButtonBuilder()
+      const nextButton = new SecondaryButtonBuilder()
         .setCustomId(`help2_next:${state}`)
-        .setEmoji(EMOJIS.arrowRight)
-        .setStyle(ButtonStyle.Secondary)
+        .setEmoji(toComponentEmoji(EMOJIS.arrowRight))
         .setDisabled((totalPages || 1) <= 1 || page >= (totalPages || 1) - 1);
 
       container.addActionRowComponents(row => row.addComponents(prevButton, homeButton, infoButton, closeButton, nextButton));

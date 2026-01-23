@@ -1,4 +1,5 @@
-const { ButtonBuilder, ButtonStyle } = require('discord.js');
+const { PrimaryButtonBuilder, DangerButtonBuilder } = require('discord.js');
+const { toComponentEmoji } = require('./discordEmoji');
 
 function buildCooldownRemindCustomId({ type, fireAt, userId }) {
     return `cdrem:${String(type)}:${String(fireAt)}:${String(userId)}`;
@@ -9,19 +10,19 @@ function buildCooldownCancelCustomId({ type, userId }) {
 }
 
 function buildRemindButton({ type, fireAt, userId, label = 'Avisarme' } = {}) {
-    return new ButtonBuilder()
+    return new PrimaryButtonBuilder()
         .setCustomId(buildCooldownRemindCustomId({ type, fireAt, userId }))
-        .setEmoji('🔔')
+        .setEmoji(toComponentEmoji('🔔'))
         .setLabel(label)
-        .setStyle(ButtonStyle.Primary);
+        ;
 }
 
 function buildCancelReminderButton({ type, userId, label = 'Cancelar recordatorio' } = {}) {
-    return new ButtonBuilder()
+    return new DangerButtonBuilder()
         .setCustomId(buildCooldownCancelCustomId({ type, userId }))
-        .setEmoji('🛑')
+        .setEmoji(toComponentEmoji('🛑'))
         .setLabel(label)
-        .setStyle(ButtonStyle.Danger);
+        ;
 }
 
 module.exports = {

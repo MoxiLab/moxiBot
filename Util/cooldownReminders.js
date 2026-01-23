@@ -1,5 +1,6 @@
 const { ensureMongoConnection } = require('./mongoConnect');
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
+const { ActionRowBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
+const { ButtonBuilder } = require('./compatButtonBuilder');
 const { Bot } = require('../Config');
 
 const MAX_TIMEOUT_MS = 2_147_000_000; // ~24.8 días (límite práctico de setTimeout)

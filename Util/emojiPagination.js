@@ -1,4 +1,5 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
+const { ActionRowBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
+const { ButtonBuilder } = require('./compatButtonBuilder');
 const { EMOJIS } = require('./emojis');
 
 function buildEmojiPaginationRow(currentPage, totalPages, translate, options = {}) {

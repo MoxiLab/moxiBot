@@ -1,7 +1,6 @@
 const {
     ContainerBuilder,
     ActionRowBuilder,
-    ButtonBuilder,
     ButtonStyle,
     MessageFlags,
     StringSelectMenuBuilder,
@@ -9,6 +8,8 @@ const {
     MediaGalleryBuilder,
     MediaGalleryItemBuilder,
 } = require('discord.js');
+
+const { ButtonBuilder } = require('./compatButtonBuilder');
 
 const { Bot } = require('../Config');
 const { EXPLORE_ZONES } = require('./zonesView');
@@ -64,19 +65,20 @@ function formatRelativeTime(date, locale) {
 
 function normalizeZoneOptions(zones, selectedZoneId, lang) {
     const tPet = (key, vars = {}) => moxi.translate(`economy/pet:${key}`, lang, vars);
+    const { toComponentEmoji } = require('./discordEmoji');
     const list = Array.isArray(zones) ? zones : [];
     const safeSelected = selectedZoneId ? String(selectedZoneId) : null;
 
     if (!list.length) {
         const label = tPet('SOON') || 'Coming soon…';
-        return [{ label, value: 'soon', emoji: '🧭', default: true }];
+        return [{ label, value: 'soon', emoji: toComponentEmoji('🧭'), default: true }];
     }
 
     // Discord limita opciones a 25
     return list.slice(0, 25).map((z) => ({
         label: `${String(z?.name || z?.id || (tPet('ZONE_FALLBACK') || 'Zone'))}`,
         value: String(z?.id || ''),
-        emoji: z?.emoji || '🧭',
+        emoji: toComponentEmoji(z?.emoji || '🧭'),
         default: safeSelected ? String(z?.id || '') === safeSelected : false,
     })).filter((o) => o.value);
 }
