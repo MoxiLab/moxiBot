@@ -179,9 +179,18 @@ module.exports = async (Moxi) => {
   for (const file of slashcommandsFiles) {
     const slash = require(file);
     let data = slash.data || (slash.Command && slash.Command.data);
-    if (data && data.name) {
+    let name = data && data.name;
+    if (!name && data && typeof data.toJSON === 'function') {
+      try {
+        const json = data.toJSON();
+        if (json && json.name) name = json.name;
+      } catch {
+        // ignore
+      }
+    }
+    if (name) {
       if (!slash.__sourceFile) slash.__sourceFile = file;
-      Moxi.slashcommands.set(data.name, slash);
+      Moxi.slashcommands.set(name, slash);
     }
     // No warning: los subcomandos no necesitan .data
   }
