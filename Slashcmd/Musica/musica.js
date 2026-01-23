@@ -1,10 +1,11 @@
 const {
-    SlashCommandBuilder,
     MessageFlags,
     ContainerBuilder,
     TextDisplayBuilder,
     SeparatorBuilder
 } = require("discord.js");
+
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const ms = require("ms");
 const moxi = require("../../i18n");
 const GuildSettings = require("../../Models/GuildSettings");

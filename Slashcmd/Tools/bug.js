@@ -1,10 +1,5 @@
-const {
-    SlashCommandBuilder,
-    ContainerBuilder,
-    MessageFlags,
-    ChannelType,
-    PermissionsBitField,
-} = require('discord.js');
+const { ContainerBuilder, MessageFlags, ChannelType, PermissionsBitField } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { Bot } = require('../../Config');
 const { getSettings, upsertSettings } = require('../../Util/bugStorage');

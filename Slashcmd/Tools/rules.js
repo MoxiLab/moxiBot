@@ -1,4 +1,6 @@
-const { SlashCommandBuilder, ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const fs = require('fs');
 const path = require('path');
 const moxi = require('../../i18n');

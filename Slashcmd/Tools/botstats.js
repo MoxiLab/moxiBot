@@ -1,10 +1,12 @@
 const {
-    SlashCommandBuilder,
     ContainerBuilder,
     MessageFlags,
-    ButtonBuilder,
     ButtonStyle,
 } = require('discord.js');
+
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
+
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 
 const os = require('node:os');
 

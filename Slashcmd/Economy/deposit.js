@@ -1,10 +1,12 @@
-const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
 const { getOrCreateEconomyRaw } = require('../../Util/balanceView');
 const { getBankInfo, formatInt } = require('../../Util/bankSystem');
-const { ButtonBuilder, ButtonStyle } = require('discord.js');
+const { ButtonStyle } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
 
 const { description, localizations } = getSlashCommandDescription('deposit');

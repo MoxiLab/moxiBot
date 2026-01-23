@@ -1,4 +1,5 @@
-const { SlashCommandBuilder, ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 
 const rankCmd = require('../../Comandos/Utiility/Rank');

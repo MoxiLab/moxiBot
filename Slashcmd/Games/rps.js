@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { gamesCategory } = require('../../Util/commandCategories');
 const { buildRpsMessageOptions } = require('../../Util/rpsGame');

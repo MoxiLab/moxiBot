@@ -1,14 +1,14 @@
 const {
-    SlashCommandBuilder,
     MessageFlags,
     EmbedBuilder,
     ActionRowBuilder,
-    ButtonBuilder,
     ButtonStyle,
     ContainerBuilder,
     MediaGalleryBuilder,
     MediaGalleryItemBuilder,
 } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');

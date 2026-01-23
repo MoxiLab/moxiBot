@@ -1,4 +1,5 @@
-const { SlashCommandBuilder, PermissionsBitField, ButtonStyle } = require('discord.js');
+const { PermissionsBitField, ButtonStyle } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { putPending, buildConfirmV2 } = require('../../Util/modV2');

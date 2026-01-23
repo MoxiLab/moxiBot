@@ -1,4 +1,5 @@
-const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const afkStorage = require('../../Util/afkStorage');
 const { buildAfkContainer, formatAfkTimestamp } = require('../../Util/afkRender');

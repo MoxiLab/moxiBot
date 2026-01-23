@@ -1,11 +1,13 @@
 const {
-    SlashCommandBuilder,
     ContainerBuilder,
     MessageFlags,
     PermissionFlagsBits,
-    ButtonBuilder,
     ButtonStyle,
 } = require('discord.js');
+
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
+
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 
 const { Bot } = require('../../Config');
 const moxi = require('../../i18n');
@@ -16,7 +18,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('portal')
         .setDescription('Muestra el portal del servidor (enlace oficial de invitación)')
-        .addBooleanOption((opt) =>
+        .addBooleanOptions((opt) =>
             opt
                 .setName('publico')
                 .setDescription('Mostrar el portal públicamente (por defecto: oculto)')

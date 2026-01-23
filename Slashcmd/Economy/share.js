@@ -1,4 +1,5 @@
-const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { buildWipPayload } = require('../../Util/wip');
 const { WIP_SLASH_DESC, WIP_SLASH_DESC_LOCALIZATIONS } = require('../../Util/slashI18n');

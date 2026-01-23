@@ -1,5 +1,5 @@
 
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const getHelpContent = require('../../Util/getHelpContent');
 const moxi = require('../../i18n');
 const logger = require('../../Util/logger');
