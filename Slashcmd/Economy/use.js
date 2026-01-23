@@ -1,10 +1,9 @@
 const {
-    SlashCommandBuilder,
+    ChatInputCommandBuilder: SlashCommandBuilder,
     MessageFlags,
     EmbedBuilder,
     ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
+    PrimaryButtonBuilder,
     ContainerBuilder,
     MediaGalleryBuilder,
     MediaGalleryItemBuilder,
@@ -62,20 +61,20 @@ module.exports = {
         .setName('use')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addIntegerOption((opt) =>
+        .addIntegerOptions((opt) =>
             opt
                 .setName('id')
                 .setDescription('ID del ítem (se ve en /bag y /shop list)')
                 .setRequired(false)
                 .setMinValue(1)
         )
-        .addStringOption((opt) =>
+        .addStringOptions((opt) =>
             opt
                 .setName('item')
                 .setDescription('Nombre o itemId del ítem (alternativa a id)')
                 .setRequired(false)
         )
-        .addIntegerOption((opt) =>
+        .addIntegerOptions((opt) =>
             opt
                 .setName('cantidad')
                 .setDescription('Cantidad a usar (por defecto: 1)')
@@ -190,10 +189,9 @@ module.exports = {
             container
                 .addTextDisplayComponents(t => t.setContent(`🐾 **${pet.name || 'Tu mascota'}** ha oído el sonido… ¡y ha regresado!`))
                 .addActionRowComponents(row => row.addComponents(
-                    new ButtonBuilder()
+                    new PrimaryButtonBuilder()
                         .setCustomId(`pet:open:${interaction.user.id}`)
                         .setLabel('Ver mascota')
-                        .setStyle(ButtonStyle.Primary)
                         .setEmoji('🐣')
                 ));
 

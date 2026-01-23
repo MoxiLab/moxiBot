@@ -1,5 +1,5 @@
 const {
-    SlashCommandBuilder,
+    ChatInputCommandBuilder: SlashCommandBuilder,
     PermissionFlagsBits,
     ContainerBuilder,
     MessageFlags,
@@ -34,25 +34,25 @@ module.exports = {
         .setName('economy')
         .setDescription('Configura economía: toggle y canal dedicado')
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
-        .addSubcommand(sub => sub.setName('status').setDescription('Ver el estado actual'))
-        .addSubcommand(sub => sub.setName('on').setDescription('Activar economía'))
-        .addSubcommand(sub => sub.setName('off').setDescription('Desactivar economía'))
-        .addSubcommand(sub =>
+        .addSubcommands(sub => sub.setName('status').setDescription('Ver el estado actual'))
+        .addSubcommands(sub => sub.setName('on').setDescription('Activar economía'))
+        .addSubcommands(sub => sub.setName('off').setDescription('Desactivar economía'))
+        .addSubcommands(sub =>
             sub
                 .setName('set-channel')
                 .setDescription('Establecer el canal de economía')
-                .addChannelOption(o => o.setName('canal').setDescription('Canal dedicado para economía').setRequired(true))
+                .addChannelOptions(o => o.setName('canal').setDescription('Canal dedicado para economía').setRequired(true))
         )
-        .addSubcommand(sub =>
+        .addSubcommands(sub =>
             sub
                 .setName('clear-channel')
                 .setDescription('Quitar restricción de canal de economía')
         )
-        .addSubcommand(sub =>
+        .addSubcommands(sub =>
             sub
                 .setName('exclusive')
                 .setDescription('Bloquear comandos no-econ en el canal de economía')
-                .addBooleanOption(o => o.setName('activo').setDescription('Activar/desactivar').setRequired(true))
+                .addBooleanOptions(o => o.setName('activo').setDescription('Activar/desactivar').setRequired(true))
         ),
 
     async run(Moxi, interaction) {

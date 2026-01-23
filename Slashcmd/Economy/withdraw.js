@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
@@ -28,7 +28,7 @@ module.exports = {
         .setName('withdraw')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addIntegerOption((opt) =>
+        .addIntegerOptions((opt) =>
             opt
                 .setName('cantidad')
                 .setDescription('Cantidad a retirar (si se omite, retira todo)')
