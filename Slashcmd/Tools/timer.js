@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 const fetch = require('node-fetch');
 const moxi = require('../../i18n');
+const { Bot } = require('../../Config');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -52,10 +53,8 @@ module.exports = {
         setTimeout(async () => {
             try {
                 const done = new ContainerBuilder()
-                    .setAccentColor(0x2ecc71)
-                    .addTextDisplayComponents(c => c.setContent(`# ⏰ Temporizador terminado\n<@${interaction.user.id}>`))
-                    .addSeparatorComponents(s => s.setDivider(true))
-                    .addTextDisplayComponents(c => c.setContent(`Tiempo: **${minutos} minutos**`));
+                    .setAccentColor(Bot.AccentColor)
+                    .addTextDisplayComponents(c => c.setContent(`⏰ <@${interaction.user.id}> ¡Tu temporizador de ${minutos} ${minutos === 1 ? 'minuto' : 'minutos'} ha terminado!`));
 
                 await interaction.channel.send({
                     components: [done],

@@ -69,15 +69,7 @@ module.exports = async function timerModalHandler(interaction, Moxi, logger) {
             const done = new ContainerBuilder()
                 .setAccentColor(Bot.AccentColor)
                 .addTextDisplayComponents(c =>
-                    c.setContent(`# ⏰ Temporizador terminado\n<@${userId}>`)
-                )
-                .addSeparatorComponents(s => s.setDivider(true))
-                .addTextDisplayComponents(c =>
-                    c.setContent(`Tiempo: **${minutos} minutos**`)
-                )
-                .addSeparatorComponents(s => s.setDivider(true))
-                .addTextDisplayComponents(c =>
-                    c.setContent(`${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`)
+                    c.setContent(`⏰ <@${userId}> ¡Tu temporizador de ${minutos} ${minutos === 1 ? 'minuto' : 'minutos'} ha terminado!`)
                 );
 
             await interaction.channel.send({
