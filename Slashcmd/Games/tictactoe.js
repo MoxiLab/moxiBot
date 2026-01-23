@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { ChatInputCommandBuilder: SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require('discord.js');
 const moxi = require('../../i18n');
 const { gamesCategory } = require('../../Util/commandCategories');
 const { buildTttMessageOptions } = require('../../Util/tictactoe');
@@ -21,7 +21,8 @@ module.exports = {
             'hi': 'टिक-टैक-टो (बॉट के खिलाफ)',
             'id': 'Tic-tac-toe (vs bot)',
         })
-        .setDMPermission(true),
+        .setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
+        .setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall),
 
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;

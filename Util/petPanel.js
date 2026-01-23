@@ -1,8 +1,10 @@
 const {
     ContainerBuilder,
     ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
+    DangerButtonBuilder,
+    PrimaryButtonBuilder,
+    SecondaryButtonBuilder,
+    SuccessButtonBuilder,
     MessageFlags,
     StringSelectMenuBuilder,
     ThumbnailBuilder,
@@ -13,6 +15,15 @@ const {
 const { Bot } = require('../Config');
 const { EXPLORE_ZONES } = require('./zonesView');
 const moxi = require('../i18n');
+const { toEmojiObject } = require('./emojis');
+
+function createButtonForStyle(style) {
+    const s = Number(style);
+    if (s === 1) return new PrimaryButtonBuilder();
+    if (s === 3) return new SuccessButtonBuilder();
+    if (s === 4) return new DangerButtonBuilder();
+    return new SecondaryButtonBuilder();
+}
 
 function clampInt(n, min, max) {
     const x = Number(n);
@@ -69,14 +80,14 @@ function normalizeZoneOptions(zones, selectedZoneId, lang) {
 
     if (!list.length) {
         const label = tPet('SOON') || 'Coming soon…';
-        return [{ label, value: 'soon', emoji: '🧭', default: true }];
+        return [{ label, value: 'soon', emoji: toEmojiObject('🧭'), default: true }];
     }
 
     // Discord limita opciones a 25
     return list.slice(0, 25).map((z) => ({
         label: `${String(z?.name || z?.id || (tPet('ZONE_FALLBACK') || 'Zone'))}`,
         value: String(z?.id || ''),
-        emoji: z?.emoji || '🧭',
+        emoji: toEmojiObject(z?.emoji || '🧭'),
         default: safeSelected ? String(z?.id || '') === safeSelected : false,
     })).filter((o) => o.value);
 }
@@ -152,39 +163,33 @@ function buildPetTrainingMessageOptions({ lang = 'es-ES', userId, ownerName, pet
 
     // Botones fuera del container (a nivel de mensaje)
     const row1 = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`pet:stat:${safeUserId}:attack`)
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('⚔️')
+            .setEmoji(toEmojiObject('⚔️'))
             .setDisabled(Boolean(disabled)),
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`pet:stat:${safeUserId}:defense`)
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('🛡️')
+            .setEmoji(toEmojiObject('🛡️'))
             .setDisabled(Boolean(disabled)),
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`pet:stat:${safeUserId}:resistance`)
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('🧬')
+            .setEmoji(toEmojiObject('🧬'))
             .setDisabled(Boolean(disabled))
     );
 
     const row2 = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`pet:stat:${safeUserId}:hunt`)
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('🏹')
+            .setEmoji(toEmojiObject('🏹'))
             .setDisabled(Boolean(disabled)),
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`pet:open:${safeUserId}`)
             .setLabel(moxi.translate('MAIN_MENU', lang) || 'Menú principal')
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('📋')
+            .setEmoji(toEmojiObject('📋'))
             .setDisabled(Boolean(disabled)),
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`pet:trainHelp:${safeUserId}`)
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('📖')
+            .setEmoji(toEmojiObject('📖'))
             .setDisabled(Boolean(disabled))
     );
 
@@ -288,38 +293,33 @@ function buildPetPanelMessageOptions({
     container.addActionRowComponents(r => r.addComponents(zoneSelect));
 
     const actionRowMain = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:play`)
             .setLabel(tMisc('PLAY') || 'Play')
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('🎮')
+            .setEmoji(toEmojiObject('🎮'))
             .setDisabled(disabled || Boolean(away)),
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:feed`)
             .setLabel(tMisc('FEED') || 'Feed')
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('🍎')
+            .setEmoji(toEmojiObject('🍎'))
             .setDisabled(disabled || Boolean(away)),
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:clean`)
             .setLabel(tMisc('CLEAN') || 'Clean')
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('🧼')
+            .setEmoji(toEmojiObject('🧼'))
             .setDisabled(disabled || Boolean(away))
     );
 
     const actionRowSecondary = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`pet:do:${safeUserId}:train`)
             .setLabel(tMisc('TRAIN') || 'Train')
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('🏋️')
+            .setEmoji(toEmojiObject('🏋️'))
             .setDisabled(disabled || Boolean(away)),
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`pet:renameModal:${safeUserId}`)
             .setLabel(tMisc('CHANGE_NAME') || 'Change name')
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('📝')
+            .setEmoji(toEmojiObject('📝'))
             .setDisabled(disabled || Boolean(away))
     );
 
@@ -369,26 +369,24 @@ function buildPetActionResultMessageOptions({
         if (!customId) continue;
         const label = b?.label != null ? String(b.label) : null;
         const emoji = b?.emoji != null ? String(b.emoji) : null;
-        const style = Number.isFinite(Number(b?.style)) ? Number(b.style) : ButtonStyle.Secondary;
+        const style = Number.isFinite(Number(b?.style)) ? Number(b.style) : 2;
 
-        const btn = new ButtonBuilder()
+        const btn = createButtonForStyle(style)
             .setCustomId(customId)
-            .setStyle(style)
             .setDisabled(Boolean(disabled));
 
         if (label) btn.setLabel(label);
-        if (emoji) btn.setEmoji(emoji);
+        if (emoji) btn.setEmoji(toEmojiObject(emoji));
 
         built.push(btn);
     }
 
     // Botón de vuelta al menú
     built.push(
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`pet:open:${safeUserId}`)
             .setLabel(moxi.translate('MENU', lang) || 'Menú')
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('⬅️')
+            .setEmoji(toEmojiObject('⬅️'))
             .setDisabled(Boolean(disabled))
     );
 

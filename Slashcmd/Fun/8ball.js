@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { ChatInputCommandBuilder: SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { funCategory } = require('../../Util/commandCategories');
@@ -15,13 +15,14 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('8ball')
         .setDescription('Responde a tu pregunta con una respuesta aleatoria')
-        .addStringOption(opt =>
+        .addStringOptions(opt =>
             opt
                 .setName('pregunta')
                 .setDescription('Tu pregunta')
                 .setRequired(true)
         )
-        .setDMPermission(true),
+        .setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
+        .setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall),
 
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;

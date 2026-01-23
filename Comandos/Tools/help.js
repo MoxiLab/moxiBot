@@ -407,7 +407,7 @@ module.exports = {
                 );
             }
             // Construir panel tipo ContainerBuilder (estilo captura “work”)
-            const { ContainerBuilder, MessageFlags, ButtonBuilder, ButtonStyle } = require('discord.js');
+            const { ContainerBuilder, MessageFlags, LinkButtonBuilder } = require('discord.js');
 
             // Intentar enriquecer: si existe versión prefix y slash, usar ambas
             const canonicalName = (typeof cmd?.name === 'string' && cmd.name.trim())
@@ -542,9 +542,8 @@ module.exports = {
                 webUrl = 'https://moxilab.net';
             }
 
-            const webButton = new ButtonBuilder()
+            const webButton = new LinkButtonBuilder()
                 .setLabel(webLabel)
-                .setStyle(ButtonStyle.Link)
                 .setURL(webUrl);
 
             container

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
@@ -18,20 +18,20 @@ module.exports = {
         .setName('buy')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addStringOption((opt) =>
+        .addStringOptions((opt) =>
             opt
                 .setName('item')
                 .setDescription('Nombre o itemId (ej: "Hacha elemental" o "herramientas/hacha-elemental")')
                 .setRequired(false)
         )
-        .addIntegerOption((opt) =>
+        .addIntegerOptions((opt) =>
             opt
                 .setName('id')
                 .setDescription('ID del ítem (se ve en /shop list)')
                 .setRequired(false)
                 .setMinValue(1)
         )
-        .addIntegerOption((opt) =>
+        .addIntegerOptions((opt) =>
             opt
                 .setName('cantidad')
                 .setDescription('Cantidad a comprar')

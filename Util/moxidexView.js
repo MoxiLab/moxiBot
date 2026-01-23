@@ -1,13 +1,13 @@
 const {
     ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
+    DangerButtonBuilder,
     EmbedBuilder,
+    SecondaryButtonBuilder,
     StringSelectMenuBuilder,
 } = require('discord.js');
 
 const { Bot } = require('../Config');
-const { EMOJIS } = require('./emojis');
+const { EMOJIS, toEmojiObject } = require('./emojis');
 const { getItemById } = require('./inventoryCatalog');
 const { formatRemaining } = require('./petSystem');
 
@@ -209,35 +209,29 @@ async function buildMoxidexMessage({
     const selectRow = new ActionRowBuilder().addComponents(select);
 
     const buttonRow = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`moxidex:nav:${viewerId}:${safeTier}:${safeSort}:${safePage}:prev`)
-            .setEmoji(EMOJIS.arrowLeft)
-            .setStyle(ButtonStyle.Secondary)
+            .setEmoji(toEmojiObject(EMOJIS.arrowLeft))
             .setDisabled(prevDisabled),
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`moxidex:home:${viewerId}`)
-            .setEmoji(EMOJIS.home)
-            .setStyle(ButtonStyle.Secondary),
-        new ButtonBuilder()
+            .setEmoji(toEmojiObject(EMOJIS.home)),
+        new SecondaryButtonBuilder()
             .setCustomId(`moxidex:sort:${viewerId}:${safeTier}:${safeSort}:${safePage}`)
-            .setEmoji('🔀')
-            .setStyle(ButtonStyle.Secondary),
-        new ButtonBuilder()
+            .setEmoji(toEmojiObject('🔀')),
+        new SecondaryButtonBuilder()
             .setCustomId(`moxidex:info:${viewerId}`)
-            .setEmoji(EMOJIS.info)
-            .setStyle(ButtonStyle.Secondary),
-        new ButtonBuilder()
+            .setEmoji(toEmojiObject(EMOJIS.info)),
+        new SecondaryButtonBuilder()
             .setCustomId(`moxidex:nav:${viewerId}:${safeTier}:${safeSort}:${safePage}:next`)
-            .setEmoji(EMOJIS.arrowRight)
-            .setStyle(ButtonStyle.Secondary)
+            .setEmoji(toEmojiObject(EMOJIS.arrowRight))
             .setDisabled(nextDisabled),
     );
 
     const closeRow = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
+        new DangerButtonBuilder()
             .setCustomId(`moxidex:close:${viewerId}`)
-            .setEmoji(EMOJIS.cross)
-            .setStyle(ButtonStyle.Danger)
+            .setEmoji(toEmojiObject(EMOJIS.cross))
     );
 
     return {

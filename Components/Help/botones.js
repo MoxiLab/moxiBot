@@ -2,25 +2,22 @@
 // Si necesitas lógica especial para estos botones, agrégala aquí.
 // Si solo exportas el row, puedes importar este archivo donde lo necesites.
 
-const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
-const { EMOJIS } = require("../../Util/emojis");
+const { ActionRowBuilder, LinkButtonBuilder } = require("discord.js");
+const { EMOJIS, toEmojiObject } = require("../../Util/emojis");
 
 const row1 = new ActionRowBuilder()
   .addComponents(
-    new ButtonBuilder()
+    new LinkButtonBuilder()
       .setLabel("top.gg")
-      .setStyle("Link")
-      .setEmoji(EMOJIS.smileGrinBig)
+      .setEmoji(toEmojiObject(EMOJIS.smileGrinBig))
       .setURL("https://top.gg/bot/947571048214319134/vote"),
-    new ButtonBuilder()
+    new LinkButtonBuilder()
       .setLabel("discordbotlist")
-      .setStyle("Link")
-      .setEmoji(EMOJIS.smileSmile)
+      .setEmoji(toEmojiObject(EMOJIS.smileSmile))
       .setURL("https://discordbotlist.com/bots/v8bot/upvote"),
-    new ButtonBuilder()
+    new LinkButtonBuilder()
       .setLabel("dbotlist")
-      .setStyle("Link")
-      .setEmoji(EMOJIS.smileGrin)
+      .setEmoji(toEmojiObject(EMOJIS.smileGrin))
       .setURL("https://dbots.fun/bot/947571048214319134")
   );
 

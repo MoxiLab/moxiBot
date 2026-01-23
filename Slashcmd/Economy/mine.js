@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { getItemById } = require('../../Util/inventoryCatalog');
@@ -40,7 +40,7 @@ module.exports = {
         .setName('mine')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addStringOption((opt) =>
+        .addStringOptions((opt) =>
             opt
                 .setName('zona')
                 .setDescription('Mining zone (id or alias). If omitted, picks an available one.')

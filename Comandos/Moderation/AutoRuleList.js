@@ -1,6 +1,6 @@
 // Comando: Listar reglas de auto-moderación
 const fetch = require('node-fetch');
-const { ContainerBuilder, MessageFlags, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require('discord.js');
+const { ContainerBuilder, MessageFlags, SecondaryButtonBuilder, ActionRowBuilder, ComponentType } = require('discord.js');
 const debugHelper = require('../../Util/debugHelper');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
@@ -61,8 +61,8 @@ module.exports = {
             };
             const makeContainer = (p) => new ContainerBuilder()
                 .addTextDisplayComponents(c => c.setContent(`# 📋 Reglas de auto-moderación (${p + 1}/${totalPages}):\n${getPage(p)}`));
-            const prevBtn = new ButtonBuilder().setCustomId('prev').setLabel(`⏪ ${moxi.translate('PREVIOUS', lang) || 'Anterior'}`).setStyle(ButtonStyle.Secondary).setDisabled(page === 0);
-            const nextBtn = new ButtonBuilder().setCustomId('next').setLabel(`${moxi.translate('NEXT', lang) || 'Siguiente'} ⏩`).setStyle(ButtonStyle.Secondary).setDisabled(page === totalPages - 1);
+            const prevBtn = new SecondaryButtonBuilder().setCustomId('prev').setLabel(`⏪ ${moxi.translate('PREVIOUS', lang) || 'Anterior'}`).setDisabled(page === 0);
+            const nextBtn = new SecondaryButtonBuilder().setCustomId('next').setLabel(`${moxi.translate('NEXT', lang) || 'Siguiente'} ⏩`).setDisabled(page === totalPages - 1);
             const row = new ActionRowBuilder().addComponents(prevBtn, nextBtn);
             let msg = await message.reply({ components: [makeContainer(page), row], flags: MessageFlags.IsComponentsV2, reply: true, allowedMentions: { repliedUser: false } });
             debugHelper.log('autorulelist', 'panel sent', { guildId, totalPages, page });
@@ -75,15 +75,15 @@ module.exports = {
                 }
                 if (i.customId === 'prev' && page > 0) page--;
                 if (i.customId === 'next' && page < totalPages - 1) page++;
-                const prevBtn = new ButtonBuilder().setCustomId('prev').setLabel(`⏪ ${moxi.translate('PREVIOUS', lang) || 'Anterior'}`).setStyle(ButtonStyle.Secondary).setDisabled(page === 0);
-                const nextBtn = new ButtonBuilder().setCustomId('next').setLabel(`${moxi.translate('NEXT', lang) || 'Siguiente'} ⏩`).setStyle(ButtonStyle.Secondary).setDisabled(page === totalPages - 1);
+                const prevBtn = new SecondaryButtonBuilder().setCustomId('prev').setLabel(`⏪ ${moxi.translate('PREVIOUS', lang) || 'Anterior'}`).setDisabled(page === 0);
+                const nextBtn = new SecondaryButtonBuilder().setCustomId('next').setLabel(`${moxi.translate('NEXT', lang) || 'Siguiente'} ⏩`).setDisabled(page === totalPages - 1);
                 const row = new ActionRowBuilder().addComponents(prevBtn, nextBtn);
                 await i.update({ components: [makeContainer(page), row], flags: MessageFlags.IsComponentsV2 });
                 debugHelper.log('autorulelist', 'collector nav', { guildId, action: i.customId, page });
             });
             collector.on('end', async () => {
-                const prevBtn = new ButtonBuilder().setCustomId('prev').setLabel(`⏪ ${moxi.translate('PREVIOUS', lang) || 'Anterior'}`).setStyle(ButtonStyle.Secondary).setDisabled(true);
-                const nextBtn = new ButtonBuilder().setCustomId('next').setLabel(`${moxi.translate('NEXT', lang) || 'Siguiente'} ⏩`).setStyle(ButtonStyle.Secondary).setDisabled(true);
+                const prevBtn = new SecondaryButtonBuilder().setCustomId('prev').setLabel(`⏪ ${moxi.translate('PREVIOUS', lang) || 'Anterior'}`).setDisabled(true);
+                const nextBtn = new SecondaryButtonBuilder().setCustomId('next').setLabel(`${moxi.translate('NEXT', lang) || 'Siguiente'} ⏩`).setDisabled(true);
                 const row = new ActionRowBuilder().addComponents(prevBtn, nextBtn);
                 await msg.edit({ components: [makeContainer(page), row], flags: MessageFlags.IsComponentsV2 });
                 debugHelper.log('autorulelist', 'collector ended', { guildId, page });
@@ -100,3 +100,4 @@ module.exports = {
         }
     }
 };
+

@@ -1,14 +1,13 @@
 const {
     ContainerBuilder,
-    ButtonBuilder,
-    ButtonStyle,
     MessageFlags,
+    SecondaryButtonBuilder,
 } = require('discord.js');
 
 const { ensureMongoConnection } = require('./mongoConnect');
 const moxi = require('../i18n');
 const { Bot } = require('../Config');
-const { EMOJIS } = require('./emojis');
+const { EMOJIS, toEmojiObject } = require('./emojis');
 
 function formatInt(n) {
     const x = Number(n);
@@ -20,24 +19,21 @@ function buildBalanceButtons({ lang = 'es-ES', viewerId, targetId } = {}) {
     const t = (k, vars = {}) => moxi.translate(`economy/balance:${k}`, lang, vars);
     const canAct = String(viewerId) === String(targetId);
 
-    const deposit = new ButtonBuilder()
+    const deposit = new SecondaryButtonBuilder()
         .setCustomId(`bal:deposit:${viewerId}:${targetId}`)
         .setLabel(t('BTN_DEPOSIT'))
-        .setStyle(ButtonStyle.Secondary)
-        .setEmoji('📥')
+        .setEmoji(toEmojiObject('📥'))
         .setDisabled(!canAct);
 
-    const withdraw = new ButtonBuilder()
+    const withdraw = new SecondaryButtonBuilder()
         .setCustomId(`bal:withdraw:${viewerId}:${targetId}`)
         .setLabel(t('BTN_WITHDRAW'))
-        .setStyle(ButtonStyle.Secondary)
-        .setEmoji('📤')
+        .setEmoji(toEmojiObject('📤'))
         .setDisabled(!canAct);
 
-    const refresh = new ButtonBuilder()
+    const refresh = new SecondaryButtonBuilder()
         .setCustomId(`bal:refresh:${viewerId}:${targetId}`)
-        .setStyle(ButtonStyle.Secondary)
-        .setEmoji('🔁');
+        .setEmoji(toEmojiObject('🔁'));
 
     return [deposit, withdraw, refresh];
 }

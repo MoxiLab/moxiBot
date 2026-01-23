@@ -1,5 +1,5 @@
 
-const { SlashCommandBuilder } = require('discord.js');
+const { ChatInputCommandBuilder: SlashCommandBuilder } = require('discord.js');
 const getHelpContent = require('../../Util/getHelpContent');
 const moxi = require('../../i18n');
 const logger = require('../../Util/logger');
@@ -16,7 +16,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('help')
         .setDescription('Muestra la lista de comandos disponibles y su uso')
-        .addStringOption((opt) =>
+        .addStringOptions((opt) =>
             opt
                 .setName('categoria')
                 .setDescription('Filtra por categoría (ej: economia, herramientas, musica)')

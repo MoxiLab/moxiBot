@@ -1,5 +1,6 @@
 const { getShutdownComponentV2 } = require("../Components/V2/shutdownEmbedComponent");
 const { MessageFlags } = require("discord.js");
+const { isTestMode } = require('./runtimeMode');
 
 /**
  * Inicializa el handler de apagado visual para el bot.
@@ -7,6 +8,7 @@ const { MessageFlags } = require("discord.js");
  * @param {string} channelId
  */
 function setupShutdownHandler(client, channelId) {
+    if (isTestMode()) return;
     process.on('beforeExit', async () => {
         try {
             const channel = await client.channels.fetch(channelId);

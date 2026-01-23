@@ -1,13 +1,14 @@
 const {
     ContainerBuilder,
-    ButtonBuilder,
-    ButtonStyle,
+    DangerButtonBuilder,
     MessageFlags,
+    PrimaryButtonBuilder,
+    SecondaryButtonBuilder,
 } = require('discord.js');
 
 const { Bot } = require('../Config');
 const moxi = require('../i18n');
-const { EMOJIS } = require('./emojis');
+const { EMOJIS, toEmojiObject } = require('./emojis');
 const { getItemById } = require('./inventoryCatalog');
 
 const COIN = EMOJIS.coin || '\u{1FA99}'; // 🪙
@@ -359,34 +360,29 @@ function buildFishNavButtons({ userId, page, totalPages, disabled = false } = {}
     const safeUserId = String(userId || '').trim();
     const p = clampInt(page, 0, Math.max(0, (totalPages || 1) - 1));
 
-    const prev = new ButtonBuilder()
+    const prev = new SecondaryButtonBuilder()
         .setCustomId(`fish:prev:${safeUserId}:${p}`)
-        .setStyle(ButtonStyle.Secondary)
-        .setEmoji(EMOJIS.arrowLeft)
+        .setEmoji(toEmojiObject(EMOJIS.arrowLeft))
         .setDisabled(disabled || p <= 0);
 
-    const refresh = new ButtonBuilder()
+    const refresh = new SecondaryButtonBuilder()
         .setCustomId(`fish:refresh:${safeUserId}:${p}`)
-        .setStyle(ButtonStyle.Secondary)
-        .setEmoji('🔁')
+        .setEmoji(toEmojiObject('🔁'))
         .setDisabled(disabled);
 
-    const close = new ButtonBuilder()
+    const close = new DangerButtonBuilder()
         .setCustomId(`fish:close:${safeUserId}:${p}`)
-        .setStyle(ButtonStyle.Danger)
-        .setEmoji(EMOJIS.cross)
+        .setEmoji(toEmojiObject(EMOJIS.cross))
         .setDisabled(disabled);
 
-    const help = new ButtonBuilder()
+    const help = new SecondaryButtonBuilder()
         .setCustomId(`fish:help:${safeUserId}:${p}`)
-        .setStyle(ButtonStyle.Secondary)
-        .setEmoji(EMOJIS.question)
+        .setEmoji(toEmojiObject(EMOJIS.question))
         .setDisabled(disabled);
 
-    const next = new ButtonBuilder()
+    const next = new SecondaryButtonBuilder()
         .setCustomId(`fish:next:${safeUserId}:${p}`)
-        .setStyle(ButtonStyle.Secondary)
-        .setEmoji(EMOJIS.arrowRight)
+        .setEmoji(toEmojiObject(EMOJIS.arrowRight))
         .setDisabled(disabled || p >= (totalPages - 1));
 
     return [prev, refresh, close, help, next];
@@ -398,10 +394,9 @@ function buildFishPickButtons({ userId, page, zones, disabled = false } = {}) {
     const slice = Array.isArray(zones) ? zones : [];
 
     return slice.map((z, index) =>
-        new ButtonBuilder()
+        new PrimaryButtonBuilder()
             .setCustomId(`fish:pick:${safeUserId}:${p}:${index}`)
-            .setStyle(ButtonStyle.Primary)
-            .setEmoji(z?.emoji || '🎣')
+            .setEmoji(toEmojiObject(z?.emoji || '🎣'))
             .setLabel(String(z?.id || `zona-${index + 1}`))
             .setDisabled(disabled)
     );
