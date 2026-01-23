@@ -9,6 +9,7 @@ const { ensureMongoConnection } = require('./mongoConnect');
 const moxi = require('../i18n');
 const { Bot } = require('../Config');
 const { EMOJIS } = require('./emojis');
+const { getBankInfo, formatInt: formatInt2 } = require('./bankSystem');
 
 function formatInt(n) {
     const x = Number(n);
@@ -62,7 +63,7 @@ async function getOrCreateEconomyRaw(userId) {
     try {
         await Economy.updateOne(
             { userId },
-            { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [] } },
+            { $setOnInsert: { userId, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: [] } },
             { upsert: true }
         );
     } catch (e) {
@@ -90,6 +91,7 @@ async function buildBalanceMessage({ guildId, lang, viewerId, targetUser } = {})
 
     const balance = eco?.balance ?? 0;
     const bank = eco?.bank ?? 0;
+    const bankInfo = getBankInfo(eco);
     const sakuras = eco?.sakuras ?? 0;
     const rank = await getGlobalBalanceRank(balance);
 
@@ -102,7 +104,7 @@ async function buildBalanceMessage({ guildId, lang, viewerId, targetUser } = {})
             text.setContent(
                 `# ${title}\n\n` +
                 `${EMOJIS.coin || '🪙'} **${tr('COINS')}:** ${formatInt(balance)}\n` +
-                `🏦 **${tr('BANK')}:** ${formatInt(bank)}\n` +
+                `🏦 **${tr('BANK')}:** ${formatInt(bank)} / ${formatInt2(bankInfo.capacity)} (Lv ${formatInt2(bankInfo.level)})\n` +
                 `🌸 **${tr('SAKURAS')}:** ${formatInt(sakuras)}\n\n` +
                 `${tr('GLOBAL_RANK')}: **#${formatInt(rank)}**`
             )
