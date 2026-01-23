@@ -2,7 +2,7 @@ module.exports = async function lavanodeButtons(interaction, Moxi) {
     if (interaction.customId !== 'lavanode_refresh') return false;
 
     const moxi = require('../../../../i18n');
-    const { MessageFlags, ContainerBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+    const { MessageFlags, ContainerBuilder, PrimaryButtonBuilder } = require('discord.js');
     const { EMOJIS } = require('../../../../Util/emojis');
     const { Bot } = require('../../../../Config');
     const { buildNoticeContainer } = require('../../../../Util/v2Notice');
@@ -65,10 +65,9 @@ module.exports = async function lavanodeButtons(interaction, Moxi) {
         .addSeparatorComponents(s => s.setDivider(true))
         .addActionRowComponents(row =>
             row.addComponents(
-                new ButtonBuilder()
+                new PrimaryButtonBuilder()
                     .setCustomId('lavanode_refresh')
                     .setLabel(moxi.translate('REFRESH', lang))
-                    .setStyle(ButtonStyle.Primary)
             )
         )
         .addSeparatorComponents(s => s.setDivider(true))
