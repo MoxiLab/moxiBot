@@ -18,6 +18,9 @@ yarn-debug.log*
 pnpm-debug.log*
 *.pid
 
+# Nodemon
+.nodemon-restart
+
 # Build/coverage
 dist/
 build/
