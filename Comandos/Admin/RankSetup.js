@@ -3,13 +3,14 @@ const {
     ApplicationCommandOptionType,
     ContainerBuilder,
     MessageFlags,
-    ButtonBuilder,
     ButtonStyle,
     AttachmentBuilder,
     MediaGalleryBuilder,
     MediaGalleryItemBuilder,
     ActionRowBuilder,
 } = require('discord.js');
+
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 
 const { Bot } = require('../../Config');
 const RankConfig = require('../../Models/RankSchema');

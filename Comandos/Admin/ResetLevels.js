@@ -1,4 +1,5 @@
-const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ContainerBuilder, MessageFlags, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
+const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ContainerBuilder, MessageFlags, ButtonStyle, ActionRowBuilder } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const LevelSystem = require('../../Global/Helpers/LevelSystem');
 const { Bot } = require('../../Config');
 const debugHelper = require('../../Util/debugHelper');

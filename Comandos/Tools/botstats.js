@@ -1,4 +1,5 @@
-const { ContainerBuilder, MessageFlags, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { ContainerBuilder, MessageFlags, ButtonStyle } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 
 const os = require('node:os');
 

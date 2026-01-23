@@ -407,7 +407,8 @@ module.exports = {
                 );
             }
             // Construir panel tipo ContainerBuilder (estilo captura “work”)
-            const { ContainerBuilder, MessageFlags, ButtonBuilder, ButtonStyle } = require('discord.js');
+            const { ContainerBuilder, MessageFlags, ButtonStyle } = require('discord.js');
+            const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 
             // Intentar enriquecer: si existe versión prefix y slash, usar ambas
             const canonicalName = (typeof cmd?.name === 'string' && cmd.name.trim())

@@ -2,13 +2,13 @@ const {
     ContainerBuilder,
     MessageFlags,
     ActionRowBuilder,
-    ButtonBuilder,
     ButtonStyle,
     ChannelType,
     PermissionsBitField,
     MediaGalleryBuilder,
     MediaGalleryItemBuilder,
 } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const { randomBytes } = require('crypto');
 const moxi = require('../../i18n');
 const { Bot } = require('../../Config');

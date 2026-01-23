@@ -3,12 +3,12 @@ const {
     MessageFlags,
     AttachmentBuilder,
     PermissionsBitField,
-    ButtonBuilder,
     ButtonStyle,
     MediaGalleryBuilder,
     MediaGalleryItemBuilder,
     PermissionsBitField: { Flags }
 } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const moxi = require('../../i18n');
 const { Bot } = require('../../Config');
 const { EMOJIS } = require('../../Util/emojis');

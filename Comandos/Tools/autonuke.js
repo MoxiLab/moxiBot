@@ -2,11 +2,11 @@
 const {
     ChannelType,
     PermissionsBitField,
-    ButtonBuilder,
     ActionRowBuilder,
     ContainerBuilder,
     MessageFlags,
 } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const moxi = require('../../i18n');
 const { Bot } = require('../../Config');
 

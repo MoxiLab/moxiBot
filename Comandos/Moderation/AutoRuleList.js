@@ -1,6 +1,7 @@
 // Comando: Listar reglas de auto-moderación
 const fetch = require('node-fetch');
-const { ContainerBuilder, MessageFlags, ButtonBuilder, ButtonStyle, ActionRowBuilder, ComponentType } = require('discord.js');
+const { ContainerBuilder, MessageFlags, ButtonStyle, ActionRowBuilder, ComponentType } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const debugHelper = require('../../Util/debugHelper');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');

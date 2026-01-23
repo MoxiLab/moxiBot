@@ -1,4 +1,5 @@
-const { ContainerBuilder, MessageFlags, PermissionFlagsBits, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { ContainerBuilder, MessageFlags, PermissionFlagsBits, ButtonStyle } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 
 const { Bot } = require('../../Config');
 const moxi = require('../../i18n');

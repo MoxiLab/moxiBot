@@ -3,7 +3,8 @@ const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notic
 const { EMOJIS } = require('../../Util/emojis');
 const { getOrCreateEconomyRaw } = require('../../Util/balanceView');
 const { getBankInfo, formatInt } = require('../../Util/bankSystem');
-const { ButtonBuilder, ButtonStyle } = require('discord.js');
+const { ButtonStyle } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 
 const { economyCategory } = require('../../Util/commandCategories');
 function safeInt(n, fallback = 0) {

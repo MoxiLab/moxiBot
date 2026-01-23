@@ -1,5 +1,6 @@
 
-const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const { ownerPermissions } = require('../../Util/ownerPermissions');
 
 module.exports = {

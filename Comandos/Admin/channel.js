@@ -1,5 +1,6 @@
 
-const { PermissionsBitField, ContainerBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle, MessageFlags, TextInputBuilder, ActionRowBuilder, ModalBuilder } = require('discord.js');
+const { PermissionsBitField, ContainerBuilder, StringSelectMenuBuilder, ButtonStyle, MessageFlags, TextInputBuilder, ActionRowBuilder, ModalBuilder } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const { Bot } = require('../../Config');
 const { EMOJIS } = require('../../Util/emojis');
 const moxi = require('../../i18n');

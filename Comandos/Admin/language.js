@@ -1,5 +1,6 @@
 
-const { PermissionsBitField: { Flags }, ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { PermissionsBitField: { Flags }, ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const moxi = require('../../i18n');
 const { setGuildLanguage } = require('../../Util/guildSettings');
 const log = require('../../Util/logger');

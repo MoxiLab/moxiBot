@@ -1,4 +1,5 @@
-const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ActionRowBuilder, ButtonBuilder, ButtonStyle, ContainerBuilder, MediaGalleryBuilder, MediaGalleryItemBuilder, MessageFlags } = require('discord.js');
+const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ActionRowBuilder, ButtonStyle, ContainerBuilder, MediaGalleryBuilder, MediaGalleryItemBuilder, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const LevelSystem = require('../../Global/Helpers/LevelSystem');
 const { generateRankImage } = require('../../Global/Helpers/WelcomeImage');
 const RankConfig = require('../../Models/RankSchema');
