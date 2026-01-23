@@ -5,6 +5,8 @@ require('./Util/webhookError').sendErrorToWebhook('Error de prueba V2', 'console
 require('./Util/silentDotenv')();
 
 const { Client, IntentsBitField } = require("discord.js");
+const { ContainerBuilder, MessageFlags } = require('discord.js');
+const { Bot } = require('./Config');
 const client = new Client({
     intents: [
         IntentsBitField.Flags.Guilds,
@@ -20,7 +22,26 @@ const client = new Client({
 require('./Util/discordEphemeralCompat').installEphemeralCompat();
 
 const { restoreTimers } = require('./Util/timerStorage');
-restoreTimers();
+restoreTimers(async (guildId, channelId, userId, minutos) => {
+    try {
+        // En caso de que dispare antes del ready, intentamos igualmente.
+        const channel = await client.channels.fetch(channelId).catch(() => null);
+        if (!channel || typeof channel.send !== 'function') return;
+
+        const done = new ContainerBuilder()
+            .setAccentColor(Bot.AccentColor)
+            .addTextDisplayComponents(c => c.setContent(`# ⏰ Temporizador terminado\n<@${userId}>`))
+            .addSeparatorComponents(s => s.setDivider(true))
+            .addTextDisplayComponents(c => c.setContent(`Tiempo: **${minutos} minutos**`));
+
+        await channel.send({
+            components: [done],
+            flags: MessageFlags.IsComponentsV2,
+        });
+    } catch {
+        // Silencioso para no romper el arranque.
+    }
+});
 
 // Notificación visual de apagado (shutdown) modular
 const { setupShutdownHandler } = require("./Util/shutdownHandler");
