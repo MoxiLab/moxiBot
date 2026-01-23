@@ -35,7 +35,7 @@ async function getOrCreateEconomy(userId) {
     try {
         await Economy.updateOne(
             { userId },
-            { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [] } },
+            { $setOnInsert: { userId, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: [] } },
             { upsert: true }
         );
     } catch (e) {
