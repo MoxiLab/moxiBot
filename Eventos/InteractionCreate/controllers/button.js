@@ -1,4 +1,6 @@
 const handlers = [
+  require('./buttons/cooldownReminder'),
+  require('./buttons/bankUpgrade'),
   require('./buttons/moxidex'),
   require('./buttons/pet'),
   require('./buttons/shop'),
