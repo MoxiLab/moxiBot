@@ -1,14 +1,13 @@
 const {
     ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
+    LinkButtonBuilder,
     ContainerBuilder,
     SeparatorBuilder,
     TextDisplayBuilder,
     MessageFlags
 } = require('discord.js');
 const { Bot } = require('../Config');
-const { EMOJIS } = require('../Util/emojis');
+const { EMOJIS, toEmojiObject } = require('../Util/emojis');
 const logger = require('../Util/logger');
 const moxi = require('../i18n');
 
@@ -26,20 +25,17 @@ async function sendVoteShare(client, player) {
     }
 
     const shareRow = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-            .setEmoji(EMOJIS.smileGrinBig)
+        new LinkButtonBuilder()
+            .setEmoji(toEmojiObject(EMOJIS.smileGrinBig))
             .setLabel('top.gg')
-            .setStyle(ButtonStyle.Link)
             .setURL('https://top.gg/bot/moxi/vote'),
-        new ButtonBuilder()
-            .setEmoji(EMOJIS.smileSmile)
+        new LinkButtonBuilder()
+            .setEmoji(toEmojiObject(EMOJIS.smileSmile))
             .setLabel('discordbotlist')
-            .setStyle(ButtonStyle.Link)
             .setURL('https://discordbotlist.com/bots/moxi/upvote'),
-        new ButtonBuilder()
-            .setEmoji(EMOJIS.smileGrin)
+        new LinkButtonBuilder()
+            .setEmoji(toEmojiObject(EMOJIS.smileGrin))
             .setLabel('dbotlist')
-            .setStyle(ButtonStyle.Link)
             .setURL('https://dbots.fun/bot/moxi')
     );
 

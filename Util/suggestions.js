@@ -1,8 +1,8 @@
 const {
-    ButtonBuilder,
-    ButtonStyle,
+    DangerButtonBuilder,
     ContainerBuilder,
     PermissionsBitField,
+    SuccessButtonBuilder,
 } = require('discord.js');
 
 const { Bot } = require('../Config');
@@ -49,15 +49,14 @@ function buildSuggestionCard({ lang = 'es-ES', suggestionId = null, content, sta
         container.addSeparatorComponents(s => s.setDivider(true));
         container.addActionRowComponents(row =>
             row.addComponents(
-                new ButtonBuilder()
+                new SuccessButtonBuilder()
                     .setCustomId(`suggest:approve:${suggestionId}`)
                     .setLabel(moxi.translate('APPROVE', lang) || 'Aprobar')
-                    .setStyle(ButtonStyle.Success)
                     .setDisabled(isDone),
-                new ButtonBuilder()
+                new DangerButtonBuilder()
                     .setCustomId(`suggest:deny:${suggestionId}`)
                     .setLabel(moxi.translate('REJECT', lang) || 'Rechazar')
-                    .setStyle(ButtonStyle.Danger)
+                    
                     .setDisabled(isDone),
             )
         );

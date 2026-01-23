@@ -1,8 +1,8 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } = require('discord.js');
+const { ActionRowBuilder, DangerButtonBuilder, EmbedBuilder, SecondaryButtonBuilder, StringSelectMenuBuilder } = require('discord.js');
 const { Bot } = require('../Config');
 const moxi = require('../i18n');
 const { loadCatalog, resolveLocalizedString, resolveCategoryFromLanguages, normalizeItemForLang } = require('./inventoryCatalog');
-const { EMOJIS } = require('./emojis');
+const { EMOJIS, toEmojiObject } = require('./emojis');
 
 function slugify(input) {
     return String(input || '')
@@ -111,27 +111,22 @@ function buildShopMessage({
     const nextDisabled = safePage >= totalPages - 1;
 
     const buttonRow = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`shop:nav:${userId}:${categoryKey}:${safePage}:prev`)
-            .setEmoji(EMOJIS.arrowLeft)
-            .setStyle(ButtonStyle.Secondary)
+            .setEmoji(toEmojiObject(EMOJIS.arrowLeft))
             .setDisabled(prevDisabled),
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`shop:home:${userId}:${categoryKey}`)
-            .setEmoji(EMOJIS.home)
-            .setStyle(ButtonStyle.Secondary),
-        new ButtonBuilder()
+            .setEmoji(toEmojiObject(EMOJIS.home)),
+        new SecondaryButtonBuilder()
             .setCustomId(`shop:info:${userId}:${categoryKey}:${totalPages}`)
-            .setEmoji(EMOJIS.info)
-            .setStyle(ButtonStyle.Secondary),
-        new ButtonBuilder()
+            .setEmoji(toEmojiObject(EMOJIS.info)),
+        new DangerButtonBuilder()
             .setCustomId(`shop:close:${userId}`)
-            .setEmoji(EMOJIS.stopSign)
-            .setStyle(ButtonStyle.Danger),
-        new ButtonBuilder()
+            .setEmoji(toEmojiObject(EMOJIS.stopSign)),
+        new SecondaryButtonBuilder()
             .setCustomId(`shop:nav:${userId}:${categoryKey}:${safePage}:next`)
-            .setEmoji(EMOJIS.arrowRight)
-            .setStyle(ButtonStyle.Secondary)
+            .setEmoji(toEmojiObject(EMOJIS.arrowRight))
             .setDisabled(nextDisabled)
     );
 

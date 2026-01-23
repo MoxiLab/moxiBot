@@ -1,4 +1,14 @@
-const { WebhookClient, Colors } = require('discord.js');
+const { Colors } = require('discord.js');
+const { isTestMode } = require('./runtimeMode');
+
+async function sendWebhook(url, payload) {
+    // Node 18+ incluye fetch
+    await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+    }).catch(() => { });
+}
 
 /**
  * Envía un error crítico a un webhook de Discord como embed bonito.
@@ -6,9 +16,9 @@ const { WebhookClient, Colors } = require('discord.js');
  * @param {string} [stack] - Stacktrace o detalles
  */
 async function sendErrorToWebhook(message, stack) {
+    if (isTestMode()) return;
     const url = process.env.ERROR_WEBHOOK_URL;
     if (!url) return;
-    const webhook = new WebhookClient({ url });
     const year = new Date().getFullYear();
     const embed = {
         color: Colors.Red,
@@ -18,9 +28,9 @@ async function sendErrorToWebhook(message, stack) {
         footer: { text: `Moxi AntiCrash • ${year}` }
     };
     try {
-        await webhook.send({
+        await sendWebhook(url, {
             username: 'Moxi AntiCrash',
-            avatarURL: 'https://i.imgur.com/1Q9Z1Zm.png',
+            avatar_url: 'https://i.imgur.com/1Q9Z1Zm.png',
             embeds: [embed],
         });
     } catch {}

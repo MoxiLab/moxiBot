@@ -1,32 +1,27 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
-const { EMOJIS } = require('./emojis');
+const { ActionRowBuilder, SecondaryButtonBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
+const { EMOJIS, toEmojiObject } = require('./emojis');
 
 function buildEmojiPaginationRow(currentPage, totalPages, translate, options = {}) {
     const disableAll = Boolean(options.disableAll);
-    const prevBtn = new ButtonBuilder()
+    const prevBtn = new SecondaryButtonBuilder()
         .setCustomId('addemoji-list-prev')
-        .setStyle(ButtonStyle.Secondary)
-        .setEmoji(EMOJIS.arrowLeft)
+        .setEmoji(toEmojiObject(EMOJIS.arrowLeft))
         .setDisabled(disableAll || currentPage <= 0);
-    const homeBtn = new ButtonBuilder()
+    const homeBtn = new SecondaryButtonBuilder()
         .setCustomId('addemoji-list-home')
-        .setStyle(ButtonStyle.Secondary)
-        .setEmoji(EMOJIS.home)
+        .setEmoji(toEmojiObject(EMOJIS.home))
         .setDisabled(disableAll || currentPage === 0);
-    const closeBtn = new ButtonBuilder()
+    const closeBtn = new SecondaryButtonBuilder()
         .setCustomId('addemoji-list-close')
-        .setStyle(ButtonStyle.Secondary)
-        .setEmoji(EMOJIS.cross)
+        .setEmoji(toEmojiObject(EMOJIS.cross))
         .setDisabled(disableAll);
-    const infoBtn = new ButtonBuilder()
+    const infoBtn = new SecondaryButtonBuilder()
         .setCustomId('addemoji-list-info')
-        .setStyle(ButtonStyle.Secondary)
-        .setEmoji(EMOJIS.question)
+        .setEmoji(toEmojiObject(EMOJIS.question))
         .setDisabled(disableAll);
-    const nextBtn = new ButtonBuilder()
+    const nextBtn = new SecondaryButtonBuilder()
         .setCustomId('addemoji-list-next')
-        .setStyle(ButtonStyle.Secondary)
-        .setEmoji(EMOJIS.arrowRight)
+        .setEmoji(toEmojiObject(EMOJIS.arrowRight))
         .setDisabled(disableAll || currentPage >= totalPages - 1);
 
     return new ActionRowBuilder().addComponents(prevBtn, homeBtn, closeBtn, infoBtn, nextBtn);

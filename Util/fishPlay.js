@@ -1,8 +1,8 @@
-const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ContainerBuilder, DangerButtonBuilder, MessageFlags, PrimaryButtonBuilder, SecondaryButtonBuilder } = require('discord.js');
 
 const { Bot } = require('../Config');
 const moxi = require('../i18n');
-const { EMOJIS } = require('./emojis');
+const { EMOJIS, toEmojiObject } = require('./emojis');
 const { getItemById } = require('./inventoryCatalog');
 const { awardBalance, formatDuration, getOrCreateEconomy } = require('./economyCore');
 const { claimRateLimit } = require('./actionRateLimit');
@@ -106,10 +106,9 @@ function buildFishPlayMessageOptions({ userId, zoneId, scene, disabled = false, 
 
     if (sc.kind === 'methods') {
         const row = (sc.methods || []).slice(0, 3).map(m =>
-            new ButtonBuilder()
+            new SecondaryButtonBuilder()
                 .setCustomId(`fish:do:${safeUserId}:${zId}:m:${String(m.id)}`)
-                .setStyle(ButtonStyle.Secondary)
-                .setEmoji('🎣')
+                .setEmoji(toEmojiObject('🎣'))
                 .setLabel(String(m.name || m.id))
                 .setDisabled(disabled)
         );
@@ -119,10 +118,9 @@ function buildFishPlayMessageOptions({ userId, zoneId, scene, disabled = false, 
     if (sc.kind === 'doors') {
         const seed = Number.isFinite(sc.seed) ? sc.seed : randInt(0, 2);
         const row = (sc.doors || []).slice(0, 3).map((d, idx) =>
-            new ButtonBuilder()
+            (idx === 1 ? new PrimaryButtonBuilder() : new SecondaryButtonBuilder())
                 .setCustomId(`fish:do:${safeUserId}:${zId}:d:${String(d.id)}:${seed}`)
-                .setStyle(idx === 1 ? ButtonStyle.Primary : ButtonStyle.Secondary)
-                .setEmoji(d.emoji || '🧰')
+                .setEmoji(toEmojiObject(d.emoji || '🧰'))
                 .setLabel(String(d.label || d.id))
                 .setDisabled(disabled)
         );
@@ -132,10 +130,9 @@ function buildFishPlayMessageOptions({ userId, zoneId, scene, disabled = false, 
     if (sc.kind === 'wires') {
         const seed = Number.isFinite(sc.seed) ? sc.seed : randInt(0, 3);
         const row = (sc.wires || []).slice(0, 4).map(w =>
-            new ButtonBuilder()
+            new SecondaryButtonBuilder()
                 .setCustomId(`fish:do:${safeUserId}:${zId}:w:${String(w.id)}:${seed}`)
-                .setStyle(ButtonStyle.Secondary)
-                .setEmoji(w.emoji || '🪝')
+                .setEmoji(toEmojiObject(w.emoji || '🪝'))
                 .setLabel(String(w.label || w.id))
                 .setDisabled(disabled)
         );
@@ -143,15 +140,13 @@ function buildFishPlayMessageOptions({ userId, zoneId, scene, disabled = false, 
     }
 
     container.addActionRowComponents(r => r.addComponents(
-        new ButtonBuilder()
+        new SecondaryButtonBuilder()
             .setCustomId(`fish:play:${safeUserId}:${zId}`)
-            .setEmoji(EMOJIS.refresh || '🔄')
-            .setStyle(ButtonStyle.Secondary)
+            .setEmoji(toEmojiObject(EMOJIS.refresh || '🔄'))
             .setDisabled(disabled),
-        new ButtonBuilder()
+        new DangerButtonBuilder()
             .setCustomId(`fish:closeplay:${safeUserId}:${zId}`)
-            .setEmoji(EMOJIS.stopSign || '⛔')
-            .setStyle(ButtonStyle.Danger)
+            .setEmoji(toEmojiObject(EMOJIS.stopSign || '⛔'))
             .setDisabled(disabled)
     ));
 
