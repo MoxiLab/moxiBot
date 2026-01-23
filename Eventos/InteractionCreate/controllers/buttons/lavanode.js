@@ -2,7 +2,8 @@ module.exports = async function lavanodeButtons(interaction, Moxi) {
     if (interaction.customId !== 'lavanode_refresh') return false;
 
     const moxi = require('../../../../i18n');
-    const { MessageFlags, ContainerBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+    const { MessageFlags, ContainerBuilder, ButtonStyle } = require('discord.js');
+    const { ButtonBuilder } = require('../../../../Util/compatButtonBuilder');
     const { EMOJIS } = require('../../../../Util/emojis');
     const { Bot } = require('../../../../Config');
     const { buildNoticeContainer } = require('../../../../Util/v2Notice');

@@ -1,4 +1,4 @@
-const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ContainerBuilder, LinkButtonBuilder, MessageFlags } = require('discord.js');
 const { EMOJIS } = require('../../Util/emojis');
 const { Bot } = require('../../Config');
 
@@ -40,9 +40,9 @@ async function panelV2({ client: Moxi, message, prefix }) {
         .addSeparatorComponents(s => s.setDivider(true))
         .addActionRowComponents(row =>
             row.addComponents(
-                new ButtonBuilder().setLabel(t(panel.invite)).setStyle(ButtonStyle.Link).setURL('https://discord.com/oauth2/authorize?client_id=1456441655769956436&permissions=8&integration_type=0&scope=bot'),
-                new ButtonBuilder().setLabel(t(panel.support)).setStyle(ButtonStyle.Link).setURL('https://discord.gg/tu-servidor'),
-                new ButtonBuilder().setLabel(t(panel.web)).setStyle(ButtonStyle.Link).setURL('https://moxilab.net')
+                new LinkButtonBuilder().setLabel(t(panel.invite)).setURL('https://discord.com/oauth2/authorize?client_id=1456441655769956436&permissions=8&integration_type=0&scope=bot'),
+                new LinkButtonBuilder().setLabel(t(panel.support)).setURL('https://discord.gg/tu-servidor'),
+                new LinkButtonBuilder().setLabel(t(panel.web)).setURL('https://moxilab.net')
             )
         )
         .addSeparatorComponents(s => s.setDivider(true))

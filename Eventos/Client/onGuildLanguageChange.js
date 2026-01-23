@@ -5,7 +5,8 @@
 const GuildMessage = require('../../Models/GuildMessageSchema');
 const fs = require('fs');
 const path = require('path');
-const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const { Bot } = require('../../Config');
 const { EMOJIS } = require('../../Util/emojis');
 const { isFlagEnabled } = require('../../Util/debug');

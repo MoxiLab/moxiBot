@@ -1,4 +1,5 @@
-const { PermissionsBitField, MessageFlags, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, ContainerBuilder, SeparatorBuilder } = require('discord.js');
+const { PermissionsBitField, MessageFlags, ActionRowBuilder, ButtonStyle, ChannelType, ContainerBuilder, SeparatorBuilder } = require('discord.js');
+const { ButtonBuilder } = require('../../../../Util/compatButtonBuilder');
 const { Bot } = require('../../../../Config');
 const { getSettings } = require('../../../../Util/bugStorage');
 

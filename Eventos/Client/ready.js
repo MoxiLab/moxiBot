@@ -3,6 +3,7 @@ const logger = require("../../Util/logger");
 const { EMOJIS } = require("../../Util/emojis");
 const Config = require("../../Config");
 const { ensureMongoConnection } = require('../../Util/mongoConnect');
+const { restoreTimers } = require('../../Util/timerStorage');
 
 module.exports = async (Moxi) => {
     const moxi = require("../../i18n");
@@ -57,6 +58,28 @@ module.exports = async (Moxi) => {
     if (typeof process.env.MONGODB === 'string' && process.env.MONGODB.trim()) {
         try {
             await ensureMongoConnection();
+
+            // Restaurar timers persistidos (best-effort) una vez Mongo está listo.
+            restoreTimers(async (guildId, channelId, userId, minutos) => {
+                try {
+                    const channel = await Moxi.channels.fetch(channelId).catch(() => null);
+                    if (!channel || typeof channel.send !== 'function') return;
+
+                    const { ContainerBuilder, MessageFlags } = require('discord.js');
+                    const done = new ContainerBuilder()
+                        .setAccentColor(Config?.Bot?.AccentColor)
+                        .addTextDisplayComponents(c => c.setContent(
+                            `⏰ <@${userId}> ¡Tu temporizador de ${minutos} ${minutos === 1 ? 'minuto' : 'minutos'} ha terminado!`
+                        ));
+
+                    await channel.send({
+                        components: [done],
+                        flags: MessageFlags.IsComponentsV2,
+                    });
+                } catch {
+                    // noop
+                }
+            }).catch(() => null);
         } catch (error) {
             logger.error(`${EMOJIS.cross} Error crítico al conectar a MongoDB:`);
             logger.error(error?.message || error);

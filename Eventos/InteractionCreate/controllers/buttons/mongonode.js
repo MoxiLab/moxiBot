@@ -6,7 +6,8 @@ module.exports = async function mongonodeButtons(interaction, Moxi) {
     const { EMOJIS } = require('../../../../Util/emojis');
     const { Bot } = require('../../../../Config');
     const { buildNoticeContainer } = require('../../../../Util/v2Notice');
-    const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+    const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+    const { ButtonBuilder } = require('../../../../Util/compatButtonBuilder');
 
     const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
 
