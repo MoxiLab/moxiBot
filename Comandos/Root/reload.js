@@ -6,7 +6,11 @@ const path = require('node:path');
 const { Bot } = require('../../Config.js');
 const moxi = require('../../i18n.js');
 const debugHelper = require('../../Util/debugHelper.js');
+<<<<<<< Updated upstream
 const { ownerPermissions } = require('../../Util/ownerPermissions.js');
+=======
+const { isDiscordOnlyOwner } = require('../../Util/ownerPermissions.js');
+>>>>>>> Stashed changes
 const { getFiles } = require('../../Handlers/getFiles.js');
 
 function safeRequireResolve(p) {
@@ -67,6 +71,17 @@ function touchNodemonRestartFile() {
     }
 }
 
+<<<<<<< Updated upstream
+=======
+function requestProcessRestart() {
+    if (isRunningUnderNodemon()) {
+        if (touchNodemonRestartFile()) return;
+    }
+    // eslint-disable-next-line no-process-exit
+    process.exit(0);
+}
+
+>>>>>>> Stashed changes
 module.exports = {
     name: 'reload',
     alias: ['rl', 'recargar'],
@@ -84,6 +99,7 @@ module.exports = {
         const requesterId = message.author?.id;
         debugHelper.log('reload', 'command start', { requesterId, args });
 
+<<<<<<< Updated upstream
         const fakeInteraction = {
             user: message.author,
             memberPermissions: message.member?.permissions,
@@ -92,6 +108,9 @@ module.exports = {
 
         const isOwner = await ownerPermissions(fakeInteraction, Moxi);
         if (!isOwner) {
+=======
+        if (!await isDiscordOnlyOwner({ client: Moxi, userId: requesterId })) {
+>>>>>>> Stashed changes
             return message.reply('Solo los owners pueden usar este comando.');
         }
 
@@ -218,7 +237,11 @@ module.exports = {
                             });
                             return;
                         }
+<<<<<<< Updated upstream
                     } catch { } 
+=======
+                    } catch { }
+>>>>>>> Stashed changes
                     requestProcessRestart();
                 }, 600);
 

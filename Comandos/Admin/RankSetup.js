@@ -3,8 +3,8 @@ const {
     ApplicationCommandOptionType,
     ContainerBuilder,
     MessageFlags,
-    ButtonBuilder,
-    ButtonStyle,
+    PrimaryButtonBuilder,
+    SuccessButtonBuilder,
     AttachmentBuilder,
     MediaGalleryBuilder,
     MediaGalleryItemBuilder,
@@ -51,10 +51,9 @@ function buildPanel({ selectedStyle, availability }) {
                 `${hasSylpha ? '' : '\n_❌ Preview no disponible_'}`
             ))
             .setButtonAccessory(
-                new ButtonBuilder()
+                (selectedStyle === 'sylphacard' ? new SuccessButtonBuilder() : new PrimaryButtonBuilder())
                     .setCustomId('rank_style_sylphacard')
                     .setLabel('Usar Sylphacard')
-                    .setStyle(selectedStyle === 'sylphacard' ? ButtonStyle.Success : ButtonStyle.Primary)
                     .setDisabled(!!disabled)
             )
     );
@@ -77,10 +76,9 @@ function buildPanel({ selectedStyle, availability }) {
                 `${hasArts ? '' : '\n_❌ Preview no disponible_'}`
             ))
             .setButtonAccessory(
-                new ButtonBuilder()
+                (selectedStyle === 'discord-arts' ? new SuccessButtonBuilder() : new PrimaryButtonBuilder())
                     .setCustomId('rank_style_discord-arts')
                     .setLabel('Usar Discord-Arts')
-                    .setStyle(selectedStyle === 'discord-arts' ? ButtonStyle.Success : ButtonStyle.Primary)
                     .setDisabled(!!disabled)
             )
     );
@@ -103,10 +101,9 @@ function buildPanel({ selectedStyle, availability }) {
                 `${hasCanva ? '' : '\n_❌ Preview no disponible_'}`
             ))
             .setButtonAccessory(
-                new ButtonBuilder()
+                (selectedStyle === 'canvacard' ? new SuccessButtonBuilder() : new PrimaryButtonBuilder())
                     .setCustomId('rank_style_canvacard')
                     .setLabel('Usar Canvacard')
-                    .setStyle(selectedStyle === 'canvacard' ? ButtonStyle.Success : ButtonStyle.Primary)
                     .setDisabled(!!disabled)
             )
     );
@@ -388,7 +385,7 @@ module.exports = {
             }
         });
 
-        await interaction.editReply({
+        const editResult = await interaction.editReply({
             content: '',
             components: [container],
             files,
@@ -397,8 +394,12 @@ module.exports = {
 
         debugHelper.log('ranksetup', 'interaction panel sent', { guildId: guildID, hasMedia: files.length > 0 });
 
-        const replyMsg = await interaction.fetchReply().catch(() => null);
+        const replyMsg = editResult?.resource?.message || editResult;
         if (!replyMsg) return;
+        if (typeof replyMsg.createMessageComponentCollector !== 'function') {
+            debugHelper.warn('ranksetup', 'editReply did not return a message object; cannot attach collector', { guildId: guildID });
+            return;
+        }
 
         const collector = replyMsg.createMessageComponentCollector({
             time: 2 * 60 * 1000,

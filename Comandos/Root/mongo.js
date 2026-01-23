@@ -1,6 +1,6 @@
 
 const mongoose = require('mongoose');
-const { ContainerBuilder, ButtonBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ContainerBuilder, PrimaryButtonBuilder, MessageFlags } = require('discord.js');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { isDiscordOnlyOwner } = require('../../Util/ownerPermissions');
@@ -122,10 +122,9 @@ module.exports = {
             .addSeparatorComponents(s => s.setDivider(true))
             .addActionRowComponents(row =>
                 row.addComponents(
-                    new ButtonBuilder()
+                    new PrimaryButtonBuilder()
                         .setCustomId('refresh_mongonode')
                         .setLabel(moxi.translate('REFRESH', lang) || 'Refrescar')
-                        .setStyle(ButtonStyle.Primary)
                 )
             )
             .addSeparatorComponents(s => s.setDivider(true))
