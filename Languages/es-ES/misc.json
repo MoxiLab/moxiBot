@@ -567,5 +567,6 @@
   "RELOAD_DONE": "RELOAD_DONE",
   "RELOAD_SUMMARY": "RELOAD_SUMMARY",
   "RELOAD_NOTE": "RELOAD_NOTE",
-  "RELOAD_FAILED": "RELOAD_FAILED"
+  "RELOAD_FAILED": "RELOAD_FAILED",
+  "Ya hay un temporizador activo en este canal": "Ya hay un temporizador activo en este canal."
 }
