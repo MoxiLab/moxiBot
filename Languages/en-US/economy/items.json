@@ -741,7 +741,7 @@
     },
     "mejoras/expansion-de-banco": {
       "name": "Expansion of Bank",
-      "description": "Increases bank space (future use)."
+      "description": "Upgrades your bank (+1 level) and increases its capacity. Price increases each upgrade."
     },
     "mejoras/expansion-de-mochila-plus": {
       "name": "Expansion of Backpack Plus",
