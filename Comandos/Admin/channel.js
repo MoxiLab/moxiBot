@@ -4,6 +4,7 @@ const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const { Bot } = require('../../Config');
 const { EMOJIS } = require('../../Util/emojis');
 const moxi = require('../../i18n');
+const { toComponentEmoji } = require('../../Util/discordEmoji');
 
 module.exports = {
     name: 'channel',
@@ -41,10 +42,10 @@ module.exports = {
             .setCustomId('channel_action')
             .setPlaceholder(moxi.translate('SELECT_ACTION', lang) || 'Selecciona una acción')
             .addOptions([
-                { label: moxi.translate('CREATE', lang) || 'Crear', value: 'crear', emoji: EMOJIS.greenCircle || '🟢' },
-                { label: moxi.translate('DELETE', lang) || 'Borrar', value: 'borrar', emoji: EMOJIS.redCircle || '🔴' },
-                { label: moxi.translate('RENAME', lang) || 'Renombrar', value: 'renombrar', emoji: EMOJIS.orangeCircle || '🟠' },
-                { label: moxi.translate('MOVE', lang) || 'Mover', value: 'mover', emoji: EMOJIS.folder || '📁' },
+                { label: moxi.translate('CREATE', lang) || 'Crear', value: 'crear', emoji: toComponentEmoji(EMOJIS.greenCircle || '🟢') },
+                { label: moxi.translate('DELETE', lang) || 'Borrar', value: 'borrar', emoji: toComponentEmoji(EMOJIS.redCircle || '🔴') },
+                { label: moxi.translate('RENAME', lang) || 'Renombrar', value: 'renombrar', emoji: toComponentEmoji(EMOJIS.orangeCircle || '🟠') },
+                { label: moxi.translate('MOVE', lang) || 'Mover', value: 'mover', emoji: toComponentEmoji(EMOJIS.folder || '📁') },
             ]);
 
         // Select de tipo
@@ -52,9 +53,9 @@ module.exports = {
             .setCustomId('channel_type')
             .setPlaceholder(moxi.translate('SELECT_CHANNEL_TYPE', lang) || 'Selecciona el tipo de canal')
             .addOptions([
-                { label: moxi.translate('TEXT', lang) || 'Texto', value: 'texto', emoji: EMOJIS.book || '📖' },
-                { label: moxi.translate('VOICE', lang) || 'Voz', value: 'voz', emoji: EMOJIS.musicNotes || '🎶' },
-                { label: moxi.translate('CATEGORY', lang) || 'Categoría', value: 'categoria', emoji: EMOJIS.folder || '📁' },
+                { label: moxi.translate('TEXT', lang) || 'Texto', value: 'texto', emoji: toComponentEmoji(EMOJIS.book || '📖') },
+                { label: moxi.translate('VOICE', lang) || 'Voz', value: 'voz', emoji: toComponentEmoji(EMOJIS.musicNotes || '🎶') },
+                { label: moxi.translate('CATEGORY', lang) || 'Categoría', value: 'categoria', emoji: toComponentEmoji(EMOJIS.folder || '📁') },
             ]);
 
         container.addActionRowComponents(row => row.addComponents(actionSelect));
