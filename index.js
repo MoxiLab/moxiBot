@@ -26,6 +26,14 @@ if (process.env.TRACE_PROCESS_EXIT === '1') {
 // Cargar .env y configuración de red (Undici) lo antes posible.
 require('./Util/silentDotenv')();
 
+// Opcional: arrancar tarotcardapi en local si se configuró.
+try {
+    const { maybeAutostartTarotApi } = require('./Util/autostartTarotApi');
+    maybeAutostartTarotApi().catch(() => null);
+} catch {
+    // best-effort
+}
+
 const { Client, GatewayIntentBits } = require("discord.js");
 const { ContainerBuilder, MessageFlags } = require('discord.js');
 const { Bot } = require('./Config');

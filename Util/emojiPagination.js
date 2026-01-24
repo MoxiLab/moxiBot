@@ -1,4 +1,4 @@
-const { ActionRowBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
+const { ActionRowBuilder, ButtonStyle, LabelBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
 const { ButtonBuilder } = require('./compatButtonBuilder');
 const { EMOJIS } = require('./emojis');
 
@@ -38,17 +38,44 @@ function createPageNavigationModal(translate, helperText) {
     const label = translate('misc:ADDEMOJI_NAV_PAGE_LABEL') || 'Número de página';
     const placeholder = translate('misc:ADDEMOJI_NAV_PAGE_PLACEHOLDER') || 'Escribe 1 para la página inicial';
 
-    return new ModalBuilder()
+    const modal = new ModalBuilder()
         .setCustomId('addemoji-nav-page-modal')
-        .setTitle(title)
-        .addComponents(
-            new TextInputBuilder()
-                .setCustomId('addemoji-nav-page-field')
-                .setLabel(label)
-                .setStyle(TextInputStyle.Short)
-                .setPlaceholder(helperText || placeholder)
-                .setRequired(true)
-        );
+        .setTitle(title);
+
+    const input = new TextInputBuilder()
+        .setCustomId('addemoji-nav-page-field')
+        .setStyle(TextInputStyle.Short)
+        .setPlaceholder(placeholder)
+        .setRequired(true);
+
+    // Compat discord.js v14 (TextInputBuilder tenía label en el propio input)
+    if (typeof input.setLabel === 'function') {
+        input.setLabel(label);
+        if (typeof modal.addComponents === 'function') {
+            const row = new ActionRowBuilder().addComponents(input);
+            modal.addComponents(row);
+            return modal;
+        }
+    }
+
+    // discord.js dev/v15: el texto del label va en un LabelBuilder que envuelve al TextInput
+    if (typeof modal.addLabelComponents === 'function' && typeof LabelBuilder === 'function') {
+        const labelComp = new LabelBuilder().setLabel(label).setTextInputComponent(input);
+        const desc = String(helperText || '').trim();
+        if (desc && typeof labelComp.setDescription === 'function') {
+            labelComp.setDescription(desc);
+        }
+        modal.addLabelComponents(labelComp);
+        return modal;
+    }
+
+    // Último fallback (si el modal no soporta addLabelComponents pero sí addComponents)
+    if (typeof modal.addComponents === 'function') {
+        const row = new ActionRowBuilder().addComponents(input);
+        modal.addComponents(row);
+    }
+
+    return modal;
 }
 
 module.exports = {
