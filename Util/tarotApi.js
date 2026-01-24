@@ -1,7 +1,19 @@
 const axios = require('axios');
 
-const TAROT_API_BASE_URL = process.env.TAROT_API_BASE_URL || 'https://tarotapi.dev/api/v1';
 const TAROT_API_TIMEOUT_MS = Number(process.env.TAROT_API_TIMEOUT_MS) || 6500;
+
+function getTarotApiBaseUrl() {
+  const raw = String(process.env.TAROT_API_BASE_URL || '').trim();
+  if (raw && raw.toLowerCase() !== 'auto') return raw;
+
+  // Hosting panels (Pelican/Pterodactyl): suele existir PORT.
+  // Si el bot no expone HTTP, podemos reutilizar ese puerto para la API local.
+  const hostPort = String(process.env.TAROT_API_PORT || process.env.PORT || '').trim();
+  if (/^\d+$/.test(hostPort)) return `http://127.0.0.1:${hostPort}`;
+
+  // Sin configuración, no usar un servicio externo por defecto.
+  return null;
+}
 
 function stripTrailingSlash(url) {
   return String(url || '').replace(/\/+$/, '');
@@ -88,7 +100,10 @@ function clampInt(n, min, max) {
 async function getRandomTarotCards(count = 1) {
   const n = clampInt(count, 1, 10);
   try {
-    const base = stripTrailingSlash(TAROT_API_BASE_URL);
+    const resolvedBase = getTarotApiBaseUrl();
+    if (!resolvedBase) return null;
+
+    const base = stripTrailingSlash(resolvedBase);
 
     // tarotapi.dev (formato: { cards: [...] })
     if (isTarotApiDevBase(base)) {
@@ -119,11 +134,17 @@ async function getRandomTarotCards(count = 1) {
 function getTarotApiSourceLabel() {
   const override = String(process.env.TAROT_API_SOURCE_LABEL || '').trim();
   if (override) return override;
-  return safeHostLabel(TAROT_API_BASE_URL);
+  return safeHostLabel(getTarotApiBaseUrl());
 }
 
 module.exports = {
   getRandomTarotCards,
-  TAROT_API_BASE_URL,
+  getTarotApiBaseUrl,
   getTarotApiSourceLabel,
 };
+
+// Compat: permitir `require(...).TAROT_API_BASE_URL` como antes.
+Object.defineProperty(module.exports, 'TAROT_API_BASE_URL', {
+  enumerable: true,
+  get: () => getTarotApiBaseUrl(),
+});

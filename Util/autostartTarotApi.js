@@ -57,9 +57,22 @@ async function maybeAutostartTarotApi() {
   const enabled = String(process.env.TAROT_API_AUTOSTART || '').trim() === '1';
   if (!enabled) return false;
 
-  const baseUrl = process.env.TAROT_API_BASE_URL;
+  const logEnabled = String(process.env.TAROT_API_LOG || '').trim() === '1';
+
+  // Reutiliza la misma resolución que usa el cliente (soporta TAROT_API_BASE_URL=auto).
+  let baseUrl = process.env.TAROT_API_BASE_URL;
+  try {
+    const { getTarotApiBaseUrl } = require('./tarotApi');
+    baseUrl = getTarotApiBaseUrl();
+  } catch {
+    // best-effort
+  }
+
   const parsed = parseBaseUrl(baseUrl);
-  if (!parsed) return false;
+  if (!parsed) {
+    if (logEnabled) console.warn('[tarot][autostart] baseUrl inválida:', baseUrl);
+    return false;
+  }
 
   // Solo autostart si apunta a local.
   if (!isLocalHost(parsed.host)) return false;
@@ -69,12 +82,15 @@ async function maybeAutostartTarotApi() {
 
   const tarotRepoDir = path.resolve(__dirname, '..', 'external', 'tarotcardapi');
   const entry = path.join(tarotRepoDir, 'app.js');
-  if (!fs.existsSync(entry)) return false;
+  if (!fs.existsSync(entry)) {
+    if (logEnabled) console.warn('[tarot][autostart] no existe:', entry);
+    return false;
+  }
 
   const child = spawn(process.execPath, [entry], {
     cwd: tarotRepoDir,
     env: { ...process.env, PORT: String(parsed.port) },
-    stdio: process.env.TAROT_API_LOG === '1' ? 'inherit' : 'ignore',
+    stdio: logEnabled ? 'inherit' : 'ignore',
     windowsHide: true,
   });
 
