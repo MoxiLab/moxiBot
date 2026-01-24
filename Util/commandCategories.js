@@ -22,7 +22,6 @@ const musicCategory = makeCategory('commands:CATEGORY_MUSICA');
 const funCategory = makeCategory('commands:CATEGORY_FUN');
 const gamesCategory = makeCategory('commands:CATEGORY_GAMES');
 const rootCategory = makeCategory('commands:CATEGORY_ROOT');
-const tarotCategory = makeCategory('commands:CATEGORY_TAROT');
 
 module.exports = {
     makeCategory,
@@ -34,5 +33,4 @@ module.exports = {
     funCategory,
     gamesCategory,
     rootCategory,
-    tarotCategory,
 };

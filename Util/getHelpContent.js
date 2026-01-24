@@ -43,10 +43,6 @@ function normalizeCategoryKey(value) {
   if (upper.includes('مرح')) return 'Fun';
   if (upper.includes('मज़ा') || upper.includes('मजा')) return 'Fun';
 
-  // Tarot
-  if (upper.includes('CATEGORY_TAROT') || upper === 'TAROT') return 'Tarot';
-  if (upper.includes('TAROT')) return 'Tarot';
-
   // Equivalentes árabes (por si el value viene ya traducido)
   if (value.includes('الأدوات')) return 'Tools';
   if (value.includes('الموسيقى')) return 'Music';
@@ -262,7 +258,6 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
       'Economía': 'HELP_CATEGORY_ECONOMY',
       'Economy': 'HELP_CATEGORY_ECONOMY',
       'Moderation': 'HELP_CATEGORY_MODERATION',
-      'Tarot': 'HELP_CATEGORY_TAROT',
       'Moderación': 'HELP_CATEGORY_MODERATION',
       'Music': 'HELP_CATEGORY_MUSIC',
       'Música': 'HELP_CATEGORY_MUSIC',
