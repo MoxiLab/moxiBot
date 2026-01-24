@@ -6,8 +6,9 @@ module.exports = async (Moxi) => {
   Moxi.commands = new Collection();
   Moxi.slashcommands = new Collection();
 
-  const commandFiles = getFiles("Comandos");
-  const slashcommandsFiles = getFiles("Slashcmd");
+  const ignoreDirs = ['Tarot'];
+  const commandFiles = getFiles("Comandos", { ignoreDirs });
+  const slashcommandsFiles = getFiles("Slashcmd", { ignoreDirs });
 
   const logger = require("../Util/logger");
 
