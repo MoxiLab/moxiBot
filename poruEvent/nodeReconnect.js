@@ -1,3 +1,10 @@
+const logger = require("../Util/logger");
+
 module.exports = (client, node) => {
-    console.log(`[RECONECTANDO] El nodo ${node.options.identifier} está intentando volver a conectarse...`.yellow);
+    try {
+        const nodeName = node?.name ?? node?.options?.name ?? "(unknown)";
+        logger.warn(`[PORU] nodeReconnect: ${nodeName}`);
+    } catch (e) {
+        logger.error("[PORU] nodeReconnect handler error", e);
+    }
 };

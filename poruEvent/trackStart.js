@@ -71,7 +71,8 @@ module.exports = async (Moxi, player, track) => {
 
         const buffer = await card.build();
         const fileName = `moxi_${Date.now()}.png`;
-        const attachment = new AttachmentBuilder(buffer, { name: fileName });
+        const hasBuffer = Buffer.isBuffer(buffer) && buffer.length > 0;
+        const attachmentPayload = hasBuffer ? { attachment: buffer, name: fileName } : null;
 
 
         // Traducción internacionalizada con idioma de la base de datos
@@ -90,12 +91,14 @@ module.exports = async (Moxi, player, track) => {
         // Fila 2: Volumen
         const volumeRow = buildMusicVolumeRow();
 
+        const imageUrlForGallery = hasBuffer ? `attachment://${fileName}` : (track.info.image || iconURL || FALLBACK_IMG);
+
         const mainContainer = new ContainerBuilder()
             .setAccentColor(Bot.AccentColor)
             .addTextDisplayComponents(new TextDisplayBuilder().setContent(currentTitle))
             .addSeparatorComponents(new SeparatorBuilder())
             .addMediaGalleryComponents(new MediaGalleryBuilder().addItems(
-                new MediaGalleryItemBuilder().setURL(`attachment://${fileName}`)
+                new MediaGalleryItemBuilder().setURL(imageUrlForGallery)
             ))
             .addSeparatorComponents(new SeparatorBuilder())
             .addTextDisplayComponents(new TextDisplayBuilder().setContent(currentInfo))
@@ -105,11 +108,14 @@ module.exports = async (Moxi, player, track) => {
             .addTextDisplayComponents(new TextDisplayBuilder().setContent(`> ${EMOJIS.studioAnim} _**Moxi Studios**_ `));
 
         // --- 4. ENVIAR Y GUARDAR ---
-        const newMessage = await channel.send({
+        const sendPayload = {
             components: [mainContainer],
-            files: [attachment],
             flags: MessageFlags.IsComponentsV2,
-        });
+        };
+
+        if (attachmentPayload) sendPayload.files = [attachmentPayload];
+
+        const newMessage = await channel.send(sendPayload);
 
         Moxi.previousMessage = newMessage;
 
