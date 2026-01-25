@@ -43,21 +43,26 @@ module.exports = {
         const url = `https://discord.com/api/v10/guilds/${guildId}/auto-moderation/rules/${id}`;
 
         const fmtTrigger = (t) => {
-            switch (t) {
-                case 1: return 'keyword';
-                case 3: return 'spam';
-                case 4: return 'preset';
-                case 5: return 'mention';
-                default: return String(t);
+            if (t === 1) {
+                return 'keyword';
+            } else if (t === 3) {
+                return 'spam';
+            } else if (t === 4) {
+                return 'preset';
+            } else if (t === 5) {
+                return 'mention';
             }
+            return String(t);
         };
         const fmtAction = (a) => {
-            switch (a) {
-                case 1: return 'block';
-                case 2: return 'alert';
-                case 3: return 'timeout';
-                default: return String(a);
+            if (a === 1) {
+                return 'block';
+            } else if (a === 2) {
+                return 'alert';
+            } else if (a === 3) {
+                return 'timeout';
             }
+            return String(a);
         };
 
         try {

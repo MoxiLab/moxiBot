@@ -253,208 +253,173 @@ module.exports = {
             let config = await BonusSystem.getConfig(guildID);
             const updates = {};
 
-            switch (subcommand) {
-                case 'set': {
-                    const mentioned = message.mentions.channels.first();
-                    const channelIdArg = args[1] ? String(args[1]).replace(/[<#>]/g, '') : null;
-                    const fallbackChannel = channelIdArg
-                        ? (message.guild?.channels?.cache?.get(channelIdArg) || null)
-                        : null;
-                    const notifChannel = mentioned || fallbackChannel;
+            if (subcommand === 'set') {
+                const mentioned = message.mentions.channels.first();
+                const channelIdArg = args[1] ? String(args[1]).replace(/[<#>]/g, '') : null;
+                const fallbackChannel = channelIdArg
+                    ? (message.guild?.channels?.cache?.get(channelIdArg) || null)
+                    : null;
+                const notifChannel = mentioned || fallbackChannel;
 
-                    if (!notifChannel) {
-                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig set #niveles\``);
-                    }
-
-                    updates.levelUpNotifications = {
-                        enabled: true,
-                        channel: notifChannel.id,
-                        message: '🎉 ¡{user} ha subido al nivel {level}!'
-                    };
-
-                    await BonusSystem.updateConfig(guildID, updates);
-                    debugHelper.log('levelconfig', 'set notifications channel (prefix)', { guildId: guildID, channel: notifChannel.id });
-                    return replyPanel('# ✅ Configuración actualizada', `Notificaciones de level-up: **habilitadas**\nCanal: ${notifChannel}`);
-                }
-                case 'set': {
-                    const mentioned = message.mentions.channels.first();
-                    const channelIdArg = args[1] ? String(args[1]).replace(/[<#>]/g, '') : null;
-                    const targetChannel = mentioned || (channelIdArg ? (message.guild?.channels?.cache?.get(channelIdArg) || null) : null);
-
-                    if (!targetChannel) {
-                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig set #niveles\``);
-                    }
-
-                    updates.levelUpNotifications = {
-                        enabled: true,
-                        channel: targetChannel.id,
-                        message: '🎉 ¡{user} ha subido al nivel {level}!'
-                    };
-
-                    await BonusSystem.updateConfig(guildID, updates);
-                    debugHelper.log('levelconfig', 'updated notifications via set (prefix)', { guildId: guildID, channel: targetChannel.id });
-                    return replyPanel('# ✅ Configuración actualizada', `Notificaciones **habilitadas** en ${targetChannel}.`);
-                }
-                case 'preview': {
-                    const { LevelUp } = require('canvafy');
-                    const { AttachmentBuilder } = require('discord.js');
-                    const LevelSystem = require('../../Global/Helpers/LevelSystem');
-                    const accentHex = toHexColor(Bot?.AccentColor);
-                    const bannerUrl = await getUserBannerUrl(message.client, message.author.id);
-
-                    const userInfo = await LevelSystem.getUserLevelInfo(message.guildId, message.author.id);
-                    if (!userInfo) {
-                        debugHelper.warn('levelconfig', 'preview missing data (prefix)', { guildId: guildID, userId: message.author?.id });
-                        return replyPanel('# ❌ Sin datos', 'No se encontraron datos de nivel para este usuario.');
-                    }
-
-                    const card = await new LevelUp()
-                        .setAvatar(message.author.displayAvatarURL({ extension: 'png' }))
-                        .setBackground(bannerUrl ? 'image' : 'color', bannerUrl || '#23272a')
-                        .setUsername(message.author.username)
-                        .setBorder(accentHex)
-                        .setAvatarBorder(accentHex)
-                        .setOverlayOpacity(0.7)
-                        .setLevels(userInfo.level > 1 ? userInfo.level - 1 : 1, userInfo.level)
-                        .build();
-
-                    const attachment = new AttachmentBuilder(card, { name: 'levelup.png' });
-                    return message.reply({
-                        content: '🖼️ Vista previa de la tarjeta de level-up:',
-                        files: [attachment],
-                        allowedMentions: { repliedUser: false }
-                    });
+                if (!notifChannel) {
+                    return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig set #niveles\``);
                 }
 
-                case 'xp': {
-                    const minXp = parseIntStrict(args[1]);
-                    const maxXp = parseIntStrict(args[2]);
-                    const cooldown = parseIntStrict(args[3]);
+                updates.levelUpNotifications = {
+                    enabled: true,
+                    channel: notifChannel.id,
+                    message: '🎉 ¡{user} ha subido al nivel {level}!'
+                };
 
-                    if (!minXp || !maxXp || !cooldown) {
-                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig xp 5 15 60\``);
-                    }
-                    if (minXp < 1 || maxXp < 1 || cooldown < 1) {
-                        return replyPanel('# ❌ Argumentos inválidos', 'Los valores deben ser números enteros mayores o iguales a 1.');
-                    }
-                    if (maxXp < minXp) {
-                        return replyPanel('# ❌ Argumentos inválidos', 'El máximo no puede ser menor que el mínimo.');
-                    }
+                await BonusSystem.updateConfig(guildID, updates);
+                debugHelper.log('levelconfig', 'set notifications channel (prefix)', { guildId: guildID, channel: notifChannel.id });
+                return replyPanel('# ✅ Configuración actualizada', `Notificaciones de level-up: **habilitadas**\nCanal: ${notifChannel}`);
+            } else if (subcommand === 'preview') {
+                const { LevelUp } = require('canvafy');
+                const { AttachmentBuilder } = require('discord.js');
+                const LevelSystem = require('../../Global/Helpers/LevelSystem');
+                const accentHex = toHexColor(Bot?.AccentColor);
+                const bannerUrl = await getUserBannerUrl(message.client, message.author.id);
 
-                    updates.minXpPerMessage = minXp;
-                    updates.maxXpPerMessage = maxXp;
-                    updates.xpCooldown = cooldown;
-
-                    await BonusSystem.updateConfig(guildID, updates);
-                    debugHelper.log('levelconfig', 'updated xp config (prefix)', { guildId: guildID, ...updates });
-                    return replyPanel('# ✅ Configuración actualizada', `XP por mensaje:\n- Mínimo: **${minXp}**\n- Máximo: **${maxXp}**\n- Cooldown: **${cooldown}s**`);
+                const userInfo = await LevelSystem.getUserLevelInfo(message.guildId, message.author.id);
+                if (!userInfo) {
+                    debugHelper.warn('levelconfig', 'preview missing data (prefix)', { guildId: guildID, userId: message.author?.id });
+                    return replyPanel('# ❌ Sin datos', 'No se encontraron datos de nivel para este usuario.');
                 }
 
-                case 'prestige': {
-                    const enabled = parseBoolean(args[1]);
-                    if (enabled === null) {
-                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig prestige si 50\``);
-                    }
-                    const levelRequired = parseIntStrict(args[2]) || 50;
-                    if (levelRequired < 1) {
-                        return replyPanel('# ❌ Argumentos inválidos', 'El nivel requerido debe ser un entero >= 1.');
-                    }
+                const card = await new LevelUp()
+                    .setAvatar(message.author.displayAvatarURL({ extension: 'png' }))
+                    .setBackground(bannerUrl ? 'image' : 'color', bannerUrl || '#23272a')
+                    .setUsername(message.author.username)
+                    .setBorder(accentHex)
+                    .setAvatarBorder(accentHex)
+                    .setOverlayOpacity(0.7)
+                    .setLevels(userInfo.level > 1 ? userInfo.level - 1 : 1, userInfo.level)
+                    .build();
 
-                    updates.prestigeEnabled = enabled;
-                    updates.levelRequiredForPrestige = levelRequired;
+                const attachment = new AttachmentBuilder(card, { name: 'levelup.png' });
+                return message.reply({
+                    content: '🖼️ Vista previa de la tarjeta de level-up:',
+                    files: [attachment],
+                    allowedMentions: { repliedUser: false }
+                });
+            } else if (subcommand === 'xp') {
+                const minXp = parseIntStrict(args[1]);
+                const maxXp = parseIntStrict(args[2]);
+                const cooldown = parseIntStrict(args[3]);
 
-                    await BonusSystem.updateConfig(guildID, updates);
-                    debugHelper.log('levelconfig', 'updated prestige config (prefix)', { guildId: guildID, ...updates });
-                    return replyPanel('# ✅ Configuración actualizada', `Prestige: **${enabled ? 'habilitado' : 'deshabilitado'}**${enabled ? `\nNivel requerido: **${levelRequired}**` : ''}`);
+                if (!minXp || !maxXp || !cooldown) {
+                    return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig xp 5 15 60\``);
+                }
+                if (minXp < 1 || maxXp < 1 || cooldown < 1) {
+                    return replyPanel('# ❌ Argumentos inválidos', 'Los valores deben ser números enteros mayores o iguales a 1.');
+                }
+                if (maxXp < minXp) {
+                    return replyPanel('# ❌ Argumentos inválidos', 'El máximo no puede ser menor que el mínimo.');
                 }
 
-                case 'dailybonus': {
-                    const enabled = parseBoolean(args[1]);
-                    if (enabled === null) {
-                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig dailybonus si 100\``);
-                    }
-                    const xp = parseIntStrict(args[2]) || 100;
-                    if (xp < 1) {
-                        return replyPanel('# ❌ Argumentos inválidos', 'La XP del bonus debe ser un entero >= 1.');
-                    }
+                updates.minXpPerMessage = minXp;
+                updates.maxXpPerMessage = maxXp;
+                updates.xpCooldown = cooldown;
 
-                    updates.dailyBonusEnabled = enabled;
-                    updates.dailyBonusXp = xp;
-
-                    await BonusSystem.updateConfig(guildID, updates);
-                    debugHelper.log('levelconfig', 'updated daily bonus (prefix)', { guildId: guildID, ...updates });
-                    return replyPanel('# ✅ Configuración actualizada', `Bonus diario: **${enabled ? 'habilitado' : 'deshabilitado'}**${enabled ? `\nXP: **${xp}**` : ''}`);
+                await BonusSystem.updateConfig(guildID, updates);
+                debugHelper.log('levelconfig', 'updated xp config (prefix)', { guildId: guildID, ...updates });
+                return replyPanel('# ✅ Configuración actualizada', `XP por mensaje:\n- Mínimo: **${minXp}**\n- Máximo: **${maxXp}**\n- Cooldown: **${cooldown}s**`);
+            } else if (subcommand === 'prestige') {
+                const enabled = parseBoolean(args[1]);
+                if (enabled === null) {
+                    return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig prestige si 50\``);
+                }
+                const levelRequired = parseIntStrict(args[2]) || 50;
+                if (levelRequired < 1) {
+                    return replyPanel('# ❌ Argumentos inválidos', 'El nivel requerido debe ser un entero >= 1.');
                 }
 
-                case 'reaccionbonus': {
-                    const enabled = parseBoolean(args[1]);
-                    if (enabled === null) {
-                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig reaccionbonus si 5\``);
-                    }
-                    const xp = parseIntStrict(args[2]) || 5;
-                    if (xp < 1) {
-                        return replyPanel('# ❌ Argumentos inválidos', 'La XP por reacción debe ser un entero >= 1.');
-                    }
+                updates.prestigeEnabled = enabled;
+                updates.levelRequiredForPrestige = levelRequired;
 
-                    updates.reactionBonusEnabled = enabled;
-                    updates.xpPerReaction = xp;
-
-                    await BonusSystem.updateConfig(guildID, updates);
-                    debugHelper.log('levelconfig', 'updated reaction bonus (prefix)', { guildId: guildID, ...updates });
-                    return replyPanel('# ✅ Configuración actualizada', `Bonus de reacciones: **${enabled ? 'habilitado' : 'deshabilitado'}**${enabled ? `\nXP por reacción: **${xp}**` : ''}`);
+                await BonusSystem.updateConfig(guildID, updates);
+                debugHelper.log('levelconfig', 'updated prestige config (prefix)', { guildId: guildID, ...updates });
+                return replyPanel('# ✅ Configuración actualizada', `Prestige: **${enabled ? 'habilitado' : 'deshabilitado'}**${enabled ? `\nNivel requerido: **${levelRequired}**` : ''}`);
+            } else if (subcommand === 'dailybonus') {
+                const enabled = parseBoolean(args[1]);
+                if (enabled === null) {
+                    return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig dailybonus si 100\``);
+                }
+                const xp = parseIntStrict(args[2]) || 100;
+                if (xp < 1) {
+                    return replyPanel('# ❌ Argumentos inválidos', 'La XP del bonus debe ser un entero >= 1.');
                 }
 
-                case 'notificaciones': {
-                    const enabled = parseBoolean(args[1]);
-                    if (enabled === null) {
-                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig notificaciones si #canal\``);
-                    }
+                updates.dailyBonusEnabled = enabled;
+                updates.dailyBonusXp = xp;
 
-                    const mentioned = message.mentions.channels.first();
-                    const channelIdArg = args[2] ? String(args[2]).replace(/[<#>]/g, '') : null;
-                    const fallbackChannel = channelIdArg
-                        ? (message.guild?.channels?.cache?.get(channelIdArg) || null)
-                        : null;
-                    const notifChannel = mentioned || fallbackChannel;
-
-                    updates.levelUpNotifications = {
-                        enabled,
-                        channel: notifChannel?.id || null,
-                        message: '🎉 ¡{user} ha subido al nivel {level}!'
-                    };
-
-                    await BonusSystem.updateConfig(guildID, updates);
-                    debugHelper.log('levelconfig', 'updated notifications (prefix)', { guildId: guildID, enabled, channel: notifChannel?.id || null });
-                    return replyPanel('# ✅ Configuración actualizada', `Notificaciones: **${enabled ? 'habilitadas' : 'deshabilitadas'}**${notifChannel ? `\nCanal: ${notifChannel}` : ''}`);
+                await BonusSystem.updateConfig(guildID, updates);
+                debugHelper.log('levelconfig', 'updated daily bonus (prefix)', { guildId: guildID, ...updates });
+                return replyPanel('# ✅ Configuración actualizada', `Bonus diario: **${enabled ? 'habilitado' : 'deshabilitado'}**${enabled ? `\nXP: **${xp}**` : ''}`);
+            } else if (subcommand === 'reaccionbonus') {
+                const enabled = parseBoolean(args[1]);
+                if (enabled === null) {
+                    return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig reaccionbonus si 5\``);
+                }
+                const xp = parseIntStrict(args[2]) || 5;
+                if (xp < 1) {
+                    return replyPanel('# ❌ Argumentos inválidos', 'La XP por reacción debe ser un entero >= 1.');
                 }
 
-                case 'canal_bloqueado': {
-                    const mentioned = message.mentions.channels.first();
-                    const channelIdArg = args[1] ? String(args[1]).replace(/[<#>]/g, '') : null;
-                    const targetChannel = mentioned || (channelIdArg ? (message.guild?.channels?.cache?.get(channelIdArg) || null) : null);
-                    const block = parseBoolean(args[2]);
+                updates.reactionBonusEnabled = enabled;
+                updates.xpPerReaction = xp;
 
-                    if (!targetChannel || block === null) {
-                        return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig canal_bloqueado #general si\``);
-                    }
-
-                    if (!config.blockedChannels) config.blockedChannels = [];
-
-                    if (block && !config.blockedChannels.includes(targetChannel.id)) {
-                        config.blockedChannels.push(targetChannel.id);
-                    } else if (!block && config.blockedChannels.includes(targetChannel.id)) {
-                        config.blockedChannels = config.blockedChannels.filter(id => id !== targetChannel.id);
-                    }
-
-                    await BonusSystem.updateConfig(guildID, { blockedChannels: config.blockedChannels });
-                    debugHelper.log('levelconfig', 'updated blocked channel (prefix)', { guildId: guildID, channel: targetChannel.id, blocked: block });
-                    return replyPanel('# ✅ Configuración actualizada', `Canal ${targetChannel} **${block ? 'bloqueado' : 'desbloqueado'}** para XP.`);
+                await BonusSystem.updateConfig(guildID, updates);
+                debugHelper.log('levelconfig', 'updated reaction bonus (prefix)', { guildId: guildID, ...updates });
+                return replyPanel('# ✅ Configuración actualizada', `Bonus de reacciones: **${enabled ? 'habilitado' : 'deshabilitado'}**${enabled ? `\nXP por reacción: **${xp}**` : ''}`);
+            } else if (subcommand === 'notificaciones') {
+                const enabled = parseBoolean(args[1]);
+                if (enabled === null) {
+                    return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig notificaciones si #canal\``);
                 }
 
-                default:
-                    debugHelper.warn('levelconfig', 'unknown subcommand (prefix)', { guildId: guildID, subcommand });
-                    return replyPanel('# ❌ Subcomando inválido', usageLines);
+                const mentioned = message.mentions.channels.first();
+                const channelIdArg = args[2] ? String(args[2]).replace(/[<#>]/g, '') : null;
+                const fallbackChannel = channelIdArg
+                    ? (message.guild?.channels?.cache?.get(channelIdArg) || null)
+                    : null;
+                const notifChannel = mentioned || fallbackChannel;
+
+                updates.levelUpNotifications = {
+                    enabled,
+                    channel: notifChannel?.id || null,
+                    message: '🎉 ¡{user} ha subido al nivel {level}!'
+                };
+
+                await BonusSystem.updateConfig(guildID, updates);
+                debugHelper.log('levelconfig', 'updated notifications (prefix)', { guildId: guildID, enabled, channel: notifChannel?.id || null });
+                return replyPanel('# ✅ Configuración actualizada', `Notificaciones: **${enabled ? 'habilitadas' : 'deshabilitadas'}**${notifChannel ? `\nCanal: ${notifChannel}` : ''}`);
+            } else if (subcommand === 'canal_bloqueado') {
+                const mentioned = message.mentions.channels.first();
+                const channelIdArg = args[1] ? String(args[1]).replace(/[<#>]/g, '') : null;
+                const targetChannel = mentioned || (channelIdArg ? (message.guild?.channels?.cache?.get(channelIdArg) || null) : null);
+                const block = parseBoolean(args[2]);
+
+                if (!targetChannel || block === null) {
+                    return replyPanel('# ❌ Argumentos inválidos', `${usageLines}\n\nEjemplo: \`levelconfig canal_bloqueado #general si\``);
+                }
+
+                if (!config.blockedChannels) config.blockedChannels = [];
+
+                if (block && !config.blockedChannels.includes(targetChannel.id)) {
+                    config.blockedChannels.push(targetChannel.id);
+                } else if (!block && config.blockedChannels.includes(targetChannel.id)) {
+                    config.blockedChannels = config.blockedChannels.filter(id => id !== targetChannel.id);
+                }
+
+                await BonusSystem.updateConfig(guildID, { blockedChannels: config.blockedChannels });
+                debugHelper.log('levelconfig', 'updated blocked channel (prefix)', { guildId: guildID, channel: targetChannel.id, blocked: block });
+                return replyPanel('# ✅ Configuración actualizada', `Canal ${targetChannel} **${block ? 'bloqueado' : 'desbloqueado'}** para XP.`);
             }
+
+            debugHelper.warn('levelconfig', 'unknown subcommand (prefix)', { guildId: guildID, subcommand });
+            return replyPanel('# ❌ Subcomando inválido', usageLines);
 
         } catch (error) {
             console.error('[LevelConfig Command] Error (prefix):', error);
@@ -481,130 +446,122 @@ module.exports = {
             let config = await BonusSystem.getConfig(guildID);
             const updates = {};
 
-            switch (subcommand) {
-                case 'preview': {
-                    const { LevelUp } = require('canvafy');
-                    const { AttachmentBuilder } = require('discord.js');
-                    const LevelSystem = require('../../Global/Helpers/LevelSystem');
-                    const accentHex = toHexColor(Bot?.AccentColor);
-                    const bannerUrl = await getUserBannerUrl(interaction.client, interaction.user.id);
+            if (subcommand === 'preview') {
+                const { LevelUp } = require('canvafy');
+                const { AttachmentBuilder } = require('discord.js');
+                const LevelSystem = require('../../Global/Helpers/LevelSystem');
+                const accentHex = toHexColor(Bot?.AccentColor);
+                const bannerUrl = await getUserBannerUrl(interaction.client, interaction.user.id);
 
-                    const userInfo = await LevelSystem.getUserLevelInfo(interaction.guildId, interaction.user.id);
-                    if (!userInfo) {
-                        debugHelper.warn('levelconfig', 'preview missing data', { guildId: guildID, userId: interaction.user?.id });
-                        return interaction.editReply({ content: '❌ No se encontraron datos de nivel para este usuario.' });
-                    }
-
-                    const card = await new LevelUp()
-                        .setAvatar(interaction.user.displayAvatarURL({ extension: 'png' }))
-                        .setBackground(bannerUrl ? 'image' : 'color', bannerUrl || '#23272a')
-                        .setUsername(interaction.user.username)
-                        .setBorder(accentHex)
-                        .setAvatarBorder(accentHex)
-                        .setOverlayOpacity(0.7)
-                        .setLevels(userInfo.level > 1 ? userInfo.level - 1 : 1, userInfo.level)
-                        .build();
-                    const attachment = new AttachmentBuilder(card, { name: 'levelup.png' });
-                    await interaction.editReply({
-                        content: '🖼️ Vista previa de la tarjeta de level-up:',
-                        files: [attachment]
-                    });
-
-                    debugHelper.log('levelconfig', 'preview success', { guildId: guildID, userId: interaction.user?.id });
-                    return;
+                const userInfo = await LevelSystem.getUserLevelInfo(interaction.guildId, interaction.user.id);
+                if (!userInfo) {
+                    debugHelper.warn('levelconfig', 'preview missing data', { guildId: guildID, userId: interaction.user?.id });
+                    return interaction.editReply({ content: '❌ No se encontraron datos de nivel para este usuario.' });
                 }
-                case 'xp': {
-                    const minXp = interaction.options.getInteger('minimo');
-                    const maxXp = interaction.options.getInteger('maximo');
-                    const cooldown = interaction.options.getInteger('cooldown');
 
-                    updates.minXpPerMessage = minXp;
-                    updates.maxXpPerMessage = maxXp;
-                    updates.xpCooldown = cooldown;
+                const card = await new LevelUp()
+                    .setAvatar(interaction.user.displayAvatarURL({ extension: 'png' }))
+                    .setBackground(bannerUrl ? 'image' : 'color', bannerUrl || '#23272a')
+                    .setUsername(interaction.user.username)
+                    .setBorder(accentHex)
+                    .setAvatarBorder(accentHex)
+                    .setOverlayOpacity(0.7)
+                    .setLevels(userInfo.level > 1 ? userInfo.level - 1 : 1, userInfo.level)
+                    .build();
+                const attachment = new AttachmentBuilder(card, { name: 'levelup.png' });
+                await interaction.editReply({
+                    content: '🖼️ Vista previa de la tarjeta de level-up:',
+                    files: [attachment]
+                });
 
-                    await BonusSystem.updateConfig(guildID, updates);
-                    debugHelper.log('levelconfig', 'updated xp config', { guildId: guildID, ...updates });
-                    return interaction.editReply(
-                        `✅ Configuración de XP actualizada:\n- Mínimo: ${minXp}\n- Máximo: ${maxXp}\n- Cooldown: ${cooldown}s`
-                    );
+                debugHelper.log('levelconfig', 'preview success', { guildId: guildID, userId: interaction.user?.id });
+                return;
+            } else if (subcommand === 'xp') {
+                const minXp = interaction.options.getInteger('minimo');
+                const maxXp = interaction.options.getInteger('maximo');
+                const cooldown = interaction.options.getInteger('cooldown');
+
+                updates.minXpPerMessage = minXp;
+                updates.maxXpPerMessage = maxXp;
+                updates.xpCooldown = cooldown;
+
+                await BonusSystem.updateConfig(guildID, updates);
+                debugHelper.log('levelconfig', 'updated xp config', { guildId: guildID, ...updates });
+                return interaction.editReply(
+                    `✅ Configuración de XP actualizada:\n- Mínimo: ${minXp}\n- Máximo: ${maxXp}\n- Cooldown: ${cooldown}s`
+                );
+            } else if (subcommand === 'prestige') {
+                const prestigeEnabled = interaction.options.getBoolean('habilitado');
+                const levelRequired = interaction.options.getInteger('nivel_requerido') || 50;
+
+                updates.prestigeEnabled = prestigeEnabled;
+                updates.levelRequiredForPrestige = levelRequired;
+
+                await BonusSystem.updateConfig(guildID, updates);
+                debugHelper.log('levelconfig', 'updated prestige config', { guildId: guildID, ...updates });
+                return interaction.editReply(
+                    `✅ Prestige ${prestigeEnabled ? 'habilitado' : 'deshabilitado'}${prestigeEnabled ? ` (Nivel requerido: ${levelRequired})` : ''}`
+                );
+            } else if (subcommand === 'dailybonus') {
+                const dailyEnabled = interaction.options.getBoolean('habilitado');
+                const dailyXp = interaction.options.getInteger('xp') || 100;
+
+                updates.dailyBonusEnabled = dailyEnabled;
+                updates.dailyBonusXp = dailyXp;
+
+                await BonusSystem.updateConfig(guildID, updates);
+                debugHelper.log('levelconfig', 'updated daily bonus', { guildId: guildID, ...updates });
+                return interaction.editReply(
+                    `✅ Bonus diario ${dailyEnabled ? 'habilitado' : 'deshabilitado'}${dailyEnabled ? ` (${dailyXp} XP)` : ''}`
+                );
+            } else if (subcommand === 'reaccionbonus') {
+                const reactionEnabled = interaction.options.getBoolean('habilitado');
+                const reactionXp = interaction.options.getInteger('xp_por_reaccion') || 5;
+
+                updates.reactionBonusEnabled = reactionEnabled;
+                updates.xpPerReaction = reactionXp;
+
+                await BonusSystem.updateConfig(guildID, updates);
+                debugHelper.log('levelconfig', 'updated reaction bonus', { guildId: guildID, ...updates });
+                return interaction.editReply(
+                    `✅ Bonus de reacciones ${reactionEnabled ? 'habilitado' : 'deshabilitado'}${reactionEnabled ? ` (${reactionXp} XP por reacción)` : ''}`
+                );
+            } else if (subcommand === 'notificaciones') {
+                const notifEnabled = interaction.options.getBoolean('habilitado');
+                const notifChannel = interaction.options.getChannel('canal');
+
+                updates.levelUpNotifications = {
+                    enabled: notifEnabled,
+                    channel: notifChannel?.id || null,
+                    message: '🎉 ¡{user} ha subido al nivel {level}!'
+                };
+
+                await BonusSystem.updateConfig(guildID, updates);
+                debugHelper.log('levelconfig', 'updated notifications', { guildId: guildID, notifEnabled, channel: notifChannel?.id });
+                return interaction.editReply(
+                    `✅ Notificaciones ${notifEnabled ? 'habilitadas' : 'deshabilitadas'}${notifChannel ? ` en ${notifChannel}` : ''}`
+                );
+            } else if (subcommand === 'canal_bloqueado') {
+                const channel = interaction.options.getChannel('canal');
+                const block = interaction.options.getBoolean('bloquear');
+
+                if (!config.blockedChannels) config.blockedChannels = [];
+
+                if (block && !config.blockedChannels.includes(channel.id)) {
+                    config.blockedChannels.push(channel.id);
+                } else if (!block && config.blockedChannels.includes(channel.id)) {
+                    config.blockedChannels = config.blockedChannels.filter(id => id !== channel.id);
                 }
-                case 'prestige': {
-                    const prestigeEnabled = interaction.options.getBoolean('habilitado');
-                    const levelRequired = interaction.options.getInteger('nivel_requerido') || 50;
 
-                    updates.prestigeEnabled = prestigeEnabled;
-                    updates.levelRequiredForPrestige = levelRequired;
-
-                    await BonusSystem.updateConfig(guildID, updates);
-                    debugHelper.log('levelconfig', 'updated prestige config', { guildId: guildID, ...updates });
-                    return interaction.editReply(
-                        `✅ Prestige ${prestigeEnabled ? 'habilitado' : 'deshabilitado'}${prestigeEnabled ? ` (Nivel requerido: ${levelRequired})` : ''}`
-                    );
-                }
-                case 'dailybonus': {
-                    const dailyEnabled = interaction.options.getBoolean('habilitado');
-                    const dailyXp = interaction.options.getInteger('xp') || 100;
-
-                    updates.dailyBonusEnabled = dailyEnabled;
-                    updates.dailyBonusXp = dailyXp;
-
-                    await BonusSystem.updateConfig(guildID, updates);
-                    debugHelper.log('levelconfig', 'updated daily bonus', { guildId: guildID, ...updates });
-                    return interaction.editReply(
-                        `✅ Bonus diario ${dailyEnabled ? 'habilitado' : 'deshabilitado'}${dailyEnabled ? ` (${dailyXp} XP)` : ''}`
-                    );
-                }
-                case 'reaccionbonus': {
-                    const reactionEnabled = interaction.options.getBoolean('habilitado');
-                    const reactionXp = interaction.options.getInteger('xp_por_reaccion') || 5;
-
-                    updates.reactionBonusEnabled = reactionEnabled;
-                    updates.xpPerReaction = reactionXp;
-
-                    await BonusSystem.updateConfig(guildID, updates);
-                    debugHelper.log('levelconfig', 'updated reaction bonus', { guildId: guildID, ...updates });
-                    return interaction.editReply(
-                        `✅ Bonus de reacciones ${reactionEnabled ? 'habilitado' : 'deshabilitado'}${reactionEnabled ? ` (${reactionXp} XP por reacción)` : ''}`
-                    );
-                }
-                case 'notificaciones': {
-                    const notifEnabled = interaction.options.getBoolean('habilitado');
-                    const notifChannel = interaction.options.getChannel('canal');
-
-                    updates.levelUpNotifications = {
-                        enabled: notifEnabled,
-                        channel: notifChannel?.id || null,
-                        message: '🎉 ¡{user} ha subido al nivel {level}!'
-                    };
-
-                    await BonusSystem.updateConfig(guildID, updates);
-                    debugHelper.log('levelconfig', 'updated notifications', { guildId: guildID, notifEnabled, channel: notifChannel?.id });
-                    return interaction.editReply(
-                        `✅ Notificaciones ${notifEnabled ? 'habilitadas' : 'deshabilitadas'}${notifChannel ? ` en ${notifChannel}` : ''}`
-                    );
-                }
-                case 'canal_bloqueado': {
-                    const channel = interaction.options.getChannel('canal');
-                    const block = interaction.options.getBoolean('bloquear');
-
-                    if (!config.blockedChannels) config.blockedChannels = [];
-
-                    if (block && !config.blockedChannels.includes(channel.id)) {
-                        config.blockedChannels.push(channel.id);
-                    } else if (!block && config.blockedChannels.includes(channel.id)) {
-                        config.blockedChannels = config.blockedChannels.filter(id => id !== channel.id);
-                    }
-
-                    await BonusSystem.updateConfig(guildID, { blockedChannels: config.blockedChannels });
-                    debugHelper.log('levelconfig', 'updated blocked channel', { guildId: guildID, channel: channel.id, blocked: block });
-                    return interaction.editReply(
-                        `✅ Canal ${channel} ${block ? 'bloqueado' : 'desbloqueado'}`
-                    );
-                }
-                default:
-                    debugHelper.warn('levelconfig', 'unknown subcommand', { guildId: guildID, subcommand });
-                    return interaction.editReply({ content: '❌ Subcomando inválido.' });
+                await BonusSystem.updateConfig(guildID, { blockedChannels: config.blockedChannels });
+                debugHelper.log('levelconfig', 'updated blocked channel', { guildId: guildID, channel: channel.id, blocked: block });
+                return interaction.editReply(
+                    `✅ Canal ${channel} ${block ? 'bloqueado' : 'desbloqueado'}`
+                );
             }
+
+            debugHelper.warn('levelconfig', 'unknown subcommand', { guildId: guildID, subcommand });
+            return interaction.editReply({ content: '❌ Subcomando inválido.' });
         } catch (error) {
             console.error('[LevelConfig Command] Error:', error);
             debugHelper.error('levelconfig', 'interaction failure', { guildId: interaction.guildId || 'dm', userId: interaction.user?.id, error: error?.message || error });

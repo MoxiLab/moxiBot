@@ -121,61 +121,44 @@ module.exports = {
             return;
         }
 
-        switch (sub) {
-            case 'canal':
-            case 'channel':
-            case 'set':
-                {
-                    const rawChannelArg = rest[0];
-                    const channelArg = rawChannelArg ? rawChannelArg.replace(/[<#>]/g, '').trim() : '';
-                    const resolvedChannel = channelMention
-                        || (channelArg ? (message.guild.channels.cache.get(channelArg) || await message.guild.channels.fetch(channelArg).catch(() => null)) : null);
+        if (sub === 'canal' || sub === 'channel' || sub === 'set') {
+            const rawChannelArg = rest[0];
+            const channelArg = rawChannelArg ? rawChannelArg.replace(/[<#>]/g, '').trim() : '';
+            const resolvedChannel = channelMention
+                || (channelArg ? (message.guild.channels.cache.get(channelArg) || await message.guild.channels.fetch(channelArg).catch(() => null)) : null);
 
-                    if (!resolvedChannel) {
-                        return message.reply('Menciona o proporciona el ID de un canal válido donde quieres enviar los starboards.');
-                    }
+            if (!resolvedChannel) {
+                return message.reply('Menciona o proporciona el ID de un canal válido donde quieres enviar los starboards.');
+            }
 
-                    logger.debug('starboard.canal', { guildId, channel: resolvedChannel.id });
-                    await starboardStorage.updateStarboardSettings(guildId, { channelID: resolvedChannel.id, enabled: true });
-                    return respondWithLatestSettings(message, guildId, lang, Moxi.user?.username);
-                }
-            case 'emoji': {
-                const emoji = rest[0];
-                if (!emoji) {
-                    return message.reply('Proporciona un emoji para el starboard.');
-                }
-                logger.debug('starboard.emoji', { guildId, emoji });
-                await starboardStorage.updateStarboardSettings(guildId, { emoji });
-                return respondWithLatestSettings(message, guildId, lang, Moxi.user?.username);
+            logger.debug('starboard.canal', { guildId, channel: resolvedChannel.id });
+            await starboardStorage.updateStarboardSettings(guildId, { channelID: resolvedChannel.id, enabled: true });
+            return respondWithLatestSettings(message, guildId, lang, Moxi.user?.username);
+        } else if (sub === 'emoji') {
+            const emoji = rest[0];
+            if (!emoji) {
+                return message.reply('Proporciona un emoji para el starboard.');
             }
-            case 'umbral':
-            case 'threshold': {
-                const amount = Number(rest[0]);
-                if (!amount || amount < 1) {
-                    return message.reply('Indica un número válido mayor a 0.');
-                }
-                logger.debug('starboard.umbral', { guildId, threshold: amount });
-                await starboardStorage.updateStarboardSettings(guildId, { threshold: amount });
-                return respondWithLatestSettings(message, guildId, lang, Moxi.user?.username);
+            logger.debug('starboard.emoji', { guildId, emoji });
+            await starboardStorage.updateStarboardSettings(guildId, { emoji });
+            return respondWithLatestSettings(message, guildId, lang, Moxi.user?.username);
+        } else if (sub === 'umbral' || sub === 'threshold') {
+            const amount = Number(rest[0]);
+            if (!amount || amount < 1) {
+                return message.reply('Indica un número válido mayor a 0.');
             }
-            case 'activar':
-            case 'enable':
-                {
-                    logger.debug('starboard.activar', { guildId });
-                    await starboardStorage.updateStarboardSettings(guildId, { enabled: true });
-                    return respondWithLatestSettings(message, guildId, lang, Moxi.user?.username);
-                }
-            case 'desactivar':
-            case 'disable':
-                {
-                    logger.debug('starboard.desactivar', { guildId });
-                    await starboardStorage.updateStarboardSettings(guildId, { enabled: false });
-                    return respondWithLatestSettings(message, guildId, lang, Moxi.user?.username);
-                }
-            case 'status':
-            case 'info':
-            default:
-                return respond(message, buildStatusContainer(currentSettings || {}, lang, Moxi.user?.username));
+            logger.debug('starboard.umbral', { guildId, threshold: amount });
+            await starboardStorage.updateStarboardSettings(guildId, { threshold: amount });
+            return respondWithLatestSettings(message, guildId, lang, Moxi.user?.username);
+        } else if (sub === 'activar' || sub === 'enable') {
+            logger.debug('starboard.activar', { guildId });
+            await starboardStorage.updateStarboardSettings(guildId, { enabled: true });
+            return respondWithLatestSettings(message, guildId, lang, Moxi.user?.username);
+        } else if (sub === 'desactivar' || sub === 'disable') {
+            logger.debug('starboard.desactivar', { guildId });
+            await starboardStorage.updateStarboardSettings(guildId, { enabled: false });
+            return respondWithLatestSettings(message, guildId, lang, Moxi.user?.username);
         }
+        return respond(message, buildStatusContainer(currentSettings || {}, lang, Moxi.user?.username));
     },
 };

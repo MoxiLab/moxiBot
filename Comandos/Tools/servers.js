@@ -120,12 +120,16 @@ module.exports = {
 
         const blocks = [];
         let preview = `${baseParts.join('\n')}\n\n`;
-        for (let i = 0; i < candidates.length; i += 1) {
+        let canAppend = true;
+        for (let i = 0; i < candidates.length && canAppend; i += 1) {
             const block = formatGuildBlock(candidates[i], i);
             const candidateText = preview + (blocks.length ? separator : '') + block;
-            if (candidateText.length > MAX_CONTENT) break;
-            blocks.push(block);
-            preview = candidateText;
+            if (candidateText.length > MAX_CONTENT) {
+                canAppend = false;
+            } else {
+                blocks.push(block);
+                preview = candidateText;
+            }
         }
 
         const remaining = Math.max(0, filtered.length - blocks.length);

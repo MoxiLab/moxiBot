@@ -227,7 +227,7 @@ module.exports = {
         // Create doc with retry on collision
         let suggestionId = null;
         let created = null;
-        for (let attempt = 0; attempt < 5; attempt += 1) {
+        for (let attempt = 0; attempt < 5 && !created; attempt += 1) {
             suggestionId = makeSuggestionId();
             try {
                 created = await Suggestions.create({
@@ -242,7 +242,6 @@ module.exports = {
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 });
-                break;
             } catch (err) {
                 // duplicate key -> retry
                 created = null;
