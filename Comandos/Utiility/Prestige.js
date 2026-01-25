@@ -36,32 +36,48 @@ module.exports = {
             const userID = message.author.id;
             debugHelper.log('prestige', 'command start', { guildID, requesterId });
 
-            const config = await BonusSystem.getConfig(guildID);
-            if (!config.prestigeEnabled) {
-                debugHelper.warn('prestige', 'system disabled', { guildID });
+            const replyV2 = (title, body) => {
+                const container = new ContainerBuilder()
+                    .setAccentColor(Bot.AccentColor)
+                    .addTextDisplayComponents(c => c.setContent(`# ${title}`))
+                    .addSeparatorComponents(s => s.setDivider(true))
+                    .addTextDisplayComponents(c => c.setContent(body))
+                    .addSeparatorComponents(s => s.setDivider(true))
+                    .addTextDisplayComponents(c => c.setContent(`${new Date().getFullYear()} • ${Moxi.user.username}`));
+
                 return message.reply({
-                    content: t('PRESTIGE_DISABLED'),
-                    allowedMentions: { repliedUser: false }
+                    content: '',
+                    components: [container],
+                    flags: MessageFlags.IsComponentsV2,
+                    allowedMentions: { repliedUser: false },
                 });
+            };
+
+            const config = await BonusSystem.getConfig(guildID);
+            const prestigeEnabled = Boolean(config && config.prestigeEnabled);
+            if (!prestigeEnabled) {
+                debugHelper.warn('prestige', 'system disabled', { guildID });
+                const globalPrefix = (Array.isArray(Bot?.Prefix) && Bot.Prefix[0])
+                    ? Bot.Prefix[0]
+                    : (process.env.PREFIX || '.');
+                const hint = `\n\nUn admin puede activarlo con \`${globalPrefix}levelconfig prestige si 50\` (o usando el comando slash de levelconfig).`;
+                return replyV2('👑 Prestige', `❌ ${t('PRESTIGE_DISABLED')}${hint}`);
             }
 
             const user = await LevelSystem.getUser(guildID, userID, message.author.username);
             if (!user) {
                 debugHelper.warn('prestige', 'user missing', { guildID, requesterId });
-                return message.reply({ content: t('PRESTIGE_NO_DATA') || '❌ No tienes datos de nivel.', allowedMentions: { repliedUser: false } });
+                return replyV2('👑 Prestige', `❌ ${t('PRESTIGE_NO_DATA') || 'No tienes datos de nivel.'}`);
             }
 
             if (user.level < config.levelRequiredForPrestige) {
                 debugHelper.warn('prestige', 'level too low', { guildID, requesterId, level: user.level, required: config.levelRequiredForPrestige });
-                return message.reply({ content: `❌ Necesitas estar en nivel ${config.levelRequiredForPrestige} para hacer prestige. Actualmente estás en nivel ${user.level}.`, allowedMentions: { repliedUser: false } });
+                return replyV2('👑 Prestige', `❌ Necesitas estar en nivel **${config.levelRequiredForPrestige}** para hacer prestige. Actualmente estás en nivel **${user.level}**.`);
             }
 
             const prestigedUser = await LevelSystem.prestige(guildID, userID);
             if (!prestigedUser) {
-                return message.reply({
-                    content: t('PRESTIGE_ERROR'),
-                    allowedMentions: { repliedUser: false }
-                });
+                return replyV2('👑 Prestige', `❌ ${t('PRESTIGE_ERROR')}`);
             }
 
             const container = new ContainerBuilder()
@@ -107,8 +123,15 @@ module.exports = {
         } catch (error) {
             debugHelper.error('prestige', 'command error', { guildID: message.guildId, requesterId: message.author?.id, error: error.message });
             const t = (key) => key;
+            const container = new ContainerBuilder()
+                .setAccentColor(Bot.AccentColor)
+                .addTextDisplayComponents(c => c.setContent('# 👑 Prestige'))
+                .addSeparatorComponents(s => s.setDivider(true))
+                .addTextDisplayComponents(c => c.setContent(`❌ ${t('PRESTIGE_ERROR_FETCH')}`));
             message.reply({
-                content: t('PRESTIGE_ERROR_FETCH'),
+                content: '',
+                components: [container],
+                flags: MessageFlags.IsComponentsV2,
                 allowedMentions: { repliedUser: false }
             });
         }
