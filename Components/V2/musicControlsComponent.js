@@ -13,7 +13,8 @@ const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const { Bot } = require('../../Config');
 const { EMOJIS } = require('../../Util/emojis');
 
-const FALLBACK_IMG = String(process.env.MUSIC_FALLBACK_IMAGE_URL || 'https://cdn.discordapp.com/embed/avatars/0.png').trim();
+// Sin placeholder: si no hay imagen, el container no mostrará MediaGallery.
+const FALLBACK_IMG = String(process.env.MUSIC_FALLBACK_IMAGE_URL || '').trim();
 
 const CONTROL_EMOJIS = {
     repit: EMOJIS.Icon,
@@ -80,18 +81,25 @@ function buildDisabledMusicSessionContainer({ title, info, imageUrl, footerText 
     const resolvedInfo = info || '';
     const resolvedFooterText = footerText || '_**Moxi Studios**_ - Sesión Finalizada';
 
-    return new ContainerBuilder()
+    const container = new ContainerBuilder()
         .setAccentColor(Bot.AccentColor)
-        .addTextDisplayComponents(new TextDisplayBuilder().setContent(resolvedTitle))
-        .addMediaGalleryComponents(
+        .addTextDisplayComponents(new TextDisplayBuilder().setContent(resolvedTitle));
+
+    if (safeImageUrl) {
+        container.addMediaGalleryComponents(
             new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(safeImageUrl))
-        )
+        );
+    }
+
+    container
         .addSeparatorComponents(new SeparatorBuilder())
         .addTextDisplayComponents(new TextDisplayBuilder().setContent(resolvedInfo))
         .addActionRowComponents(buildMusicControlsRow({ disabled: true }))
         .addSeparatorComponents(new SeparatorBuilder())
         .addActionRowComponents(buildMusicVolumeRow({ disabled: true }))
         .addTextDisplayComponents(new TextDisplayBuilder().setContent(resolvedFooterText));
+
+    return container;
 }
 
 function buildActiveMusicSessionContainer({ title, info, imageUrl, footerText } = {}) {
@@ -104,19 +112,27 @@ function buildActiveMusicSessionContainer({ title, info, imageUrl, footerText } 
     const resolvedInfo = info || '';
     const resolvedFooterText = footerText || `> ${EMOJIS.studioAnim} _**Moxi Studios**_ `;
 
-    return new ContainerBuilder()
+    const container = new ContainerBuilder()
         .setAccentColor(Bot.AccentColor)
         .addTextDisplayComponents(new TextDisplayBuilder().setContent(resolvedTitle))
-        .addSeparatorComponents(new SeparatorBuilder())
-        .addMediaGalleryComponents(
-            new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(safeImageUrl))
-        )
-        .addSeparatorComponents(new SeparatorBuilder())
+        .addSeparatorComponents(new SeparatorBuilder());
+
+    if (safeImageUrl) {
+        container
+            .addMediaGalleryComponents(
+                new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(safeImageUrl))
+            )
+            .addSeparatorComponents(new SeparatorBuilder());
+    }
+
+    container
         .addTextDisplayComponents(new TextDisplayBuilder().setContent(resolvedInfo))
         .addActionRowComponents(buildMusicControlsRow({ disabled: false }))
         .addSeparatorComponents(new SeparatorBuilder())
         .addActionRowComponents(buildMusicVolumeRow({ disabled: false }))
         .addTextDisplayComponents(new TextDisplayBuilder().setContent(resolvedFooterText));
+
+    return container;
 }
 
 module.exports = {
