@@ -152,12 +152,16 @@ module.exports = {
                 // best-effort
             }
 
-            await interaction.deferReply({ flags: v2Flags() });
+            // Ephemeral debe establecerse en la respuesta inicial (deferReply),
+            // luego editReply heredará ese estado.
+            await interaction.deferReply({ ephemeral: true, flags: MessageFlags.IsComponentsV2 });
             const requestedTrack = interaction.options.getString("track");
             const lugar = interaction.options.getString("platform");
             debugHelper.log('play', 'start', { guildId, requesterId, track: requestedTrack, platform: lugar });
 
-            const source = lugar === 'youtube' ? 'ytsearch' : 'spotify';
+            // YouTube: ytsearch
+            // Spotify: spsearch (lavasrc). Para URLs/URIs de Spotify, Poru enviará el identificador tal cual.
+            const source = lugar === 'youtube' ? 'ytsearch' : 'spsearch';
             const res = await Moxi.poru.resolve({ query: requestedTrack, source, requester: interaction.member });
             const rawLoadType = String(res?.loadType ?? '');
             const loadTypeLower = rawLoadType.toLowerCase();
@@ -218,7 +222,7 @@ module.exports = {
 
                 interaction.editReply({
                     components: [buildV2Notice(moxi.translate('MUSIC_PLAYLIST_LOADED', lang, { name: playlistName, count: res.tracks.length }))],
-                    flags: v2Flags()
+                    flags: MessageFlags.IsComponentsV2
                 });
 
             } else {
@@ -228,10 +232,10 @@ module.exports = {
                     track.info.requester = interaction.user;
                     player.queue.add(track);
                     debugHelper.log('play', 'track queued', { guildId, requesterId, title: track.info.title });
-                    interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_TRACK_ADDED', lang, { title: track.info.title }))], flags: v2Flags() });
+                    interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_TRACK_ADDED', lang, { title: track.info.title }))], flags: MessageFlags.IsComponentsV2 });
                 } else {
                     debugHelper.warn('play', 'track invalid', { guildId, requesterId });
-                    interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_TRACK_INVALID', lang))], flags: v2Flags() })
+                    interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_TRACK_INVALID', lang))], flags: MessageFlags.IsComponentsV2 })
                 }
             }
             if (!player.isPlaying) {
