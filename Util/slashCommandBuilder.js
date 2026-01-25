@@ -18,16 +18,15 @@ function withSingularAliases(builder) {
   };
 
   for (const [singular, plural] of Object.entries(aliasMap)) {
-    if (typeof builder[singular] === 'function') continue;
-    if (typeof builder[plural] !== 'function') continue;
-
-    // Definimos el alias como función normal para respetar "this".
-    Object.defineProperty(builder, singular, {
-      value: function (fn) {
-        return this[plural](fn);
-      },
-      enumerable: false,
-    });
+    if(typeof builder[singular] !== 'function' && typeof builder[plural] === 'function') {
+      // Definimos el alias como función normal para respetar "this".
+      Object.defineProperty(builder, singular, {
+        value: function (fn) {
+          return this[plural](fn);
+        },
+        enumerable: false,
+      });
+    }
   }
 
   return builder;

@@ -17,8 +17,7 @@ function collectSlashFiles(root) {
   for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
     const full = path.join(root, entry.name);
     if (entry.isDirectory()) {
-      if (entry.name === 'Tarot') continue;
-      out.push(...collectSlashFiles(full));
+      if(entry.name != 'Tarot') out.push(...collectSlashFiles(full));
     }
     else if (entry.isFile() && entry.name.endsWith('.js')) out.push(full);
   }

@@ -61,35 +61,38 @@ module.exports = {
             const positionals = [];
             for (let i = 0; i < argv.length; i++) {
                 const token = String(argv[i] ?? '').trim();
-                if (!token) continue;
-                if (!token.startsWith('--')) {
-                    positionals.push(token);
-                    continue;
-                }
-                const [keyRaw, inlineValue] = token.slice(2).split('=');
-                const key = String(keyRaw || '').trim().toLowerCase();
-                if (!key) continue;
-                const needsValue = !['off'].includes(key);
-                let value = inlineValue;
-                if (value === undefined && needsValue) {
-                    // Flags cuyo valor puede contener espacios, p.ej: --msg hola mundo
-                    const multiWordKeys = new Set(['name', 'msg', 'reason']);
-                    if (multiWordKeys.has(key)) {
-                        const parts = [];
-                        while (argv[i + 1] !== undefined && !String(argv[i + 1]).startsWith('--')) {
-                            parts.push(String(argv[i + 1]));
-                            i++;
-                        }
-                        value = parts.length ? parts.join(' ') : undefined;
-                    } else {
-                        const next = argv[i + 1];
-                        if (next !== undefined && !String(next).startsWith('--')) {
-                            value = String(next);
-                            i++;
+                if(token) {
+                    if (!token.startsWith('--')) {
+                        positionals.push(token);
+                    }
+                    else {
+                        const [keyRaw, inlineValue] = token.slice(2).split('=');
+                        const key = String(keyRaw || '').trim().toLowerCase();
+                        if(key) {
+                            const needsValue = !['off'].includes(key);
+                            let value = inlineValue;
+                            if (value === undefined && needsValue) {
+                                // Flags cuyo valor puede contener espacios, p.ej: --msg hola mundo
+                                const multiWordKeys = new Set(['name', 'msg', 'reason']);
+                                if (multiWordKeys.has(key)) {
+                                    const parts = [];
+                                    while (argv[i + 1] !== undefined && !String(argv[i + 1]).startsWith('--')) {
+                                        parts.push(String(argv[i + 1]));
+                                        i++;
+                                    }
+                                    value = parts.length ? parts.join(' ') : undefined;
+                                } else {
+                                    const next = argv[i + 1];
+                                    if (next !== undefined && !String(next).startsWith('--')) {
+                                        value = String(next);
+                                        i++;
+                                    }
+                                }
+                            }
+                            flags[key] = value === undefined ? true : value;
                         }
                     }
                 }
-                flags[key] = value === undefined ? true : value;
             }
             return { flags, positionals };
         };

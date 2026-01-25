@@ -2,6 +2,53 @@ const { PermissionFlagsBits, ContainerBuilder, MessageFlags } = require('discord
 const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 
+const FOURTEEN_DAYS_MS = 14 * 24 * 60 * 60 * 1000;
+
+async function purgeRecentMessages(channel, amount, { keepPinned = true } = {}) {
+  if (!channel?.messages?.fetch) {
+    throw new Error('Este canal no soporta fetch de mensajes.');
+  }
+
+  const fetchLimit = Math.min(100, Math.max(1, Number(amount) || 0) + 10);
+  const fetched = await channel.messages.fetch({ limit: fetchLimit });
+
+  const candidates = [];
+  for(let i = 0, msg = fetched.at(i); i < amount; i++, msg = fetched.at(i)) {
+    if(!keepPinned || !msg.pinned) candidates.push(msg);
+  }
+
+  const cutoff = Date.now() - FOURTEEN_DAYS_MS;
+  const bulkIds = [];
+  const oldOnes = [];
+
+  for (const msg of candidates) {
+    const created = msg.createdTimestamp || 0;
+    if (created && created < cutoff) oldOnes.push(msg);
+    else bulkIds.push(msg.id);
+  }
+
+  let bulkCount = 0;
+  if (bulkIds.length && typeof channel.bulkDelete === 'function') {
+    const deleted = await channel.bulkDelete(bulkIds, true);
+    bulkCount = (typeof deleted === 'number') ? deleted : (deleted?.size ?? 0);
+    // En algunos casos bulkDelete borra correctamente pero devuelve 0 (p.ej. si no había cache).
+    // Como ya filtramos >14 días, el mínimo razonable es lo que intentamos borrar.
+    if (bulkCount === 0 && bulkIds.length > 0) bulkCount = bulkIds.length;
+  }
+
+  let oldCount = 0;
+  for (const msg of oldOnes) {
+    try {
+      await msg.delete();
+      oldCount++;
+    } catch {
+      // ignorar fallos individuales
+    }
+  }
+
+  return { deletedCount: bulkCount + oldCount, bulkCount, oldCount, attempted: candidates.length };
+}
+
 function toolsCategory(lang) {
   lang = lang || 'es-ES';
   return moxi.translate('commands:CATEGORY_HERRAMIENTAS', lang);
