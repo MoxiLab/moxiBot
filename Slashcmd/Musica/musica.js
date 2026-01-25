@@ -16,6 +16,42 @@ const { buildDisabledMusicSessionContainer } = require("../../Components/V2/musi
 const { sendVoteShare } = require("../../Util/sendVoteShare");
 const debugHelper = require("../../Util/debugHelper");
 
+function normalizeSpotifyIdentifier(input) {
+    const raw = String(input || '').trim();
+    if (!raw) return null;
+
+    // spotify:artist:<id> / spotify:album:<id> / etc
+    if (raw.startsWith('spotify:')) {
+        const parts = raw.split(':');
+        const kind = parts[1];
+        const id = parts[2];
+        if (kind && id) return `spotify:${kind}:${id}`;
+        return null;
+    }
+
+    // open.spotify.com URLs (including /intl-xx/ prefix)
+    try {
+        const url = new URL(raw);
+        if (!/spotify\.com$/i.test(url.hostname)) return null;
+        const path = url.pathname.replace(/^\/+/, '');
+        const segments = path.split('/').filter(Boolean);
+        if (!segments.length) return null;
+
+        const known = new Set(['track', 'album', 'playlist', 'artist', 'episode', 'show']);
+        let kindIndex = segments.findIndex((s) => known.has(String(s).toLowerCase()));
+        if (kindIndex === -1 && segments[0].toLowerCase().startsWith('intl-')) {
+            kindIndex = segments.findIndex((s) => known.has(String(s).toLowerCase()));
+        }
+        if (kindIndex === -1) return null;
+        const kind = String(segments[kindIndex]).toLowerCase();
+        const id = segments[kindIndex + 1];
+        if (!id) return null;
+        return `spotify:${kind}:${id}`;
+    } catch {
+        return null;
+    }
+}
+
 
 
 module.exports = {
@@ -162,10 +198,17 @@ module.exports = {
             // YouTube: ytsearch
             // Spotify: spsearch (lavasrc). Para URLs/URIs de Spotify, Poru enviará el identificador tal cual.
             const source = lugar === 'youtube' ? 'ytsearch' : 'spsearch';
-            const res = await Moxi.poru.resolve({ query: requestedTrack, source, requester: interaction.member });
+
+            const normalizedSpotify = lugar === 'spotify' ? normalizeSpotifyIdentifier(requestedTrack) : null;
+            const query = normalizedSpotify || requestedTrack;
+            if (normalizedSpotify) {
+                debugHelper.log('play', 'normalized spotify identifier', { guildId, requesterId, from: requestedTrack, to: normalizedSpotify });
+            }
+
+            const res = await Moxi.poru.resolve({ query, source, requester: interaction.member });
             const rawLoadType = String(res?.loadType ?? '');
             const loadTypeLower = rawLoadType.toLowerCase();
-            const loadTypeUpper = rawLoadType.toUpperCase(); 
+            const loadTypeUpper = rawLoadType.toUpperCase();
             const isLoadFailed = loadTypeLower === 'error' || loadTypeUpper === 'LOAD_FAILED';
             const isNoMatches = loadTypeLower === 'empty' || loadTypeUpper === 'NO_MATCHES';
             const isPlaylistLoaded = loadTypeLower === 'playlist' || loadTypeUpper === 'PLAYLIST_LOADED';
@@ -177,11 +220,22 @@ module.exports = {
                 compat: { isLoadFailed, isNoMatches, isPlaylistLoaded }
             });
 
+            const looksLikeSpotifyPlaylist =
+                lugar === 'spotify' &&
+                typeof normalizedSpotify === 'string' &&
+                normalizedSpotify.startsWith('spotify:playlist:');
+
             if (isLoadFailed) {
                 debugHelper.warn('play', 'resolve failed', { guildId, requesterId });
+                if (looksLikeSpotifyPlaylist) {
+                    return interaction.editReply({ components: [buildV2Notice('No se puede reproducir una lista privada de Spotify.')], flags: v2Flags() });
+                }
                 return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_LOAD_FAILED', lang))], flags: v2Flags() });
             } else if (isNoMatches) {
                 debugHelper.warn('play', 'resolve no matches', { guildId, requesterId });
+                if (looksLikeSpotifyPlaylist) {
+                    return interaction.editReply({ components: [buildV2Notice('No se puede reproducir una lista privada de Spotify.')], flags: v2Flags() });
+                }
                 return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_NO_SOURCE_FOUND', lang))], flags: v2Flags() });
             }
 
@@ -214,14 +268,15 @@ module.exports = {
 
             if (isPlaylistLoaded) {
                 const playlistName = res?.playlistInfo?.name || res?.playlistInfo?.title || 'Playlist';
-                debugHelper.log('play', 'playlist loaded', { guildId, requesterId, playlist: playlistName, count: res.tracks.length });
-                for (const track of res.tracks) {
+                const playlistTracks = res.tracks;
+                debugHelper.log('play', 'playlist loaded', { guildId, requesterId, playlist: playlistName, count: playlistTracks.length });
+                for (const track of playlistTracks) {
                     track.info.requester = interaction.user;
                     player.queue.add(track);
                 }
 
                 interaction.editReply({
-                    components: [buildV2Notice(moxi.translate('MUSIC_PLAYLIST_LOADED', lang, { name: playlistName, count: res.tracks.length }))],
+                    components: [buildV2Notice(moxi.translate('MUSIC_PLAYLIST_LOADED', lang, { name: playlistName, count: playlistTracks.length }))],
                     flags: MessageFlags.IsComponentsV2
                 });
 
