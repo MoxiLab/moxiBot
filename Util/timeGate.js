@@ -72,11 +72,11 @@ function isWithinAnyWindow(nowMinutes, windows) {
         // normal (ej: 18:00-23:00)
         if (w.start < w.end) {
             if (mins >= w.start && mins <= w.end) return true;
-            continue;
         }
-
-        // overnight (ej: 22:00-02:00)
-        if (mins >= w.start || mins <= w.end) return true;
+        else {
+            // overnight (ej: 22:00-02:00)
+            if (mins >= w.start || mins <= w.end) return true;
+        }
     }
 
     return false;
@@ -87,11 +87,12 @@ function hasAnyBypassPermission(memberPermissions, bypassPermNames) {
     for (const name of bypassPermNames) {
         const key = safeString(name).trim();
         const bit = PermissionsBitField.Flags[key];
-        if (!bit) continue;
-        try {
-            if (memberPermissions.has(bit, true)) return true;
-        } catch {
-            // ignore
+        if(bit) {
+            try {
+                if (memberPermissions.has(bit, true)) return true;
+            } catch {
+                // ignore
+            }
         }
     }
     return false;

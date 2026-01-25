@@ -66,12 +66,12 @@ function getEnabledFlagsSet() {
     const set = new Set();
     for (const item of items) {
         const t = String(item).trim();
-        if (!t) continue;
-        if (t.toLowerCase() === 'all' || t === '*') {
-            set.add('*');
-            continue;
+        if(t) {
+            if (t.toLowerCase() === 'all' || t === '*') {
+                set.add('*');
+            }
+            else set.add(resolveEnvKey(t));
         }
-        set.add(resolveEnvKey(t));
     }
     return set;
 }

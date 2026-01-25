@@ -92,10 +92,12 @@ function base36ToBigInt(str) {
     for (const ch of s) {
         const code = ch.charCodeAt(0);
         let v;
-        if (code >= 48 && code <= 57) v = BigInt(code - 48);
-        else if (code >= 97 && code <= 122) v = BigInt(code - 87);
-        else continue;
-        out = (out * 36n) + v;
+        if (code >= 48 && code <= 122) {
+            if (code >= 48 && code <= 57) v = BigInt(code - 48);
+            else if (code >= 97 && code <= 122) v = BigInt(code - 87);
+
+            out = (out * 36n) + v;
+        }
     }
     return out;
 }
@@ -113,10 +115,10 @@ function randomMineMask({ size, mines, safeIndex } = {}) {
     while (placed < m && guard < 5000) {
         guard++;
         const i = Math.floor(Math.random() * cells);
-        if (safe !== null && i === safe) continue;
-        if (bitGet(mineMask, i)) continue;
-        mineMask = bitSet(mineMask, i);
-        placed++;
+        if (safe === null && i != safe && !bitGet(mineMask, i)) {
+            mineMask = bitSet(mineMask, i);
+            placed++;
+        }
     }
 
     return mineMask;
@@ -127,11 +129,13 @@ function countAdjacentMines({ x, y, size, mineMask }) {
     let count = 0;
     for (let dy = -1; dy <= 1; dy++) {
         for (let dx = -1; dx <= 1; dx++) {
-            if (dx === 0 && dy === 0) continue;
-            const nx = x + dx;
-            const ny = y + dy;
-            if (nx < 0 || ny < 0 || nx >= sz || ny >= sz) continue;
-            if (bitGet(mineMask, idxOf(nx, ny, sz))) count++;
+            if(dx != 0 || dy != 0) {
+                const nx = x + dx;
+                const ny = y + dy;
+                if (nx > 0 & ny > 0 && nx < sz && ny < sz) {
+                    if (bitGet(mineMask, idxOf(nx, ny, sz))) count++;
+                }
+            }
         }
     }
     return count;
@@ -148,30 +152,33 @@ function floodReveal({ x, y, state }) {
 
     while (queue.length) {
         const i = queue.shift();
-        if (bitGet(revealMask, i)) continue;
-        if (bitGet(mineMask, i)) {
-            status = 1;
-            revealMask = bitSet(revealMask, i);
-            continue;
-        }
+        if(!bitGet(revealMask, i)) {
+            let bit = bitGet(mineMask, i);
+            if (!bit) {
+                revealMask = bitSet(revealMask, i);
 
-        revealMask = bitSet(revealMask, i);
-
-        const cx = i % size;
-        const cy = Math.floor(i / size);
-        const adj = countAdjacentMines({ x: cx, y: cy, size, mineMask });
-        if (adj !== 0) continue;
-
-        for (let dy = -1; dy <= 1; dy++) {
-            for (let dx = -1; dx <= 1; dx++) {
-                const nx = cx + dx;
-                const ny = cy + dy;
-                if (nx < 0 || ny < 0 || nx >= size || ny >= size) continue;
-                const ni = idxOf(nx, ny, size);
-                if (seen.has(ni)) continue;
-                if (bitGet(mineMask, ni)) continue;
-                seen.add(ni);
-                queue.push(ni);
+                const cx = i % size;
+                const cy = Math.floor(i / size);
+                const adj = countAdjacentMines({ x: cx, y: cy, size, mineMask });
+                if(adj === 0) {
+                    for (let dy = -1; dy <= 1; dy++) {
+                        for (let dx = -1; dx <= 1; dx++) {
+                            const nx = cx + dx;
+                            const ny = cy + dy;
+                            if (nx >= 0 && ny >= 0 && nx < size && ny < size) {
+                                const ni = idxOf(nx, ny, size);
+                                if(!seen.has(ni) && !bitGet(mineMask, ni)) {
+                                    seen.add(ni);
+                                    queue.push(ni);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                status = 1;
+                revealMask = bitSet(revealMask, i);
             }
         }
     }
@@ -254,27 +261,26 @@ function buildMinesweeperMessageOptions({ userId, lang, state, disabled = false 
                         if (adj === 0) {
                             b.setLabel(BLANK).setStyle(ButtonStyle.Secondary).setCustomId(noopId);
                         } else {
-                            b.setLabel(String(adj)).setStyle(ButtonStyle.Secondary).setCustomId(noopId);
+                            const b = new SecondaryButtonBuilder()
+                                .setLabel(String(adj))
+                                .setCustomId(noopId)
+                                .setDisabled(true);
+                            row.addComponents(b);
                         }
                     }
-                    b.setDisabled(true);
+                }
+                else {
+                    // Hidden
+                    const b = new SecondaryButtonBuilder();
+                    if (isFlagged) b.setEmoji(toEmojiObject('🚩'));
+                    else b.setLabel(BLANK);
+
+                    // Click action depends on current mode.
+                    const act = isFlagMode ? 'g' : 'o';
+                    b.setCustomId(`msw:${act}:${safeUserId}:${x}:${y}:${encoded}`);
+                    b.setDisabled(isLocked);
                     row.addComponents(b);
-                    continue;
                 }
-
-                // Hidden
-                if (isFlagged) {
-                    b.setEmoji('🚩').setStyle(ButtonStyle.Secondary);
-                } else {
-                    // Discord exige label o emoji: usamos un label “invisible” para que se vea como casilla vacía.
-                    b.setLabel(BLANK).setStyle(ButtonStyle.Secondary);
-                }
-
-                // Click action depends on current mode.
-                const act = isFlagMode ? 'g' : 'o';
-                b.setCustomId(`msw:${act}:${safeUserId}:${x}:${y}:${encoded}`);
-                b.setDisabled(isLocked);
-                row.addComponents(b);
             }
             return row;
         });

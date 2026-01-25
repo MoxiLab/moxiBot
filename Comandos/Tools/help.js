@@ -25,31 +25,29 @@ function splitUsageVariants(usage) {
     for (let i = 0; i < raw.length; i++) {
         const ch = raw[i];
 
-        if (escaped) {
+        if(!escaped) {
+            if (ch === '\\') {
+                cur += ch;
+                escaped = true;
+            }
+            else {
+                if (ch === '[') squareDepth++;
+                else if (ch === ']') squareDepth = Math.max(0, squareDepth - 1);
+                else if (ch === '<') angleDepth++;
+                else if (ch === '>') angleDepth = Math.max(0, angleDepth - 1);
+
+                if (ch === '|' && squareDepth === 0 && angleDepth === 0) {
+                    const v = cur.trim();
+                    if (v) variants.push(v);
+                    cur = '';
+                }
+                else cur += ch;
+            }
+        }
+        else {
             cur += ch;
             escaped = false;
-            continue;
         }
-
-        if (ch === '\\') {
-            cur += ch;
-            escaped = true;
-            continue;
-        }
-
-        if (ch === '[') squareDepth++;
-        else if (ch === ']') squareDepth = Math.max(0, squareDepth - 1);
-        else if (ch === '<') angleDepth++;
-        else if (ch === '>') angleDepth = Math.max(0, angleDepth - 1);
-
-        if (ch === '|' && squareDepth === 0 && angleDepth === 0) {
-            const v = cur.trim();
-            if (v) variants.push(v);
-            cur = '';
-            continue;
-        }
-
-        cur += ch;
     }
 
     const last = cur.trim();
@@ -75,14 +73,19 @@ function extractSubcommandsFromUsageLines(lines, cmdName) {
     const subs = new Set();
     for (const ln of Array.isArray(lines) ? lines : []) {
         const raw = String(ln || '').trim();
-        if (!raw) continue;
-        const parts = raw.split(/\s+/g).filter(Boolean);
-        if (!parts.length) continue;
-        if (String(parts[0]).toLowerCase() !== name) continue;
-        const maybe = parts[1];
-        if (!maybe) continue;
-        if (/^[\[<]/.test(maybe)) continue;
-        subs.add(String(maybe).trim().toLowerCase());
+        if(raw) {
+            const parts = raw.split(/\s+/g).filter(Boolean);
+            if(parts.length) {
+                if (String(parts[0]).toLowerCase() === name) {
+                    const maybe = parts[1];
+                    if(maybe) {
+                        if (!(/^[\[<]/.test(maybe))) {
+                            subs.add(String(maybe).trim().toLowerCase());
+                        }
+                    }
+                }
+            }
+        }
     }
     return Array.from(subs.values()).sort();
 }
