@@ -13,8 +13,7 @@ const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const { Bot } = require('../../Config');
 const { EMOJIS } = require('../../Util/emojis');
 
-const FALLBACK_IMG =
-    'https://i.ibb.co/fdvrFrXW/Whats-App-Image-2025-12-25-at-16-02-06.jpg';
+const FALLBACK_IMG = String(process.env.MUSIC_FALLBACK_IMAGE_URL || 'https://cdn.discordapp.com/embed/avatars/0.png').trim();
 
 const CONTROL_EMOJIS = {
     repit: EMOJIS.Icon,
