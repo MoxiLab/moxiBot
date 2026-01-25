@@ -16,7 +16,8 @@ const {
     buildDisabledMusicSessionContainer,
 } = require('../Components/V2/musicControlsComponent');
 
-const FALLBACK_IMG = String(process.env.MUSIC_FALLBACK_IMAGE_URL || 'https://cdn.discordapp.com/embed/avatars/0.png').trim();
+// Sin placeholder: si no hay portada real, no mostramos imagen.
+const FALLBACK_IMG = String(process.env.MUSIC_FALLBACK_IMAGE_URL || '').trim();
 
 const spotifyOEmbedCache = new Map();
 
@@ -71,7 +72,7 @@ async function getBestArtworkUrl(track, fallbackUrl) {
         }
     }
 
-    return pickFirstString(fallbackUrl, FALLBACK_IMG) || FALLBACK_IMG;
+    return pickFirstString(fallbackUrl, FALLBACK_IMG);
 }
 
 function getEnvNumber(key, fallback) {
@@ -115,28 +116,30 @@ module.exports = async (Moxi, player, track) => {
         // --- 2. GENERAR NUEVA TARJETA ---
         const trackDuration = track.info.isStream ? "LIVE" : formatDuration(track.info.length);
         const solicitud = track?.info?.requester?.tag || "Moxi Autoplay";
-        const iconURL = track?.info?.requester?.displayAvatarURL?.({ dynamic: true }) || FALLBACK_IMG;
-        const artworkUrl = await getBestArtworkUrl(track, iconURL);
+        const iconURL = track?.info?.requester?.displayAvatarURL?.({ dynamic: true }) || null;
+        const artworkUrl = await getBestArtworkUrl(track, null);
 
         // --- 2. GENERAR NUEVA TARJETA (musicard-quartz) ---
         // Nota: progress/tiempos reales se verán mejor en updates; en trackStart normalmente estamos en 0:00.
-        const quartzCard = new musicCard()
-            .setName(track.info.title)
-            .setAuthor(track.info.author)
-            // Puede ser "auto" o un color (por ejemplo: #FFB6E6)
-            .setColor(MUSIC_CARD_COLOR)
-            .setTheme(MUSIC_CARD_THEME)
-            .setBrightness(MUSIC_CARD_BRIGHTNESS)
-            .setProgress(2)
-            .setStartTime("0:00")
-            .setEndTime(trackDuration)
-            .setThumbnail(artworkUrl);
-
         let buffer = null;
-        try {
-            buffer = await quartzCard.build();
-        } catch {
-            buffer = null;
+        if (artworkUrl) {
+            const quartzCard = new musicCard()
+                .setName(track.info.title)
+                .setAuthor(track.info.author)
+                // Puede ser "auto" o un color (por ejemplo: #FFB6E6)
+                .setColor(MUSIC_CARD_COLOR)
+                .setTheme(MUSIC_CARD_THEME)
+                .setBrightness(MUSIC_CARD_BRIGHTNESS)
+                .setProgress(2)
+                .setStartTime("0:00")
+                .setEndTime(trackDuration)
+                .setThumbnail(artworkUrl);
+
+            try {
+                buffer = await quartzCard.build();
+            } catch {
+                buffer = null;
+            }
         }
         const fileName = `moxi_${Date.now()}.png`;
         const hasBuffer = Buffer.isBuffer(buffer) && buffer.length > 0;
@@ -159,15 +162,21 @@ module.exports = async (Moxi, player, track) => {
         // Fila 2: Volumen
         const volumeRow = buildMusicVolumeRow();
 
-        const imageUrlForGallery = hasBuffer ? `attachment://${fileName}` : artworkUrl;
+        const imageUrlForGallery = hasBuffer ? `attachment://${fileName}` : (artworkUrl || null);
 
         const mainContainer = new ContainerBuilder()
             .setAccentColor(Bot.AccentColor)
-            .addTextDisplayComponents(new TextDisplayBuilder().setContent(currentTitle))
-            .addSeparatorComponents(new SeparatorBuilder())
-            .addMediaGalleryComponents(new MediaGalleryBuilder().addItems(
-                new MediaGalleryItemBuilder().setURL(imageUrlForGallery)
-            ))
+            .addTextDisplayComponents(new TextDisplayBuilder().setContent(currentTitle));
+
+        if (imageUrlForGallery) {
+            mainContainer
+                .addSeparatorComponents(new SeparatorBuilder())
+                .addMediaGalleryComponents(new MediaGalleryBuilder().addItems(
+                    new MediaGalleryItemBuilder().setURL(imageUrlForGallery)
+                ));
+        }
+
+        mainContainer
             .addSeparatorComponents(new SeparatorBuilder())
             .addTextDisplayComponents(new TextDisplayBuilder().setContent(currentInfo))
             .addActionRowComponents(buttonsRow)
@@ -187,7 +196,7 @@ module.exports = async (Moxi, player, track) => {
 
         Moxi.previousMessage = newMessage;
 
-        const finalImageUrl = newMessage.attachments.first()?.url || artworkUrl;
+        const finalImageUrl = newMessage.attachments.first()?.url || artworkUrl || null;
 
         await player.set("lastSessionData", {
             title: currentTitle,
