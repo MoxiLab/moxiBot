@@ -183,13 +183,17 @@ function applyPetAction(pet, action, now = Date.now()) {
 
     let leveledUp = false;
     let guard = 0;
-    while (guard++ < 25) {
+    let canLevelUp = true;
+    while (guard++ < 25 && canLevelUp) {
         const need = petXpToNext(pet);
         a.xpToNext = need;
-        if (a.xp < need) break;
-        a.xp -= need;
-        pet.level = Math.max(1, Math.trunc(safeNumber(pet.level, 1))) + 1;
-        leveledUp = true;
+        if (a.xp < need) {
+            canLevelUp = false;
+        } else {
+            a.xp -= need;
+            pet.level = Math.max(1, Math.trunc(safeNumber(pet.level, 1))) + 1;
+            leveledUp = true;
+        }
     }
 
     const after = {

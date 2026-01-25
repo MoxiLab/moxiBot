@@ -298,52 +298,47 @@ function rarityForIndex(i) {
 }
 
 function basePriceForPrefix(prefix) {
-    switch (prefix) {
-        case 'materiales':
-            return 12;
-        case 'consumibles':
-            return 30;
-        case 'coleccionables':
-            return 80;
-        case 'buffs':
-            return 250;
-        case 'herramientas':
-            return 220;
-        case 'llaves':
-            return 900;
-        case 'loots':
-            return 600;
-        case 'mascotas':
-            return 900;
-        case 'mejoras':
-            return 1500;
-        case 'pociones':
-            return 180;
-        case 'rollos':
-            return 220;
-        case 'proteccion':
-            return 2500;
-        case 'misiones':
-            return 200;
-        default:
-            return 100;
+    if (prefix === 'materiales') {
+        return 12;
+    } else if (prefix === 'consumibles') {
+        return 30;
+    } else if (prefix === 'coleccionables') {
+        return 80;
+    } else if (prefix === 'buffs') {
+        return 250;
+    } else if (prefix === 'herramientas') {
+        return 220;
+    } else if (prefix === 'llaves') {
+        return 900;
+    } else if (prefix === 'loots') {
+        return 600;
+    } else if (prefix === 'mascotas') {
+        return 900;
+    } else if (prefix === 'mejoras') {
+        return 1500;
+    } else if (prefix === 'pociones') {
+        return 180;
+    } else if (prefix === 'rollos') {
+        return 220;
+    } else if (prefix === 'proteccion') {
+        return 2500;
+    } else if (prefix === 'misiones') {
+        return 200;
     }
+    return 100;
 }
 
 function priceForRarity(base, rarity) {
-    switch (rarity) {
-        case 'uncommon':
-            return Math.max(1, Math.trunc(base * 1.6));
-        case 'rare':
-            return Math.max(1, Math.trunc(base * 3.6));
-        case 'epic':
-            return Math.max(1, Math.trunc(base * 7.0));
-        case 'legendary':
-            return Math.max(1, Math.trunc(base * 12.0));
-        case 'common':
-        default:
-            return Math.max(1, Math.trunc(base));
+    if (rarity === 'uncommon') {
+        return Math.max(1, Math.trunc(base * 1.6));
+    } else if (rarity === 'rare') {
+        return Math.max(1, Math.trunc(base * 3.6));
+    } else if (rarity === 'epic') {
+        return Math.max(1, Math.trunc(base * 7.0));
+    } else if (rarity === 'legendary') {
+        return Math.max(1, Math.trunc(base * 12.0));
     }
+    return Math.max(1, Math.trunc(base));
 }
 
 function expandCatalogToMinItems(catalog, minPerCategory) {

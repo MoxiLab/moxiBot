@@ -13,20 +13,19 @@ function reminderKey({ guildId, userId, type }) {
 }
 
 function formatType(type) {
-    switch (String(type)) {
-        case 'work':
-            return 'Work';
-        case 'salary':
-            return 'Salary';
-        case 'crime':
-            return 'Crime';
-        case 'fish':
-            return 'Fishing';
-        case 'mine':
-            return 'Mining';
-        default:
-            return String(type || 'Cooldown');
+    const t = String(type);
+    if (t === 'work') {
+        return 'Work';
+    } else if (t === 'salary') {
+        return 'Salary';
+    } else if (t === 'crime') {
+        return 'Crime';
+    } else if (t === 'fish') {
+        return 'Fishing';
+    } else if (t === 'mine') {
+        return 'Mining';
     }
+    return String(type || 'Cooldown');
 }
 
 function buildReminderMessage({ userId, type }) {

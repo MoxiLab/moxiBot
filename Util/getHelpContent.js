@@ -122,40 +122,33 @@ function buildHelpIndex(Moxi) {
     return merged;
   };
 
-  // Estos dos for son prácticamente iguales, refactoriza con una función
+  const upsertCommand = (cmd, modeFlags) => {
+    if (!cmd) return;
+
+    const cmdName = getName(cmd);
+    if (!cmdName) return;
+
+    const normalized = {
+      ...cmd,
+      name: cmdName,
+      command: {
+        ...((cmd.command && typeof cmd.command === 'object') ? cmd.command : {}),
+        ...(modeFlags && typeof modeFlags === 'object' ? modeFlags : {}),
+      },
+    };
+
+    byName.set(cmdName, merge(byName.get(cmdName), normalized));
+  };
+
+  const upsertAll = (arr, modeFlags) => {
+    for (const cmd of Array.isArray(arr) ? arr : []) {
+      upsertCommand(cmd, modeFlags);
+    }
+  };
+
   // Primero prefijos, luego slash: el prefijo queda como “base” en caso de colisión.
-  for (const _cmd of commandsArr) {
-    if(_cmd) {
-      const cmdName = getName(_cmd);
-      if(cmdName) {
-        const normalized = {
-          ..._cmd,
-          name: cmdName,
-          command: {
-            ...((_cmd.command && typeof _cmd.command === 'object') ? _cmd.command : {}),
-            Prefix: true,
-          },
-        };
-        byName.set(cmdName, merge(byName.get(cmdName), normalized));
-      }
-    }
-  }
-  for (const _cmd of slashArr) {
-    if(_cmd) {
-      const cmdName = getName(_cmd);
-      if(cmdName) {
-        const normalized = {
-          ..._cmd,
-          name: cmdName,
-          command: {
-            ...((_cmd.command && typeof _cmd.command === 'object') ? _cmd.command : {}),
-            Slash: true,
-          },
-        };
-        byName.set(cmdName, merge(byName.get(cmdName), normalized));
-      }
-    }
-  }
+  upsertAll(commandsArr, { Prefix: true });
+  upsertAll(slashArr, { Slash: true });
 
   allCommands = Array.from(byName.values());
 

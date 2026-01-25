@@ -34,39 +34,35 @@ function normalizeTierKey(input) {
 }
 
 function tierLabel(key) {
-    switch (normalizeTierKey(key)) {
-        case 'divine':
-            return 'Divino';
-        case 'mythic':
-            return 'Mítico';
-        case 'legendary':
-            return 'Legendario';
-        case 'epic':
-            return 'Épico';
-        case 'rare':
-            return 'Raro';
-        case 'uncommon':
-            return 'Poco común';
-        case 'common':
-            return 'Común';
-        case 'all':
-        default:
-            return 'Todos los tiers';
+    const t = normalizeTierKey(key);
+    if (t === 'divine') {
+        return 'Divino';
+    } else if (t === 'mythic') {
+        return 'Mítico';
+    } else if (t === 'legendary') {
+        return 'Legendario';
+    } else if (t === 'epic') {
+        return 'Épico';
+    } else if (t === 'rare') {
+        return 'Raro';
+    } else if (t === 'uncommon') {
+        return 'Poco común';
+    } else if (t === 'common') {
+        return 'Común';
     }
+    return 'Todos los tiers';
 }
 
 function sortLabel(sortKey) {
-    switch (String(sortKey || 'new')) {
-        case 'name':
-            return 'Nombre';
-        case 'level':
-            return 'Nivel';
-        case 'tier':
-            return 'Tier';
-        case 'new':
-        default:
-            return 'Recientes';
+    const s = String(sortKey || 'new');
+    if (s === 'name') {
+        return 'Nombre';
+    } else if (s === 'level') {
+        return 'Nivel';
+    } else if (s === 'tier') {
+        return 'Tier';
     }
+    return 'Recientes';
 }
 
 function cycleSort(sortKey) {

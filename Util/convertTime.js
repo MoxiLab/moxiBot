@@ -20,24 +20,25 @@ module.exports = {
 
         var abbrev = ["K", "M", "B", "T"];
 
-        for (var i = abbrev.length - 1; i >= 0; i--) {
+        var formatted = null;
+
+        for (var i = abbrev.length - 1; i >= 0 && formatted === null; i--) {
             var size = Math.pow(10, (i + 1) * 3);
 
             if (size <= number) {
-                number = Math.round((number * decPlaces) / size) / decPlaces;
+                var n = Math.round((number * decPlaces) / size) / decPlaces;
 
-                if (number == 1000 && i < abbrev.length - 1) {
-                    number = 1;
-                    i++;
+                var suffixIndex = i;
+                if (n == 1000 && i < abbrev.length - 1) {
+                    n = 1;
+                    suffixIndex = i + 1;
                 }
 
-                number += abbrev[i];
-
-                break;
+                formatted = String(n) + abbrev[suffixIndex];
             }
         }
 
-        return number;
+        return formatted === null ? number : formatted;
     },
     chunk: function (arr, size) {
         const temp = [];

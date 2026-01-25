@@ -54,14 +54,18 @@ async function detectUsedInviteOnJoin(member) {
     if (!before || !after) return null;
 
     // Find invite whose uses increased.
-    let used = null;
-    for (const [code, usesAfter] of after.entries()) {
+    const usedEntry = Array.from(after.entries()).find(([code, usesAfter]) => {
         const usesBefore = Number(before.get(code) || 0);
-        if (usesAfter > usesBefore) {
-            used = { code, usesBefore, usesAfter };
-            break;
-        }
-    }
+        return Number(usesAfter) > usesBefore;
+    });
+
+    const used = usedEntry
+        ? (() => {
+            const [code, usesAfter] = usedEntry;
+            const usesBefore = Number(before.get(code) || 0);
+            return { code, usesBefore, usesAfter: Number(usesAfter) };
+        })()
+        : null;
 
     if (!used) return null;
 
