@@ -1,17 +1,13 @@
 const {
-    ActionRowBuilder,
-    AttachmentBuilder,
     ContainerBuilder,
     TextDisplayBuilder,
     MediaGalleryBuilder,
     MediaGalleryItemBuilder,
     SeparatorBuilder,
     MessageFlags,
-    ButtonStyle
 } = require('discord.js');
-const { ButtonBuilder } = require('../Util/compatButtonBuilder');
 const formatDuration = require("../Util/formate.js");
-const { muzicard } = require("muzicard");
+const { musicCard } = require("musicard-quartz");
 const { Bot } = require("../Config");
 const { EMOJIS } = require("../Util/emojis");
 const {
@@ -20,13 +16,75 @@ const {
     buildDisabledMusicSessionContainer,
 } = require('../Components/V2/musicControlsComponent');
 
-const FALLBACK_IMG = "https://i.ibb.co/fdvrFrXW/Whats-App-Image-2025-12-25-at-16-02-06.jpg";
+const FALLBACK_IMG = String(process.env.MUSIC_FALLBACK_IMAGE_URL || 'https://cdn.discordapp.com/embed/avatars/0.png').trim();
 
-function toHexColor(value) {
-    const n = Number(value);
-    if (!Number.isFinite(n)) return '#FFB6E6';
-    return `#${(n & 0xffffff).toString(16).padStart(6, '0')}`.toUpperCase();
+const spotifyOEmbedCache = new Map();
+
+function pickFirstString(...values) {
+    for (const v of values) {
+        if (typeof v === 'string' && v.trim().length > 0) return v.trim();
+    }
+    return null;
 }
+
+async function getBestArtworkUrl(track, fallbackUrl) {
+    const direct = pickFirstString(
+        track?.info?.image,
+        track?.info?.artworkUrl,
+        track?.info?.thumbnail,
+        track?.info?.coverUrl,
+        track?.pluginInfo?.image,
+        track?.pluginInfo?.artworkUrl,
+        track?.pluginInfo?.thumbnail,
+        track?.pluginInfo?.albumArtUrl
+    );
+    if (direct) return direct;
+
+    const uri = pickFirstString(track?.info?.uri);
+    const canFetch = typeof globalThis.fetch === 'function';
+
+    let oembedUrl = uri;
+    if (oembedUrl && oembedUrl.startsWith('spotify:')) {
+        const parts = oembedUrl.split(':');
+        const kind = parts[1];
+        const id = parts[2];
+        if (kind && id && ['track', 'album', 'playlist', 'episode', 'show'].includes(kind)) {
+            oembedUrl = `https://open.spotify.com/${kind}/${id}`;
+        }
+    }
+
+    if (oembedUrl && canFetch && oembedUrl.includes('open.spotify.com')) {
+        const cached = spotifyOEmbedCache.get(oembedUrl);
+        if (cached) return cached;
+        try {
+            const res = await globalThis.fetch(`https://open.spotify.com/oembed?url=${encodeURIComponent(oembedUrl)}`);
+            if (res.ok) {
+                const json = await res.json();
+                const oembedThumb = pickFirstString(json?.thumbnail_url, json?.thumbnail_url_with_play_button);
+                if (oembedThumb) {
+                    spotifyOEmbedCache.set(oembedUrl, oembedThumb);
+                    return oembedThumb;
+                }
+            }
+        } catch {
+            // ignore
+        }
+    }
+
+    return pickFirstString(fallbackUrl, FALLBACK_IMG) || FALLBACK_IMG;
+}
+
+function getEnvNumber(key, fallback) {
+    const raw = process.env[key];
+    const n = Number(raw);
+    return Number.isFinite(n) ? n : fallback;
+}
+
+// Temas conocidos en musicard-quartz: quartz+, onepiece+, vector+
+// Por defecto usamos vector+ (el estilo de la card que buscabas).
+const MUSIC_CARD_THEME = String(process.env.MUSIC_CARD_THEME || 'vector+');
+const MUSIC_CARD_COLOR = String(process.env.MUSIC_CARD_COLOR || 'auto');
+const MUSIC_CARD_BRIGHTNESS = getEnvNumber('MUSIC_CARD_BRIGHTNESS', 50);
 
 module.exports = async (Moxi, player, track) => {
     try {
@@ -58,18 +116,28 @@ module.exports = async (Moxi, player, track) => {
         const trackDuration = track.info.isStream ? "LIVE" : formatDuration(track.info.length);
         const solicitud = track?.info?.requester?.tag || "Moxi Autoplay";
         const iconURL = track?.info?.requester?.displayAvatarURL?.({ dynamic: true }) || FALLBACK_IMG;
+        const artworkUrl = await getBestArtworkUrl(track, iconURL);
 
-        const card = new muzicard()
+        // --- 2. GENERAR NUEVA TARJETA (musicard-quartz) ---
+        // Nota: progress/tiempos reales se verán mejor en updates; en trackStart normalmente estamos en 0:00.
+        const quartzCard = new musicCard()
             .setName(track.info.title)
             .setAuthor(track.info.author)
-            .setColor(toHexColor(Bot.AccentColor))
-            .setTheme("blueskyx")
-            .setProgress(35)
+            // Puede ser "auto" o un color (por ejemplo: #FFB6E6)
+            .setColor(MUSIC_CARD_COLOR)
+            .setTheme(MUSIC_CARD_THEME)
+            .setBrightness(MUSIC_CARD_BRIGHTNESS)
+            .setProgress(2)
             .setStartTime("0:00")
             .setEndTime(trackDuration)
-            .setThumbnail(track.info.image || iconURL);
+            .setThumbnail(artworkUrl);
 
-        const buffer = await card.build();
+        let buffer = null;
+        try {
+            buffer = await quartzCard.build();
+        } catch {
+            buffer = null;
+        }
         const fileName = `moxi_${Date.now()}.png`;
         const hasBuffer = Buffer.isBuffer(buffer) && buffer.length > 0;
         const attachmentPayload = hasBuffer ? { attachment: buffer, name: fileName } : null;
@@ -91,7 +159,7 @@ module.exports = async (Moxi, player, track) => {
         // Fila 2: Volumen
         const volumeRow = buildMusicVolumeRow();
 
-        const imageUrlForGallery = hasBuffer ? `attachment://${fileName}` : (track.info.image || iconURL || FALLBACK_IMG);
+        const imageUrlForGallery = hasBuffer ? `attachment://${fileName}` : artworkUrl;
 
         const mainContainer = new ContainerBuilder()
             .setAccentColor(Bot.AccentColor)
@@ -119,7 +187,7 @@ module.exports = async (Moxi, player, track) => {
 
         Moxi.previousMessage = newMessage;
 
-        const finalImageUrl = newMessage.attachments.first()?.url || track.info.image || iconURL;
+        const finalImageUrl = newMessage.attachments.first()?.url || artworkUrl;
 
         await player.set("lastSessionData", {
             title: currentTitle,
