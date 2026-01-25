@@ -44,12 +44,13 @@ function summarizeArgs(args) {
         const arg = args[i];
         if (typeof arg === 'string') {
             preview.push(arg);
-            continue;
         }
-        try {
-            preview.push(JSON.stringify(arg));
-        } catch {
-            preview.push(String(arg));
+        else {
+            try {
+                preview.push(JSON.stringify(arg));
+            } catch {
+                preview.push(String(arg));
+            }
         }
     }
     return preview.join(' | ');

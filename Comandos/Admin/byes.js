@@ -69,10 +69,11 @@ function normalizeLangInput(input) {
     const lowered = raw.toLowerCase();
     for (const item of (LANGUAGE_META || [])) {
         const name = String(item?.name || '').trim();
-        if (!name) continue;
-        if (name.toLowerCase() === lowered) return name;
-        const alias = Array.isArray(item?.alias) ? item.alias : [];
-        if (alias.some(a => String(a || '').toLowerCase() === lowered)) return name;
+        if(name) {
+            if (name.toLowerCase() === lowered) return name;
+            const alias = Array.isArray(item?.alias) ? item.alias : [];
+            if (alias.some(a => String(a || '').toLowerCase() === lowered)) return name;
+        }
     }
     return '';
 }

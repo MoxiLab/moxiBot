@@ -129,12 +129,12 @@ function getSlashNamespaceString(ns, key, { defaultLocale = 'en-US' } = {}) {
     const localizations = {};
     for (const botLocale of botLocales) {
         const discordLocale = toDiscordLocale(botLocale);
-        if (!discordLocale) continue;
-
-        const json = getNamespaceJson(botLocale, namespace);
-        const value = pickValue({ json, key: k, defaultJson, enJson: en });
-        if (typeof value === 'string' && value.trim()) {
-            localizations[discordLocale] = value;
+        if(discordLocale) {
+            const json = getNamespaceJson(botLocale, namespace);
+            const value = pickValue({ json, key: k, defaultJson, enJson: en });
+            if (typeof value === 'string' && value.trim()) {
+                localizations[discordLocale] = value;
+            }
         }
     }
 

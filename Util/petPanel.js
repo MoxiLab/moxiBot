@@ -368,10 +368,10 @@ function buildPetActionResultMessageOptions({
 
     for (const b of extraButtons.slice(0, 4)) {
         const customId = String(b?.customId || '').trim();
-        if (!customId) continue;
-        const label = b?.label != null ? String(b.label) : null;
-        const emoji = b?.emoji != null ? String(b.emoji) : null;
-        const style = Number.isFinite(Number(b?.style)) ? Number(b.style) : ButtonStyle.Secondary;
+        if(customId) {
+            const label = b?.label != null ? String(b.label) : null;
+            const emoji = b?.emoji != null ? String(b.emoji) : null;
+            const style = Number.isFinite(Number(b?.style)) ? Number(b.style) : 2;
 
         const btn = new ButtonBuilder()
             .setCustomId(customId)
@@ -381,7 +381,8 @@ function buildPetActionResultMessageOptions({
         if (label) btn.setLabel(label);
         if (emoji) btn.setEmoji(emoji);
 
-        built.push(btn);
+            built.push(btn);
+        }
     }
 
     // Botón de vuelta al menú
