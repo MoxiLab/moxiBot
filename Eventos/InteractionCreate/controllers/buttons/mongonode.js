@@ -12,13 +12,15 @@ module.exports = async function mongonodeButtons(interaction, Moxi) {
     const lang = await moxi.guildLang(interaction.guildId || interaction.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
 
     const state = mongoose.connection.readyState;
-    let stateEmoji = '';
-    switch (state) {
-        case 0: stateEmoji = EMOJIS.redCircle; break;
-        case 1: stateEmoji = EMOJIS.greenCircle; break;
-        case 2: stateEmoji = EMOJIS.yellowCircle; break;
-        case 3: stateEmoji = EMOJIS.orangeCircle; break;
-        default: stateEmoji = EMOJIS.whiteCircle;
+    let stateEmoji = EMOJIS.whiteCircle;
+    if (state === 0) {
+        stateEmoji = EMOJIS.redCircle;
+    } else if (state === 1) {
+        stateEmoji = EMOJIS.greenCircle;
+    } else if (state === 2) {
+        stateEmoji = EMOJIS.yellowCircle;
+    } else if (state === 3) {
+        stateEmoji = EMOJIS.orangeCircle;
     }
 
     let stats = {}, server = {};
