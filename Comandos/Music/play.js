@@ -58,8 +58,12 @@ module.exports = {
                 )
             );
         }
-        const track = args[0];
-        const platform = args[1] || 'spotify'; // Por defecto Spotify
+
+        // Permite: .play <texto con espacios> [spotify|youtube]
+        const last = String(args[args.length - 1] || '').toLowerCase();
+        const hasPlatform = last === 'spotify' || last === 'youtube';
+        const platform = hasPlatform ? last : 'spotify';
+        const track = (hasPlatform ? args.slice(0, -1) : args).join(' ').trim();
         const responder = makeResponder(message);
         // Simula la estructura de interaction para reutilizar la lógica
         const fakeInteraction = {
