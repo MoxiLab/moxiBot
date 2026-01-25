@@ -55,17 +55,21 @@ module.exports = async (Moxi) => {
 
         if (nextAliases.length === 0) {
           // Autogeneración: intentar prefijo único (2..6 chars). Si no, caer a name.
+          let generated = null;
           for (let len = 2; len <= Math.min(6, name.length); len++) {
             const cand = name.slice(0, len);
             if(cand) {
               if(cand !== name) {
                 if(!reserved.has(cand)) {
-                  nextAliases.push(cand);
-                  reserved.add(cand);
-                  break; // El break deberias quitarlo y arreglar esto de alguna forma.
+                  generated = cand;
                 }
               }
             }
+          }
+
+          if (generated) {
+            nextAliases.push(generated);
+            reserved.add(generated);
           }
         }
 
