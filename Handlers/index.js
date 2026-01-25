@@ -28,6 +28,32 @@ Moxi.poru = new Poru(Moxi, nodes, {
 });
 
 const logger = require("../Util/logger");
+// Logs de Poru (activar con PORU_DEBUG=1 o DEBUG_FLAGS=poru)
+try {
+  Moxi.poru.on("debug", (...args) => {
+    // Poru suele emitir (scope, message) pero puede variar.
+    const text = args
+      .map((a) => (typeof a === 'string' ? a : ''))
+      .filter(Boolean)
+      .join(' ');
+
+    // Para diagnosticar "no suena": estos mensajes son críticos.
+    // Los subimos a info para que salgan incluso si LOG_LEVEL está en info.
+    if (
+      text.includes('[Voice]') ||
+      text.includes('[Player]') ||
+      text.includes('VOICE_SERVER_UPDATE') ||
+      text.includes('VOICE_STATE_UPDATE')
+    ) {
+      logger.info('[PORU]', ...args);
+      return;
+    }
+
+    logger.debug("[PORU]", ...args);
+  });
+} catch {
+  // noop
+}
 logger.startup(`🎶 Lavalink en ${process.env.LAVALINK_NODE_NAME}`)
 require("./commands.js")(Moxi);
 require("./poru.js")(Moxi);
