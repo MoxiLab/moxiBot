@@ -1,0 +1,282 @@
+diff --git a/node_modules/poru/dist/src/Player/Connection.js b/node_modules/poru/dist/src/Player/Connection.js
+index 93b3a65..448d688 100644
+--- a/node_modules/poru/dist/src/Player/Connection.js
++++ b/node_modules/poru/dist/src/Player/Connection.js
+@@ -39,16 +39,39 @@ class Connection {
+      * @param data The data from the voice server update
+      */
+     async setServersUpdate(data) {
+-        if (!data.endpoint)
+-            throw new Error("[Poru Error] No Session id found.");
++        if (!data.endpoint) {
++            this.player.poru.emit(
++                "debug",
++                this.player.node.name,
++                `[Voice] <- [Discord] : Voice Server Update missing endpoint | Guild: ${this.player.guildId} (token=${data.token ? "yes" : "no"})`
++            );
++            return;
++        }
+         this.voice.endpoint = data.endpoint;
+         this.voice.token = data.token;
+         this.region = data.endpoint.split(".").shift()?.replace(/[0-9]/g, "") || null;
+-        await this.player.node.rest.updatePlayer({
++        const res = await this.player.node.rest.updatePlayer({
+             guildId: this.player.guildId,
+             data: { voice: this.voice },
+         });
+         this.player.poru.emit("debug", this.player.node.name, `[Voice] <- [Discord] : Voice Server Update | Server: ${this.region} Guild: ${this.player.guildId}`);
++
++        if (process.env.PORU_DEBUG === "1" || process.env.DEBUG === "1") {
++            if (!res) {
++                this.player.poru.emit(
++                    "debug",
++                    this.player.node.name,
++                    `[Voice] -> [Lavalink] updatePlayer(voice) returned null | Guild: ${this.player.guildId}`
++                );
++            }
++            else if (typeof res === "object" && res && "status" in res && "error" in res) {
++                this.player.poru.emit(
++                    "debug",
++                    this.player.node.name,
++                    `[Voice] -> [Lavalink] updatePlayer(voice) error ${res.status} ${res.error} | ${res.message ?? ""}`
++                );
++            }
++        }
+     }
+     ;
+     /**
+@@ -65,6 +88,37 @@ class Connection {
+         this.self_deaf = self_deaf;
+         this.self_mute = self_mute;
+         this.voice.sessionId = session_id || null;
++        // Si el VOICE_SERVER_UPDATE llegó antes, ya tenemos endpoint/token.
++        // En ese caso necesitamos reenviar el voice object con sessionId para completar el handshake.
++        if (this.voice.sessionId && this.voice.endpoint && this.voice.token) {
++            this.player.node.rest
++                .updatePlayer({
++                guildId: this.player.guildId,
++                data: { voice: this.voice },
++            })
++                .then((res) => {
++                if (process.env.PORU_DEBUG === "1" || process.env.DEBUG === "1") {
++                    if (!res) {
++                        this.player.poru.emit(
++                            "debug",
++                            this.player.node.name,
++                            `[Voice] -> [Lavalink] updatePlayer(voice) (from stateUpdate) returned null | Guild: ${this.player.guildId}`
++                        );
++                    }
++                    else if (typeof res === "object" && res && "status" in res && "error" in res) {
++                        this.player.poru.emit(
++                            "debug",
++                            this.player.node.name,
++                            `[Voice] -> [Lavalink] updatePlayer(voice) (from stateUpdate) error ${res.status} ${res.error} | ${res.message ?? ""}`
++                        );
++                    }
++                }
++            })
++                .catch(() => null);
++        }
++        if (process.env.PORU_DEBUG === "1" || process.env.DEBUG === "1") {
++            this.player.poru.emit("debug", "poru", `[Voice] <- [Discord] State Update applied | guild=${this.player.guildId} channel=${channel_id ?? "null"} session=${session_id ? "yes" : "no"}`);
++        }
+     }
+     ;
+ }
+diff --git a/node_modules/poru/dist/src/Player/Player.js b/node_modules/poru/dist/src/Player/Player.js
+index 622c590..35cbc79 100644
+--- a/node_modules/poru/dist/src/Player/Player.js
++++ b/node_modules/poru/dist/src/Player/Player.js
+@@ -127,15 +127,48 @@ class Player extends events_1.EventEmitter {
+         if (this.currentTrack && !this.currentTrack?.track)
+             this.currentTrack = await this.resolveTrack(this.currentTrack);
+         if (this.currentTrack?.track) {
+-            await this.node.rest.updatePlayer({
++            if (!this.node?.sessionId) {
++                this.poru.emit(
++                    "debug",
++                    this.node?.name ?? "poru",
++                    `[Player] WARNING: node.sessionId is missing; Lavalink 'ready' may not have been received yet | Guild: ${this.guildId}`
++                );
++            }
++            const res = await this.node.rest.updatePlayer({
+                 guildId: this.guildId,
+                 data: {
+                     track: { encoded: this.currentTrack.track },
++                    // Asegura un volumen válido (descarta silencio por volumen)
++                    volume: typeof this.volume === "number" ? this.volume : 100,
+                 },
+             });
+             this.isPlaying = true;
+             this.position = 0;
+             this.isAutoPlay = false;
++
++            if (process.env.PORU_DEBUG === "1" || process.env.DEBUG === "1") {
++                if (!res) {
++                    this.poru.emit(
++                        "debug",
++                        this.node.name,
++                        `[Player] updatePlayer(track) returned null | Guild: ${this.guildId}`
++                    );
++                }
++                else if (typeof res === "object" && res && "status" in res && "error" in res) {
++                    this.poru.emit(
++                        "debug",
++                        this.node.name,
++                        `[Player] updatePlayer(track) error ${res.status} ${res.error} | ${res.message ?? ""}`
++                    );
++                }
++                else {
++                    this.poru.emit(
++                        "debug",
++                        this.node.name,
++                        `[Player] Track sent to Lavalink | Guild: ${this.guildId}`
++                    );
++                }
++            }
+         }
+         ;
+         return this;
+diff --git a/node_modules/poru/dist/src/Poru.js b/node_modules/poru/dist/src/Poru.js
+index 4ca5db8..69c04b6 100644
+--- a/node_modules/poru/dist/src/Poru.js
++++ b/node_modules/poru/dist/src/Poru.js
+@@ -63,13 +63,72 @@ class Poru extends events_1.EventEmitter {
+         switch (this.options.library) {
+             case "discord.js": {
+                 this.send = (packet) => {
++                    const debugVoice = (process.env.PORU_DEBUG === "1" || process.env.DEBUG === "1") && packet?.op === 4;
+                     const guild = this.client.guilds.cache.get(packet.d.guild_id);
+-                    if (guild)
+-                        guild.shard?.send(packet);
++                    if (!guild)
++                        return;
++                    // discord.js v14/v15: en algunos setups `guild.shard` puede no existir.
++                    const shard = guild.shard;
++                    if (shard?.send) {
++                        if (debugVoice)
++                            this.emit("debug", "poru", `[Voice] -> [Discord] op:4 via guild.shard | guild=${packet.d.guild_id} channel=${packet.d.channel_id ?? "?"}`);
++                        return shard.send(packet);
++                    }
++                    const shardId = typeof guild.shardId === "number" ? guild.shardId : undefined;
++                    // discord.js usa @discordjs/ws: ws.send(shardId, payload)
++                    if (typeof shardId === "number" && typeof this.client.ws?.send === "function") {
++                        if (debugVoice)
++                            this.emit("debug", "poru", `[Voice] -> [Discord] op:4 via client.ws.send(shardId,payload) | shard=${shardId} guild=${packet.d.guild_id} channel=${packet.d.channel_id ?? "?"}`);
++                        return this.client.ws.send(shardId, packet);
++                    }
++                    if (debugVoice)
++                        this.emit("debug", "poru", `[Voice] -> [Discord] op:4 FAILED (no sender) | guild=${packet.d.guild_id} shardId=${String(guild.shardId)} hasGuildShard=${Boolean(shard)} hasWsSend=${typeof this.client.ws?.send}`);
+                 };
+-                this.client.on("raw", async (packet) => {
+-                    await this.packetUpdate(packet);
+-                });
++                const onGatewayPacket = async (pkt) => {
++                    try {
++                        await this.packetUpdate(pkt);
++                    }
++                    catch {
++                        // noop
++                    }
++                };
++
++                // discord.js v13/v14: solía existir el evento "raw".
++                // discord.js v15 (dev) usa @discordjs/ws y expone Dispatch en client.ws.
++                if (typeof this.client.on === "function") {
++                    try {
++                        this.client.on("raw", onGatewayPacket);
++                    }
++                    catch {
++                        // ignore
++                    }
++                }
++
++                // @discordjs/ws: WebSocketShardEvents.Dispatch
++                try {
++                    let dispatchEvent = "dispatch";
++                    try {
++                        const ws = require("@discordjs/ws");
++                        dispatchEvent = ws?.WebSocketShardEvents?.Dispatch || dispatchEvent;
++                    }
++                    catch {
++                        // ignore
++                    }
++
++                    if (this.client.ws && typeof this.client.ws.on === "function") {
++                        this.client.ws.on(dispatchEvent, (packet, shardId) => {
++                            // Algunos listeners reciben (event) con la payload dentro.
++                            const p = (packet && packet.t && packet.d) ? packet : (packet?.data ?? packet?.payload ?? packet);
++                            if (p && p.t && p.d)
++                                onGatewayPacket(p);
++                        });
++                        const debugVoice = (process.env.PORU_DEBUG === "1" || process.env.DEBUG === "1");
++                        debugVoice && this.emit("debug", "poru", `[Poru] Listening gateway dispatch via client.ws.on(${String(dispatchEvent)})`);
++                    }
++                }
++                catch {
++                    // ignore
++                }
+                 break;
+             }
+             case "eris": {
+@@ -113,13 +172,18 @@ class Poru extends events_1.EventEmitter {
+             return;
+         if (!("guild_id" in packet.d))
+             return;
++        const debugVoice = (process.env.PORU_DEBUG === "1" || process.env.DEBUG === "1");
+         const player = this.players.get(packet.d.guild_id);
+-        if (!player)
++        if (!player) {
++            debugVoice && this.emit("debug", "poru", `[Voice] <- [Discord] ${packet.t} (no player) | guild=${packet.d.guild_id}`);
+             return;
++        }
+         if (packet.t === "VOICE_SERVER_UPDATE") {
++            debugVoice && this.emit("debug", "poru", `[Voice] <- [Discord] VOICE_SERVER_UPDATE | guild=${packet.d.guild_id} endpoint=${packet.d.endpoint ?? "?"}`);
+             await player.connection.setServersUpdate(packet.d);
+         }
+         if (packet.t === "VOICE_STATE_UPDATE") {
++            debugVoice && this.emit("debug", "poru", `[Voice] <- [Discord] VOICE_STATE_UPDATE | guild=${packet.d.guild_id} user=${packet.d.user_id ?? "?"} channel=${packet.d.channel_id ?? "null"}`);
+             if (packet.d.user_id !== this.userId)
+                 return;
+             player.connection.setStateUpdate(packet.d);
+diff --git a/node_modules/poru/dist/src/guild/Response.js b/node_modules/poru/dist/src/guild/Response.js
+index c693b15..15242c5 100644
+--- a/node_modules/poru/dist/src/guild/Response.js
++++ b/node_modules/poru/dist/src/guild/Response.js
+@@ -14,13 +14,23 @@ class Response {
+     loadType;
+     playlistInfo;
+     constructor(response, requester) {
+-        response.loadType = this.convertNodelinkResponseToLavalink(response.loadType);
+-        const { loadType, data } = response;
++        let loadType;
++        let data;
++        if (response && typeof response === "object") {
++            loadType = this.convertNodelinkResponseToLavalink(response.loadType);
++            data = response.data;
++        }
++        else {
++            const message = typeof response === "string" ? response : "Unknown error";
++            loadType = "error";
++            data = { message, severity: "fault", cause: message };
++        }
+         switch (loadType) {
+             case "playlist": {
+-                this.tracks = this.handleTracks(data.tracks, requester);
++                const tracks = data?.tracks;
++                this.tracks = this.handleTracks(Array.isArray(tracks) ? tracks : [], requester);
+                 this.playlistInfo = {
+-                    ...data.info,
++                    ...(data?.info ?? {}),
+                     type: "playlist"
+                 };
+                 break;
+@@ -28,7 +38,7 @@ class Response {
+             case "search":
+             case "track":
+                 {
+-                    this.tracks = this.handleTracks(data, requester);
++                    this.tracks = data ? this.handleTracks(data, requester) : [];
+                     this.playlistInfo = {
+                         type: "noPlaylist"
+                     };
