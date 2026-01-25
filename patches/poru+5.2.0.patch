@@ -138,7 +138,7 @@ index 622c590..35cbc79 100644
          ;
          return this;
 diff --git a/node_modules/poru/dist/src/Poru.js b/node_modules/poru/dist/src/Poru.js
-index 4ca5db8..69c04b6 100644
+index 4ca5db8..2e38215 100644
 --- a/node_modules/poru/dist/src/Poru.js
 +++ b/node_modules/poru/dist/src/Poru.js
 @@ -63,13 +63,72 @@ class Poru extends events_1.EventEmitter {
@@ -239,6 +239,19 @@ index 4ca5db8..69c04b6 100644
              if (packet.d.user_id !== this.userId)
                  return;
              player.connection.setStateUpdate(packet.d);
+@@ -253,7 +317,11 @@ class Poru extends events_1.EventEmitter {
+             node = this.leastUsedNodes[0];
+         if (!node)
+             throw new Error("No nodes are available.");
+-        const response = (await node.rest.get(`/v4/loadtracks?identifier=${encodeURIComponent((this.startsWithMultiple(query, ["https://", "http://"]) ? '' : `${source || 'ytsearch'}:`) + query)}`)) ?? { loadType: "empty", data: {} };
++        const rawQuery = String(query ?? "");
++        const hasScheme = this.startsWithMultiple(rawQuery, ["https://", "http://"]);
++        const hasIdentifierPrefix = /^(?:[a-z0-9]+search|spotify|scsearch|amsearch|dzsearch|ytsearch|ytmsearch):/i.test(rawQuery);
++        const identifierPrefix = (hasScheme || hasIdentifierPrefix) ? '' : `${source || 'ytsearch'}:`;
++        const response = (await node.rest.get(`/v4/loadtracks?identifier=${encodeURIComponent(identifierPrefix + rawQuery)}`)) ?? { loadType: "empty", data: {} };
+         return new Response_1.Response(response, requester);
+     }
+     /**
 diff --git a/node_modules/poru/dist/src/guild/Response.js b/node_modules/poru/dist/src/guild/Response.js
 index c693b15..15242c5 100644
 --- a/node_modules/poru/dist/src/guild/Response.js
