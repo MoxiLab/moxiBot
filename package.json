@@ -29,6 +29,7 @@
     "i18next": "^25.7.3",
     "i18next-fs-backend": "^2.6.1",
     "mongoose": "^9.0.2",
+    "musicard-quartz": "^1.0.0",
     "muzicard": "^2.6.3",
     "poru": "^5.2.0",
     "poru-spotify": "^2.0.2",
