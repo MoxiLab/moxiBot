@@ -9,9 +9,35 @@ const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notic
 const debugHelper = require('../../Util/debugHelper');
 
 function makeResponder(message) {
+    const ttlMs = Number(process.env.PREFIX_EPHEMERAL_DELETE_MS ?? 8000);
+    let lastBotMessage = null;
+
+    async function scheduleDelete(msg) {
+        if (!msg || !Number.isFinite(ttlMs) || ttlMs <= 0) return;
+        setTimeout(() => {
+            msg.delete().catch(() => null);
+        }, ttlMs).unref?.();
+    }
+
     return {
-        reply: async (payload) => message.reply(payload),
-        editReply: async (payload) => message.reply(payload),
+        // En prefix no existe ephemeral: emulamos con auto-delete.
+        reply: async (payload) => {
+            const sent = await message.reply(payload);
+            lastBotMessage = sent;
+            await scheduleDelete(sent);
+            return sent;
+        },
+        editReply: async (payload) => {
+            if (lastBotMessage && typeof lastBotMessage.edit === 'function') {
+                const edited = await lastBotMessage.edit(payload).catch(() => null);
+                if (edited) return edited;
+            }
+            const sent = await message.reply(payload);
+            lastBotMessage = sent;
+            await scheduleDelete(sent);
+            return sent;
+        },
+        // slash usa deferReply antes de editReply; en prefix lo dejamos sin placeholder.
         deferReply: async () => { },
     };
 }
