@@ -65,10 +65,11 @@ function isFull(board) {
 
 function findWinningMove(board, who) {
     for (let pos = 0; pos < 9; pos += 1) {
-        if (board[pos] !== 0) continue;
-        const copy = board.slice();
-        copy[pos] = who;
-        if (winner(copy) === who) return pos;
+        if(board[pos] === 0) {
+            const copy = board.slice();
+            copy[pos] = who;
+            if (winner(copy) === who) return pos;
+        }
     }
     return -1;
 }

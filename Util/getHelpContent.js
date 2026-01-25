@@ -120,34 +120,39 @@ function buildHelpIndex(Moxi) {
     return merged;
   };
 
+  // Estos dos for son prácticamente iguales, refactoriza con una función
   // Primero prefijos, luego slash: el prefijo queda como “base” en caso de colisión.
   for (const _cmd of commandsArr) {
-    if (!_cmd) continue;
-    const cmdName = getName(_cmd);
-    if (!cmdName) continue;
-    const normalized = {
-      ..._cmd,
-      name: cmdName,
-      command: {
-        ...((_cmd.command && typeof _cmd.command === 'object') ? _cmd.command : {}),
-        Prefix: true,
-      },
-    };
-    byName.set(cmdName, merge(byName.get(cmdName), normalized));
+    if(_cmd) {
+      const cmdName = getName(_cmd);
+      if(cmdName) {
+        const normalized = {
+          ..._cmd,
+          name: cmdName,
+          command: {
+            ...((_cmd.command && typeof _cmd.command === 'object') ? _cmd.command : {}),
+            Prefix: true,
+          },
+        };
+        byName.set(cmdName, merge(byName.get(cmdName), normalized));
+      }
+    }
   }
   for (const _cmd of slashArr) {
-    if (!_cmd) continue;
-    const cmdName = getName(_cmd);
-    if (!cmdName) continue;
-    const normalized = {
-      ..._cmd,
-      name: cmdName,
-      command: {
-        ...((_cmd.command && typeof _cmd.command === 'object') ? _cmd.command : {}),
-        Slash: true,
-      },
-    };
-    byName.set(cmdName, merge(byName.get(cmdName), normalized));
+    if(_cmd) {
+      const cmdName = getName(_cmd);
+      if(cmdName) {
+        const normalized = {
+          ..._cmd,
+          name: cmdName,
+          command: {
+            ...((_cmd.command && typeof _cmd.command === 'object') ? _cmd.command : {}),
+            Slash: true,
+          },
+        };
+        byName.set(cmdName, merge(byName.get(cmdName), normalized));
+      }
+    }
   }
 
   allCommands = Array.from(byName.values());
@@ -174,9 +179,10 @@ function buildHelpIndex(Moxi) {
     }
     if (typeof catKey !== 'string') catKey = String(catKey || '');
     catKey = normalizeCategoryKey(catKey);
-    if (!catKey) continue;
-    if (!categoriasBase[catKey]) categoriasBase[catKey] = [];
-    categoriasBase[catKey].push(cmd);
+    if(catKey) {
+      if (!categoriasBase[catKey]) categoriasBase[catKey] = [];
+      categoriasBase[catKey].push(cmd);
+    }
   }
 
   return {
@@ -232,9 +238,9 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
   // Build category list for select menu, ocultando Root si no es owner
   const categorias = {};
   for (const [catKey, arr] of Object.entries(categoriasBase || {})) {
-    if (!catKey) continue;
-    if (catKey === 'Root' && !canSeeRoot) continue;
-    categorias[catKey] = arr;
+    if(catKey) {
+      if(catKey != 'Root' || canSeeRoot) categorias[catKey] = arr;
+    }
   }
 
   if (helpDebugEnabled) {

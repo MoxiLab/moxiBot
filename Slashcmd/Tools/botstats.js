@@ -52,13 +52,14 @@ async function sampleCpuUsagePercent(delayMs = 250) {
         for (let i = 0; i < start.length; i += 1) {
             const a = start[i]?.times;
             const b = end[i]?.times;
-            if (!a || !b) continue;
-            const idleDelta = (b.idle ?? 0) - (a.idle ?? 0);
-            const totalA = (a.user ?? 0) + (a.nice ?? 0) + (a.sys ?? 0) + (a.idle ?? 0) + (a.irq ?? 0);
-            const totalB = (b.user ?? 0) + (b.nice ?? 0) + (b.sys ?? 0) + (b.idle ?? 0) + (b.irq ?? 0);
-            const totalDelta = totalB - totalA;
-            idle += idleDelta;
-            total += totalDelta;
+            if(a && b) {
+                const idleDelta = (b.idle ?? 0) - (a.idle ?? 0);
+                const totalA = (a.user ?? 0) + (a.nice ?? 0) + (a.sys ?? 0) + (a.idle ?? 0) + (a.irq ?? 0);
+                const totalB = (b.user ?? 0) + (b.nice ?? 0) + (b.sys ?? 0) + (b.idle ?? 0) + (b.irq ?? 0);
+                const totalDelta = totalB - totalA;
+                idle += idleDelta;
+                total += totalDelta;
+            }
         }
         if (!total) return null;
         const usage = 1 - clamp01(idle / total);

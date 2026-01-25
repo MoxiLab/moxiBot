@@ -41,19 +41,19 @@ function listJsFiles(dirAbs) {
     let entries;
     try {
       entries = fs.readdirSync(current, { withFileTypes: true });
-    } catch {
-      continue;
-    }
-    for (const ent of entries) {
-      const full = path.join(current, ent.name);
-      if (ent.isDirectory()) {
-        // saltar node_modules por seguridad
-        if (ent.name === 'node_modules' || ent.name.startsWith('.')) continue;
-        stack.push(full);
-      } else if (ent.isFile()) {
-        if (!ent.name.endsWith('.js')) continue;
-        out.push(full);
+      for (const ent of entries) {
+        const full = path.join(current, ent.name);
+        if (ent.isDirectory()) {
+          // saltar node_modules por seguridad
+          if(ent.name != 'node_modules' && !ent.name.startsWith('.')) {
+            stack.push(full);
+          }
+        } else if (ent.isFile()) {
+          if(ent.name.endsWith('.js')) out.push(full);
+        }
       }
+    } catch(err) {
+      console.error(err);
     }
   }
   return out;
@@ -79,10 +79,11 @@ for (const rel of ROOTS_TO_SCAN) {
   const abs = path.join(workspaceRoot, rel);
   const files = listJsFiles(abs);
   for (const f of files) {
-    if (SKIP_FILES.has(f)) continue;
-    total++;
-    const fail = safeRequire(f);
-    if (fail) failures.push(fail);
+    if (!SKIP_FILES.has(f)) {
+      total++;
+      const fail = safeRequire(f);
+      if (fail) failures.push(fail);
+    }
   }
 }
 

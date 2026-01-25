@@ -76,10 +76,11 @@ function getInventoryLocaleChain(lang) {
     const chain = [];
     for (const cand of candidates) {
         const c = normalizeLang(cand);
-        if (!c || seen.has(c)) continue;
-        seen.add(c);
-        const data = getInventoryLocaleData(c);
-        if (data) chain.push({ lang: c, data });
+        if(c && !seen.has(c)) {
+            seen.add(c);
+            const data = getInventoryLocaleData(c);
+            if (data) chain.push({ lang: c, data });
+        }
     }
 
     _inventoryLocaleChainCache.set(requested, chain);
@@ -125,10 +126,11 @@ function resolveItemTextFromLanguages(itemId, lang) {
     const chain = getInventoryLocaleChain(lang);
     for (const { data } of chain) {
         const entry = data?.items?.[id];
-        if (!entry || typeof entry !== 'object') continue;
-        const name = typeof entry.name === 'string' ? entry.name : '';
-        const description = typeof entry.description === 'string' ? entry.description : '';
-        if (name || description) return { name, description };
+        if (entry && typeof entry === 'object') {
+            const name = typeof entry.name === 'string' ? entry.name : '';
+            const description = typeof entry.description === 'string' ? entry.description : '';
+            if (name || description) return { name, description };
+        }
     }
 
     return null;
@@ -245,10 +247,11 @@ function getBaseItemsData({ lang } = {}) {
     const seen = new Set();
     for (const cand of candidates) {
         const c = normalizeLang(cand);
-        if (!c || seen.has(c)) continue;
-        seen.add(c);
-        const data = getInventoryLocaleData(c);
-        if (data && data.items && typeof data.items === 'object') return data;
+        if(c && !seen.has(c)) {
+            seen.add(c);
+            const data = getInventoryLocaleData(c);
+            if (data && data.items && typeof data.items === 'object') return data;
+        }
     }
     return null;
 }
@@ -357,35 +360,37 @@ function expandCatalogToMinItems(catalog, minPerCategory) {
     }
 
     for (const cat of catalog) {
-        if (!cat || typeof cat !== 'object') continue;
-        if (!Array.isArray(cat.items)) cat.items = [];
+        if(cat && typeof cat === 'object') {
+            if (!Array.isArray(cat.items)) cat.items = [];
 
-        const prefix = pickPrefixFromCategory(cat);
-        const basePrice = basePriceForPrefix(prefix);
-        const label = typeof cat.category === 'string' ? cat.category : prefix;
-        const safeLabel = label || prefix;
+            const prefix = pickPrefixFromCategory(cat);
+            const basePrice = basePriceForPrefix(prefix);
+            const label = typeof cat.category === 'string' ? cat.category : prefix;
+            const safeLabel = label || prefix;
 
-        let counter = 1;
-        while (cat.items.length < min) {
-            const rarity = rarityForIndex(counter);
-            const id = `${prefix}/auto-${String(counter).padStart(4, '0')}`;
-            counter += 1;
-            if (usedIds.has(id)) continue;
-            usedIds.add(id);
+            let counter = 1;
+            while (cat.items.length < min) {
+                const rarity = rarityForIndex(counter);
+                const id = `${prefix}/auto-${String(counter).padStart(4, '0')}`;
+                counter += 1;
+                if(!usedIds.has(id)) {
+                    usedIds.add(id);
 
-            cat.items.push({
-                id,
-                name: {
-                    'es-ES': `${safeLabel} (Auto) ${id.slice(id.lastIndexOf('-') + 1)}`,
-                    'en-US': `${safeLabel} (Auto) ${id.slice(id.lastIndexOf('-') + 1)}`,
-                },
-                description: {
-                    'es-ES': 'Ítem autogenerado para ampliar el catálogo.',
-                    'en-US': 'Auto-generated item to expand the catalog.',
-                },
-                rarity,
-                price: priceForRarity(basePrice, rarity),
-            });
+                    cat.items.push({
+                        id,
+                        name: {
+                            'es-ES': `${safeLabel} (Auto) ${id.slice(id.lastIndexOf('-') + 1)}`,
+                            'en-US': `${safeLabel} (Auto) ${id.slice(id.lastIndexOf('-') + 1)}`,
+                        },
+                        description: {
+                            'es-ES': 'Ítem autogenerado para ampliar el catálogo.',
+                            'en-US': 'Auto-generated item to expand the catalog.',
+                        },
+                        rarity,
+                        price: priceForRarity(basePrice, rarity),
+                    });
+                }
+            }
         }
     }
 
@@ -445,8 +450,7 @@ function buildItemIndex(catalog) {
     for (const cat of catalog) {
         const items = Array.isArray(cat?.items) ? cat.items : [];
         for (const item of items) {
-            if (!item?.id) continue;
-            byId.set(item.id, item);
+            if(item && item.id) byId.set(item.id, item);
         }
     }
     return { byId };

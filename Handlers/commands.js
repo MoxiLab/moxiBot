@@ -36,45 +36,49 @@ module.exports = async (Moxi) => {
     }
 
     for (const c of commands.values()) {
-      if (!c || !c.name) continue;
-      const name = normalizeKey(c.name);
+      if(c && c.name) {
+        const name = normalizeKey(c.name);
 
-      const existing = Array.isArray(c.alias)
-        ? c.alias
-        : (Array.isArray(c.aliases) ? c.aliases : []);
+        const existing = Array.isArray(c.alias)
+          ? c.alias
+          : (Array.isArray(c.aliases) ? c.aliases : []);
 
-      const cleaned = Array.from(new Set((existing || []).map(normalizeKey).filter(Boolean)));
+        const cleaned = Array.from(new Set((existing || []).map(normalizeKey).filter(Boolean)));
 
-      // Si el comando tiene nombre con diacríticos (raro), agregar variante sin diacríticos.
-      // (normalizeKey ya quita diacríticos; si cambia respecto al lower original, se notará aquí)
-      // Nota: el nombre principal ya se resuelve por name exacto; esto es solo para alias.
-      const nextAliases = [...cleaned];
+        // Si el comando tiene nombre con diacríticos (raro), agregar variante sin diacríticos.
+        // (normalizeKey ya quita diacríticos; si cambia respecto al lower original, se notará aquí)
+        // Nota: el nombre principal ya se resuelve por name exacto; esto es solo para alias.
+        const nextAliases = [...cleaned];
 
-      const hadAliases = nextAliases.length > 0;
+        const hadAliases = nextAliases.length > 0;
 
-      if (nextAliases.length === 0) {
-        // Autogeneración: intentar prefijo único (2..6 chars). Si no, caer a name.
-        for (let len = 2; len <= Math.min(6, name.length); len++) {
-          const cand = name.slice(0, len);
-          if (!cand) continue;
-          if (cand === name) continue;
-          if (reserved.has(cand)) continue;
-          nextAliases.push(cand);
-          reserved.add(cand);
-          break;
+        if (nextAliases.length === 0) {
+          // Autogeneración: intentar prefijo único (2..6 chars). Si no, caer a name.
+          for (let len = 2; len <= Math.min(6, name.length); len++) {
+            const cand = name.slice(0, len);
+            if(cand) {
+              if(cand !== name) {
+                if(!reserved.has(cand)) {
+                  nextAliases.push(cand);
+                  reserved.add(cand);
+                  break; // El break deberias quitarlo y arreglar esto de alguna forma.
+                }
+              }
+            }
+          }
         }
-      }
 
-      if (nextAliases.length === 0) {
-        // Garantía mínima: que exista al menos 1 alias.
-        nextAliases.push(name);
-      }
+        if (nextAliases.length === 0) {
+          // Garantía mínima: que exista al menos 1 alias.
+          nextAliases.push(name);
+        }
 
-      // Persistir en el formato principal del bot (alias)
-      c.alias = Array.from(new Set(nextAliases.map(normalizeKey).filter(Boolean)));
+        // Persistir en el formato principal del bot (alias)
+        c.alias = Array.from(new Set(nextAliases.map(normalizeKey).filter(Boolean)));
 
-      if (!hadAliases) {
-        c.__autoAliasGenerated = true;
+        if (!hadAliases) {
+          c.__autoAliasGenerated = true;
+        }
       }
     }
   };
@@ -140,20 +144,21 @@ module.exports = async (Moxi) => {
 
   for (const files of commandFiles) {
     const base = String(files).split(/[/\\]/g).pop() || '';
-    if (base.startsWith('_')) continue; // helpers
-
-    try {
-      const raw = require(files);
-      const command = normalizeCommandModule(raw, files);
-      if (!command || !command.name) {
-        logger.warn(`[Commands] Ignorado (sin name/Name): ${files}`);
-        continue;
+    if(!base.startsWith("_")) { // no es un helpers
+      try {
+        const raw = require(files);
+        const command = normalizeCommandModule(raw, files);
+        if(command && command.name) {
+          if (!command.__sourceFile) command.__sourceFile = files;
+          Moxi.commands.set(command.name, command);
+        }
+        else {
+          logger.warn(`[Commands] Ignorado (sin name/Name): ${files}`);
+        }
+      } catch (err) {
+        logger.error(`[Commands] Error cargando comando: ${files}`);
+        logger.error(err);
       }
-      if (!command.__sourceFile) command.__sourceFile = files;
-      Moxi.commands.set(command.name, command);
-    } catch (err) {
-      logger.error(`[Commands] Error cargando comando: ${files}`);
-      logger.error(err);
     }
   }
 

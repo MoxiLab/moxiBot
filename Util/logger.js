@@ -19,8 +19,9 @@ const debug = require('./debug');
 function anyDebugEnvEnabled() {
   if (debug.isGlobalDebugEnabled()) return true;
   for (const [k, v] of Object.entries(process.env || {})) {
-    if (!k || !k.endsWith('_DEBUG')) continue;
-    if (debug.normalizeEnvValue(v) === '1') return true;
+    if(k && k.endsWith('_DEBUG')) {
+      if (debug.normalizeEnvValue(v) === '1') return true;
+    }
   }
   return false;
 }

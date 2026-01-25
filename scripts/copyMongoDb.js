@@ -70,18 +70,19 @@ async function copyCollection({ srcDb, dstDb, srcName, dstName, batchSize, copyI
     let batch = [];
     while (await cursor.hasNext()) {
         const doc = await cursor.next();
-        if (!doc) continue;
-        batch.push(doc);
-        if (batch.length >= batchSize) {
-            try {
-                const res = await dstCol.insertMany(batch, { ordered: false });
-                inserted += res?.insertedCount ?? 0;
-            } catch (err) {
-                inserted += err?.result?.insertedCount ?? 0;
-                // si hay errores por duplicados u otros, los dejamos visibles
-                if (err?.code !== 11000) throw err;
+        if(doc) {
+            batch.push(doc);
+            if (batch.length >= batchSize) {
+                try {
+                    const res = await dstCol.insertMany(batch, { ordered: false });
+                    inserted += res?.insertedCount ?? 0;
+                } catch (err) {
+                    inserted += err?.result?.insertedCount ?? 0;
+                    // si hay errores por duplicados u otros, los dejamos visibles
+                    if (err?.code !== 11000) throw err;
+                }
+                batch = [];
             }
-            batch = [];
         }
     }
 
@@ -97,14 +98,15 @@ async function copyCollection({ srcDb, dstDb, srcName, dstName, batchSize, copyI
 
     if (copyIndexes && Array.isArray(indexes) && indexes.length) {
         for (const idx of indexes) {
-            if (!idx || idx.name === '_id_') continue;
-            const { key, name, v, ns, ...options } = idx;
-            // Evitar opciones internas que pueden romper
-            delete options.key;
-            delete options.name;
-            delete options.v;
-            delete options.ns;
-            await dstCol.createIndex(key, { name, ...options });
+            if (idx && idx.name != '_id_') {
+                const { key, name, v, ns, ...options } = idx;
+                // Evitar opciones internas que pueden romper
+                delete options.key;
+                delete options.name;
+                delete options.v;
+                delete options.ns;
+                await dstCol.createIndex(key, { name, ...options });
+            }
         }
     }
 

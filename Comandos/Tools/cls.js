@@ -11,10 +11,10 @@ async function purgeRecentMessages(channel, amount, { keepPinned = true } = {}) 
   const fetched = await channel.messages.fetch({ limit: fetchLimit });
 
   const candidates = [];
-  for (const msg of fetched.values()) {
-    if (keepPinned && msg.pinned) continue;
-    candidates.push(msg);
-    if (candidates.length >= amount) break;
+  for(let i = 0, msg = fetched.at(i); i < amount; i++, msg = fetched.at(i)) {
+    if(!keepPinned || msg.pinned) {
+      candidates.push(msg);
+    }
   }
 
   const cutoff = Date.now() - FOURTEEN_DAYS_MS;

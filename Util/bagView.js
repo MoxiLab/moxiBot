@@ -28,8 +28,7 @@ function getCatalogIndexes() {
     const categoryKey = cat?.categoryKey || cat?.category || 'Other';
     const items = Array.isArray(cat?.items) ? cat.items : [];
     for (const item of items) {
-      if (!item?.id) continue;
-      categoryByItemId.set(item.id, categoryKey);
+      if(item && item.id)  categoryByItemId.set(item.id, categoryKey);
     }
   }
   _categoryByItemIdCache = categoryByItemId;
@@ -91,10 +90,10 @@ async function getIventoryRows(userId, { lang = process.env.DEFAULT_LANG || 'es-
   const inv = Array.isArray(eco.inventory) ? eco.inventory : [];
   const totals = new Map();
   for (const row of inv) {
-    if (!row || !row.itemId) continue;
-    const amount = Math.max(0, safeInt(row.amount, 0));
-    if (!amount) continue;
-    totals.set(row.itemId, (totals.get(row.itemId) || 0) + amount);
+    if(row && row.itemId) {
+      const amount = Math.max(0, safeInt(row.amount, 0));
+      if(amount) totals.set(row.itemId, (totals.get(row.itemId) || 0) + amount);
+    }
   }
 
   const { byId, categoryByItemId } = getCatalogIndexes();

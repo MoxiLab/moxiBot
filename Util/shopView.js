@@ -32,18 +32,19 @@ function buildShopData({ catalogPath, lang = process.env.DEFAULT_LANG || 'es-ES'
     let index = 1;
     for (const cat of categories) {
         for (const item of cat.items) {
-            if (!item || !item.id) continue;
-            const normalized = normalizeItemForLang(item, lang);
-            allItems.push({
-                shopId: index++,
-                itemId: item.id,
-                name: resolveLocalizedString(normalized?.name, lang) || item.id,
-                description: resolveLocalizedString(normalized?.description, lang) || '',
-                price: Number.isFinite(item.price) ? item.price : 0,
-                rarity: item.rarity || 'common',
-                categoryLabel: cat.label,
-                categoryKey: cat.key,
-            });
+            if(item && item.id) {
+                const normalized = normalizeItemForLang(item, lang);
+                allItems.push({
+                    shopId: index++,
+                    itemId: item.id,
+                    name: resolveLocalizedString(normalized?.name, lang) || item.id,
+                    description: resolveLocalizedString(normalized?.description, lang) || '',
+                    price: Number.isFinite(item.price) ? item.price : 0,
+                    rarity: item.rarity || 'common',
+                    categoryLabel: cat.label,
+                    categoryKey: cat.key,
+                });
+            }
         }
     }
 
