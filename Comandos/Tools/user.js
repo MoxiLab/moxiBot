@@ -1,5 +1,6 @@
 
-const { ContainerBuilder, SecondaryButtonBuilder, MessageFlags } = require('discord.js');
+const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { Bot } = require('../../Config');
@@ -10,9 +11,10 @@ const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notic
 function buildUserPermsButton(guildId, userId, lang) {
     if (!guildId || !userId) return null;
     const label = moxi.translate('HELP_PERMISSIONS', lang) || 'Permisos';
-    return new SecondaryButtonBuilder()
+    return new ButtonBuilder()
         .setCustomId(`user_perms:${guildId}:${userId}`)
-        .setLabel(label);
+        .setLabel(label)
+        .setStyle(ButtonStyle.Secondary);
 }
 
 

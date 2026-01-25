@@ -1,12 +1,15 @@
 const {
+    ActionRowBuilder,
     AttachmentBuilder,
     ContainerBuilder,
     TextDisplayBuilder,
     MediaGalleryBuilder,
     MediaGalleryItemBuilder,
     SeparatorBuilder,
-    MessageFlags
+    MessageFlags,
+    ButtonStyle
 } = require('discord.js');
+const { ButtonBuilder } = require('../Util/compatButtonBuilder');
 const formatDuration = require("../Util/formate.js");
 const { muzicard } = require("muzicard");
 const { Bot } = require("../Config");

@@ -1,9 +1,11 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, PermissionsBitField, MessageFlags } = require('discord.js');
+const { PermissionsBitField, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildShopData, buildShopMessage } = require('../../Util/shopView');
 const { resolveItemFromInput } = require('../../Util/useItem');
+const { BANK_UPGRADE_ITEM_ID, getBankUpgradeTotalCost, getBankInfo, formatInt } = require('../../Util/bankSystem');
 const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
 
 const { description, localizations } = getSlashCommandDescription('moxishop');
@@ -18,17 +20,17 @@ module.exports = {
         .setName('moxishop')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addSubcommands((sc) =>
+        .addSubcommand((sc) =>
             sc
                 .setName('list')
                 .setDescription('Muestra la lista de ítems disponibles')
-                .addStringOptions((opt) =>
+                .addStringOption((opt) =>
                     opt
                         .setName('categoria')
                         .setDescription('Filtra por categoría (opcional)')
                         .setRequired(false)
                 )
-                .addIntegerOptions((opt) =>
+                .addIntegerOption((opt) =>
                     opt
                         .setName('pagina')
                         .setDescription('Página (opcional)')
@@ -36,24 +38,24 @@ module.exports = {
                         .setMinValue(1)
                 )
         )
-        .addSubcommands((sc) =>
+        .addSubcommand((sc) =>
             sc
                 .setName('buy')
                 .setDescription('Compra un ítem por su ID, nombre o itemId de la tienda')
-                .addStringOptions((opt) =>
+                .addStringOption((opt) =>
                     opt
                         .setName('item')
                         .setDescription('Nombre o itemId (ej: "Hacha elemental" o "herramientas/hacha-elemental")')
                         .setRequired(false)
                 )
-                .addIntegerOptions((opt) =>
+                .addIntegerOption((opt) =>
                     opt
                         .setName('id')
                         .setDescription('ID del ítem (se ve en /shop list)')
                         .setRequired(false)
                         .setMinValue(1)
                 )
-                .addIntegerOptions((opt) =>
+                .addIntegerOption((opt) =>
                     opt
                         .setName('cantidad')
                         .setDescription('Cantidad a comprar')
@@ -102,6 +104,7 @@ module.exports = {
             const rawItem = interaction.options.getString('item');
             const id = interaction.options.getInteger('id');
             const amount = interaction.options.getInteger('cantidad') || 1;
+            const safeAmount = Math.min(100, Math.max(1, Number(amount) || 1));
 
             if (!rawItem && !id) {
                 return await interaction.editReply(
@@ -152,7 +155,9 @@ module.exports = {
             }
 
             const price = Number.isFinite(item.price) ? item.price : 0;
-            const cost = price * amount;
+            const cost = item.itemId === BANK_UPGRADE_ITEM_ID
+                ? getBankUpgradeTotalCost(eco?.bankLevel, safeAmount)
+                : (price * safeAmount);
 
             if (cost <= 0) {
                 return await interaction.editReply(
@@ -178,12 +183,31 @@ module.exports = {
                 );
             }
 
+            if (item.itemId === BANK_UPGRADE_ITEM_ID) {
+                eco.balance = (eco.balance || 0) - cost;
+                eco.bankLevel = Math.max(0, (Number(eco.bankLevel) || 0) + safeAmount);
+                await eco.save();
+
+                const info = getBankInfo(eco);
+                return await interaction.editReply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.check,
+                            title: t('PURCHASE_SUCCESS_TITLE'),
+                            text:
+                                `${t('PURCHASE_SUCCESS', { amount: safeAmount, name: item.name, cost })}` +
+                                `\n\n🏦 Banco: **Lv ${formatInt(info.level)}** — Capacidad: **${formatInt(info.capacity)}**`,
+                        })
+                    )
+                );
+            }
+
             const inv = Array.isArray(eco.inventory) ? eco.inventory : [];
             const existing = inv.find((x) => x && x.itemId === item.itemId);
             if (existing) {
-                existing.amount = (existing.amount || 0) + amount;
+                existing.amount = (existing.amount || 0) + safeAmount;
             } else {
-                inv.push({ itemId: item.itemId, amount, obtainedAt: new Date() });
+                inv.push({ itemId: item.itemId, amount: safeAmount, obtainedAt: new Date() });
             }
             eco.inventory = inv;
             eco.balance = (eco.balance || 0) - cost;

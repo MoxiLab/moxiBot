@@ -3,7 +3,7 @@ const logger = require("../../Util/logger");
 const { EMOJIS } = require("../../Util/emojis");
 const Config = require("../../Config");
 const { ensureMongoConnection } = require('../../Util/mongoConnect');
-const { isTestMode } = require('../../Util/runtimeMode');
+const { restoreTimers } = require('../../Util/timerStorage');
 
 module.exports = async (Moxi) => {
     const moxi = require("../../i18n");
@@ -14,21 +14,36 @@ module.exports = async (Moxi) => {
     // Helper para obtener textos según idioma (shard-aware)
     async function getStatusTexts(lang) {
         let totalGuilds = 0;
-        let users = 0;
+        let totalUsers = 0;
         if (Moxi.shard) {
-            // Aggregate guild and member counts from all shards
+            // Aggregate guild and user counts from all shards
             const guildCounts = await Moxi.shard.fetchClientValues('guilds.cache.size');
-            const userCounts = await Moxi.shard.fetchClientValues('users.cache.size');
             totalGuilds = guildCounts.reduce((a, b) => a + b, 0);
-            totalUsers = userCounts.reduce((a, b) => a + b, 0);
+            if (typeof Moxi.shard.broadcastEval === 'function') {
+                const userCounts = await Moxi.shard.broadcastEval((c) => {
+                    let users = 0;
+                    c.guilds.cache.forEach((guild) => {
+                        users += guild?.memberCount ?? 0;
+                    });
+                    return users;
+                });
+                totalUsers = Array.isArray(userCounts) ? userCounts.reduce((a, b) => a + b, 0) : 0;
+            } else {
+                const userCounts = await Moxi.shard.fetchClientValues('users.cache.size');
+                totalUsers = userCounts.reduce((a, b) => a + b, 0);
+            }
         } else {
             totalGuilds = Moxi.guilds.cache.size;
-            totalUsers = Moxi.users.cache.size;
+            let users = 0;
+            Moxi.guilds.cache.forEach((guild) => {
+                users += guild?.memberCount ?? 0;
+            });
+            totalUsers = users;
         }
         return [
             { name: moxi.translate('BOT_STATUS_VERSION', lang, { version: require('../../package.json').version }), type: ActivityType.Custom },
             { name: moxi.translate('BOT_STATUS_HELP', lang, { prefix: globalPrefix }), type: ActivityType.Custom },
-            { name: moxi.translate('BOT_STATUS_USERS', lang, { users }), type: ActivityType.Custom },
+            { name: moxi.translate('BOT_STATUS_USERS', lang, { users: totalUsers }), type: ActivityType.Custom },
             { name: moxi.translate('BOT_STATUS_SERVERS', lang, { servers: totalGuilds }), type: ActivityType.Custom },
             { name: moxi.translate('BOT_STATUS_MUSIC', lang, { prefix: globalPrefix }), type: ActivityType.Custom }
         ];
@@ -43,6 +58,28 @@ module.exports = async (Moxi) => {
     if (typeof process.env.MONGODB === 'string' && process.env.MONGODB.trim()) {
         try {
             await ensureMongoConnection();
+
+            // Restaurar timers persistidos (best-effort) una vez Mongo está listo.
+            restoreTimers(async (guildId, channelId, userId, minutos) => {
+                try {
+                    const channel = await Moxi.channels.fetch(channelId).catch(() => null);
+                    if (!channel || typeof channel.send !== 'function') return;
+
+                    const { ContainerBuilder, MessageFlags } = require('discord.js');
+                    const done = new ContainerBuilder()
+                        .setAccentColor(Config?.Bot?.AccentColor)
+                        .addTextDisplayComponents(c => c.setContent(
+                            `⏰ <@${userId}> ¡Tu temporizador de ${minutos} ${minutos === 1 ? 'minuto' : 'minutos'} ha terminado!`
+                        ));
+
+                    await channel.send({
+                        components: [done],
+                        flags: MessageFlags.IsComponentsV2,
+                    });
+                } catch {
+                    // noop
+                }
+            }).catch(() => null);
         } catch (error) {
             logger.error(`${EMOJIS.cross} Error crítico al conectar a MongoDB:`);
             logger.error(error?.message || error);
@@ -81,38 +118,15 @@ module.exports = async (Moxi) => {
 
     logger.startup(`${EMOJIS.butter} Conectado como ${Moxi.user.tag}`);
     logger.divider();
-    if (isTestMode()) return;
+    // logger.startup(`${EMOJIS.butter} Conectado como ${Moxi.user.tag}`);
+    // Enviar componente V2 de arranque (estilo ping, sin botón)
     const { getStartupComponentV2 } = require("../../Components/V2/startupEmbedComponent");
     const { MessageFlags } = require("discord.js");
-
-    // IMPORTANTE: no enviar mensajes de estado al canal de errores.
-    // Si no hay canal de arranque configurado, se omite silenciosamente.
-    const channelId = process.env.STARTUP_CHANNEL_ID || process.env.STATUS_CHANNEL_ID;
-    if (!channelId) return;
-    if (process.env.ERROR_CHANNEL_ID && String(channelId) === String(process.env.ERROR_CHANNEL_ID)) {
-        logger.warn('STARTUP_CHANNEL_ID/STATUS_CHANNEL_ID apunta al canal de errores; se omite el mensaje de arranque.');
-        return;
-    }
-
-    Moxi.channels
-        .fetch(channelId)
-        .then(channel => {
-            if (channel && channel.isTextBased()) {
-                const component = getStartupComponentV2(Moxi);
-                channel
-                    .send({ content: '', components: [component], flags: MessageFlags.IsComponentsV2 })
-                    .catch(() => { });
-            }
-        })
-        .catch(err => {
-            // Evita Unhandled Rejection al arrancar si el canal no es accesible.
-            if (err && (err.code === 50001 || err.status === 403)) {
-                logger.warn(
-                    `No tengo acceso al canal de arranque (${channelId}). ` +
-                        'Asegúrate de que el bot esté en el servidor y tenga permisos (Ver canal / Enviar mensajes).'
-                );
-                return;
-            }
-            logger.warn('No se pudo obtener el canal de arranque:', err);
-        });
+    const channelId = process.env.ERROR_CHANNEL_ID || '1459913736050704485';
+    Moxi.channels.fetch(channelId).then(channel => {
+        if (channel && channel.isTextBased()) {
+            const component = getStartupComponentV2(Moxi);
+            channel.send({ content: '', components: [component], flags: MessageFlags.IsComponentsV2 }).catch(() => { });
+        }
+    });
 };

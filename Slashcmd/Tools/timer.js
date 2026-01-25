@@ -1,12 +1,15 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, ContainerBuilder, DangerButtonBuilder, MessageFlags } = require('discord.js');
+const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const fetch = require('node-fetch');
 const moxi = require('../../i18n');
+const { Bot } = require('../../Config');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('timer')
         .setDescription('Crea un temporizador visual y elegante')
-        .addIntegerOptions(opt =>
+        .addIntegerOption(opt =>
             opt.setName('minutos')
                 .setDescription('Duración en minutos')
                 .setRequired(true)
@@ -39,18 +42,26 @@ module.exports = {
         container.addTextDisplayComponents(c => c.setContent(`Duración: **${minutos} minutos**\nTe avisaré cuando termine.`));
         container.addActionRowComponents(row =>
             row.addComponents(
-                new DangerButtonBuilder()
+                new ButtonBuilder()
                     .setCustomId('cancel_timer')
                     .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
+                    .setStyle(ButtonStyle.Danger)
             )
         );
 
-        await interaction.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2, ephemeral: false });
+        await interaction.reply({ components: [container], flags: MessageFlags.IsComponentsV2, ephemeral: false });
 
         // Esperar el tiempo y avisar
         setTimeout(async () => {
             try {
-                await interaction.followUp({ content: `⏰ ¡Tu temporizador de **${minutos} minutos** ha terminado!`, ephemeral: false });
+                const done = new ContainerBuilder()
+                    .setAccentColor(Bot.AccentColor)
+                    .addTextDisplayComponents(c => c.setContent(`⏰ <@${interaction.user.id}> ¡Tu temporizador de ${minutos} ${minutos === 1 ? 'minuto' : 'minutos'} ha terminado!`));
+
+                await interaction.channel.send({
+                    components: [done],
+                    flags: MessageFlags.IsComponentsV2,
+                });
             } catch { }
         }, minutos * 60 * 1000);
     }

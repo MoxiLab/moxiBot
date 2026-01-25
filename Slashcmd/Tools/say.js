@@ -1,4 +1,5 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
@@ -14,7 +15,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('say')
         .setDescription('Envía un mensaje como el bot')
-        .addStringOptions((opt) =>
+        .addStringOption((opt) =>
             opt
                 .setName('mensaje')
                 .setDescription('Texto a enviar')

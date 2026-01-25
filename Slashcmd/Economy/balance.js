@@ -1,4 +1,5 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { buildBalanceMessage } = require('../../Util/balanceView');
 const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
@@ -15,7 +16,7 @@ module.exports = {
         .setName('balance')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addUserOptions((opt) =>
+        .addUserOption((opt) =>
             opt
                 .setName('usuario')
                 .setDescription('Usuario (opcional)')

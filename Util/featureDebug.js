@@ -9,8 +9,10 @@ function buildLabel(label, fallback) {
 function resolveActiveFlag(feature, legacyFlags = []) {
     const candidates = [feature, ...(legacyFlags || [])];
     for (const candidate of candidates) {
-        if (!candidate) continue;
-        if (debugHelper.isEnabled(candidate)) return candidate;
+        if(candidate) {
+            //Este bucle no está bien hecho, hay un return dentro
+            if (debugHelper.isEnabled(candidate)) return candidate;
+        }
     }
     return null;
 }

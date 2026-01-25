@@ -1,5 +1,6 @@
 
-const { ContainerBuilder, PrimaryButtonBuilder, MessageFlags } = require('discord.js');
+const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { isDiscordOnlyOwner } = require('../../Util/ownerPermissions');
@@ -103,9 +104,10 @@ module.exports = {
             .addSeparatorComponents(s => s.setDivider(true))
             .addActionRowComponents(row =>
                 row.addComponents(
-                    new PrimaryButtonBuilder()
+                    new ButtonBuilder()
                         .setCustomId('lavanode_refresh')
                         .setLabel(moxi.translate('REFRESH', lang))
+                        .setStyle(ButtonStyle.Primary)
                 )
             )
             .addSeparatorComponents(s => s.setDivider(true))

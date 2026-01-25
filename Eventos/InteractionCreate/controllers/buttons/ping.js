@@ -2,7 +2,8 @@ module.exports = async function pingButtons(interaction, Moxi) {
     if (interaction.customId !== 'refresh_ping') return false;
 
     const moxi = require('../../../../i18n');
-    const { ContainerBuilder, PrimaryButtonBuilder, MessageFlags } = require('discord.js');
+    const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+    const { ButtonBuilder } = require('../../../../Util/compatButtonBuilder');
     const { EMOJIS } = require('../../../../Util/emojis');
     const { Bot } = require('../../../../Config');
 
@@ -46,9 +47,10 @@ module.exports = async function pingButtons(interaction, Moxi) {
         .addSeparatorComponents(s => s.setDivider(true))
         .addActionRowComponents(row =>
             row.addComponents(
-                new PrimaryButtonBuilder()
+                new ButtonBuilder()
                     .setCustomId('refresh_ping')
                     .setLabel(moxi.translate('PING_REFRESH', lang) || 'Refrescar')
+                    .setStyle(ButtonStyle.Primary)
             )
         )
         .addSeparatorComponents(s => s.setDivider(true))

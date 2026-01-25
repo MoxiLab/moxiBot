@@ -45,14 +45,15 @@ module.exports = {
                 if (Number.isFinite(n) && n > 0) page = n - 1;
                 cleaned.splice(i, 2);
                 i -= 1;
-                continue;
             }
-            const m = a.match(/^-p(\d+)$/);
-            if (m) {
-                const n = Number.parseInt(m[1], 10);
-                if (Number.isFinite(n) && n > 0) page = n - 1;
-                cleaned.splice(i, 1);
-                i -= 1;
+            else {
+                const m = a.match(/^-p(\d+)$/);
+                if (m) {
+                    const n = Number.parseInt(m[1], 10);
+                    if (Number.isFinite(n) && n > 0) page = n - 1;
+                    cleaned.splice(i, 1);
+                    i -= 1;
+                }
             }
         }
 

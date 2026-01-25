@@ -1,15 +1,12 @@
 const { EmbedBuilder } = require('discord.js');
-const { isTestMode } = require('./runtimeMode');
+require('dotenv').config(); 
 
-/** 
+/**
  * Envía un embed de arranque al canal especificado.
  * @param {import('discord.js').Client} client - Instancia del cliente de Discord
  */
 async function sendStartupEmbed(client) {
-    if (isTestMode()) return;
-
-    const channelId = process.env.STARTUP_CHANNEL_ID || process.env.STATUS_CHANNEL_ID;
-    if (!channelId) return;
+    const channelId = process.env.ERROR_CHANNEL_ID || '1459913736050704485';
     const color = process.env.BOT_ACCENT_COLOR ? process.env.BOT_ACCENT_COLOR.replace(/^0x/i, '#') : '#E1A6FF';
 
     // Datos del bot

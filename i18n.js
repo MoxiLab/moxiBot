@@ -24,20 +24,22 @@ function buildLocaleResolver() {
     const baseToPreferred = new Map();
     for (const d of dirs) {
       const key = String(d).trim();
-      if (!key) continue;
-      const lower = key.toLowerCase();
-      normalizedToDir.set(lower, key);
-      normalizedToDir.set(lower.replace(/_/g, '-'), key);
-      normalizedToDir.set(lower.replace(/-/g, '_'), key);
+      if(key) {
+        const lower = key.toLowerCase();
+        normalizedToDir.set(lower, key);
+        normalizedToDir.set(lower.replace(/_/g, '-'), key);
+        normalizedToDir.set(lower.replace(/-/g, '_'), key);
 
-      const base = lower.split(/[-_]/)[0];
-      if (!base) continue;
-      if (!baseToPreferred.has(base)) {
-        baseToPreferred.set(base, key);
-      } else {
-        // Preferir locales completos sobre bases sueltas, y mantener una opción estable
-        const prev = String(baseToPreferred.get(base));
-        if (prev.length < key.length) baseToPreferred.set(base, key);
+        const base = lower.split(/[-_]/)[0];
+        if(base) {
+          if (!baseToPreferred.has(base)) {
+            baseToPreferred.set(base, key);
+          } else {
+            // Preferir locales completos sobre bases sueltas, y mantener una opción estable
+            const prev = String(baseToPreferred.get(base));
+            if (prev.length < key.length) baseToPreferred.set(base, key);
+          }
+        }
       }
     }
 

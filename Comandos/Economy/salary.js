@@ -1,6 +1,7 @@
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
+const { buildRemindButton } = require('../../Util/cooldownReminderUI');
 const { claimCooldownReward, formatDuration } = require('../../Util/economyCore');
 const { getWorkStats, getJobDisplayName } = require('../../Util/workSystem');
 
@@ -85,18 +86,22 @@ module.exports = {
             }
 
             if (res.reason === 'cooldown') {
+                const fireAt = Date.now() + (Number(res.nextInMs) || 0);
+                const container = buildNoticeContainer({
+                    emoji: EMOJIS.hourglass,
+                    title: t('COOLDOWN_TITLE'),
+                    text: t('COOLDOWN_TEXT', {
+                        next: formatDuration(res.nextInMs),
+                        balance: res.balance,
+                        jobLine,
+                    }),
+                });
+                container.addSeparatorComponents(s => s.setDivider(true));
+                container.addActionRowComponents(r => r.addComponents(
+                    buildRemindButton({ type: 'salary', fireAt, userId: message.author.id })
+                ));
                 return message.reply({
-                    ...asV2MessageOptions(
-                        buildNoticeContainer({
-                            emoji: EMOJIS.hourglass,
-                            title: t('COOLDOWN_TITLE'),
-                            text: t('COOLDOWN_TEXT', {
-                                next: formatDuration(res.nextInMs),
-                                balance: res.balance,
-                                jobLine,
-                            }),
-                        })
-                    ),
+                    ...asV2MessageOptions(container),
                     allowedMentions: { repliedUser: false },
                 });
             }

@@ -1,5 +1,6 @@
 
-const { ContainerBuilder, LinkButtonBuilder, MessageFlags } = require('discord.js');
+const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const fs = require('fs');
 const path = require('path');
 
@@ -75,11 +76,13 @@ module.exports = {
       const discordGuidelinesUrl = 'https://discord.com/guidelines';
       container.addActionRowComponents(row =>
         row.addComponents(
-          new LinkButtonBuilder()
+          new ButtonBuilder()
             .setLabel('Términos de Discord')
+            .setStyle(ButtonStyle.Link)
             .setURL(discordTermsUrl),
-          new LinkButtonBuilder()
+          new ButtonBuilder()
             .setLabel('Normas de Discord')
+            .setStyle(ButtonStyle.Link)
             .setURL(discordGuidelinesUrl)
         )
       );

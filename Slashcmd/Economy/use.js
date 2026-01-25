@@ -1,13 +1,14 @@
 const {
-    ChatInputCommandBuilder: SlashCommandBuilder,
     MessageFlags,
     EmbedBuilder,
     ActionRowBuilder,
-    PrimaryButtonBuilder,
+    ButtonStyle,
     ContainerBuilder,
     MediaGalleryBuilder,
     MediaGalleryItemBuilder,
 } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
@@ -61,20 +62,20 @@ module.exports = {
         .setName('use')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addIntegerOptions((opt) =>
+        .addIntegerOption((opt) =>
             opt
                 .setName('id')
                 .setDescription('ID del ítem (se ve en /bag y /shop list)')
                 .setRequired(false)
                 .setMinValue(1)
         )
-        .addStringOptions((opt) =>
+        .addStringOption((opt) =>
             opt
                 .setName('item')
                 .setDescription('Nombre o itemId del ítem (alternativa a id)')
                 .setRequired(false)
         )
-        .addIntegerOptions((opt) =>
+        .addIntegerOption((opt) =>
             opt
                 .setName('cantidad')
                 .setDescription('Cantidad a usar (por defecto: 1)')
@@ -189,9 +190,10 @@ module.exports = {
             container
                 .addTextDisplayComponents(t => t.setContent(`🐾 **${pet.name || 'Tu mascota'}** ha oído el sonido… ¡y ha regresado!`))
                 .addActionRowComponents(row => row.addComponents(
-                    new PrimaryButtonBuilder()
+                    new ButtonBuilder()
                         .setCustomId(`pet:open:${interaction.user.id}`)
                         .setLabel('Ver mascota')
+                        .setStyle(ButtonStyle.Primary)
                         .setEmoji('🐣')
                 ));
 

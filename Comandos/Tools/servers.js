@@ -3,11 +3,7 @@ const { ContainerBuilder, MessageFlags } = require('discord.js');
 const { Bot } = require('../../Config');
 const moxi = require('../../i18n');
 const debugHelper = require('../../Util/debugHelper');
-<<<<<<< Updated upstream
 const { ownerPermissions } = require('../../Util/ownerPermissions');
-=======
-const { isDiscordOnlyOwner } = require('../../Util/ownerPermissions');
->>>>>>> Stashed changes
 
 function safeLower(s) {
     return String(s ?? '').toLowerCase();
@@ -28,17 +24,10 @@ function formatGuildBlock(guild, idx) {
     const id = String(guild?.id ?? '');
 
     return [
-<<<<<<< Updated upstream
         `**🏰 ${number}. ${name}**`,
         `• 👥 Miembros: **${members.toLocaleString()}**`,
         `• 🧩 Shard: **${shardText}**`,
         `• 🆔 ID: \`${id}\``,
-=======
-        `> **🏰 ${number}. ${name}**`,
-        `> » 👥 Miembros: **${members.toLocaleString()}**`,
-        `> » 🧩 Shard: **${shardText}**`,
-        `> » 🆔 ID: \`${id}\``,
->>>>>>> Stashed changes
     ].join('\n');
 }
 
@@ -84,7 +73,6 @@ module.exports = {
         const requesterId = message.author?.id;
         debugHelper.log('servers', 'command start', { requesterId });
 
-<<<<<<< Updated upstream
         const fakeInteraction = {
             user: message.author,
             memberPermissions: message.member?.permissions,
@@ -93,9 +81,6 @@ module.exports = {
 
         const isOwner = await ownerPermissions(fakeInteraction, Moxi);
         if (!isOwner) {
-=======
-        if (!await isDiscordOnlyOwner({ client: Moxi, userId: requesterId })) {
->>>>>>> Stashed changes
             return message.reply('Solo los owners pueden usar este comando.');
         }
 

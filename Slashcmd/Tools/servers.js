@@ -1,8 +1,9 @@
 const {
-    SlashCommandBuilder,
     ContainerBuilder,
     MessageFlags,
 } = require('discord.js');
+
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 
 const { Bot } = require('../../Config');
 const moxi = require('../../i18n');

@@ -1,4 +1,5 @@
-const { PermissionsBitField: { Flags }, ContainerBuilder, MessageFlags, ActionRowBuilder, SecondaryButtonBuilder } = require('discord.js');
+const { PermissionsBitField: { Flags }, ContainerBuilder, MessageFlags, ActionRowBuilder, ButtonStyle } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const LevelSystem = require('../../Global/Helpers/LevelSystem');
 const BonusSystem = require('../../Global/Helpers/BonusSystem');
 const { Bot } = require('../../Config');
@@ -78,7 +79,7 @@ module.exports = {
                     t('PRESTIGE_FOOTER')
                 ));
             const row = new ActionRowBuilder().addComponents(
-                new SecondaryButtonBuilder().setCustomId('prestige_close').setLabel(t('LEVEL_CLOSE'))
+                new ButtonBuilder().setCustomId('prestige_close').setLabel(t('LEVEL_CLOSE')).setStyle(ButtonStyle.Secondary)
             );
             container.addActionRowComponents(row);
             debugHelper.log('prestige', 'command success', { guildID, requesterId, newPrestige: prestigedUser.prestige });

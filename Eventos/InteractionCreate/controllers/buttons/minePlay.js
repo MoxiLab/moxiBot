@@ -75,12 +75,12 @@ module.exports = async function minePlayButtons(interaction) {
             if (res?.reason === 'cooldown' && !shouldShowCooldownNotice({ userId, key: 'mine' })) {
                 return true;
             }
-            const payload = buildMineResultPayload({ zone, res, lang });
+            const payload = buildMineResultPayload({ zone, res, lang, userId });
             await interaction.followUp({ ...payload, flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2 }).catch(() => null);
             return true;
         }
 
-        const payload = buildMineResultPayload({ zone, res, lang });
+        const payload = buildMineResultPayload({ zone, res, lang, userId });
         await interaction.message?.edit?.(payload).catch(() => null);
         return true;
     }

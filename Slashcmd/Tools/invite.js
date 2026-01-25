@@ -1,9 +1,10 @@
 const {
-    ChatInputCommandBuilder: SlashCommandBuilder,
     ContainerBuilder,
     MessageFlags,
     PermissionFlagsBits,
 } = require('discord.js');
+
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 
 const { Bot } = require('../../Config');
 const moxi = require('../../i18n');
@@ -14,13 +15,13 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('invite')
         .setDescription('Crea una invitación permanente del servidor')
-        .addChannelOptions((opt) =>
+        .addChannelOption((opt) =>
             opt
                 .setName('canal')
                 .setDescription('Canal donde se creará la invitación (opcional)')
                 .setRequired(false)
         )
-        .addBooleanOptions((opt) =>
+        .addBooleanOption((opt) =>
             opt
                 .setName('publico')
                 .setDescription('Enviar el enlace de forma pública (por defecto: oculto)')

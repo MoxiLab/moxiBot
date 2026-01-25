@@ -226,9 +226,10 @@ function buildGeneratedCrimeActivities() {
     const uniq = [];
     for (const a of base) {
         const id = String(a?.id || '').trim().toLowerCase();
-        if (!id || seen.has(id)) continue;
-        seen.add(id);
-        uniq.push({ ...a, id });
+        if(id && !seen.has(id)) {
+            seen.add(id);
+            uniq.push({ ...a, id });
+        }
     }
 
     return uniq;

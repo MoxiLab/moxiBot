@@ -16,8 +16,7 @@ function addToInventory(economyDoc, itemId, amount = 1) {
 
 function addManyToInventory(economyDoc, items = []) {
     for (const it of Array.isArray(items) ? items : []) {
-        if (!it?.itemId) continue;
-        addToInventory(economyDoc, String(it.itemId), safeInt(it.amount, 1));
+        if(it && it.itemId) addToInventory(economyDoc, String(it.itemId), safeInt(it.amount, 1));
     }
 }
 

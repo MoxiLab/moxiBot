@@ -1,14 +1,15 @@
 const {
   ActionRowBuilder,
-  DangerButtonBuilder,
+  ButtonStyle,
   EmbedBuilder,
-  SecondaryButtonBuilder,
   StringSelectMenuBuilder,
 } = require('discord.js');
 
+const { ButtonBuilder } = require('./compatButtonBuilder');
+
 const { Bot } = require('../Config');
 const moxi = require('../i18n');
-const { EMOJIS, toEmojiObject } = require('./emojis');
+const { EMOJIS } = require('./emojis');
 const { loadCatalog, buildItemIndex, resolveLocalizedString, resolveCategoryFromLanguages, normalizeItemForLang } = require('./inventoryCatalog');
 
 let _catalogCache = null;
@@ -28,8 +29,7 @@ function getCatalogIndexes() {
     const categoryKey = cat?.categoryKey || cat?.category || 'Other';
     const items = Array.isArray(cat?.items) ? cat.items : [];
     for (const item of items) {
-      if (!item?.id) continue;
-      categoryByItemId.set(item.id, categoryKey);
+      if(item && item.id)  categoryByItemId.set(item.id, categoryKey);
     }
   }
   _categoryByItemIdCache = categoryByItemId;
@@ -91,10 +91,10 @@ async function getIventoryRows(userId, { lang = process.env.DEFAULT_LANG || 'es-
   const inv = Array.isArray(eco.inventory) ? eco.inventory : [];
   const totals = new Map();
   for (const row of inv) {
-    if (!row || !row.itemId) continue;
-    const amount = Math.max(0, safeInt(row.amount, 0));
-    if (!amount) continue;
-    totals.set(row.itemId, (totals.get(row.itemId) || 0) + amount);
+    if(row && row.itemId) {
+      const amount = Math.max(0, safeInt(row.amount, 0));
+      if(amount) totals.set(row.itemId, (totals.get(row.itemId) || 0) + amount);
+    }
   }
 
   const { byId, categoryByItemId } = getCatalogIndexes();
@@ -234,22 +234,27 @@ async function buildBagMessage({ userId, viewerId, page = 0, selectedCategoryKey
   const selectRow = new ActionRowBuilder().addComponents(select);
 
   const buttonRow = new ActionRowBuilder().addComponents(
-    new SecondaryButtonBuilder()
+    new ButtonBuilder()
       .setCustomId(`bag:nav:${viewerId}:${activeCategoryKey || 'none'}:${safePage}:prev`)
-      .setEmoji(toEmojiObject(EMOJIS.arrowLeft))
+      .setEmoji(EMOJIS.arrowLeft)
+      .setStyle(ButtonStyle.Secondary)
       .setDisabled(prevDisabled),
-    new SecondaryButtonBuilder()
+    new ButtonBuilder()
       .setCustomId(`bag:nav:${viewerId}:${activeCategoryKey || 'none'}:${safePage}:home`)
-      .setEmoji(toEmojiObject(EMOJIS.package)),
-    new DangerButtonBuilder()
+      .setEmoji(EMOJIS.package)
+      .setStyle(ButtonStyle.Secondary),
+    new ButtonBuilder()
       .setCustomId(`bag:nav:${viewerId}:${activeCategoryKey || 'none'}:${safePage}:close`)
-      .setEmoji(toEmojiObject(EMOJIS.cross)),
-    new SecondaryButtonBuilder()
+      .setEmoji(EMOJIS.cross)
+      .setStyle(ButtonStyle.Danger),
+    new ButtonBuilder()
       .setCustomId(`bag:nav:${viewerId}:${activeCategoryKey || 'none'}:${safePage}:info`)
-      .setEmoji(toEmojiObject(EMOJIS.question)),
-    new SecondaryButtonBuilder()
+      .setEmoji(EMOJIS.question)
+      .setStyle(ButtonStyle.Secondary),
+    new ButtonBuilder()
       .setCustomId(`bag:nav:${viewerId}:${activeCategoryKey || 'none'}:${safePage}:next`)
-      .setEmoji(toEmojiObject(EMOJIS.arrowRight))
+      .setEmoji(EMOJIS.arrowRight)
+      .setStyle(ButtonStyle.Secondary)
       .setDisabled(nextDisabled)
   );
 

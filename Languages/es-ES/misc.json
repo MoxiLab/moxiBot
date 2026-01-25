@@ -162,6 +162,10 @@
   "HELP_CATEGORY_GAMES_DESC": "Juegos: buscaminas, rps, tictactoe.",
   "GAMES_MINESWEEPER_TITLE": "Buscaminas",
   "GAMES_MINESWEEPER_HELP": "Clic para abrir • Usa el modo 🚩 para marcar",
+  "HELP_CATEGORY_TAROT": "Tarot",
+  "HELP_CATEGORY_TAROT_DESC": "Comandos de tarot y cartas.",
+  "TAROT_TITLE": "Tarot",
+  "TAROT_RESULT": "Tu carta del tarot es: {{card}}",
   "GAMES_MINESWEEPER_PLAYING": "Partida en curso.",
   "GAMES_MINESWEEPER_WON": "¡Ganaste!",
   "GAMES_MINESWEEPER_LOST": "¡Boom! Has perdido.",
@@ -559,5 +563,14 @@
   "PORTAL_STATUS_REUSED": "Reutilizando invitación oficial",
   "PORTAL_NO_PERMS": "No hay invitación oficial creada. Necesitas permisos para crearla.",
   "PORTAL_NO_CHANNEL": "No encontré un canal válido para crear la invitación oficial.",
-  "PORTAL_ERR": "No pude resolver la invitación oficial."
+  "PORTAL_ERR": "No pude resolver la invitación oficial.",
+  "SERVERS_TITLE": "SERVERS_TITLE",
+  "SERVERS_TOTAL": "SERVERS_TOTAL",
+  "SERVERS_USERS": "SERVERS_USERS",
+  "RELOAD_TITLE": "RELOAD_TITLE",
+  "RELOAD_DONE": "RELOAD_DONE",
+  "RELOAD_SUMMARY": "RELOAD_SUMMARY",
+  "RELOAD_NOTE": "RELOAD_NOTE",
+  "RELOAD_FAILED": "RELOAD_FAILED",
+  "Ya hay un temporizador activo en este canal": "Ya hay un temporizador activo en este canal."
 }

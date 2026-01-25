@@ -1,4 +1,5 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
@@ -23,13 +24,13 @@ module.exports = {
         .setName('give')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addUserOptions((opt) =>
+        .addUserOption((opt) =>
             opt
                 .setName('usuario')
                 .setDescription('Usuario que recibirá las coins')
                 .setRequired(true)
         )
-        .addIntegerOptions((opt) =>
+        .addIntegerOption((opt) =>
             opt
                 .setName('cantidad')
                 .setDescription('Cantidad a dar')

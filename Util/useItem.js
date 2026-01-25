@@ -79,32 +79,34 @@ function resolveItemFromInput({ shopId, query, lang } = {}) {
     const { byId } = buildItemIndex(catalog);
 
     for (const [itemId, item] of byId.entries()) {
-        if (!item) continue;
-        const normalized = normalizeItemForLang(item, lang);
-        const displayName = resolveLocalizedString(normalized?.name, lang) || itemId;
-        const displayDesc = resolveLocalizedString(normalized?.description, lang) || '';
-        if (normalizeText(displayName) === needle) {
-            return {
-                itemId,
-                name: displayName || itemId,
-                shopId: null,
-                description: displayDesc,
-            };
+        if(item) {
+            const normalized = normalizeItemForLang(item, lang);
+            const displayName = resolveLocalizedString(normalized?.name, lang) || itemId;
+            const displayDesc = resolveLocalizedString(normalized?.description, lang) || '';
+            if (normalizeText(displayName) === needle) {
+                return {
+                    itemId,
+                    name: displayName || itemId,
+                    shopId: null,
+                    description: displayDesc,
+                };
+            }
         }
     }
 
     for (const [itemId, item] of byId.entries()) {
-        if (!item) continue;
-        const normalized = normalizeItemForLang(item, lang);
-        const displayName = resolveLocalizedString(normalized?.name, lang) || itemId;
-        const displayDesc = resolveLocalizedString(normalized?.description, lang) || '';
-        if (normalizeText(displayName).includes(needle)) {
-            return {
-                itemId,
-                name: displayName || itemId,
-                shopId: null,
-                description: displayDesc,
-            };
+        if(item) {
+            const normalized = normalizeItemForLang(item, lang);
+            const displayName = resolveLocalizedString(normalized?.name, lang) || itemId;
+            const displayDesc = resolveLocalizedString(normalized?.description, lang) || '';
+            if (normalizeText(displayName).includes(needle)) {
+                return {
+                    itemId,
+                    name: displayName || itemId,
+                    shopId: null,
+                    description: displayDesc,
+                };
+            }
         }
     }
 

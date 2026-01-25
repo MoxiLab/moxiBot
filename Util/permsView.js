@@ -1,10 +1,11 @@
 const {
     ActionRowBuilder,
-    DangerButtonBuilder,
-    SecondaryButtonBuilder,
+    ButtonStyle,
     EmbedBuilder,
     StringSelectMenuBuilder,
 } = require('discord.js');
+
+const { ButtonBuilder } = require('./compatButtonBuilder');
 
 const moxi = require('../i18n');
 
@@ -132,16 +133,19 @@ function buildPermsBrowserMessage({ guild, userId, lang = 'es-ES', page = 0, sel
 
     const rowSelect = new ActionRowBuilder().addComponents(select);
 
-    const btnPrev = new SecondaryButtonBuilder()
+    const btnPrev = new ButtonBuilder()
         .setCustomId(`perms:nav:${userId}:${safePage}:prev`)
+        .setStyle(ButtonStyle.Secondary)
         .setLabel('◀');
 
-    const btnNext = new SecondaryButtonBuilder()
+    const btnNext = new ButtonBuilder()
         .setCustomId(`perms:nav:${userId}:${safePage}:next`)
+        .setStyle(ButtonStyle.Secondary)
         .setLabel('▶');
 
-    const btnClose = new DangerButtonBuilder()
+    const btnClose = new ButtonBuilder()
         .setCustomId(`perms:nav:${userId}:${safePage}:close`)
+        .setStyle(ButtonStyle.Danger)
         .setLabel(moxi.translate('CLOSE', lang) || 'Cerrar');
 
     const rowBtns = new ActionRowBuilder().addComponents(btnPrev, btnClose, btnNext);

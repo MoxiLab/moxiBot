@@ -4,9 +4,13 @@
 
 const timers = {};
 const TimerModel = require('../Models/TimerSchema');
+const { ensureMongoConnection } = require('./mongoConnect');
 
 async function restoreTimers(onFinish) {
     try {
+        // Asegurar conexión antes de consultar (evita "buffering timed out").
+        await ensureMongoConnection().catch(() => null);
+
         const all = await TimerModel.find({});
         for (const t of all) {
             const msLeft = t.endTime - Date.now();
@@ -41,6 +45,7 @@ async function setTimer(guildId, channelId, userId, minutos, onFinish) {
     timers[guildId][channelId] = { userId, endTime, timeoutId };
     // Guardar en MongoDB
     try {
+        await ensureMongoConnection().catch(() => null);
         await TimerModel.findOneAndUpdate(
             { guildId, channelId },
             { guildId, channelId, userId, endTime, minutos },
@@ -61,7 +66,9 @@ function clearTimer(guildId, channelId) {
         delete timers[guildId][channelId];
     }
     // Eliminar también de MongoDB aunque no esté en memoria
-    TimerModel.deleteOne({ guildId, channelId }).catch(() => { });
+    ensureMongoConnection()
+        .then(() => TimerModel.deleteOne({ guildId, channelId }).catch(() => { }))
+        .catch(() => null);
 }
 
 function getAllTimers() {

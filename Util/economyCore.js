@@ -50,7 +50,7 @@ async function getOrCreateEconomy(userId) {
   try {
     await Economy.updateOne(
       { userId },
-      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
+      { $setOnInsert: { userId, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: starterInventory() } },
       { upsert: true }
     );
   } catch (e) {
@@ -104,7 +104,7 @@ async function claimCooldownReward({
   try {
     await Economy.updateOne(
       { userId },
-      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
+      { $setOnInsert: { userId, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: starterInventory() } },
       { upsert: true }
     );
   } catch (e) {
@@ -168,7 +168,7 @@ async function claimCooldown({
   try {
     await Economy.updateOne(
       { userId },
-      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
+      { $setOnInsert: { userId, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: starterInventory() } },
       { upsert: true }
     );
   } catch (e) {
@@ -217,7 +217,7 @@ async function awardBalance({ userId, amount } = {}) {
   try {
     await Economy.updateOne(
       { userId },
-      { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
+      { $setOnInsert: { userId, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: starterInventory() } },
       { upsert: true }
     );
   } catch (e) {
@@ -253,7 +253,7 @@ async function transferBalance({ fromUserId, toUserId, amount } = {}) {
     try {
       await Economy.updateOne(
         { userId: uid },
-        { $setOnInsert: { userId: uid, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
+        { $setOnInsert: { userId: uid, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: starterInventory() } },
         { upsert: true }
       );
     } catch (e) {
@@ -324,7 +324,7 @@ async function transferInventoryItem({ fromUserId, toUserId, itemId, amount } = 
     try {
       await Economy.updateOne(
         { userId: uid },
-        { $setOnInsert: { userId: uid, balance: 0, bank: 0, sakuras: 0, inventory: starterInventory() } },
+        { $setOnInsert: { userId: uid, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: starterInventory() } },
         { upsert: true }
       );
     } catch (e) {

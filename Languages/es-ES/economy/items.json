@@ -741,7 +741,7 @@
     },
     "mejoras/expansion-de-banco": {
       "name": "Expansión de Banco",
-      "description": "Aumenta el espacio del banco (uso futuro)."
+      "description": "Mejora tu banco (+1 nivel) y aumenta su capacidad. El precio sube con cada mejora."
     },
     "mejoras/expansion-de-mochila-plus": {
       "name": "Expansión de Mochila Plus",

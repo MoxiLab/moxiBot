@@ -121,17 +121,17 @@ function getSlashCommandDescription(commandName, { defaultLocale = 'en-US' } = {
     const localizations = {};
     for (const botLocale of botLocales) {
         const discordLocale = toDiscordLocale(botLocale);
-        if (!discordLocale) continue;
+        if(discordLocale) {
+            const json = getCommandsJson(botLocale);
+            const value = typeof json?.[key] === 'string'
+                ? json[key]
+                : (typeof defaultJson?.[key] === 'string'
+                    ? defaultJson[key]
+                    : (typeof en?.[key] === 'string' ? en[key] : null));
 
-        const json = getCommandsJson(botLocale);
-        const value = typeof json?.[key] === 'string'
-            ? json[key]
-            : (typeof defaultJson?.[key] === 'string'
-                ? defaultJson[key]
-                : (typeof en?.[key] === 'string' ? en[key] : null));
-
-        if (typeof value === 'string' && value.trim()) {
-            localizations[discordLocale] = value;
+            if (typeof value === 'string' && value.trim()) {
+                localizations[discordLocale] = value;
+            }
         }
     }
 

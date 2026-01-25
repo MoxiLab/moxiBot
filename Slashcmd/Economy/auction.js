@@ -1,4 +1,5 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
@@ -34,35 +35,35 @@ module.exports = {
         .setName('auction')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addSubcommands((sc) => sc
+        .addSubcommand((sc) => sc
             .setName('help')
             .setDescription(helpDesc.description)
             .setDescriptionLocalizations(helpDesc.localizations))
-        .addSubcommands((sc) => sc
+        .addSubcommand((sc) => sc
             .setName('add')
             .setDescription(addDesc.description)
             .setDescriptionLocalizations(addDesc.localizations))
-        .addSubcommands((sc) => sc
+        .addSubcommand((sc) => sc
             .setName('bid')
             .setDescription(bidDesc.description)
             .setDescriptionLocalizations(bidDesc.localizations))
-        .addSubcommands((sc) => sc
+        .addSubcommand((sc) => sc
             .setName('bids')
             .setDescription(bidsDesc.description)
             .setDescriptionLocalizations(bidsDesc.localizations))
-        .addSubcommands((sc) => sc
+        .addSubcommand((sc) => sc
             .setName('cancel')
             .setDescription(cancelDesc.description)
             .setDescriptionLocalizations(cancelDesc.localizations))
-        .addSubcommands((sc) => sc
+        .addSubcommand((sc) => sc
             .setName('list')
             .setDescription(listDesc.description)
             .setDescriptionLocalizations(listDesc.localizations))
-        .addSubcommands((sc) => sc
+        .addSubcommand((sc) => sc
             .setName('search')
             .setDescription(searchDesc.description)
             .setDescriptionLocalizations(searchDesc.localizations))
-        .addSubcommands((sc) => sc
+        .addSubcommand((sc) => sc
             .setName('upgrade')
             .setDescription(upgradeDesc.description)
             .setDescriptionLocalizations(upgradeDesc.localizations)),

@@ -65,8 +65,9 @@ function resolveSlashMentionPlaceholders(text, { applicationId, guildId = null }
 function cacheCommands({ applicationId, guildId = null, commands }) {
   if (!applicationId || !Array.isArray(commands)) return;
   for (const cmd of commands) {
-    if (!cmd || !cmd.name || !cmd.id) continue;
-    CACHE.set(cacheKey({ applicationId, guildId, name: String(cmd.name) }), String(cmd.id));
+    if(cmd && cmd.name && cmd.id) {
+      CACHE.set(cacheKey({ applicationId, guildId, name: String(cmd.name) }), String(cmd.id));
+    }
   }
 }
 

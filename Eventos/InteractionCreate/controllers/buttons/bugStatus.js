@@ -1,16 +1,5 @@
-const {
-    PermissionsBitField,
-    MessageFlags,
-    ActionRowBuilder,
-    ChannelType,
-    ContainerBuilder,
-    SeparatorBuilder,
-    SuccessButtonBuilder,
-    PrimaryButtonBuilder,
-    SecondaryButtonBuilder,
-    DangerButtonBuilder,
-    LinkButtonBuilder,
-} = require('discord.js');
+const { PermissionsBitField, MessageFlags, ActionRowBuilder, ButtonStyle, ChannelType, ContainerBuilder, SeparatorBuilder } = require('discord.js');
+const { ButtonBuilder } = require('../../../../Util/compatButtonBuilder');
 const { Bot } = require('../../../../Config');
 const { getSettings } = require('../../../../Util/bugStorage');
 
@@ -21,28 +10,31 @@ const DELETE_ID = 'bug:delete-thread';
 
 function buildCompleteRow(translate) {
     return new ActionRowBuilder().addComponents(
-        new SuccessButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(COMPLETE_ID)
             .setLabel(translate('BUG_BUTTON_COMPLETE'))
+            .setStyle(ButtonStyle.Success)
     );
 }
 
 function buildReopenRow(translate) {
     return new ActionRowBuilder().addComponents(
-        new PrimaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(REOPEN_ID)
             .setLabel(translate('BUG_BUTTON_REOPEN'))
-            ,
-        new SecondaryButtonBuilder()
+            .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
             .setCustomId(CANCEL_ID)
             .setLabel(translate('BUG_BUTTON_CANCEL'))
+            .setStyle(ButtonStyle.Secondary)
     );
 }
 
 function buildDeleteButton(translate) {
-    return new DangerButtonBuilder()
+    return new ButtonBuilder()
         .setCustomId(DELETE_ID)
-        .setLabel(translate('BUG_BUTTON_DELETE'));
+        .setLabel(translate('BUG_BUTTON_DELETE'))
+        .setStyle(ButtonStyle.Danger);
 }
 
 function mergeWithDeleteButton(statusRow, translate) {
@@ -128,8 +120,9 @@ function buildThreadLinkRow(interaction, thread) {
     if (!thread?.id || !guildId) return null;
     const threadUrl = `https://discord.com/channels/${guildId}/${thread.id}`;
     return new ActionRowBuilder().addComponents(
-        new LinkButtonBuilder()
+        new ButtonBuilder()
             .setLabel(interaction.translate('BUG_THREAD_BUTTON'))
+            .setStyle(ButtonStyle.Link)
             .setURL(threadUrl)
     );
 }

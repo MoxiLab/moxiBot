@@ -1,8 +1,10 @@
-const { ActionRowBuilder, DangerButtonBuilder, EmbedBuilder, SecondaryButtonBuilder, StringSelectMenuBuilder } = require('discord.js');
+const { ActionRowBuilder, ButtonStyle, EmbedBuilder, StringSelectMenuBuilder } = require('discord.js');
+const { ButtonBuilder } = require('./compatButtonBuilder');
 const { Bot } = require('../Config');
 const moxi = require('../i18n');
 const { loadCatalog, resolveLocalizedString, resolveCategoryFromLanguages, normalizeItemForLang } = require('./inventoryCatalog');
-const { EMOJIS, toEmojiObject } = require('./emojis');
+const { EMOJIS } = require('./emojis');
+const { BANK_UPGRADE_ITEM_ID, getBankUpgradeCost } = require('./bankSystem');
 
 function slugify(input) {
     return String(input || '')
@@ -32,18 +34,19 @@ function buildShopData({ catalogPath, lang = process.env.DEFAULT_LANG || 'es-ES'
     let index = 1;
     for (const cat of categories) {
         for (const item of cat.items) {
-            if (!item || !item.id) continue;
-            const normalized = normalizeItemForLang(item, lang);
-            allItems.push({
-                shopId: index++,
-                itemId: item.id,
-                name: resolveLocalizedString(normalized?.name, lang) || item.id,
-                description: resolveLocalizedString(normalized?.description, lang) || '',
-                price: Number.isFinite(item.price) ? item.price : 0,
-                rarity: item.rarity || 'common',
-                categoryLabel: cat.label,
-                categoryKey: cat.key,
-            });
+            if(item && item.id) {
+                const normalized = normalizeItemForLang(item, lang);
+                allItems.push({
+                    shopId: index++,
+                    itemId: item.id,
+                    name: resolveLocalizedString(normalized?.name, lang) || item.id,
+                    description: resolveLocalizedString(normalized?.description, lang) || '',
+                    price: Number.isFinite(item.price) ? item.price : 0,
+                    rarity: item.rarity || 'common',
+                    categoryLabel: cat.label,
+                    categoryKey: cat.key,
+                });
+            }
         }
     }
 
@@ -111,22 +114,27 @@ function buildShopMessage({
     const nextDisabled = safePage >= totalPages - 1;
 
     const buttonRow = new ActionRowBuilder().addComponents(
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`shop:nav:${userId}:${categoryKey}:${safePage}:prev`)
-            .setEmoji(toEmojiObject(EMOJIS.arrowLeft))
+            .setEmoji(EMOJIS.arrowLeft)
+            .setStyle(ButtonStyle.Secondary)
             .setDisabled(prevDisabled),
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`shop:home:${userId}:${categoryKey}`)
-            .setEmoji(toEmojiObject(EMOJIS.home)),
-        new SecondaryButtonBuilder()
+            .setEmoji(EMOJIS.home)
+            .setStyle(ButtonStyle.Secondary),
+        new ButtonBuilder()
             .setCustomId(`shop:info:${userId}:${categoryKey}:${totalPages}`)
-            .setEmoji(toEmojiObject(EMOJIS.info)),
-        new DangerButtonBuilder()
+            .setEmoji(EMOJIS.info)
+            .setStyle(ButtonStyle.Secondary),
+        new ButtonBuilder()
             .setCustomId(`shop:close:${userId}`)
-            .setEmoji(toEmojiObject(EMOJIS.stopSign)),
-        new SecondaryButtonBuilder()
+            .setEmoji(EMOJIS.stopSign)
+            .setStyle(ButtonStyle.Danger),
+        new ButtonBuilder()
             .setCustomId(`shop:nav:${userId}:${categoryKey}:${safePage}:next`)
-            .setEmoji(toEmojiObject(EMOJIS.arrowRight))
+            .setEmoji(EMOJIS.arrowRight)
+            .setStyle(ButtonStyle.Secondary)
             .setDisabled(nextDisabled)
     );
 

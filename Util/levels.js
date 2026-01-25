@@ -77,10 +77,11 @@ function computeMultiplier(member, channelId, cfg) {
     if (member?.roles?.cache && byRole.length) {
         for (const roleRule of byRole) {
             const rid = String(roleRule?.roleID || '');
-            if (!rid) continue;
-            if (!member.roles.cache.has(rid)) continue;
-            if (typeof roleRule.multiplier !== 'number' || !Number.isFinite(roleRule.multiplier)) continue;
-            mult *= Math.max(0, roleRule.multiplier);
+            if(rid && member.roles.cache.has(rid)) {
+                if (typeof roleRule.multiplier === 'number' && Number.isFinite(roleRule.multiplier)) {
+                    mult *= Math.max(0, roleRule.multiplier);
+                }
+            }
         }
     }
 

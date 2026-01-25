@@ -1,14 +1,9 @@
-const {
-    ContainerBuilder,
-    DangerButtonBuilder,
-    PrimaryButtonBuilder,
-    SecondaryButtonBuilder,
-    MessageFlags,
-} = require('discord.js');
+const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('./compatButtonBuilder');
 
 const Config = require('../Config');
 const moxi = require('../i18n');
-const { EMOJIS, toEmojiObject } = require('./emojis');
+const { EMOJIS } = require('./emojis');
 
 const DEFAULT_SIZE = 5;
 const DEFAULT_MINES = 5;
@@ -97,10 +92,12 @@ function base36ToBigInt(str) {
     for (const ch of s) {
         const code = ch.charCodeAt(0);
         let v;
-        if (code >= 48 && code <= 57) v = BigInt(code - 48);
-        else if (code >= 97 && code <= 122) v = BigInt(code - 87);
-        else continue;
-        out = (out * 36n) + v;
+        if (code >= 48 && code <= 122) {
+            if (code >= 48 && code <= 57) v = BigInt(code - 48);
+            else if (code >= 97 && code <= 122) v = BigInt(code - 87);
+
+            out = (out * 36n) + v;
+        }
     }
     return out;
 }
@@ -118,10 +115,10 @@ function randomMineMask({ size, mines, safeIndex } = {}) {
     while (placed < m && guard < 5000) {
         guard++;
         const i = Math.floor(Math.random() * cells);
-        if (safe !== null && i === safe) continue;
-        if (bitGet(mineMask, i)) continue;
-        mineMask = bitSet(mineMask, i);
-        placed++;
+        if (safe === null && i != safe && !bitGet(mineMask, i)) {
+            mineMask = bitSet(mineMask, i);
+            placed++;
+        }
     }
 
     return mineMask;
@@ -132,11 +129,13 @@ function countAdjacentMines({ x, y, size, mineMask }) {
     let count = 0;
     for (let dy = -1; dy <= 1; dy++) {
         for (let dx = -1; dx <= 1; dx++) {
-            if (dx === 0 && dy === 0) continue;
-            const nx = x + dx;
-            const ny = y + dy;
-            if (nx < 0 || ny < 0 || nx >= sz || ny >= sz) continue;
-            if (bitGet(mineMask, idxOf(nx, ny, sz))) count++;
+            if(dx != 0 || dy != 0) {
+                const nx = x + dx;
+                const ny = y + dy;
+                if (nx > 0 & ny > 0 && nx < sz && ny < sz) {
+                    if (bitGet(mineMask, idxOf(nx, ny, sz))) count++;
+                }
+            }
         }
     }
     return count;
@@ -153,30 +152,33 @@ function floodReveal({ x, y, state }) {
 
     while (queue.length) {
         const i = queue.shift();
-        if (bitGet(revealMask, i)) continue;
-        if (bitGet(mineMask, i)) {
-            status = 1;
-            revealMask = bitSet(revealMask, i);
-            continue;
-        }
+        if(!bitGet(revealMask, i)) {
+            let bit = bitGet(mineMask, i);
+            if (!bit) {
+                revealMask = bitSet(revealMask, i);
 
-        revealMask = bitSet(revealMask, i);
-
-        const cx = i % size;
-        const cy = Math.floor(i / size);
-        const adj = countAdjacentMines({ x: cx, y: cy, size, mineMask });
-        if (adj !== 0) continue;
-
-        for (let dy = -1; dy <= 1; dy++) {
-            for (let dx = -1; dx <= 1; dx++) {
-                const nx = cx + dx;
-                const ny = cy + dy;
-                if (nx < 0 || ny < 0 || nx >= size || ny >= size) continue;
-                const ni = idxOf(nx, ny, size);
-                if (seen.has(ni)) continue;
-                if (bitGet(mineMask, ni)) continue;
-                seen.add(ni);
-                queue.push(ni);
+                const cx = i % size;
+                const cy = Math.floor(i / size);
+                const adj = countAdjacentMines({ x: cx, y: cy, size, mineMask });
+                if(adj === 0) {
+                    for (let dy = -1; dy <= 1; dy++) {
+                        for (let dx = -1; dx <= 1; dx++) {
+                            const nx = cx + dx;
+                            const ny = cy + dy;
+                            if (nx >= 0 && ny >= 0 && nx < size && ny < size) {
+                                const ni = idxOf(nx, ny, size);
+                                if(!seen.has(ni) && !bitGet(mineMask, ni)) {
+                                    seen.add(ni);
+                                    queue.push(ni);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                status = 1;
+                revealMask = bitSet(revealMask, i);
             }
         }
     }
@@ -248,22 +250,16 @@ function buildMinesweeperMessageOptions({ userId, lang, state, disabled = false 
                 const isMine = bitGet(mineMask, i);
                 const isFlagged = bitGet(flagMask, i);
 
+                const b = new ButtonBuilder();
+
                 if (isRevealed) {
                     const noopId = `msw:noop:${x}:${y}`;
                     if (isMine) {
-                        const b = new DangerButtonBuilder()
-                            .setEmoji(toEmojiObject('💣'))
-                            .setCustomId(noopId)
-                            .setDisabled(true);
-                        row.addComponents(b);
+                        b.setEmoji('💣').setStyle(ButtonStyle.Danger).setCustomId(noopId);
                     } else {
                         const adj = countAdjacentMines({ x, y, size, mineMask });
                         if (adj === 0) {
-                            const b = new SecondaryButtonBuilder()
-                                .setLabel(BLANK)
-                                .setCustomId(noopId)
-                                .setDisabled(true);
-                            row.addComponents(b);
+                            b.setLabel(BLANK).setStyle(ButtonStyle.Secondary).setCustomId(noopId);
                         } else {
                             const b = new SecondaryButtonBuilder()
                                 .setLabel(String(adj))
@@ -272,19 +268,19 @@ function buildMinesweeperMessageOptions({ userId, lang, state, disabled = false 
                             row.addComponents(b);
                         }
                     }
-                    continue;
                 }
+                else {
+                    // Hidden
+                    const b = new SecondaryButtonBuilder();
+                    if (isFlagged) b.setEmoji(toEmojiObject('🚩'));
+                    else b.setLabel(BLANK);
 
-                // Hidden
-                const b = new SecondaryButtonBuilder();
-                if (isFlagged) b.setEmoji(toEmojiObject('🚩'));
-                else b.setLabel(BLANK);
-
-                // Click action depends on current mode.
-                const act = isFlagMode ? 'g' : 'o';
-                b.setCustomId(`msw:${act}:${safeUserId}:${x}:${y}:${encoded}`);
-                b.setDisabled(isLocked);
-                row.addComponents(b);
+                    // Click action depends on current mode.
+                    const act = isFlagMode ? 'g' : 'o';
+                    b.setCustomId(`msw:${act}:${safeUserId}:${x}:${y}:${encoded}`);
+                    b.setDisabled(isLocked);
+                    row.addComponents(b);
+                }
             }
             return row;
         });
@@ -292,22 +288,25 @@ function buildMinesweeperMessageOptions({ userId, lang, state, disabled = false 
 
     // Controls
     container.addActionRowComponents(r => r.addComponents(
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`msw:mode:${safeUserId}:${isFlagMode ? 'open' : 'flag'}:${encoded}`)
-            .setEmoji(toEmojiObject(isFlagMode ? '🧩' : '🚩'))
+            .setEmoji(isFlagMode ? '🧩' : '🚩')
             .setLabel(isFlagMode
                 ? (tr(safeLang, 'GAMES_MINESWEEPER_OPEN_MODE') || 'Abrir')
                 : (tr(safeLang, 'GAMES_MINESWEEPER_FLAG_MODE') || 'Marcar'))
+            .setStyle(ButtonStyle.Secondary)
             .setDisabled(disabled),
-        new PrimaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`msw:n:${safeUserId}`)
-            .setEmoji(toEmojiObject(EMOJIS.refresh || '🔄'))
+            .setEmoji(EMOJIS.refresh || '🔄')
             .setLabel(tr(safeLang, 'GAMES_MINESWEEPER_NEW') || 'Nueva')
+            .setStyle(ButtonStyle.Primary)
             .setDisabled(disabled),
-        new DangerButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`msw:close:${safeUserId}:${encoded}`)
-            .setEmoji(toEmojiObject(EMOJIS.stopSign || '⛔'))
+            .setEmoji(EMOJIS.stopSign || '⛔')
             .setLabel(tr(safeLang, 'GAMES_MINESWEEPER_CLOSE') || 'Cerrar')
+            .setStyle(ButtonStyle.Danger)
             .setDisabled(disabled)
     ));
 

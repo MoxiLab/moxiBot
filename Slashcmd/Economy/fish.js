@@ -1,4 +1,5 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { getItemById } = require('../../Util/inventoryCatalog');
@@ -49,7 +50,7 @@ module.exports = {
         .setName('fish')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addStringOptions((opt) =>
+        .addStringOption((opt) =>
             opt
                 .setName('zona')
                 .setDescription('Fishing zone (id or alias). If omitted, picks an available one.')

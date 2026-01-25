@@ -7,7 +7,6 @@ const { getSettings: getBugSettings } = require('../../Util/bugStorage');
 const moxi = require('../../i18n');
 const logger = require('../../Util/logger');
 const debugHelper = require('../../Util/debugHelper');
-const { isOwnerOnlyModeEnabled, isOwnerUser, getOwnerOnlyPrefix } = require('../../Util/ownerOnlyMode');
 const { trackBotUserUsage } = require('../../Util/botUsageTracker');
 const { awardXpForMessage } = require('../../Util/levels');
 const afkStorage = require('../../Util/afkStorage');
@@ -71,20 +70,20 @@ function getLocalizedCommandMap(lang) {
 
   for (const cmd of values) {
     const canonicalName = (cmd && cmd.name) ? String(cmd.name).trim().toLowerCase() : '';
-    if (!canonicalName) continue;
+    if(canonicalName) {
+      const baseName = String(cmd.name);
+      const candidates = [
+        // Probar uppercase primero (la mayoría de keys están así)
+        `commands:CMD_${baseName.toUpperCase()}_NAME`,
+        `commands:CMD_${baseName}_NAME`,
+        `commands:CMD_${baseName.toLowerCase()}_NAME`,
+      ];
 
-    const baseName = String(cmd.name);
-    const candidates = [
-      // Probar uppercase primero (la mayoría de keys están así)
-      `commands:CMD_${baseName.toUpperCase()}_NAME`,
-      `commands:CMD_${baseName}_NAME`,
-      `commands:CMD_${baseName.toLowerCase()}_NAME`,
-    ];
-
-    for (const c of candidates) {
-      const t = moxi.translate(c, keyLang);
-      if (t && !isUntranslated(c, t)) {
-        addIfValid(t, canonicalName);
+      for (const c of candidates) {
+        const t = moxi.translate(c, keyLang);
+        if (t && !isUntranslated(c, t)) {
+          addIfValid(t, canonicalName);
+        }
       }
     }
   }
@@ -98,48 +97,49 @@ function uniqStrings(values) {
   const seen = new Set();
   for (const v of values) {
     const s = (v === undefined || v === null) ? '' : String(v).trim();
-    if (!s) continue;
-    if (seen.has(s)) continue;
-    seen.add(s);
-    out.push(s);
+    if(s && !seen.has(s)) {
+      seen.add(s);
+      out.push(s);
+    }
   }
   return out;
 }
 
 function matchPrefix(content, prefixes) {
   for (const p of prefixes) {
-    if (!p) continue;
-    const prefix = String(p);
-    if (prefix.length === 0) continue;
-
-    // Prefijo por mención del bot: <@id> o <@!id> (requiere espacio o fin)
-    if (/^<@!?\d+>$/.test(prefix)) {
-      if (content === prefix) return { matched: prefix, rest: '' };
-      if (content.startsWith(prefix + ' ')) return { matched: prefix, rest: content.slice(prefix.length).trimStart() };
-      continue;
-    }
-
-    // Prefijo tipo palabra: debe ir seguido de espacio o fin
-    if (/^[A-Za-z0-9_]+$/.test(prefix)) {
-      // 'moxi' y abreviatura 'mx' siempre activos y case-insensitive (MOXI/Mx/...)
-      const lowerPrefix = prefix.toLowerCase();
-      if (lowerPrefix === 'moxi' || lowerPrefix === 'mx') {
-        const lower = content.toLowerCase();
-        if (lower === lowerPrefix) return { matched: prefix, rest: '' };
-        if (lower.startsWith(lowerPrefix + ' ')) {
-          return { matched: prefix, rest: content.slice(lowerPrefix.length).trimStart() };
+    if(p) {
+      const prefix = String(p);
+      if(prefix.length > 0) {
+        // Prefijo por mención del bot: <@id> o <@!id> (requiere espacio o fin)
+        if (/^<@!?\d+>$/.test(prefix)) {
+          if (content === prefix) return { matched: prefix, rest: '' };
+          if (content.startsWith(prefix + ' ')) return { matched: prefix, rest: content.slice(prefix.length).trimStart() };
         }
-        continue;
+        else {
+          // Prefijo tipo palabra: debe ir seguido de espacio o fin
+          if (/^[A-Za-z0-9_]+$/.test(prefix)) {
+            // 'moxi' y abreviatura 'mx' siempre activos y case-insensitive (MOXI/Mx/...)
+            const lowerPrefix = prefix.toLowerCase();
+            if (lowerPrefix === 'moxi' || lowerPrefix === 'mx') {
+              const lower = content.toLowerCase();
+              if (lower === lowerPrefix) return { matched: prefix, rest: '' };
+              if (lower.startsWith(lowerPrefix + ' ')) {
+                return { matched: prefix, rest: content.slice(lowerPrefix.length).trimStart() };
+              }
+            }
+            else {
+              if (content === prefix) return { matched: prefix, rest: '' };
+              if (content.startsWith(prefix + ' ')) return { matched: prefix, rest: content.slice(prefix.length).trimStart() };
+            }
+          }
+          else {
+            // Prefijo de símbolo
+            if (content.startsWith(prefix)) {
+              return { matched: prefix, rest: content.slice(prefix.length) };
+            }
+          }
+        }
       }
-
-      if (content === prefix) return { matched: prefix, rest: '' };
-      if (content.startsWith(prefix + ' ')) return { matched: prefix, rest: content.slice(prefix.length).trimStart() };
-      continue;
-    }
-
-    // Prefijo de símbolo
-    if (content.startsWith(prefix)) {
-      return { matched: prefix, rest: content.slice(prefix.length) };
     }
   }
   return null;
@@ -149,13 +149,6 @@ Moxi.on("messageCreate", async (message) => {
 
   if (message.channel.type === 'dm') return;
   if (message.author.bot) return;
-
-  // Modo privado: solo owners pueden usar comandos y con prefijo dedicado.
-  // Importante: aquí cortamos temprano para evitar que miembros disparen handlers de comandos.
-  const ownerOnlyEnabled = isOwnerOnlyModeEnabled();
-  const requesterId = message.author?.id;
-  const requesterIsOwner = ownerOnlyEnabled ? await isOwnerUser({ client: Moxi, userId: requesterId }) : false;
-  if (ownerOnlyEnabled && !requesterIsOwner) return;
 
   const globalPrefixes = (Array.isArray(Config?.Bot?.Prefix) && Config.Bot.Prefix.length)
     ? Config.Bot.Prefix
@@ -192,11 +185,8 @@ Moxi.on("messageCreate", async (message) => {
   // - Si hay prefijo en DB, usar ese; si no, los globales
   // - Siempre permitir la mención del bot
   // - Siempre permitir 'moxi' y 'mx' (case-insensitive) como prefijo palabra
-  // Nota: antes se añadía '.' como prefijo "universal" por compat, lo que hacía
-  // que el bot siguiera respondiendo a '.' aunque el prefijo real fuese otro.
-  const prefixesToUse = ownerOnlyEnabled
-    ? uniqStrings([getOwnerOnlyPrefix({ fallback: globalPrefixes[0] }), ...mentionPrefixes])
-    : uniqStrings([...(settings?.Prefix ? [prefix] : globalPrefixes), ...mentionPrefixes, 'moxi', 'mx']);
+  // Nota: añadimos '.' como prefijo "universal" para comandos estilo .bag
+  const prefixesToUse = uniqStrings([...(settings?.Prefix ? [prefix] : globalPrefixes), '.', ...mentionPrefixes, 'moxi', 'mx']);
   const matched = matchPrefix(message.content, prefixesToUse);
 
   // IMPORTANTE: no queremos que ciertos comandos (p.ej. say) quiten el estado AFK del usuario.
@@ -348,8 +338,8 @@ async function handleAfkMentions(message) {
   const entries = [];
   for (const user of mentions) {
     const entry = await afkStorage.getAfkEntry(user.id, message.guild.id);
-    if (!entry) continue;
-    entries.push({ user, entry });
+
+    if(entry) entries.push({ user, entry });
   }
   if (!entries.length) return;
   const limit = Math.min(entries.length, 4);

@@ -1,5 +1,5 @@
-const { ContainerBuilder, PrimaryButtonBuilder, SecondaryButtonBuilder, MessageFlags } = require('discord.js');
-const { toEmojiObject } = require('./emojis');
+const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('./compatButtonBuilder');
 
 const Config = require('../Config');
 const moxi = require('../i18n');
@@ -57,13 +57,13 @@ function buildRpsMessageOptions({ userId, lang, resolved = null, disabled = fals
     }
 
     container.addActionRowComponents(r => r.addComponents(
-        new SecondaryButtonBuilder().setCustomId(`rps:pick:${safeUserId}:rock`).setEmoji(toEmojiObject('🪨')).setLabel(tr(safeLang, 'GAMES_RPS_ROCK') || 'Piedra').setDisabled(disabled || Boolean(resolved)),
-        new SecondaryButtonBuilder().setCustomId(`rps:pick:${safeUserId}:paper`).setEmoji(toEmojiObject('📄')).setLabel(tr(safeLang, 'GAMES_RPS_PAPER') || 'Papel').setDisabled(disabled || Boolean(resolved)),
-        new SecondaryButtonBuilder().setCustomId(`rps:pick:${safeUserId}:scissors`).setEmoji(toEmojiObject('✂️')).setLabel(tr(safeLang, 'GAMES_RPS_SCISSORS') || 'Tijera').setDisabled(disabled || Boolean(resolved))
+        new ButtonBuilder().setCustomId(`rps:pick:${safeUserId}:rock`).setEmoji('🪨').setLabel(tr(safeLang, 'GAMES_RPS_ROCK') || 'Piedra').setStyle(ButtonStyle.Secondary).setDisabled(disabled || Boolean(resolved)),
+        new ButtonBuilder().setCustomId(`rps:pick:${safeUserId}:paper`).setEmoji('📄').setLabel(tr(safeLang, 'GAMES_RPS_PAPER') || 'Papel').setStyle(ButtonStyle.Secondary).setDisabled(disabled || Boolean(resolved)),
+        new ButtonBuilder().setCustomId(`rps:pick:${safeUserId}:scissors`).setEmoji('✂️').setLabel(tr(safeLang, 'GAMES_RPS_SCISSORS') || 'Tijera').setStyle(ButtonStyle.Secondary).setDisabled(disabled || Boolean(resolved))
     ));
 
     container.addActionRowComponents(r => r.addComponents(
-        new PrimaryButtonBuilder().setCustomId(`rps:new:${safeUserId}`).setEmoji(toEmojiObject('🔄')).setLabel(tr(safeLang, 'GAMES_RPS_NEW') || 'Otra').setDisabled(disabled)
+        new ButtonBuilder().setCustomId(`rps:new:${safeUserId}`).setEmoji('🔄').setLabel(tr(safeLang, 'GAMES_RPS_NEW') || 'Otra').setStyle(ButtonStyle.Primary).setDisabled(disabled)
     ));
 
     return {

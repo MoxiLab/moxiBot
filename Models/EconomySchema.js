@@ -17,6 +17,7 @@ const EconomySchema = new mongoose.Schema({
     userId: { type: String, required: true, unique: true },
     balance: { type: Number, default: 0 }, // Moneda principal
     bank: { type: Number, default: 0 }, // Banco
+    bankLevel: { type: Number, default: 0 }, // Nivel de banco (capacidad mejorable)
     sakuras: { type: Number, default: 0 }, // Moneda secundaria
     inventory: {
         type: [{

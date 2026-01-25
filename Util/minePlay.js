@@ -1,8 +1,9 @@
-const { ContainerBuilder, DangerButtonBuilder, MessageFlags, PrimaryButtonBuilder, SecondaryButtonBuilder } = require('discord.js');
+const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('./compatButtonBuilder');
 
 const { Bot } = require('../Config');
 const moxi = require('../i18n');
-const { EMOJIS, toEmojiObject } = require('./emojis');
+const { EMOJIS } = require('./emojis');
 const { getItemById } = require('./inventoryCatalog');
 const { awardBalance, formatDuration, getOrCreateEconomy } = require('./economyCore');
 const { claimRateLimit } = require('./actionRateLimit');
@@ -13,6 +14,7 @@ const { getZonesForKind, zoneName } = require('./zonesView');
 const { hasInventoryItem } = require('./fishView');
 const { scaleRange, randInt, chance } = require('./activityUtils');
 const { buildNoticeContainer } = require('./v2Notice');
+const { buildRemindButton } = require('./cooldownReminderUI');
 
 // Anti-spam: no hay cooldown fijo por ejecución; solo se bloquea si se spamea.
 const MINE_WINDOW_MS = 35 * 1000;
@@ -103,9 +105,10 @@ function buildMinePlayMessageOptions({ userId, zoneId, scene, disabled = false, 
 
     if (sc.kind === 'methods') {
         const row = (sc.methods || []).slice(0, 3).map(m =>
-            new SecondaryButtonBuilder()
+            new ButtonBuilder()
                 .setCustomId(`mine:do:${safeUserId}:${zId}:m:${String(m.id)}:${String(m.multiplier)}`)
-                .setEmoji(toEmojiObject(m.emoji || '⛏️'))
+                .setStyle(ButtonStyle.Secondary)
+                .setEmoji(m.emoji || '⛏️')
                 .setLabel(String(m.name || m.id))
                 .setDisabled(disabled)
         );
@@ -115,9 +118,10 @@ function buildMinePlayMessageOptions({ userId, zoneId, scene, disabled = false, 
     if (sc.kind === 'doors') {
         const seed = Number.isFinite(sc.seed) ? sc.seed : randInt(0, 2);
         const row = (sc.doors || []).slice(0, 3).map((d, idx) =>
-            (idx === 1 ? new PrimaryButtonBuilder() : new SecondaryButtonBuilder())
+            new ButtonBuilder()
                 .setCustomId(`mine:do:${safeUserId}:${zId}:d:${String(d.id)}:${seed}`)
-                .setEmoji(toEmojiObject(d.emoji || '🕳️'))
+                .setStyle(idx === 1 ? ButtonStyle.Primary : ButtonStyle.Secondary)
+                .setEmoji(d.emoji || '🕳️')
                 .setLabel(String(d.label || d.id))
                 .setDisabled(disabled)
         );
@@ -127,9 +131,10 @@ function buildMinePlayMessageOptions({ userId, zoneId, scene, disabled = false, 
     if (sc.kind === 'wires') {
         const seed = Number.isFinite(sc.seed) ? sc.seed : randInt(0, 3);
         const row = (sc.wires || []).slice(0, 4).map(w =>
-            new SecondaryButtonBuilder()
+            new ButtonBuilder()
                 .setCustomId(`mine:do:${safeUserId}:${zId}:w:${String(w.id)}:${seed}`)
-                .setEmoji(toEmojiObject(w.emoji || '🧨'))
+                .setStyle(ButtonStyle.Secondary)
+                .setEmoji(w.emoji || '🧨')
                 .setLabel(String(w.label || w.id))
                 .setDisabled(disabled)
         );
@@ -137,13 +142,15 @@ function buildMinePlayMessageOptions({ userId, zoneId, scene, disabled = false, 
     }
 
     container.addActionRowComponents(r => r.addComponents(
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`mine:play:${safeUserId}:${zId}`)
-            .setEmoji(toEmojiObject(EMOJIS.refresh || '🔄'))
+            .setEmoji(EMOJIS.refresh || '🔄')
+            .setStyle(ButtonStyle.Secondary)
             .setDisabled(disabled),
-        new DangerButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`mine:closeplay:${safeUserId}:${zId}`)
-            .setEmoji(toEmojiObject(EMOJIS.stopSign || '⛔'))
+            .setEmoji(EMOJIS.stopSign || '⛔')
+            .setStyle(ButtonStyle.Danger)
             .setDisabled(disabled)
     ));
 
@@ -248,15 +255,27 @@ async function resolveMinePlay({ userId, zoneId, mode, choiceId, seedOrMult, lan
     return { ...res, zone, actionLine, failed: false, drops };
 }
 
-function buildMineResultPayload({ zone, res, lang } = {}) {
+function buildMineResultPayload({ zone, res, lang, userId } = {}) {
     const emoji = zone?.emoji || '⛏️';
     const t = (k, vars) => trMine(lang, k, vars);
     const displayZone = zone ? zoneName({ kind: 'mine', zone, lang: lang || process.env.DEFAULT_LANG || 'es-ES' }) : t('ZONE_FALLBACK');
 
     if (!res?.ok && res?.reason === 'cooldown') {
+        const fireAt = Date.now() + (Number(res.nextInMs) || 0);
+        const container = buildNoticeContainer({
+            emoji: '⏳',
+            title: t('COOLDOWN_TITLE'),
+            text: t('COOLDOWN_TEXT', { time: formatDuration(res.nextInMs) }),
+        });
+        if (userId) {
+            container.addSeparatorComponents(s => s.setDivider(true));
+            container.addActionRowComponents(r => r.addComponents(
+                buildRemindButton({ type: 'mine', fireAt, userId })
+            ));
+        }
         return {
             content: '',
-            components: [buildNoticeContainer({ emoji: '⏳', title: t('COOLDOWN_TITLE'), text: t('COOLDOWN_TEXT', { time: formatDuration(res.nextInMs) }) })],
+            components: [container],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
         };
     }

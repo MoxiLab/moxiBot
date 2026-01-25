@@ -1,4 +1,5 @@
-const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ContainerBuilder, MessageFlags, ActionRowBuilder, PrimaryButtonBuilder, SecondaryButtonBuilder } = require('discord.js');
+const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ContainerBuilder, MessageFlags, ActionRowBuilder, ButtonStyle } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const LevelSystem = require('../../Global/Helpers/LevelSystem');
 const { Bot } = require('../../Config');
 const moxi = require('../../i18n');
@@ -83,8 +84,8 @@ module.exports = {
                 .addSeparatorComponents(s => s.setDivider(true))
                 .addTextDisplayComponents(c => c.setContent(description));
             const row = new ActionRowBuilder().addComponents(
-                new PrimaryButtonBuilder().setCustomId('levels_refresh').setLabel(t('LEVEL_REFRESH')),
-                new SecondaryButtonBuilder().setCustomId('levels_close').setLabel(t('LEVEL_CLOSE'))
+                new ButtonBuilder().setCustomId('levels_refresh').setLabel(t('LEVEL_REFRESH')).setStyle(ButtonStyle.Primary),
+                new ButtonBuilder().setCustomId('levels_close').setLabel(t('LEVEL_CLOSE')).setStyle(ButtonStyle.Secondary)
             );
             container.addActionRowComponents(row);
             debugHelper.log('levels', 'command replied', { guildID, requesterId, sortBy, total: leaderboard.length });

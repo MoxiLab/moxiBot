@@ -1,4 +1,5 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType, PermissionFlagsBits, ContainerBuilder, MessageFlags } = require('discord.js');
+const { PermissionFlagsBits, ContainerBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 
 const FOURTEEN_DAYS_MS = 14 * 24 * 60 * 60 * 1000;
@@ -12,10 +13,8 @@ async function purgeRecentMessages(channel, amount, { keepPinned = true } = {}) 
   const fetched = await channel.messages.fetch({ limit: fetchLimit });
 
   const candidates = [];
-  for (const msg of fetched.values()) {
-    if (keepPinned && msg.pinned) continue;
-    candidates.push(msg);
-    if (candidates.length >= amount) break;
+  for(let i = 0, msg = fetched.at(i); i < amount; i++, msg = fetched.at(i)) {
+    if(!keepPinned || !msg.pinned) candidates.push(msg);
   }
 
   const cutoff = Date.now() - FOURTEEN_DAYS_MS;
@@ -61,15 +60,14 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('cls')
     .setDescription('Limpia el chat borrando los mensajes recientes (máx 100)')
-    .addIntegerOptions(option =>
+    .addIntegerOption(option =>
       option.setName('cantidad')
         .setDescription('Cantidad de mensajes a borrar (1-100)')
         .setMinValue(1)
         .setMaxValue(100)
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
-    .setContexts(InteractionContextType.Guild)
-    .setIntegrationTypes(ApplicationIntegrationType.GuildInstall),
+    .setDMPermission(false),
 
   async run(Moxi, interaction) {
     const guildId = interaction.guildId || interaction.guild?.id;
@@ -85,11 +83,39 @@ module.exports = {
     await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
     try {
-      const result = await purgeRecentMessages(interaction.channel, amount, { keepPinned: true });
-      const deletedCount = (result.deletedCount === 0 && result.attempted > 0) ? result.attempted : result.deletedCount;
+      const limit = Math.min(100, Math.max(1, amount));
+      const channel = interaction.channel;
+
+      const me = interaction.guild?.members?.me || await interaction.guild?.members?.fetchMe?.().catch(() => null);
+      const botPerms = me ? channel.permissionsFor(me) : null;
+      if (!botPerms?.has(PermissionFlagsBits.ManageMessages)) {
+        return interaction.editReply({ content: 'No puedo borrar mensajes: me falta **Gestionar mensajes** en este canal.' });
+      }
+      if (botPerms && !botPerms.has(PermissionFlagsBits.ReadMessageHistory)) {
+        return interaction.editReply({ content: 'No puedo borrar mensajes: me falta **Leer el historial de mensajes** en este canal.' });
+      }
+
+      const fetched = await channel.messages.fetch({ limit }).catch(() => null);
+      const cutoff = Date.now() - (14 * 24 * 60 * 60 * 1000);
+
+      const eligible = fetched
+        ? fetched.filter((m) => !m.pinned && (m.createdTimestamp || 0) > cutoff)
+        : null;
+
+      const deleted = eligible ? await channel.bulkDelete(eligible, true) : await channel.bulkDelete(limit, true);
+      const deletedCount = deleted?.size ?? 0;
+      const fetchedCount = fetched?.size ?? limit;
+      const skippedOldOrPinned = eligible ? Math.max(0, fetchedCount - eligible.size) : 0;
+
       const container = new ContainerBuilder()
         .setAccentColor(0x00bfff)
         .addTextDisplayComponents(c => c.setContent(`🧹 Se han borrado **${deletedCount}** mensajes.`));
+
+      if (skippedOldOrPinned > 0) {
+        container.addTextDisplayComponents(c => c.setContent(`Se omitieron **${skippedOldOrPinned}** por estar fijados o ser de hace más de 14 días.`));
+      } else if (deletedCount === 0) {
+        container.addTextDisplayComponents(c => c.setContent('No se pudo borrar nada. Si los mensajes son antiguos (+14 días), Discord no permite borrarlos en masa.'));
+      }
 
       const msg = await interaction.channel.send({
         content: '',

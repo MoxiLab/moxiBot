@@ -1,4 +1,5 @@
-const { MessageFlags, ContainerBuilder, DangerButtonBuilder, MediaGalleryBuilder, MediaGalleryItemBuilder } = require('discord.js');
+const { MessageFlags, ContainerBuilder, ButtonStyle, MediaGalleryBuilder, MediaGalleryItemBuilder } = require('discord.js');
+const { ButtonBuilder } = require('../../../../Util/compatButtonBuilder');
 const moxi = require('../../../../i18n');
 const { Bot } = require('../../../../Config');
 const { EMOJIS } = require('../../../../Util/emojis');
@@ -31,9 +32,6 @@ module.exports = async function timerModalHandler(interaction, Moxi, logger) {
         return true;
     }
 
-    const startTime = Date.now();
-    const endTime = startTime + minutos * 60 * 1000;
-    const msToWait = Math.max(0, endTime - Date.now());
     const timerImageUrl = `https://dummyimage.com/600x200/222/fff&text=⏰+${minutos}+minutos`;
     const container = new ContainerBuilder()
         .setAccentColor(Bot.AccentColor)
@@ -56,9 +54,10 @@ module.exports = async function timerModalHandler(interaction, Moxi, logger) {
         .addSeparatorComponents(s => s.setDivider(true))
         .addActionRowComponents(row =>
             row.addComponents(
-                new DangerButtonBuilder()
+                new ButtonBuilder()
                     .setCustomId('cancel_timer')
                     .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
+                    .setStyle(ButtonStyle.Danger)
             )
         )
         .addSeparatorComponents(s => s.setDivider(true))
@@ -68,16 +67,27 @@ module.exports = async function timerModalHandler(interaction, Moxi, logger) {
 
     timerStorage.setTimer(guildId, channelId, userId, minutos, async () => {
         try {
-            await interaction.channel.send(`⏰ ¡Tu temporizador de **${minutos} minutos** ha terminado!`);
-        } catch { }
+            const done = new ContainerBuilder()
+                .setAccentColor(Bot.AccentColor)
+                .addTextDisplayComponents(c =>
+                    c.setContent(`⏰ <@${userId}> ¡Tu temporizador de ${minutos} ${minutos === 1 ? 'minuto' : 'minutos'} ha terminado!`)
+                );
+
+            await interaction.channel.send({
+                components: [done],
+                flags: MessageFlags.IsComponentsV2,
+            });
+        } catch (err) {
+            try {
+                if (logger && typeof logger.error === 'function') {
+                    logger.error('timer modal: error enviando aviso de fin', err);
+                } else {
+                    console.error('[timer modal] Error enviando aviso de fin:', err);
+                }
+            } catch { }
+        }
     });
 
-    setTimeout(async () => {
-        try {
-            await interaction.channel.send(`⏰ ¡Tu temporizador de **${minutos} minutos** ha terminado!`);
-        } catch { }
-    }, msToWait);
-
-    await interaction.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
+    await interaction.reply({ components: [container], flags: MessageFlags.IsComponentsV2 });
     return true;
 };

@@ -3,6 +3,7 @@ const { MessageFlags } = require('discord.js');
 const moxi = require('../../../../i18n');
 const { EMOJIS } = require('../../../../Util/emojis');
 const { buildNoticeContainer } = require('../../../../Util/v2Notice');
+const { buildRemindButton } = require('../../../../Util/cooldownReminderUI');
 const { awardBalance, formatDuration, getOrCreateEconomy } = require('../../../../Util/economyCore');
 const { claimRateLimit } = require('../../../../Util/actionRateLimit');
 const { randInt, chance } = require('../../../../Util/activityUtils');
@@ -105,13 +106,19 @@ module.exports = async function crimeButtons(interaction, Moxi, logger) {
         if (!shouldShowCooldownNotice({ userId, key: 'crime' })) {
             return true;
         }
+        const fireAt = Date.now() + (Number(cd.nextInMs) || 0);
+        const container = buildNoticeContainer({
+            emoji: '⏳',
+            title: 'Crime • Cooldown',
+            text: `Aún es muy pronto. Vuelve en **${formatDuration(cd.nextInMs)}**.`,
+        });
+        container.addSeparatorComponents(s => s.setDivider(true));
+        container.addActionRowComponents(r => r.addComponents(
+            buildRemindButton({ type: 'crime', fireAt, userId })
+        ));
         const payload = {
             content: '',
-            components: [buildNoticeContainer({
-                emoji: '⏳',
-                title: 'Crime • Cooldown',
-                text: `Aún es muy pronto. Vuelve en **${formatDuration(cd.nextInMs)}**.`,
-            })],
+            components: [container],
             flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
             allowedMentions: { repliedUser: false },
         };

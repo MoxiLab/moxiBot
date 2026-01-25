@@ -7,7 +7,7 @@ const debugHelper = require('../../Util/debugHelper');
 
 module.exports = {
     name: 'restart',
-    alias: ['reboot', 'reiniciar'],
+    alias: ['reboot', 'reiniciar', 'reload'],
     Category: function (lang) {
         lang = lang || 'es-ES';
         return moxi.translate('commands:CATEGORY_ROOT', lang);

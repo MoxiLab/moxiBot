@@ -1,17 +1,10 @@
 
-const {
-    ContainerBuilder,
-    MessageFlags,
-    MediaGalleryBuilder,
-    MediaGalleryItemBuilder,
-    DangerButtonBuilder,
-    SecondaryButtonBuilder,
-    PrimaryButtonBuilder,
-    LinkButtonBuilder,
-} = require('discord.js');
+const { ContainerBuilder, ButtonStyle, MessageFlags, MediaGalleryBuilder, MediaGalleryItemBuilder } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { Bot } = require('../../Config');
+const { isFlagEnabled } = require('../../Util/debug');
 const timerStorage = require('../../Util/timerStorage');
 
 function buildListContainer(Moxi, message, allTimers, lang = 'es-ES') {
@@ -43,16 +36,17 @@ function buildListContainer(Moxi, message, allTimers, lang = 'es-ES') {
         );
         container.addActionRowComponents(row =>
             row.addComponents(
-                new DangerButtonBuilder()
+                new ButtonBuilder()
                     .setCustomId(`cancel_timer_${t.guildId}_${t.channelId}`)
                     .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
-                    ,
-                new SecondaryButtonBuilder()
+                    .setStyle(ButtonStyle.Danger),
+                new ButtonBuilder()
                     .setCustomId(`refresh_timer_list_${t.guildId}_${t.channelId}`)
                     .setLabel(moxi.translate('REFRESH', lang) || 'Refrescar')
-                    ,
-                new LinkButtonBuilder()
+                    .setStyle(ButtonStyle.Secondary),
+                new ButtonBuilder()
                     .setLabel(moxi.translate('GO_TO_SERVER', lang) || 'Ir al servidor')
+                    .setStyle(ButtonStyle.Link)
                     .setURL(`https://discord.com/channels/${t.guildId}`)
             )
         );
@@ -97,9 +91,9 @@ module.exports = {
             }
             const container = buildListContainer(Moxi, message, allTimers, lang);
             if (message && message.reply) {
-                return message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
+                return message.reply({ components: [container], flags: MessageFlags.IsComponentsV2 });
             } else if (message && message.send) {
-                return message.send({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
+                return message.send({ components: [container], flags: MessageFlags.IsComponentsV2 });
             }
         }
         const guildId = message.guild?.id;
@@ -134,16 +128,17 @@ module.exports = {
                     .addSeparatorComponents(s => s.setDivider(true))
                     .addActionRowComponents(row =>
                         row.addComponents(
-                            new PrimaryButtonBuilder()
+                            new ButtonBuilder()
                                 .setCustomId('nuevo_timer')
                                 .setLabel('Nuevo temporizador')
+                                .setStyle(ButtonStyle.Primary)
                         )
                     )
                     .addSeparatorComponents(s => s.setDivider(true))
                     .addTextDisplayComponents(c =>
                         c.setContent(`${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`)
                     );
-                return message.reply({ content: '', components: [helpContainer], flags: MessageFlags.IsComponentsV2 });
+                return message.reply({ components: [helpContainer], flags: MessageFlags.IsComponentsV2 });
             }
             let desc = '';
             if (current) {
@@ -168,16 +163,17 @@ module.exports = {
                 .addSeparatorComponents(s => s.setDivider(true))
                 .addActionRowComponents(row =>
                     row.addComponents(
-                        new PrimaryButtonBuilder()
+                        new ButtonBuilder()
                             .setCustomId('nuevo_timer')
                             .setLabel('Nuevo temporizador')
+                            .setStyle(ButtonStyle.Primary)
                     )
                 )
                 .addSeparatorComponents(s => s.setDivider(true))
                 .addTextDisplayComponents(c =>
                     c.setContent(`${EMOJIS.copyright} ${Moxi.user.username} • ${new Date().getFullYear()}`)
                 );
-            return message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
+            return message.reply({ components: [container], flags: MessageFlags.IsComponentsV2 });
         }
 
         // Si el argumento es un número, crear el temporizador
@@ -189,8 +185,6 @@ module.exports = {
             return message.reply('Ya hay un temporizador activo en este canal. Espera a que termine o cancélalo antes de crear uno nuevo.');
         }
 
-        const endTime = Date.now() + minutos * 60 * 1000;
-        const msToWait = Math.max(0, endTime - Date.now());
         const timerImageUrl = `https://dummyimage.com/600x200/222/fff&text=⏰+${minutos}+minutos`;
         const container = new ContainerBuilder()
             .setAccentColor(Bot.AccentColor)
@@ -213,9 +207,10 @@ module.exports = {
             .addSeparatorComponents(s => s.setDivider(true))
             .addActionRowComponents(row =>
                 row.addComponents(
-                    new DangerButtonBuilder()
+                    new ButtonBuilder()
                         .setCustomId('cancel_timer')
                         .setLabel(moxi.translate('CANCEL', lang) || 'Cancelar')
+                        .setStyle(ButtonStyle.Danger)
                 )
             )
             .addSeparatorComponents(s => s.setDivider(true))
@@ -226,16 +221,21 @@ module.exports = {
         timerStorage.setTimer(guildId, channelId, userId, minutos, async () => {
             if (TIMER_DEBUG) console.log('[TIMER_DEBUG] Temporizador finalizado para canal:', channelId);
             try {
-                await message.channel.send(`⏰ ¡Tu temporizador de **${minutos} minutos** ha terminado!`);
-            } catch { }
+                const done = new ContainerBuilder()
+                    .setAccentColor(Bot.AccentColor)
+                    .addTextDisplayComponents(c =>
+                        c.setContent(`⏰ <@${userId}> ¡Tu temporizador de ${minutos} ${minutos === 1 ? 'minuto' : 'minutos'} ha terminado!`)
+                    );
+
+                await message.channel.send({
+                    components: [done],
+                    flags: MessageFlags.IsComponentsV2,
+                });
+            } catch (err) {
+                if (TIMER_DEBUG) console.error('[TIMER_DEBUG] Error enviando aviso de fin:', err);
+            }
         });
 
-        setTimeout(async () => {
-            try {
-                await message.channel.send(`⏰ ¡Tu temporizador de **${minutos} minutos** ha terminado!`);
-            } catch { }
-        }, msToWait);
-
-        await message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 });
+        await message.reply({ components: [container], flags: MessageFlags.IsComponentsV2 });
     }
 };
