@@ -2,7 +2,8 @@ const {
     MessageFlags,
     ContainerBuilder,
     TextDisplayBuilder,
-    SeparatorBuilder
+    SeparatorBuilder,
+    ChannelType
 } = require("discord.js");
 
 const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
@@ -130,6 +131,27 @@ module.exports = {
             const voiceErr = ensureVoice({ requireSameChannel: true });
             if (voiceErr) return interaction.reply(voiceErr);
 
+            // Permisos del bot en el canal de voz (si faltan, se une pero no suena o ni conecta)
+            try {
+                const voiceChannel = interaction.member?.voice?.channel;
+                const me = interaction.guild?.members?.me;
+                const perms = voiceChannel && me ? voiceChannel.permissionsFor(me) : null;
+                if (perms) {
+                    const canConnect = perms.has('Connect', true);
+                    const canSpeak = perms.has('Speak', true);
+                    if (!canConnect || !canSpeak) {
+                        debugHelper.warn('play', 'missing voice perms', { guildId, requesterId, canConnect, canSpeak });
+                        await interaction.reply({
+                            components: [buildV2Notice(moxi.translate('MUSIC_MISSING_PERMS', lang) || 'No tengo permisos para Conectar/Hablar en ese canal.')],
+                            flags: v2Flags(),
+                        });
+                        return;
+                    }
+                }
+            } catch {
+                // best-effort
+            }
+
             await interaction.deferReply({ flags: v2Flags() });
             const requestedTrack = interaction.options.getString("track");
             const lugar = interaction.options.getString("platform");
@@ -137,12 +159,24 @@ module.exports = {
 
             const source = lugar === 'youtube' ? 'ytsearch' : 'spotify';
             const res = await Moxi.poru.resolve({ query: requestedTrack, source, requester: interaction.member });
-            debugHelper.log('play', 'resolve result', { guildId, requesterId, loadType: res.loadType });
+            const rawLoadType = String(res?.loadType ?? '');
+            const loadTypeLower = rawLoadType.toLowerCase();
+            const loadTypeUpper = rawLoadType.toUpperCase(); 
+            const isLoadFailed = loadTypeLower === 'error' || loadTypeUpper === 'LOAD_FAILED';
+            const isNoMatches = loadTypeLower === 'empty' || loadTypeUpper === 'NO_MATCHES';
+            const isPlaylistLoaded = loadTypeLower === 'playlist' || loadTypeUpper === 'PLAYLIST_LOADED';
 
-            if (res.loadType === "LOAD_FAILED") {
+            debugHelper.log('play', 'resolve result', {
+                guildId,
+                requesterId,
+                loadType: rawLoadType,
+                compat: { isLoadFailed, isNoMatches, isPlaylistLoaded }
+            });
+
+            if (isLoadFailed) {
                 debugHelper.warn('play', 'resolve failed', { guildId, requesterId });
                 return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_LOAD_FAILED', lang))], flags: v2Flags() });
-            } else if (res.loadType === "NO_MATCHES") {
+            } else if (isNoMatches) {
                 debugHelper.warn('play', 'resolve no matches', { guildId, requesterId });
                 return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_NO_SOURCE_FOUND', lang))], flags: v2Flags() });
             }
@@ -154,15 +188,36 @@ module.exports = {
                 deaf: true,
             });
 
-            if (res.loadType === "PLAYLIST_LOADED") {
-                debugHelper.log('play', 'playlist loaded', { guildId, requesterId, playlist: res.playlistInfo?.name, count: res.tracks.length });
+            // Si es un Stage channel, el bot puede quedar "suppressed" y no sonar.
+            // Best-effort: intentar quitar suppress o pedir speak.
+            try {
+                const voiceChannel = interaction.member?.voice?.channel;
+                const me = interaction.guild?.members?.me;
+                if (voiceChannel?.type === ChannelType.GuildStageVoice && me?.voice) {
+                    // En stage, el bot puede entrar como "audience".
+                    if (typeof me.voice.setSuppressed === 'function') {
+                        await me.voice.setSuppressed(false).catch(() => null);
+                        debugHelper.log('play', 'stage unsuppress attempted', { guildId, requesterId });
+                    }
+                    if (typeof me.voice.setRequestToSpeak === 'function') {
+                        await me.voice.setRequestToSpeak(true).catch(() => null);
+                        debugHelper.log('play', 'stage requestToSpeak attempted', { guildId, requesterId });
+                    }
+                }
+            } catch {
+                // best-effort
+            }
+
+            if (isPlaylistLoaded) {
+                const playlistName = res?.playlistInfo?.name || res?.playlistInfo?.title || 'Playlist';
+                debugHelper.log('play', 'playlist loaded', { guildId, requesterId, playlist: playlistName, count: res.tracks.length });
                 for (const track of res.tracks) {
                     track.info.requester = interaction.user;
                     player.queue.add(track);
                 }
 
                 interaction.editReply({
-                    components: [buildV2Notice(moxi.translate('MUSIC_PLAYLIST_LOADED', lang, { name: res.playlistInfo.name, count: res.tracks.length }))],
+                    components: [buildV2Notice(moxi.translate('MUSIC_PLAYLIST_LOADED', lang, { name: playlistName, count: res.tracks.length }))],
                     flags: v2Flags()
                 });
 
@@ -179,7 +234,13 @@ module.exports = {
                     interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_TRACK_INVALID', lang))], flags: v2Flags() })
                 }
             }
-            if (!player.isPlaying && player.isConnected) player.play();
+            if (!player.isPlaying) {
+                try {
+                    await player.play();
+                } catch (e) {
+                    debugHelper.error('play', 'player.play failed', { guildId, requesterId, message: e?.message || String(e) });
+                }
+            }
             if (player.isPlaying) {
                 debugHelper.log('play', 'player playing', { guildId, requesterId });
             }
