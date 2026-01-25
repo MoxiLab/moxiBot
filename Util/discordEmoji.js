@@ -24,13 +24,28 @@ function toComponentEmoji(input) {
     const raw = String(input).trim();
     if (!raw) return undefined;
 
-    const m = raw.match(/^<(?:(a):)?([\w~]{2,32}):(\d{17,21})>$/);
-    if (m) {
-        return {
-            animated: Boolean(m[1]),
-            name: m[2],
-            id: m[3],
-        };
+    // Custom emoji: <a:name:id> o <:name:id>
+    // Evitamos regex aquí porque algunos entornos/builds están resultando sorprendentes con escapes.
+    if (raw.startsWith('<') && raw.endsWith('>') && raw.includes(':')) {
+        const inner = raw.slice(1, -1); // ':name:id' o 'a:name:id'
+        const parts = inner.split(':');
+        if (parts.length === 3) {
+            const isAnimated = parts[0] === 'a';
+            const isStatic = parts[0] === '';
+            if (isAnimated || isStatic) {
+                const name = String(parts[1] || '');
+                const id = String(parts[2] || '');
+
+                // Validaciones mínimas (Discord): name 2..32 y [A-Za-z0-9_~], id 17..21 dígitos
+                if (!/^[\w~]{2,32}$/.test(name)) return undefined;
+                if (!/^\d{17,21}$/.test(id)) return undefined;
+
+                return { animated: isAnimated, name, id };
+            }
+        }
+
+        // Si parecía custom pero no encaja, mejor omitirlo para no mandar `name: "<:...>"`.
+        if (raw.startsWith('<:') || raw.startsWith('<a:')) return undefined;
     }
 
     return { name: raw };

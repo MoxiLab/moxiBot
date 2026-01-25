@@ -17,7 +17,13 @@ const FEATURE_ENV = {
 };
 
 function normalizeEnvValue(value) {
-    return String(value ?? '').trim();
+    if (value === true) return '1';
+    if (value === false) return '0';
+    const raw = String(value ?? '').trim();
+    const lower = raw.toLowerCase();
+    if (lower === 'true' || lower === 'yes' || lower === 'on') return '1';
+    if (lower === 'false' || lower === 'no' || lower === 'off') return '0';
+    return raw;
 }
 
 function parseList(value) {
