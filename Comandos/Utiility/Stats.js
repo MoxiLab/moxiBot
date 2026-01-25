@@ -1,4 +1,5 @@
-const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ContainerBuilder, MessageFlags, PrimaryButtonBuilder, SecondaryButtonBuilder } = require('discord.js');
+const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ContainerBuilder, MessageFlags, ActionRowBuilder, ButtonStyle } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const moxi = require('../../i18n');
 const LevelSystem = require('../../Global/Helpers/LevelSystem');
 const { Bot } = require('../../Config');
@@ -92,12 +93,11 @@ module.exports = {
                     `📅 **${t('STATS_INFO')}**\n` +
                     `${t('STATS_MEMBER_SINCE')}: ${formatRelativeTime(stats.joinedAt, language)}`
                 ));
-            container.addActionRowComponents(row =>
-                row.addComponents(
-                    new PrimaryButtonBuilder().setCustomId('stats_refresh').setLabel(t('LEVEL_REFRESH')),
-                    new SecondaryButtonBuilder().setCustomId('stats_close').setLabel(t('LEVEL_CLOSE'))
-                )
+            const row = new ActionRowBuilder().addComponents(
+                new ButtonBuilder().setCustomId('stats_refresh').setLabel(t('LEVEL_REFRESH')).setStyle(ButtonStyle.Primary),
+                new ButtonBuilder().setCustomId('stats_close').setLabel(t('LEVEL_CLOSE')).setStyle(ButtonStyle.Secondary)
             );
+            container.addActionRowComponents(row);
             debugHelper.log('stats', 'command replied', { guildID, requesterId, targetId: target.id });
             await message.reply({ content: '', components: [container], flags: MessageFlags.IsComponentsV2, allowedMentions: { repliedUser: false } });
 

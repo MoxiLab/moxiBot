@@ -1,14 +1,9 @@
-const {
-    ContainerBuilder,
-    DangerButtonBuilder,
-    PrimaryButtonBuilder,
-    SecondaryButtonBuilder,
-    MessageFlags,
-} = require('discord.js');
+const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('./compatButtonBuilder');
 
 const Config = require('../Config');
 const moxi = require('../i18n');
-const { EMOJIS, toEmojiObject } = require('./emojis');
+const { EMOJIS } = require('./emojis');
 
 const DEFAULT_SIZE = 5;
 const DEFAULT_MINES = 5;
@@ -255,22 +250,16 @@ function buildMinesweeperMessageOptions({ userId, lang, state, disabled = false 
                 const isMine = bitGet(mineMask, i);
                 const isFlagged = bitGet(flagMask, i);
 
+                const b = new ButtonBuilder();
+
                 if (isRevealed) {
                     const noopId = `msw:noop:${x}:${y}`;
                     if (isMine) {
-                        const b = new DangerButtonBuilder()
-                            .setEmoji(toEmojiObject('💣'))
-                            .setCustomId(noopId)
-                            .setDisabled(true);
-                        row.addComponents(b);
+                        b.setEmoji('💣').setStyle(ButtonStyle.Danger).setCustomId(noopId);
                     } else {
                         const adj = countAdjacentMines({ x, y, size, mineMask });
                         if (adj === 0) {
-                            const b = new SecondaryButtonBuilder()
-                                .setLabel(BLANK)
-                                .setCustomId(noopId)
-                                .setDisabled(true);
-                            row.addComponents(b);
+                            b.setLabel(BLANK).setStyle(ButtonStyle.Secondary).setCustomId(noopId);
                         } else {
                             const b = new SecondaryButtonBuilder()
                                 .setLabel(String(adj))
@@ -299,22 +288,25 @@ function buildMinesweeperMessageOptions({ userId, lang, state, disabled = false 
 
     // Controls
     container.addActionRowComponents(r => r.addComponents(
-        new SecondaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`msw:mode:${safeUserId}:${isFlagMode ? 'open' : 'flag'}:${encoded}`)
-            .setEmoji(toEmojiObject(isFlagMode ? '🧩' : '🚩'))
+            .setEmoji(isFlagMode ? '🧩' : '🚩')
             .setLabel(isFlagMode
                 ? (tr(safeLang, 'GAMES_MINESWEEPER_OPEN_MODE') || 'Abrir')
                 : (tr(safeLang, 'GAMES_MINESWEEPER_FLAG_MODE') || 'Marcar'))
+            .setStyle(ButtonStyle.Secondary)
             .setDisabled(disabled),
-        new PrimaryButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`msw:n:${safeUserId}`)
-            .setEmoji(toEmojiObject(EMOJIS.refresh || '🔄'))
+            .setEmoji(EMOJIS.refresh || '🔄')
             .setLabel(tr(safeLang, 'GAMES_MINESWEEPER_NEW') || 'Nueva')
+            .setStyle(ButtonStyle.Primary)
             .setDisabled(disabled),
-        new DangerButtonBuilder()
+        new ButtonBuilder()
             .setCustomId(`msw:close:${safeUserId}:${encoded}`)
-            .setEmoji(toEmojiObject(EMOJIS.stopSign || '⛔'))
+            .setEmoji(EMOJIS.stopSign || '⛔')
             .setLabel(tr(safeLang, 'GAMES_MINESWEEPER_CLOSE') || 'Cerrar')
+            .setStyle(ButtonStyle.Danger)
             .setDisabled(disabled)
     ));
 

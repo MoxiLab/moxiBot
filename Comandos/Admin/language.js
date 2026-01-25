@@ -1,5 +1,6 @@
 
-const { PermissionsBitField: { Flags }, ContainerBuilder, SuccessButtonBuilder, DangerButtonBuilder, MessageFlags } = require('discord.js');
+const { PermissionsBitField: { Flags }, ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const moxi = require('../../i18n');
 const { setGuildLanguage } = require('../../Util/guildSettings');
 const log = require('../../Util/logger');
@@ -180,9 +181,10 @@ module.exports = {
                         text.setContent(`${lang.emoji} **${lang.name}** (${lang.code})${isSelected ? ` ${EMOJIS.tick}` : ''}`)
                     )
                     .setButtonAccessory(
-                        (isSelected ? new SuccessButtonBuilder() : new DangerButtonBuilder())
+                        new ButtonBuilder()
                             .setCustomId(`lang_button_${lang.code}`)
                             .setLabel(moxi.translate('SELECT', langCode) || 'Select')
+                            .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Danger)
                     )
             );
         });
@@ -257,9 +259,10 @@ module.exports = {
                                     text.setContent(`${lang.emoji} **${lang.name}** (${lang.code})${isSelected ? ` ${EMOJIS.tick}` : ''}`)
                                 )
                                 .setButtonAccessory(
-                                    (isSelected ? new SuccessButtonBuilder() : new DangerButtonBuilder())
+                                    new ButtonBuilder()
                                         .setCustomId(`lang_button_${lang.code}`)
                                         .setLabel(moxi.translate('SELECT', selectedCode) || 'Select')
+                                        .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Danger)
                                 )
                         );
                     });
@@ -329,9 +332,10 @@ module.exports = {
                                 text.setContent(`${lang.emoji} **${lang.name}** (${lang.code})${isSelected ? ` ${EMOJIS.tick}` : ''}`)
                             )
                             .setButtonAccessory(
-                                (isSelected ? new SuccessButtonBuilder() : new DangerButtonBuilder())
+                                new ButtonBuilder()
                                     .setCustomId(`lang_button_${lang.code}`)
                                     .setLabel(moxi.translate('SELECT', lastLangCode) || 'Select')
+                                    .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Danger)
                                     .setDisabled(true)
                             )
                     );

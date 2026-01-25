@@ -1,7 +1,9 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, MessageFlags } = require('discord.js');
+const { MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
+const { buildRemindButton } = require('../../Util/cooldownReminderUI');
 const { shouldShowCooldownNotice } = require('../../Util/cooldownNotice');
 const {
     listJobs,
@@ -68,16 +70,16 @@ module.exports = {
         .setName('work')
         .setDescription(description)
         .setDescriptionLocalizations(localizations)
-        .addSubcommands((s) =>
+        .addSubcommand((s) =>
             s
                 .setName('list')
                 .setDescription('Mira la lista de trabajos')
         )
-        .addSubcommands((s) =>
+        .addSubcommand((s) =>
             s
                 .setName('apply')
                 .setDescription('Aplica a un trabajo')
-                .addStringOptions((o) =>
+                .addStringOption((o) =>
                     o
                         .setName('trabajo')
                         .setDescription('ID o nombre del trabajo')
@@ -85,22 +87,22 @@ module.exports = {
                         .setRequired(true)
                 )
         )
-        .addSubcommands((s) =>
+        .addSubcommand((s) =>
             s
                 .setName('leave')
                 .setDescription('Renuncia a tu trabajo')
         )
-        .addSubcommands((s) =>
+        .addSubcommand((s) =>
             s
                 .setName('shift')
                 .setDescription('Completa un turno de trabajo')
         )
-        .addSubcommands((s) =>
+        .addSubcommand((s) =>
             s
                 .setName('stats')
                 .setDescription('Muestra tu progreso en el trabajo actual')
         )
-        .addSubcommands((s) =>
+        .addSubcommand((s) =>
             s
                 .setName('top')
                 .setDescription('Mira los mejores empleados de tu profesión')
@@ -218,15 +220,19 @@ module.exports = {
             if (!res.ok) {
                 if (res.reason === 'cooldown') {
                     const show = shouldShowCooldownNotice({ userId: interaction.user.id, key: 'work', windowMs: 15_000, threshold: 3 });
-                    const payload = asV2MessageOptions(
-                        buildNoticeContainer({
-                            emoji: EMOJIS.hourglass,
-                            title: t('COOLDOWN_TITLE'),
-                            text: show
-                                ? t('COOLDOWN_TEXT', { next: res.nextInText, balance: res.balance })
-                                : t('COOLDOWN_SOFT_TEXT', { balance: res.balance }),
-                        })
-                    );
+                    const fireAt = Date.now() + (Number(res.nextInMs) || 0);
+                    const container = buildNoticeContainer({
+                        emoji: EMOJIS.hourglass,
+                        title: t('COOLDOWN_TITLE'),
+                        text: show
+                            ? t('COOLDOWN_TEXT', { next: res.nextInText, balance: res.balance })
+                            : t('COOLDOWN_SOFT_TEXT', { balance: res.balance }),
+                    });
+                    container.addSeparatorComponents(s => s.setDivider(true));
+                    container.addActionRowComponents(r => r.addComponents(
+                        buildRemindButton({ type: 'work', fireAt, userId: interaction.user.id })
+                    ));
+                    const payload = asV2MessageOptions(container);
                     return interaction.reply({ ...payload, flags: payload.flags | MessageFlags.Ephemeral });
                 }
 

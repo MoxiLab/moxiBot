@@ -1,4 +1,5 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, InteractionContextType, ApplicationIntegrationType, MessageFlags } = require('discord.js');
+const { MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { economyCategory } = require('../../Util/commandCategories');
@@ -9,8 +10,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('coinflip')
         .setDescription('Lanza una moneda (cara o cruz)')
-        .setContexts(InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel)
-        .setIntegrationTypes(ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall),
+        .setDMPermission(true),
 
     async run(Moxi, interaction) {
         const guildId = interaction.guildId || interaction.guild?.id;

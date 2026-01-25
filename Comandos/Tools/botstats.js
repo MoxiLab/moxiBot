@@ -1,4 +1,5 @@
-const { ContainerBuilder, MessageFlags, LinkButtonBuilder } = require('discord.js');
+const { ContainerBuilder, MessageFlags, ButtonStyle } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 
 const os = require('node:os');
 
@@ -379,7 +380,7 @@ module.exports = {
             .addActionRowComponents((row) => {
                 if (!statusUrl) return row;
                 return row.addComponents(
-                    new LinkButtonBuilder().setLabel(t('BOTSTATS_STATUS_BUTTON', 'Estado')).setURL(statusUrl)
+                    new ButtonBuilder().setLabel(t('BOTSTATS_STATUS_BUTTON', 'Estado')).setStyle(ButtonStyle.Link).setURL(statusUrl)
                 );
             })
             .addSeparatorComponents((s) => s.setDivider(true))

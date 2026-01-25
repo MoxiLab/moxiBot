@@ -3,6 +3,7 @@ const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notic
 const { EMOJIS } = require('../../Util/emojis');
 const { buildShopData } = require('../../Util/shopView');
 const { resolveItemFromInput } = require('../../Util/useItem');
+const { BANK_UPGRADE_ITEM_ID, getBankUpgradeTotalCost, getBankInfo, formatInt } = require('../../Util/bankSystem');
 
 const { economyCategory } = require('../../Util/commandCategories');
 function safeInt(n, fallback = 0) {
@@ -88,8 +89,12 @@ module.exports = {
         let eco = await Economy.findOne({ userId });
         if (!eco) eco = await Economy.create({ userId, balance: 0, bank: 0, sakuras: 0 });
 
+        const safeAmount = Math.min(100, Math.max(1, safeInt(amount, 1)));
+
         const price = Number.isFinite(item.price) ? item.price : 0;
-        const cost = price * amount;
+        const cost = item.itemId === BANK_UPGRADE_ITEM_ID
+            ? getBankUpgradeTotalCost(eco?.bankLevel, safeAmount)
+            : (price * safeAmount);
 
         if (cost <= 0) {
             return message.reply({
@@ -117,10 +122,31 @@ module.exports = {
             });
         }
 
+        // Compra especial: mejora del banco (se aplica al momento)
+        if (item.itemId === BANK_UPGRADE_ITEM_ID) {
+            eco.balance = (eco.balance || 0) - cost;
+            eco.bankLevel = Math.max(0, (Number(eco.bankLevel) || 0) + safeAmount);
+            await eco.save();
+
+            const info = getBankInfo(eco);
+            return message.reply({
+                ...asV2MessageOptions(
+                    buildNoticeContainer({
+                        emoji: EMOJIS.check,
+                        title: t('PURCHASE_SUCCESS_TITLE'),
+                        text:
+                            `${t('PURCHASE_SUCCESS', { amount: safeAmount, name: item.name, cost })}` +
+                            `\n\n🏦 Banco: **Lv ${formatInt(info.level)}** — Capacidad: **${formatInt(info.capacity)}**`,
+                    })
+                ),
+                allowedMentions: { repliedUser: false },
+            });
+        }
+
         const inv = Array.isArray(eco.inventory) ? eco.inventory : [];
         const existing = inv.find((x) => x && x.itemId === item.itemId);
-        if (existing) existing.amount = (existing.amount || 0) + amount;
-        else inv.push({ itemId: item.itemId, amount, obtainedAt: new Date() });
+        if (existing) existing.amount = (existing.amount || 0) + safeAmount;
+        else inv.push({ itemId: item.itemId, amount: safeAmount, obtainedAt: new Date() });
 
         eco.inventory = inv;
         eco.balance = (eco.balance || 0) - cost;
@@ -131,7 +157,7 @@ module.exports = {
                 buildNoticeContainer({
                     emoji: EMOJIS.check,
                     title: t('PURCHASE_SUCCESS_TITLE'),
-                    text: t('PURCHASE_SUCCESS', { amount, name: item.name, cost }),
+                        text: t('PURCHASE_SUCCESS', { amount: safeAmount, name: item.name, cost }),
                 })
             ),
             allowedMentions: { repliedUser: false },

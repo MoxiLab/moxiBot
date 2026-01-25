@@ -1,9 +1,12 @@
 const {
-    ChatInputCommandBuilder: SlashCommandBuilder,
     ContainerBuilder,
     MessageFlags,
-    LinkButtonBuilder,
+    ButtonStyle,
 } = require('discord.js');
+
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
+
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 
 const os = require('node:os');
 
@@ -194,7 +197,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('botstats')
         .setDescription('Muestra estadísticas del bot')
-        .addBooleanOptions((opt) =>
+        .addBooleanOption((opt) =>
             opt
                 .setName('publico')
                 .setDescription('Mostrar el resultado públicamente (por defecto: oculto)')
@@ -388,7 +391,7 @@ module.exports = {
             .addActionRowComponents((row) => {
                 if (!statusUrl) return row;
                 return row.addComponents(
-                    new LinkButtonBuilder().setLabel(t('BOTSTATS_STATUS_BUTTON', 'Estado')).setURL(statusUrl)
+                    new ButtonBuilder().setLabel(t('BOTSTATS_STATUS_BUTTON', 'Estado')).setStyle(ButtonStyle.Link).setURL(statusUrl)
                 );
             })
             .addSeparatorComponents((s) => s.setDivider(true))

@@ -1,8 +1,9 @@
-const { ContainerBuilder, MessageFlags, SecondaryButtonBuilder } = require('discord.js');
+const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('./compatButtonBuilder');
 
 const moxi = require('../i18n');
 const { Bot } = require('../Config');
-const { EMOJIS, toEmojiObject } = require('./emojis');
+const { EMOJIS } = require('./emojis');
 const { ensureMongoConnection } = require('./mongoConnect');
 
 function clampPct(n) {
@@ -35,7 +36,7 @@ async function getOrCreateEconomy(userId) {
     try {
         await Economy.updateOne(
             { userId },
-            { $setOnInsert: { userId, balance: 0, bank: 0, sakuras: 0, inventory: [] } },
+            { $setOnInsert: { userId, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: [] } },
             { upsert: true }
         );
     } catch (e) {
@@ -97,10 +98,11 @@ function buildBuffsContainer({ lang, userId, activeLines, bonusLines, disabled =
         .addTextDisplayComponents((c) => c.setContent(`## ${subtitle}\n${bonusLines.join('\n')}`))
         .addActionRowComponents((row) =>
             row.addComponents(
-                new SecondaryButtonBuilder()
+                new ButtonBuilder()
                     .setCustomId(`buffs:refresh:${safeUserId}`)
                     .setLabel(moxi.translate('REFRESH', language) || 'Refrescar')
-                    .setEmoji(toEmojiObject(EMOJIS.refresh || '🔁'))
+                    .setStyle(ButtonStyle.Secondary)
+                    .setEmoji(EMOJIS.refresh || '🔁')
                     .setDisabled(disabled)
             )
         );

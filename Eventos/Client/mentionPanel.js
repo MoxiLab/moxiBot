@@ -1,10 +1,10 @@
 const { ContainerBuilder, LinkButtonBuilder, MessageFlags } = require('discord.js');
+const { EMOJIS } = require('../../Util/emojis');
 const { Bot } = require('../../Config');
 
 async function panelV2({ client: Moxi, message, prefix }) {
     const moxi = require('../../i18n');
-    const lang = await moxi.guildLang(message.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
-    let panel;
+    const lang = await moxi.guildLang(message.guild?.id, process.env.DEFAULT_LANG || 'es-ES');    let panel;
     try {
         panel = require(`../../Languages/${lang}/mentionPanel.json`);
     } catch {

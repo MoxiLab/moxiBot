@@ -1,10 +1,5 @@
-const {
-    ChatInputCommandBuilder: SlashCommandBuilder,
-    ContainerBuilder,
-    MessageFlags,
-    ChannelType,
-    PermissionsBitField,
-} = require('discord.js');
+const { ContainerBuilder, MessageFlags, ChannelType, PermissionsBitField } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { Bot } = require('../../Config');
 const { getSettings, upsertSettings } = require('../../Util/bugStorage');
@@ -14,7 +9,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('bug')
         .setDescription('Configura el foro oficial de reportes de bugs')
-        .addChannelOptions(opt =>
+        .addChannelOption(opt =>
             opt.setName('category')
                 .setDescription('Categoría en la que crear el foro')
                 .addChannelTypes(ChannelType.GuildCategory)

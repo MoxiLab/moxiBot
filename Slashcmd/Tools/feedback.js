@@ -1,8 +1,5 @@
-const {
-  ChatInputCommandBuilder: SlashCommandBuilder,
-  ContainerBuilder,
-  MessageFlags,
-} = require('discord.js');
+const { ContainerBuilder, MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 
 const { Bot } = require('../../Config');
 const moxi = require('../../i18n');
@@ -12,7 +9,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName('feedback')
     .setDescription('Send feedback about the bot')
-    .addStringOptions((opt) =>
+    .addStringOption((opt) =>
       opt
         .setName('text')
         .setDescription('Your feedback')

@@ -1,7 +1,7 @@
 // Centraliza la construcción del help (Components V2) para cualquier página/categoría
 const { StringSelectMenuBuilder, ContainerBuilder, MessageFlags, SecondaryButtonBuilder, LinkButtonBuilder } = require('discord.js');
 const moxi = require('../i18n');
-const { EMOJIS, toEmojiObject } = require('./emojis');
+const { EMOJIS } = require('./emojis');
 const logger = require('./logger');
 const debugHelper = require('./debugHelper');
 const Config = require('../Config');
@@ -12,10 +12,12 @@ let HELP_INDEX_CACHE = null;
 const SLASH_JSON_CACHE = new WeakMap();
 
 function normalizeCategoryKey(value) {
-  if (!value || typeof value !== 'string') return value; 
+  if (!value || typeof value !== 'string') return value;
+  // Si i18n aún no está listo, algunos comandos devuelven claves tipo "commands:CATEGORY_HERRAMIENTAS".
+  // Convertimos esas claves a categorías estables para que el help funcione en cualquier idioma.
   const upper = value.toUpperCase();
   if (upper.includes('CATEGORY_ECONOMIA') || upper.includes('ECONOMIA') || upper.includes('ECONOMÍA')) return 'Economy';
-  if (upper.includes('CATEGORY_HERRAMIENTAS') || upper.includes ('HERRAMIENTAS')) return 'Tools';
+  if (upper.includes('CATEGORY_HERRAMIENTAS') || upper.includes('HERRAMIENTAS')) return 'Tools';
   if (upper.includes('CATEGORY_MUSICA') || upper.includes('MUSICA')) return 'Music';
   if (upper.includes('CATEGORY_ADMIN')) return 'Admin';
   if (upper.includes('CATEGORY_MODERATION') || upper.includes('MODERATION') || upper.includes('MODERACION')) return 'Moderation';
@@ -515,6 +517,7 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
   // Components V2 mode
   // -------------------------
   if (useComponentsV2) {
+    const { toComponentEmoji } = require('./discordEmoji');
     const container = new ContainerBuilder().setAccentColor(Bot.AccentColor);
     const safeDesc = desc || moxi.translate('HELP_NO_CONTENT', lang);
 
@@ -542,7 +545,7 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
         return {
           label,
           value: catKey,
-          emoji: toEmojiObject(EMOJIS.package),
+          emoji: toComponentEmoji(EMOJIS.package),
           default: categoria === catKey
         };
       }));
@@ -552,8 +555,7 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
     if (!categoria) {
       const closeButton = new SecondaryButtonBuilder()
         .setCustomId('help2_close')
-        .setEmoji(toEmojiObject(EMOJIS.cross))
-        ;
+        .setEmoji(toComponentEmoji(EMOJIS.cross));
 
       const webLabel = moxi.translate('HELP_WEB_LABEL', lang);
       let webUrl = moxi.translate('HELP_WEB_URL', lang);
@@ -571,27 +573,24 @@ async function getHelpContent({ page = 0, totalPages, tipo = 'main', categoria =
 
       const prevButton = new SecondaryButtonBuilder()
         .setCustomId(`help2_prev:${state}`)
-        .setEmoji(toEmojiObject(EMOJIS.arrowLeft))
+        .setEmoji(toComponentEmoji(EMOJIS.arrowLeft))
         .setDisabled((totalPages || 1) <= 1 || page <= 0);
 
       const homeButton = new SecondaryButtonBuilder()
         .setCustomId(`help2_home:${state}`)
-        .setEmoji(toEmojiObject(EMOJIS.home))
-        ;
+        .setEmoji(toComponentEmoji(EMOJIS.home));
 
       const infoButton = new SecondaryButtonBuilder()
         .setCustomId(`help2_info:${state}`)
-        .setEmoji(toEmojiObject(EMOJIS.info))
-        ;
+        .setEmoji(toComponentEmoji(EMOJIS.info));
 
       const closeButton = new SecondaryButtonBuilder()
         .setCustomId('help2_close')
-        .setEmoji(toEmojiObject(EMOJIS.cross))
-        ;
+        .setEmoji(toComponentEmoji(EMOJIS.cross));
 
       const nextButton = new SecondaryButtonBuilder()
         .setCustomId(`help2_next:${state}`)
-        .setEmoji(toEmojiObject(EMOJIS.arrowRight))
+        .setEmoji(toComponentEmoji(EMOJIS.arrowRight))
         .setDisabled((totalPages || 1) <= 1 || page >= (totalPages || 1) - 1);
 
       container.addActionRowComponents(row => row.addComponents(prevButton, homeButton, infoButton, closeButton, nextButton));

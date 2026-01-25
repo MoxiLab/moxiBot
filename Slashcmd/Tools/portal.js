@@ -1,10 +1,13 @@
 const {
-    ChatInputCommandBuilder: SlashCommandBuilder,
     ContainerBuilder,
     MessageFlags,
     PermissionFlagsBits,
-    LinkButtonBuilder,
+    ButtonStyle,
 } = require('discord.js');
+
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
+
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 
 const { Bot } = require('../../Config');
 const moxi = require('../../i18n');
@@ -141,7 +144,7 @@ module.exports = {
                 )
             )
             .addActionRowComponents((row) =>
-                row.addComponents(new LinkButtonBuilder().setLabel(t('PORTAL_BUTTON', 'Abrir portal')).setURL(inviteUrl))
+                row.addComponents(new ButtonBuilder().setLabel(t('PORTAL_BUTTON', 'Abrir portal')).setStyle(ButtonStyle.Link).setURL(inviteUrl))
             )
             .addSeparatorComponents((s) => s.setDivider(true))
             .addTextDisplayComponents((c) => c.setContent(`© ${Moxi.user.username} • ${year}`));

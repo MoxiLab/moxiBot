@@ -6,8 +6,9 @@ module.exports = async (Moxi) => {
   Moxi.commands = new Collection();
   Moxi.slashcommands = new Collection();
 
-  const commandFiles = getFiles("Comandos");
-  const slashcommandsFiles = getFiles("Slashcmd");
+  const ignoreDirs = ['Tarot'];
+  const commandFiles = getFiles("Comandos", { ignoreDirs });
+  const slashcommandsFiles = getFiles("Slashcmd", { ignoreDirs });
 
   const logger = require("../Util/logger");
 
@@ -183,23 +184,19 @@ module.exports = async (Moxi) => {
 
   for (const file of slashcommandsFiles) {
     const slash = require(file);
-    const data = slash.data || (slash.Command && slash.Command.data);
-
-    // discord.js v15: los builders no siempre exponen .name directamente.
-    let slashName = data && typeof data.name === 'string' ? data.name : undefined;
-    if (!slashName && data && data.data && typeof data.data.name === 'string') slashName = data.data.name;
-    if (!slashName && data && typeof data.toJSON === 'function') {
+    let data = slash.data || (slash.Command && slash.Command.data);
+    let name = data && data.name;
+    if (!name && data && typeof data.toJSON === 'function') {
       try {
         const json = data.toJSON();
-        if (json && typeof json.name === 'string') slashName = json.name;
+        if (json && json.name) name = json.name;
       } catch {
         // ignore
       }
     }
-
-    if (slashName) {
+    if (name) {
       if (!slash.__sourceFile) slash.__sourceFile = file;
-      Moxi.slashcommands.set(slashName, slash);
+      Moxi.slashcommands.set(name, slash);
     }
     // No warning: los subcomandos no necesitan .data
   }

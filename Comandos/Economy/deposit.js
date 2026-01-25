@@ -2,6 +2,9 @@ const moxi = require('../../i18n');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { EMOJIS } = require('../../Util/emojis');
 const { getOrCreateEconomyRaw } = require('../../Util/balanceView');
+const { getBankInfo, formatInt } = require('../../Util/bankSystem');
+const { ButtonStyle } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 
 const { economyCategory } = require('../../Util/commandCategories');
 function safeInt(n, fallback = 0) {
@@ -9,11 +12,7 @@ function safeInt(n, fallback = 0) {
     return Number.isFinite(x) ? Math.trunc(x) : fallback;
 }
 
-function formatInt(n) {
-    const x = Number(n);
-    if (!Number.isFinite(x)) return '0';
-    return Math.trunc(x).toLocaleString('en-US');
-}
+// formatInt viene de bankSystem
 
 function parseAmountArg(arg) {
     const raw = String(arg || '').trim().toLowerCase();
@@ -61,6 +60,7 @@ module.exports = {
             const eco = await getOrCreateEconomyRaw(message.author.id);
             const bal = Math.max(0, safeInt(eco?.balance, 0));
             const bank = Math.max(0, safeInt(eco?.bank, 0));
+            const bankInfo = getBankInfo(eco);
 
             if (bal <= 0) {
                 return message.reply({
@@ -98,6 +98,32 @@ module.exports = {
                             text: t('INSUFFICIENT_FUNDS_TEXT', { wanted: formatInt(wanted), balance: formatInt(bal) }),
                         })
                     ),
+                    allowedMentions: { repliedUser: false },
+                });
+            }
+
+            // Capacidad de banco (mejorable, sin tope máximo global)
+            if (bankInfo.free <= 0 || (bank + wanted) > bankInfo.capacity) {
+                const container = buildNoticeContainer({
+                    emoji: EMOJIS.hourglass,
+                    title: 'Banco lleno',
+                    text:
+                        `Tu banco está al **límite**.\n` +
+                        `Banco: **${formatInt(bank)} / ${formatInt(bankInfo.capacity)}** 🏦 (Lv **${formatInt(bankInfo.level)}**)\n\n` +
+                        `Para aumentar la capacidad, compra **Expansión de Banco** en la tienda.\n` +
+                        `Coste de la siguiente mejora: **${formatInt(bankInfo.nextCost)}** 🪙\n\n` +
+                        `Compra: \`${prefix}buy mejoras/expansion-de-banco\``,
+                });
+                container.addSeparatorComponents(s => s.setDivider(true));
+                container.addActionRowComponents(r => r.addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`shop:home:${message.author.id}:upgrades`)
+                        .setEmoji('🛒')
+                        .setLabel('Abrir tienda (Mejoras)')
+                        .setStyle(ButtonStyle.Secondary)
+                ));
+                return message.reply({
+                    ...asV2MessageOptions(container),
                     allowedMentions: { repliedUser: false },
                 });
             }

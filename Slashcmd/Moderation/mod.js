@@ -1,4 +1,5 @@
-const { ChatInputCommandBuilder: SlashCommandBuilder, PermissionsBitField } = require('discord.js');
+const { PermissionsBitField, ButtonStyle } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const moxi = require('../../i18n');
 const { EMOJIS } = require('../../Util/emojis');
 const { putPending, buildConfirmV2 } = require('../../Util/modV2');
@@ -55,60 +56,60 @@ module.exports = {
         .setName('mod')
         .setDescription(`${EMOJIS.shield} ${moxi.translate('commands:CATEGORY_MODERATION', 'es-ES') || 'Moderación'}`)
 
-        .addSubcommands((sub) =>
+        .addSubcommand((sub) =>
             sub
                 .setName('ban')
                 .setDescription(moxi.translate('moderation:CMD_BAN_DESC', 'es-ES') || `${EMOJIS.shield} Banea a un usuario y protege al servidor.`)
-            .addUserOptions((o) => o.setName('usuario').setDescription(moxi.translate('moderation:OPT_USER_BAN', 'es-ES') || 'Usuario a banear').setRequired(true))
-            .addStringOptions((o) => o.setName('motivo').setDescription(moxi.translate('moderation:OPT_REASON', 'es-ES') || 'Motivo').setRequired(false))
+                .addUserOption((o) => o.setName('usuario').setDescription(moxi.translate('moderation:OPT_USER_BAN', 'es-ES') || 'Usuario a banear').setRequired(true))
+                .addStringOption((o) => o.setName('motivo').setDescription(moxi.translate('moderation:OPT_REASON', 'es-ES') || 'Motivo').setRequired(false))
         )
 
-        .addSubcommands((sub) =>
+        .addSubcommand((sub) =>
             sub
                 .setName('kick')
                 .setDescription(moxi.translate('moderation:CMD_KICK_DESC', 'es-ES') || `${EMOJIS.person} Expulsa a un usuario del servidor y restaura el orden.`)
-            .addUserOptions((o) => o.setName('usuario').setDescription(moxi.translate('moderation:OPT_USER_KICK', 'es-ES') || 'Usuario a expulsar').setRequired(true))
-            .addStringOptions((o) => o.setName('motivo').setDescription(moxi.translate('moderation:OPT_REASON', 'es-ES') || 'Motivo').setRequired(false))
+                .addUserOption((o) => o.setName('usuario').setDescription(moxi.translate('moderation:OPT_USER_KICK', 'es-ES') || 'Usuario a expulsar').setRequired(true))
+                .addStringOption((o) => o.setName('motivo').setDescription(moxi.translate('moderation:OPT_REASON', 'es-ES') || 'Motivo').setRequired(false))
         )
 
-        .addSubcommands((sub) =>
+        .addSubcommand((sub) =>
             sub
                 .setName('timeout')
                 .setDescription(moxi.translate('moderation:CMD_TIMEOUT_DESC', 'es-ES') || `${EMOJIS.hourglass} Aplica un timeout temporal para reflexionar.`)
-            .addUserOptions((o) => o.setName('usuario').setDescription(moxi.translate('moderation:OPT_USER', 'es-ES') || 'Usuario').setRequired(true))
-            .addIntegerOptions((o) => o.setName('minutos').setDescription(moxi.translate('moderation:OPT_MINUTES', 'es-ES') || 'Minutos').setRequired(true).setMinValue(1))
-            .addStringOptions((o) => o.setName('motivo').setDescription(moxi.translate('moderation:OPT_REASON', 'es-ES') || 'Motivo').setRequired(false))
+                .addUserOption((o) => o.setName('usuario').setDescription(moxi.translate('moderation:OPT_USER', 'es-ES') || 'Usuario').setRequired(true))
+                .addIntegerOption((o) => o.setName('minutos').setDescription(moxi.translate('moderation:OPT_MINUTES', 'es-ES') || 'Minutos').setRequired(true).setMinValue(1))
+                .addStringOption((o) => o.setName('motivo').setDescription(moxi.translate('moderation:OPT_REASON', 'es-ES') || 'Motivo').setRequired(false))
         )
 
-        .addSubcommands((sub) =>
+        .addSubcommand((sub) =>
             sub
                 .setName('unban')
                 .setDescription(moxi.translate('moderation:CMD_UNBAN_DESC', 'es-ES') || `${EMOJIS.check} Desbanea a un usuario por ID y restituye su acceso.`)
-            .addStringOptions((o) => o.setName('id').setDescription(moxi.translate('moderation:OPT_ID_USER', 'es-ES') || 'ID del usuario').setRequired(true))
-            .addStringOptions((o) => o.setName('motivo').setDescription(moxi.translate('moderation:OPT_REASON', 'es-ES') || 'Motivo').setRequired(false))
+                .addStringOption((o) => o.setName('id').setDescription(moxi.translate('moderation:OPT_ID_USER', 'es-ES') || 'ID del usuario').setRequired(true))
+                .addStringOption((o) => o.setName('motivo').setDescription(moxi.translate('moderation:OPT_REASON', 'es-ES') || 'Motivo').setRequired(false))
         )
 
-        .addSubcommands((sub) =>
+        .addSubcommand((sub) =>
             sub
                 .setName('warn')
                 .setDescription(moxi.translate('moderation:CMD_WARN_DESC', 'es-ES') || `${EMOJIS.info} Advierte a un usuario con un aviso oficial.`)
-            .addUserOptions((o) => o.setName('usuario').setDescription(moxi.translate('moderation:OPT_USER', 'es-ES') || 'Usuario').setRequired(true))
-            .addStringOptions((o) => o.setName('motivo').setDescription(moxi.translate('moderation:OPT_REASON', 'es-ES') || 'Motivo').setRequired(false))
+                .addUserOption((o) => o.setName('usuario').setDescription(moxi.translate('moderation:OPT_USER', 'es-ES') || 'Usuario').setRequired(true))
+                .addStringOption((o) => o.setName('motivo').setDescription(moxi.translate('moderation:OPT_REASON', 'es-ES') || 'Motivo').setRequired(false))
         )
 
-        .addSubcommands((sub) =>
+        .addSubcommand((sub) =>
             sub
                 .setName('mute')
                 .setDescription(moxi.translate('moderation:CMD_MUTE_DESC', 'es-ES') || `${EMOJIS.noEntry} Silencia temporalmente a un usuario.`)
-            .addUserOptions((o) => o.setName('usuario').setDescription(moxi.translate('moderation:OPT_USER', 'es-ES') || 'Usuario').setRequired(true))
-            .addStringOptions((o) => o.setName('motivo').setDescription(moxi.translate('moderation:OPT_REASON', 'es-ES') || 'Motivo').setRequired(false))
+                .addUserOption((o) => o.setName('usuario').setDescription(moxi.translate('moderation:OPT_USER', 'es-ES') || 'Usuario').setRequired(true))
+                .addStringOption((o) => o.setName('motivo').setDescription(moxi.translate('moderation:OPT_REASON', 'es-ES') || 'Motivo').setRequired(false))
         )
 
-        .addSubcommands((sub) =>
+        .addSubcommand((sub) =>
             sub
                 .setName('unmute')
                 .setDescription(moxi.translate('moderation:CMD_UNMUTE_DESC', 'es-ES') || `${EMOJIS.check} Quita el silencio a un usuario y restaura su voz.`)
-            .addUserOptions((o) => o.setName('usuario').setDescription(moxi.translate('moderation:OPT_USER', 'es-ES') || 'Usuario').setRequired(true))
+                .addUserOption((o) => o.setName('usuario').setDescription(moxi.translate('moderation:OPT_USER', 'es-ES') || 'Usuario').setRequired(true))
         ),
 
     async run(Moxi, interaction) {
@@ -158,7 +159,7 @@ module.exports = {
                     ],
                     confirmCustomId: `modv2:confirm:${token}`,
                     cancelCustomId: `modv2:cancel:${token}`,
-                    confirmStyle: 4,
+                    confirmStyle: ButtonStyle.Danger,
                     ephemeral: true,
                 })
             );
@@ -212,7 +213,7 @@ module.exports = {
                     ],
                     confirmCustomId: `modv2:confirm:${token}`,
                     cancelCustomId: `modv2:cancel:${token}`,
-                    confirmStyle: 4,
+                    confirmStyle: ButtonStyle.Danger,
                     ephemeral: true,
                 })
             );
@@ -268,7 +269,7 @@ module.exports = {
                     ],
                     confirmCustomId: `modv2:confirm:${token}`,
                     cancelCustomId: `modv2:cancel:${token}`,
-                    confirmStyle: 4,
+                    confirmStyle: ButtonStyle.Danger,
                     ephemeral: true,
                 })
             );
@@ -314,7 +315,7 @@ module.exports = {
                     ],
                     confirmCustomId: `modv2:confirm:${token}`,
                     cancelCustomId: `modv2:cancel:${token}`,
-                    confirmStyle: 3,
+                    confirmStyle: ButtonStyle.Success,
                     ephemeral: true,
                 })
             );
@@ -359,7 +360,7 @@ module.exports = {
                     ],
                     confirmCustomId: `modv2:confirm:${token}`,
                     cancelCustomId: `modv2:cancel:${token}`,
-                    confirmStyle: 1,
+                    confirmStyle: ButtonStyle.Primary,
                     ephemeral: true,
                 })
             );
@@ -414,7 +415,7 @@ module.exports = {
                     ],
                     confirmCustomId: `modv2:confirm:${token}`,
                     cancelCustomId: `modv2:cancel:${token}`,
-                    confirmStyle: 4,
+                    confirmStyle: ButtonStyle.Danger,
                     ephemeral: true,
                 })
             );
@@ -466,7 +467,7 @@ module.exports = {
                     ],
                     confirmCustomId: `modv2:confirm:${token}`,
                     cancelCustomId: `modv2:cancel:${token}`,
-                    confirmStyle: 3,
+                    confirmStyle: ButtonStyle.Success,
                     ephemeral: true,
                 })
             );

@@ -1,9 +1,10 @@
 const {
-    ChatInputCommandBuilder: SlashCommandBuilder,
     PermissionFlagsBits,
     ContainerBuilder,
     MessageFlags,
 } = require('discord.js');
+
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 
 const moxi = require('../../i18n');
 const { Bot } = require('../../Config');
@@ -34,25 +35,25 @@ module.exports = {
         .setName('economy')
         .setDescription('Configura economía: toggle y canal dedicado')
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
-        .addSubcommands(sub => sub.setName('status').setDescription('Ver el estado actual'))
-        .addSubcommands(sub => sub.setName('on').setDescription('Activar economía'))
-        .addSubcommands(sub => sub.setName('off').setDescription('Desactivar economía'))
-        .addSubcommands(sub =>
+        .addSubcommand(sub => sub.setName('status').setDescription('Ver el estado actual'))
+        .addSubcommand(sub => sub.setName('on').setDescription('Activar economía'))
+        .addSubcommand(sub => sub.setName('off').setDescription('Desactivar economía'))
+        .addSubcommand(sub =>
             sub
                 .setName('set-channel')
                 .setDescription('Establecer el canal de economía')
-                .addChannelOptions(o => o.setName('canal').setDescription('Canal dedicado para economía').setRequired(true))
+                .addChannelOption(o => o.setName('canal').setDescription('Canal dedicado para economía').setRequired(true))
         )
-        .addSubcommands(sub =>
+        .addSubcommand(sub =>
             sub
                 .setName('clear-channel')
                 .setDescription('Quitar restricción de canal de economía')
         )
-        .addSubcommands(sub =>
+        .addSubcommand(sub =>
             sub
                 .setName('exclusive')
                 .setDescription('Bloquear comandos no-econ en el canal de economía')
-                .addBooleanOptions(o => o.setName('activo').setDescription('Activar/desactivar').setRequired(true))
+                .addBooleanOption(o => o.setName('activo').setDescription('Activar/desactivar').setRequired(true))
         ),
 
     async run(Moxi, interaction) {

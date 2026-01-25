@@ -1,4 +1,5 @@
-const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ActionRowBuilder, PrimaryButtonBuilder, DangerButtonBuilder, ContainerBuilder, MediaGalleryBuilder, MediaGalleryItemBuilder, MessageFlags } = require('discord.js');
+const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ActionRowBuilder, ButtonStyle, ContainerBuilder, MediaGalleryBuilder, MediaGalleryItemBuilder, MessageFlags } = require('discord.js');
+const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const LevelSystem = require('../../Global/Helpers/LevelSystem');
 const { generateRankImage } = require('../../Global/Helpers/WelcomeImage');
 const RankConfig = require('../../Models/RankSchema');
@@ -106,8 +107,8 @@ module.exports = {
                 .addTextDisplayComponents(c => c.setContent(`© ${Moxi.user.username} • ${year}`));
 
             const row = new ActionRowBuilder().addComponents(
-                new PrimaryButtonBuilder().setCustomId('rank_refresh').setLabel(t('LEVEL_REFRESH')),
-                new DangerButtonBuilder().setCustomId('rank_close').setLabel(t('LEVEL_CLOSE'))
+                new ButtonBuilder().setCustomId('rank_refresh').setLabel(t('LEVEL_REFRESH')).setStyle(ButtonStyle.Primary),
+                new ButtonBuilder().setCustomId('rank_close').setLabel(t('LEVEL_CLOSE')).setStyle(ButtonStyle.Danger)
             );
             container.addActionRowComponents(row);
 
@@ -191,8 +192,8 @@ module.exports = {
                 .addTextDisplayComponents(c => c.setContent(`© ${client.user.username} • ${year}`));
 
             const row = new ActionRowBuilder().addComponents(
-                new PrimaryButtonBuilder().setCustomId('rank_refresh').setLabel(t('LEVEL_REFRESH')),
-                new DangerButtonBuilder().setCustomId('rank_close').setLabel(t('LEVEL_CLOSE'))
+                new ButtonBuilder().setCustomId('rank_refresh').setLabel(t('LEVEL_REFRESH')).setStyle(ButtonStyle.Primary),
+                new ButtonBuilder().setCustomId('rank_close').setLabel(t('LEVEL_CLOSE')).setStyle(ButtonStyle.Danger)
             );
             container.addActionRowComponents(row);
 
