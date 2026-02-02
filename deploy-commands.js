@@ -7,6 +7,7 @@ const path = require('path');
 require('./Util/silentDotenv')();
 const { EMOJIS } = require('./Util/emojis');
 const moxi = require('./i18n');
+const { applySlashI18nToCommandJson } = require('./Util/slashHelpI18n');
 
 const clientId = process.env.CLIENT_ID || 'TU_CLIENT_ID';
 const guildId = process.env.GUILD_ID; // Opcional: para registro por servidor
@@ -39,7 +40,8 @@ const rest = new REST({ version: '10' }).setToken(token);
     for (const file of slashFiles) {
       const command = require(file);
       if (command.data) {
-        commands.push(command.data.toJSON ? command.data.toJSON() : command.data);
+        const json = command.data.toJSON ? command.data.toJSON() : command.data;
+        commands.push(applySlashI18nToCommandJson(json));
       }
     }
 
