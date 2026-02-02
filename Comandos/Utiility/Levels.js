@@ -10,7 +10,10 @@ module.exports = {
     alias: ['leaderboard', 'top', 'rankings'],
     description: 'Muestra el leaderboard de niveles',
     usage: 'levels [tipo]',
-    category: 'Utility',
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_UTILIDAD', lang);
+    },
     cooldown: 5,
 
     permissions: {
@@ -98,6 +101,6 @@ module.exports = {
                 allowedMentions: { repliedUser: false }
             });
         }
-    } 
+    }
 };
 

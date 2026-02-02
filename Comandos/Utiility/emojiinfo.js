@@ -11,7 +11,10 @@ module.exports = {
     alias: ['ei', ' emoji'],
     description: 'Get detailed information about an emoji',
     usage: 'emojiinfo <emoji/name>',
-    category: 'Utility',
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_UTILIDAD', lang);
+    },
     cooldown: 3,
 
     command: {

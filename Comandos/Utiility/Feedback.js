@@ -13,7 +13,10 @@ module.exports = {
     alias: ['feedback'],
     description: 'Share your thoughts about the bot',
     usage: 'feedback <text>',
-    category: 'Utility',
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_UTILIDAD', lang);
+    },
     cooldown: 60,
     execute: async (Moxi, message, args, settings) => {
 

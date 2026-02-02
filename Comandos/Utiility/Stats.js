@@ -36,7 +36,10 @@ module.exports = {
     alias: ['estadisticas', 'profile', 'información'],
     description: (lang = 'es-ES') => moxi.translate('commands:CMD_STATS_DESC', lang) || 'Muestra estadísticas detalladas de un usuario',
     usage: 'stats [usuario]',
-    category: function (lang) { return moxi.translate('commands:CATEGORY_HERRAMIENTAS', lang); },
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_UTILIDAD', lang);
+    },
     cooldown: 5,
 
     permissions: {

@@ -11,7 +11,10 @@ module.exports = {
     alias: ['ascend', 'ascender'],
     description: 'Sube tu rango de prestige',
     usage: 'prestige',
-    category: 'Utility',
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_UTILIDAD', lang);
+    },
     cooldown: 5,
 
     permissions: {
@@ -135,6 +138,6 @@ module.exports = {
                 allowedMentions: { repliedUser: false }
             });
         }
-    } 
+    }
 };
 
