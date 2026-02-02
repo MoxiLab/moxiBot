@@ -32,8 +32,8 @@ module.exports = function silentDotenv() {
         console.info = () => { };
         console.warn = () => { };
 
-        try {
-            require('dotenv').config();
+        try { 
+            require('dotenv').config({ override: !!envFileExists });
         } catch {
             // Si dotenv no está instalado, no rompemos el arranque: asumimos variables por entorno.
         }

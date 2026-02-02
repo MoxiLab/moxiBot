@@ -17,10 +17,25 @@ async function ensureMongoConnection(options = {}) {
         throw err;
     }
 
+    const envDbNameRaw = process.env.MONGODB_DB || process.env.MONGODB_DATABASE || process.env.DB_NAME;
+    const envDbName = (typeof envDbNameRaw === 'string' ? envDbNameRaw.trim() : '');
+    const connectOptions = envDbName ? { ...options, dbName: envDbName } : options;
+
     connectionPromise = (async () => {
-        mongoose.set('strictQuery', false); 
-        await mongoose.connect(uri, options);
-        logger.startup(`${EMOJIS.waffle} MongoDB conectado (${mongoose.connection.name || 'default'})`);
+        mongoose.set('strictQuery', false);
+        await mongoose.connect(uri, connectOptions);
+
+        const dbName = mongoose.connection.name || 'default';
+        logger.startup(`${EMOJIS.waffle} MongoDB conectado (${dbName})`);
+
+        // Ayuda rápida: el error típico es conectar a "admin" cuando el usuario no tiene permisos ahí.
+        if (!envDbName && dbName === 'admin') {
+            logger.warn(
+                `${EMOJIS.warn || '⚠️'} MongoDB está usando la BD "admin". ` +
+                `Si tu usuario no tiene permisos, añade el nombre de tu BD al URI o define MONGODB_DB en el entorno.`
+            );
+        }
+
         return mongoose.connection;
     })();
 
