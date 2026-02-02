@@ -67,6 +67,18 @@ function touchNodemonRestartFile() {
     }
 }
 
+function requestProcessRestart() {
+    // 1) En dev (nodemon): forzamos restart tocando un archivo observado.
+    if (isRunningUnderNodemon()) {
+        const ok = touchNodemonRestartFile();
+        if (ok) return true;
+    }
+
+    // 2) En producción (Pterodactyl/PM2/docker): salir con código 0 suele provocar reinicio.
+    setTimeout(() => process.exit(0), 250);
+    return true;
+}
+
 module.exports = {
     name: 'reload',
     alias: ['rl', 'recargar'],
