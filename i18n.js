@@ -22,22 +22,52 @@ function buildLocaleResolver() {
 
     const normalizedToDir = new Map();
     const baseToPreferred = new Map();
+
+    function preferenceRank(localeDirName) {
+      const s = String(localeDirName || '').trim();
+      if (!s) return [-1, -1, -1];
+      const lower = s.toLowerCase();
+      const noEncodingSuffix = !lower.includes('.');
+      const hasRegion = /[-_][a-z]{2}\b/i.test(s) || s.length >= 5;
+      return [noEncodingSuffix ? 1 : 0, hasRegion ? 1 : 0, s.length];
+    }
+
+    function pickPreferred(prev, next) {
+      if (!prev) return next;
+      if (!next) return prev;
+      const a = preferenceRank(prev);
+      const b = preferenceRank(next);
+      if (b[0] !== a[0]) return b[0] > a[0] ? next : prev;
+      if (b[1] !== a[1]) return b[1] > a[1] ? next : prev;
+      if (b[2] !== a[2]) return b[2] > a[2] ? next : prev;
+      return prev;
+    }
     for (const d of dirs) {
       const key = String(d).trim();
-      if(key) {
+      if (key) {
         const lower = key.toLowerCase();
-        normalizedToDir.set(lower, key);
-        normalizedToDir.set(lower.replace(/_/g, '-'), key);
-        normalizedToDir.set(lower.replace(/-/g, '_'), key);
+        const variants = new Set([
+          lower,
+          lower.replace(/_/g, '-'),
+          lower.replace(/-/g, '_'),
+          lower.split('.')[0],
+          lower.split('.')[0].replace(/_/g, '-'),
+          lower.split('.')[0].replace(/-/g, '_'),
+        ]);
+        for (const v of variants) {
+          if (!v) continue;
+          const existing = normalizedToDir.get(v);
+          normalizedToDir.set(v, pickPreferred(existing, key));
+        }
 
         const base = lower.split(/[-_]/)[0];
-        if(base) {
+        if (base) {
           if (!baseToPreferred.has(base)) {
             baseToPreferred.set(base, key);
           } else {
-            // Preferir locales completos sobre bases sueltas, y mantener una opción estable
+            // Preferir locales sin sufijo de encoding (p.ej. evitar *.UTF-8) y mantener una opción estable.
             const prev = String(baseToPreferred.get(base));
-            if (prev.length < key.length) baseToPreferred.set(base, key);
+            baseToPreferred.set(base, pickPreferred(prev, key));
           }
         }
       }
@@ -46,7 +76,8 @@ function buildLocaleResolver() {
     return function resolveLocale(input, fallbackLang = 'es-ES') {
       const raw = String(input || '').trim();
       if (!raw) return fallbackLang;
-      const normalized = raw.replace(/_/g, '-').toLowerCase();
+      const withoutEncoding = raw.split('.')[0];
+      const normalized = withoutEncoding.replace(/_/g, '-').toLowerCase();
 
       const direct = normalizedToDir.get(normalized);
       if (direct) return direct;
@@ -261,7 +292,8 @@ setTimeout(() => {
 function translate(key, lang, vars = {}) {
   const originalKey = String(key);
   const nsKey = originalKey.includes(':') ? originalKey : `misc:${originalKey}`;
-  const options = { lng: lang || 'es-ES', ...vars, emoji: EMOJIS };
+  const resolvedLang = resolveLocaleFromWorkspace(lang || 'es-ES', 'es-ES');
+  const options = { lng: resolvedLang, ...vars, emoji: EMOJIS };
   let res = i18next.t(nsKey, options);
 
   // i18next devuelve el propio `nsKey` cuando falta la traducción.
