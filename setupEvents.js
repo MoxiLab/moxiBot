@@ -38,7 +38,11 @@ function registerEventsRecursive(dir) {
                 // Compat: mantenemos el archivo ready.js pero lo registramos como clientReady.
                 const eventName = fileEventName === 'ready' ? 'clientReady' : fileEventName;
                 if (validEvents.includes(eventName)) {
-                    client.on(eventName, (...args) => {
+                    // clientReady puede dispararse más de una vez en reconexiones/resumes;
+                    // y algunos módulos (p.ej. música/voice) añaden listeners internos en init.
+                    // Usamos once para evitar duplicados y warnings de MaxListeners.
+                    const onFn = eventName === 'clientReady' ? client.once.bind(client) : client.on.bind(client);
+                    onFn(eventName, (...args) => {
                         auditLogDebug(eventName, `Evento '${eventName}' disparado`);
                         eventHandler(...args);
                     });

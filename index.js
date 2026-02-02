@@ -69,4 +69,14 @@ require("./Handlers");
 require("./setupEvents.js");
 require("./anticrash/antiCrash.js")();
 
-client.login(process.env.TOKEN);
+const discordToken = (process.env.TOKEN && String(process.env.TOKEN).trim())
+    ? String(process.env.TOKEN).trim()
+    : ((process.env.DISCORD_TOKEN && String(process.env.DISCORD_TOKEN).trim()) ? String(process.env.DISCORD_TOKEN).trim() : '');
+
+if (!discordToken) {
+    // eslint-disable-next-line no-console
+    console.error('[FATAL] Falta el token de Discord. Configura TOKEN (o DISCORD_TOKEN) en el .env');
+    process.exit(1);
+}
+
+client.login(discordToken);

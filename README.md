@@ -70,4 +70,44 @@ Si `MONGODB` está configurado, el bot guarda el código de la invitación ofici
 - `INVITE_GUARD_ENABLED=true|false` (por defecto `true`): habilita/deshabilita el borrado de invitaciones manuales.
 - `INVITE_TRACK_ENABLED=true|false` (por defecto `true`): habilita/deshabilita el tracking de invitación usada en `guildMemberAdd`.
 
+## Modo IA (auto-reply por canal)
+
+El bot puede responder automáticamente en canales donde el **modo IA** esté activado (sin necesidad de mención).
+
+- Activar/desactivar/estado: usa el comando de prefijo `ia` (owners-only).
+- Personalización (por canal): se puede ajustar mientras conversas (owners-only) usando mensajes tipo `prompt: ...`, `modelo: ...`, `temperatura: ...`, etc.
+
+### Comandos sin prefijo (en canal IA)
+
+En canales con IA activada, el bot puede ejecutar **comandos de prefijo** aunque no escribas el prefijo.
+
+- Ejemplo: escribir `help` en vez de `.help`.
+- También acepta frases tipo: `ejecuta help`, `usa ping`, `haz afk estoy comiendo`.
+
+Por seguridad, esto está pensado para **owners** por defecto.
+
+Variables (opcional):
+- `AI_COMMANDS_WITHOUT_PREFIX=1` (por defecto `1`): habilita/deshabilita esta función.
+- `AI_COMMANDS_ALLOW_NON_OWNERS=0` (por defecto `0`): si lo pones en `1`, cualquier usuario podrá disparar comandos sin prefijo en canales IA (no recomendado).
+
+## Clima/tiempo en tiempo real
+
+Cuando el modo IA está activo en un canal, el bot intercepta preguntas de clima y responde con datos reales (sin llamar a OpenAI).
+
+- Ejemplos: "tiempo en Madrid", "clima mañana en Toronto", "pronóstico en Barcelona".
+- Proveedor preferido: WeatherAPI.com (si hay key configurada).
+- Fallback: Open-Meteo (si no hay key o falla WeatherAPI).
+
+### Variables de entorno (clima)
+
+- `WEATHERAPI_KEY=...` (opcional): habilita WeatherAPI.
+- `WEATHER_CACHE_TTL_MS=60000` (opcional): TTL del caché de respuestas de clima.
+
+### Variables de entorno (Discord)
+
+- `TOKEN=...` (recomendado): token del bot (valor que usa el proyecto hoy).
+- `DISCORD_TOKEN=...` (alternativa): también se acepta por compatibilidad con tutoriales.
+
+No compartas ni subas tus keys (si se filtraron, rótalas/regénéralas).
+
 Mantén este README actualizado cada vez que se agregue o retire un comando para reflejar los cambios reales en `Comandos/` y `Slashcmd/`.
