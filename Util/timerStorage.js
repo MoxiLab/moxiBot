@@ -1,7 +1,4 @@
-// Utilidad para almacenar temporizadores activos por canal/guild
-// Estructura: { [guildId]: { [channelId]: { userId, endTime, timeoutId } } }
-
-
+const { setTimeout, clearTimeout } = require('timers');
 const timers = {};
 const TimerModel = require('../Models/TimerSchema');
 const { ensureMongoConnection } = require('./mongoConnect');
