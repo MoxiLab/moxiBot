@@ -8,6 +8,7 @@ const {
 
 const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
 const ms = require("ms");
+const axios = require('axios');
 const moxi = require("../../i18n");
 const GuildSettings = require("../../Models/GuildSettings");
 const { Bot } = require("../../Config");
@@ -15,6 +16,117 @@ const { EMOJIS } = require("../../Util/emojis");
 const { buildDisabledMusicSessionContainer } = require("../../Components/V2/musicControlsComponent");
 const { sendVoteShare } = require("../../Util/sendVoteShare");
 const debugHelper = require("../../Util/debugHelper");
+
+let spotifyApiToken = '';
+let spotifyApiTokenExpiresAt = 0;
+
+function getSpotifyClientCreds() {
+    const id = typeof process.env.SPOTIFY_CLIENT_ID === 'string' ? process.env.SPOTIFY_CLIENT_ID.trim() : '';
+    const secret = typeof process.env.SPOTIFY_CLIENT_SECRET === 'string' ? process.env.SPOTIFY_CLIENT_SECRET.trim() : '';
+    if (!id || !secret) return null;
+    return { id, secret };
+}
+
+async function getSpotifyApiToken() {
+    const now = Date.now();
+    if (spotifyApiToken && now < spotifyApiTokenExpiresAt) return spotifyApiToken;
+
+    const creds = getSpotifyClientCreds();
+    if (!creds) return '';
+
+    const res = await axios.post(
+        'https://accounts.spotify.com/api/token',
+        new URLSearchParams({ grant_type: 'client_credentials' }),
+        {
+            headers: {
+                Authorization: 'Basic ' + Buffer.from(`${creds.id}:${creds.secret}`).toString('base64'),
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            timeout: 12_000,
+        }
+    );
+
+    const token = String(res?.data?.access_token || '').trim();
+    const expiresIn = Number(res?.data?.expires_in || 0);
+    if (!token || !Number.isFinite(expiresIn) || expiresIn <= 0) return '';
+
+    spotifyApiToken = token;
+    spotifyApiTokenExpiresAt = now + (expiresIn * 1000) - 60_000;
+    return spotifyApiToken;
+}
+
+function extractSpotifyTrackId(normalizedSpotify) {
+    const s = String(normalizedSpotify || '').trim();
+    const m = s.match(/^spotify:track:([A-Za-z0-9]+)$/i);
+    return m ? m[1] : '';
+}
+
+async function getSpotifyTrackMeta(trackId) {
+    const id = String(trackId || '').trim();
+    if (!id) return null;
+    const token = await getSpotifyApiToken();
+    if (!token) return null;
+    const res = await axios.get(`https://api.spotify.com/v1/tracks/${encodeURIComponent(id)}`,
+        {
+            headers: { Authorization: `Bearer ${token}` },
+            timeout: 12_000,
+        }
+    );
+    const name = String(res?.data?.name || '').trim();
+    const artists = Array.isArray(res?.data?.artists) ? res.data.artists.map(a => String(a?.name || '').trim()).filter(Boolean) : [];
+    if (!name) return null;
+    return { name, artists };
+}
+
+function spotifyIdentifierToOpenUrl(spotifyId) {
+    const s = String(spotifyId || '').trim();
+    if (!s.startsWith('spotify:')) return null;
+    const parts = s.split(':');
+    const kind = parts[1];
+    const id = parts[2];
+    if (!kind || !id) return null;
+    return `https://open.spotify.com/${kind}/${id}`;
+}
+
+async function buildYouTubeQueryFromSpotify({ requestedTrack, normalizedSpotify }) {
+    // Preferir URL real; si solo tenemos spotify:track:id, reconstruir
+    let url = null;
+    try {
+        const u = new URL(String(requestedTrack || '').trim());
+        if (/spotify\.com$/i.test(u.hostname)) url = u.toString();
+    } catch {
+        // ignore
+    }
+    if (!url && normalizedSpotify) {
+        url = spotifyIdentifierToOpenUrl(normalizedSpotify);
+    }
+    if (!url) return '';
+
+    let title = '';
+    try {
+        const oembed = await axios.get('https://open.spotify.com/oembed', {
+            params: { url },
+            timeout: 12_000,
+        });
+        title = String(oembed?.data?.title || '').trim();
+    } catch {
+        // ignore
+    }
+
+    // Si tenemos credenciales, usar Spotify API para obtener artista y mejorar búsqueda.
+    let meta = null;
+    try {
+        const trackId = extractSpotifyTrackId(normalizedSpotify);
+        if (trackId) meta = await getSpotifyTrackMeta(trackId);
+    } catch {
+        // ignore
+    }
+
+    const name = (meta?.name || title || '').trim();
+    const artist = (Array.isArray(meta?.artists) && meta.artists.length) ? meta.artists[0] : '';
+    const q = [artist, name].filter(Boolean).join(' ');
+    return q.trim();
+}
 
 function normalizeSpotifyIdentifier(input) {
     const raw = String(input || '').trim();
@@ -206,12 +318,19 @@ module.exports = {
             }
 
             const res = await Moxi.poru.resolve({ query, source, requester: interaction.member });
-            const rawLoadType = String(res?.loadType ?? '');
-            const loadTypeLower = rawLoadType.toLowerCase();
-            const loadTypeUpper = rawLoadType.toUpperCase();
-            const isLoadFailed = loadTypeLower === 'error' || loadTypeUpper === 'LOAD_FAILED';
-            const isNoMatches = loadTypeLower === 'empty' || loadTypeUpper === 'NO_MATCHES';
-            const isPlaylistLoaded = loadTypeLower === 'playlist' || loadTypeUpper === 'PLAYLIST_LOADED';
+            const computeFlags = (r) => {
+                const raw = String(r?.loadType ?? '');
+                const lower = raw.toLowerCase();
+                const upper = raw.toUpperCase();
+                return {
+                    rawLoadType: raw,
+                    isLoadFailed: lower === 'error' || upper === 'LOAD_FAILED',
+                    isNoMatches: lower === 'empty' || upper === 'NO_MATCHES',
+                    isPlaylistLoaded: lower === 'playlist' || upper === 'PLAYLIST_LOADED',
+                };
+            };
+
+            let { rawLoadType, isLoadFailed, isNoMatches, isPlaylistLoaded } = computeFlags(res);
 
             debugHelper.log('play', 'resolve result', {
                 guildId,
@@ -224,6 +343,50 @@ module.exports = {
                 lugar === 'spotify' &&
                 typeof normalizedSpotify === 'string' &&
                 normalizedSpotify.startsWith('spotify:playlist:');
+
+            const looksLikeSpotifyTrack =
+                lugar === 'spotify' &&
+                typeof normalizedSpotify === 'string' &&
+                normalizedSpotify.startsWith('spotify:track:');
+
+            // Fallback: si Spotify falla por falta de lavasrc/spotify en el nodo,
+            // convertir a búsqueda de YouTube usando oEmbed (no requiere credenciales).
+            if ((isLoadFailed || isNoMatches) && looksLikeSpotifyTrack) {
+                try {
+                    const ytQuery = await buildYouTubeQueryFromSpotify({
+                        requestedTrack,
+                        normalizedSpotify,
+                    });
+                    if (ytQuery) {
+                        debugHelper.warn('play', 'spotify resolve failed; fallback to ytsearch', { guildId, requesterId, ytQuery });
+                        const trySources = ['ytsearch', 'ytmsearch'];
+                        for (const src of trySources) {
+                            const ytRes = await Moxi.poru.resolve({ query: ytQuery, source: src, requester: interaction.member });
+                            const ytType = String(ytRes?.loadType ?? '');
+                            const ytLower = ytType.toLowerCase();
+                            const ytUpper = ytType.toUpperCase();
+                            const ytFailed = ytLower === 'error' || ytUpper === 'LOAD_FAILED';
+                            const ytEmpty = ytLower === 'empty' || ytUpper === 'NO_MATCHES';
+                            if (!ytFailed && !ytEmpty) {
+                                debugHelper.warn('play', 'spotify fallback resolved via', { guildId, requesterId, source: src });
+                                // Sustituir el resultado por el de YouTube
+                                // eslint-disable-next-line no-param-reassign
+                                Object.assign(res, ytRes);
+                                ({ rawLoadType, isLoadFailed, isNoMatches, isPlaylistLoaded } = computeFlags(res));
+                                debugHelper.log('play', 'resolve result after fallback', {
+                                    guildId,
+                                    requesterId,
+                                    loadType: rawLoadType,
+                                    compat: { isLoadFailed, isNoMatches, isPlaylistLoaded }
+                                });
+                                break;
+                            }
+                        }
+                    }
+                } catch (e) {
+                    debugHelper.warn('play', 'spotify->ytsearch fallback failed', { guildId, requesterId, message: e?.message });
+                }
+            }
 
             if (isLoadFailed) {
                 debugHelper.warn('play', 'resolve failed', { guildId, requesterId });
