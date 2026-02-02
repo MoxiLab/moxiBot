@@ -98,6 +98,23 @@ Moxi.on("interactionCreate", async (interaction) => {
       const selectMenuController = require("./controllers/selectMenu");
       await selectMenuController(interaction, Moxi, logger);
     } else if (interaction.isButton()) {
+      // Los botones del panel de música se manejan en el listener dedicado (Eventos/Music/functionsButtons.js)
+      // para evitar doble acknowledge (40060) cuando hay múltiples routers.
+      try {
+        const id = String(interaction.customId || '');
+        const baseId = id.endsWith('_d') ? id.slice(0, -2) : id;
+        const musicIds = new Set([
+          'repit',
+          'pause',
+          'skip',
+          'queue',
+          'autoplay',
+          'vol_up',
+          'vol_down',
+        ]);
+        if (musicIds.has(baseId)) return;
+      } catch { }
+
       const buttonController = require("./controllers/button");
       await buttonController(interaction, Moxi, logger);
     } else if (interaction.isModalSubmit && interaction.isModalSubmit()) {
