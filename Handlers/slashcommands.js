@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { REST, Routes } = require("discord.js");
 const logger = require('../Util/logger');
+const { applySlashI18nToCommandJson } = require('../Util/slashHelpI18n');
 const token = process.env.TOKEN;
 const clientId = process.env.CLIENT_ID;
 const guildId = process.env.GUILD_ID;
@@ -17,7 +18,7 @@ function collectSlashFiles(root) {
   for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
     const full = path.join(root, entry.name);
     if (entry.isDirectory()) {
-      if(entry.name != 'Tarot') out.push(...collectSlashFiles(full));
+      if (entry.name != 'Tarot') out.push(...collectSlashFiles(full));
     }
     else if (entry.isFile() && entry.name.endsWith('.js')) out.push(full);
   }
@@ -29,7 +30,7 @@ for (const filePath of collectSlashFiles(slashRoot)) {
     console.log('[slash] loading', filePath);
     const slash = require(filePath);
     const data = slash?.data || (slash?.Command && slash.Command.data);
-    if (data && typeof data.toJSON === 'function') commands.push(data.toJSON());
+    if (data && typeof data.toJSON === 'function') commands.push(applySlashI18nToCommandJson(data.toJSON()));
     else console.warn('[slash] invalid export in', filePath);
   } catch (err) {
     logger.error('[slash] failed require', filePath, err);
