@@ -4,6 +4,7 @@ const { EMOJIS } = require("../../Util/emojis");
 const Config = require("../../Config");
 const { ensureMongoConnection } = require('../../Util/mongoConnect');
 const { restoreTimers } = require('../../Util/timerStorage');
+const { syncCommandRegistry } = require('../../Util/commandRegistry');
 
 module.exports = async (Moxi) => {
     const moxi = require("../../i18n");
@@ -58,6 +59,9 @@ module.exports = async (Moxi) => {
     if (typeof process.env.MONGODB === 'string' && process.env.MONGODB.trim()) {
         try {
             await ensureMongoConnection();
+
+            // Sincronizar (upsert) todos los comandos a MongoDB (best-effort)
+            syncCommandRegistry(Moxi, { deleteMissing: true }).catch(() => null);
 
             // Restaurar timers persistidos (best-effort) una vez Mongo está listo.
             restoreTimers(async (guildId, channelId, userId, minutos) => {
