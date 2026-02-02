@@ -7,6 +7,22 @@ const { restoreTimers } = require('../../Util/timerStorage');
 const { syncCommandRegistry } = require('../../Util/commandRegistry');
 
 module.exports = async (Moxi) => {
+    // En algunas condiciones (reconexión/resume) el evento puede dispararse más de una vez.
+    // Este handler hace init de módulos que registran listeners internos; si se repite, aparecen warnings.
+    if (Moxi.__clientReadyInitDone) return;
+    Moxi.__clientReadyInitDone = true;
+
+    // El warning reportado es sobre WebSocketShard. Evitamos el límite por defecto (10) por seguridad.
+    try {
+        if (Moxi.ws && Moxi.ws.shards && typeof Moxi.ws.shards.forEach === 'function') {
+            Moxi.ws.shards.forEach((shard) => {
+                if (shard && typeof shard.setMaxListeners === 'function') shard.setMaxListeners(0);
+            });
+        }
+    } catch {
+        // ignore
+    }
+
     const moxi = require("../../i18n");
     const globalPrefix = (Array.isArray(Config?.Bot?.Prefix) && Config.Bot.Prefix[0])
         ? Config.Bot.Prefix[0]
@@ -51,7 +67,10 @@ module.exports = async (Moxi) => {
     }
 
     try {
-        Moxi.poru && Moxi.poru.init && Moxi.poru.init(Moxi);
+        if (!Moxi.__poruInitDone) {
+            Moxi.poru && Moxi.poru.init && Moxi.poru.init(Moxi);
+            Moxi.__poruInitDone = true;
+        }
     } catch (e) {
         logger.warn && logger.warn('[poru] init failed', e?.message || e);
     }
@@ -118,7 +137,10 @@ module.exports = async (Moxi) => {
     // Llama una vez al inicio
     updateStatus();
     // Y luego cada 5 segundos
-    setInterval(updateStatus, 5000);
+    if (Moxi.__statusInterval) {
+        try { clearInterval(Moxi.__statusInterval); } catch { }
+    }
+    Moxi.__statusInterval = setInterval(updateStatus, 5000);
 
     logger.startup(`${EMOJIS.butter} Conectado como ${Moxi.user.tag}`);
     logger.divider();

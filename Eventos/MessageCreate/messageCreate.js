@@ -14,6 +14,11 @@ const { buildAfkContainer, formatAfkTimestamp, formatAfkDuration } = require('..
 const { resolveAfkGif } = require('../../Util/afkGif');
 const { EMOJIS } = require('../../Util/emojis');
 const { PermissionsBitField, MessageFlags } = require('discord.js');
+const { getAiConfig } = require('../../Util/aiModeStorage');
+const { maybeAutoReplyWithAi } = require('../../Util/aiAutoReply');
+const { isOwnerWithClient } = require('../../Util/ownerPermissions');
+const { maybeHandleAiChatConfigMessage } = require('../../Util/aiChatConfig');
+const { isWeatherQuestion, getWeatherForText, formatWeatherReplyEs } = require('../../Util/weather');
 
 const AFK_OVERRIDE_GIF = process.env.AFK_GIF_URL;
 const AFK_MENTION_GIF_URL = process.env.AFK_MENTION_GIF_URL || AFK_OVERRIDE_GIF;
@@ -70,7 +75,7 @@ function getLocalizedCommandMap(lang) {
 
   for (const cmd of values) {
     const canonicalName = (cmd && cmd.name) ? String(cmd.name).trim().toLowerCase() : '';
-    if(canonicalName) {
+    if (canonicalName) {
       const baseName = String(cmd.name);
       const candidates = [
         // Probar uppercase primero (la mayoría de keys están así)
@@ -92,12 +97,157 @@ function getLocalizedCommandMap(lang) {
   return map;
 }
 
+function resolvePrefixCommandByToken({ token, lang }) {
+  const t = (token === undefined || token === null) ? '' : String(token).trim().toLowerCase();
+  if (!t) return null;
+
+  let cmd = Moxi.commands.get(t);
+  if (!cmd) {
+    cmd = Moxi.commands.find(c => Array.isArray(c.alias) && c.alias.includes(t));
+  }
+
+  if (!cmd) {
+    const map = getLocalizedCommandMap(lang);
+    const canonical = map.get(t);
+    if (canonical) {
+      cmd = Moxi.commands.get(canonical);
+      if (!cmd) {
+        cmd = Moxi.commands.find(c => String(c.name || '').trim().toLowerCase() === canonical);
+      }
+    }
+  }
+
+  return cmd || null;
+}
+
+function parseNoPrefixCommandCandidate(text) {
+  const raw = (text === undefined || text === null) ? '' : String(text).trim();
+  if (!raw) return null;
+
+  // Evitar capturar mensajes largos tipo párrafo
+  if (raw.length > 2000) return null;
+
+  // Permitir frases tipo "ejecuta help" / "usa ping" / "haz afk ..."
+  const lower = raw.toLowerCase();
+  const stripped = lower
+    .replace(/^\s*(?:moxi|mx)\s+/i, '')
+    .replace(/^\s*(?:ejecuta|ejecutar|usa|utiliza|haz|hace|pon|ponme|activa|desactiva)\s+/i, '')
+    .trim();
+
+  const parts = stripped.split(/\s+/g).filter(Boolean);
+  if (!parts.length) return null;
+
+  // Quitar palabras de relleno frecuentes
+  const fillers = new Set([
+    'el', 'la', 'los', 'las',
+    'un', 'una', 'unos', 'unas',
+    'comando', 'comandos',
+    'cmd', 'cmds',
+    'command', 'commands',
+    'orden', 'ordenes',
+    'porfavor', 'por', 'favor',
+  ]);
+
+  while (parts.length && fillers.has(String(parts[0]).toLowerCase())) {
+    parts.shift();
+  }
+
+  if (!parts.length) return null;
+  const command = String(parts[0] || '')
+    .replace(/^[.!]/, '')
+    .replace(/[?!.。,]+$/g, '')
+    .trim();
+  const args = parts.slice(1).map((a) => String(a).replace(/[?!.。,]+$/g, ''));
+  return { command, args };
+}
+
+function extractFirstUserRef(text) {
+  const t = (text === undefined || text === null) ? '' : String(text);
+  if (!t) return '';
+  const m = t.match(/<@!?\d+>/);
+  if (m) return m[0];
+  const m2 = t.match(/\b\d{17,20}\b/);
+  if (m2) return m2[0];
+  return '';
+}
+
+function deriveModerationCandidateFromNaturalLanguage(text) {
+  const raw = (text === undefined || text === null) ? '' : String(text).trim();
+  if (!raw) return null;
+
+  const userRef = extractFirstUserRef(raw);
+  if (!userRef) return null;
+
+  const lower = raw.toLowerCase();
+
+  const starts = (re) => re.test(lower);
+  const afterUser = () => {
+    const idx = raw.indexOf(userRef);
+    if (idx === -1) return '';
+    return raw.slice(idx + userRef.length).trim();
+  };
+
+  // BAN
+  if (starts(/^(?:moxi|mx)?\s*(?:banea|banear|ban)\b/)) {
+    const rest = afterUser();
+    const args = [userRef, ...rest.split(/\s+/g).filter(Boolean)];
+    return { command: 'ban', args };
+  }
+
+  // UNBAN
+  if (starts(/^(?:moxi|mx)?\s*(?:desbanea|unban)\b/)) {
+    const rest = afterUser();
+    const args = [userRef, ...rest.split(/\s+/g).filter(Boolean)];
+    return { command: 'unban', args };
+  }
+
+  // KICK
+  if (starts(/^(?:moxi|mx)?\s*(?:expulsa|expulsar|kick|kickea)\b/)) {
+    const rest = afterUser();
+    const args = [userRef, ...rest.split(/\s+/g).filter(Boolean)];
+    return { command: 'kick', args };
+  }
+
+  // TIMEOUT/MUTE
+  if (starts(/^(?:moxi|mx)?\s*(?:timeout|silencia|silenciar|mute|muta|mutear)\b/)) {
+    const rest = afterUser();
+    const tokens = rest.split(/\s+/g).filter(Boolean);
+    // detectar duración simple tipo 10m, 2h, 1d, 30s
+    const durIdx = tokens.findIndex((x) => /^\d+\s*[smhd]$/i.test(x) || /^\d+(?:\.\d+)?\s*(?:min|mins|minute|minutes|hora|horas|hour|hours|dia|dias|day|days)$/i.test(x) || /^\d+[smhd]$/i.test(x));
+    let duration = '';
+    if (durIdx >= 0) {
+      duration = tokens.splice(durIdx, 1)[0];
+    }
+    const args = duration ? [userRef, duration, ...tokens] : [userRef, ...tokens];
+    return { command: 'timeout', args, fallbackCommands: ['mute'] };
+  }
+
+  // UNMUTE/UNTIMEOUT
+  if (starts(/^(?:moxi|mx)?\s*(?:unmute|desmutea|desmutear|quita\s+mute|quita\s+timeout|untimeout)\b/)) {
+    const rest = afterUser();
+    const args = [userRef, ...rest.split(/\s+/g).filter(Boolean)];
+    return { command: 'unmute', args, fallbackCommands: ['untimeout'] };
+  }
+
+  return null;
+}
+
+function requiresModerationPerm(cmdName) {
+  const n = (cmdName === undefined || cmdName === null) ? '' : String(cmdName).trim().toLowerCase();
+  if (!n) return null;
+  if (n === 'ban' || n === 'unban') return PermissionsBitField.Flags.BanMembers;
+  if (n === 'kick') return PermissionsBitField.Flags.KickMembers;
+  if (n === 'timeout' || n === 'mute' || n === 'unmute' || n === 'untimeout') return PermissionsBitField.Flags.ModerateMembers;
+  if (n === 'warn') return PermissionsBitField.Flags.ManageMessages;
+  return null;
+}
+
 function uniqStrings(values) {
   const out = [];
   const seen = new Set();
   for (const v of values) {
     const s = (v === undefined || v === null) ? '' : String(v).trim();
-    if(s && !seen.has(s)) {
+    if (s && !seen.has(s)) {
       seen.add(s);
       out.push(s);
     }
@@ -107,9 +257,9 @@ function uniqStrings(values) {
 
 function matchPrefix(content, prefixes) {
   for (const p of prefixes) {
-    if(p) {
+    if (p) {
       const prefix = String(p);
-      if(prefix.length > 0) {
+      if (prefix.length > 0) {
         // Prefijo por mención del bot: <@id> o <@!id> (requiere espacio o fin)
         if (/^<@!?\d+>$/.test(prefix)) {
           if (content === prefix) return { matched: prefix, rest: '' };
@@ -234,6 +384,171 @@ Moxi.on("messageCreate", async (message) => {
       debugHelper.error('levels', '[levels] awardXpForMessage failed', err);
     }
   }
+
+  // Modo IA por canal: responde sin necesidad de mención ni prefijo.
+  // Regla: solo si el mensaje NO es un comando.
+  if (!matched) {
+    try {
+      const cfgRes = await getAiConfig(message.guild?.id, message.channel?.id);
+      const cfg = cfgRes?.config;
+      if (cfg?.enabled) {
+        const guildOwnerId = message.guild?.ownerId || message.guild?.owner?.id || null;
+
+        // Tiempo/clima en tiempo real: resolver con API pública (sin OpenAI)
+        // Importante: debe funcionar aunque el canal esté en modo owners-only.
+        try {
+          if (isWeatherQuestion(message.content)) {
+            const wx = await getWeatherForText(message.content);
+            if (wx.ok) {
+              const content = formatWeatherReplyEs(wx);
+              await message.reply({ content, allowedMentions: { repliedUser: false, parse: [] } }).catch(async () => {
+                await message.channel.send({ content, allowedMentions: { parse: [] } }).catch(() => null);
+              });
+              return;
+            }
+
+            // Si es claramente una pregunta de clima, pero falta ubicación, pedirla explícitamente
+            if (wx && (wx.reason === 'missing_location' || wx.reason === 'location_not_found')) {
+              const content = (wx.reason === 'missing_location')
+                ? '¿De qué ciudad? Ej: "tiempo en Madrid" o "clima mañana en Toronto".'
+                : 'No encontré esa ubicación. Prueba con ciudad + país/estado (ej: "Madrid, España").';
+              await message.reply({ content, allowedMentions: { repliedUser: false, parse: [] } }).catch(async () => {
+                await message.channel.send({ content, allowedMentions: { parse: [] } }).catch(() => null);
+              });
+              return;
+            }
+          }
+        } catch {
+          // si falla el weather, seguimos al flujo IA normal
+        }
+
+        // Configurable: owners-only (por defecto ON)
+        const ownersOnly = cfg.ownersOnly !== false;
+        let isOwner = null;
+        if (ownersOnly) {
+          try {
+            isOwner = await isOwnerWithClient({ client: Moxi, userId: message.author?.id, guildOwnerId });
+            if (!isOwner) return;
+          } catch {
+            return;
+          }
+        }
+
+        // Personalización "conversando": si el owner escribe "prompt: ..." / "modelo: ..." etc.
+        // lo guardamos y no pasamos el mensaje a OpenAI.
+        try {
+          if (isOwner === null) {
+            isOwner = await isOwnerWithClient({ client: Moxi, userId: message.author?.id, guildOwnerId });
+          }
+          if (isOwner) {
+            const handled = await maybeHandleAiChatConfigMessage(message);
+            if (handled?.handled) return;
+          }
+        } catch {
+          // si falla, seguimos con el flujo normal
+        }
+
+        // Ejecutar comandos de prefijo sin prefijo (solo en canal IA)
+        // Por seguridad: por defecto solo owners, a menos que se habilite explícitamente.
+        try {
+          const canRunNoPrefix = cfg.commandsWithoutPrefix !== false;
+          const allowNonOwners = cfg.commandsAllowNonOwners === true;
+          const requireDiscordPerms = cfg.commandsRequireDiscordPerms !== false;
+
+          if (canRunNoPrefix) {
+            if (isOwner === null) {
+              isOwner = await isOwnerWithClient({ client: Moxi, userId: message.author?.id, guildOwnerId });
+            }
+
+            const allowed = allowNonOwners ? true : !!isOwner;
+            if (allowed) {
+              const candidate = parseNoPrefixCommandCandidate(message.content) || deriveModerationCandidateFromNaturalLanguage(message.content);
+              if (candidate?.command) {
+                const lang = message.lang || (process.env.DEFAULT_LANG || 'es-ES');
+
+                // Resolver comando (con posibles fallbacks si el nombre cambia en este bot)
+                let cmd = resolvePrefixCommandByToken({ token: candidate.command, lang });
+                if (!cmd && Array.isArray(candidate.fallbackCommands)) {
+                  for (const fb of candidate.fallbackCommands) {
+                    cmd = resolvePrefixCommandByToken({ token: fb, lang });
+                    if (cmd) break;
+                  }
+                }
+
+                if (cmd) {
+                  // Si no es owner y es un comando de moderación, exigir permisos Discord.
+                  if (!isOwner && allowNonOwners && requireDiscordPerms) {
+                    const required = requiresModerationPerm(cmd.name || candidate.command);
+                    if (required) {
+                      const memberPerms = message.member?.permissions;
+                      if (!memberPerms || !memberPerms.has(required, true)) {
+                        return;
+                      }
+                    }
+                  }
+
+                  const handleCommand = require('../../Util/commandHandler');
+                  try {
+                    const uid = message.author?.id;
+                    if (uid && !message.author?.bot) {
+                      trackBotUserUsage({ userId: uid, guildId: message.guild?.id, source: 'ai-command', name: cmd.name || candidate.command });
+                    }
+                  } catch {
+                    // best-effort
+                  }
+                  await handleCommand(Moxi, message, candidate.args || [], cmd);
+                  return;
+                }
+              }
+            }
+          }
+        } catch {
+          // si falla, seguimos con el flujo IA normal
+        }
+
+        const hasKey = typeof process.env.OPENAI_API_KEY === 'string' && process.env.OPENAI_API_KEY.trim();
+        if (!hasKey) return;
+
+        const result = await maybeAutoReplyWithAi(message, {
+          lang: message.lang || 'es-ES',
+          systemPrompt: cfg.systemPrompt,
+          model: cfg.model,
+          temperature: cfg.temperature,
+          cooldownMs: cfg.cooldownMs,
+          historyLimit: cfg.historyLimit,
+          minChars: cfg.minChars,
+          maxInputChars: cfg.maxInputChars,
+        });
+
+        // Si falla, loguear. Opcionalmente avisar solo a owners para debug.
+        if (result && result.ok === false) {
+          const errCode = result.error || result.reason || 'unknown';
+          const details = result.details ? String(result.details) : '';
+          debugHelper?.warn?.('ai', `auto ai reply failed: ${errCode}${details ? ' | ' + details : ''}`);
+
+          const showToOwners = String(process.env.AI_SHOW_ERRORS_TO_OWNERS || '1').trim() !== '0';
+          if (showToOwners) {
+            try {
+              if (isOwner === null) {
+                isOwner = await isOwnerWithClient({ client: Moxi, userId: message.author?.id, guildOwnerId });
+              }
+              if (isOwner) {
+                const short = details ? details.slice(0, 200) : '';
+                await message.reply({
+                  content: `IA error: ${errCode}${short ? ` (${short})` : ''}`,
+                  allowedMentions: { repliedUser: false, parse: [] },
+                }).catch(() => null);
+              }
+            } catch {
+              // ignore
+            }
+          }
+        }
+      }
+    } catch (err) {
+      debugHelper?.error?.('ai', 'auto ai reply failed', err);
+    }
+  }
   try {
     await handleBugThreadStatus(message);
   } catch (error) {
@@ -249,21 +564,69 @@ Moxi.on("messageCreate", async (message) => {
   const args = matched.rest.trim().split(/ +/g);
   const command = args.shift().toLowerCase();
 
+  // Idioma para resolver nombres localizados (y para el mapa de comandos)
+  const lang = await moxi.guildLang(message.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
+  let cmd = resolvePrefixCommandByToken({ token: command, lang });
 
-  let cmd = Moxi.commands.get(command);
+  // Si el usuario usa el prefijo palabra "moxi/mx" pero escribe una frase tipo
+  // "moxi ejecuta ...", el comando real no es "ejecuta".
+  // En ese caso, intentamos el router de "comandos sin prefijo" con el resto del texto.
   if (!cmd) {
-    cmd = Moxi.commands.find(c => Array.isArray(c.alias) && c.alias.includes(command));
-  }
+    const usedPrefixWord = matched?.matched && /^[A-Za-z0-9_]+$/.test(String(matched.matched))
+      ? String(matched.matched).trim().toLowerCase()
+      : '';
+    if (usedPrefixWord === 'moxi' || usedPrefixWord === 'mx') {
+      const cfgRes = await getAiConfig(message.guild?.id, message.channel?.id);
+      const cfg = cfgRes?.config;
+      if (cfg?.enabled && cfg.commandsWithoutPrefix !== false) {
+        const guildOwnerId = message.guild?.ownerId || message.guild?.owner?.id || null;
+        let isOwner = null;
+        try {
+          isOwner = await isOwnerWithClient({ client: Moxi, userId: message.author?.id, guildOwnerId });
+        } catch {
+          isOwner = false;
+        }
 
-  // Si no existe, intenta resolver por nombre localizado según el idioma de la guild.
-  if (!cmd) {
-    const lang = await moxi.guildLang(message.guild?.id, process.env.DEFAULT_LANG || 'es-ES');
-    const map = getLocalizedCommandMap(lang);
-    const canonical = map.get(command);
-    if (canonical) {
-      cmd = Moxi.commands.get(canonical);
-      if (!cmd) {
-        cmd = Moxi.commands.find(c => String(c.name || '').trim().toLowerCase() === canonical);
+        const allowNonOwners = cfg.commandsAllowNonOwners === true;
+        const requireDiscordPerms = cfg.commandsRequireDiscordPerms !== false;
+        const allowed = allowNonOwners ? true : !!isOwner;
+
+        if (allowed) {
+          const candidate = parseNoPrefixCommandCandidate(matched.rest) || deriveModerationCandidateFromNaturalLanguage(matched.rest);
+          if (candidate?.command) {
+            cmd = resolvePrefixCommandByToken({ token: candidate.command, lang });
+            if (!cmd && Array.isArray(candidate.fallbackCommands)) {
+              for (const fb of candidate.fallbackCommands) {
+                cmd = resolvePrefixCommandByToken({ token: fb, lang });
+                if (cmd) break;
+              }
+            }
+            if (cmd) {
+              if (!isOwner && allowNonOwners && requireDiscordPerms) {
+                const required = requiresModerationPerm(cmd.name || candidate.command);
+                if (required) {
+                  const memberPerms = message.member?.permissions;
+                  if (!memberPerms || !memberPerms.has(required, true)) {
+                    return;
+                  }
+                }
+              }
+
+              try {
+                const uid = message.author?.id;
+                if (uid && !message.author?.bot) {
+                  trackBotUserUsage({ userId: uid, guildId: message.guild?.id, source: 'ai-command', name: cmd.name || candidate.command });
+                }
+              } catch {
+                // best-effort
+              }
+
+              const handleCommand = require('../../Util/commandHandler');
+              await handleCommand(Moxi, message, candidate.args || [], cmd);
+              return;
+            }
+          }
+        }
       }
     }
   }
@@ -339,7 +702,7 @@ async function handleAfkMentions(message) {
   for (const user of mentions) {
     const entry = await afkStorage.getAfkEntry(user.id, message.guild.id);
 
-    if(entry) entries.push({ user, entry });
+    if (entry) entries.push({ user, entry });
   }
   if (!entries.length) return;
   const limit = Math.min(entries.length, 4);
