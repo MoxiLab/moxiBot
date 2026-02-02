@@ -2,6 +2,7 @@ const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ContainerB
 const BonusSystem = require('../../Global/Helpers/BonusSystem');
 const { Bot } = require('../../Config');
 const debugHelper = require('../../Util/debugHelper');
+const moxi = require('../../i18n');
 
 function toHexColor(color, fallback = '#ffb6e6') {
     if (typeof color === 'number' && Number.isFinite(color)) {
@@ -43,7 +44,10 @@ module.exports = {
         'levelconfig notificaciones no',
         'levelconfig xp 5 15 60',
     ],
-    category: 'Admin',
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_ADMIN', lang);
+    },
     cooldown: 5,
 
     permissions: {

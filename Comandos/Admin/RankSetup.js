@@ -13,6 +13,7 @@ const {
 const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 
 const { Bot } = require('../../Config');
+const moxi = require('../../i18n');
 const RankConfig = require('../../Models/RankSchema');
 const GuildData = require('../../Models/GuildSchema');
 const LevelSystem = require('../../Global/Helpers/LevelSystem');
@@ -160,7 +161,10 @@ module.exports = {
     alias: ['rank-config', 'rankstyle', 'rank-setup'],
     description: 'Configura el estilo de la tarjeta de rank',
     usage: 'ranksetup [style] | ranksetup style <sylphacard|discord-arts|canvacard>',
-    category: 'Admin',
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_ADMIN', lang);
+    },
     cooldown: 5,
 
     permissions: {

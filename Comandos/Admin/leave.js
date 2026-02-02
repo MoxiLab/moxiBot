@@ -2,12 +2,16 @@
 const { ContainerBuilder, ButtonStyle, MessageFlags } = require('discord.js');
 const { ButtonBuilder } = require('../../Util/compatButtonBuilder');
 const { ownerPermissions } = require('../../Util/ownerPermissions');
+const moxi = require('../../i18n');
 
 module.exports = {
   name: 'leave',
   alias: ['leave'],
   description: 'Hace que el bot abandone el servidor actual',
-  category: 'Admin',
+  Category: function (lang) {
+    lang = lang || 'es-ES';
+    return moxi.translate('commands:CATEGORY_ADMIN', lang);
+  },
   async execute(client, message, args) {
     // Solo owners (bot, guild o app) pueden usarlo
     const fakeInteraction = {

@@ -9,6 +9,7 @@ const {
 
 const { Bot } = require('../../Config');
 const debugHelper = require('../../Util/debugHelper');
+const moxi = require('../../i18n');
 
 const LEVELUP_FILE = 'levelup-preview.png';
 
@@ -101,7 +102,10 @@ module.exports = {
         'No hay selector de estilos.'
     ),
     examples: ['levelsetup'],
-    category: 'Admin',
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_ADMIN', lang);
+    },
     cooldown: 5,
 
     permissions: {

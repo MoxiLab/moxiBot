@@ -2,13 +2,17 @@ const { PermissionsBitField: { Flags }, ApplicationCommandOptionType, ContainerB
 const LevelSystem = require('../../Global/Helpers/LevelSystem');
 const { Bot } = require('../../Config');
 const debugHelper = require('../../Util/debugHelper');
+const moxi = require('../../i18n');
 
 module.exports = {
     name: 'setlevel',
     alias: ['set-level', 'nivel'],
     description: 'Establece el nivel de un usuario',
     usage: 'setlevel <usuario> <nivel>',
-    category: 'Admin',
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_ADMIN', lang);
+    },
     cooldown: 5,
 
     permissions: {

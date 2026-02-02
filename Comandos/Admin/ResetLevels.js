@@ -10,7 +10,10 @@ module.exports = {
     alias: ['reset-levels', 'resetear'],
     description: 'Resetea los niveles de un usuario o servidor',
     usage: 'resetlevels [usuario]',
-    category: 'Admin',
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_ADMIN', lang);
+    },
     cooldown: 5,
 
     permissions: {

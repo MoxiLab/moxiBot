@@ -1,4 +1,5 @@
 const { PermissionsBitField } = require('discord.js');
+const moxi = require('../../i18n');
 
 module.exports = {
     name: 'rol',
