@@ -32,7 +32,7 @@ module.exports = function silentDotenv() {
         console.info = () => { };
         console.warn = () => { };
 
-        try { 
+        try {
             require('dotenv').config({ override: !!envFileExists });
         } catch {
             // Si dotenv no está instalado, no rompemos el arranque: asumimos variables por entorno.
@@ -56,6 +56,15 @@ module.exports = function silentDotenv() {
         saved.warn(
             `[WARN] Config incompleta: faltan ${missing.join(', ')}. ` +
             `Sin MONGODB, la economía y otras funciones con base de datos no guardarán nada.`
+        );
+    }
+
+    // IA (OpenAI): no es obligatoria para arrancar el bot, pero sí para el comando .ia y el modo auto-reply.
+    // Solo avisamos si hay .env (flujo típico en local) para evitar ruido en hosts gestionados.
+    if (envFileExists && (!process.env.OPENAI_API_KEY || !String(process.env.OPENAI_API_KEY).trim())) {
+        saved.warn(
+            '[WARN] IA: falta OPENAI_API_KEY en .env. ' +
+            'El comando `.ia` y el modo IA por canal no funcionarán hasta configurarla.'
         );
     }
 };
