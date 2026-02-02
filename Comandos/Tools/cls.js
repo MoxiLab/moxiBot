@@ -11,8 +11,8 @@ async function purgeRecentMessages(channel, amount, { keepPinned = true } = {}) 
   const fetched = await channel.messages.fetch({ limit: fetchLimit });
 
   const candidates = [];
-  for(let i = 0, msg = fetched.at(i); i < amount; i++, msg = fetched.at(i)) {
-    if(!keepPinned || msg.pinned) {
+  for (let i = 0, msg = fetched.at(i); i < amount; i++, msg = fetched.at(i)) {
+    if (!keepPinned || msg.pinned) {
       candidates.push(msg);
     }
   }
@@ -53,7 +53,10 @@ module.exports = {
   name: 'cls',
   alias: ['clear', 'limpiar'],
   description: 'Limpia el chat borrando los mensajes recientes (máx 100)',
-  category: 'Tools',
+  Category: function (lang) {
+    lang = lang || 'es-ES';
+    return moxi.translate('commands:CATEGORY_HERRAMIENTAS', lang);
+  },
   async execute(client, message, args) {
     if (!message.guild) {
       return message.reply('Este comando solo funciona dentro de un servidor.');

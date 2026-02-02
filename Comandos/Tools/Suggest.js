@@ -51,7 +51,10 @@ async function upsertConfig(guildId, guildName, patch) {
 module.exports = {
     name: 'suggest',
     alias: ['sugerencia', 'sugerir', 'idea', 'ideas'],
-    Category: 'Tools',
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_HERRAMIENTAS', lang);
+    },
     usage: 'suggest <texto> | suggest status | suggest set #canal | suggest staff #canal | suggest off | suggest approve <id> [motivo] | suggest deny <id> [motivo]',
     description: () => 'Sistema de sugerencias del servidor.',
     cooldown: 5,
