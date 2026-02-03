@@ -421,7 +421,9 @@
     "MUSIC_VOLUME_DOWN": "🔉 | تم خفض مستوى الصوت إلى {{vol}}%.",
     "MUSIC_VOLUME_SET": "🔊 | تم ضبط مستوى الصوت على {{volume}}%",
     "HELP_CATEGORY_UTILITY": "أدوات",
+    "HELP_CATEGORY_CATEGORY_UTILIDAD": "أدوات",
     "HELP_CATEGORY_UTILITY_DESC": "أوامر الأدوات العامة.",
+    "HELP_CATEGORY_CATEGORY_UTILIDAD_DESC": "أوامر الأدوات العامة.",
     "FEEDBACK_REPORT": "يجب تقديم نص الملاحظات.",
     "FEEDBACK_MORE": "يرجى تقديم تفاصيل أكثر (٣ أحرف على الأقل).",
     "FEEDBACK_DM_TITLE": "ملاحظات",

@@ -576,5 +576,6 @@
   "RELOAD_CMD_DESC": "Recarga módulos en caliente (solo owners).",
   "INVITE_CMD_DESC": "Crea una invitación permanente del servidor.",
   "SERVERS_CMD_DESC": "Muestra los servidores donde está el bot (solo owners).",
-  "HELP_CATEGORY_CATEGORY_UTILIDAD": "Utilidad"
+  "HELP_CATEGORY_CATEGORY_UTILIDAD": "Utilidad",
+  "HELP_CATEGORY_CATEGORY_UTILIDAD_DESC": "Comandos de utilidad general."
 }

@@ -661,6 +661,6 @@
   "PORTAL_NO_PERMS": "There is no official invite yet. You need permissions to create it.",
   "PORTAL_NO_CHANNEL": "I couldn't find a valid channel to create the official invite.",
   "PORTAL_ERR": "I couldn't resolve the official invite.",
-  "HELP_CATEGORY_CATEGORY_UTILIDAD": "HELP_CATEGORY_CATEGORY_UTILIDAD",
-  "HELP_CATEGORY_CATEGORY_UTILIDAD_DESC": "HELP_CATEGORY_CATEGORY_UTILIDAD_DESC"
+  "HELP_CATEGORY_CATEGORY_UTILIDAD": "实用工具",
+  "HELP_CATEGORY_CATEGORY_UTILIDAD_DESC": "通用实用工具命令。"
 }
