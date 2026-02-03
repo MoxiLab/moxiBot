@@ -1,7 +1,8 @@
-const { PermissionsBitField } = require('discord.js');
+const { MessageFlags, PermissionsBitField } = require('discord.js');
 const { EMOJIS } = require('../../Util/emojis');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const { toolsCategory } = require('../../Util/commandCategories');
+const { speakInVoice, buildTtsUrl, splitTtsText, fetchTtsMp3Stream } = require('../../Util/discordVoiceTts');
 
 async function safeDeleteMessage(message) {
     try {
@@ -13,42 +14,24 @@ async function safeDeleteMessage(message) {
     }
 }
 
-function parseTtsArgs(args) {
-    const raw = Array.isArray(args) ? [...args] : [];
-
-    // Por defecto: silenciar menciones.
-    let allowMentions = false;
-
-    while (raw.length) {
-        const a = String(raw[0] || '').trim();
-        const lower = a.toLowerCase();
-
-        if (lower === '-m' || lower === '--mentions' || lower === '--menciones') {
-            allowMentions = true;
-            raw.shift();
-            continue;
-        }
-
-        if (lower === '--no-mentions' || lower === '--sin-menciones') {
-            allowMentions = false;
-            raw.shift();
-            continue;
-        }
-
-        break;
+function hasVoicePerms(channel, me) {
+    try {
+        const perms = channel.permissionsFor(me);
+        if (!perms) return false;
+        return perms.has(PermissionsBitField.Flags.Connect, true)
+            && perms.has(PermissionsBitField.Flags.Speak, true);
+    } catch {
+        return false;
     }
-
-    const text = raw.join(' ').trim();
-    return { text, allowMentions };
 }
 
 module.exports = {
     name: 'tts',
-    alias: ['ttsay', 'decirtts'],
+    alias: ['ttsv'],
     Category: toolsCategory,
-    usage: 'tts [--menciones] <mensaje>',
-    description: 'Envía un mensaje TTS (texto a voz) en el canal de texto y borra el comando.',
-    cooldown: 0,
+    usage: 'tts <mensaje> | tts texto <mensaje>',
+    description: 'Reproduce TTS en tu canal de voz (sin Lavalink). Usa "texto" para enviar el MP3 al canal.',
+    cooldown: 3,
     command: {
         prefix: true,
         slash: false,
@@ -56,8 +39,11 @@ module.exports = {
     },
 
     async execute(Moxi, message, args) {
-        const { text, allowMentions } = parseTtsArgs(args);
-        const replyToId = message?.reference?.messageId || null;
+        const tokens = Array.isArray(args) ? args : [];
+        const mode = (tokens[0] || '').toString().trim().toLowerCase();
+
+        const isTextMode = (mode === 'texto' || mode === 'text' || mode === 'mp3' || mode === 'archivo');
+        const text = (isTextMode ? tokens.slice(1) : tokens).join(' ').trim();
 
         if (!text) {
             return message.reply(
@@ -65,58 +51,92 @@ module.exports = {
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
                         title: 'TTS',
-                        text: 'No puedo enviar un mensaje vacío.',
+                        text: `Uso: ${this.usage}`,
                     })
                 )
             );
         }
 
-        if (text.length > 2000) {
+        const vc = message.member?.voice?.channel;
+        const shouldUseVoice = !isTextMode && !!vc;
+
+        if (shouldUseVoice) {
+            if (!hasVoicePerms(vc, message.guild?.members?.me)) {
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: 'TTS (Voz)',
+                            text: 'No tengo permisos para conectar y hablar en ese canal de voz.',
+                        })
+                    )
+                );
+            }
+
+            await safeDeleteMessage(message);
+
+            try {
+                const res = await speakInVoice({
+                    guild: message.guild,
+                    member: message.member,
+                    text,
+                });
+                const queued = res && typeof res.queued === 'number' ? res.queued : 1;
+                const reply = await message.channel.send({
+                    ...asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.check,
+                            title: 'TTS (Voz)',
+                            text: `En cola: ${queued} parte(s).`,
+                        })
+                    ),
+                    flags: MessageFlags.IsComponentsV2,
+                    allowedMentions: { parse: [] },
+                }).catch(() => null);
+
+                if (reply) {
+                    setTimeout(() => reply.delete().catch(() => null), 7000);
+                }
+                return;
+            } catch (err) {
+                return message.channel.send(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: 'TTS (Voz)',
+                            text: (err && err.message) ? err.message : 'No pude reproducir el TTS en voz.',
+                        })
+                    )
+                );
+            }
+        }
+
+        // Modo texto: generar audio externo y mandarlo como archivo (sin TTS de Discord)
+        await safeDeleteMessage(message);
+
+        try {
+            const chunks = splitTtsText(text);
+            const first = chunks[0] || text;
+            const url = buildTtsUrl({ text: first });
+            const stream = await fetchTtsMp3Stream(url);
+
+            await message.channel.send({
+                content: chunks.length > 1
+                    ? `${text.slice(0, 2000)}\n\n(Nota: el audio se generó solo con la primera parte del texto.)`
+                    : text,
+                files: [{ attachment: stream, name: 'tts.mp3' }],
+                allowedMentions: { parse: [], repliedUser: false },
+            });
+        } catch {
             return message.reply(
                 asV2MessageOptions(
                     buildNoticeContainer({
                         emoji: EMOJIS.cross,
                         title: 'TTS',
-                        text: 'El mensaje es demasiado largo (máx. 2000 caracteres).',
+                        text: 'No pude generar/enviar el audio TTS en este canal.',
                     })
                 )
             );
         }
-
-        const channel = message.channel;
-        if (!channel?.isTextBased?.()) return;
-
-        // Pre-chequeo de permisos si estamos en guild.
-        if (channel?.guild) {
-            const me = channel.guild.members?.me;
-            if (me) {
-                const perms = channel.permissionsFor(me);
-                if (!perms?.has(PermissionsBitField.Flags.SendMessages)) {
-                    return;
-                }
-                if (!perms?.has(PermissionsBitField.Flags.SendTTSMessages)) {
-                    return message.reply(
-                        asV2MessageOptions(
-                            buildNoticeContainer({
-                                emoji: EMOJIS.cross,
-                                title: 'TTS',
-                                text: 'No tengo permisos para enviar mensajes TTS en este canal (Send TTS Messages).',
-                            })
-                        )
-                    );
-                }
-            }
-        }
-
-        // 1) Borra el mensaje del usuario (si se puede)
-        await safeDeleteMessage(message);
-
-        // 2) Envía TTS
-        await channel.send({
-            content: text,
-            tts: true,
-            ...(replyToId ? { reply: { messageReference: replyToId } } : {}),
-            allowedMentions: allowMentions ? { repliedUser: false } : { parse: [], repliedUser: false },
-        });
     },
 };
