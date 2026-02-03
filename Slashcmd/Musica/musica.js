@@ -61,6 +61,32 @@ function extractSpotifyTrackId(normalizedSpotify) {
     return m ? m[1] : '';
 }
 
+function extractSpotifyPlaylistId(normalizedSpotify) {
+    const s = String(normalizedSpotify || '').trim();
+    const m = s.match(/^spotify:playlist:([A-Za-z0-9]+)$/i);
+    return m ? m[1] : '';
+}
+
+function extractSpotifyAlbumId(normalizedSpotify) {
+    const s = String(normalizedSpotify || '').trim();
+    const m = s.match(/^spotify:album:([A-Za-z0-9]+)$/i);
+    return m ? m[1] : '';
+}
+
+function extractSpotifyArtistId(normalizedSpotify) {
+    const s = String(normalizedSpotify || '').trim();
+    const m = s.match(/^spotify:artist:([A-Za-z0-9]+)$/i);
+    return m ? m[1] : '';
+}
+
+function getSpotifyMarketCandidates() {
+    const raw = typeof process.env.SPOTIFY_MARKET === 'string' ? process.env.SPOTIFY_MARKET.trim().toUpperCase() : '';
+    const envMarket = /^[A-Z]{2}$/.test(raw) ? raw : '';
+    const candidates = [envMarket, 'US', 'ES'].filter(Boolean);
+    // unique preserving order
+    return Array.from(new Set(candidates));
+}
+
 async function getSpotifyTrackMeta(trackId) {
     const id = String(trackId || '').trim();
     if (!id) return null;
@@ -69,6 +95,7 @@ async function getSpotifyTrackMeta(trackId) {
     const res = await axios.get(`https://api.spotify.com/v1/tracks/${encodeURIComponent(id)}`,
         {
             headers: { Authorization: `Bearer ${token}` },
+            params: { market: getSpotifyMarketCandidates()[0] || 'US' },
             timeout: 12_000,
         }
     );
@@ -76,6 +103,243 @@ async function getSpotifyTrackMeta(trackId) {
     const artists = Array.isArray(res?.data?.artists) ? res.data.artists.map(a => String(a?.name || '').trim()).filter(Boolean) : [];
     if (!name) return null;
     return { name, artists };
+}
+
+async function getSpotifyPlaylistMetaAndTracks(playlistId, { maxTracks = 25 } = {}) {
+    const id = String(playlistId || '').trim();
+    if (!id) return null;
+
+    const token = await getSpotifyApiToken();
+    if (!token) return null;
+
+    const markets = getSpotifyMarketCandidates();
+    let lastErr;
+    for (const market of markets) {
+        try {
+            // Nombre
+            const playlistRes = await axios.get(
+                `https://api.spotify.com/v1/playlists/${encodeURIComponent(id)}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                    params: { fields: 'name', market },
+                    timeout: 12_000,
+                }
+            );
+            const name = String(playlistRes?.data?.name || '').trim() || 'Playlist';
+
+            const tracks = [];
+            let offset = 0;
+            const limit = 100;
+            while (tracks.length < maxTracks) {
+                const res = await axios.get(
+                    `https://api.spotify.com/v1/playlists/${encodeURIComponent(id)}/tracks`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                        params: {
+                            limit,
+                            offset,
+                            market,
+                            fields: 'items(track(name,artists(name),is_local)),next',
+                        },
+                        timeout: 12_000,
+                    }
+                );
+
+                const items = Array.isArray(res?.data?.items) ? res.data.items : [];
+                for (const it of items) {
+                    const t = it?.track;
+                    if (!t || t.is_local) continue;
+                    const tName = String(t?.name || '').trim();
+                    const artists = Array.isArray(t?.artists) ? t.artists.map(a => String(a?.name || '').trim()).filter(Boolean) : [];
+                    const artist = artists[0] || '';
+                    if (!tName) continue;
+                    tracks.push({ name: tName, artist });
+                    if (tracks.length >= maxTracks) break;
+                }
+
+                if (!res?.data?.next) break;
+                offset += limit;
+            }
+
+            return { name, tracks, market };
+        } catch (e) {
+            lastErr = e;
+            const status = e?.response?.status;
+            // Si parece restricción por mercado, intentamos otro
+            if ((status === 404 || status === 403) && markets.length > 1) continue;
+            throw e;
+        }
+    }
+    if (lastErr) throw lastErr;
+    return null;
+}
+
+async function searchSpotifyPlaylistByTitle(title, { limit = 5 } = {}) {
+    const q = String(title || '').trim();
+    if (!q) return null;
+
+    const token = await getSpotifyApiToken();
+    if (!token) return null;
+
+    const markets = getSpotifyMarketCandidates();
+    for (const market of markets) {
+        const res = await axios.get(
+            'https://api.spotify.com/v1/search',
+            {
+                headers: { Authorization: `Bearer ${token}` },
+                params: {
+                    q,
+                    type: 'playlist',
+                    limit,
+                    market,
+                },
+                timeout: 12_000,
+            }
+        );
+
+        const items = Array.isArray(res?.data?.playlists?.items) ? res.data.playlists.items : [];
+        const candidates = items.filter((p) => p && p.id && p.name);
+        if (!candidates.length) continue;
+
+        const normalizedQ = q.toLowerCase();
+        const exactName = candidates.filter((p) => String(p.name).toLowerCase() === normalizedQ);
+        const pool = exactName.length ? exactName : candidates;
+
+        // Preferir playlists de Spotify si existen
+        const spotifyOwned = pool.find((p) => String(p?.owner?.id || '').toLowerCase() === 'spotify')
+            || pool.find((p) => String(p?.owner?.display_name || '').toLowerCase().includes('spotify'));
+        const picked = spotifyOwned || pool[0];
+        if (!picked) continue;
+        return {
+            id: String(picked.id),
+            name: String(picked.name || '').trim(),
+            owner: {
+                id: String(picked?.owner?.id || '').trim(),
+                displayName: String(picked?.owner?.display_name || '').trim(),
+            },
+            market,
+        };
+    }
+
+    return null;
+}
+
+async function getSpotifyAlbumMetaAndTracks(albumId, { maxTracks = 25 } = {}) {
+    const id = String(albumId || '').trim();
+    if (!id) return null;
+
+    const token = await getSpotifyApiToken();
+    if (!token) return null;
+
+    const markets = getSpotifyMarketCandidates();
+    let lastErr;
+    for (const market of markets) {
+        try {
+            const albumRes = await axios.get(
+                `https://api.spotify.com/v1/albums/${encodeURIComponent(id)}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                    params: { market, fields: 'name' },
+                    timeout: 12_000,
+                }
+            );
+            const name = String(albumRes?.data?.name || '').trim() || 'Álbum';
+
+            const tracks = [];
+            let offset = 0;
+            const limit = 50;
+            while (tracks.length < maxTracks) {
+                const res = await axios.get(
+                    `https://api.spotify.com/v1/albums/${encodeURIComponent(id)}/tracks`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                        params: {
+                            market,
+                            limit,
+                            offset,
+                            fields: 'items(name,artists(name),is_local),next',
+                        },
+                        timeout: 12_000,
+                    }
+                );
+                const items = Array.isArray(res?.data?.items) ? res.data.items : [];
+                for (const t of items) {
+                    if (!t || t.is_local) continue;
+                    const tName = String(t?.name || '').trim();
+                    const artists = Array.isArray(t?.artists) ? t.artists.map(a => String(a?.name || '').trim()).filter(Boolean) : [];
+                    const artist = artists[0] || '';
+                    if (!tName) continue;
+                    tracks.push({ name: tName, artist });
+                    if (tracks.length >= maxTracks) break;
+                }
+                if (!res?.data?.next) break;
+                offset += limit;
+            }
+
+            return { name, tracks, market };
+        } catch (e) {
+            lastErr = e;
+            const status = e?.response?.status;
+            if ((status === 404 || status === 403) && markets.length > 1) continue;
+            throw e;
+        }
+    }
+    if (lastErr) throw lastErr;
+    return null;
+}
+
+async function getSpotifyArtistMetaAndTopTracks(artistId, { maxTracks = 15 } = {}) {
+    const id = String(artistId || '').trim();
+    if (!id) return null;
+
+    const token = await getSpotifyApiToken();
+    if (!token) return null;
+
+    const markets = getSpotifyMarketCandidates();
+    let lastErr;
+    for (const market of markets) {
+        try {
+            const artistRes = await axios.get(
+                `https://api.spotify.com/v1/artists/${encodeURIComponent(id)}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                    params: { market, fields: 'name' },
+                    timeout: 12_000,
+                }
+            );
+            const name = String(artistRes?.data?.name || '').trim() || 'Artista';
+
+            // top-tracks requiere market
+            const topRes = await axios.get(
+                `https://api.spotify.com/v1/artists/${encodeURIComponent(id)}/top-tracks`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                    params: { market },
+                    timeout: 12_000,
+                }
+            );
+
+            const rawTracks = Array.isArray(topRes?.data?.tracks) ? topRes.data.tracks : [];
+            const tracks = [];
+            for (const t of rawTracks) {
+                const tName = String(t?.name || '').trim();
+                const artists = Array.isArray(t?.artists) ? t.artists.map(a => String(a?.name || '').trim()).filter(Boolean) : [];
+                const artist = artists[0] || name;
+                if (!tName) continue;
+                tracks.push({ name: tName, artist });
+                if (tracks.length >= maxTracks) break;
+            }
+
+            return { name, tracks, market };
+        } catch (e) {
+            lastErr = e;
+            const status = e?.response?.status;
+            if ((status === 404 || status === 403) && markets.length > 1) continue;
+            throw e;
+        }
+    }
+    if (lastErr) throw lastErr;
+    return null;
 }
 
 function spotifyIdentifierToOpenUrl(spotifyId) {
@@ -86,6 +350,20 @@ function spotifyIdentifierToOpenUrl(spotifyId) {
     const id = parts[2];
     if (!kind || !id) return null;
     return `https://open.spotify.com/${kind}/${id}`;
+}
+
+async function getSpotifyOEmbedTitle(url) {
+    const u = String(url || '').trim();
+    if (!u) return '';
+    try {
+        const oembed = await axios.get('https://open.spotify.com/oembed', {
+            params: { url: u },
+            timeout: 12_000,
+        });
+        return String(oembed?.data?.title || '').trim();
+    } catch {
+        return '';
+    }
 }
 
 async function buildYouTubeQueryFromSpotify({ requestedTrack, normalizedSpotify }) {
@@ -102,16 +380,7 @@ async function buildYouTubeQueryFromSpotify({ requestedTrack, normalizedSpotify 
     }
     if (!url) return '';
 
-    let title = '';
-    try {
-        const oembed = await axios.get('https://open.spotify.com/oembed', {
-            params: { url },
-            timeout: 12_000,
-        });
-        title = String(oembed?.data?.title || '').trim();
-    } catch {
-        // ignore
-    }
+    const title = await getSpotifyOEmbedTitle(url);
 
     // Si tenemos credenciales, usar Spotify API para obtener artista y mejorar búsqueda.
     let meta = null;
@@ -315,7 +584,19 @@ module.exports = {
             const source = lugar === 'youtube' ? 'ytsearch' : 'spsearch';
 
             const normalizedSpotify = lugar === 'spotify' ? normalizeSpotifyIdentifier(requestedTrack) : null;
-            const query = normalizedSpotify || requestedTrack;
+            // Importante: si el usuario pega un enlace open.spotify.com, preferimos pasar la URL tal cual
+            // al resolver (algunos setups de Lavalink/lavasrc resuelven mejor URLs que URIs spotify:*:*).
+            let query = normalizedSpotify || requestedTrack;
+            if (lugar === 'spotify') {
+                try {
+                    const u = new URL(String(requestedTrack || '').trim());
+                    if (/spotify\.com$/i.test(u.hostname)) {
+                        query = u.toString();
+                    }
+                } catch {
+                    // ignore
+                }
+            }
             if (normalizedSpotify) {
                 debugHelper.log('play', 'normalized spotify identifier', { guildId, requesterId, from: requestedTrack, to: normalizedSpotify });
             }
@@ -346,6 +627,16 @@ module.exports = {
                 lugar === 'spotify' &&
                 typeof normalizedSpotify === 'string' &&
                 normalizedSpotify.startsWith('spotify:playlist:');
+
+            const looksLikeSpotifyAlbum =
+                lugar === 'spotify' &&
+                typeof normalizedSpotify === 'string' &&
+                normalizedSpotify.startsWith('spotify:album:');
+
+            const looksLikeSpotifyArtist =
+                lugar === 'spotify' &&
+                typeof normalizedSpotify === 'string' &&
+                normalizedSpotify.startsWith('spotify:artist:');
 
             const looksLikeSpotifyTrack =
                 lugar === 'spotify' &&
@@ -391,16 +682,166 @@ module.exports = {
                 }
             }
 
+            // Fallback Spotify (playlist/álbum/artista) -> YouTube: con client_credentials intentamos
+            // leer la colección pública desde Spotify API y convertirla a búsquedas de YouTube.
+            if ((isLoadFailed || isNoMatches) && (looksLikeSpotifyPlaylist || looksLikeSpotifyAlbum || looksLikeSpotifyArtist)) {
+                const creds = getSpotifyClientCreds();
+                if (!creds) {
+                    return interaction.editReply({
+                        components: [buildV2Notice('Para reproducir playlists/álbumes/artistas de Spotify necesito SPOTIFY_CLIENT_ID y SPOTIFY_CLIENT_SECRET configurados.\nAlternativa: usa YouTube o pega el nombre a buscar.')],
+                        flags: v2Flags(),
+                    });
+                }
+
+                const kind = looksLikeSpotifyPlaylist ? 'playlist' : (looksLikeSpotifyAlbum ? 'álbum' : 'artista');
+                const id = looksLikeSpotifyPlaylist
+                    ? extractSpotifyPlaylistId(normalizedSpotify)
+                    : (looksLikeSpotifyAlbum ? extractSpotifyAlbumId(normalizedSpotify) : extractSpotifyArtistId(normalizedSpotify));
+
+                if (!id) {
+                    return interaction.editReply({
+                        components: [buildV2Notice('No pude leer el ID de ese enlace de Spotify. Prueba a pegar el enlace completo de Spotify (open.spotify.com/...).')],
+                        flags: v2Flags(),
+                    });
+                }
+
+                await interaction.editReply({
+                    components: [buildV2Notice(`Cargando ${kind} de Spotify (fallback a YouTube)…`)],
+                    flags: MessageFlags.IsComponentsV2,
+                });
+
+                let meta;
+                let usedAlternative = null;
+                try {
+                    if (looksLikeSpotifyPlaylist) meta = await getSpotifyPlaylistMetaAndTracks(id, { maxTracks: 25 });
+                    else if (looksLikeSpotifyAlbum) meta = await getSpotifyAlbumMetaAndTracks(id, { maxTracks: 25 });
+                    else meta = await getSpotifyArtistMetaAndTopTracks(id, { maxTracks: 15 });
+                } catch (e) {
+                    const status = e?.response?.status;
+                    const oembedTitle = await getSpotifyOEmbedTitle(requestedTrack);
+                    const oembedOk = Boolean(oembedTitle);
+                    const markets = getSpotifyMarketCandidates();
+                    const marketsHint = markets.length ? `\nMercados probados: ${markets.join(', ')}. Puedes fijarlo con SPOTIFY_MARKET=US (o ES).` : '';
+
+                    // Caso especial: algunas playlists editoriales públicas dan 404/403 con client_credentials.
+                    // Intentamos encontrar una alternativa accesible por título y reproducirla.
+                    if ((status === 404 || status === 403) && oembedOk && looksLikeSpotifyPlaylist) {
+                        try {
+                            const alt = await searchSpotifyPlaylistByTitle(oembedTitle, { limit: 5 });
+                            if (alt?.id && alt.id !== id) {
+                                debugHelper.warn('play', 'spotify playlist not accessible; trying title-search alternative', {
+                                    guildId,
+                                    requesterId,
+                                    title: oembedTitle,
+                                    altId: alt.id,
+                                    altOwner: alt.owner?.id || alt.owner?.displayName,
+                                    market: alt.market,
+                                });
+                                meta = await getSpotifyPlaylistMetaAndTracks(alt.id, { maxTracks: 25 });
+                                usedAlternative = { title: oembedTitle, alt };
+                            }
+                        } catch (e2) {
+                            debugHelper.warn('play', 'spotify title-search alternative failed', { guildId, requesterId, message: e2?.message || String(e2) });
+                        }
+                    }
+
+                    // Si la alternativa funcionó, continuamos.
+                    if (meta && Array.isArray(meta.tracks) && meta.tracks.length) {
+                        // continue
+                    } else if (status === 404 || status === 403) {
+                        if (!oembedOk) {
+                            return interaction.editReply({
+                                components: [buildV2Notice(`No puedo reproducir ese ${kind} de Spotify.\nSi es privado o no es accesible públicamente, no tengo acceso. Hazlo público o usa YouTube.`)],
+                                flags: v2Flags(),
+                            });
+                        }
+
+                        return interaction.editReply({
+                            components: [buildV2Notice(`Parece público (${oembedTitle}), pero Spotify API devolvió ${status}.${marketsHint}\nEsto puede ser una restricción de Spotify. Prueba con SPOTIFY_MARKET=US o usa YouTube.`)],
+                            flags: v2Flags(),
+                        });
+                    } else if (status === 401) {
+                        return interaction.editReply({
+                            components: [buildV2Notice('No pude autenticar con Spotify (401).\nRevisa SPOTIFY_CLIENT_ID / SPOTIFY_CLIENT_SECRET y vuelve a intentar.')],
+                            flags: v2Flags(),
+                        });
+                    } else {
+                        debugHelper.warn('play', 'spotify collection fallback failed', { guildId, requesterId, status, message: e?.message || String(e) });
+                        return interaction.editReply({
+                            components: [buildV2Notice(`No pude cargar ese ${kind} de Spotify ahora mismo. Intenta más tarde o usa YouTube.`)],
+                            flags: v2Flags(),
+                        });
+                    }
+                }
+
+                if (!meta || !Array.isArray(meta.tracks) || meta.tracks.length === 0) {
+                    return interaction.editReply({
+                        components: [buildV2Notice(`No pude leer canciones de ese ${kind} de Spotify. Si es privado o está restringido por región, no tendré acceso.`)],
+                        flags: v2Flags(),
+                    });
+                }
+
+                debugHelper.log('play', 'spotify collection fallback meta', { guildId, requesterId, kind, name: meta.name, count: meta.tracks.length, market: meta.market, usedAlternative: Boolean(usedAlternative) });
+
+                player = Moxi.poru.createConnection({
+                    guildId: interaction.guildId,
+                    voiceChannel: interaction.member.voice.channelId,
+                    textChannel: interaction.channel.id,
+                    deaf: true,
+                });
+
+                let added = 0;
+                for (const t of meta.tracks) {
+                    const ytQuery = [t.artist, t.name].filter(Boolean).join(' ').trim();
+                    if (!ytQuery) continue;
+                    try {
+                        const ytRes = await Moxi.poru.resolve({ query: ytQuery, source: 'ytsearch', requester: interaction.member });
+                        const first = Array.isArray(ytRes?.tracks) ? ytRes.tracks[0] : null;
+                        if (!first) continue;
+                        first.info.requester = interaction.user;
+                        player.queue.add(first);
+                        added += 1;
+                    } catch (e) {
+                        debugHelper.warn('play', 'spotify collection track resolve failed', { guildId, requesterId, message: e?.message || String(e) });
+                    }
+                }
+
+                if (added === 0) {
+                    return interaction.editReply({
+                        components: [buildV2Notice(`No pude convertir ese ${kind} a resultados de YouTube. Prueba con otro o usa YouTube directo.`)],
+                        flags: v2Flags(),
+                    });
+                }
+
+                const altNote = usedAlternative
+                    ? `\nNota: no pude leer la playlist original por API y usé una alternativa por título (${usedAlternative.title}).`
+                    : '';
+                await interaction.editReply({
+                    components: [buildV2Notice(`Cargado desde Spotify (${kind}): ${meta.name} • ${added} canciones.${altNote}`)],
+                    flags: MessageFlags.IsComponentsV2,
+                });
+
+                if (!player.isPlaying) {
+                    try {
+                        await player.play();
+                    } catch (e) {
+                        debugHelper.error('play', 'player.play failed (spotify collection fallback)', { guildId, requesterId, message: e?.message || String(e) });
+                    }
+                }
+
+                return;
+            }
+
             if (isLoadFailed) {
                 debugHelper.warn('play', 'resolve failed', { guildId, requesterId });
-                if (looksLikeSpotifyPlaylist) {
-                    return interaction.editReply({ components: [buildV2Notice('No se puede reproducir una lista privada de Spotify.')], flags: v2Flags() });
+                if (looksLikeSpotifyPlaylist || looksLikeSpotifyAlbum || looksLikeSpotifyArtist) {
+                    return interaction.editReply({ components: [buildV2Notice('No pude cargar ese enlace de Spotify. Si es privado/restringido, no puedo acceder; si es público, revisa SPOTIFY_CLIENT_ID/SECRET y prueba con SPOTIFY_MARKET=US (o ES) o usa YouTube.')], flags: v2Flags() });
                 }
                 return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_LOAD_FAILED', lang))], flags: v2Flags() });
             } else if (isNoMatches) {
                 debugHelper.warn('play', 'resolve no matches', { guildId, requesterId });
-                if (looksLikeSpotifyPlaylist) {
-                    return interaction.editReply({ components: [buildV2Notice('No se puede reproducir una lista privada de Spotify.')], flags: v2Flags() });
+                if (looksLikeSpotifyPlaylist || looksLikeSpotifyAlbum || looksLikeSpotifyArtist) {
+                    return interaction.editReply({ components: [buildV2Notice('No pude encontrar resultados para ese enlace de Spotify. Si es privado/restringido, no puedo acceder; si es público, revisa SPOTIFY_CLIENT_ID/SECRET y prueba con SPOTIFY_MARKET=US (o ES) o usa YouTube.')], flags: v2Flags() });
                 }
                 return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_NO_SOURCE_FOUND', lang))], flags: v2Flags() });
             }
