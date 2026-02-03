@@ -22,7 +22,6 @@ module.exports = async (Moxi) => {
   };
 
   const ensurePrefixAliases = (commands) => {
-    // Reservados: nombres de comandos + alias existentes (para evitar colisiones al autogenerar)
     const reserved = new Set();
     for (const c of commands.values()) {
       const name = normalizeKey(c?.name);
@@ -46,15 +45,11 @@ module.exports = async (Moxi) => {
 
         const cleaned = Array.from(new Set((existing || []).map(normalizeKey).filter(Boolean)));
 
-        // Si el comando tiene nombre con diacríticos (raro), agregar variante sin diacríticos.
-        // (normalizeKey ya quita diacríticos; si cambia respecto al lower original, se notará aquí)
-        // Nota: el nombre principal ya se resuelve por name exacto; esto es solo para alias.
         const nextAliases = [...cleaned];
 
         const hadAliases = nextAliases.length > 0;
 
         if (nextAliases.length === 0) {
-          // Autogeneración: intentar prefijo único (2..6 chars). Si no, caer a name.
           let generated = null;
           for (let len = 2; len <= Math.min(6, name.length); len++) {
             const cand = name.slice(0, len);
@@ -74,11 +69,9 @@ module.exports = async (Moxi) => {
         }
 
         if (nextAliases.length === 0) {
-          // Garantía mínima: que exista al menos 1 alias.
           nextAliases.push(name);
         }
 
-        // Persistir en el formato principal del bot (alias)
         c.alias = Array.from(new Set(nextAliases.map(normalizeKey).filter(Boolean)));
 
         if (!hadAliases) {
@@ -91,10 +84,8 @@ module.exports = async (Moxi) => {
   const normalizeCommandModule = (mod, filePath) => {
     if (!mod || typeof mod !== 'object') return null;
 
-    // Formato actual del bot
     if (mod.name) return mod;
 
-    // Formato alternativo (Name/Aliases/messageRun/interactionRun)
     if (mod.Name) {
       const name = String(mod.Name).trim();
       if (!name) return null;
@@ -113,7 +104,6 @@ module.exports = async (Moxi) => {
         ? mod.Usage.trim()
         : (typeof mod.usage === 'string' && mod.usage.trim() ? mod.usage.trim() : undefined);
 
-      // Estructura de comandos (Prefix/Slash) usada por el help para listar formatos
       const command = (mod.Command && typeof mod.Command === 'object') ? mod.Command : undefined;
 
       const run = async (client, ctx, args) => {
@@ -167,7 +157,7 @@ module.exports = async (Moxi) => {
     }
   }
 
-  // Asegurar que todos los comandos prefix tienen alias (aunque sea autogenerado)
+  
   try {
     ensurePrefixAliases(Moxi.commands);
 
@@ -195,14 +185,12 @@ module.exports = async (Moxi) => {
         const json = data.toJSON();
         if (json && json.name) name = json.name;
       } catch {
-        // ignore
       }
     }
     if (name) {
       if (!slash.__sourceFile) slash.__sourceFile = file;
       Moxi.slashcommands.set(name, slash);
     }
-    // No warning: los subcomandos no necesitan .data
   }
   const comandos = Moxi.commands.map(cmd => `• ${cmd.name}`).join("\n");
   const slashs = Moxi.slashcommands.map(slash => `• ${slash.data.name}`).join("\n");
