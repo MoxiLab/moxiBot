@@ -19,6 +19,7 @@ const { buildDiscordArtsProfile } = require('../../Util/discordArts');
 const { buildCanvacardWelcomeLeave } = require('../../Util/canvacard');
 const logger = require('../../Util/logger');
 const debugHelper = require('../../Util/debugHelper');
+const { setSectionButtonAccessory } = require('../../Util/v2SectionAccessory');
 const LANGUAGE_META = require('../../Languages/language-meta.json');
 
 function toHexColor(value, fallback = '#00d9ff') {
@@ -238,20 +239,19 @@ module.exports = {
 
                     // Opción 1
                     c.addSectionComponents(section =>
-                        section
-                            .addTextDisplayComponents(t =>
+                        setSectionButtonAccessory(
+                            section.addTextDisplayComponents(t =>
                                 t.setContent(
                                     `**Sylphacard** (clásico)${selectedStyle === 'sylphacard' ? ` ${EMOJIS.tick}` : ''}` +
                                     `${hasSylpha ? '' : `\n_${EMOJIS.cross} Preview no disponible_`}`
                                 )
-                            )
-                            .setButtonAccessory(
-                                new ButtonBuilder()
-                                    .setCustomId('byes_style_sylphacard')
-                                    .setLabel('Usar Sylphacard')
-                                    .setStyle(selectedStyle === 'sylphacard' ? ButtonStyle.Success : ButtonStyle.Primary)
-                                    .setDisabled(disabled)
-                            )
+                            ),
+                            new ButtonBuilder()
+                                .setCustomId('byes_style_sylphacard')
+                                .setLabel('Usar Sylphacard')
+                                .setStyle(selectedStyle === 'sylphacard' ? ButtonStyle.Success : ButtonStyle.Primary)
+                                .setDisabled(disabled)
+                        )
                     );
                     if (hasSylpha) {
                         c.addMediaGalleryComponents(
@@ -264,20 +264,19 @@ module.exports = {
 
                     // Opción 2
                     c.addSectionComponents(section =>
-                        section
-                            .addTextDisplayComponents(t =>
+                        setSectionButtonAccessory(
+                            section.addTextDisplayComponents(t =>
                                 t.setContent(
                                     `**Discord-Arts** (Discord style)${selectedStyle === 'discord-arts' ? ` ${EMOJIS.tick}` : ''}` +
                                     `${hasArts ? '' : `\n_${EMOJIS.cross} Preview no disponible_`}`
                                 )
-                            )
-                            .setButtonAccessory(
-                                new ButtonBuilder()
-                                    .setCustomId('byes_style_discord-arts')
-                                    .setLabel('Usar Discord-Arts')
-                                    .setStyle(selectedStyle === 'discord-arts' ? ButtonStyle.Success : ButtonStyle.Primary)
-                                    .setDisabled(disabled)
-                            )
+                            ),
+                            new ButtonBuilder()
+                                .setCustomId('byes_style_discord-arts')
+                                .setLabel('Usar Discord-Arts')
+                                .setStyle(selectedStyle === 'discord-arts' ? ButtonStyle.Success : ButtonStyle.Primary)
+                                .setDisabled(disabled)
+                        )
                     );
                     if (hasArts) {
                         c.addMediaGalleryComponents(
@@ -290,20 +289,19 @@ module.exports = {
 
                     // Opción 3
                     c.addSectionComponents(section =>
-                        section
-                            .addTextDisplayComponents(t =>
+                        setSectionButtonAccessory(
+                            section.addTextDisplayComponents(t =>
                                 t.setContent(
                                     `**Canvacard** (WelcomeLeave)${selectedStyle === 'canvacard' ? ` ${EMOJIS.tick}` : ''}` +
                                     `${hasCanva ? '' : `\n_${EMOJIS.cross} Preview no disponible_`}`
                                 )
-                            )
-                            .setButtonAccessory(
-                                new ButtonBuilder()
-                                    .setCustomId('byes_style_canvacard')
-                                    .setLabel('Usar Canvacard')
-                                    .setStyle(selectedStyle === 'canvacard' ? ButtonStyle.Success : ButtonStyle.Primary)
-                                    .setDisabled(disabled)
-                            )
+                            ),
+                            new ButtonBuilder()
+                                .setCustomId('byes_style_canvacard')
+                                .setLabel('Usar Canvacard')
+                                .setStyle(selectedStyle === 'canvacard' ? ButtonStyle.Success : ButtonStyle.Primary)
+                                .setDisabled(disabled)
+                        )
                     );
                     if (hasCanva) {
                         c.addMediaGalleryComponents(

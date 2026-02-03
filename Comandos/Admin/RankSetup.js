@@ -19,6 +19,7 @@ const GuildData = require('../../Models/GuildSchema');
 const LevelSystem = require('../../Global/Helpers/LevelSystem');
 const debugHelper = require('../../Util/debugHelper');
 const { generateRankImage } = require('../../Global/Helpers/WelcomeImage');
+const { setSectionButtonAccessory } = require('../../Util/v2SectionAccessory');
 
 function normalizeStyle(raw) {
     const v = String(raw || '').trim().toLowerCase();
@@ -47,18 +48,17 @@ function buildPanel({ selectedStyle, availability }) {
 
     // Opción 1 (Sylphacard)
     container.addSectionComponents(section =>
-        section
-            .addTextDisplayComponents(t => t.setContent(
+        setSectionButtonAccessory(
+            section.addTextDisplayComponents(t => t.setContent(
                 `**Sylphacard**${selectedStyle === 'sylphacard' ? ' ✅' : ''}` +
                 `${hasSylpha ? '' : '\n_❌ Preview no disponible_'}`
-            ))
-            .setButtonAccessory(
-                new ButtonBuilder()
-                    .setCustomId('rank_style_sylphacard')
-                    .setLabel('Usar Sylphacard')
-                    .setStyle(selectedStyle === 'sylphacard' ? ButtonStyle.Success : ButtonStyle.Primary)
-                    .setDisabled(!!disabled)
-            )
+            )),
+            new ButtonBuilder()
+                .setCustomId('rank_style_sylphacard')
+                .setLabel('Usar Sylphacard')
+                .setStyle(selectedStyle === 'sylphacard' ? ButtonStyle.Success : ButtonStyle.Primary)
+                .setDisabled(!!disabled)
+        )
     );
 
     if (hasSylpha) {
@@ -73,18 +73,17 @@ function buildPanel({ selectedStyle, availability }) {
 
     // Opción 2 (Discord-Arts)
     container.addSectionComponents(section =>
-        section
-            .addTextDisplayComponents(t => t.setContent(
+        setSectionButtonAccessory(
+            section.addTextDisplayComponents(t => t.setContent(
                 `**Discord-Arts**${selectedStyle === 'discord-arts' ? ' ✅' : ''}` +
                 `${hasArts ? '' : '\n_❌ Preview no disponible_'}`
-            ))
-            .setButtonAccessory(
-                new ButtonBuilder()
-                    .setCustomId('rank_style_discord-arts')
-                    .setLabel('Usar Discord-Arts')
-                    .setStyle(selectedStyle === 'discord-arts' ? ButtonStyle.Success : ButtonStyle.Primary)
-                    .setDisabled(!!disabled)
-            )
+            )),
+            new ButtonBuilder()
+                .setCustomId('rank_style_discord-arts')
+                .setLabel('Usar Discord-Arts')
+                .setStyle(selectedStyle === 'discord-arts' ? ButtonStyle.Success : ButtonStyle.Primary)
+                .setDisabled(!!disabled)
+        )
     );
 
     if (hasArts) {
@@ -99,18 +98,17 @@ function buildPanel({ selectedStyle, availability }) {
 
     // Opción 3 (Canvacard)
     container.addSectionComponents(section =>
-        section
-            .addTextDisplayComponents(t => t.setContent(
+        setSectionButtonAccessory(
+            section.addTextDisplayComponents(t => t.setContent(
                 `**Canvacard**${selectedStyle === 'canvacard' ? ' ✅' : ''}` +
                 `${hasCanva ? '' : '\n_❌ Preview no disponible_'}`
-            ))
-            .setButtonAccessory(
-                new ButtonBuilder()
-                    .setCustomId('rank_style_canvacard')
-                    .setLabel('Usar Canvacard')
-                    .setStyle(selectedStyle === 'canvacard' ? ButtonStyle.Success : ButtonStyle.Primary)
-                    .setDisabled(!!disabled)
-            )
+            )),
+            new ButtonBuilder()
+                .setCustomId('rank_style_canvacard')
+                .setLabel('Usar Canvacard')
+                .setStyle(selectedStyle === 'canvacard' ? ButtonStyle.Success : ButtonStyle.Primary)
+                .setDisabled(!!disabled)
+        )
     );
 
     if (hasCanva) {

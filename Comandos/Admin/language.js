@@ -10,6 +10,7 @@ const { Bot } = require('../../Config');
 const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
 const debugHelper = require('../../Util/debugHelper');
 const { getSlashCommandId } = require('../../Util/slashCommandMentions');
+const { setSectionButtonAccessory } = require('../../Util/v2SectionAccessory');
 
 module.exports = {
     name: 'language',
@@ -176,16 +177,15 @@ module.exports = {
         languages.forEach(lang => {
             const isSelected = langCode === lang.code;
             container.addSectionComponents(section =>
-                section
-                    .addTextDisplayComponents(text =>
+                setSectionButtonAccessory(
+                    section.addTextDisplayComponents(text =>
                         text.setContent(`${lang.emoji} **${lang.name}** (${lang.code})${isSelected ? ` ${EMOJIS.tick}` : ''}`)
-                    )
-                    .setButtonAccessory(
-                        new ButtonBuilder()
-                            .setCustomId(`lang_button_${lang.code}`)
-                            .setLabel(moxi.translate('SELECT', langCode) || 'Select')
-                            .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Danger)
-                    )
+                    ),
+                    new ButtonBuilder()
+                        .setCustomId(`lang_button_${lang.code}`)
+                        .setLabel(moxi.translate('SELECT', langCode) || 'Select')
+                        .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Danger)
+                )
             );
         });
 
@@ -254,16 +254,15 @@ module.exports = {
                     languages.forEach(lang => {
                         const isSelected = selectedCode === lang.code;
                         updatedContainer.addSectionComponents(section =>
-                            section
-                                .addTextDisplayComponents(text =>
+                            setSectionButtonAccessory(
+                                section.addTextDisplayComponents(text =>
                                     text.setContent(`${lang.emoji} **${lang.name}** (${lang.code})${isSelected ? ` ${EMOJIS.tick}` : ''}`)
-                                )
-                                .setButtonAccessory(
-                                    new ButtonBuilder()
-                                        .setCustomId(`lang_button_${lang.code}`)
-                                        .setLabel(moxi.translate('SELECT', selectedCode) || 'Select')
-                                        .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Danger)
-                                )
+                                ),
+                                new ButtonBuilder()
+                                    .setCustomId(`lang_button_${lang.code}`)
+                                    .setLabel(moxi.translate('SELECT', selectedCode) || 'Select')
+                                    .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Danger)
+                            )
                         );
                     });
                     updatedContainer
@@ -327,17 +326,16 @@ module.exports = {
                 languages.forEach(lang => {
                     const isSelected = lastLangCode === lang.code;
                     disabledContainer.addSectionComponents(section =>
-                        section
-                            .addTextDisplayComponents(text =>
+                        setSectionButtonAccessory(
+                            section.addTextDisplayComponents(text =>
                                 text.setContent(`${lang.emoji} **${lang.name}** (${lang.code})${isSelected ? ` ${EMOJIS.tick}` : ''}`)
-                            )
-                            .setButtonAccessory(
-                                new ButtonBuilder()
-                                    .setCustomId(`lang_button_${lang.code}`)
-                                    .setLabel(moxi.translate('SELECT', lastLangCode) || 'Select')
-                                    .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Danger)
-                                    .setDisabled(true)
-                            )
+                            ),
+                            new ButtonBuilder()
+                                .setCustomId(`lang_button_${lang.code}`)
+                                .setLabel(moxi.translate('SELECT', lastLangCode) || 'Select')
+                                .setStyle(isSelected ? ButtonStyle.Success : ButtonStyle.Danger)
+                                .setDisabled(true)
+                        )
                     );
                 });
 
