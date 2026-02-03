@@ -517,6 +517,7 @@
     "MUSIC_LOAD_FAILED": "❌ | Failed to load the track.",
     "MUSIC_NO_SOURCE_FOUND": "❌ | No matches found.",
     "MUSIC_JOIN_VOICE": "❌ | You need to join a voice channel.",
+    "MUSIC_MISSING_PERMS": "❌ | I don't have permission to connect/speak in that voice channel.",
     "MUSIC_NOT_SEEKABLE": "❌ | This track can't be restarted.",
     "MUSIC_NOT_PAUSED": "The player is not paused.",
     "MUSIC_QUEUE_DESCRIPTION": "[{{title}}]({{url}}) • `{{length}}`",

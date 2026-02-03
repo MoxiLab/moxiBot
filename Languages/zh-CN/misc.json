@@ -396,6 +396,7 @@
   "MUSIC_LOAD_FAILED": "❌ | 加载曲目失败。",
   "MUSIC_NO_SOURCE_FOUND": "❌ | 未找到匹配结果。",
   "MUSIC_JOIN_VOICE": "❌ | 你需要加入语音频道。",
+  "MUSIC_MISSING_PERMS": "❌ | 我没有权限在该语音频道连接/说话。",
   "MUSIC_NOT_SEEKABLE": "❌ | 此曲目无法从头开始。",
   "MUSIC_NOT_PAUSED": "播放器未处于暂停状态。",
   "MUSIC_QUEUE_DESCRIPTION": "[{{title}}]({{url}}) • `{{length}}`",

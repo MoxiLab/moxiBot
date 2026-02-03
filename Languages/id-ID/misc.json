@@ -396,6 +396,7 @@
     "MUSIC_LOAD_FAILED": "❌ | Gagal memuat trek.",
     "MUSIC_NO_SOURCE_FOUND": "❌ | Tidak ada hasil.",
     "MUSIC_JOIN_VOICE": "❌ | Kamu harus bergabung ke channel suara.",
+    "MUSIC_MISSING_PERMS": "❌ | Aku tidak punya izin untuk terhubung/berbicara di kanal suara itu.",
     "MUSIC_NOT_SEEKABLE": "❌ | Trek ini tidak bisa diulang dari awal.",
     "MUSIC_NOT_PAUSED": "Pemutar tidak sedang dijeda.",
     "MUSIC_QUEUE_DESCRIPTION": "[{{title}}]({{url}}) • `{{length}}`",

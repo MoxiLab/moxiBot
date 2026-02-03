@@ -396,6 +396,7 @@
     "MUSIC_LOAD_FAILED": "❌ | Impossible de charger la piste.",
     "MUSIC_NO_SOURCE_FOUND": "❌ | Aucun résultat.",
     "MUSIC_JOIN_VOICE": "❌ | Vous devez rejoindre un salon vocal.",
+    "MUSIC_MISSING_PERMS": "❌ | Je n'ai pas la permission de me connecter/parler dans ce salon vocal.",
     "MUSIC_NOT_SEEKABLE": "❌ | Cette piste ne peut pas être redémarrée.",
     "MUSIC_NOT_PAUSED": "Le lecteur n'est pas en pause.",
     "MUSIC_QUEUE_DESCRIPTION": "[{{title}}]({{url}}) • Durée {{length}}",

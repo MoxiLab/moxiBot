@@ -408,6 +408,7 @@
     "MUSIC_LOAD_FAILED": "❌ | تعذّر تحميل المقطع.",
     "MUSIC_NO_SOURCE_FOUND": "❌ | لم يتم العثور على نتائج.",
     "MUSIC_JOIN_VOICE": "❌ | يجب عليك الانضمام إلى قناة صوتية.",
+    "MUSIC_MISSING_PERMS": "❌ | ليس لدي إذن للاتصال/التحدث في قناة الصوت تلك.",
     "MUSIC_NOT_SEEKABLE": "❌ | لا يمكن إعادة تشغيل هذا المقطع من البداية.",
     "MUSIC_NOT_PAUSED": "المشغّل ليس في وضع الإيقاف المؤقت.",
     "MUSIC_QUEUE_DESCRIPTION": "[{{title}}]({{url}}) • `{{length}}`",

@@ -396,6 +396,7 @@
     "MUSIC_LOAD_FAILED": "❌ | Impossibile caricare la traccia.",
     "MUSIC_NO_SOURCE_FOUND": "❌ | Nessun risultato trovato.",
     "MUSIC_JOIN_VOICE": "❌ | Devi entrare in un canale vocale.",
+    "MUSIC_MISSING_PERMS": "❌ | Non ho i permessi per connettermi/parlare in quel canale vocale.",
     "MUSIC_NOT_SEEKABLE": "❌ | Questa traccia non può essere riavviata.",
     "MUSIC_NOT_PAUSED": "Il player non è in pausa.",
     "MUSIC_QUEUE_DESCRIPTION": "[{{title}}]({{url}}) • `{{length}}`",

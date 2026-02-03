@@ -510,6 +510,7 @@
   "MUSIC_LOAD_FAILED": "❌ | No se pudo cargar la pista.",
   "MUSIC_NO_SOURCE_FOUND": "❌ | No se encontraron resultados.",
   "MUSIC_JOIN_VOICE": "❌ | Debes unirte a un canal de voz.",
+  "MUSIC_MISSING_PERMS": "❌ | No tengo permisos para Conectar/Hablar en ese canal de voz.",
   "MUSIC_NOT_SEEKABLE": "❌ | Esta pista no se puede reiniciar.",
   "MUSIC_NOT_PAUSED": "El reproductor no está en pausa.",
   "MUSIC_QUEUE_DESCRIPTION": "[{{title}}]({{url}}) • Duración {{length}}",

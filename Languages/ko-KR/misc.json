@@ -396,6 +396,7 @@
     "MUSIC_LOAD_FAILED": "❌ | 트랙을 불러오지 못했습니다.",
     "MUSIC_NO_SOURCE_FOUND": "❌ | 결과를 찾을 수 없습니다.",
     "MUSIC_JOIN_VOICE": "❌ | 음성 채널에 들어가야 합니다.",
+    "MUSIC_MISSING_PERMS": "❌ | 해당 음성 채널에 연결/말하기 권한이 없습니다.",
     "MUSIC_NOT_SEEKABLE": "❌ | 이 트랙은 처음부터 다시 재생할 수 없습니다.",
     "MUSIC_NOT_PAUSED": "플레이어가 일시정지 상태가 아닙니다.",
     "MUSIC_QUEUE_DESCRIPTION": "[{{title}}]({{url}}) • `{{length}}`",

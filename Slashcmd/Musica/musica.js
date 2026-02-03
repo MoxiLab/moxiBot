@@ -239,7 +239,10 @@ module.exports = {
         const botVoiceId = interaction.guild?.members?.me?.voice?.channelId;
         const voiceContext = { guildId, requesterId, subcommand };
 
-        debugHelper.log('moxi', 'slash run start', { guildId, requesterId, subcommand });
+        // Usar una sola variable para evitar redeclaraciones (SyntaxError) si el archivo se mergea mal.
+        let player;
+
+        debugHelper.log('music', 'slash run start', { guildId, requesterId, subcommand });
 
         function v2Flags() {
             return MessageFlags.Ephemeral | MessageFlags.IsComponentsV2;
@@ -264,11 +267,11 @@ module.exports = {
 
         function ensureVoice({ requireSameChannel = true } = {}) {
             if (!memberVoiceId) {
-                debugHelper.warn('moxi', 'voice not joined', voiceContext);
+                debugHelper.warn('music', 'voice not joined', voiceContext);
                 return { components: [buildV2Notice(moxi.translate('MUSIC_JOIN_VOICE', lang))], flags: v2Flags() };
             }
             if (requireSameChannel && botVoiceId && botVoiceId !== memberVoiceId) {
-                debugHelper.warn('moxi', 'voice channel mismatch', voiceContext);
+                debugHelper.warn('music', 'voice channel mismatch', voiceContext);
                 return { components: [buildV2Notice(moxi.translate('MUSIC_SAME_VOICE_CHANNEL', lang))], flags: v2Flags() };
             }
             return null;
@@ -402,7 +405,7 @@ module.exports = {
                 return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_NO_SOURCE_FOUND', lang))], flags: v2Flags() });
             }
 
-            const player = Moxi.poru.createConnection({
+            player = Moxi.poru.createConnection({
                 guildId: interaction.guildId,
                 voiceChannel: interaction.member.voice.channelId,
                 textChannel: interaction.channel.id,
@@ -474,7 +477,7 @@ module.exports = {
             const voiceErr = ensureVoice({ requireSameChannel: true });
             if (voiceErr) return interaction.reply(voiceErr);
 
-            const player = Moxi.poru.players.get(interaction.guild.id);
+            player = Moxi.poru.players.get(interaction.guild.id);
             if (!player) return interaction.reply({ components: [buildV2Notice(moxi.translate('MUSIC_NO_MUSIC_PLAYING', lang))], flags: v2Flags() });
             if (player.isPaused) {
                 debugHelper.warn('pause', 'already paused', { guildId, requesterId });
@@ -491,7 +494,7 @@ module.exports = {
             const voiceErr = ensureVoice({ requireSameChannel: true });
             if (voiceErr) return interaction.reply(voiceErr);
 
-            const player = Moxi.poru.players.get(interaction.guild.id);
+            player = Moxi.poru.players.get(interaction.guild.id);
             if (!player) return interaction.reply({ components: [buildV2Notice(moxi.translate('MUSIC_NO_MUSIC_PLAYING', lang))], flags: v2Flags() });
 
             if (!player.isPaused) {
@@ -511,7 +514,7 @@ module.exports = {
 
             const music = Moxi.poru.players.get(interaction.guild.id)
             if (!music) return interaction.reply({ components: [buildV2Notice(moxi.translate('MUSIC_NO_MUSIC_PLAYING', lang))], flags: v2Flags() });
-            const player = Moxi.poru.players.get(interaction.guild.id);
+            player = Moxi.poru.players.get(interaction.guild.id);
             player.skip();
             debugHelper.log('skip', 'skipped', { guildId, requesterId });
             return interaction.reply({ components: [buildV2Notice(moxi.translate('MUSIC_TRACK_SKIPPED', lang))], flags: v2Flags() });
@@ -525,7 +528,7 @@ module.exports = {
 
             const music = Moxi.poru.players.get(interaction.guild.id)
             if (!music) return interaction.reply({ components: [buildV2Notice(moxi.translate('MUSIC_NO_MUSIC_PLAYING', lang))], flags: v2Flags() });
-            const player = Moxi.poru.players.get(interaction.guild.id);
+            player = Moxi.poru.players.get(interaction.guild.id);
             const queue =
                 player.queue.length > 5 ? player.queue.slice(0, 5) : player.queue;
             const nowPlaying = `${moxi.translate('MUSIC_NOW_PLAYING', lang)}: [${player.currentTrack.info.title}](${player.currentTrack.info.uri}) • \`${ms(player.currentTrack.info.length)}\``;
@@ -546,7 +549,7 @@ module.exports = {
             if (voiceErr) return interaction.reply(voiceErr);
 
             const plat = interaction.options.getString("platform")
-            const player = Moxi.poru.players.get(interaction.guild.id)
+            player = Moxi.poru.players.get(interaction.guild.id)
             if (!player) return interaction.reply({ components: [buildV2Notice(moxi.translate('MUSIC_NO_MUSIC_PLAYING', lang))], flags: v2Flags() })
 
             debugHelper.log('autoplay', 'branch selected', { guildId, requesterId, platform: plat });
@@ -593,11 +596,11 @@ module.exports = {
                 const currentsong = player.currentTrack.info;
 
                 // Validamos que la canción actual sea realmente de Spotify
-                const spUri = /^(https?:\/\/)?(open\.spotify\.com)\/.+$/gi.test(currentsong.uri);
+                const spUri = /^(https?:\/\/)?(open\.spotify\.com)\/.+$/gi.test(currentsong.uri) || /^spotify:/i.test(currentsong.uri);
 
                 if (!spUri) {
                     debugHelper.warn('autoplay', 'spotify only track', { guildId, requesterId });
-                    return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_SPOTIFY_ONLY', lang))], flags: v2Flags() });
+                    return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_AUTOPLAY_SPOTIFY_ONLY', lang))], flags: v2Flags() });
                 }
 
                 // Lógica para DESACTIVAR
@@ -605,7 +608,7 @@ module.exports = {
                     player.autoplay = false;
                     await player.queue.clear();
                     debugHelper.log('autoplay', 'spotify disabled', { guildId, requesterId });
-                    return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_SPOTIFY_AUTOPLAY_DISABLED', lang))], flags: v2Flags() });
+                    return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_AUTOPLAY_SPOTIFY_DISABLED', lang))], flags: v2Flags() });
                 }
 
                 // Lógica para ACTIVAR
@@ -618,7 +621,7 @@ module.exports = {
                     try {
                         const res = await Moxi.poru.resolve({
                             query: search,
-                            source: "spotify",
+                            source: "spsearch",
                             requester: interaction.user
                         });
 
@@ -631,13 +634,13 @@ module.exports = {
 
                         debugHelper.log('autoplay', 'spotify enabled', { guildId, requesterId });
 
-                        return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_SPOTIFY_AUTOPLAY_ENABLED', lang))], flags: v2Flags() });
+                        return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_AUTOPLAY_SPOTIFY_ENABLED', lang))], flags: v2Flags() });
 
                     } catch (error) {
                         console.error(error);
                         player.autoplay = false;
                         debugHelper.warn('autoplay', 'spotify error', { guildId, requesterId, message: error?.message });
-                        return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_SPOTIFY_AUTOPLAY_ERROR', lang))], flags: v2Flags() });
+                        return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_AUTOPLAY_SPOTIFY_ERROR', lang))], flags: v2Flags() });
                     }
                 }
             }
@@ -648,14 +651,13 @@ module.exports = {
             const voiceErr = ensureVoice({ requireSameChannel: true });
             if (voiceErr) return interaction.reply(voiceErr);
 
-            const music = Moxi.poru.players.get(interaction.guild.id)
-            if (!music) return interaction.reply({ components: [buildV2Notice(moxi.translate('MUSIC_NO_MUSIC_PLAYING', lang))], flags: v2Flags() })
+            player = Moxi.poru.players.get(interaction.guild.id);
+            if (!player) return interaction.reply({ components: [buildV2Notice(moxi.translate('MUSIC_NO_MUSIC_PLAYING', lang))], flags: v2Flags() })
 
             if (!Moxi.previousMessage) return;
 
             if (Moxi.previousMessage) {
                 try {
-                    const player = Moxi.poru.players.get(interaction.guild.id);
                     const lastSession = player ? await player.get("lastSessionData") : null;
                     if (lastSession) {
                         const disabledContainer = buildDisabledMusicSessionContainer({
@@ -673,8 +675,6 @@ module.exports = {
                     // si no se puede editar (mensaje viejo/no-v2), ignoramos
                 }
             }
-
-            const player = Moxi.poru.players.get(interaction.guild.id);
             if (player) {
                 await sendVoteShare(Moxi, player).catch(() => { });
                 await player.destroy();
@@ -699,7 +699,7 @@ module.exports = {
             await interaction.deferReply({ flags: v2Flags() });
 
 
-            const player = Moxi.poru.players.get(interaction.guild.id);
+            player = Moxi.poru.players.get(interaction.guild.id);
             const currentsong = player.currentTrack.info;
             const ytUri = /^(https?:\/\/)?(www\.)?(m\.)?(music\.)?(youtube\.com|youtu\.?be)\/.+$/gi.test(currentsong.uri);
 
@@ -719,7 +719,7 @@ module.exports = {
                     await player.queue.add(res.tracks[randomIndex]);
                 }
                 debugHelper.log('add', 'tracks added', { guildId, requesterId, amount: num });
-                return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_TRACKS_ADDED', lang, { count: num }))], flags: v2Flags() });
+                return interaction.editReply({ components: [buildV2Notice(moxi.translate('MUSIC_ADDED_TRACKS', lang, { count: num }))], flags: v2Flags() });
             }
         }
 
@@ -729,7 +729,7 @@ module.exports = {
             const voiceErr = ensureVoice({ requireSameChannel: true });
             if (voiceErr) return interaction.reply(voiceErr);
 
-            const player = Moxi.poru.players.get(interaction.guild.id);
+            player = Moxi.poru.players.get(interaction.guild.id);
             if (!value) {
                 debugHelper.warn('volume', 'no value provided', { guildId, requesterId, currentVolume: player?.volume });
                 return interaction.reply({ components: [buildV2Notice(moxi.translate('MUSIC_CURRENT_VOLUME', lang, { volume: player.volume }))], flags: v2Flags() });

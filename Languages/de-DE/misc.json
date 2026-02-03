@@ -396,6 +396,7 @@
     "MUSIC_LOAD_FAILED": "❌ | Track konnte nicht geladen werden.",
     "MUSIC_NO_SOURCE_FOUND": "❌ | Keine Treffer gefunden.",
     "MUSIC_JOIN_VOICE": "❌ | Du musst einem Sprachkanal beitreten.",
+    "MUSIC_MISSING_PERMS": "❌ | Ich habe keine Berechtigung, dem Sprachkanal beizutreten/zu sprechen.",
     "MUSIC_NOT_SEEKABLE": "❌ | Dieser Track kann nicht neu gestartet werden.",
     "MUSIC_NOT_PAUSED": "Der Player ist nicht pausiert.",
     "MUSIC_QUEUE_DESCRIPTION": "[{{title}}]({{url}}) • Länge {{length}}",
