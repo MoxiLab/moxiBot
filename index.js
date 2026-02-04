@@ -66,7 +66,7 @@ module.exports = client;
 
 require("colors");
 require("./Handlers");
-require("./setupEvents.js");
+require("./setupEvents.js")(client);
 require("./anticrash/antiCrash.js")();
 
 const discordToken = (process.env.TOKEN && String(process.env.TOKEN).trim())
