@@ -189,6 +189,8 @@
   "GAMES_TTT_CLOSE": "Cerrar",
   "HELP_CATEGORY_WELCOME": "Sistema de bienvenida",
   "HELP_CATEGORY_WELCOME_DESC": "Comandos para configurar mensajes y ajustes de bienvenida.",
+  "HELP_CATEGORY_VOICE": "Voz",
+  "HELP_CATEGORY_VOICE_DESC": "Comandos relacionados con voz (por ejemplo, TTS y utilidades).",
   "FUN_COINFLIP_TITLE": "Lanzar moneda",
   "FUN_COINFLIP_HEADS": "Cara",
   "FUN_COINFLIP_TAILS": "Cruz",
