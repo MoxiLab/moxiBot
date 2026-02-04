@@ -5,20 +5,15 @@ const client = require('./index');
 const path = require('path');
 const fs = require('fs');
 
-// Lista de eventos válidos de Discord.js (puedes ampliarla si usas más)
-const validEvents = [
-    // Compat v14/v15
-    // En v14 'ready' está deprecado (y genera warning). Usamos siempre 'clientReady'.
+const validEvents = [ 
     'clientReady',
     'channelCreate', 'channelDelete', 'channelUpdate',
     'emojiCreate', 'emojiDelete', 'emojiUpdate',
     'guildBanAdd', 'guildBanRemove',
     'guildMemberAdd', 'guildMemberRemove', 'guildMemberUpdate',
     'messageCreate', 'messageDelete', 'messageDeleteBulk', 'messageBulkDelete', 'messageUpdate',
-    'roleCreate', 'roleDelete', 'roleUpdate',
-    // invites
-    'inviteCreate', 'inviteDelete', 'inviteUpdate',
-    // ...agrega más si usas otros eventos
+    'roleCreate', 'roleDelete', 'roleUpdate', 
+    'inviteCreate', 'inviteDelete', 'inviteUpdate', 
 ];
 
 
