@@ -325,6 +325,8 @@
     "HELP_CATEGORY_MODERATION_DESC": "モデレーションコマンド：BAN、キック、ミュート、警告など。",
     "HELP_CATEGORY_MUSIC": "音楽",
     "HELP_CATEGORY_MUSIC_DESC": "音楽再生やキュー管理のコマンド。",
+    "HELP_CATEGORY_VOICE": "ボイス",
+    "HELP_CATEGORY_VOICE_DESC": "ボイス関連コマンドとボイスチャンネルのユーティリティ。",
     "HELP_CATEGORY_TOOLS": "ツール",
     "HELP_CATEGORY_TOOLS_DESC": "様々なサーバー機能のためのユーティリティコマンド。",
     "HELP_CATEGORY_ECONOMY": "経済",

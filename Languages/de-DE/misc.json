@@ -124,6 +124,8 @@
     "HELP_CATEGORY_MODERATION": "Moderationsteam",
     "HELP_CATEGORY_MUSIC": "Musik",
     "HELP_CATEGORY_MUSIC_DESC": "Musikbefehle zum Abspielen und Verwalten von Songs.",
+    "HELP_CATEGORY_VOICE": "Voice",
+    "HELP_CATEGORY_VOICE_DESC": "Befehle für Sprachkanäle und Voice-Funktionen.",
     "HELP_CATEGORY_TOOLS": "Werkzeuge",
     "HELP_CATEGORY_TOOLS_DESC": "Nützliche Befehle für verschiedene Serverfunktionen.",
     "HELP_CATEGORY_ECONOMY": "Wirtschaft",

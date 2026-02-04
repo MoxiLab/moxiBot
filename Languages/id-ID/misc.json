@@ -123,6 +123,8 @@
     "HELP_CATEGORY_ADMIN_DESC": "Perintah administratif untuk manajemen server.",
     "HELP_CATEGORY_MUSIC": "Musik",
     "HELP_CATEGORY_MUSIC_DESC": "Perintah untuk pemutaran musik dan manajemen antrean.",
+    "HELP_CATEGORY_VOICE": "Suara",
+    "HELP_CATEGORY_VOICE_DESC": "Perintah suara dan utilitas kanal suara.",
     "HELP_CATEGORY_MODERATION": "Moderasi",
     "HELP_CATEGORY_MODERATION_DESC": "Perintah moderasi: ban, kick, mute, warn, dan lainnya.",
     "HELP_CATEGORY_TOOLS": "Alat",

@@ -118,6 +118,8 @@
     "HELP_CATEGORY_MODERATION_DESC": "Commandes de modération : bannir, expulser, mute, avertir, etc.",
     "HELP_CATEGORY_MUSIC": "Musique",
     "HELP_CATEGORY_MUSIC_DESC": "Commandes pour écouter de la musique et gérer la file d’attente.",
+    "HELP_CATEGORY_VOICE": "Vocal",
+    "HELP_CATEGORY_VOICE_DESC": "Commandes vocales et utilitaires pour les salons vocaux.",
     "HELP_CATEGORY_TOOLS": "Outils",
     "HELP_CATEGORY_TOOLS_DESC": "Commandes utilitaires pour diverses fonctions du serveur.",
     "HELP_CATEGORY_ECONOMY": "Économie",

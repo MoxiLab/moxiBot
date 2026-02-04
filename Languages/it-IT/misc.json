@@ -125,6 +125,8 @@
     "HELP_CATEGORY_MODERATION_DESC": "Comandi di moderazione: ban, kick, mute, warn e altro.",
     "HELP_CATEGORY_MUSIC": "Musica",
     "HELP_CATEGORY_MUSIC_DESC": "Comandi musicali per riprodurre e gestire l'audio.",
+    "HELP_CATEGORY_VOICE": "Voce",
+    "HELP_CATEGORY_VOICE_DESC": "Comandi vocali e utilità per i canali vocali.",
     "HELP_CATEGORY_TOOLS": "Strumenti",
     "HELP_CATEGORY_TOOLS_DESC": "Comandi utili per varie funzioni del server.",
     "HELP_CATEGORY_ECONOMY": "Economia",

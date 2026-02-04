@@ -1,56 +1,49 @@
 // setupEvents.js
-// Registra eventos de Discord Client desde Eventos/Client
+// Registra todos los eventos de Discord Client de la carpeta Eventos/Client
 
+const client = require('./index');
 const path = require('path');
 const fs = require('fs');
 
-function registerEventsRecursive(client, dir) {
-    if (!fs.existsSync(dir)) return;
+// Lista de eventos válidos de Discord.js (puedes ampliarla si usas más)
+const validEvents = [ 
+    'clientReady',
+    'channelCreate', 'channelDelete', 'channelUpdate',
+    'emojiCreate', 'emojiDelete', 'emojiUpdate',
+    'guildBanAdd', 'guildBanRemove',
+    'guildMemberAdd', 'guildMemberRemove', 'guildMemberUpdate',
+    'messageCreate', 'messageDelete', 'messageDeleteBulk', 'messageBulkDelete', 'messageUpdate',
+    'roleCreate', 'roleDelete', 'roleUpdate', 
+    'inviteCreate', 'inviteDelete', 'inviteUpdate', 
+];
 
-    for (const file of fs.readdirSync(dir)) {
+
+
+function registerEventsRecursive(dir) {
+    fs.readdirSync(dir).forEach(file => {
         const fullPath = path.join(dir, file);
         const stat = fs.statSync(fullPath);
-
         if (stat.isDirectory()) {
-            registerEventsRecursive(client, fullPath);
-            continue;
+            registerEventsRecursive(fullPath);
+        } else if (file.endsWith('.js')) {
+            const fileEventName = file.replace('.js', '');
+            const eventHandler = require(fullPath);
+            if (typeof eventHandler === 'function') {
+                const auditLogDebug = require('./Util/auditLogDebug');
+
+                // Compat: mantenemos el archivo ready.js pero lo registramos como clientReady.
+                const eventName = fileEventName === 'ready' ? 'clientReady' : fileEventName;
+                if (validEvents.includes(eventName)) {
+                    const onFn = eventName === 'clientReady' ? client.once.bind(client) : client.on.bind(client);
+                    onFn(eventName, (...args) => {
+                        auditLogDebug(eventName, `Evento '${eventName}' disparado`);
+                        eventHandler(...args);
+                    });
+                }
+            }
         }
-
-        if (!file.endsWith('.js')) continue;
-
-        const fileEventName = file.replace(/\.js$/i, '');
-        const eventHandler = require(fullPath);
-        if (typeof eventHandler !== 'function') continue;
-
-        const auditLogDebug = require('./Util/auditLogDebug');
-        const eventName = fileEventName;
-        const isOnce = eventName === 'ready';
-        const onFn = isOnce ? client.once.bind(client) : client.on.bind(client);
-
-        onFn(eventName, (...args) => {
-            try {
-                auditLogDebug(eventName, `Evento '${eventName}' disparado`);
-            } catch {
-                // noop
-            }
-
-            // Compat de firma:
-            // - La mayoría de handlers exportan (arg1, arg2...)
-            // - Algunos (p.ej. ready.js) exportan (client)
-            // Si el handler parece esperar el client además de los args del evento, lo inyectamos.
-            try {
-                if (eventHandler.length === args.length + 1) return eventHandler(client, ...args);
-                return eventHandler(...args);
-            } catch (err) {
-                // No reventar el proceso por un handler
-                // eslint-disable-next-line no-console
-                console.error(`❌ Error en handler de evento '${eventName}' (${fullPath}):`, err);
-            }
-        });
-    }
+    });
 }
 
-module.exports = (client) => {
-    const eventsDir = path.join(__dirname, 'Eventos', 'Client');
-    registerEventsRecursive(client, eventsDir);
-};
+const eventsDir = path.join(__dirname, 'Eventos', 'Client');
+registerEventsRecursive(eventsDir);

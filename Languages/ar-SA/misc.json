@@ -324,6 +324,8 @@
     "HELP_CATEGORY_MODERATION_DESC": "أوامر الإشراف والإدارة.",
     "HELP_CATEGORY_MUSIC": "الموسيقى",
     "HELP_CATEGORY_MUSIC_DESC": "أوامر لتشغيل الموسيقى وإدارة قائمة الانتظار.",
+    "HELP_CATEGORY_VOICE": "الصوت",
+    "HELP_CATEGORY_VOICE_DESC": "أوامر الصوت وأدوات القنوات الصوتية.",
     "HELP_CATEGORY_TOOLS": "الأدوات",
     "HELP_CATEGORY_TOOLS_DESC": "أوامر مساعدة لمهام متنوعة في الخادم.",
     "HELP_CATEGORY_ECONOMY": "الاقتصاد",

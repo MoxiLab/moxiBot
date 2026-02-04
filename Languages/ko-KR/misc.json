@@ -123,6 +123,8 @@
     "HELP_CATEGORY_ADMIN_DESC": "서버 관리를 위한 관리자 명령어.",
     "HELP_CATEGORY_MUSIC": "음악",
     "HELP_CATEGORY_MUSIC_DESC": "음악 재생 및 대기열 관리를 위한 명령어.",
+    "HELP_CATEGORY_VOICE": "음성",
+    "HELP_CATEGORY_VOICE_DESC": "음성 명령어 및 음성 채널 유틸리티.",
     "HELP_CATEGORY_TOOLS": "도구",
     "HELP_CATEGORY_TOOLS_DESC": "서버의 다양한 기능을 위한 유틸리티 명령어.",
     "HELP_CATEGORY_ECONOMY": "경제",

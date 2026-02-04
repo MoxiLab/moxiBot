@@ -125,6 +125,8 @@
   "HELP_CATEGORY_MODERATION_DESC": "管理命令：封禁、踢出、禁言、警告等。",
   "HELP_CATEGORY_MUSIC": "音乐",
   "HELP_CATEGORY_MUSIC_DESC": "用于播放和管理音乐的命令。",
+  "HELP_CATEGORY_VOICE": "语音",
+  "HELP_CATEGORY_VOICE_DESC": "语音命令与语音频道工具。",
   "HELP_CATEGORY_TOOLS": "工具",
   "HELP_CATEGORY_TOOLS_DESC": "用于各种服务器功能的实用命令。",
   "HELP_CATEGORY_ECONOMY": "经济",
