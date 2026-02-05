@@ -236,12 +236,10 @@ function autofillMissingTranslation(lang, nsKey) {
   const json = readJsonSafe(filePath) || {};
   if (hasDeep(json, keyPath)) return;
 
-  // Placeholder: por defecto, igual a la key (sin namespace)
   setDeep(json, keyPath, keyPath);
   writeJsonSafe(filePath, json);
 }
 
-// Initialize i18next with backend
 let __readyResolve;
 const ready = new Promise((resolve) => {
   __readyResolve = resolve;
@@ -252,14 +250,11 @@ i18next
   .init({
     lng: 'en-US',
     fallbackLng: 'en-US',
+    showSupportNotice: false,
     preload: defaultLangs,
     ns: defaultNamespaces,
     defaultNS: 'misc',
-    load: 'currentOnly', // Only use the exact language code, never fallback to 'en', 'es', 'zh'
-    backend: {
-      // Evita errores ENOENT cuando pre-cargamos muchos idiomas pero no
-      // existen todos los namespaces para cada uno (p.ej. economy/buy).
-      // Si falta el archivo del idioma solicitado, cargamos el del fallback.
+    backend: { 
       loadPath: (lng, ns) => {
         const tryPaths = [
           path.join(__dirname, 'Languages', String(lng), `${String(ns)}.json`),
@@ -296,14 +291,12 @@ function translate(key, lang, vars = {}) {
   const options = { lng: resolvedLang, ...vars, emoji: EMOJIS };
   let res = i18next.t(nsKey, options);
 
-  // i18next devuelve el propio `nsKey` cuando falta la traducción.
   if (!res || res === nsKey) {
     res = i18next.t(nsKey, { ...options, lng: 'en-US' });
   }
 
   let finalValue = (!res || res === nsKey) ? originalKey : res;
 
-  // Log de claves faltantes (siempre, pero con cache para evitar spam)
   {
     const cacheKey = `${options.lng}|${nsKey}`;
     if (!translate.__missingCache) translate.__missingCache = new Set();
@@ -311,37 +304,29 @@ function translate(key, lang, vars = {}) {
       translate.__missingCache.add(cacheKey);
       logger.warn(`[i18n] Missing translation lang=${options.lng} key=${nsKey}`);
 
-      // Auto-fill: crea/actualiza el JSON del namespace para este idioma.
       autofillMissingTranslation(options.lng, nsKey);
     }
   }
 
   if (typeof finalValue === 'string') {
-    // Normaliza emojis custom del tipo <a:name:id> o <:name:id> a los definidos en EMOJIS.
     finalValue = finalValue.replace(/<a?:([\w]+):\d+>/g, (match, name) => {
       return EMOJIS[name] || match;
     });
 
-    // Normaliza emojis Unicode por codepoint -> clave de EMOJIS (sin hardcodear emojis aquí).
     finalValue = finalValue.replace(/\p{Extended_Pictographic}/gu, (ch) => {
       const code = (ch.codePointAt(0) || 0).toString(16).toUpperCase();
       const k = UNICODE_CODEPOINT_TO_KEY[code];
       return k && EMOJIS[k] ? EMOJIS[k] : ch;
     });
 
-    // Resuelve placeholders de menciones slash tipo </bug:{{COMMAND}}>
-    // Nota: es síncrono; usa caché. Si aún no hay IDs, degrada a /bug.
     try {
       const applicationId = process.env.CLIENT_ID;
       const guildId = vars?.guildId || vars?.guild?.id || null;
-      // Lazy require para evitar ciclos
-      // eslint-disable-next-line global-require
       const { resolveSlashMentionPlaceholders } = require('./Util/slashCommandMentions');
       if (applicationId) {
         finalValue = resolveSlashMentionPlaceholders(finalValue, { applicationId, guildId });
       }
     } catch {
-      // ignore
     }
   }
 
@@ -354,9 +339,6 @@ async function getGuildLanguageCached(guildId, fallbackLang = 'es-ES') {
   try {
     const { getGuildSettingsCached } = require('./Util/guildSettings');
     const settings = await getGuildSettingsCached(gid);
-
-    // El proyecto históricamente ha usado varias formas de guardar el idioma.
-    // Preferimos `Language` pero aceptamos `language` y arrays.
     const raw =
       (settings && (settings.Language ?? settings.language ?? settings.lang ?? settings.Lang)) ??
       null;
@@ -401,20 +383,16 @@ const moxi = {
   i18next,
   translate,
   ready,
-  // Alias para que puedas usar moxi.translation(...) o moxi.t(...)
   translation: translate,
   t: translate,
 
-  // Helpers para usar el idioma guardado del servidor
   getGuildLanguageCached,
   getGuildPrefixCached,
   tGuild: translateGuild,
-  // Alias con nombres más claros (sin "t")
   guildLang: getGuildLanguageCached,
   guildPrefix: getGuildPrefixCached,
   translationGuild: translateGuild,
 
-  // Debug centralizado (moxi.*)
   debug,
   debugEnabled: (flag) => debug.isFlagEnabled(flag),
   EMOJIS,

@@ -63,10 +63,9 @@ client.translate = (key, lang, vars = {}) => moxi.translate(key, lang, vars);
 
 module.exports = client;
 
-
 require("colors");
 require("./Handlers");
-require("./setupEvents.js")(client);
+require("./setupEvents.js");
 require("./anticrash/antiCrash.js")();
 
 const discordToken = (process.env.TOKEN && String(process.env.TOKEN).trim())
