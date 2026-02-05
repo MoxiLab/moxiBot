@@ -1,10 +1,3 @@
-// Emoji registry centralizado.
-// - Usar estas claves en código.
-// - En traducciones, si aparece un emoji custom (formato <a:name:id> o <:name:id>),
-//   `moxi.translate` lo normaliza a la versión definida aquí por `name`.
-// Nota: para evitar hardcodear tokens `<:name:id>` como texto, guardamos `name/id/animated`
-// y generamos el string en runtime.
-
 function fmtCustom({ name, id, animated = false }) {
     // Construcción por piezas para evitar dejar tokens completos en el source.
     return ['<', animated ? 'a' : '', ':', name, ':', String(id), '>'].join('');
@@ -91,7 +84,19 @@ const UNICODE_CODEPOINT_TO_KEY = Object.freeze({
     '2713': 'tick',
 });
 
-const EMOJIS = Object.freeze({
+const EMOJIS = {
+    // Flechas (añadir VS16)
+    arrowLeft: '⬅️',
+    arrowRight: '➡️',
+
+    // Dingbats típicos (añadir VS16 para evitar length=1)
+    cross: '✖️',
+    question: '❓️',
+
+    // Otros (estos normalmente ya valen)
+    refresh: '🔄',
+    package: '📦',
+
     // Música (panel / botones)
     nowPlayingAnim: fmtCustom(CUSTOM.nowPlayingAnim),
     studioAnim: fmtCustom(CUSTOM.studioAnim),
@@ -171,6 +176,9 @@ const EMOJIS = Object.freeze({
     '99': fmtCustom(CUSTOM.trackAddAnim),
     reload: fmtCustom(CUSTOM.reload),
     emoji_1767091260450: fmtCustom(CUSTOM.emoji_1767091260450),
-});
+    cherryBlossom: '\u{1F338}', // 🌸
+    schoolBackpack: '\u{1F392}', // 🎒
+};
 
+// Exportar también el mapa que i18n.js está intentando usar
 module.exports = { EMOJIS, UNICODE_CODEPOINT_TO_KEY };

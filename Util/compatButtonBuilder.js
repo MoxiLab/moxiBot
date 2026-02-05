@@ -46,7 +46,19 @@ class ButtonBuilder {
   }
 
   setEmoji(emoji) {
-    this._emoji = toComponentEmoji(emoji);
+    const compEmoji = toComponentEmoji(emoji);
+
+    // Acepta solo si hay nombre y cumple el mínimo exigido por builders (>= 2)
+    if (
+      compEmoji &&
+      typeof compEmoji.name === 'string' &&
+      compEmoji.name.length >= 2
+    ) {
+      this._emoji = compEmoji;
+    } else {
+      this._emoji = undefined;
+    }
+
     return this;
   }
 
@@ -82,6 +94,10 @@ class ButtonBuilder {
 
     if (!isLink && isNonEmptyString(this._customId)) {
       builder.setCustomId(this._customId);
+      // Validación: si no hay label ni emoji, asigna un label por defecto visible
+      if (!isNonEmptyString(this._label) && !this._emoji) {
+        builder.setLabel('\u200b'); 
+      }
     }
 
     if (isNonEmptyString(this._label)) builder.setLabel(this._label);
