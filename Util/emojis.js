@@ -182,3 +182,29 @@ const EMOJIS = {
 
 // Exportar también el mapa que i18n.js está intentando usar
 module.exports = { EMOJIS, UNICODE_CODEPOINT_TO_KEY };
+
+function emojiComponent(key) {
+    // 1) Si existe como custom “nativo”
+    if (CUSTOM[key]) {
+        const { id, name, animated } = CUSTOM[key];
+        return { id: String(id), name: String(name), animated: Boolean(animated) };
+    }
+
+    // 2) Si en EMOJIS hay un custom formateado, lo parseamos
+    const raw = EMOJIS[key];
+    if (typeof raw === 'string') {
+        const m = /^<(a)?:([^:]+):(\d+)>$/.exec(raw);
+        if (m) return { animated: Boolean(m[1]), name: m[2], id: m[3] };
+
+        // 3) Unicode para componentes
+        return { name: raw };
+    }
+
+    return undefined;
+}
+
+function emojiText(key) {
+    return EMOJIS[key] ?? '';
+}
+
+module.exports = { EMOJIS, UNICODE_CODEPOINT_TO_KEY, emojiComponent, emojiText };
