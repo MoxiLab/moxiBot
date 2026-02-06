@@ -1,6 +1,38 @@
 const { REST, Routes } = require('discord.js');
 const logger = require('./logger');
 
+function isPersistingSlashCommandIds() {
+  const env = process.env.SLASH_COMMAND_IDS_PERSIST;
+  if (env === 'true') return true;
+  if (env === 'false') return false;
+
+  try {
+    // eslint-disable-next-line global-require
+    const Config = require('../Config');
+    if (typeof Config?.Bot?.PersistSlashCommandIds === 'boolean') return Config.Bot.PersistSlashCommandIds;
+  } catch {
+    // ignore
+  }
+
+  return false;
+}
+
+const PERSIST_SLASH_IDS = isPersistingSlashCommandIds();
+
+let SlashCommandIdModel = null;
+async function getSlashCommandIdModel() {
+  if (!PERSIST_SLASH_IDS) return null;
+  try {
+    if (!SlashCommandIdModel) {
+      // eslint-disable-next-line global-require
+      SlashCommandIdModel = require('../Models/SlashCommandIdSchema');
+    }
+    return SlashCommandIdModel;
+  } catch {
+    return null;
+  }
+}
+
 // Por defecto NO usamos IDs para menciones (evita depender de Mongo / sync).
 // Si quieres volver a menciones reales tipo </bug:ID>, activa:
 //   SLASH_MENTIONS_WITH_ID=true
@@ -90,7 +122,29 @@ async function getSlashCommandId({ name, applicationId, guildId = null, allowFet
   if (CACHE.has(primaryKey)) return CACHE.get(primaryKey);
   if (CACHE.has(globalKey)) return CACHE.get(globalKey);
 
-  // Fetch from Discord API (no DB sync; only in-memory cache)
+  // DB lookup (opcional) para cache persistente
+  if (PERSIST_SLASH_IDS) {
+    try {
+      const Model = await getSlashCommandIdModel();
+      if (Model) {
+        const doc = await Model.findOne({
+          applicationId: String(applicationId),
+          guildId: guildId ? String(guildId) : null,
+          name: String(name),
+        }).lean().exec();
+
+        if (doc?.commandId) {
+          const id = String(doc.commandId);
+          CACHE.set(primaryKey, id);
+          return id;
+        }
+      }
+    } catch (e) {
+      logger?.warn?.('[slashIds] db lookup failed', e?.message || e);
+    }
+  }
+
+  // Fetch from Discord API
   if (allowFetch) {
     const token = process.env.TOKEN;
     if (token) {
@@ -99,7 +153,33 @@ async function getSlashCommandId({ name, applicationId, guildId = null, allowFet
         if (Array.isArray(list) && list.length) {
           cacheCommands({ applicationId, guildId, commands: list });
           const found = list.find((c) => c && c.name === name);
-          if (found?.id) return String(found.id);
+          if (found?.id) {
+            const id = String(found.id);
+
+            if (PERSIST_SLASH_IDS) {
+              try {
+                const Model = await getSlashCommandIdModel();
+                if (Model) {
+                  await Model.updateOne(
+                    {
+                      applicationId: String(applicationId),
+                      guildId: guildId ? String(guildId) : null,
+                      name: String(name),
+                    },
+                    {
+                      $set: { commandId: id },
+                      $setOnInsert: { applicationId: String(applicationId), guildId: guildId ? String(guildId) : null, name: String(name) },
+                    },
+                    { upsert: true }
+                  ).exec();
+                }
+              } catch (e) {
+                logger?.warn?.('[slashIds] db upsert failed', e?.message || e);
+              }
+            }
+
+            return id;
+          }
         }
       } catch (e) {
         logger?.warn?.('[slashIds] fetch failed', e?.message || e);
@@ -112,7 +192,33 @@ async function getSlashCommandId({ name, applicationId, guildId = null, allowFet
           if (Array.isArray(list) && list.length) {
             cacheCommands({ applicationId, guildId: null, commands: list });
             const found = list.find((c) => c && c.name === name);
-            if (found?.id) return String(found.id);
+            if (found?.id) {
+              const id = String(found.id);
+
+              if (PERSIST_SLASH_IDS) {
+                try {
+                  const Model = await getSlashCommandIdModel();
+                  if (Model) {
+                    await Model.updateOne(
+                      {
+                        applicationId: String(applicationId),
+                        guildId: null,
+                        name: String(name),
+                      },
+                      {
+                        $set: { commandId: id },
+                        $setOnInsert: { applicationId: String(applicationId), guildId: null, name: String(name) },
+                      },
+                      { upsert: true }
+                    ).exec();
+                  }
+                } catch {
+                  // ignore
+                }
+              }
+
+              return id;
+            }
           }
         } catch {
           // ignore
