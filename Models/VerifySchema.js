@@ -44,6 +44,7 @@ const VerifySchema = new Schema({
   enabled: { type: Boolean, default: false },
 
   channelId: { type: String, default: null },
+  verifyLogChannelId: { type: String, default: null },
   verifiedRoleId: { type: String, default: null },
   unverifiedRoleId: { type: String, default: null },
   panelMessageId: { type: String, default: null },
@@ -89,6 +90,7 @@ async function upsertVerificationConfig(guildId, patch) {
   const safePatch = patch && typeof patch === 'object' ? { ...patch } : {};
 
   if ('channelId' in safePatch) safePatch.channelId = normalizeId(safePatch.channelId);
+  if ('verifyLogChannelId' in safePatch) safePatch.verifyLogChannelId = normalizeId(safePatch.verifyLogChannelId);
   if ('verifiedRoleId' in safePatch) safePatch.verifiedRoleId = normalizeId(safePatch.verifiedRoleId);
   if ('unverifiedRoleId' in safePatch) safePatch.unverifiedRoleId = normalizeId(safePatch.unverifiedRoleId);
   if ('panelMessageId' in safePatch) safePatch.panelMessageId = normalizeId(safePatch.panelMessageId);
