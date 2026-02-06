@@ -5,6 +5,7 @@ Este README documenta únicamente los comandos que el bot expone hoy, separados 
 ## Comandos con prefijo
 
 ### Administrador
+
 - `prefix`: muestra o cambia el prefijo del servidor.
 - `language`: fija el idioma del servidor.
 - `welcome` / `byes`: administran mensajes e imágenes de bienvenida y despedida.
@@ -14,34 +15,43 @@ Este README documenta únicamente los comandos que el bot expone hoy, separados 
 - `RankSetup`: define canales y estilos para tarjetas de nivel.
 - `channel`, `leave`, `permiso`, `perms`, `rol`: utilidades administrativas varias.
 
-### Moderación
+### Moderación (Prefijo)
+
 - `AutoRuleCreate`, `AutoRuleEdit`, `AutoRuleList`, `AutoRuleDelete`: gestionan reglas automáticas.
 - `ban`, `kick`, `timeout`, `warn`, `mute`, `unban`, `unmute`: sanciones y moderación básica.
 
-### Música
+### Música (Prefijo)
+
 - `play`, `queue`, `pause`, `resume`, `skip`, `stop`, `volume`, `add`, `autoplay`: control total de la música.
 
 ### Herramientas y utilidades
+
 - `help`, `ping`, `bug`, `afk`, `starboard`, `autonuke`, `user`, `cls`, `rules`, `timer`, `uptime`, `invite`, `portal`, `botstats`: utilidades generales y de soporte.
 
 ### Funciones de experiencia gamificada
+
 - `Feedback`, `Prestige`, `Levels`, `Rank`, `Stats`, `emojiinfo`: experiencia, estadísticas y feedback de la comunidad.
 
 ### Comandos raíz
+
 - `mongo`, `lava`: diagnósticos y control de nodos.
 
 ## Comandos slash
 
 ### Administración
+
 - `audit`: consulta registros de auditoría.
 
 ### Moderación
+
 - `mod`: acciones clave de moderación (ban, kick, mute, timeout, warn, unban).
 
-### Música
+### Música (Slash)
+
 - `musica`: reproducción, control de cola y volumen.
 
 ### Herramientas
+
 - `help`, `bug`, `afk`, `cls`, `rules`, `starboard`, `timer`, `invite`, `portal`, `botstats`: utilidades y soporte.
 
 ## Sistema de invitaciones (permanentes + anti-manual + tracking)
@@ -87,6 +97,7 @@ En canales con IA activada, el bot puede ejecutar **comandos de prefijo** aunque
 Por seguridad, esto está pensado para **owners** por defecto.
 
 Variables (opcional):
+
 - `AI_COMMANDS_WITHOUT_PREFIX=1` (por defecto `1`): habilita/deshabilita esta función.
 - `AI_COMMANDS_ALLOW_NON_OWNERS=0` (por defecto `0`): si lo pones en `1`, cualquier usuario podrá disparar comandos sin prefijo en canales IA (no recomendado).
 
