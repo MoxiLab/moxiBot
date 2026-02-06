@@ -103,6 +103,94 @@ function cacheCommands({ applicationId, guildId = null, commands }) {
   }
 }
 
+async function loadSlashCommandIdsFromDb({ applicationId, guildId = null } = {}) {
+  if (!USE_SLASH_COMMAND_IDS) return 0;
+  if (!PERSIST_SLASH_IDS) return 0;
+  if (!applicationId) return 0;
+
+  try {
+    const Model = await getSlashCommandIdModel();
+    if (!Model) return 0;
+
+    const docs = await Model.find({
+      applicationId: String(applicationId),
+      guildId: guildId ? String(guildId) : null,
+    }).lean().exec();
+
+    if (Array.isArray(docs)) {
+      for (const d of docs) {
+        if (d?.name && d?.commandId) {
+          CACHE.set(cacheKey({
+            applicationId: String(applicationId),
+            guildId: guildId ? String(guildId) : null,
+            name: String(d.name),
+          }), String(d.commandId));
+        }
+      }
+      return docs.length;
+    }
+  } catch (e) {
+    logger?.warn?.('[slashIds] db preload failed', e?.message || e);
+  }
+
+  return 0;
+}
+
+async function warmSlashCommandIdsCache({ applicationId, guildId = null } = {}) {
+  if (!USE_SLASH_COMMAND_IDS) return 0;
+  if (!applicationId) return 0;
+
+  const token = process.env.TOKEN;
+  if (!token) return 0;
+
+  try {
+    const list = await fetchIdsFromDiscord({ applicationId, token, guildId });
+    if (!Array.isArray(list) || !list.length) return 0;
+
+    cacheCommands({ applicationId, guildId, commands: list });
+
+    if (PERSIST_SLASH_IDS) {
+      try {
+        const Model = await getSlashCommandIdModel();
+        if (Model) {
+          const ops = [];
+          for (const c of list) {
+            if (!c?.name || !c?.id) continue;
+            ops.push({
+              updateOne: {
+                filter: {
+                  applicationId: String(applicationId),
+                  guildId: guildId ? String(guildId) : null,
+                  name: String(c.name),
+                },
+                update: {
+                  $set: { commandId: String(c.id) },
+                  $setOnInsert: {
+                    applicationId: String(applicationId),
+                    guildId: guildId ? String(guildId) : null,
+                    name: String(c.name),
+                  },
+                },
+                upsert: true,
+              }
+            });
+          }
+          if (ops.length) {
+            await Model.bulkWrite(ops, { ordered: false });
+          }
+        }
+      } catch (e) {
+        logger?.warn?.('[slashIds] db warm bulkWrite failed', e?.message || e);
+      }
+    }
+
+    return list.length;
+  } catch (e) {
+    logger?.warn?.('[slashIds] warm fetch failed', e?.message || e);
+    return 0;
+  }
+}
+
 async function fetchIdsFromDiscord({ applicationId, token, guildId = null } = {}) {
   if (!applicationId || !token) return [];
   const rest = new REST({ version: '10' }).setToken(token);
@@ -245,4 +333,6 @@ module.exports = {
   slashMention,
   getCachedSlashCommandId,
   resolveSlashMentionPlaceholders,
+  warmSlashCommandIdsCache,
+  loadSlashCommandIdsFromDb,
 };
