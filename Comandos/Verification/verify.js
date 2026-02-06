@@ -146,7 +146,7 @@ module.exports = {
           title: 'Verificación',
           body:
             `Usos:\n` +
-            `• \.verify setup #canal @Verificado [@SinVerificar]\n` +
+            `• \.verify setup #canal @Verificado [@SinVerificar] [#canal_log]\n` +
             `• \.verify panel\n` +
             `• \.verify status\n` +
             `• \.verify off\n\n` +
@@ -170,6 +170,7 @@ module.exports = {
         const cfg = await getVerificationConfig(guildId);
         const enabled = !!cfg?.enabled;
         const channelText = cfg?.channelId ? `<#${cfg.channelId}>` : '-';
+        const logChannelText = (cfg?.verifyLogChannelId || cfg?.channelId) ? `<#${cfg?.verifyLogChannelId || cfg?.channelId}>` : '-';
         const verifiedRoleText = cfg?.verifiedRoleId ? `<@&${cfg.verifiedRoleId}>` : '-';
         const unverifiedRoleText = cfg?.unverifiedRoleId ? `<@&${cfg.unverifiedRoleId}>` : '-';
 
@@ -178,6 +179,7 @@ module.exports = {
           body:
             `${EMOJIS.info || ''} Estado: **${enabled ? 'ON' : 'OFF'}**\n` +
             `${EMOJIS.channel || ''} Canal: ${channelText}\n` +
+            `${EMOJIS.channel || ''} Canal log: ${logChannelText}\n` +
             `${EMOJIS.tick} Rol verificado: ${verifiedRoleText}\n` +
             `${EMOJIS.lock || ''} Rol no verificado: ${unverifiedRoleText}`,
         }));
@@ -217,14 +219,30 @@ module.exports = {
       if (sub === 'setup' || sub === 'set') {
         const channel = await resolveChannel(message, args?.[1]);
         const verifiedRole = await resolveRole(message, args?.[2]);
-        const unverifiedRole = await resolveRole(message, args?.[3], { allowMissing: true });
+
+        // args[3] puede ser @SinVerificar o #canal_log
+        let unverifiedRole = null;
+        let logChannel = null;
+
+        const raw3 = args?.[3];
+        const raw4 = args?.[4];
+
+        const maybeRole3 = await resolveRole(message, raw3, { allowMissing: true });
+        const maybeChannel3 = await resolveChannel(message, raw3);
+
+        if (maybeRole3) {
+          unverifiedRole = maybeRole3;
+          logChannel = await resolveChannel(message, raw4);
+        } else if (maybeChannel3) {
+          logChannel = maybeChannel3;
+        }
 
         if (!channel || !verifiedRole) {
           return message.reply(buildPanel({
             title: 'Verificación',
             body:
-              `${EMOJIS.cross} Uso: \.verify setup #canal @Verificado [@SinVerificar]\n` +
-              `Ejemplo: \.verify setup #verificacion @Verificado @SinVerificar`,
+              `${EMOJIS.cross} Uso: \.verify setup #canal @Verificado [@SinVerificar] [#canal_log]\n` +
+              `Ejemplo: \.verify setup #verificacion @Verificado @SinVerificar #logs`,
           }));
         }
 
@@ -238,6 +256,7 @@ module.exports = {
         await upsertVerificationConfig(guildId, {
           enabled: true,
           channelId: channel.id,
+          verifyLogChannelId: logChannel?.id || channel.id,
           verifiedRoleId: verifiedRole.id,
           unverifiedRoleId: unverifiedRole?.id ?? null,
           captchaLength: 6,
@@ -254,6 +273,7 @@ module.exports = {
           body:
             `${EMOJIS.tick} Configuración guardada y panel enviado.\n` +
             `${EMOJIS.channel || ''} Canal: ${channel}\n` +
+            `${EMOJIS.channel || ''} Canal log: ${logChannel ? logChannel : channel}\n` +
             `${EMOJIS.tick} Rol verificado: <@&${verifiedRole.id}>\n` +
             `${EMOJIS.lock || ''} Rol no verificado: ${unverifiedRole ? `<@&${unverifiedRole.id}>` : '-'}`,
         }));
