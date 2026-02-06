@@ -1,6 +1,17 @@
 const mongoose = require('mongoose');
 const { ensureMongoConnection } = require('../Util/mongoConnect');
 
+function getSlashIdsCollectionName() {
+    const env = process.env.SLASH_COMMAND_IDS_COLLECTION;
+    if (typeof env === 'string' && env.trim()) return env.trim();
+    return 'slash_command_ids';
+}
+
+// Persistir IDs en Mongo es opcional: activa SLASH_COMMAND_IDS_PERSIST=true
+function shouldPersistSlashIds() {
+    return process.env.SLASH_COMMAND_IDS_PERSIST === 'true';
+}
+
 const SlashCommandIdSchema = new mongoose.Schema(
     {
         applicationId: { type: String, required: true, index: true },
@@ -11,7 +22,7 @@ const SlashCommandIdSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-        collection: 'slash_command_ids',
+        collection: getSlashIdsCollectionName(),
     }
 );
 
@@ -23,11 +34,11 @@ try {
     const path = require('path');
     const mainFile = require.main && require.main.filename ? String(require.main.filename) : '';
     const isScript = mainFile.includes(`${path.sep}scripts${path.sep}`);
-    if (!isScript && typeof process.env.MONGODB === 'string' && process.env.MONGODB.trim()) {
+    if (!isScript && shouldPersistSlashIds() && typeof process.env.MONGODB === 'string' && process.env.MONGODB.trim()) {
         ensureMongoConnection().catch(() => null);
     }
 } catch {
-    if (typeof process.env.MONGODB === 'string' && process.env.MONGODB.trim()) {
+    if (shouldPersistSlashIds() && typeof process.env.MONGODB === 'string' && process.env.MONGODB.trim()) {
         ensureMongoConnection().catch(() => null);
     }
 }
