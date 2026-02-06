@@ -20,20 +20,37 @@ Este proyecto centraliza el control de registros de depuración en `Util/debug.j
 | `mongo` | `MONGO_DEBUG` | Muestra información extra de MongoDB. |
 | `i18n` | `I18N_DEBUG` | Registra pasos del sistema de internacionalización. |
 | `interaction` | `INTERACTION_DEBUG` | Registra select menus y componentes con interacciones. |
-| `components` | `COMPONENTS_DEBUG` | Activa trazas de componentes V2 y manejo de botones/enlaces.
+| `components` | `COMPONENTS_DEBUG` | Activa trazas de componentes V2 y manejo de botones/enlaces. |
+| `verify` | `VERIFY_DEBUG` | Logs extra del sistema de verificación con captcha (lectura del modal, etc.). |
 
 ## Cómo usarlo
 
 1. Define las banderas que necesites en `.env`. Por ejemplo:
 
-```
+```env
 BYES_DEBUG=1
 WELCOME_DEBUG=1
 ```
 
-2. También puedes usar `DEBUG=1` para activar todos los logs o `DEBUG_FLAGS=welcome,byes` para una lista de banderas específicas.
-3. Reinicia el bot; `Util/logger.js` eleva automáticamente el nivel a `debug` y `Util/debugHelper.js` solo emitirá mensajes cuando la flag correspondiente esté habilitada.
-4. Todos los comandos y eventos usan `debugHelper` para mantener el control en un único lugar. No necesitas volver a editar cada archivo cuando quieras activar logs.
+1. También puedes usar `DEBUG=1` para activar todos los logs o `DEBUG_FLAGS=welcome,byes` para una lista de banderas específicas.
+
+### Debug de verificación (captcha)
+
+Si el captcha siempre sale incorrecto o el modal no envía el texto, activa:
+
+```env
+VERIFY_DEBUG=1
+```
+
+En Windows puedes arrancar así:
+
+- PowerShell: `$env:VERIFY_DEBUG="1"; npm run dev`
+- CMD: `set VERIFY_DEBUG=1` y luego `npm run dev`
+
+Busca en consola una línea tipo: `[verify] modal extract debug`.
+
+1. Reinicia el bot; `Util/logger.js` eleva automáticamente el nivel a `debug` y `Util/debugHelper.js` solo emitirá mensajes cuando la flag correspondiente esté habilitada.
+1. Todos los comandos y eventos usan `debugHelper` para mantener el control en un único lugar. No necesitas volver a editar cada archivo cuando quieras activar logs.
 
 ## Flags por comando
 
