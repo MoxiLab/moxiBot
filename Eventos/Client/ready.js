@@ -120,8 +120,21 @@ module.exports = async (Moxi) => {
     } catch { }
 
     // IDs de comandos slash:
-    // Ya NO se sincronizan/guardan al arrancar. Si SLASH_MENTIONS_WITH_ID está activo,
-    // los IDs se resuelven bajo demanda via Discord API y se cachean en memoria.
+    // Si SLASH_MENTIONS_WITH_ID está activo, precargamos IDs para que los placeholders
+    // en traducciones puedan convertirse a menciones clicables (</cmd:ID>) desde el arranque.
+    try {
+        const applicationId = process.env.CLIENT_ID;
+        const { isUsingSlashCommandIds, loadSlashCommandIdsFromDb, warmSlashCommandIdsCache } = require('../../Util/slashCommandMentions');
+        if (applicationId && isUsingSlashCommandIds()) {
+            // 1) DB -> memoria (si persistencia está activa)
+            await loadSlashCommandIdsFromDb({ applicationId, guildId: null }).catch(() => 0);
+            // 2) Discord API -> memoria (+ DB si persistencia activa)
+            // Global suele ser suficiente porque el ID se asocia al comando raíz.
+            await warmSlashCommandIdsCache({ applicationId, guildId: null }).catch(() => 0);
+        }
+    } catch {
+        // ignore
+    }
 
     const fixedLang = 'es-ES';
     let statusList = [];

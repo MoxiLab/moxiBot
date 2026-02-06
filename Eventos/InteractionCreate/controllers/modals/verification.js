@@ -14,6 +14,61 @@ const { getVerificationConfig } = require('../../../../Models/VerifySchema');
 const { renderCaptchaPng } = require('../../../../Util/verification/captcha');
 const { createChallenge, tryVerify } = require('../../../../Util/verification/store');
 
+async function sendVerificationLog({ client, guild, cfg, userId }) {
+  try {
+    const gid = String(guild?.id || '');
+    if (!gid || !client) return;
+
+    // 1) Intentar canal específico de verificación
+    const logChannelId = cfg?.verifyLogChannelId ? String(cfg.verifyLogChannelId) : '';
+    const verifiedRoleId = cfg?.verifiedRoleId ? String(cfg.verifiedRoleId) : '';
+
+    const now = new Date();
+    const timeStr = now.toISOString().replace('T', ' ').replace('Z', ' UTC');
+
+    const container = new ContainerBuilder()
+      .setAccentColor(Bot.AccentColor)
+      .addTextDisplayComponents(c => c.setContent(`# ${EMOJIS.tick} Verificación`))
+      .addSeparatorComponents(s => s.setDivider(true))
+      .addTextDisplayComponents(c => c.setContent(
+        [
+          `${EMOJIS.user || ''} Usuario: <@${userId}> (\`${userId}\`)`.trim(),
+          verifiedRoleId ? `${EMOJIS.tick} Rol: <@&${verifiedRoleId}>` : `${EMOJIS.tick} Rol: -`,
+          `${EMOJIS.time || ''} Hora: ${timeStr}`.trim(),
+        ].filter(Boolean).join('\n')
+      ));
+
+    if (logChannelId) {
+      const ch = guild.channels?.cache?.get(logChannelId) || await guild.channels?.fetch?.(logChannelId).catch(() => null);
+      if (ch && typeof ch.send === 'function') {
+        await ch.send({ content: '', components: [container], flags: MessageFlags.IsComponentsV2 }).catch(() => null);
+        return;
+      }
+    }
+
+    // 2) Fallback: canal de auditoría si está habilitado
+    try {
+      const { sendAuditLog } = require('../../../../Util/audit');
+      const botId = client.user?.id;
+      if (sendAuditLog && botId) {
+        await sendAuditLog({
+          client,
+          guild,
+          guildId: gid,
+          action: 25, // MEMBER_ROLE_UPDATE
+          moderatorId: botId,
+          targetId: String(userId),
+          reason: verifiedRoleId ? `Verificación completada. Rol: <@&${verifiedRoleId}>` : 'Verificación completada.',
+        });
+      }
+    } catch {
+      // ignore
+    }
+  } catch {
+    // ignore
+  }
+}
+
 function getModalTextValue(interaction, customId) {
   // discord.js v15 (PR) usa ModalComponentResolver en `interaction.components`
   try {
@@ -314,6 +369,9 @@ module.exports = async function verificationModal(interaction, Moxi, logger) {
     title: 'Verificación',
     body: `${EMOJIS.tick} ¡Verificación completada!`,
   }));
+
+  // Log (best-effort)
+  sendVerificationLog({ client: Moxi, guild, cfg, userId }).catch(() => null);
 
   return true;
   } catch (err) {
