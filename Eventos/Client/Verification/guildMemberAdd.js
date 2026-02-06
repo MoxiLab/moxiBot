@@ -1,6 +1,6 @@
 const { PermissionsBitField } = require('discord.js');
 
-const { getVerificationConfig } = require('../../../Models/VerificationConfig');
+const { getVerificationConfig } = require('../../../Models/VerifySchema');
 const debugHelper = require('../../../Util/debugHelper');
 
 module.exports = async (member) => {

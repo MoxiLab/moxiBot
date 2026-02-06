@@ -10,7 +10,7 @@ const { ButtonBuilder } = require('../../../../Util/compatButtonBuilder');
 
 const { Bot } = require('../../../../Config');
 const { EMOJIS } = require('../../../../Util/emojis');
-const { getVerificationConfig } = require('../../../../Models/VerificationConfig');
+const { getVerificationConfig } = require('../../../../Models/VerifySchema');
 const { renderCaptchaPng } = require('../../../../Util/verification/captcha');
 const { createChallenge, tryVerify } = require('../../../../Util/verification/store');
 
