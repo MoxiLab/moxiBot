@@ -17,7 +17,7 @@ const {
   getVerificationConfig,
   upsertVerificationConfig,
   disableVerification,
-} = require('../../Models/VerificationConfig');
+} = require('../../Models/VerifySchema');
 
 function buildPanel({ title, body }) {
   const container = new ContainerBuilder()
