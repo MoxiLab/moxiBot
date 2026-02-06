@@ -97,6 +97,7 @@ module.exports = {
         .setName('set')
         .setDescription('Configurar canal/roles y (opcional) enviar el panel')
         .addChannelOption(o => o.setName('canal').setDescription('Canal donde estará el panel').setRequired(true))
+        .addChannelOption(o => o.setName('canal_log').setDescription('Canal donde se enviará el log de verificaciones (por defecto: el canal del panel)').setRequired(false))
         .addRoleOption(o => o.setName('rol_verificado').setDescription('Rol que se asigna al verificar').setRequired(true))
         .addRoleOption(o => o.setName('rol_no_verificado').setDescription('Rol a dar al entrar (y quitar al verificar)').setRequired(false))
         .addBooleanOption(o => o.setName('enviar_panel').setDescription('Enviar panel ahora mismo').setRequired(false))
@@ -166,6 +167,7 @@ module.exports = {
 
       if (sub === 'set') {
         const channel = interaction.options.getChannel('canal', true);
+        const logChannel = interaction.options.getChannel('canal_log', false);
         const verifiedRole = interaction.options.getRole('rol_verificado', true);
         const unverifiedRole = interaction.options.getRole('rol_no_verificado', false);
         const sendPanel = interaction.options.getBoolean('enviar_panel') ?? true;
@@ -179,6 +181,7 @@ module.exports = {
         await upsertVerificationConfig(guildId, {
           enabled: true,
           channelId: channel.id,
+          verifyLogChannelId: logChannel?.id || channel.id,
           verifiedRoleId: verifiedRole.id,
           unverifiedRoleId: unverifiedRole?.id ?? null,
           captchaLength: 6,

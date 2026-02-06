@@ -17,6 +17,7 @@ module.exports = {
         .setName('set')
         .setDescription('Configure channel/roles and (optionally) send panel')
         .addChannelOption(o => o.setName('canal').setDescription('Channel where the panel will be').setRequired(true))
+        .addChannelOption(o => o.setName('canal_log').setDescription('Log channel for verification events (default: panel channel)').setRequired(false))
         .addRoleOption(o => o.setName('rol_verificado').setDescription('Role to assign after verifying').setRequired(true))
         .addRoleOption(o => o.setName('rol_no_verificado').setDescription('Role to give on join (removed after verifying)').setRequired(false))
         .addBooleanOption(o => o.setName('enviar_panel').setDescription('Send the panel now').setRequired(false))
