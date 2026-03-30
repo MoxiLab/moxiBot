@@ -1,0 +1,12 @@
+{
+    "TITLE": "Gehalt",
+    "DESC": "Hol dir dein tägliches Gehalt ab.",
+    "CLAIMED_TITLE": "Gehalt erhalten",
+    "CLAIMED_TEXT": "Du hast **{{amount}}** 🪙 erhalten.\nAktueller Kontostand: **{{balance}}** 🪙.{{jobLine}}",
+    "COOLDOWN_TITLE": "Gehalt in Abklingzeit",
+    "COOLDOWN_TEXT": "Du hast dein Gehalt bereits abgeholt. Komm in **{{next}}** wieder.\nAktueller Kontostand: **{{balance}}** 🪙.{{jobLine}}",
+    "NO_DB_TITLE": "Datenbank nicht konfiguriert",
+    "NO_DB_TEXT": "MongoDB ist nicht konfiguriert, daher sind Wirtschafts-Belohnungen deaktiviert.",
+    "ERROR_TITLE": "Fehler",
+    "UNKNOWN_ERROR": "Ein Fehler ist aufgetreten."
+}

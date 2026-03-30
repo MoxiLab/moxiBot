@@ -1,0 +1,18 @@
+{
+    "TITLE": "Missionen",
+    "LIST_TEXT": "Heutige Missionen:\n{{list}}\n\nZum Abholen der Belohnung: `{{prefix}}quest claim`",
+    "FOOTER": "Die Missionen werden jeden Tag erneuert.",
+    "NO_DB": "MongoDB ist nicht konfiguriert, daher kann ich Belohnungen nicht speichern.",
+    "COOLDOWN_TITLE": "Belohnung bereits abgeholt",
+    "COOLDOWN_TEXT": "Du hast die Belohnung bereits abgeholt. Komm in **{{next}}** wieder.",
+    "CLAIMED_TITLE": "Missionsbelohnung",
+    "CLAIMED_TEXT": "Du hast **{{amount}}** 🪙 erhalten.\nKontostand: **{{balance}}** 🪙.",
+    "QUESTS": [
+        "Hol dir dein daily ab",
+        "Arbeite einmal",
+        "Kaufe 1 Gegenstand im Shop",
+        "Verkaufe 1 Gegenstand",
+        "Spiele eine Runde Roulette"
+    ],
+    "ERROR": "Ich konnte die Mission nicht verarbeiten."
+}

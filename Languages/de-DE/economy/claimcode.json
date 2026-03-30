@@ -1,0 +1,12 @@
+{
+    "TITLE": "Code einlösen",
+    "USAGE": "Verwendung: `{{prefix}}claimcode <code>`",
+    "NO_DB": "MongoDB ist nicht konfiguriert, daher kann ich keine Codes einlösen.",
+    "INVALID_TITLE": "Ungültiger Code",
+    "INVALID_TEXT": "Dieser Code existiert nicht oder ist nicht verfügbar.",
+    "ALREADY_TITLE": "Bereits eingelöst",
+    "ALREADY_TEXT": "Du hast diesen Code bereits eingelöst.",
+    "SUCCESS_TITLE": "Code eingelöst!",
+    "SUCCESS_TEXT": "Du hast **{{amount}}** 🪙 erhalten.\nKontostand: **{{balance}}** 🪙.",
+    "ERROR": "Ich konnte den Code nicht einlösen."
+}

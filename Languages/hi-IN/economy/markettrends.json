@@ -1,0 +1,17 @@
+{
+    "TITLE": "मार्केट ट्रेंड्स",
+    "FOOTER": "ये ट्रेंड्स हर दिन बदलते हैं (सिमुलेटेड)।",
+    "LINE": "{{rank}}) {{icon}} **{{topic}}** — {{trend}}",
+    "UP": "📈 ऊपर",
+    "FLAT": "➖ स्थिर",
+    "DOWN": "📉 नीचे",
+    "TOPIC_BUFFS": "बफ्स",
+    "TOPIC_TOOLS": "टूल्स",
+    "TOPIC_PETS": "पेट्स",
+    "TOPIC_MATERIALS": "मटेरियल्स",
+    "TOPIC_LOOT": "लूट",
+    "TOPIC_KEYS": "कीज़",
+    "TOPIC_COLLECTIBLES": "कलेक्टिबल्स",
+    "TOPIC_POTIONS": "पोशन्स",
+    "TOPIC_SCROLLS": "स्क्रॉल्स"
+}

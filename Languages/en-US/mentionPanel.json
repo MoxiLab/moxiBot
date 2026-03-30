@@ -1,0 +1,13 @@
+{
+    "greeting": "## 🌸 Hi! I'm {{mention}}, your musical companion with an oriental touch.",
+    "lang_label": "🌐 **{{langName}}** ({{lang}})",
+    "prefix_label": "✨ **Prefix in this server:** `{{prefix}}`",
+    "prefix_source_env": "Prefix source: **ENV (.env)**",
+    "prefix_source_custom": "Prefix source: **Server custom setting**",
+    "user_prefix_label": "👤 **Your personal prefix:** `{{userPrefix}}`",
+    "forgot_prefix": "Forgot my prefix? Just mention me to see it anytime.",
+    "invite": "Invite me",
+    "support": "Support",
+    "web": "Web",
+    "thanks": "Thanks for choosing {{mention}}!"
+}

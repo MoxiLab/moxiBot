@@ -1,0 +1,12 @@
+{
+    "TITLE": "经济设置",
+    "LINE_PREFIX": "• 前缀: `{{prefix}}`",
+    "LINE_LANG": "• 语言: `{{lang}}`",
+    "LINE_DB": "• 数据库: **{{status}}**",
+    "DB_ON": "已启用",
+    "DB_OFF": "已禁用",
+    "LINE_DAILY": "• 每日: **{{min}}–{{max}}** 🪙",
+    "LINE_WORK": "• 工作: **{{min}}–{{max}}** 🪙",
+    "LINE_SALARY": "• 工资: **{{min}}–{{max}}** 🪙",
+    "FOOTER": "部分范围由环境变量控制。"
+}

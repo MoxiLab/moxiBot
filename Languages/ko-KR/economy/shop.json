@@ -1,0 +1,19 @@
+{
+    "SHOP_TITLE": "상점",
+    "SHOP_EMBED_TITLE": "🛍️ Moxi의 상점",
+    "SHOP_WELCOME": "내 작은 상점에 오신 걸 환영해요.",
+    "SHOP_INSTRUCTIONS": "구매: `{{prefix}}buy <id|name|itemId> [amount]` 또는 `{{prefix}}moxishop buy <id|name|itemId> [amount]`.",
+    "SHOP_LIST_TITLE": "**아이템 목록**",
+    "SHOP_ALL_ITEMS": "전체 아이템",
+    "SHOP_CATEGORY": "카테고리",
+    "SHOP_NO_ITEMS": "_이 카테고리에 아이템이 없습니다._",
+    "SHOP_FOOTER_PAGE": "{{page}} / {{total}} 페이지",
+    "USAGE_BUY": "사용법: `.moxishop buy <id|name|itemId> [amount]`",
+    "NOT_FOUND_BY_ID": "ID {{id}}인 아이템이 없습니다. .moxishop list로 ID를 확인하세요.",
+    "NOT_FOUND_GENERIC": "상점에서 해당 아이템을 찾을 수 없습니다. .moxishop list로 ID를 확인하세요.",
+    "INVALID_PRICE": "이 아이템은 구매할 수 없습니다(가격이 올바르지 않음).",
+    "INSUFFICIENT_FUNDS_TITLE": "잔액이 부족합니다",
+    "INSUFFICIENT_FUNDS": "필요 금액: {{cost}} 🪙 / 보유: {{balance}} 🪙",
+    "PURCHASE_SUCCESS_TITLE": "구매 완료",
+    "PURCHASE_SUCCESS": "**{{amount}}x {{name}}**를 **{{cost}}** 🪙에 구매했습니다."
+}

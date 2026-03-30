@@ -1,0 +1,16 @@
+{
+    "TITLE_PUBLIC": "🎒 Ton sac",
+    "TITLE_PRIVATE": "🎒 Ton sac (privé)",
+    "CATEGORY_OTHER": "Autres",
+    "HELP_USE": "Tu peux utiliser un objet avec : {{use}}",
+    "HELP_BUFFS": "Tu peux voir tes buffs actifs avec : {{buffs}}",
+    "EMBED_EMPTY": "_Tu n’as aucun objet dans cette catégorie._",
+    "FOOTER_PAGE": "Page {{page}} of {{total}}",
+    "SELECT_PLACEHOLDER": "Choisis une catégorie",
+    "SELECT_DESC": "{{types}} types • {{total}} au total",
+    "SELECT_EMPTY_OPTION": "Aucun objet",
+    "ONLY_AUTHOR_BUTTONS": "Seul l’utilisateur qui a ouvert le sac peut utiliser ces boutons.",
+    "ONLY_AUTHOR_MENU": "Seul l’utilisateur qui a ouvert le sac peut utiliser ce menu.",
+    "INFO_TEXT": "Utilise le sélecteur pour changer de catégorie. Change de page avec ◀ ▶. Ferme avec ❌.",
+    "CLOSED_TEXT": "Sac fermé."
+}

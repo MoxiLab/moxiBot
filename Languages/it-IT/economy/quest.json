@@ -1,0 +1,18 @@
+{
+    "TITLE": "Missioni",
+    "LIST_TEXT": "Missioni di oggi:\n{{list}}\n\nPer riscattare la ricompensa: `{{prefix}}quest claim`",
+    "FOOTER": "Le missioni si rinnovano ogni giorno.",
+    "NO_DB": "MongoDB non è configurato, quindi non posso salvare le ricompense.",
+    "COOLDOWN_TITLE": "Ricompensa già riscattata",
+    "COOLDOWN_TEXT": "Hai già riscattato la ricompensa. Torna tra **{{next}}**.",
+    "CLAIMED_TITLE": "Ricompensa missione",
+    "CLAIMED_TEXT": "Hai ricevuto **{{amount}}** 🪙.\nSaldo: **{{balance}}** 🪙.",
+    "QUESTS": [
+        "Riscatta il tuo daily",
+        "Lavora una volta",
+        "Compra 1 oggetto nel negozio",
+        "Vendi 1 oggetto",
+        "Gioca 1 turno di roulette"
+    ],
+    "ERROR": "Non sono riuscito a elaborare la missione."
+}

@@ -1,0 +1,17 @@
+{
+    "TITLE": "시장 트렌드",
+    "FOOTER": "이 트렌드는 매일 바뀝니다(시뮬레이션).",
+    "LINE": "{{rank}}) {{icon}} **{{topic}}** — {{trend}}",
+    "UP": "📈 상승",
+    "FLAT": "➖ 보합",
+    "DOWN": "📉 하락",
+    "TOPIC_BUFFS": "버프",
+    "TOPIC_TOOLS": "도구",
+    "TOPIC_PETS": "펫",
+    "TOPIC_MATERIALS": "재료",
+    "TOPIC_LOOT": "전리품",
+    "TOPIC_KEYS": "열쇠",
+    "TOPIC_COLLECTIBLES": "수집품",
+    "TOPIC_POTIONS": "포션",
+    "TOPIC_SCROLLS": "두루마리"
+}

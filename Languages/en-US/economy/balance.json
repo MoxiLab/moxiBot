@@ -1,0 +1,13 @@
+{
+    "TITLE": "{{user}}'s balance",
+    "COINS": "Coins",
+    "BANK": "Bank",
+    "SAKURAS": "Sakuras",
+    "GLOBAL_RANK": "Global rank",
+    "BTN_DEPOSIT": "Deposit",
+    "BTN_WITHDRAW": "Withdraw",
+    "ONLY_AUTHOR": "Only the author can use these buttons.",
+    "ONLY_OWN_BALANCE": "You can only manage your own balance.",
+    "NO_COINS_TO_DEPOSIT": "You don't have coins to deposit.",
+    "NO_COINS_TO_WITHDRAW": "You don't have coins in the bank to withdraw."
+}

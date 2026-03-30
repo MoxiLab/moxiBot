@@ -1,0 +1,9 @@
+{
+    "TITLE": "回収",
+    "NO_DB": "MongoDB が設定されていないため、経済機能は無効です。",
+    "COOLDOWN_TITLE": "回収はクールダウン中",
+    "COOLDOWN_TEXT": "すでに回収しました。**{{next}}** 後にもう一度。\n残高: **{{balance}}** 🪙。",
+    "CLAIMED_TITLE": "回収",
+    "CLAIMED_TEXT": "**{{amount}}** 🪙 を回収しました。\n残高: **{{balance}}** 🪙。",
+    "ERROR": "回収中にエラーが発生しました。"
+}

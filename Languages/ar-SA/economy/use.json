@@ -1,0 +1,17 @@
+{
+    "USAGE_BAD_TITLE": "استخدام غير صحيح",
+    "USAGE_BAD_TEXT": "يجب أن تكتب اسم العنصر أو مُعرّفه الذي تريد استخدامه.",
+    "ITEM_NOT_FOUND_TITLE": "لم يتم العثور على العنصر",
+    "ITEM_NOT_FOUND_TEXT": "لم أستطع العثور على هذا العنصر. استخدم `{{prefix}}bag` لعرض حقيبتك أو `{{prefix}}shop list` لعرض المعرفات.",
+    "PETS_TITLE": "الحيوانات الأليفة",
+    "NO_PETS_TEXT_SHORT": "ليس لديك حيوانات أليفة بعد. قم بحضانة بيضة للحصول على واحد.",
+    "OCARINA_TITLE": "أوكارينا الترابط",
+    "OCARINA_ALREADY_WITH_YOU": "حيوانك الأليف معك بالفعل. لست بحاجة لاستخدام هذا الآن.",
+    "OCARINA_NOT_OWNED": "لا تملك هذا العنصر في حقيبتك.",
+    "OCARINA_HEADER": "# 🎶 أوكارينا الترابط",
+    "PET_FALLBACK_NAME": "حيوانك الأليف",
+    "PET_RETURN_TEXT": "🐾 سمع **{{pet}}** الصوت… وعاد!",
+    "PET_VIEW_BUTTON": "عرض الحيوان الأليف",
+    "INCUBATOR_TITLE": "الحاضنة",
+    "INCUBATOR_NOT_OWNED": "لا تملك حاضنة في حقيبتك."
+}

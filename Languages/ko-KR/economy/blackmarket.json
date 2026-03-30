@@ -1,0 +1,19 @@
+{
+    "TITLE": "암시장",
+    "BALANCE": "잔액: **{{balance}}** 🪙",
+    "HINT": "구매: `blackmarket buy <1-3>`",
+    "OFFER_LINE": "{{slot}} • **{{name}}** ({{rarity}}) → **{{price}}** 🪙",
+    "BAD_SLOT_TITLE": "잘못된 선택",
+    "BAD_SLOT_TEXT": "1~3 중에서 숫자를 선택하세요. 예: `blackmarket buy 2`",
+    "NO_FUNDS_TITLE": "잔액 부족",
+    "NO_FUNDS_TEXT": "**{{price}}** 🪙가 필요합니다. 현재 잔액: **{{balance}}** 🪙.",
+    "BOUGHT_TITLE": "구매 완료",
+    "BOUGHT_TEXT": "**{{price}}** 🪙로 **{{name}}**을(를) 구매했습니다.\n현재 잔액: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "데이터베이스 미설정",
+    "NO_DB_TEXT": "MongoDB가 설정되지 않아 경제 기능이 비활성화되었습니다.",
+    "RARITY_COMMON": "일반",
+    "RARITY_UNCOMMON": "고급",
+    "RARITY_RARE": "희귀",
+    "RARITY_EPIC": "에픽",
+    "RARITY_LEGENDARY": "전설"
+}

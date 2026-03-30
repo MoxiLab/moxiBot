@@ -1,0 +1,10 @@
+{
+    "TITLE": "इवेंट",
+    "USAGE": "उपयोग: `{{prefix}}event`",
+    "NO_DB": "MongoDB सेट नहीं है, इसलिए इकोनॉमी बंद है।",
+    "COOLDOWN_TITLE": "इवेंट कूलडाउन",
+    "COOLDOWN_TEXT": "**{{next}}** में वापस आएँ।",
+    "CLAIMED_TITLE": "इवेंट इनाम",
+    "CLAIMED_TEXT": "आपको **{{amount}}** 🪙 मिले।\nबैलेंस: **{{balance}}** 🪙.",
+    "ERROR": "मैं इवेंट क्लेम नहीं कर पाया।"
+}

@@ -1,0 +1,843 @@
+{
+  "categories": {
+    "Buffs": "تعزيزات",
+    "Collectibles": "مقتنيات",
+    "Consumables": "مستهلكات",
+    "Tools": "أدوات",
+    "Keys": "مفاتيح",
+    "Loot": "غنائم",
+    "Pets": "حيوانات أليفة",
+    "Materials": "مواد",
+    "Upgrades": "ترقيات",
+    "Quests": "مهام",
+    "Potions": "جرعات",
+    "Scrolls": "لفائف",
+    "Protection": "حماية"
+  },
+  "items": {
+    "buffs/scroll-de-impulso-moxi": {
+      "name": "لفافة تعزيز موكسي",
+      "description": "تزيد سرعة جميع أفعالك لمدة ساعة واحدة."
+    },
+    "buffs/pez-lumina": {
+      "name": "سمكة لُومينا",
+      "description": "مكافأة خبرة للأنشطة المائية."
+    },
+    "buffs/gusano-brillo": {
+      "name": "دودة التوهّج",
+      "description": "يزيد فرصة العثور على موارد نادرة."
+    },
+    "buffs/linterna-solar": {
+      "name": "فانوس شمسي",
+      "description": "يسمح لك باستكشاف المناطق المظلمة واكتشاف الكنوز المخفية."
+    },
+    "buffs/fruta-vital": {
+      "name": "فاكهة حيوية",
+      "description": "تعيد الطاقة وتمنح زيادة بسيطة في السرعة."
+    },
+    "buffs/scroll-mascota-veloz": {
+      "name": "لفافة سرعة الحيوان الأليف",
+      "description": "يكتسب حيوانك الأليف سرعة إضافية مؤقتًا."
+    },
+    "buffs/fruta-mutante": {
+      "name": "فاكهة متحوّلة",
+      "description": "تعطي تأثيرًا عشوائيًا؛ قد يكون إيجابيًا أو سلبيًا."
+    },
+    "buffs/holly-prisma": {
+      "name": "هولي بريزما",
+      "description": "مكافأة خاصة في فعاليات المواسم."
+    },
+    "buffs/pan-dulce-moxi": {
+      "name": "خبز موكسي الحلو",
+      "description": "يضاعف مكافآت المهام لمدة 10 دقائق."
+    },
+    "buffs/pase-de-evento": {
+      "name": "تذكرة الحدث",
+      "description": "يمنحك الوصول إلى المكافآت والمناطق الحصرية (المنتهية والحالية)."
+    },
+    "buffs/fogata-elemental": {
+      "name": "موقد عنصري",
+      "description": "يسمح لك بالتخييم والحصول على تعزيزات مؤقتة حسب نوع الخشب."
+    },
+    "buffs/scroll-gelido": {
+      "name": "لفافة جليدية",
+      "description": "تزيد الدفاع في المناطق الباردة."
+    },
+    "buffs/corona-de-invierno": {
+      "name": "تاج الشتاء",
+      "description": "مكافأة خاصة في فعاليات الشتاء."
+    },
+    "buffs/dulce-de-fresa": {
+      "name": "حلوى الفراولة",
+      "description": "تعيد الطاقة وتمنح مكافأة حظ."
+    },
+    "buffs/trebol-de-fortuna": {
+      "name": "نفل الحظ",
+      "description": "يزيد فرصة الحصول على عناصر نادرة."
+    },
+    "buffs/cascanueces-moxi": {
+      "name": "كسارة الجوز موكسي",
+      "description": "مكافأة دفاع في فعاليات الشتاء."
+    },
+    "coleccionables/medalla-de-nieve": {
+      "name": "ميدالية الثلج",
+      "description": "مقتنى من موسم الشتاء."
+    },
+    "coleccionables/medalla-prisma": {
+      "name": "ميدالية بريزما",
+      "description": "مقتنى خاص بالفعاليات."
+    },
+    "coleccionables/medalla-lunar": {
+      "name": "الميدالية القمرية",
+      "description": "تُحصل عليها من المهام الليلية."
+    },
+    "coleccionables/token-festivo": {
+      "name": "رمز احتفالي",
+      "description": "يمكن استبداله بمكافآت في متجر الفعاليات."
+    },
+    "coleccionables/carta-de-amistad": {
+      "name": "رسالة الصداقة",
+      "description": "مقتنى من الفعاليات الاجتماعية."
+    },
+    "coleccionables/moneda-de-fortuna": {
+      "name": "عملة الحظ",
+      "description": "تمنح مكافأة حظ طالما أنك تمتلكها."
+    },
+    "coleccionables/gema-de-espiritu": {
+      "name": "جوهرة الروح",
+      "description": "مطلوبة للمهام المتقدمة."
+    },
+    "coleccionables/corazon-prisma": {
+      "name": "قلب بريزما",
+      "description": "مقتنى من الفعاليات الرومانسية."
+    },
+    "coleccionables/petalo-de-sakura": {
+      "name": "بتلة ساكورا",
+      "description": "مقتنى من الربيع."
+    },
+    "coleccionables/bouquet-festivo": {
+      "name": "باقة احتفالية",
+      "description": "مقتنى من الفعاليات الزهرية."
+    },
+    "coleccionables/ticket-de-temporada": {
+      "name": "تذكرة الموسم",
+      "description": "تمنحك الوصول إلى فعاليات خاصة."
+    },
+    "coleccionables/varita-de-luz": {
+      "name": "عصا الضوء",
+      "description": "مقتنى سحري."
+    },
+    "coleccionables/cascabel-festivo": {
+      "name": "جرس احتفالي",
+      "description": "مقتنى من الشتاء."
+    },
+    "coleccionables/flor-de-espiritu": {
+      "name": "زهرة الروح",
+      "description": "مقتنى من فعاليات الزهور."
+    },
+    "coleccionables/fantasmita-moxi": {
+      "name": "شبح موكسي الصغير",
+      "description": "مقتنى من الهالوين."
+    },
+    "coleccionables/gato-sombrio": {
+      "name": "القط المظلم",
+      "description": "مقتنى من الفعاليات المظلمة."
+    },
+    "coleccionables/copa-de-campeon": {
+      "name": "كأس البطل",
+      "description": "يُكتسب عند إكمال تحديات خاصة."
+    },
+    "consumibles/galleta-energetica": {
+      "name": "بسكويت الطاقة",
+      "description": "يعيد الطاقة."
+    },
+    "consumibles/pastel-de-celebracion": {
+      "name": "كعكة الاحتفال",
+      "description": "تمنح مكافأة خبرة."
+    },
+    "consumibles/fruta-magica": {
+      "name": "فاكهة سحرية",
+      "description": "تعطي تأثيرًا عشوائيًا."
+    },
+    "consumibles/ensalada-refrescante": {
+      "name": "سلطة منعشة",
+      "description": "تعيد الطاقة والصحة."
+    },
+    "consumibles/fuegos-artificiales": {
+      "name": "ألعاب نارية",
+      "description": "تمنح مكافأة حظ في الفعاليات."
+    },
+    "consumibles/calabaza-festiva": {
+      "name": "قرع احتفالي",
+      "description": "مستهلك خاص بالهالوين."
+    },
+    "consumibles/nuez-dorada": {
+      "name": "جوزة ذهبية",
+      "description": "تمنح مكافأة دفاع."
+    },
+    "consumibles/electrolito": {
+      "name": "إلكتروليت",
+      "description": "يعيد الطاقة فورًا."
+    },
+    "consumibles/monedas-de-oro": {
+      "name": "عملات ذهبية",
+      "description": "عنصر قابل للاستهلاك لاستخدامه في الشراء من المتجر."
+    },
+    "consumibles/agua-fresca": {
+      "name": "ماء منعش",
+      "description": "يبقيك نشيطًا: مكافأة طاقة بسيطة."
+    },
+    "consumibles/te-verde": {
+      "name": "شاي أخضر",
+      "description": "يقلل التعب: مكافأة تركيز خفيفة."
+    },
+    "consumibles/cafe-moxi": {
+      "name": "قهوة موكسي",
+      "description": "تسرّع أفعالك قليلًا لبضع دقائق."
+    },
+    "consumibles/chocolate-caliente": {
+      "name": "شوكولاتة ساخنة",
+      "description": "تمنح شعورًا بالدفء: مكافأة خفيفة في الفعاليات الباردة."
+    },
+    "consumibles/sopa-caliente": {
+      "name": "شوربة ساخنة",
+      "description": "تعيد الطاقة وتمنح مقاومة خفيفة."
+    },
+    "consumibles/barra-proteica": {
+      "name": "لوح بروتين",
+      "description": "طاقة سريعة للأنشطة المكثفة."
+    },
+    "consumibles/batido-prisma": {
+      "name": "مخفوق بريزما",
+      "description": "زيادة بسيطة في الحظ لفترة قصيرة."
+    },
+    "consumibles/sandwich-de-aventura": {
+      "name": "ساندويتش المغامرة",
+      "description": "يعيد الطاقة ويحسن الاستكشاف قليلًا."
+    },
+    "consumibles/sushi-marino": {
+      "name": "سوشي بحري",
+      "description": "مكافأة بسيطة للصيد والغنائم البحرية."
+    },
+    "consumibles/pan-de-ajo": {
+      "name": "خبز بالثوم",
+      "description": "يحسن التحمل: مثالي للتعدين."
+    },
+    "herramientas/pico-prisma": {
+      "name": "معول بريزما",
+      "description": "يسمح لك بتعدين معادن نادرة."
+    },
+    "herramientas/cana-de-pesca-moxi": {
+      "name": "سنارة صيد موكسي",
+      "description": "تزيد فرصة اصطياد عناصر نادرة."
+    },
+    "herramientas/llave-multiusos": {
+      "name": "أداة متعددة الاستخدامات",
+      "description": "أداة للإصلاح والبناء."
+    },
+    "herramientas/varita-solar": {
+      "name": "عصا شمسية",
+      "description": "تسمح لك بتنفيذ أفعال سحرية."
+    },
+    "herramientas/hacha-elemental": {
+      "name": "فأس عنصري",
+      "description": "أداة لجمع أخشاب خاصة."
+    },
+    "herramientas/incubadora": {
+      "name": "حاضنة",
+      "description": "تسمح لك بفقس البيوض."
+    },
+    "herramientas/revelador-prisma": {
+      "name": "كاشف بريزما",
+      "description": "أداة لاكتشاف الكنوز المخفية."
+    },
+    "herramientas/barco-moxi": {
+      "name": "قارب موكسي",
+      "description": "يسمح لك باستكشاف المناطق البحرية."
+    },
+    "herramientas/dinamita": {
+      "name": "ديناميت",
+      "description": "يسمح لك بفتح المناطق المغلقة."
+    },
+    "herramientas/golem-minero-pescador": {
+      "name": "غولم التعدين/الصيد",
+      "description": "أداة آلية للتعدين والصيد."
+    },
+    "herramientas/pico-de-hierro": {
+      "name": "معول حديد",
+      "description": "أداة تعدين أساسية."
+    },
+    "herramientas/pico-de-acero": {
+      "name": "معول فولاذ",
+      "description": "يحسن كفاءة التعدين."
+    },
+    "herramientas/pico-de-diamante": {
+      "name": "معول ألماس",
+      "description": "مثالي للعروق النادرة والقاسية."
+    },
+    "herramientas/pico-de-obsidiana": {
+      "name": "معول سبج",
+      "description": "أداة أسطورية للتعدين الشديد."
+    },
+    "herramientas/cana-de-bambu": {
+      "name": "سنارة خيزران",
+      "description": "سنارة بسيطة للبدء في الصيد."
+    },
+    "herramientas/cana-de-carbono": {
+      "name": "سنارة كربون",
+      "description": "تزيد فرصة الصيد النادر."
+    },
+    "herramientas/red-de-pesca": {
+      "name": "شبكة صيد",
+      "description": "تلتقط المزيد من الغنائم الشائعة في المناطق البحرية."
+    },
+    "herramientas/arpon-marino": {
+      "name": "حربة بحرية",
+      "description": "تحسن الغنائم في صيد أعماق البحر."
+    },
+    "herramientas/pala-de-excavacion": {
+      "name": "مجرفة تنقيب",
+      "description": "تستخدم للعثور على الأشياء المدفونة."
+    },
+    "herramientas/brujula-prisma": {
+      "name": "بوصلة بريزما",
+      "description": "تساعدك على التنقل واكتشاف المسارات."
+    },
+    "herramientas/mapa-arrugado": {
+      "name": "خريطة مجعّدة",
+      "description": "دلائل للاستكشاف والكنوز."
+    },
+    "herramientas/linterna-de-caverna": {
+      "name": "فانوس الكهف",
+      "description": "ينير المناطق المظلمة للاستكشاف."
+    },
+    "herramientas/detector-de-metales": {
+      "name": "كاشف معادن",
+      "description": "يعثر على أشياء ثمينة تحت الأرض."
+    },
+    "herramientas/cuerda-de-escalada": {
+      "name": "حبل تسلق",
+      "description": "مفيد لمسارات الجبال وعمليات الإنقاذ."
+    },
+    "herramientas/kit-de-reparacion": {
+      "name": "عدة إصلاح",
+      "description": "يصلح الأدوات والمعدات (استخدام مستقبلي)."
+    },
+    "herramientas/lupa-antigua": {
+      "name": "عدسة مكبرة قديمة",
+      "description": "تساعد على تحديد الأشياء والقرائن."
+    },
+    "herramientas/frasco-cazabichos": {
+      "name": "مرطبان صائد الحشرات",
+      "description": "يسمح لك بالإمساك بالحشرات والمخلوقات الصغيرة."
+    },
+    "herramientas/guantes-de-minero": {
+      "name": "قفازات عامل منجم",
+      "description": "تحمي يديك أثناء العمل الشاق."
+    },
+    "herramientas/sierra-de-carpintero": {
+      "name": "منشار نجّار",
+      "description": "أداة للعمل على الخشب (استخدام مستقبلي)."
+    },
+    "herramientas/cuchillo-de-supervivencia": {
+      "name": "سكين بقاء",
+      "description": "أداة متعددة الاستخدامات للاستكشاف."
+    },
+    "herramientas/martillo-de-forja": {
+      "name": "مطرقة حدادة",
+      "description": "ضرورية للصناعة المتقدمة (استخدام مستقبلي)."
+    },
+    "herramientas/anzuelo-de-lux": {
+      "name": "سنارة لوكس",
+      "description": "تحسن الصيد النادر في المياه العميقة."
+    },
+    "herramientas/cebo-prisma": {
+      "name": "طُعم بريزما",
+      "description": "يزيد مؤقتًا فرصة الصيد النادر."
+    },
+    "herramientas/taladro-portatil": {
+      "name": "مثقاب محمول",
+      "description": "أداة قوية للتعدين السريع (استخدام مستقبلي)."
+    },
+    "herramientas/bomba-de-humo": {
+      "name": "قنبلة دخان",
+      "description": "تساعدك على الهروب أو تجنب المخاطر (استخدام مستقبلي)."
+    },
+    "llaves/llave-prisma": {
+      "name": "مفتاح بريزما",
+      "description": "يفتح صناديق خاصة."
+    },
+    "llaves/llave-elemental": {
+      "name": "مفتاح عنصري",
+      "description": "يفتح مناطق وصناديق خاصة بالفعاليات."
+    },
+    "llaves/talisman-solar": {
+      "name": "تعويذة شمسية",
+      "description": "تسمح بالوصول إلى مناطق سحرية."
+    },
+    "llaves/anillo-de-fuego": {
+      "name": "خاتم النار",
+      "description": "مفتاح خاص بفعاليات النار."
+    },
+    "llaves/llave-abisal": {
+      "name": "مفتاح الهاوية",
+      "description": "يفتح صناديق وأبواب المناطق العميقة."
+    },
+    "llaves/llave-glaciar": {
+      "name": "مفتاح جليدي",
+      "description": "يفتح صناديق الثلج والغرف الباردة."
+    },
+    "llaves/llave-volcanica": {
+      "name": "مفتاح بركاني",
+      "description": "يفتح صناديق وأبواب المناطق الحارة."
+    },
+    "llaves/llave-lunar": {
+      "name": "مفتاح قمري",
+      "description": "يمنح الوصول إلى غرف ليلية ومكافآت قمرية."
+    },
+    "llaves/llave-antigua": {
+      "name": "مفتاح قديم",
+      "description": "مفتاح غامض للصناديق القديمة."
+    },
+    "loots/caja-misteriosa": {
+      "name": "صندوق غامض",
+      "description": "يحتوي على عناصر عشوائية."
+    },
+    "loots/cofre-de-fortuna": {
+      "name": "صندوق كنز الحظ",
+      "description": "يحتوي على عملات أو مواد أو عناصر نادرة."
+    },
+    "loots/caja-marina": {
+      "name": "صندوق بحري",
+      "description": "يحتوي على عناصر من فعاليات مائية."
+    },
+    "loots/caja-premium-diamante-platino": {
+      "name": "صندوق بريميوم (ألماس/بلاتين)",
+      "description": "يحتوي على عناصر عالية الجودة."
+    },
+    "loots/pack-de-celebracion": {
+      "name": "حزمة احتفال",
+      "description": "حزمة تحتوي على عناصر فعاليات."
+    },
+    "loots/caja-de-suerte": {
+      "name": "صندوق الحظ",
+      "description": "صندوق مع فرصة عالية لعناصر نادرة."
+    },
+    "loots/tarjeta-de-regalo": {
+      "name": "بطاقة هدية",
+      "description": "يمكن استبدالها بعناصر في المتجر."
+    },
+    "loots/bolsa-de-materiales": {
+      "name": "كيس مواد",
+      "description": "يحتوي على مواد عشوائية للصناعة."
+    },
+    "loots/bolsa-de-gemas": {
+      "name": "كيس جواهر",
+      "description": "يحتوي على جواهر أو شظايا نادرة."
+    },
+    "loots/caja-de-herramientas": {
+      "name": "صندوق أدوات",
+      "description": "فرصة للحصول على أدوات مفيدة."
+    },
+    "loots/cofre-abisal": {
+      "name": "صندوق الهاوية",
+      "description": "غنائم نادرة من المناطق العميقة."
+    },
+    "loots/cofre-glaciar": {
+      "name": "صندوق جليدي",
+      "description": "غنائم نادرة من الجليد والشفق."
+    },
+    "loots/cofre-volcanico": {
+      "name": "صندوق بركاني",
+      "description": "غنائم نادرة من الحمم والمعادن."
+    },
+    "mascotas/huevo-prisma": {
+      "name": "بيضة بريزما",
+      "description": "تسمح بالحصول على حيوانات أليفة بقدرات فريدة."
+    },
+    "mascotas/huevo-festivo": {
+      "name": "بيضة احتفالية",
+      "description": "حيوانات أليفة من فعاليات خاصة."
+    },
+    "mascotas/huevo-elemental": {
+      "name": "بيضة عنصرية",
+      "description": "حيوانات أليفة بقوى عنصرية."
+    },
+    "mascotas/huevo-legendario": {
+      "name": "بيضة أسطورية",
+      "description": "حيوانات أليفة نادرة وقوية."
+    },
+    "mascotas/huevo-magico": {
+      "name": "بيضة سحرية",
+      "description": "فقس بسمات سحرية وقدرات خاصة."
+    },
+    "mascotas/huevo-abisal": {
+      "name": "بيضة الهاوية",
+      "description": "فقس من المناطق العميقة؛ ألفة مع الماء والظل."
+    },
+    "mascotas/huevo-solar": {
+      "name": "بيضة شمسية",
+      "description": "فقس من الضوء؛ يحسن مكافآت النهار."
+    },
+    "mascotas/huevo-brumoso": {
+      "name": "بيضة ضبابية",
+      "description": "فقس من الضباب؛ مكافأة للاستكشاف المتخفي."
+    },
+    "mascotas/huevo-de-bosque": {
+      "name": "بيضة الغابة",
+      "description": "فقس طبيعي؛ مكافأة في الجمع."
+    },
+    "mascotas/huevo-de-montana": {
+      "name": "بيضة الجبل",
+      "description": "فقس قوي؛ مكافأة في التعدين والمسارات الوعرة."
+    },
+    "mascotas/huevo-de-tormenta": {
+      "name": "بيضة العاصفة",
+      "description": "فقس كهربائي؛ مكافأة في فعاليات الطقس."
+    },
+    "mascotas/huevo-aurora": {
+      "name": "بيضة الشفق القطبي",
+      "description": "فقس شتوي نادر؛ مكافأة في المواسم الباردة."
+    },
+    "mascotas/huevo-jardin": {
+      "name": "بيضة الحديقة",
+      "description": "فقس ودود؛ مكافأة في المهام الاجتماعية والعناية."
+    },
+    "mascotas/huevo-de-cristal": {
+      "name": "بيضة الكريستال",
+      "description": "فقس بريزمي؛ مكافأة حظ بسيطة."
+    },
+    "mascotas/huevo-meteoro": {
+      "name": "بيضة النيزك",
+      "description": "فقس نادر جدًا؛ مكافأة في الغنائم والمواد الخاصة."
+    },
+    "mascotas/huevo-volcanico": {
+      "name": "بيضة بركانية",
+      "description": "فقس من المناطق الحارة؛ مكافأة في التعدين ومقاومة الحرارة."
+    },
+    "mascotas/huevo-glaciar": {
+      "name": "بيضة جليدية",
+      "description": "فقس من المناطق الباردة؛ مكافأة في البقاء والاستكشاف الشتوي."
+    },
+    "mascotas/huevo-marino": {
+      "name": "بيضة بحرية",
+      "description": "فقس مائي؛ مكافأة في الصيد والمسارات البحرية."
+    },
+    "mascotas/huevo-selvatico": {
+      "name": "بيضة برّية",
+      "description": "فقس من الأدغال؛ مكافأة في جمع النباتات النادرة."
+    },
+    "mascotas/huevo-umbrio": {
+      "name": "بيضة ظليّة",
+      "description": "فقس من الظلال؛ مكافأة في الفعاليات الليلية."
+    },
+    "mascotas/huevo-radiante": {
+      "name": "بيضة مشعّة",
+      "description": "فقس من الضوء؛ مكافأة حظ خفيفة في الصناديق."
+    },
+    "mascotas/ocarina-del-vinculo": {
+      "name": "أوكارينا الارتباط",
+      "description": "لحن قديم ينادي حيوانك الأليف ليعود إذا غادر بسبب قلة العناية."
+    },
+    "mascotas/huevo-torbellino": {
+      "name": "بيضة الدوّامة",
+      "description": "فقس من الرياح؛ يحسن السفر والمهام السريعة."
+    },
+    "mascotas/huevo-fertil": {
+      "name": "بيضة خصبة",
+      "description": "فقس من المروج؛ مكافأة في جمع الموارد الشائعة."
+    },
+    "mascotas/huevo-coral": {
+      "name": "بيضة مرجانية",
+      "description": "فقس من الشعاب؛ مكافأة في الغنائم البحرية."
+    },
+    "mascotas/huevo-relampago": {
+      "name": "بيضة البرق",
+      "description": "فقس كهربائي نادر؛ مكافأة في تحديات الوقت."
+    },
+    "mascotas/huevo-lunar": {
+      "name": "بيضة قمرية",
+      "description": "فقس ليلي نادر؛ مكافأة في مهام الليل."
+    },
+    "mascotas/huevo-solar-real": {
+      "name": "بيضة شمسية ملكية",
+      "description": "نسخة نادرة من البيضة الشمسية؛ مكافأة نهارية محسّنة."
+    },
+    "mascotas/huevo-prisma-antiguo": {
+      "name": "بيضة بريزما قديمة",
+      "description": "فقس نادر جدًا؛ مكافأة في فعاليات خاصة."
+    },
+    "mascotas/huevo-cometa": {
+      "name": "بيضة المُذنب",
+      "description": "فقس نادر جدًا؛ فرصة إضافية للحصول على عناصر نادرة."
+    },
+    "mascotas/huevo-encantado": {
+      "name": "بيضة مسحورة",
+      "description": "فقس سحري؛ مكافأة في تأثيرات التعزيزات المؤقتة."
+    },
+    "mascotas/huevo-guardian": {
+      "name": "بيضة الحارس",
+      "description": "فقس دفاعي؛ يقلل العقوبات في الفعاليات."
+    },
+    "materiales/hierba-prisma": {
+      "name": "عشب بريزما",
+      "description": "مادة للصناعة."
+    },
+    "materiales/roca-volcanica": {
+      "name": "صخر بركاني",
+      "description": "مادة لتحسينات الدفاع."
+    },
+    "materiales/barra-de-oro-acero": {
+      "name": "سبيكة ذهب/فولاذ",
+      "description": "مادة للصناعة المتقدمة."
+    },
+    "materiales/fragmento-de-espiritu": {
+      "name": "شظية روح",
+      "description": "مادة للمهام والتحسينات."
+    },
+    "materiales/mineral-elemental": {
+      "name": "معدن عنصري",
+      "description": "مادة لصناعة الأدوات."
+    },
+    "materiales/flor-de-amor": {
+      "name": "زهرة الحب",
+      "description": "مادة لفعاليات رومانسية."
+    },
+    "materiales/fosil": {
+      "name": "أحفورة",
+      "description": "مادة لمهام الاستكشاف."
+    },
+    "materiales/dulce-festivo": {
+      "name": "حلوى احتفالية",
+      "description": "مادة لفعاليات الموسم."
+    },
+    "materiales/alga-marina": {
+      "name": "طحالب بحرية",
+      "description": "مادة للصيد ومكون لصناعة بحرية."
+    },
+    "materiales/concha-marina": {
+      "name": "صدفة بحرية",
+      "description": "مادة شائعة من المناطق الساحلية."
+    },
+    "materiales/coral-prisma": {
+      "name": "مرجان بريزما",
+      "description": "مادة نادرة من الشعاب وأعماق البحار."
+    },
+    "materiales/perla-azur": {
+      "name": "لؤلؤة أزور",
+      "description": "كنز بحري ثمين."
+    },
+    "materiales/mineral-de-cobre": {
+      "name": "خام نحاس",
+      "description": "مادة تعدين شائعة."
+    },
+    "materiales/mineral-de-hierro": {
+      "name": "خام حديد",
+      "description": "أساس للسبائك والأدوات."
+    },
+    "materiales/mineral-de-plata": {
+      "name": "خام فضة",
+      "description": "معدن ثمين للصناعة."
+    },
+    "materiales/mineral-de-oro": {
+      "name": "خام ذهب",
+      "description": "معدن نادر للصناعة المتقدمة."
+    },
+    "materiales/mineral-de-diamante": {
+      "name": "خام ألماس",
+      "description": "معدن نادر جدًا للصناعة الراقية."
+    },
+    "materiales/madera-robusta": {
+      "name": "خشب متين",
+      "description": "جيد للهياكل والأدوات."
+    },
+    "materiales/madera-encantada": {
+      "name": "خشب مسحور",
+      "description": "خشب نادر بخصائص سحرية."
+    },
+    "materiales/cuero-curtido": {
+      "name": "جلد مدبوغ",
+      "description": "مادة مرنة للمعدات."
+    },
+    "materiales/tela-resistente": {
+      "name": "قماش متين",
+      "description": "مادة للحقائب والملابس."
+    },
+    "materiales/hilo-fino": {
+      "name": "خيط رفيع",
+      "description": "مادة خياطة للصناعة."
+    },
+    "materiales/polvo-prisma": {
+      "name": "غبار بريزما",
+      "description": "مكوّن سحري للتحسينات."
+    },
+    "materiales/esencia-solar": {
+      "name": "جوهر شمسي",
+      "description": "مكوّن مضيء للصناعة النادرة."
+    },
+    "materiales/esencia-lunar": {
+      "name": "جوهر قمري",
+      "description": "مكوّن ليلي لوصفات خاصة."
+    },
+    "materiales/esencia-umbria": {
+      "name": "جوهر ظلي",
+      "description": "طاقة مظلمة نادرة جدًا."
+    },
+    "materiales/fragmento-de-cristal": {
+      "name": "شظية كريستال",
+      "description": "شظية لامعة للصناعة."
+    },
+    "materiales/gema-rubi": {
+      "name": "جوهرة ياقوت",
+      "description": "جوهرة نادرة للتبادل والتحسينات."
+    },
+    "materiales/gema-zafiro": {
+      "name": "جوهرة ياقوت أزرق",
+      "description": "جوهرة نادرة بطاقة مائية."
+    },
+    "materiales/gema-esmeralda": {
+      "name": "جوهرة زمرد",
+      "description": "جوهرة نادرة بطاقة طبيعية."
+    },
+    "materiales/nucleo-elemental": {
+      "name": "نواة عنصرية",
+      "description": "مكوّن نادر جدًا للأدوات العنصرية."
+    },
+    "materiales/placa-de-acero": {
+      "name": "صفيحة فولاذ",
+      "description": "مادة متينة للصناعة المتقدمة."
+    },
+    "mejoras/potenciador-de-fortuna": {
+      "name": "مُعزّز الحظ",
+      "description": "يزيد فرصة الحصول على مكافآت كبيرة."
+    },
+    "mejoras/escudo-de-tolerancia": {
+      "name": "درع التحمّل",
+      "description": "يقلل العقوبات في الفعاليات."
+    },
+    "mejoras/expansion-de-mochila": {
+      "name": "توسعة الحقيبة",
+      "description": "تزيد مساحة المخزون."
+    },
+    "mejoras/entrenamiento-moxi": {
+      "name": "تدريب موكسي",
+      "description": "مكافأة خبرة لكل نشاط."
+    },
+    "mejoras/trabajo-en-equipo": {
+      "name": "العمل الجماعي",
+      "description": "مكافأة عند العمل ضمن مجموعة."
+    },
+    "mejoras/estrella-de-suerte": {
+      "name": "نجمة الحظ",
+      "description": "مكافأة حظ."
+    },
+    "mejoras/aurora-festiva": {
+      "name": "شفق احتفالي",
+      "description": "مكافأة في فعاليات الشتاء."
+    },
+    "mejoras/tinte-personalizado": {
+      "name": "صبغة مخصصة",
+      "description": "تغير لون ملفك الشخصي أو ناديك."
+    },
+    "mejoras/expansion-de-banco": {
+      "name": "توسعة البنك",
+      "description": "تزيد مساحة البنك (استخدام مستقبلي)."
+    },
+    "mejoras/expansion-de-mochila-plus": {
+      "name": "توسعة الحقيبة بلس",
+      "description": "تزيد مساحة المخزون أكثر (استخدام مستقبلي)."
+    },
+    "mejoras/sello-de-proteccion": {
+      "name": "ختم الحماية",
+      "description": "يقلل الخسائر في الفعاليات الخطرة (استخدام مستقبلي)."
+    },
+    "mejoras/pase-premium-moxi": {
+      "name": "بطاقة بريميوم موكسي",
+      "description": "يمنحك الوصول إلى مزايا النظام المميّز (استخدام مستقبلي)."
+    },
+    "misiones/gema-prisma": {
+      "name": "جوهرة بريزما",
+      "description": "مطلوبة للمهام المتقدمة."
+    },
+    "misiones/conejo-de-peluche": {
+      "name": "أرنب محشو",
+      "description": "عنصر مهمة خاص."
+    },
+    "misiones/espada-de-hielo": {
+      "name": "سيف جليدي",
+      "description": "مطلوب لمهام الاستكشاف."
+    },
+    "misiones/katana-solar": {
+      "name": "كاتانا شمسية",
+      "description": "عنصر مهمة متقدم."
+    },
+    "misiones/mascara-de-zorro": {
+      "name": "قناع الثعلب",
+      "description": "عنصر مهمة خاص."
+    },
+    "pociones/pocion-de-regeneracion": {
+      "name": "جرعة التجدد",
+      "description": "تعيد الصحة."
+    },
+    "pociones/pocion-de-resistencia": {
+      "name": "جرعة المقاومة",
+      "description": "تزيد الدفاع مؤقتًا."
+    },
+    "pociones/pocion-del-explorador": {
+      "name": "جرعة المستكشف",
+      "description": "تسمح لك باستكشاف مناطق جديدة."
+    },
+    "pociones/elixir-prisma": {
+      "name": "إكسير بريزما",
+      "description": "يمنح مكافأة خبرة وطاقة."
+    },
+    "pociones/huevito-de-energia-exploracion-regeneracion-resistencia": {
+      "name": "بيضة صغيرة (طاقة/استكشاف/تجدد/مقاومة)",
+      "description": "مستهلكات خاصة."
+    },
+    "pociones/pocion-de-suerte": {
+      "name": "جرعة الحظ",
+      "description": "تزيد الحظ مؤقتًا."
+    },
+    "pociones/pocion-de-velocidad": {
+      "name": "جرعة السرعة",
+      "description": "تزيد السرعة مؤقتًا."
+    },
+    "pociones/pocion-del-minero": {
+      "name": "جرعة عامل المنجم",
+      "description": "تحسن غنائم التعدين مؤقتًا."
+    },
+    "pociones/pocion-del-pescador": {
+      "name": "جرعة الصيّاد",
+      "description": "تحسن غنائم الصيد مؤقتًا."
+    },
+    "pociones/elixir-de-luz": {
+      "name": "إكسير الضوء",
+      "description": "يعزز مكافآت النهار والاستكشاف."
+    },
+    "pociones/elixir-de-sombra": {
+      "name": "إكسير الظل",
+      "description": "يعزز مكافآت الليل والتخفي."
+    },
+    "rollos/rollo-moxi": {
+      "name": "لفافة موكسي",
+      "description": "تمنح قدرات خاصة مؤقتة."
+    },
+    "rollos/rollo-de-estrategia": {
+      "name": "لفافة الاستراتيجية",
+      "description": "تفتح استراتيجيات متقدمة في الفعاليات."
+    },
+    "rollos/notas-del-explorador": {
+      "name": "ملاحظات المستكشف",
+      "description": "توفر أدلة للمهام."
+    },
+    "rollos/papiro-jeroglifico": {
+      "name": "بردية/نقوش هيروغليفية",
+      "description": "تفتح محتوى مخفيًا."
+    },
+    "proteccion/vida-extra": {
+      "name": "حياة إضافية",
+      "description": "تسمح لك بالعودة للحياة مرة واحدة في فعاليات خاصة."
+    }
+  }
+}

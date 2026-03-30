@@ -1,0 +1,3 @@
+{
+    "README": "## Fehlerverfolgung · Aura Moxi 🌙✨\n\n💬 Was ist passiert? Wie lässt es sich reproduzieren?\n📸 Lade kurze Beweise hoch (Screenshots, Videos, Logs, IDs).\n🌈 Was hättest du erwartet?\n\n🎴 Ein Thread pro Bug.\n🔴 · 🟡 · 🟢 Tags markieren den Status.\n🪄 Buttons zum Schließen / Wiederöffnen.\n🎐 Der Bot pinnt die Anleitung und verlinkt erkannte Duplikate.\n\n📷 '.bug' benötigt Bilder oder Beweise, um den Prozess zu beschleunigen.\n🚀 Nutze '/bug', um das Forum vorzubereiten, oder sende '/bug'/'.bug <Text>', um den Fehler zu melden.\n\nDanke, dass du dafür sorgst, dass {{guildName}} ruhig bleibt."
+}

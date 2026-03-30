@@ -1,0 +1,12 @@
+{
+    "TITLE": "إعدادات الاقتصاد",
+    "LINE_PREFIX": "• البادئة: `{{prefix}}`",
+    "LINE_LANG": "• اللغة: `{{lang}}`",
+    "LINE_DB": "• قاعدة البيانات: **{{status}}**",
+    "DB_ON": "مُفعّلة",
+    "DB_OFF": "مُعطّلة",
+    "LINE_DAILY": "• daily: **{{min}}–{{max}}** 🪙",
+    "LINE_WORK": "• work: **{{min}}–{{max}}** 🪙",
+    "LINE_SALARY": "• salary: **{{min}}–{{max}}** 🪙",
+    "FOOTER": "تُضبط بعض النطاقات عبر متغيرات البيئة."
+}

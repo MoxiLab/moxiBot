@@ -1,0 +1,5 @@
+[
+    {
+        "usage": ".timer nuevo [minutes] — Démarre un nouveau minuteur dans ce canal. Un seul minuteur actif par canal est autorisé.\n.timer desde [minutes] — Crée un minuteur relatif à votre dernier message dans le canal.\n.timer — Affiche l'état du minuteur actif et combien il y en a sur le serveur."
+    }
+]

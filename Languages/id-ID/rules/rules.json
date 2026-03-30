@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "title": "Hormat dan hidup bersama",
+        "description": "Bersikaplah baik dan toleran kepada semua orang. Tidak diperbolehkan melakukan pelecehan, penghinaan, diskriminasi, ujaran kebencian, ancaman, atau sikap beracun. Jangan gunakan bahasa kasar, serangan pribadi, atau sindiran. Jika ada konflik, hubungi staf sebelum memperburuk situasi."
+    },
+    {
+        "id": 2,
+        "title": "Konten yang diizinkan",
+        "description": "Semua konten NSFW, ilegal, kekerasan, gore, jumpscare, atau tautan berbahaya dilarang. Gambar, video, dan file harus cocok untuk semua orang. Jangan bagikan tautan mencurigakan atau file yang dapat dieksekusi."
+    },
+    {
+        "id": 3,
+        "title": "Saluran dan topik",
+        "description": "Gunakan setiap saluran sesuai tujuannya. Baca deskripsi sebelum menulis. Spam, flood, pesan berulang, atau di luar topik akan dihapus. Jaga saluran tetap bersih dan teratur."
+    },
+    {
+        "id": 4,
+        "title": "Iklan dan promosi diri",
+        "description": "Promosi server lain, media sosial, saluran, produk, atau layanan dilarang tanpa izin staf. Jangan kirim pesan pribadi yang tidak diminta untuk mempromosikan apa pun."
+    },
+    {
+        "id": 5,
+        "title": "Kekayaan intelektual dan kreativitas",
+        "description": "Bagikan hanya konten milik sendiri atau dengan izin dan kredit yang jelas. Jangan menjiplak, mencuri, atau menggunakan materi orang lain tanpa izin. Hargai dan hormati karya orang lain."
+    },
+    {
+        "id": 6,
+        "title": "Masukan dan kritik",
+        "description": "Berikan pendapat dan kritik selalu dengan cara yang membangun dan sopan. Ejekan, sarkasme destruktif, atau penghinaan publik tidak diperbolehkan."
+    },
+    {
+        "id": 7,
+        "title": "Privasi dan keamanan",
+        "description": "Jangan bagikan data pribadi Anda atau orang lain (alamat, nomor telepon, dll). Laporkan situasi mencurigakan, pelecehan, atau pengguna yang melanggar aturan."
+    },
+    {
+        "id": 8,
+        "title": "Penggunaan bot dan perintah",
+        "description": "Gunakan perintah bot hanya di saluran yang ditentukan. Penyalahgunaan, spam, atau penggunaan perintah yang tidak semestinya akan dikenakan sanksi."
+    },
+    {
+        "id": 9,
+        "title": "Staf dan moderasi",
+        "description": "Hormati dan ikuti instruksi staf. Keputusan mereka bersifat final. Jika ada pertanyaan, saran, atau masalah, hubungi moderator secara pribadi."
+    },
+    {
+        "id": 10,
+        "title": "Partisipasi dan sikap",
+        "description": "Berkolaborasi, berbagi, dan nikmati. Ini adalah ruang untuk belajar, berkreasi, dan bersenang-senang bersama komunitas. Selalu bawa energi terbaik Anda dan bantu menjadikan Moxi Studio tempat yang unik."
+    }
+]

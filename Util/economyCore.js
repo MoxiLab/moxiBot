@@ -1,0 +1,397 @@
+const { ensureMongoConnection } = require('./mongoConnect');
+const { normalizeDiscordId, normalizeDbText } = require('./idGuards');
+
+const STARTER_EGG_ITEM_ID = 'mascotas/huevo-de-bosque';
+
+function starterInventory() {
+  return [{ itemId: STARTER_EGG_ITEM_ID, amount: 1, obtainedAt: new Date() }];
+}
+
+function hasAnyEgg(inventory) {
+  const inv = Array.isArray(inventory) ? inventory : [];
+  return inv.some((row) => {
+    const itemId = String(row?.itemId || '');
+    const amount = Number(row?.amount || 0);
+    return itemId.startsWith('mascotas/huevo-') && amount > 0;
+  });
+}
+
+function safeInt(n, fallback = 0) {
+  const x = Number(n);
+  if (!Number.isFinite(x)) return fallback;
+  return Math.trunc(x);
+}
+
+function formatDuration(ms) {
+  const s = Math.max(0, Math.floor(ms / 1000));
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  if (h > 0) return `${h}h ${m}m`;
+  if (m > 0) return `${m}m ${sec}s`;
+  return `${sec}s`;
+}
+
+function msUntilNext(lastDate, cooldownMs) {
+  const last = lastDate instanceof Date ? lastDate.getTime() : 0;
+  const next = last + cooldownMs;
+  return Math.max(0, next - Date.now());
+}
+
+async function getOrCreateEconomy(userId) {
+  userId = normalizeDiscordId(userId);
+  if (!userId) throw new Error('userId inválido.');
+  if (!process.env.MONGODB) {
+    throw new Error('MongoDB no está configurado (MONGODB vacío).');
+  }
+
+  await ensureMongoConnection();
+
+  const { Economy } = require('../Models/EconomySchema');
+
+  // Upsert atómico para evitar carreras (shards / comandos simultáneos)
+  try {
+    await Economy.updateOne(
+      { userId },
+      { $setOnInsert: { userId, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: starterInventory() } },
+      { upsert: true }
+    );
+  } catch (e) {
+    // Si hubo una carrera y el doc se creó justo antes, ignoramos el DuplicateKey.
+    if (e?.code !== 11000) throw e;
+  }
+
+  const eco = await Economy.findOne({ userId });
+
+  // Backfill suave: si el usuario no tiene ningún huevo y aún no tiene mascota/incubación, le damos 1 huevo inicial.
+  if (eco) {
+    const inv = Array.isArray(eco.inventory) ? eco.inventory : [];
+    const pets = Array.isArray(eco.pets) ? eco.pets : [];
+    const hasEgg = hasAnyEgg(inv);
+    const hasIncubation = Boolean(eco.petIncubation?.eggItemId);
+
+    if (!hasEgg && pets.length === 0 && !hasIncubation) {
+      if (inv.length === 0) {
+        eco.inventory = starterInventory();
+      } else {
+        inv.push({ itemId: STARTER_EGG_ITEM_ID, amount: 1, obtainedAt: new Date() });
+        eco.inventory = inv;
+      }
+      await eco.save();
+    }
+  }
+
+  return eco;
+}
+
+async function claimCooldownReward({
+  userId,
+  field,
+  cooldownMs,
+  minAmount,
+  maxAmount,
+} = {}) {
+  userId = normalizeDiscordId(userId);
+  if (!userId) return { ok: false, reason: 'missing-user', message: 'userId inválido.' };
+
+  if (!process.env.MONGODB) {
+    return { ok: false, reason: 'no-db', message: 'MongoDB no está configurado (MONGODB vacío).' };
+  }
+
+  await ensureMongoConnection();
+
+  const { Economy } = require('../Models/EconomySchema');
+
+  const now = new Date();
+  const cutoff = new Date(Date.now() - cooldownMs);
+  const amount = Math.max(minAmount, Math.min(maxAmount, Math.floor(minAmount + Math.random() * (maxAmount - minAmount + 1))));
+
+  // 1) Asegura que el documento existe (sin depender del cooldown en el filtro)
+  try {
+    await Economy.updateOne(
+      { userId },
+      { $setOnInsert: { userId, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: starterInventory() } },
+      { upsert: true }
+    );
+  } catch (e) {
+    if (e?.code !== 11000) throw e;
+  }
+
+  // 2) Intenta reclamar SOLO si ha pasado el cooldown (sin upsert para evitar E11000)
+  const claimFilter = {
+    userId,
+    $or: [
+      { [field]: { $exists: false } },
+      { [field]: null },
+      { [field]: { $lte: cutoff } },
+    ],
+  };
+
+  const updated = await Economy.findOneAndUpdate(
+    claimFilter,
+    {
+      $inc: { balance: amount },
+      $set: { [field]: now },
+    },
+    { new: true }
+  );
+
+  if (updated) {
+    return {
+      ok: true,
+      amount,
+      balance: safeInt(updated.balance, 0),
+      nextInMs: 0,
+    };
+  }
+
+  const existing = await getOrCreateEconomy(userId);
+  const remaining = msUntilNext(existing[field], cooldownMs);
+  return {
+    ok: false,
+    reason: 'cooldown',
+    nextInMs: remaining,
+    balance: safeInt(existing.balance, 0),
+  };
+}
+
+async function claimCooldown({
+  userId,
+  field,
+  cooldownMs,
+} = {}) {
+  userId = normalizeDiscordId(userId);
+  if (!userId) return { ok: false, reason: 'missing-user', message: 'userId inválido.' };
+
+  if (!process.env.MONGODB) {
+    return { ok: false, reason: 'no-db', message: 'MongoDB no está configurado (MONGODB vacío).' };
+  }
+
+  await ensureMongoConnection();
+
+  const { Economy } = require('../Models/EconomySchema');
+
+  const now = new Date();
+  const cutoff = new Date(Date.now() - cooldownMs);
+
+  try {
+    await Economy.updateOne(
+      { userId },
+      { $setOnInsert: { userId, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: starterInventory() } },
+      { upsert: true }
+    );
+  } catch (e) {
+    if (e?.code !== 11000) throw e;
+  }
+
+  const claimFilter = {
+    userId,
+    $or: [
+      { [field]: { $exists: false } },
+      { [field]: null },
+      { [field]: { $lte: cutoff } },
+    ],
+  };
+
+  const updated = await Economy.findOneAndUpdate(
+    claimFilter,
+    { $set: { [field]: now } },
+    { new: true }
+  );
+
+  if (updated) {
+    return { ok: true, nextInMs: 0 };
+  }
+
+  const existing = await getOrCreateEconomy(userId);
+  const remaining = msUntilNext(existing[field], cooldownMs);
+  return { ok: false, reason: 'cooldown', nextInMs: remaining };
+}
+
+async function awardBalance({ userId, amount } = {}) {
+  userId = normalizeDiscordId(userId);
+  if (!userId) return { ok: false, reason: 'missing-user', message: 'userId inválido.' };
+
+  if (!process.env.MONGODB) {
+    return { ok: false, reason: 'no-db', message: 'MongoDB no está configurado (MONGODB vacío).' };
+  }
+
+  const inc = safeInt(amount, 0);
+  if (inc <= 0) {
+    const existing = await getOrCreateEconomy(userId);
+    return { ok: true, amount: 0, balance: safeInt(existing.balance, 0) };
+  }
+
+  await ensureMongoConnection();
+  const { Economy } = require('../Models/EconomySchema');
+
+  // Asegura doc
+  try {
+    await Economy.updateOne(
+      { userId },
+      { $setOnInsert: { userId, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: starterInventory() } },
+      { upsert: true }
+    );
+  } catch (e) {
+    if (e?.code !== 11000) throw e;
+  }
+
+  const updated = await Economy.findOneAndUpdate(
+    { userId },
+    { $inc: { balance: inc } },
+    { new: true }
+  );
+
+  return { ok: true, amount: inc, balance: safeInt(updated?.balance, 0) };
+}
+
+async function transferBalance({ fromUserId, toUserId, amount } = {}) {
+  const from = normalizeDiscordId(fromUserId);
+  const to = normalizeDiscordId(toUserId);
+  const inc = safeInt(amount, 0);
+
+  if (!process.env.MONGODB) {
+    return { ok: false, reason: 'no-db', message: 'MongoDB no está configurado (MONGODB vacío).' };
+  }
+  if (!from || !to) return { ok: false, reason: 'missing-user', message: 'Faltan userId.' };
+  if (from === to) return { ok: false, reason: 'same-user', message: 'No puedes transferirte a ti mismo.' };
+  if (inc <= 0) return { ok: false, reason: 'invalid-amount', message: 'Cantidad inválida.' };
+
+  await ensureMongoConnection();
+  const { Economy } = require('../Models/EconomySchema');
+
+  // Asegurar documentos
+  for (const uid of [from, to]) {
+    try {
+      await Economy.updateOne(
+        { userId: uid },
+        { $setOnInsert: { userId: uid, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: starterInventory() } },
+        { upsert: true }
+      );
+    } catch (e) {
+      if (e?.code !== 11000) throw e;
+    }
+  }
+
+  // Debitar solo si hay balance suficiente
+  const debited = await Economy.findOneAndUpdate(
+    { userId: from, balance: { $gte: inc } },
+    { $inc: { balance: -inc } },
+    { new: true }
+  );
+
+  if (!debited) {
+    const existing = await getOrCreateEconomy(from);
+    return { ok: false, reason: 'insufficient', balance: safeInt(existing?.balance, 0) };
+  }
+
+  // Acreditar al receptor
+  let credited;
+  try {
+    credited = await Economy.findOneAndUpdate(
+      { userId: to },
+      { $inc: { balance: inc } },
+      { new: true }
+    );
+  } catch (e) {
+    // Rollback best-effort
+    try {
+      await Economy.findOneAndUpdate(
+        { userId: from },
+        { $inc: { balance: inc } },
+        { new: true }
+      );
+    } catch { }
+    throw e;
+  }
+
+  return {
+    ok: true,
+    amount: inc,
+    fromBalance: safeInt(debited?.balance, 0),
+    toBalance: safeInt(credited?.balance, 0),
+  };
+}
+
+async function transferInventoryItem({ fromUserId, toUserId, itemId, amount } = {}) {
+  const from = normalizeDiscordId(fromUserId);
+  const to = normalizeDiscordId(toUserId);
+  const id = normalizeDbText(itemId, { maxLen: 120, fallback: '' });
+  const qty = Math.max(1, safeInt(amount, 1));
+
+  if (!process.env.MONGODB) {
+    return { ok: false, reason: 'no-db', message: 'MongoDB no está configurado (MONGODB vacío).' };
+  }
+  if (!from || !to) return { ok: false, reason: 'missing-user', message: 'Faltan userId.' };
+  if (from === to) return { ok: false, reason: 'same-user', message: 'No puedes transferirte a ti mismo.' };
+  if (!id) return { ok: false, reason: 'invalid-item', message: 'Item inválido.' };
+
+  await ensureMongoConnection();
+  const { Economy } = require('../Models/EconomySchema');
+  // eslint-disable-next-line global-require
+  const { addToInventory } = require('./inventoryOps');
+
+  // Asegurar documentos
+  for (const uid of [from, to]) {
+    try {
+      await Economy.updateOne(
+        { userId: uid },
+        { $setOnInsert: { userId: uid, balance: 0, bank: 0, bankLevel: 0, sakuras: 0, inventory: starterInventory() } },
+        { upsert: true }
+      );
+    } catch (e) {
+      if (e?.code !== 11000) throw e;
+    }
+  }
+
+  const fromDoc = await Economy.findOne({ userId: from });
+  const toDoc = await Economy.findOne({ userId: to });
+
+  if (!fromDoc || !toDoc) {
+    return { ok: false, reason: 'missing-doc', message: 'No se pudo cargar el documento de economía.' };
+  }
+
+  const fromInv = Array.isArray(fromDoc.inventory) ? fromDoc.inventory : [];
+  const row = fromInv.find((x) => x && String(x.itemId) === id);
+  const have = row ? Math.max(0, Number(row.amount) || 0) : 0;
+
+  if (!row || have <= 0) {
+    return { ok: false, reason: 'not-owned', have };
+  }
+  if (qty > have) {
+    return { ok: false, reason: 'not-enough', have, wanted: qty };
+  }
+
+  row.amount = have - qty;
+  if (row.amount <= 0) fromDoc.inventory = fromInv.filter((x) => x && String(x.itemId) !== id);
+  else fromDoc.inventory = fromInv;
+
+  await fromDoc.save();
+
+  addToInventory(toDoc, id, qty);
+  await toDoc.save();
+
+  const toInv = Array.isArray(toDoc.inventory) ? toDoc.inventory : [];
+  const toRow = toInv.find((x) => x && String(x.itemId) === id);
+  const toHave = toRow ? Math.max(0, Number(toRow.amount) || 0) : qty;
+
+  return {
+    ok: true,
+    itemId: id,
+    amount: qty,
+    fromRemaining: Math.max(0, have - qty),
+    toAmount: toHave,
+  };
+}
+
+module.exports = {
+  safeInt,
+  formatDuration,
+  msUntilNext,
+  getOrCreateEconomy,
+  claimCooldownReward,
+  claimCooldown,
+  awardBalance,
+  transferBalance,
+  transferInventoryItem,
+};

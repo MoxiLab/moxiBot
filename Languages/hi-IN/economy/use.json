@@ -1,0 +1,17 @@
+{
+    "USAGE_BAD_TITLE": "गलत उपयोग",
+    "USAGE_BAD_TEXT": "जिस आइटम का उपयोग करना है उसका नाम या ID लिखें।",
+    "ITEM_NOT_FOUND_TITLE": "आइटम नहीं मिला",
+    "ITEM_NOT_FOUND_TEXT": "मैं वह आइटम नहीं ढूँढ पाया। अपनी इन्वेंटरी देखने के लिए `{{prefix}}bag` या IDs देखने के लिए `{{prefix}}shop list` उपयोग करें।",
+    "PETS_TITLE": "पालतू",
+    "NO_PETS_TEXT_SHORT": "आपके पास अभी कोई पालतू नहीं है। एक पाने के लिए अंडा इनक्यूबेट करें।",
+    "OCARINA_TITLE": "बॉन्ड ओकारिना",
+    "OCARINA_ALREADY_WITH_YOU": "आपका पालतू पहले से आपके साथ है। अभी इसे उपयोग करने की जरूरत नहीं है।",
+    "OCARINA_NOT_OWNED": "आपके बैग में यह आइटम नहीं है।",
+    "OCARINA_HEADER": "# 🎶 बॉन्ड ओकारिना",
+    "PET_FALLBACK_NAME": "आपका पालतू",
+    "PET_RETURN_TEXT": "🐾 **{{pet}}** ने आवाज़ सुनी… और वापस आ गया!",
+    "PET_VIEW_BUTTON": "पालतू देखें",
+    "INCUBATOR_TITLE": "इनक्यूबेटर",
+    "INCUBATOR_NOT_OWNED": "आपके बैग में इनक्यूबेटर नहीं है।"
+}

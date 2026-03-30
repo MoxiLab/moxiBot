@@ -1,0 +1,19 @@
+{
+    "DESC": "أرسل عملات إلى مستخدم آخر.",
+    "USAGE_TITLE": "طريقة الاستخدام",
+    "USAGE_TEXT": "استخدم: `{{prefix}}give @user 100`",
+    "INVALID_AMOUNT_TITLE": "كمية غير صالحة",
+    "INVALID_AMOUNT_TEXT": "يجب أن تكون الكمية أكبر من 0.",
+    "SELF_TITLE": "غير مسموح",
+    "SELF_TEXT": "لا يمكنك إرسال العملات لنفسك.",
+    "BOT_TITLE": "غير مسموح",
+    "BOT_TEXT": "لا يمكنك إرسال العملات للبوتات.",
+    "INSUFFICIENT_TITLE": "رصيد غير كافٍ",
+    "INSUFFICIENT_TEXT": "حاولت إرسال **{{amount}}** 🪙 لكن رصيدك **{{balance}}** 🪙 فقط.",
+    "SUCCESS_TITLE": "تم الإرسال",
+    "SUCCESS_TEXT": "أرسلت إلى {{user}} **{{amount}}** 🪙.\nرصيدك: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "قاعدة البيانات غير مهيأة",
+    "NO_DB_TEXT": "MongoDB غير مُعدّ، لذا تم تعطيل أوامر الاقتصاد.",
+    "ERROR_TITLE": "خطأ",
+    "UNKNOWN_ERROR": "حدث خطأ."
+}

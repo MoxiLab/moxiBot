@@ -1,0 +1,12 @@
+{
+    "TITLE": "Paramètres d'économie",
+    "LINE_PREFIX": "• Préfixe : `{{prefix}}`",
+    "LINE_LANG": "• Langue : `{{lang}}`",
+    "LINE_DB": "• Base de données : **{{status}}**",
+    "DB_ON": "ACTIVE",
+    "DB_OFF": "INACTIVE",
+    "LINE_DAILY": "• Daily: **{{min}}–{{max}}** 🪙",
+    "LINE_WORK": "• Work: **{{min}}–{{max}}** 🪙",
+    "LINE_SALARY": "• Salary: **{{min}}–{{max}}** 🪙",
+    "FOOTER": "Certaines plages sont contrôlées par des variables d'environnement."
+}

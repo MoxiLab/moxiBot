@@ -1,0 +1,11 @@
+{
+    "CURRENT_PREFIX_TITLE": "Current Prefix",
+    "CURRENT_PREFIX_DESC": "The current bot prefix is: **{{prefix}}**",
+    "ALSO_CAN_USE": "You can also use: {{prefixes}}",
+    "PREFIX_TOO_LONG_TITLE": "Prefix Too Long",
+    "PREFIX_TOO_LONG": "❗ The prefix cannot be longer than 5 characters.",
+    "PREFIX_SUCCESS_TITLE": "Prefix Updated",
+    "PREFIX_SUCCESS": "✅ The new prefix is: **{{prefix}}**",
+    "PREFIX_ERROR_TITLE": "Update Error",
+    "PREFIX_ERROR": "❌ There was an error updating the prefix. Please try again."
+}

@@ -1,0 +1,843 @@
+{
+    "categories": {
+        "Buffs": "बफ़्स",
+        "Collectibles": "संग्रहणीय",
+        "Consumables": "उपभोग्य",
+        "Tools": "औज़ार",
+        "Keys": "चाबियाँ",
+        "Loot": "लूट",
+        "Pets": "पालतू",
+        "Materials": "सामग्री",
+        "Upgrades": "उन्नयन",
+        "Quests": "क्वेस्ट",
+        "Potions": "पोषन",
+        "Scrolls": "स्क्रॉल",
+        "Protection": "सुरक्षा"
+    },
+    "items": {
+        "buffs/scroll-de-impulso-moxi": {
+            "name": "मॉक्सी बूस्ट स्क्रॉल",
+            "description": "1 घंटे के लिए आपके सभी कार्यों की गति बढ़ाता है।"
+        },
+        "buffs/pez-lumina": {
+            "name": "लुमिना मछली",
+            "description": "जल गतिविधियों के लिए अनुभव बोनस।"
+        },
+        "buffs/gusano-brillo": {
+            "name": "चमकता कीड़ा",
+            "description": "दुर्लभ संसाधन मिलने की संभावना बढ़ाता है।"
+        },
+        "buffs/linterna-solar": {
+            "name": "सौर लालटेन",
+            "description": "अंधेरे इलाकों का अन्वेषण करने और छुपे ख़ज़ाने खोजने में मदद करता है।"
+        },
+        "buffs/fruta-vital": {
+            "name": "वाइटल फल",
+            "description": "ऊर्जा बहाल करता है और थोड़ी गति बढ़ोतरी देता है।"
+        },
+        "buffs/scroll-mascota-veloz": {
+            "name": "पालतू-तेज़ी स्क्रॉल",
+            "description": "आपके पालतू को अस्थायी रूप से अतिरिक्त गति मिलती है।"
+        },
+        "buffs/fruta-mutante": {
+            "name": "म्यूटेंट फल",
+            "description": "एक यादृच्छिक प्रभाव देता है; यह सकारात्मक या नकारात्मक हो सकता है।"
+        },
+        "buffs/holly-prisma": {
+            "name": "हॉली प्रिज़्म",
+            "description": "मौसमी इवेंट्स में विशेष बोनस।"
+        },
+        "buffs/pan-dulce-moxi": {
+            "name": "मॉक्सी मीठी ब्रेड",
+            "description": "10 मिनट के लिए क्वेस्ट इनाम दोगुना करता है।"
+        },
+        "buffs/pase-de-evento": {
+            "name": "इवेंट पास",
+            "description": "इनाम और विशेष क्षेत्रों तक पहुँच (समाप्त और वर्तमान)।"
+        },
+        "buffs/fogata-elemental": {
+            "name": "तत्वीय अलाव",
+            "description": "कैम्प करने देता है और लकड़ी के प्रकार के अनुसार अस्थायी बफ़्स देता है।"
+        },
+        "buffs/scroll-gelido": {
+            "name": "हिमानी स्क्रॉल",
+            "description": "ठंडे इलाकों में रक्षा बढ़ाता है।"
+        },
+        "buffs/corona-de-invierno": {
+            "name": "शीत मुकुट",
+            "description": "सर्दियों के इवेंट्स में विशेष बोनस।"
+        },
+        "buffs/dulce-de-fresa": {
+            "name": "स्ट्रॉबेरी कैंडी",
+            "description": "ऊर्जा बहाल करता है और किस्मत बोनस देता है।"
+        },
+        "buffs/trebol-de-fortuna": {
+            "name": "भाग्य का तिपतिया",
+            "description": "दुर्लभ आइटम मिलने की संभावना बढ़ाता है।"
+        },
+        "buffs/cascanueces-moxi": {
+            "name": "मॉक्सी नटक्रैकर",
+            "description": "सर्दियों के इवेंट्स में रक्षा बोनस।"
+        },
+        "coleccionables/medalla-de-nieve": {
+            "name": "बर्फ़ का पदक",
+            "description": "सर्दी मौसम का संग्रहणीय।"
+        },
+        "coleccionables/medalla-prisma": {
+            "name": "प्रिज़्म पदक",
+            "description": "विशेष इवेंट का संग्रहणीय।"
+        },
+        "coleccionables/medalla-lunar": {
+            "name": "चंद्र पदक",
+            "description": "रात के मिशनों में मिलता है।"
+        },
+        "coleccionables/token-festivo": {
+            "name": "उत्सव टोकन",
+            "description": "इवेंट शॉप में इनामों के लिए रिडीम किया जा सकता है।"
+        },
+        "coleccionables/carta-de-amistad": {
+            "name": "दोस्ती का पत्र",
+            "description": "सामाजिक इवेंट्स का संग्रहणीय।"
+        },
+        "coleccionables/moneda-de-fortuna": {
+            "name": "भाग्य सिक्का",
+            "description": "जब तक यह आपके पास है, किस्मत बोनस देता है।"
+        },
+        "coleccionables/gema-de-espiritu": {
+            "name": "आत्मा रत्न",
+            "description": "उन्नत क्वेस्ट के लिए आवश्यक।"
+        },
+        "coleccionables/corazon-prisma": {
+            "name": "प्रिज़्म दिल",
+            "description": "रोमांटिक इवेंट्स का संग्रहणीय।"
+        },
+        "coleccionables/petalo-de-sakura": {
+            "name": "सकुरा पंखुड़ी",
+            "description": "वसंत का संग्रहणीय।"
+        },
+        "coleccionables/bouquet-festivo": {
+            "name": "उत्सव गुलदस्ता",
+            "description": "फूलों वाले इवेंट्स का संग्रहणीय।"
+        },
+        "coleccionables/ticket-de-temporada": {
+            "name": "सीज़न टिकट",
+            "description": "विशेष इवेंट्स तक पहुँच देता है।"
+        },
+        "coleccionables/varita-de-luz": {
+            "name": "प्रकाश की छड़ी",
+            "description": "जादुई संग्रहणीय।"
+        },
+        "coleccionables/cascabel-festivo": {
+            "name": "उत्सव झंकार घंटी",
+            "description": "सर्दियों का संग्रहणीय।"
+        },
+        "coleccionables/flor-de-espiritu": {
+            "name": "आत्मा का फूल",
+            "description": "फूलों वाले इवेंट्स का संग्रहणीय।"
+        },
+        "coleccionables/fantasmita-moxi": {
+            "name": "छोटा भूत मॉक्सी",
+            "description": "हैलोवीन का संग्रहणीय।"
+        },
+        "coleccionables/gato-sombrio": {
+            "name": "छाया बिल्ली",
+            "description": "डार्क/अंधेरे इवेंट्स का संग्रहणीय।"
+        },
+        "coleccionables/copa-de-campeon": {
+            "name": "चैंपियन कप",
+            "description": "विशेष चुनौतियाँ पूरी करने पर मिलता है।"
+        },
+        "consumibles/galleta-energetica": {
+            "name": "ऊर्जा कुकी",
+            "description": "ऊर्जा बहाल करता है।"
+        },
+        "consumibles/pastel-de-celebracion": {
+            "name": "उत्सव केक",
+            "description": "अनुभव बोनस देता है।"
+        },
+        "consumibles/fruta-magica": {
+            "name": "जादुई फल",
+            "description": "एक यादृच्छिक प्रभाव देता है।"
+        },
+        "consumibles/ensalada-refrescante": {
+            "name": "ताज़ा सलाद",
+            "description": "ऊर्जा और स्वास्थ्य बहाल करता है।"
+        },
+        "consumibles/fuegos-artificiales": {
+            "name": "आतिशबाज़ी",
+            "description": "इवेंट्स में किस्मत बोनस देता है।"
+        },
+        "consumibles/calabaza-festiva": {
+            "name": "उत्सव कद्दू",
+            "description": "हैलोवीन उपभोग्य।"
+        },
+        "consumibles/nuez-dorada": {
+            "name": "सुनहरा अखरोट",
+            "description": "रक्षा बोनस देता है।"
+        },
+        "consumibles/electrolito": {
+            "name": "इलेक्ट्रोलाइट",
+            "description": "तुरंत ऊर्जा बहाल करता है।"
+        },
+        "consumibles/monedas-de-oro": {
+            "name": "सोने के सिक्के",
+            "description": "दुकान में आइटम खरीदने के लिए उपयोग होने वाला उपभोग्य।"
+        },
+        "consumibles/agua-fresca": {
+            "name": "ताज़ा पानी",
+            "description": "आपको चलता रखता है: थोड़ी ऊर्जा बढ़ोतरी।"
+        },
+        "consumibles/te-verde": {
+            "name": "हरी चाय",
+            "description": "थकान कम करता है: हल्का फोकस बोनस।"
+        },
+        "consumibles/cafe-moxi": {
+            "name": "मॉक्सी कॉफ़ी",
+            "description": "कुछ मिनटों के लिए आपके काम थोड़े तेज़ करता है।"
+        },
+        "consumibles/chocolate-caliente": {
+            "name": "गरम चॉकलेट",
+            "description": "सुकून देने वाला: ठंडे इवेंट्स में हल्का बोनस।"
+        },
+        "consumibles/sopa-caliente": {
+            "name": "गरम सूप",
+            "description": "ऊर्जा बहाल करता है और हल्का सहनशक्ति बूस्ट देता है।"
+        },
+        "consumibles/barra-proteica": {
+            "name": "प्रोटीन बार",
+            "description": "तीव्र गतिविधियों के लिए तेज़ ऊर्जा।"
+        },
+        "consumibles/batido-prisma": {
+            "name": "प्रिज़्म शेक",
+            "description": "कुछ समय के लिए थोड़ा किस्मत बूस्ट।"
+        },
+        "consumibles/sandwich-de-aventura": {
+            "name": "एडवेंचर सैंडविच",
+            "description": "ऊर्जा बहाल करता है और अन्वेषण को थोड़ा बेहतर करता है।"
+        },
+        "consumibles/sushi-marino": {
+            "name": "समुद्री सुशी",
+            "description": "मछली पकड़ने और समुद्री लूट में छोटा बोनस।"
+        },
+        "consumibles/pan-de-ajo": {
+            "name": "लहसुन ब्रेड",
+            "description": "सहनशक्ति बढ़ाता है: खनन के लिए आदर्श।"
+        },
+        "herramientas/pico-prisma": {
+            "name": "प्रिज़्म पिकऐक्स",
+            "description": "दुर्लभ खनिज खनन करने देता है।"
+        },
+        "herramientas/cana-de-pesca-moxi": {
+            "name": "मॉक्सी मछली पकड़ने की छड़ी",
+            "description": "दुर्लभ आइटम पकड़ने की संभावना बढ़ाता है।"
+        },
+        "herramientas/llave-multiusos": {
+            "name": "मल्टी-टूल चाबी",
+            "description": "मरम्मत और निर्माण के लिए औज़ार।"
+        },
+        "herramientas/varita-solar": {
+            "name": "सौर छड़ी",
+            "description": "जादुई कार्य करने देता है।"
+        },
+        "herramientas/hacha-elemental": {
+            "name": "तत्वीय कुल्हाड़ी",
+            "description": "विशेष लकड़ी इकट्ठा करने का औज़ार।"
+        },
+        "herramientas/incubadora": {
+            "name": "इनक्यूबेटर",
+            "description": "अंडे हैच/फोड़ने देता है।"
+        },
+        "herramientas/revelador-prisma": {
+            "name": "प्रिज़्म रिवीलर",
+            "description": "छुपे ख़ज़ाने खोजने का औज़ार।"
+        },
+        "herramientas/barco-moxi": {
+            "name": "मॉक्सी नाव",
+            "description": "समुद्री क्षेत्रों का अन्वेषण करने देता है।"
+        },
+        "herramientas/dinamita": {
+            "name": "डायनामाइट",
+            "description": "रुके/बंद रास्ते खोलने देता है।"
+        },
+        "herramientas/golem-minero-pescador": {
+            "name": "खनन/मछली गोलेम",
+            "description": "खनन/मछली के लिए स्वचालित औज़ार।"
+        },
+        "herramientas/pico-de-hierro": {
+            "name": "लोहे का पिकऐक्स",
+            "description": "बुनियादी खनन औज़ार।"
+        },
+        "herramientas/pico-de-acero": {
+            "name": "स्टील पिकऐक्स",
+            "description": "खनन दक्षता बढ़ाता है।"
+        },
+        "herramientas/pico-de-diamante": {
+            "name": "हीरे का पिकऐक्स",
+            "description": "दुर्लभ और कठोर नसों के लिए आदर्श।"
+        },
+        "herramientas/pico-de-obsidiana": {
+            "name": "ओब्सिडियन पिकऐक्स",
+            "description": "अत्यधिक खनन के लिए लेजेंडरी औज़ार।"
+        },
+        "herramientas/cana-de-bambu": {
+            "name": "बाँस की छड़ी",
+            "description": "मछली पकड़ना शुरू करने के लिए एक सरल छड़ी।"
+        },
+        "herramientas/cana-de-carbono": {
+            "name": "कार्बन छड़ी",
+            "description": "दुर्लभ मछली पकड़ने की संभावना बढ़ाता है।"
+        },
+        "herramientas/red-de-pesca": {
+            "name": "मछली जाल",
+            "description": "समुद्री क्षेत्रों में अधिक सामान्य लूट पकड़ता है।"
+        },
+        "herramientas/arpon-marino": {
+            "name": "समुद्री हार्पून",
+            "description": "गहरे समुद्र में मछली पकड़ने की लूट बेहतर करता है।"
+        },
+        "herramientas/pala-de-excavacion": {
+            "name": "खुदाई फावड़ा",
+            "description": "दबी हुई वस्तुएँ ढूँढने के लिए उपयोग होता है।"
+        },
+        "herramientas/brujula-prisma": {
+            "name": "प्रिज़्म कम्पास",
+            "description": "नेविगेट करने और नए रास्ते खोजने में मदद करता है।"
+        },
+        "herramientas/mapa-arrugado": {
+            "name": "चुन्नटदार नक्शा",
+            "description": "अन्वेषण और ख़ज़ानों के लिए सुराग।"
+        },
+        "herramientas/linterna-de-caverna": {
+            "name": "गुफा लालटेन",
+            "description": "अन्वेषण के दौरान अंधेरे इलाकों को रोशन करता है।"
+        },
+        "herramientas/detector-de-metales": {
+            "name": "धातु डिटेक्टर",
+            "description": "जमीन के नीचे कीमती वस्तुएँ ढूँढता है।"
+        },
+        "herramientas/cuerda-de-escalada": {
+            "name": "चढ़ाई रस्सी",
+            "description": "पहाड़ी रास्तों और बचाव कार्यों में उपयोगी।"
+        },
+        "herramientas/kit-de-reparacion": {
+            "name": "मरम्मत किट",
+            "description": "औज़ार और उपकरण की मरम्मत करता है (भविष्य उपयोग)।"
+        },
+        "herramientas/lupa-antigua": {
+            "name": "प्राचीन आवर्धक काँच",
+            "description": "वस्तुएँ और सुराग पहचानने में मदद करता है।"
+        },
+        "herramientas/frasco-cazabichos": {
+            "name": "कीट पकड़ने का जार",
+            "description": "कीड़े और छोटे जीव पकड़ने देता है।"
+        },
+        "herramientas/guantes-de-minero": {
+            "name": "खनिक के दस्ताने",
+            "description": "कठिन काम के दौरान आपके हाथों की रक्षा करता है।"
+        },
+        "herramientas/sierra-de-carpintero": {
+            "name": "बढ़ई की आरी",
+            "description": "लकड़ी का औज़ार (भविष्य उपयोग)।"
+        },
+        "herramientas/cuchillo-de-supervivencia": {
+            "name": "सर्वाइवल चाकू",
+            "description": "अन्वेषण के लिए एक बहुउपयोगी औज़ार।"
+        },
+        "herramientas/martillo-de-forja": {
+            "name": "फोर्ज हथौड़ा",
+            "description": "उन्नत क्राफ्टिंग के लिए आवश्यक (भविष्य उपयोग)।"
+        },
+        "herramientas/anzuelo-de-lux": {
+            "name": "लक्स हुक",
+            "description": "गहरे पानी में दुर्लभ मछली पकड़ना बेहतर करता है।"
+        },
+        "herramientas/cebo-prisma": {
+            "name": "प्रिज़्म चारा",
+            "description": "अस्थायी रूप से दुर्लभ पकड़ की संभावना बढ़ाता है।"
+        },
+        "herramientas/taladro-portatil": {
+            "name": "पोर्टेबल ड्रिल",
+            "description": "तेज़ खनन के लिए शक्तिशाली औज़ार (भविष्य उपयोग)।"
+        },
+        "herramientas/bomba-de-humo": {
+            "name": "धुआँ बम",
+            "description": "भागने या खतरे से बचने में मदद करता है (भविष्य उपयोग)।"
+        },
+        "llaves/llave-prisma": {
+            "name": "प्रिज़्म चाबी",
+            "description": "विशेष संदूक खोलती है।"
+        },
+        "llaves/llave-elemental": {
+            "name": "तत्वीय चाबी",
+            "description": "इवेंट क्षेत्र और संदूक खोलती है।"
+        },
+        "llaves/talisman-solar": {
+            "name": "सौर ताबीज",
+            "description": "जादुई क्षेत्रों तक पहुँच देता है।"
+        },
+        "llaves/anillo-de-fuego": {
+            "name": "अग्नि अंगूठी",
+            "description": "अग्नि-थीम इवेंट्स की विशेष चाबी।"
+        },
+        "llaves/llave-abisal": {
+            "name": "अथाह चाबी",
+            "description": "गहरे क्षेत्रों में संदूक और दरवाज़े खोलती है।"
+        },
+        "llaves/llave-glaciar": {
+            "name": "हिमानी चाबी",
+            "description": "बर्फीले संदूक और ठंडे कक्ष खोलती है।"
+        },
+        "llaves/llave-volcanica": {
+            "name": "ज्वालामुखीय चाबी",
+            "description": "गरम क्षेत्रों में संदूक और दरवाज़े खोलती है।"
+        },
+        "llaves/llave-lunar": {
+            "name": "चंद्र चाबी",
+            "description": "रात के कक्षों और चंद्र इनामों तक पहुँच देता है।"
+        },
+        "llaves/llave-antigua": {
+            "name": "प्राचीन चाबी",
+            "description": "प्राचीन संदूकों के लिए रहस्यमय चाबी।"
+        },
+        "loots/caja-misteriosa": {
+            "name": "रहस्यमय बॉक्स",
+            "description": "यादृच्छिक आइटम होते हैं।"
+        },
+        "loots/cofre-de-fortuna": {
+            "name": "भाग्य संदूक",
+            "description": "कॉइन्स, सामग्री या दुर्लभ आइटम शामिल हो सकते हैं।"
+        },
+        "loots/caja-marina": {
+            "name": "समुद्री बॉक्स",
+            "description": "जल/समुद्री इवेंट्स के आइटम शामिल होते हैं।"
+        },
+        "loots/caja-premium-diamante-platino": {
+            "name": "प्रीमियम/डायमंड/प्लैटिनम बॉक्स",
+            "description": "उच्च गुणवत्ता वाले आइटम शामिल होते हैं।"
+        },
+        "loots/pack-de-celebracion": {
+            "name": "उत्सव पैक",
+            "description": "इवेंट आइटम वाले पैक।"
+        },
+        "loots/caja-de-suerte": {
+            "name": "किस्मत बॉक्स",
+            "description": "दुर्लभ आइटम मिलने की उच्च संभावना वाला बॉक्स।"
+        },
+        "loots/tarjeta-de-regalo": {
+            "name": "गिफ्ट कार्ड",
+            "description": "दुकान में आइटम के लिए रिडीम किया जा सकता है।"
+        },
+        "loots/bolsa-de-materiales": {
+            "name": "सामग्री की थैली",
+            "description": "क्राफ्टिंग के लिए यादृच्छिक सामग्री शामिल होती है।"
+        },
+        "loots/bolsa-de-gemas": {
+            "name": "रत्न थैली",
+            "description": "रत्न या दुर्लभ टुकड़े शामिल होते हैं।"
+        },
+        "loots/caja-de-herramientas": {
+            "name": "औज़ार बॉक्स",
+            "description": "उपयोगी औज़ार मिलने की संभावना।"
+        },
+        "loots/cofre-abisal": {
+            "name": "अथाह संदूक",
+            "description": "गहरे क्षेत्रों की दुर्लभ लूट।"
+        },
+        "loots/cofre-glaciar": {
+            "name": "हिमानी संदूक",
+            "description": "बर्फ और ऑरोरा क्षेत्रों की दुर्लभ लूट।"
+        },
+        "loots/cofre-volcanico": {
+            "name": "ज्वालामुखीय संदूक",
+            "description": "लावा और खनिजों की दुर्लभ लूट।"
+        },
+        "mascotas/huevo-prisma": {
+            "name": "प्रिज़्म अंडा",
+            "description": "अद्वितीय क्षमताओं वाले पालतू पाने देता है।"
+        },
+        "mascotas/huevo-festivo": {
+            "name": "उत्सव अंडा",
+            "description": "विशेष इवेंट्स के पालतू।"
+        },
+        "mascotas/huevo-elemental": {
+            "name": "तत्वीय अंडा",
+            "description": "तत्वीय शक्तियों वाले पालतू।"
+        },
+        "mascotas/huevo-legendario": {
+            "name": "लेजेंडरी अंडा",
+            "description": "दुर्लभ और शक्तिशाली पालतू।"
+        },
+        "mascotas/huevo-magico": {
+            "name": "जादुई अंडा",
+            "description": "जादुई गुणों और विशेष क्षमताओं वाला पालतू निकलता है।"
+        },
+        "mascotas/huevo-abisal": {
+            "name": "अथाह अंडा",
+            "description": "गहरे क्षेत्रों से निकलता है; पानी और छाया के साथ जुड़ाव।"
+        },
+        "mascotas/huevo-solar": {
+            "name": "सौर अंडा",
+            "description": "प्रकाश-समर्थक बच्चा; दिन के इनाम बेहतर करता है।"
+        },
+        "mascotas/huevo-brumoso": {
+            "name": "धुंधला अंडा",
+            "description": "धुंध-समर्थक बच्चा; चुपके अन्वेषण में बोनस।"
+        },
+        "mascotas/huevo-de-bosque": {
+            "name": "जंगल अंडा",
+            "description": "प्रकृति-समर्थक बच्चा; गैदरिंग में बोनस।"
+        },
+        "mascotas/huevo-de-montana": {
+            "name": "पर्वतीय अंडा",
+            "description": "मज़बूत बच्चा; खनन और खड़ी राहों में बोनस।"
+        },
+        "mascotas/huevo-de-tormenta": {
+            "name": "तूफ़ानी अंडा",
+            "description": "विद्युत बच्चा; मौसम इवेंट्स में बोनस।"
+        },
+        "mascotas/huevo-aurora": {
+            "name": "ऑरोरा अंडा",
+            "description": "दुर्लभ शीत बच्चा; ठंडे मौसम में बोनस।"
+        },
+        "mascotas/huevo-jardin": {
+            "name": "बगीचा अंडा",
+            "description": "मित्रवत बच्चा; सामाजिक कामों और देखभाल में बोनस।"
+        },
+        "mascotas/huevo-de-cristal": {
+            "name": "क्रिस्टल अंडा",
+            "description": "प्रिज़्मीय बच्चा; छोटा किस्मत बोनस।"
+        },
+        "mascotas/huevo-meteoro": {
+            "name": "उल्का अंडा",
+            "description": "बहुत दुर्लभ बच्चा; लूट और विशेष सामग्री में बोनस।"
+        },
+        "mascotas/huevo-volcanico": {
+            "name": "ज्वालामुखीय अंडा",
+            "description": "गरम क्षेत्रों से निकलता है; खनन और गर्मी-प्रतिरोध में बोनस।"
+        },
+        "mascotas/huevo-glaciar": {
+            "name": "हिमानी अंडा",
+            "description": "ठंडे क्षेत्रों से निकलता है; सर्वाइवल और शीतकालीन अन्वेषण में बोनस।"
+        },
+        "mascotas/huevo-marino": {
+            "name": "समुद्री अंडा",
+            "description": "जलीय बच्चा; मछली पकड़ने और समुद्री रास्तों में बोनस।"
+        },
+        "mascotas/huevo-selvatico": {
+            "name": "जंगली अंडा",
+            "description": "जंगल बच्चा; दुर्लभ पौधों की गैदरिंग में बोनस।"
+        },
+        "mascotas/huevo-umbrio": {
+            "name": "छायामय अंडा",
+            "description": "छाया बच्चा; रात के इवेंट्स में बोनस।"
+        },
+        "mascotas/huevo-radiante": {
+            "name": "दीप्त अंडा",
+            "description": "प्रकाश बच्चा; संदूकों के लिए हल्का किस्मत बोनस।"
+        },
+        "mascotas/ocarina-del-vinculo": {
+            "name": "बॉन्ड ओकारिना",
+            "description": "एक प्राचीन धुन जो देखभाल की कमी से पालतू चले जाने पर उसे वापस बुलाती है।"
+        },
+        "mascotas/huevo-torbellino": {
+            "name": "बवंडर अंडा",
+            "description": "हवा-समर्थक बच्चा; यात्रा और तेज़ क्वेस्ट बेहतर करता है।"
+        },
+        "mascotas/huevo-fertil": {
+            "name": "उपजाऊ अंडा",
+            "description": "मैदान बच्चा; सामान्य गैदरिंग में बोनस।"
+        },
+        "mascotas/huevo-coral": {
+            "name": "मूंगा अंडा",
+            "description": "रीफ़ बच्चा; समुद्री लूट में बोनस।"
+        },
+        "mascotas/huevo-relampago": {
+            "name": "बिजली अंडा",
+            "description": "दुर्लभ विद्युत बच्चा; समयबद्ध चुनौतियों में बोनस।"
+        },
+        "mascotas/huevo-lunar": {
+            "name": "चंद्र अंडा",
+            "description": "दुर्लभ रात्रि बच्चा; रात की क्वेस्ट में बोनस।"
+        },
+        "mascotas/huevo-solar-real": {
+            "name": "राजसी सौर अंडा",
+            "description": "सौर अंडे का दुर्लभ रूप; बेहतर दिन-सम्बंधित बोनस।"
+        },
+        "mascotas/huevo-prisma-antiguo": {
+            "name": "प्राचीन प्रिज़्म अंडा",
+            "description": "बहुत दुर्लभ बच्चा; विशेष इवेंट्स में बोनस।"
+        },
+        "mascotas/huevo-cometa": {
+            "name": "धूमकेतु अंडा",
+            "description": "अति-दुर्लभ बच्चा; दुर्लभ आइटम की अतिरिक्त संभावना।"
+        },
+        "mascotas/huevo-encantado": {
+            "name": "मंत्रमुग्ध अंडा",
+            "description": "जादुई बच्चा; अस्थायी बफ़ प्रभावों में बोनस।"
+        },
+        "mascotas/huevo-guardian": {
+            "name": "रक्षक अंडा",
+            "description": "रक्षात्मक बच्चा; इवेंट्स के दौरान दंड कम करता है।"
+        },
+        "materiales/hierba-prisma": {
+            "name": "प्रिज़्म घास",
+            "description": "क्राफ्टिंग सामग्री।"
+        },
+        "materiales/roca-volcanica": {
+            "name": "ज्वालामुखीय पत्थर",
+            "description": "रक्षा उन्नयन के लिए सामग्री।"
+        },
+        "materiales/barra-de-oro-acero": {
+            "name": "सोना/स्टील की सिल्लियाँ",
+            "description": "उन्नत क्राफ्टिंग के लिए सामग्री।"
+        },
+        "materiales/fragmento-de-espiritu": {
+            "name": "आत्मा का टुकड़ा",
+            "description": "क्वेस्ट और उन्नयन के लिए सामग्री।"
+        },
+        "materiales/mineral-elemental": {
+            "name": "तत्वीय खनिज",
+            "description": "औज़ार क्राफ्टिंग के लिए सामग्री।"
+        },
+        "materiales/flor-de-amor": {
+            "name": "प्रेम फूल",
+            "description": "रोमांटिक इवेंट्स के लिए सामग्री।"
+        },
+        "materiales/fosil": {
+            "name": "जीवाश्म",
+            "description": "अन्वेषण क्वेस्ट के लिए सामग्री।"
+        },
+        "materiales/dulce-festivo": {
+            "name": "उत्सव कैंडी",
+            "description": "मौसमी इवेंट्स के लिए सामग्री।"
+        },
+        "materiales/alga-marina": {
+            "name": "समुद्री शैवाल",
+            "description": "मछली पकड़ने की सामग्री और समुद्री क्राफ्टिंग घटक।"
+        },
+        "materiales/concha-marina": {
+            "name": "समुद्री सीप",
+            "description": "तटीय क्षेत्रों से मिलने वाली सामान्य सामग्री।"
+        },
+        "materiales/coral-prisma": {
+            "name": "प्रिज़्म मूंगा",
+            "description": "रीफ़ और गहरे समुद्र से मिलने वाली दुर्लभ सामग्री।"
+        },
+        "materiales/perla-azur": {
+            "name": "एज़ुर मोती",
+            "description": "एक कीमती समुद्री ख़ज़ाना।"
+        },
+        "materiales/mineral-de-cobre": {
+            "name": "तांबे का अयस्क",
+            "description": "सामान्य खनन सामग्री।"
+        },
+        "materiales/mineral-de-hierro": {
+            "name": "लोहे का अयस्क",
+            "description": "सिल्लियों और औज़ारों के लिए आधार।"
+        },
+        "materiales/mineral-de-plata": {
+            "name": "चाँदी का अयस्क",
+            "description": "क्राफ्टिंग के लिए कीमती खनिज।"
+        },
+        "materiales/mineral-de-oro": {
+            "name": "सोने का अयस्क",
+            "description": "उन्नत क्राफ्टिंग के लिए दुर्लभ खनिज।"
+        },
+        "materiales/mineral-de-diamante": {
+            "name": "हीरे का अयस्क",
+            "description": "अत्यंत दुर्लभ खनिज: एलीट क्राफ्टिंग।"
+        },
+        "materiales/madera-robusta": {
+            "name": "मज़बूत लकड़ी",
+            "description": "ढाँचे और औज़ारों के लिए बढ़िया।"
+        },
+        "materiales/madera-encantada": {
+            "name": "मंत्रमुग्ध लकड़ी",
+            "description": "जादुई गुणों वाली दुर्लभ लकड़ी।"
+        },
+        "materiales/cuero-curtido": {
+            "name": "टैन्ड चमड़ा",
+            "description": "गियर के लिए लचीली सामग्री।"
+        },
+        "materiales/tela-resistente": {
+            "name": "टिकाऊ कपड़ा",
+            "description": "बैग और कपड़ों के लिए सामग्री।"
+        },
+        "materiales/hilo-fino": {
+            "name": "बारीक धागा",
+            "description": "क्राफ्टिंग के लिए सिलाई सामग्री।"
+        },
+        "materiales/polvo-prisma": {
+            "name": "प्रिज़्म धूल",
+            "description": "उन्नयन के लिए जादुई घटक।"
+        },
+        "materiales/esencia-solar": {
+            "name": "सौर सार",
+            "description": "दुर्लभ क्राफ्टिंग के लिए चमकीला घटक।"
+        },
+        "materiales/esencia-lunar": {
+            "name": "चंद्र सार",
+            "description": "विशेष रेसिपी के लिए रात्रि घटक।"
+        },
+        "materiales/esencia-umbria": {
+            "name": "छायामय सार",
+            "description": "डार्क ऊर्जा, बहुत दुर्लभ।"
+        },
+        "materiales/fragmento-de-cristal": {
+            "name": "क्रिस्टल का टुकड़ा",
+            "description": "क्राफ्टिंग के लिए चमकदार टुकड़ा।"
+        },
+        "materiales/gema-rubi": {
+            "name": "रूबी रत्न",
+            "description": "व्यापार और उन्नयन के लिए दुर्लभ रत्न।"
+        },
+        "materiales/gema-zafiro": {
+            "name": "सैफायर रत्न",
+            "description": "जलीय ऊर्जा वाला दुर्लभ रत्न।"
+        },
+        "materiales/gema-esmeralda": {
+            "name": "एमरल्ड रत्न",
+            "description": "प्राकृतिक ऊर्जा वाला दुर्लभ रत्न।"
+        },
+        "materiales/nucleo-elemental": {
+            "name": "तत्वीय कोर",
+            "description": "तत्वीय औज़ारों के लिए बहुत दुर्लभ घटक।"
+        },
+        "materiales/placa-de-acero": {
+            "name": "स्टील प्लेट",
+            "description": "उन्नत क्राफ्टिंग के लिए मज़बूत सामग्री।"
+        },
+        "mejoras/potenciador-de-fortuna": {
+            "name": "भाग्य बूस्टर",
+            "description": "बेहतरीन इनाम पाने की संभावना बढ़ाता है।"
+        },
+        "mejoras/escudo-de-tolerancia": {
+            "name": "सहनशीलता ढाल",
+            "description": "इवेंट्स में दंड कम करता है।"
+        },
+        "mejoras/expansion-de-mochila": {
+            "name": "बैग विस्तार",
+            "description": "इन्वेंटरी जगह बढ़ाता है।"
+        },
+        "mejoras/entrenamiento-moxi": {
+            "name": "मॉक्सी प्रशिक्षण",
+            "description": "प्रति गतिविधि अनुभव बोनस।"
+        },
+        "mejoras/trabajo-en-equipo": {
+            "name": "टीमवर्क",
+            "description": "समूह में काम करने पर बोनस।"
+        },
+        "mejoras/estrella-de-suerte": {
+            "name": "किस्मत का तारा",
+            "description": "किस्मत बोनस।"
+        },
+        "mejoras/aurora-festiva": {
+            "name": "उत्सव ऑरोरा",
+            "description": "सर्दियों के इवेंट्स में बोनस।"
+        },
+        "mejoras/tinte-personalizado": {
+            "name": "कस्टम डाई",
+            "description": "आपके प्रोफ़ाइल या क्लब का रंग बदलता है।"
+        },
+        "mejoras/expansion-de-banco": {
+            "name": "बैंक विस्तार",
+            "description": "बैंक जगह बढ़ाता है (भविष्य उपयोग)।"
+        },
+        "mejoras/expansion-de-mochila-plus": {
+            "name": "बैग विस्तार प्लस",
+            "description": "इन्वेंटरी जगह और भी बढ़ाता है (भविष्य उपयोग)।"
+        },
+        "mejoras/sello-de-proteccion": {
+            "name": "सुरक्षा मुहर",
+            "description": "खतरनाक इवेंट्स में नुकसान कम करता है (भविष्य उपयोग)।"
+        },
+        "mejoras/pase-premium-moxi": {
+            "name": "मॉक्सी प्रीमियम पास",
+            "description": "प्रीमियम सिस्टम लाभों तक पहुँच देता है (भविष्य उपयोग)।"
+        },
+        "misiones/gema-prisma": {
+            "name": "प्रिज़्म रत्न",
+            "description": "उन्नत क्वेस्ट के लिए आवश्यक।"
+        },
+        "misiones/conejo-de-peluche": {
+            "name": "प्लश खरगोश",
+            "description": "विशेष क्वेस्ट आइटम।"
+        },
+        "misiones/espada-de-hielo": {
+            "name": "बर्फ़ की तलवार",
+            "description": "अन्वेषण क्वेस्ट के लिए आवश्यक।"
+        },
+        "misiones/katana-solar": {
+            "name": "सौर कटाना",
+            "description": "उन्नत क्वेस्ट आइटम।"
+        },
+        "misiones/mascara-de-zorro": {
+            "name": "लोमड़ी मुखौटा",
+            "description": "विशेष क्वेस्ट आइटम।"
+        },
+        "pociones/pocion-de-regeneracion": {
+            "name": "पुनर्जीवन पोशन",
+            "description": "स्वास्थ्य बहाल करता है।"
+        },
+        "pociones/pocion-de-resistencia": {
+            "name": "प्रतिरोध पोशन",
+            "description": "अस्थायी रूप से रक्षा बढ़ाता है।"
+        },
+        "pociones/pocion-del-explorador": {
+            "name": "अन्वेषक पोशन",
+            "description": "नए क्षेत्रों का अन्वेषण करने देता है।"
+        },
+        "pociones/elixir-prisma": {
+            "name": "प्रिज़्म एलिक्सिर",
+            "description": "अनुभव और ऊर्जा बोनस देता है।"
+        },
+        "pociones/huevito-de-energia-exploracion-regeneracion-resistencia": {
+            "name": "ऊर्जा/अन्वेषण/पुनर्जीवन/प्रतिरोध का छोटा अंडा",
+            "description": "विशेष उपभोग्य।"
+        },
+        "pociones/pocion-de-suerte": {
+            "name": "किस्मत पोशन",
+            "description": "अस्थायी रूप से किस्मत बढ़ाता है।"
+        },
+        "pociones/pocion-de-velocidad": {
+            "name": "गति पोशन",
+            "description": "अस्थायी रूप से गति बढ़ाता है।"
+        },
+        "pociones/pocion-del-minero": {
+            "name": "खनिक पोशन",
+            "description": "अस्थायी रूप से खनन लूट बेहतर करता है।"
+        },
+        "pociones/pocion-del-pescador": {
+            "name": "मछुआरा पोशन",
+            "description": "अस्थायी रूप से मछली पकड़ने की लूट बेहतर करता है।"
+        },
+        "pociones/elixir-de-luz": {
+            "name": "प्रकाश एलिक्सिर",
+            "description": "दिन के इनाम और अन्वेषण को बढ़ाता है।"
+        },
+        "pociones/elixir-de-sombra": {
+            "name": "छाया एलिक्सिर",
+            "description": "रात के इनाम और चुपकेपन को बढ़ाता है।"
+        },
+        "rollos/rollo-moxi": {
+            "name": "मॉक्सी स्क्रॉल",
+            "description": "अस्थायी विशेष क्षमताएँ देता है।"
+        },
+        "rollos/rollo-de-estrategia": {
+            "name": "रणनीति स्क्रॉल",
+            "description": "इवेंट्स में उन्नत रणनीतियाँ सक्षम करता है।"
+        },
+        "rollos/notas-del-explorador": {
+            "name": "अन्वेषक के नोट्स",
+            "description": "क्वेस्ट के लिए सुराग देता है।"
+        },
+        "rollos/papiro-jeroglifico": {
+            "name": "पपीरस/चित्रलिपि",
+            "description": "छुपी सामग्री अनलॉक करता है।"
+        },
+        "proteccion/vida-extra": {
+            "name": "अतिरिक्त जीवन",
+            "description": "विशेष इवेंट्स में एक बार पुनर्जीवित होने देता है।"
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "SHOP_TITLE": "Shop",
+    "SHOP_EMBED_TITLE": "🛍️ Moxis Shop",
+    "SHOP_WELCOME": "Willkommen in meinem kleinen Shop.",
+    "SHOP_INSTRUCTIONS": "Du kannst kaufen mit: `{{prefix}}buy <id|name|itemId> [amount]` oder `{{prefix}}moxishop buy <id|name|itemId> [amount]`.",
+    "SHOP_LIST_TITLE": "**Gegenstandsliste**",
+    "SHOP_ALL_ITEMS": "Alle Gegenstände",
+    "SHOP_CATEGORY": "Kategorie",
+    "SHOP_NO_ITEMS": "_Keine Gegenstände in dieser Kategorie._",
+    "SHOP_FOOTER_PAGE": "Seite {{page}} von {{total}}",
+    "USAGE_BUY": "Nutzung: `.moxishop buy <id|name|itemId> [amount]`",
+    "NOT_FOUND_BY_ID": "Es gibt keinen Gegenstand mit der ID {{id}}. Nutze `.moxishop list`, um IDs zu sehen.",
+    "NOT_FOUND_GENERIC": "Ich konnte diesen Gegenstand im Shop nicht finden. Nutze `.moxishop list`, um IDs zu sehen.",
+    "INVALID_PRICE": "Dieser Gegenstand kann nicht gekauft werden (ungültiger Preis).",
+    "INSUFFICIENT_FUNDS_TITLE": "Nicht genug Geld",
+    "INSUFFICIENT_FUNDS": "Du brauchst {{cost}} 🪙 und hast {{balance}} 🪙.",
+    "PURCHASE_SUCCESS_TITLE": "Kauf abgeschlossen",
+    "PURCHASE_SUCCESS": "Du hast **{{amount}}x {{name}}** für **{{cost}}** 🪙 gekauft."
+}

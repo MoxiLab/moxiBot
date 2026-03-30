@@ -1,0 +1,17 @@
+{
+    "TITLE": "اتجاهات السوق",
+    "FOOTER": "تتغير هذه الاتجاهات يوميًا (محاكاة).",
+    "LINE": "{{rank}}) {{icon}} **{{topic}}** — {{trend}}",
+    "UP": "📈 صاعد",
+    "FLAT": "➖ ثابت",
+    "DOWN": "📉 هابط",
+    "TOPIC_BUFFS": "تعزيزات",
+    "TOPIC_TOOLS": "أدوات",
+    "TOPIC_PETS": "حيوانات أليفة",
+    "TOPIC_MATERIALS": "مواد",
+    "TOPIC_LOOT": "غنائم",
+    "TOPIC_KEYS": "مفاتيح",
+    "TOPIC_COLLECTIBLES": "مقتنيات",
+    "TOPIC_POTIONS": "جرعات",
+    "TOPIC_SCROLLS": "لفائف"
+}

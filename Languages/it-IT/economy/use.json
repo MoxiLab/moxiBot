@@ -1,0 +1,17 @@
+{
+    "USAGE_BAD_TITLE": "Uso non corretto",
+    "USAGE_BAD_TEXT": "Devi digitare il nome o l'ID dell'oggetto che vuoi usare.",
+    "ITEM_NOT_FOUND_TITLE": "Oggetto non trovato",
+    "ITEM_NOT_FOUND_TEXT": "Non sono riuscito a trovare quell'oggetto. Usa `{{prefix}}bag` per vedere il tuo inventario oppure `{{prefix}}shop list` per vedere gli ID.",
+    "PETS_TITLE": "Animali",
+    "NO_PETS_TEXT_SHORT": "Non hai ancora animali. Incuba un uovo per ottenerne uno.",
+    "OCARINA_TITLE": "Ocarina del Legame",
+    "OCARINA_ALREADY_WITH_YOU": "Il tuo animale è già con te. Non devi usare questo adesso.",
+    "OCARINA_NOT_OWNED": "Non hai questo oggetto nella tua borsa.",
+    "OCARINA_HEADER": "# 🎶 Ocarina del Legame",
+    "PET_FALLBACK_NAME": "Il tuo animale",
+    "PET_RETURN_TEXT": "🐾 **{{pet}}** ha sentito il suono… ed è tornato!",
+    "PET_VIEW_BUTTON": "Vedi animale",
+    "INCUBATOR_TITLE": "Incubatrice",
+    "INCUBATOR_NOT_OWNED": "Non hai un'incubatrice nella tua borsa."
+}

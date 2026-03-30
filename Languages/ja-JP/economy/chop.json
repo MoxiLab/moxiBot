@@ -1,0 +1,9 @@
+{
+    "TITLE": "伐採",
+    "NO_DB": "MongoDB が設定されていないため、経済機能は無効です。",
+    "COOLDOWN_TITLE": "伐採はクールダウン中",
+    "COOLDOWN_TEXT": "疲れています。**{{next}}** 後にもう一度。",
+    "SUCCESS_TITLE": "伐採完了！",
+    "SUCCESS_TEXT": "**{{amount}}x {{item}}** と **{{coins}}** 🪙 を入手しました。\n残高: **{{balance}}** 🪙。",
+    "ERROR": "伐採を完了できませんでした。"
+}

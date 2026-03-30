@@ -1,0 +1,9 @@
+{
+    "TITLE": "采集",
+    "NO_DB": "MongoDB 未配置，因此经济功能已禁用。",
+    "COOLDOWN_TITLE": "采集冷却中",
+    "COOLDOWN_TEXT": "你已经采集过了。**{{next}}** 后再来。\n余额: **{{balance}}** 🪙。",
+    "CLAIMED_TITLE": "采集奖励",
+    "CLAIMED_TEXT": "你采集到 **{{amount}}** 🪙。\n余额: **{{balance}}** 🪙。",
+    "ERROR": "采集时发生错误。"
+}

@@ -1,0 +1,9 @@
+{
+    "TITLE": "Collect",
+    "NO_DB": "MongoDB is not configured, so economy is disabled.",
+    "COOLDOWN_TITLE": "Collect cooldown",
+    "COOLDOWN_TEXT": "You already collected. Come back in **{{next}}**.\nBalance: **{{balance}}** 🪙.",
+    "CLAIMED_TITLE": "Collected",
+    "CLAIMED_TEXT": "You collected **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
+    "ERROR": "Something went wrong while collecting."
+}

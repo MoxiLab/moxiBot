@@ -1,0 +1,11 @@
+{
+    "CURRENT_PREFIX_TITLE": "वर्तमान उपसर्ग",
+    "CURRENT_PREFIX_DESC": "बॉट का वर्तमान उपसर्ग है: **{{prefix}}**",
+    "ALSO_CAN_USE": "आप यह भी उपयोग कर सकते हैं: {{prefixes}}",
+    "PREFIX_TOO_LONG_TITLE": "उपसर्ग बहुत लंबा है",
+    "PREFIX_TOO_LONG": "❗ उपसर्ग 5 अक्षरों से अधिक नहीं हो सकता।",
+    "PREFIX_SUCCESS_TITLE": "उपसर्ग अपडेट किया गया",
+    "PREFIX_SUCCESS": "✅ नया उपसर्ग है: **{{prefix}}**",
+    "PREFIX_ERROR_TITLE": "अपडेट त्रुटि",
+    "PREFIX_ERROR": "❌ उपसर्ग अपडेट करते समय त्रुटि हुई। कृपया पुनः प्रयास करें।"
+}

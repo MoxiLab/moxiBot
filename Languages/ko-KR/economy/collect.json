@@ -1,0 +1,9 @@
+{
+    "TITLE": "채집",
+    "NO_DB": "MongoDB가 설정되지 않아 경제 기능이 비활성화되었습니다.",
+    "COOLDOWN_TITLE": "채집 쿨다운",
+    "COOLDOWN_TEXT": "이미 채집했습니다. **{{next}}** 후에 다시 오세요.\n잔액: **{{balance}}** 🪙.",
+    "CLAIMED_TITLE": "채집",
+    "CLAIMED_TEXT": "**{{amount}}** 🪙를 채집했습니다.\n잔액: **{{balance}}** 🪙.",
+    "ERROR": "채집 중 오류가 발생했습니다."
+}

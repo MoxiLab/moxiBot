@@ -1,0 +1,17 @@
+{
+    "TITLE": "Course",
+    "NO_DB": "MongoDB n'est pas configuré, donc l'économie est désactivée.",
+    "COOLDOWN_TITLE": "Course en recharge",
+    "COOLDOWN_TEXT": "Reviens dans **{{next}}**.",
+    "WIN_TITLE": "Course !",
+    "WIN_TEXT": "Participants : {{racers}}\nGagnant(e) : **{{winner}}**\nTon prix : **{{amount}}** 🪙\nSolde : **{{balance}}** 🪙.",
+    "RACERS": [
+        "Moxi",
+        "Neko",
+        "Kitsune",
+        "Tanuki",
+        "Koi",
+        "Sakura"
+    ],
+    "ERROR": "Je n'ai pas pu lancer la course."
+}

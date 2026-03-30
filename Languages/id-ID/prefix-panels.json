@@ -1,0 +1,11 @@
+{
+    "CURRENT_PREFIX_TITLE": "Prefix Saat Ini",
+    "CURRENT_PREFIX_DESC": "Prefix bot saat ini adalah: **{{prefix}}**",
+    "ALSO_CAN_USE": "Anda juga dapat menggunakan: {{prefixes}}",
+    "PREFIX_TOO_LONG_TITLE": "Prefix Terlalu Panjang",
+    "PREFIX_TOO_LONG": "❗ Prefix tidak boleh lebih dari 5 karakter.",
+    "PREFIX_SUCCESS_TITLE": "Prefix Diperbarui",
+    "PREFIX_SUCCESS": "✅ Prefix baru adalah: **{{prefix}}**",
+    "PREFIX_ERROR_TITLE": "Kesalahan Pembaruan",
+    "PREFIX_ERROR": "❌ Terjadi kesalahan saat memperbarui prefix. Silakan coba lagi."
+}

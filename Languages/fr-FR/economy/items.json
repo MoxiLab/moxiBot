@@ -1,0 +1,843 @@
+{
+    "categories": {
+        "Buffs": "Bonus",
+        "Collectibles": "Objets de collection",
+        "Consumables": "Consommables",
+        "Tools": "Outils",
+        "Keys": "Clés",
+        "Loot": "Butin",
+        "Pets": "Familiers",
+        "Materials": "Matériaux",
+        "Upgrades": "Améliorations",
+        "Quests": "Quêtes",
+        "Potions": "Potions",
+        "Scrolls": "Parchemins",
+        "Protection": "Protection"
+    },
+    "items": {
+        "buffs/scroll-de-impulso-moxi": {
+            "name": "Parchemin d'impulsion Moxi",
+            "description": "Augmente la vitesse de toutes tes actions pendant 1 heure."
+        },
+        "buffs/pez-lumina": {
+            "name": "Poisson Lumina",
+            "description": "Bonus d'expérience pour les activités aquatiques."
+        },
+        "buffs/gusano-brillo": {
+            "name": "Ver luisant",
+            "description": "Améliore les chances de trouver des ressources rares."
+        },
+        "buffs/linterna-solar": {
+            "name": "Lanterne solaire",
+            "description": "Te permet d'explorer des zones sombres et de découvrir des trésors cachés."
+        },
+        "buffs/fruta-vital": {
+            "name": "Fruit vital",
+            "description": "Restaure de l'énergie et donne un petit bonus de vitesse."
+        },
+        "buffs/scroll-mascota-veloz": {
+            "name": "Parchemin de familier véloce",
+            "description": "Ton familier gagne temporairement de la vitesse."
+        },
+        "buffs/fruta-mutante": {
+            "name": "Fruit mutant",
+            "description": "Donne un effet aléatoire ; il peut être positif ou négatif."
+        },
+        "buffs/holly-prisma": {
+            "name": "Houx Prisma",
+            "description": "Bonus spécial lors des événements saisonniers."
+        },
+        "buffs/pan-dulce-moxi": {
+            "name": "Pain sucré Moxi",
+            "description": "Double les récompenses de quêtes pendant 10 minutes."
+        },
+        "buffs/pase-de-evento": {
+            "name": "Pass événement",
+            "description": "Accès à des récompenses et des zones exclusives (anciennes et actuelles)."
+        },
+        "buffs/fogata-elemental": {
+            "name": "Feu de camp élémentaire",
+            "description": "Te permet de camper et d'obtenir des bonus temporaires selon le type de bois."
+        },
+        "buffs/scroll-gelido": {
+            "name": "Parchemin glacial",
+            "description": "Augmente la défense dans les zones froides."
+        },
+        "buffs/corona-de-invierno": {
+            "name": "Couronne d'hiver",
+            "description": "Bonus spécial lors des événements d'hiver."
+        },
+        "buffs/dulce-de-fresa": {
+            "name": "Bonbon à la fraise",
+            "description": "Restaure de l'énergie et accorde un bonus de chance."
+        },
+        "buffs/trebol-de-fortuna": {
+            "name": "Trèfle de fortune",
+            "description": "Augmente les chances d'obtenir des objets rares."
+        },
+        "buffs/cascanueces-moxi": {
+            "name": "Casse-noisette Moxi",
+            "description": "Bonus de défense pendant les événements d'hiver."
+        },
+        "coleccionables/medalla-de-nieve": {
+            "name": "Médaille de neige",
+            "description": "Objet de collection de la saison d'hiver."
+        },
+        "coleccionables/medalla-prisma": {
+            "name": "Médaille Prisma",
+            "description": "Objet de collection d'événement spécial."
+        },
+        "coleccionables/medalla-lunar": {
+            "name": "Médaille lunaire",
+            "description": "Obtenue lors de missions nocturnes."
+        },
+        "coleccionables/token-festivo": {
+            "name": "Jeton festif",
+            "description": "Échangeable contre des récompenses dans la boutique d'événement."
+        },
+        "coleccionables/carta-de-amistad": {
+            "name": "Lettre d'amitié",
+            "description": "Objet de collection d'événements sociaux."
+        },
+        "coleccionables/moneda-de-fortuna": {
+            "name": "Pièce de fortune",
+            "description": "Accorde un bonus de chance tant que tu l'as sur toi."
+        },
+        "coleccionables/gema-de-espiritu": {
+            "name": "Gemme d'esprit",
+            "description": "Requise pour les quêtes avancées."
+        },
+        "coleccionables/corazon-prisma": {
+            "name": "Cœur Prisma",
+            "description": "Objet de collection d'événements romantiques."
+        },
+        "coleccionables/petalo-de-sakura": {
+            "name": "Pétale de sakura",
+            "description": "Objet de collection du printemps."
+        },
+        "coleccionables/bouquet-festivo": {
+            "name": "Bouquet festif",
+            "description": "Objet de collection d'événements floraux."
+        },
+        "coleccionables/ticket-de-temporada": {
+            "name": "Ticket de saison",
+            "description": "Accès à des événements spéciaux."
+        },
+        "coleccionables/varita-de-luz": {
+            "name": "Baguette de lumière",
+            "description": "Objet de collection magique."
+        },
+        "coleccionables/cascabel-festivo": {
+            "name": "Grelot festif",
+            "description": "Objet de collection d'hiver."
+        },
+        "coleccionables/flor-de-espiritu": {
+            "name": "Fleur d'esprit",
+            "description": "Objet de collection d'événements floraux."
+        },
+        "coleccionables/fantasmita-moxi": {
+            "name": "Petit fantôme Moxi",
+            "description": "Objet de collection d'Halloween."
+        },
+        "coleccionables/gato-sombrio": {
+            "name": "Chat sombre",
+            "description": "Objet de collection d'événements sombres."
+        },
+        "coleccionables/copa-de-campeon": {
+            "name": "Coupe du champion",
+            "description": "Obtenue en terminant des défis spéciaux."
+        },
+        "consumibles/galleta-energetica": {
+            "name": "Biscuit énergétique",
+            "description": "Restaure de l'énergie."
+        },
+        "consumibles/pastel-de-celebracion": {
+            "name": "Gâteau de célébration",
+            "description": "Donne un bonus d'expérience."
+        },
+        "consumibles/fruta-magica": {
+            "name": "Fruit magique",
+            "description": "Donne un effet aléatoire."
+        },
+        "consumibles/ensalada-refrescante": {
+            "name": "Salade rafraîchissante",
+            "description": "Restaure l'énergie et la santé."
+        },
+        "consumibles/fuegos-artificiales": {
+            "name": "Feux d'artifice",
+            "description": "Donne un bonus de chance pendant les événements."
+        },
+        "consumibles/calabaza-festiva": {
+            "name": "Citrouille festive",
+            "description": "Consommable d'Halloween."
+        },
+        "consumibles/nuez-dorada": {
+            "name": "Noix dorée",
+            "description": "Accorde un bonus de défense."
+        },
+        "consumibles/electrolito": {
+            "name": "Électrolyte",
+            "description": "Restaure immédiatement de l'énergie."
+        },
+        "consumibles/monedas-de-oro": {
+            "name": "Pièces d'or",
+            "description": "Consommable utilisé pour acheter des objets dans la boutique."
+        },
+        "consumibles/agua-fresca": {
+            "name": "Eau fraîche",
+            "description": "Pour tenir le coup : un petit bonus d'énergie."
+        },
+        "consumibles/te-verde": {
+            "name": "Thé vert",
+            "description": "Réduit la fatigue : un léger bonus de concentration."
+        },
+        "consumibles/cafe-moxi": {
+            "name": "Café Moxi",
+            "description": "Accélère légèrement tes actions pendant quelques minutes."
+        },
+        "consumibles/chocolate-caliente": {
+            "name": "Chocolat chaud",
+            "description": "Réconfortant : un petit bonus pendant les événements froids."
+        },
+        "consumibles/sopa-caliente": {
+            "name": "Soupe chaude",
+            "description": "Restaure l'énergie et accorde un léger bonus d'endurance."
+        },
+        "consumibles/barra-proteica": {
+            "name": "Barre protéinée",
+            "description": "Énergie rapide pour les activités intenses."
+        },
+        "consumibles/batido-prisma": {
+            "name": "Shake Prisma",
+            "description": "Un petit bonus de chance pendant un moment."
+        },
+        "consumibles/sandwich-de-aventura": {
+            "name": "Sandwich d'aventure",
+            "description": "Restaure l'énergie et améliore légèrement l'exploration."
+        },
+        "consumibles/sushi-marino": {
+            "name": "Sushi marin",
+            "description": "Un petit bonus à la pêche et au butin marin."
+        },
+        "consumibles/pan-de-ajo": {
+            "name": "Pain à l'ail",
+            "description": "Améliore l'endurance : idéal pour miner."
+        },
+        "herramientas/pico-prisma": {
+            "name": "Pioche Prisma",
+            "description": "Te permet de miner des minéraux rares."
+        },
+        "herramientas/cana-de-pesca-moxi": {
+            "name": "Canne à pêche Moxi",
+            "description": "Augmente les chances d'attraper des objets rares."
+        },
+        "herramientas/llave-multiusos": {
+            "name": "Clé multifonction",
+            "description": "Outil pour réparer et construire."
+        },
+        "herramientas/varita-solar": {
+            "name": "Baguette solaire",
+            "description": "Te permet d'effectuer des actions magiques."
+        },
+        "herramientas/hacha-elemental": {
+            "name": "Hache élémentaire",
+            "description": "Outil pour récolter du bois spécial."
+        },
+        "herramientas/incubadora": {
+            "name": "Incubateur",
+            "description": "Te permet de faire éclore des œufs."
+        },
+        "herramientas/revelador-prisma": {
+            "name": "Révélateur Prisma",
+            "description": "Outil pour découvrir des trésors cachés."
+        },
+        "herramientas/barco-moxi": {
+            "name": "Bateau Moxi",
+            "description": "Te permet d'explorer les régions maritimes."
+        },
+        "herramientas/dinamita": {
+            "name": "Dynamite",
+            "description": "Te permet d'ouvrir des passages bloqués."
+        },
+        "herramientas/golem-minero-pescador": {
+            "name": "Golem mineur/pêcheur",
+            "description": "Outils automatisés pour miner/pêcher."
+        },
+        "herramientas/pico-de-hierro": {
+            "name": "Pioche en fer",
+            "description": "Outil de base pour miner."
+        },
+        "herramientas/pico-de-acero": {
+            "name": "Pioche en acier",
+            "description": "Améliore l'efficacité du minage."
+        },
+        "herramientas/pico-de-diamante": {
+            "name": "Pioche en diamant",
+            "description": "Idéale pour les filons rares et résistants."
+        },
+        "herramientas/pico-de-obsidiana": {
+            "name": "Pioche en obsidienne",
+            "description": "Outil légendaire pour le minage extrême."
+        },
+        "herramientas/cana-de-bambu": {
+            "name": "Canne en bambou",
+            "description": "Une canne simple pour commencer à pêcher."
+        },
+        "herramientas/cana-de-carbono": {
+            "name": "Canne en carbone",
+            "description": "Augmente les chances de pêche rare."
+        },
+        "herramientas/red-de-pesca": {
+            "name": "Filet de pêche",
+            "description": "Attrape davantage de butin commun dans les zones marines."
+        },
+        "herramientas/arpon-marino": {
+            "name": "Harpon marin",
+            "description": "Améliore le butin lors de la pêche en haute mer."
+        },
+        "herramientas/pala-de-excavacion": {
+            "name": "Pelle d'excavation",
+            "description": "Utilisée pour trouver des objets enterrés."
+        },
+        "herramientas/brujula-prisma": {
+            "name": "Boussole Prisma",
+            "description": "Aide à s'orienter et à découvrir des itinéraires."
+        },
+        "herramientas/mapa-arrugado": {
+            "name": "Carte froissée",
+            "description": "Des indices pour l'exploration et les trésors."
+        },
+        "herramientas/linterna-de-caverna": {
+            "name": "Lanterne de caverne",
+            "description": "Éclaire les zones sombres pendant l'exploration."
+        },
+        "herramientas/detector-de-metales": {
+            "name": "Détecteur de métaux",
+            "description": "Trouve des objets de valeur sous terre."
+        },
+        "herramientas/cuerda-de-escalada": {
+            "name": "Corde d'escalade",
+            "description": "Utile pour les itinéraires de montagne et les sauvetages."
+        },
+        "herramientas/kit-de-reparacion": {
+            "name": "Kit de réparation",
+            "description": "Répare les outils et l'équipement (usage futur)."
+        },
+        "herramientas/lupa-antigua": {
+            "name": "Loupe ancienne",
+            "description": "Aide à identifier des objets et des indices."
+        },
+        "herramientas/frasco-cazabichos": {
+            "name": "Bocal attrape-bestioles",
+            "description": "Te permet d'attraper des insectes et de petites créatures."
+        },
+        "herramientas/guantes-de-minero": {
+            "name": "Gants de mineur",
+            "description": "Protège tes mains pendant les travaux difficiles."
+        },
+        "herramientas/sierra-de-carpintero": {
+            "name": "Scie de menuisier",
+            "description": "Outil de menuiserie (usage futur)."
+        },
+        "herramientas/cuchillo-de-supervivencia": {
+            "name": "Couteau de survie",
+            "description": "Outil multifonction pour l'exploration."
+        },
+        "herramientas/martillo-de-forja": {
+            "name": "Marteau de forge",
+            "description": "Requis pour l'artisanat avancé (usage futur)."
+        },
+        "herramientas/anzuelo-de-lux": {
+            "name": "Hameçon Lux",
+            "description": "Améliore la pêche rare en eaux profondes."
+        },
+        "herramientas/cebo-prisma": {
+            "name": "Appât Prisma",
+            "description": "Augmente temporairement les chances de prises rares."
+        },
+        "herramientas/taladro-portatil": {
+            "name": "Perceuse portable",
+            "description": "Un outil puissant pour miner rapidement (usage futur)."
+        },
+        "herramientas/bomba-de-humo": {
+            "name": "Bombe fumigène",
+            "description": "Aide à s'échapper ou à éviter le danger (usage futur)."
+        },
+        "llaves/llave-prisma": {
+            "name": "Clé Prisma",
+            "description": "Ouvre des coffres spéciaux."
+        },
+        "llaves/llave-elemental": {
+            "name": "Clé élémentaire",
+            "description": "Ouvre des zones et des coffres d'événement."
+        },
+        "llaves/talisman-solar": {
+            "name": "Talisman solaire",
+            "description": "Permet d'accéder à des zones magiques."
+        },
+        "llaves/anillo-de-fuego": {
+            "name": "Anneau de feu",
+            "description": "Clé spéciale pour les événements sur le thème du feu."
+        },
+        "llaves/llave-abisal": {
+            "name": "Clé abyssale",
+            "description": "Ouvre des coffres et des portes dans les zones profondes."
+        },
+        "llaves/llave-glaciar": {
+            "name": "Clé glaciaire",
+            "description": "Ouvre des coffres de glace et des chambres froides."
+        },
+        "llaves/llave-volcanica": {
+            "name": "Clé volcanique",
+            "description": "Ouvre des coffres et des portes dans les zones chaudes."
+        },
+        "llaves/llave-lunar": {
+            "name": "Clé lunaire",
+            "description": "Accès aux chambres nocturnes et aux récompenses lunaires."
+        },
+        "llaves/llave-antigua": {
+            "name": "Clé ancienne",
+            "description": "Une clé mystérieuse pour des coffres anciens."
+        },
+        "loots/caja-misteriosa": {
+            "name": "Boîte mystérieuse",
+            "description": "Contient des objets aléatoires."
+        },
+        "loots/cofre-de-fortuna": {
+            "name": "Coffre de fortune",
+            "description": "Contient des pièces, des matériaux ou des objets rares."
+        },
+        "loots/caja-marina": {
+            "name": "Boîte marine",
+            "description": "Contient des objets d'événements aquatiques."
+        },
+        "loots/caja-premium-diamante-platino": {
+            "name": "Caja Premium/Diamond/Platino",
+            "description": "Contient des objets de haute qualité."
+        },
+        "loots/pack-de-celebracion": {
+            "name": "Pack de célébration",
+            "description": "Pack avec des objets d'événement."
+        },
+        "loots/caja-de-suerte": {
+            "name": "Boîte de chance",
+            "description": "Une boîte avec une forte chance d'obtenir des objets rares."
+        },
+        "loots/tarjeta-de-regalo": {
+            "name": "Carte cadeau",
+            "description": "Échangeable contre des objets dans la boutique."
+        },
+        "loots/bolsa-de-materiales": {
+            "name": "Sac de matériaux",
+            "description": "Contient des matériaux aléatoires pour l'artisanat."
+        },
+        "loots/bolsa-de-gemas": {
+            "name": "Sac de gemmes",
+            "description": "Contient des gemmes ou des fragments rares."
+        },
+        "loots/caja-de-herramientas": {
+            "name": "Boîte à outils",
+            "description": "Chance d'obtenir des outils utiles."
+        },
+        "loots/cofre-abisal": {
+            "name": "Coffre abyssal",
+            "description": "Butin rare des zones profondes."
+        },
+        "loots/cofre-glaciar": {
+            "name": "Coffre glaciaire",
+            "description": "Butin rare des zones de glace et d'aurore."
+        },
+        "loots/cofre-volcanico": {
+            "name": "Coffre volcanique",
+            "description": "Butin rare de lave et de minéraux."
+        },
+        "mascotas/huevo-prisma": {
+            "name": "Œuf Prisma",
+            "description": "Te permet d'obtenir des familiers aux capacités uniques."
+        },
+        "mascotas/huevo-festivo": {
+            "name": "Œuf festif",
+            "description": "Familiers provenant d'événements spéciaux."
+        },
+        "mascotas/huevo-elemental": {
+            "name": "Œuf élémentaire",
+            "description": "Familiers aux pouvoirs élémentaires."
+        },
+        "mascotas/huevo-legendario": {
+            "name": "Œuf légendaire",
+            "description": "Familiers rares et puissants."
+        },
+        "mascotas/huevo-magico": {
+            "name": "Œuf magique",
+            "description": "Éclot en un familier aux traits magiques et aux capacités spéciales."
+        },
+        "mascotas/huevo-abisal": {
+            "name": "Œuf abyssal",
+            "description": "Éclos dans les profondeurs ; affinité avec l'eau et l'ombre."
+        },
+        "mascotas/huevo-solar": {
+            "name": "Œuf solaire",
+            "description": "Nouveau-né aligné sur la lumière ; améliore les récompenses diurnes."
+        },
+        "mascotas/huevo-brumoso": {
+            "name": "Œuf brumeux",
+            "description": "Nouveau-né aligné sur la brume ; bonus à l'exploration discrète."
+        },
+        "mascotas/huevo-de-bosque": {
+            "name": "Œuf de forêt",
+            "description": "Nouveau-né de la nature ; bonus à la récolte."
+        },
+        "mascotas/huevo-de-montana": {
+            "name": "Œuf de montagne",
+            "description": "Nouveau-né robuste ; bonus au minage et aux chemins escarpés."
+        },
+        "mascotas/huevo-de-tormenta": {
+            "name": "Œuf de tempête",
+            "description": "Nouveau-né électrique ; bonus pendant les événements météo."
+        },
+        "mascotas/huevo-aurora": {
+            "name": "Œuf d'aurore",
+            "description": "Nouveau-né hivernal rare ; bonus pendant les saisons froides."
+        },
+        "mascotas/huevo-jardin": {
+            "name": "Œuf de jardin",
+            "description": "Nouveau-né amical ; bonus aux tâches sociales et aux soins."
+        },
+        "mascotas/huevo-de-cristal": {
+            "name": "Œuf de cristal",
+            "description": "Nouveau-né prismatique ; petit bonus de chance."
+        },
+        "mascotas/huevo-meteoro": {
+            "name": "Œuf météore",
+            "description": "Nouveau-né très rare ; bonus au butin et aux matériaux spéciaux."
+        },
+        "mascotas/huevo-volcanico": {
+            "name": "Œuf volcanique",
+            "description": "Éclos dans les zones chaudes ; bonus au minage et à la résistance à la chaleur."
+        },
+        "mascotas/huevo-glaciar": {
+            "name": "Œuf glaciaire",
+            "description": "Éclos dans les zones froides ; bonus à la survie et à l'exploration hivernale."
+        },
+        "mascotas/huevo-marino": {
+            "name": "Egg Marine",
+            "description": "Aquatic hatchling; bonus to fishing and sea routes."
+        },
+        "mascotas/huevo-selvatico": {
+            "name": "Wild Egg",
+            "description": "Jungle hatchling; bonus to gathering rare plants."
+        },
+        "mascotas/huevo-umbrio": {
+            "name": "Umbral Egg",
+            "description": "Shadow hatchling; bonus during night events."
+        },
+        "mascotas/huevo-radiante": {
+            "name": "Egg Radiante",
+            "description": "Light hatchling; a light luck bonus for chests."
+        },
+        "mascotas/ocarina-del-vinculo": {
+            "name": "Bond Ocarina",
+            "description": "An ancient melody that calls your pet back if it left due to lack of care."
+        },
+        "mascotas/huevo-torbellino": {
+            "name": "Egg Torbellino",
+            "description": "Wind hatchling; improves travel and fast quests."
+        },
+        "mascotas/huevo-fertil": {
+            "name": "Fertile Egg",
+            "description": "Meadow hatchling; bonus to common gathering."
+        },
+        "mascotas/huevo-coral": {
+            "name": "Egg Coral",
+            "description": "Reef hatchling; bonus to marine loot."
+        },
+        "mascotas/huevo-relampago": {
+            "name": "Lightning Egg",
+            "description": "Rare electric hatchling; bonus to timed challenges."
+        },
+        "mascotas/huevo-lunar": {
+            "name": "Egg Lunar",
+            "description": "Rare night hatchling; bonus to night quests."
+        },
+        "mascotas/huevo-solar-real": {
+            "name": "Egg Solar Real",
+            "description": "Rare version of the Solar Egg; improved daytime bonus."
+        },
+        "mascotas/huevo-prisma-antiguo": {
+            "name": "Egg Prism Antiguo",
+            "description": "Very rare hatchling; bonus during special events."
+        },
+        "mascotas/huevo-cometa": {
+            "name": "Egg Cometa",
+            "description": "Ultra-rare hatchling; extra chance of rare items."
+        },
+        "mascotas/huevo-encantado": {
+            "name": "Egg Encantado",
+            "description": "Magical hatchling; bonus to temporary buff effects."
+        },
+        "mascotas/huevo-guardian": {
+            "name": "Guardian Egg",
+            "description": "Defensive hatchling; reduces penalties during events."
+        },
+        "materiales/hierba-prisma": {
+            "name": "Hierba Prism",
+            "description": "Crafting material."
+        },
+        "materiales/roca-volcanica": {
+            "name": "Volcanic Rock",
+            "description": "Material for defense upgrades."
+        },
+        "materiales/barra-de-oro-acero": {
+            "name": "Bar of Oro/Steel",
+            "description": "Material for crafting avanzado."
+        },
+        "materiales/fragmento-de-espiritu": {
+            "name": "Fragment of Spirit",
+            "description": "Material for quests and mejoras."
+        },
+        "materiales/mineral-elemental": {
+            "name": "Mineral Elemental",
+            "description": "Material for crafting of tools."
+        },
+        "materiales/flor-de-amor": {
+            "name": "Flower of Amor",
+            "description": "Material for events romantic."
+        },
+        "materiales/fosil": {
+            "name": "Fossil",
+            "description": "Material for quests of exploration."
+        },
+        "materiales/dulce-festivo": {
+            "name": "Candy Festive",
+            "description": "Material for events of season."
+        },
+        "materiales/alga-marina": {
+            "name": "Seaweed",
+            "description": "Fishing material and marine crafting ingredient."
+        },
+        "materiales/concha-marina": {
+            "name": "Seashell",
+            "description": "Common material from coastal areas."
+        },
+        "materiales/coral-prisma": {
+            "name": "Prism Coral",
+            "description": "Rare material from reefs and deep seas."
+        },
+        "materiales/perla-azur": {
+            "name": "Azur Pearl",
+            "description": "A valuable marine treasure."
+        },
+        "materiales/mineral-de-cobre": {
+            "name": "Copper Ore",
+            "description": "Common mining material."
+        },
+        "materiales/mineral-de-hierro": {
+            "name": "Iron Ore",
+            "description": "Base for ingots and tools."
+        },
+        "materiales/mineral-de-plata": {
+            "name": "Silver Ore",
+            "description": "Valuable mineral for crafting."
+        },
+        "materiales/mineral-de-oro": {
+            "name": "Gold Ore",
+            "description": "Rare mineral for advanced crafting."
+        },
+        "materiales/mineral-de-diamante": {
+            "name": "Diamond Ore",
+            "description": "Very rare mineral: elite crafting."
+        },
+        "materiales/madera-robusta": {
+            "name": "Sturdy Wood",
+            "description": "Great for structures and tools."
+        },
+        "materiales/madera-encantada": {
+            "name": "Enchanted Wood",
+            "description": "Rare wood with magical properties."
+        },
+        "materiales/cuero-curtido": {
+            "name": "Leather Tanned",
+            "description": "Flexible material for gear."
+        },
+        "materiales/tela-resistente": {
+            "name": "Fabric Durable",
+            "description": "Material for backpacks and clothing."
+        },
+        "materiales/hilo-fino": {
+            "name": "Thread Fine",
+            "description": "Sewing material for crafting."
+        },
+        "materiales/polvo-prisma": {
+            "name": "Dust Prism",
+            "description": "Magical ingredient for upgrades."
+        },
+        "materiales/esencia-solar": {
+            "name": "Essence Solar",
+            "description": "Bright ingredient for rare crafting."
+        },
+        "materiales/esencia-lunar": {
+            "name": "Essence Lunar",
+            "description": "Night ingredient for special recipes."
+        },
+        "materiales/esencia-umbria": {
+            "name": "Essence Umbral",
+            "description": "Dark energy, very rare."
+        },
+        "materiales/fragmento-de-cristal": {
+            "name": "Fragment of Crystal",
+            "description": "Shiny fragment for crafting."
+        },
+        "materiales/gema-rubi": {
+            "name": "Ruby Gem",
+            "description": "Rare gem for trades and upgrades."
+        },
+        "materiales/gema-zafiro": {
+            "name": "Sapphire Gem",
+            "description": "Rare gem with aquatic energy."
+        },
+        "materiales/gema-esmeralda": {
+            "name": "Emerald Gem",
+            "description": "Rare gem with natural energy."
+        },
+        "materiales/nucleo-elemental": {
+            "name": "Core Elemental",
+            "description": "Very rare component for elemental tools."
+        },
+        "materiales/placa-de-acero": {
+            "name": "Plate of Steel",
+            "description": "Sturdy material for advanced crafting."
+        },
+        "mejoras/potenciador-de-fortuna": {
+            "name": "Booster of Fortune",
+            "description": "Increases the chance of getting great rewards."
+        },
+        "mejoras/escudo-de-tolerancia": {
+            "name": "Shield of Tolerance",
+            "description": "Reduces penalties in events."
+        },
+        "mejoras/expansion-de-mochila": {
+            "name": "Expansion of Backpack",
+            "description": "Increases inventory space."
+        },
+        "mejoras/entrenamiento-moxi": {
+            "name": "Training Moxi",
+            "description": "Experience bonus per activity."
+        },
+        "mejoras/trabajo-en-equipo": {
+            "name": "Teamwork en Team",
+            "description": "Bonus when working in a group."
+        },
+        "mejoras/estrella-de-suerte": {
+            "name": "Star of Luck",
+            "description": "Luck bonus."
+        },
+        "mejoras/aurora-festiva": {
+            "name": "Aurora Festiva",
+            "description": "Bonus during winter events."
+        },
+        "mejoras/tinte-personalizado": {
+            "name": "Dye Custom",
+            "description": "Changes the color of your profile or club."
+        },
+        "mejoras/expansion-de-banco": {
+            "name": "Expansion of Bank",
+            "description": "Increases bank space (future use)."
+        },
+        "mejoras/expansion-de-mochila-plus": {
+            "name": "Expansion of Backpack Plus",
+            "description": "Increases inventory space even more (future use)."
+        },
+        "mejoras/sello-de-proteccion": {
+            "name": "Seal of Protection",
+            "description": "Reduces losses during dangerous events (future use)."
+        },
+        "mejoras/pase-premium-moxi": {
+            "name": "Pass Premium Moxi",
+            "description": "Access to premium system benefits (future use)."
+        },
+        "misiones/gema-prisma": {
+            "name": "Gem Prism",
+            "description": "Required for advanced quests."
+        },
+        "misiones/conejo-de-peluche": {
+            "name": "Conejo of Peluche",
+            "description": "Special quest item."
+        },
+        "misiones/espada-de-hielo": {
+            "name": "Ice Sword",
+            "description": "Required for exploration quests."
+        },
+        "misiones/katana-solar": {
+            "name": "Katana Solar",
+            "description": "Advanced quest item."
+        },
+        "misiones/mascara-de-zorro": {
+            "name": "Fox Mask",
+            "description": "Special quest item."
+        },
+        "pociones/pocion-de-regeneracion": {
+            "name": "Potion of Regeneration",
+            "description": "Restores health."
+        },
+        "pociones/pocion-de-resistencia": {
+            "name": "Potion of Resistance",
+            "description": "Temporarily increases defense."
+        },
+        "pociones/pocion-del-explorador": {
+            "name": "Potion of the Explorer",
+            "description": "Allows you to explore new areas."
+        },
+        "pociones/elixir-prisma": {
+            "name": "Elixir Prism",
+            "description": "Gives an experience and energy bonus."
+        },
+        "pociones/huevito-de-energia-exploracion-regeneracion-resistencia": {
+            "name": "Little Egg of Energy/Exploration/Regeneration/Resistance",
+            "description": "Special consumables."
+        },
+        "pociones/pocion-de-suerte": {
+            "name": "Potion of Luck",
+            "description": "Temporarily increases luck."
+        },
+        "pociones/pocion-de-velocidad": {
+            "name": "Potion of Speed",
+            "description": "Temporarily increases speed."
+        },
+        "pociones/pocion-del-minero": {
+            "name": "Potion of the Miner",
+            "description": "Temporarily improves mining loot."
+        },
+        "pociones/pocion-del-pescador": {
+            "name": "Potion of the Fisher",
+            "description": "Temporarily improves fishing loot."
+        },
+        "pociones/elixir-de-luz": {
+            "name": "Elixir of Light",
+            "description": "Boosts daytime rewards and exploration."
+        },
+        "pociones/elixir-de-sombra": {
+            "name": "Elixir of Shadow",
+            "description": "Boosts nighttime rewards and stealth."
+        },
+        "rollos/rollo-moxi": {
+            "name": "Scroll Moxi",
+            "description": "Grants temporary special abilities."
+        },
+        "rollos/rollo-de-estrategia": {
+            "name": "Scroll of Strategy",
+            "description": "Enables advanced strategies in events."
+        },
+        "rollos/notas-del-explorador": {
+            "name": "Notes of the Explorer",
+            "description": "Provides clues for quests."
+        },
+        "rollos/papiro-jeroglifico": {
+            "name": "Papyrus/Hieroglyph",
+            "description": "Unlocks hidden content."
+        },
+        "proteccion/vida-extra": {
+            "name": "Life Extra",
+            "description": "Lets you revive once in special events."
+        }
+    }
+}

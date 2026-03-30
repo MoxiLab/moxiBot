@@ -1,0 +1,5 @@
+[
+    {
+        "usage": ".timer nuevo [minuten] — Startet einen neuen Timer in diesem Kanal. Es kann nur einen aktiven Timer pro Kanal geben.\n.timer desde [minuten] — Erstellt einen Timer relativ zu deiner letzten Nachricht im Kanal.\n.timer — Zeigt den Status des aktiven Timers und wie viele es im Server gibt."
+    }
+]

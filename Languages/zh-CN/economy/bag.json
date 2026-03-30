@@ -1,0 +1,16 @@
+{
+    "TITLE_PUBLIC": "🎒 你的背包",
+    "TITLE_PRIVATE": "🎒 你的背包（私密）",
+    "CATEGORY_OTHER": "其他",
+    "HELP_USE": "你可以用 {{use}} 来使用物品",
+    "HELP_BUFFS": "你可以用 {{buffs}} 查看当前增益",
+    "EMBED_EMPTY": "_此分类下没有物品。_",
+    "FOOTER_PAGE": "第 {{page}} / {{total}} 页",
+    "SELECT_PLACEHOLDER": "选择一个分类",
+    "SELECT_DESC": "{{types}} 种 • 共 {{total}} 个",
+    "SELECT_EMPTY_OPTION": "没有物品",
+    "ONLY_AUTHOR_BUTTONS": "只有打开背包的用户可以使用这些按钮。",
+    "ONLY_AUTHOR_MENU": "只有打开背包的用户可以使用此菜单。",
+    "INFO_TEXT": "使用选择器切换分类。用 ◀ ▶ 翻页。用 ❌ 关闭。",
+    "CLOSED_TEXT": "背包已关闭。"
+}

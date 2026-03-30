@@ -1,0 +1,17 @@
+{
+    "TITLE": "Balapan",
+    "NO_DB": "MongoDB belum dikonfigurasi, jadi ekonomi dinonaktifkan.",
+    "COOLDOWN_TITLE": "Balapan dalam cooldown",
+    "COOLDOWN_TEXT": "Kembali dalam **{{next}}**.",
+    "WIN_TITLE": "Balapan!",
+    "WIN_TEXT": "Peserta: {{racers}}\nPemenang: **{{winner}}**\nHadiah kamu: **{{amount}}** 🪙\nSaldo: **{{balance}}** 🪙.",
+    "RACERS": [
+        "Moxi",
+        "Neko",
+        "Kitsune",
+        "Tanuki",
+        "Koi",
+        "Sakura"
+    ],
+    "ERROR": "Aku tidak bisa menjalankan balapan."
+}

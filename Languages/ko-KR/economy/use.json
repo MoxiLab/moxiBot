@@ -1,0 +1,17 @@
+{
+    "USAGE_BAD_TITLE": "사용 방법이 올바르지 않습니다",
+    "USAGE_BAD_TEXT": "사용할 아이템의 이름 또는 ID를 입력해야 합니다.",
+    "ITEM_NOT_FOUND_TITLE": "아이템을 찾을 수 없습니다",
+    "ITEM_NOT_FOUND_TEXT": "해당 아이템을 찾을 수 없습니다. 인벤토리는 `{{prefix}}bag`, 상점 ID는 `{{prefix}}shop list`에서 확인하세요.",
+    "PETS_TITLE": "반려동물",
+    "NO_PETS_TEXT_SHORT": "아직 반려동물이 없습니다. 알을 부화시켜 얻어보세요.",
+    "OCARINA_TITLE": "유대의 오카리나",
+    "OCARINA_ALREADY_WITH_YOU": "반려동물이 이미 함께 있습니다. 지금은 사용할 필요가 없습니다.",
+    "OCARINA_NOT_OWNED": "가방에 이 아이템이 없습니다.",
+    "OCARINA_HEADER": "# 🎶 유대의 오카리나",
+    "PET_FALLBACK_NAME": "내 반려동물",
+    "PET_RETURN_TEXT": "🐾 **{{pet}}**이(가) 소리를 듣고… 돌아왔습니다!",
+    "PET_VIEW_BUTTON": "반려동물 보기",
+    "INCUBATOR_TITLE": "인큐베이터",
+    "INCUBATOR_NOT_OWNED": "가방에 인큐베이터가 없습니다."
+}

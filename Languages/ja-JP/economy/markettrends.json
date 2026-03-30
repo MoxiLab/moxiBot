@@ -1,0 +1,17 @@
+{
+    "TITLE": "相場トレンド",
+    "FOOTER": "このトレンドは毎日変わります（シミュレーション）。",
+    "LINE": "{{rank}}. {{icon}} **{{topic}}** — {{trend}}",
+    "UP": "📈 上昇中",
+    "FLAT": "➖ 安定",
+    "DOWN": "📉 下落中",
+    "TOPIC_BUFFS": "バフ",
+    "TOPIC_TOOLS": "道具",
+    "TOPIC_PETS": "ペット",
+    "TOPIC_MATERIALS": "素材",
+    "TOPIC_LOOT": "戦利品",
+    "TOPIC_KEYS": "鍵",
+    "TOPIC_COLLECTIBLES": "コレクション",
+    "TOPIC_POTIONS": "ポーション",
+    "TOPIC_SCROLLS": "巻物"
+}

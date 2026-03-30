@@ -1,0 +1,11 @@
+{
+    "CURRENT_PREFIX_TITLE": "当前前缀",
+    "CURRENT_PREFIX_DESC": "当前机器人的前缀是：**{{prefix}}**",
+    "ALSO_CAN_USE": "你也可以使用：{{prefixes}}",
+    "PREFIX_TOO_LONG_TITLE": "前缀过长",
+    "PREFIX_TOO_LONG": "❗ 前缀不能超过5个字符。",
+    "PREFIX_SUCCESS_TITLE": "前缀已更新",
+    "PREFIX_SUCCESS": "✅ 新前缀是：**{{prefix}}**",
+    "PREFIX_ERROR_TITLE": "更新错误",
+    "PREFIX_ERROR": "❌ 更新前缀时出错。请重试。"
+}

@@ -1,0 +1,18 @@
+{
+    "DAYS": "{{amount}} يومًا",
+    "HOURS": "{{amount}} ساعة",
+    "MINUTES": "{{amount}} دقيقة",
+    "SECONDS": "{{amount}} ثانية",
+    "NOT_NUMBER": "يجب أن يكون رقمًا.",
+    "INCORRECT_DELIMITERS": "يرجى استخدام أحد فواصل الوقت التالية: `d`،  `h`،  `m`، `s`.",
+    "INVALID_TIME": "تم إدخال رقم غير صالح. (مثال: 1m أو 16h)",
+    "MAX_TIME": "لا يمكن أن يتجاوز 10 أيام.",
+    "day": "يوم",
+    "days": "أيام",
+    "hour": "ساعة",
+    "hours": "ساعات",
+    "minute": "دقيقة",
+    "minutes": "دقائق",
+    "second": "ثانية",
+    "seconds": "ثوانٍ"
+}

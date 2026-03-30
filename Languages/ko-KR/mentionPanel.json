@@ -1,0 +1,13 @@
+{
+    "greeting": "## 🌸 안녕하세요! 저는 {{mention}}입니다. 동양적인 감성의 음악 친구예요.",
+    "lang_label": "🌐 **{{langName}}** ({{lang}})",
+    "prefix_label": "✨ **이 서버의 접두사:** `{{prefix}}`",
+    "prefix_source_env": "접두사 출처: **ENV (.env)**",
+    "prefix_source_custom": "접두사 출처: **서버 커스텀 설정**",
+    "user_prefix_label": "👤 **개인 접두사:** `{{userPrefix}}`",
+    "forgot_prefix": "접두사를 잊으셨나요? 언제든지 저를 멘션하면 확인할 수 있어요.",
+    "invite": "초대하기",
+    "support": "지원",
+    "web": "웹",
+    "thanks": "{{mention}}를 선택해 주셔서 감사합니다!"
+}

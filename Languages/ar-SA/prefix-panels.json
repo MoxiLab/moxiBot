@@ -1,0 +1,11 @@
+{
+    "CURRENT_PREFIX_TITLE": "البادئة الحالية",
+    "CURRENT_PREFIX_DESC": "بادئة البوت الحالية هي: **{{prefix}}**",
+    "ALSO_CAN_USE": "يمكنك أيضًا استخدام: {{prefixes}}",
+    "PREFIX_TOO_LONG_TITLE": "البادئة طويلة جدًا",
+    "PREFIX_TOO_LONG": "❗ لا يمكن أن تتجاوز البادئة 5 أحرف.",
+    "PREFIX_SUCCESS_TITLE": "تم تحديث البادئة",
+    "PREFIX_SUCCESS": "✅ البادئة الجديدة هي: **{{prefix}}**",
+    "PREFIX_ERROR_TITLE": "خطأ في التحديث",
+    "PREFIX_ERROR": "❌ حدث خطأ أثناء تحديث البادئة. حاول مرة أخرى."
+}

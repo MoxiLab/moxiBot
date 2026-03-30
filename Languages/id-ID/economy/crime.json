@@ -1,0 +1,423 @@
+{
+    "ui": {
+        "panelTitle": "Kejahatan",
+        "selectActivity": "Pilih aktivitas",
+        "riskPlaceholder": "Tingkat risiko",
+        "btnRun": "Jalankan"
+    },
+    "options": {
+        "stealth": "Menyelinap",
+        "talk": "Pengalih perhatian",
+        "rush": "Menyambar"
+    },
+    "doors": {
+        "a": "Pintu A",
+        "b": "Pintu B",
+        "c": "Pintu C"
+    },
+    "risks": {
+        "safe": "Aman",
+        "normal": "Normal",
+        "risky": "Berisiko"
+    },
+    "wires": {
+        "red": "Kabel merah",
+        "blue": "Kabel biru",
+        "yellow": "Kabel kuning",
+        "green": "Kabel hijau"
+    },
+    "activities": {
+        "pickpocket": {
+            "title": "Copet",
+            "prompt": "Kamu melihat seseorang lengah dengan tasnya terbuka. Kamu coba bagaimana?"
+        },
+        "market-swipe": {
+            "title": "Pasar ramai",
+            "prompt": "Di antara kios dan orang-orang, sebuah dompet terlihat. Kamu ngapain?"
+        },
+        "metro-bump": {
+            "title": "Dorongan di metro",
+            "prompt": "Rem mendadak, badan saling bertabrakan… dan ada kantong yang mudah."
+        },
+        "festival-confetti": {
+            "title": "Festival",
+            "prompt": "Musik, confetti, dan banyak distraksi. Kamu mainnya gimana?"
+        },
+        "hotel-lobby": {
+            "title": "Lobi hotel",
+            "prompt": "Orang-orang lengah. Kamu coba bagaimana?"
+        },
+        "arcade-tokens": {
+            "title": "Arkade",
+            "prompt": "Seseorang sedang menghitung token. Tidak ada yang memperhatikan. Kamu ngapain?"
+        },
+        "library-silence": {
+            "title": "Perpustakaan",
+            "prompt": "Sunyi total. Tas terbuka. Metode kamu apa?"
+        },
+        "park-bench": {
+            "title": "Bangku taman",
+            "prompt": "Sebuah ransel ditaruh di samping. Kamu mendekat gimana?"
+        },
+        "street-magician": {
+            "title": "Pesulap jalanan",
+            "prompt": "Semua orang menonton trik. Kamu menonton kantong-kantongnya."
+        },
+        "coffee-queue": {
+            "title": "Antrean kopi",
+            "prompt": "Antrean bergerak pelan. Perhatian rendah."
+        },
+        "cinema-dark": {
+            "title": "Bioskop gelap",
+            "prompt": "Lampu mati. Kamu ambil momen itu?"
+        },
+        "museum-exhibit": {
+            "title": "Museum",
+            "prompt": "Orang-orang terpukau melihat etalase pameran."
+        },
+        "food-truck": {
+            "title": "Food truck",
+            "prompt": "Dompet keluar dan orang-orang buru-buru bayar."
+        },
+        "crosswalk-rush": {
+            "title": "Penyeberangan ramai",
+            "prompt": "Lampu hijau. Chaos yang terkendali."
+        },
+        "gym-lockers": {
+            "title": "Loker gym",
+            "prompt": "Kunci longgar dan orang-orang lengah."
+        },
+        "pier-crowd": {
+            "title": "Dermaga",
+            "prompt": "Turis dengan ransel dan peta terbuka."
+        },
+        "station-platform": {
+            "title": "Peron",
+            "prompt": "Kereta datang. Gugup. Kesempatan."
+        },
+        "night-market": {
+            "title": "Pasar malam",
+            "prompt": "Lampu hangat. Tangan cepat."
+        },
+        "street-performer": {
+            "title": "Pengamen",
+            "prompt": "Suara musik menutupi langkah dan bisikan."
+        },
+        "salon-wait": {
+            "title": "Ruang tunggu",
+            "prompt": "HP keluar. Dompet keluar. Hmm."
+        },
+        "bank-atm": {
+            "title": "ATM",
+            "prompt": "Seseorang menarik tunai dan memasukkan struk ke saku."
+        },
+        "taxi-backseat": {
+            "title": "Taksi",
+            "prompt": "Sebuah dompet tergelincir ke jok belakang."
+        },
+        "train-sleeper": {
+            "title": "Gerbong tidur",
+            "prompt": "Kepala tertunduk, kantong tidak terjaga."
+        },
+        "snow-coats": {
+            "title": "Jaket musim dingin",
+            "prompt": "Kantong dalam… dan menggoda."
+        },
+        "rain-umbrella": {
+            "title": "Hari hujan",
+            "prompt": "Payung saling berbenturan. Tidak ada yang melihat apa-apa."
+        },
+        "beach-towels": {
+            "title": "Pantai",
+            "prompt": "Handuk, tas, distraksi. Kamu ngapain?"
+        },
+        "concert-mosh": {
+            "title": "Konser",
+            "prompt": "Kerumunan bergerak. Kamu juga."
+        },
+        "market-auction": {
+            "title": "Lelang",
+            "prompt": "Tawaran tinggi. Perhatian terpecah."
+        },
+        "fashion-store": {
+            "title": "Toko fashion",
+            "prompt": "Ruang ganti ramai. Pegawai terdistraksi."
+        },
+        "electronics-demo": {
+            "title": "Demo gadget",
+            "prompt": "Layar terang. Kantong juga terang."
+        },
+        "pet-parade": {
+            "title": "Parade hewan",
+            "prompt": "Orang-orang menonton anak anjing. Kamu… ya begitulah."
+        },
+        "street-food": {
+            "title": "Jajanan kaki lima",
+            "prompt": "Tangan penuh, kantong tidak terjaga."
+        },
+        "bus-crowd": {
+            "title": "Bus penuh",
+            "prompt": "Berhenti cepat. Gerak cepat."
+        },
+        "book-fair": {
+            "title": "Bazar buku",
+            "prompt": "Tanda tangan, antrean, dan distraksi yang sempurna."
+        },
+        "flower-stall": {
+            "title": "Lapak bunga",
+            "prompt": "Hadiah romantis. Dompet yang terlihat jelas."
+        },
+        "campus-hall": {
+            "title": "Lorong kampus",
+            "prompt": "Ransel terbuka dan orang-orang buru-buru ke kelas."
+        },
+        "airport-gate": {
+            "title": "Gate boarding",
+            "prompt": "Dokumen, tiket, chaos. Gampang."
+        },
+        "theme-park": {
+            "title": "Taman hiburan",
+            "prompt": "Teriakan, tawa, dan tas yang menggantung."
+        },
+        "harbor-ferry": {
+            "title": "Kapal feri",
+            "prompt": "Angin, mabuk laut… dan satu kelengahan."
+        },
+        "stadium-queue": {
+            "title": "Antrean stadion",
+            "prompt": "Semua orang melihat pintu masuk. Kantong? Tidak terlalu."
+        },
+        "vault": {
+            "title": "Tiga pintu",
+            "prompt": "Kamu berhasil masuk. Ada tiga pintu. Satu berisi loot cepat; yang lain, masalah."
+        },
+        "storage-doors": {
+            "title": "Gudang",
+            "prompt": "Tiga pintu besi. Satu menyimpan hasil mudah. Pilih."
+        },
+        "office-doors": {
+            "title": "Kantor",
+            "prompt": "Lorong kosong. Tiga pintu tanpa tanda. Yang mana yang menguntungkan?"
+        },
+        "basement-doors": {
+            "title": "Ruang bawah tanah",
+            "prompt": "Lembap dan sunyi. Tiga pintu: bising, tenang, hoki."
+        },
+        "backstage-doors": {
+            "title": "Belakang panggung",
+            "prompt": "Di belakang panggung ada tiga akses. Salah satunya menuju loot."
+        },
+        "dock-doors": {
+            "title": "Dermaga",
+            "prompt": "Kontainer dan tiga pintu gudang. Pilih cepat."
+        },
+        "subway-doors": {
+            "title": "Terowongan",
+            "prompt": "Tiga pintu perawatan. Salah satunya punya persediaan."
+        },
+        "library-doors": {
+            "title": "Arsip",
+            "prompt": "Tiga pintu menuju arsip terbatas. Salah satunya punya amplop."
+        },
+        "casino-doors": {
+            "title": "Kasino",
+            "prompt": "Tiga pintu di belakang VIP. Salah satunya yang bagus."
+        },
+        "hotel-doors": {
+            "title": "Lantai privat",
+            "prompt": "Tiga pintu identik. Salah satunya tidak terkunci rapat."
+        },
+        "museum-doors": {
+            "title": "Area terbatas",
+            "prompt": "Tiga pintu dengan alarm mencurigakan. Salah satunya gagal."
+        },
+        "trainyard-doors": {
+            "title": "Depo",
+            "prompt": "Tiga pintu berkarat. Salah satunya mudah dibuka."
+        },
+        "lab-doors": {
+            "title": "Laboratorium",
+            "prompt": "Tiga pintu dengan panel. Salah satunya sedang mode uji."
+        },
+        "sewers-doors": {
+            "title": "Selokan",
+            "prompt": "Tiga palka. Salah satunya menuju tempat persembunyian."
+        },
+        "attic-doors": {
+            "title": "Loteng",
+            "prompt": "Tiga pintu tua. Salah satunya berderit… tapi memberi."
+        },
+        "theater-doors": {
+            "title": "Teater",
+            "prompt": "Tiga pintu di belakang panggung. Salah satunya punya kotak uang."
+        },
+        "warehouse-doors": {
+            "title": "Area industri",
+            "prompt": "Tiga pintu bernomor manual. Salah satunya berisi barang bagus."
+        },
+        "ship-doors": {
+            "title": "Palka kapal",
+            "prompt": "Tiga pintu menuju palka. Pilih sebelum seseorang kembali."
+        },
+        "castle-doors": {
+            "title": "Lorong",
+            "prompt": "Tiga pintu batu. Salah satunya jalan pintas ke harta."
+        },
+        "clinic-doors": {
+            "title": "Klinik",
+            "prompt": "Tiga pintu penyimpanan. Salah satunya punya brankas kecil."
+        },
+        "stadium-doors": {
+            "title": "Stadion",
+            "prompt": "Tiga pintu ruang loker. Salah satunya punya barang hilang."
+        },
+        "mall-doors": {
+            "title": "Mal",
+            "prompt": "Tiga pintu servis. Salah satunya menuju kasir."
+        },
+        "garage-doors": {
+            "title": "Garasi",
+            "prompt": "Tiga pintu besi. Salah satunya tanpa kunci."
+        },
+        "serverroom-doors": {
+            "title": "Ruang server",
+            "prompt": "Tiga pintu. Salah satunya punya barang yang bisa dijual lagi."
+        },
+        "kitchen-doors": {
+            "title": "Dapur",
+            "prompt": "Tiga pintu ke gudang. Salah satunya punya bahan mahal."
+        },
+        "bakery-doors": {
+            "title": "Toko roti",
+            "prompt": "Tiga pintu belakang. Salah satunya menuju laci kas."
+        },
+        "gallery-doors": {
+            "title": "Galeri",
+            "prompt": "Tiga pintu ke ruang belakang. Salah satunya tertutup seadanya."
+        },
+        "station-doors": {
+            "title": "Stasiun",
+            "prompt": "Tiga pintu kebersihan. Salah satunya menyembunyikan tas."
+        },
+        "factory-doors": {
+            "title": "Pabrik",
+            "prompt": "Tiga pintu. Salah satunya menuju gudang suku cadang."
+        },
+        "dockyard-doors": {
+            "title": "Galangan kapal",
+            "prompt": "Tiga pintu alat. Salah satunya punya peti baru."
+        },
+        "getaway": {
+            "title": "Kabur",
+            "prompt": "Loot sudah di tangan. Seberapa besar risiko yang kamu ambil untuk kabur?"
+        },
+        "alley-chase": {
+            "title": "Gang",
+            "prompt": "Langkah kaki di belakang. Sirene jauh. Kamu kabur gimana?"
+        },
+        "rooftops": {
+            "title": "Atap",
+            "prompt": "Naik tangga darurat. Seberapa besar kamu ambil risiko?"
+        },
+        "crowd-vanish": {
+            "title": "Hilang di kerumunan",
+            "prompt": "Kerumunan bisa menyelamatkan… atau membongkarmu."
+        },
+        "river-cross": {
+            "title": "Menyeberangi sungai",
+            "prompt": "Ada jembatan, perahu, dan lompatan. Risiko?"
+        },
+        "night-scooter": {
+            "title": "Skuter malam",
+            "prompt": "Malam adalah kawan. Atau lawan. Tentukan."
+        },
+        "smoke-bomb": {
+            "title": "Tabir asap",
+            "prompt": "Kamu bisa menghilang… kalau berhasil."
+        },
+        "subway-hop": {
+            "title": "Lompat ke metro",
+            "prompt": "Kereta datang. Kamu buru-buru masuk atau tetap tenang?"
+        },
+        "taxi-dash": {
+            "title": "Taksi cepat",
+            "prompt": "Ada taksi kosong. Bayar dan pergi, atau kabur?"
+        },
+        "crowbar-route": {
+            "title": "Jalur darurat",
+            "prompt": "Pintu terkunci. Kamu bisa paksa salah satunya."
+        },
+        "rain-cover": {
+            "title": "Lindung hujan",
+            "prompt": "Hujan menyembunyikan jejak… dan penglihatan."
+        },
+        "market-escape": {
+            "title": "Kabur lewat pasar",
+            "prompt": "Kios sempit. Satu kesalahan bisa mahal."
+        },
+        "stairs-sprint": {
+            "title": "Tangga",
+            "prompt": "Naik atau turun. Setiap detik berharga."
+        },
+        "dock-fog": {
+            "title": "Kabut dermaga",
+            "prompt": "Kabut menyembunyikan… tapi juga membingungkan."
+        },
+        "warehouse-run": {
+            "title": "Di antara gudang",
+            "prompt": "Jalan pintas dalam ruangan. Risiko bertemu penjaga."
+        },
+        "festival-hide": {
+            "title": "Bersembunyi di festival",
+            "prompt": "Kostum dan topeng. Seberapa terlihat kamu?"
+        },
+        "parking-garage": {
+            "title": "Gedung parkir",
+            "prompt": "Rampa, mobil, kamera. Pilih risikomu."
+        },
+        "canal-walk": {
+            "title": "Kanal",
+            "prompt": "Kamu bisa menyusuri tepi kanal. Licin."
+        },
+        "construction-site": {
+            "title": "Lokasi konstruksi",
+            "prompt": "Perancah dan celah. Kamu bisa menghilang… atau jatuh."
+        },
+        "mall-exit": {
+            "title": "Keluar mal",
+            "prompt": "Tiga pintu keluar, dua penjaga. Kamu ngapain?"
+        },
+        "hotel-elevator": {
+            "title": "Lift",
+            "prompt": "Lift lambat atau tangga cepat. Risiko."
+        },
+        "station-cameras": {
+            "title": "Kamera",
+            "prompt": "Kamera melacakmu. Kamu coba menghindarinya?"
+        },
+        "rooftop-jump": {
+            "title": "Lompatan",
+            "prompt": "Ada lompatan antar gedung. Terserah kamu."
+        },
+        "sewer-drop": {
+            "title": "Tutup got",
+            "prompt": "Kamu bisa turun ke selokan. Atau tidak."
+        },
+        "forest-edge": {
+            "title": "Tepi hutan",
+            "prompt": "Gelap dan ranting. Jalur aman atau jalan pintas."
+        },
+        "bridge-crossing": {
+            "title": "Jembatan",
+            "prompt": "Cepat tapi terlihat. Risiko?"
+        },
+        "crowd-metro": {
+            "title": "Kerumunan stasiun",
+            "prompt": "Menyatu… atau lari kencang."
+        },
+        "harbor-boat": {
+            "title": "Perahu pelabuhan",
+            "prompt": "Sebuah perahu terlepas. Kamu pakai?"
+        }
+    }
+}

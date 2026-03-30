@@ -1,0 +1,13 @@
+{
+    "TITLE": "Saldo di {{user}}",
+    "COINS": "Monete",
+    "BANK": "Banca",
+    "SAKURAS": "Sakure",
+    "GLOBAL_RANK": "Classifica globale",
+    "BTN_DEPOSIT": "Deposita",
+    "BTN_WITHDRAW": "Preleva",
+    "ONLY_AUTHOR": "Solo l'autore può usare questi pulsanti.",
+    "ONLY_OWN_BALANCE": "Puoi gestire solo il tuo saldo.",
+    "NO_COINS_TO_DEPOSIT": "Non hai monete da depositare.",
+    "NO_COINS_TO_WITHDRAW": "Non hai monete in banca da prelevare."
+}

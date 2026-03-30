@@ -1,0 +1,18 @@
+{
+    "TITLE": "Quests",
+    "LIST_TEXT": "Today’s quests:\n{{list}}\n\nTo claim the reward: `{{prefix}}quest claim`",
+    "FOOTER": "Quests refresh daily.",
+    "NO_DB": "MongoDB is not configured, so I can’t store rewards.",
+    "COOLDOWN_TITLE": "Reward already claimed",
+    "COOLDOWN_TEXT": "You already claimed the reward. Come back in **{{next}}**.",
+    "CLAIMED_TITLE": "Quest reward",
+    "CLAIMED_TEXT": "You received **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
+    "QUESTS": [
+        "Claim your daily",
+        "Work once",
+        "Buy 1 item in the shop",
+        "Sell 1 item",
+        "Play 1 roulette round"
+    ],
+    "ERROR": "I couldn’t process the quest."
+}

@@ -1,0 +1,19 @@
+{
+    "TITLE": "闇市",
+    "BALANCE": "残高: **{{balance}}** 🪙",
+    "HINT": "購入: `blackmarket buy <1-3>`",
+    "OFFER_LINE": "{{slot}}) **{{name}}** ({{rarity}}) — **{{price}}** 🪙",
+    "BAD_SLOT_TITLE": "無効な選択",
+    "BAD_SLOT_TEXT": "1〜3の数字を選んでください。例: `blackmarket buy 2`",
+    "NO_FUNDS_TITLE": "残高不足",
+    "NO_FUNDS_TEXT": "必要: **{{price}}** 🪙。現在の残高: **{{balance}}** 🪙。",
+    "BOUGHT_TITLE": "購入完了",
+    "BOUGHT_TEXT": "**{{name}}** を **{{price}}** 🪙 で購入しました。\n現在の残高: **{{balance}}** 🪙。",
+    "NO_DB_TITLE": "データベース未設定",
+    "NO_DB_TEXT": "MongoDB が設定されていないため、経済機能は無効です。",
+    "RARITY_COMMON": "コモン",
+    "RARITY_UNCOMMON": "アンコモン",
+    "RARITY_RARE": "レア",
+    "RARITY_EPIC": "エピック",
+    "RARITY_LEGENDARY": "レジェンダリー"
+}

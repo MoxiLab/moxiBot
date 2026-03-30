@@ -1,0 +1,9 @@
+{
+    "TITLE": "Recolectar",
+    "NO_DB": "MongoDB no está configurado, así que economía está deshabilitada.",
+    "COOLDOWN_TITLE": "Recolectar en cooldown",
+    "COOLDOWN_TEXT": "Ya recolectaste. Vuelve en **{{next}}**.\nBalance: **{{balance}}** 🪙.",
+    "CLAIMED_TITLE": "Recolección",
+    "CLAIMED_TEXT": "Has recolectado **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
+    "ERROR": "Ha ocurrido un error al recolectar."
+}

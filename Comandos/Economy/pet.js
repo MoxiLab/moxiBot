@@ -1,0 +1,106 @@
+const { MessageFlags } = require('discord.js');
+const moxi = require('../../i18n');
+const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
+const { getOrCreateEconomy, formatDuration } = require('../../Util/economyCore');
+const { getItemById } = require('../../Util/inventoryCatalog');
+const { EMOJIS } = require('../../Util/emojis');
+const { buildPetPanelMessageOptions } = require('../../Util/petPanel');
+const { economyCategory } = require('../../Util/commandCategories');
+const {
+    isIncubationReady,
+    incubationRemainingMs,
+    buildPetFromEgg,
+    getActivePet,
+    ensurePetAttributes,
+    checkAndMarkPetAway,
+} = require('../../Util/petSystem');
+
+module.exports = {
+    name: 'pet',
+    alias: ['pet'],
+    Category: economyCategory,
+    usage: 'pet',
+    description: 'commands:CMD_PET_DESC',
+    cooldown: 0,
+    command: {
+        prefix: true,
+        slash: false,
+        ephemeral: false,
+    },
+
+    async execute(Moxi, message) {
+        const guildId = message.guildId || message.guild?.id;
+        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const prefix = await moxi.guildPrefix(guildId, process.env.PREFIX || '.');
+        const t = (k, vars = {}) => moxi.translate(`economy/pet:${k}`, lang, { prefix, ...vars });
+
+        const eco = await getOrCreateEconomy(message.author.id);
+        const now = Date.now();
+
+        const inc = eco.petIncubation;
+        if (inc?.eggItemId && inc?.hatchAt) {
+            const egg = getItemById(inc.eggItemId, { lang });
+            const eggName = egg?.name || inc.eggItemId;
+
+            if (!isIncubationReady(inc, now)) {
+                const remMs = incubationRemainingMs(inc, now);
+                const rem = remMs === null ? null : formatDuration(remMs);
+                return message.reply({
+                    ...asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: '🥚',
+                            title: t('TITLE'),
+                            text: t('INCUBATING_TEXT', { egg: eggName, time: rem || '...' }),
+                        })
+                    ),
+                    allowedMentions: { repliedUser: false },
+                });
+            }
+
+            // Eclosionar
+            const pet = buildPetFromEgg({ eggItemId: inc.eggItemId, lang });
+            eco.pets = Array.isArray(eco.pets) ? eco.pets : [];
+            eco.pets.push(pet);
+            eco.petIncubation = undefined;
+            await eco.save();
+
+            ensurePetAttributes(pet, now);
+            const awayRes = checkAndMarkPetAway(pet, now);
+            if (awayRes.changed) await eco.save().catch(() => null);
+
+            const panel = buildPetPanelMessageOptions({
+                lang,
+                userId: message.author.id,
+                ownerName: message.author.username,
+                pet,
+            });
+            return message.reply(panel);
+        }
+
+        const pet = getActivePet(eco);
+        if (pet) {
+            ensurePetAttributes(pet, now);
+            const awayRes = checkAndMarkPetAway(pet, now);
+            if (awayRes.changed) await eco.save().catch(() => null);
+
+            const panel = buildPetPanelMessageOptions({
+                lang,
+                userId: message.author.id,
+                ownerName: message.author.username,
+                pet,
+            });
+            return message.reply(panel);
+        }
+
+        return message.reply({
+            ...asV2MessageOptions(
+                buildNoticeContainer({
+                    emoji: EMOJIS.info,
+                    title: t('TITLE'),
+                    text: t('NO_PETS_TEXT'),
+                })
+            ),
+            allowedMentions: { repliedUser: false },
+        });
+    },
+};

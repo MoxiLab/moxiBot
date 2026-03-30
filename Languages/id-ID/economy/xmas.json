@@ -1,0 +1,10 @@
+{
+    "TITLE": "Natal",
+    "OUT_OF_SEASON": "Saat ini tidak ada Natal yang aktif.",
+    "NO_DB": "MongoDB belum dikonfigurasi, jadi ekonomi dinonaktifkan.",
+    "COOLDOWN_TITLE": "Natal dalam cooldown",
+    "COOLDOWN_TEXT": "Kembali dalam **{{next}}**.",
+    "CLAIMED_TITLE": "Hadiah Natal",
+    "CLAIMED_TEXT": "Kamu menerima **{{amount}}** 🪙.\nSaldo: **{{balance}}** 🪙.",
+    "ERROR": "Aku tidak bisa mengklaim hadiah."
+}

@@ -1,0 +1,19 @@
+{
+    "DESC": "다른 유저에게 코인을 보냅니다.",
+    "USAGE_TITLE": "사용법",
+    "USAGE_TEXT": "사용: `{{prefix}}give @user 100`",
+    "INVALID_AMOUNT_TITLE": "잘못된 수량",
+    "INVALID_AMOUNT_TEXT": "수량은 0보다 커야 합니다.",
+    "SELF_TITLE": "허용되지 않음",
+    "SELF_TEXT": "자기 자신에게 코인을 보낼 수 없습니다.",
+    "BOT_TITLE": "허용되지 않음",
+    "BOT_TEXT": "봇에게 코인을 보낼 수 없습니다.",
+    "INSUFFICIENT_TITLE": "잔액 부족",
+    "INSUFFICIENT_TEXT": "**{{amount}}** 🪙를 보내려 했지만 잔액은 **{{balance}}** 🪙입니다.",
+    "SUCCESS_TITLE": "전송 완료",
+    "SUCCESS_TEXT": "{{user}}에게 **{{amount}}** 🪙를 보냈습니다.\n내 잔액: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "데이터베이스 미설정",
+    "NO_DB_TEXT": "MongoDB가 설정되지 않아 경제 명령이 비활성화되었습니다.",
+    "ERROR_TITLE": "오류",
+    "UNKNOWN_ERROR": "오류가 발생했습니다."
+}

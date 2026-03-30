@@ -1,0 +1,10 @@
+{
+    "TITLE": "الحدث",
+    "USAGE": "الاستخدام: `{{prefix}}event`",
+    "NO_DB": "MongoDB غير مُعدّ، لذا تم تعطيل نظام الاقتصاد.",
+    "COOLDOWN_TITLE": "الحدث في فترة انتظار",
+    "COOLDOWN_TEXT": "عد بعد **{{next}}**.",
+    "CLAIMED_TITLE": "مكافأة الحدث",
+    "CLAIMED_TEXT": "حصلت على **{{amount}}** 🪙.\nالرصيد: **{{balance}}** 🪙.",
+    "ERROR": "لم أستطع استلام مكافأة الحدث."
+}

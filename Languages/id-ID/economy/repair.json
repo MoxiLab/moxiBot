@@ -1,0 +1,14 @@
+{
+    "TITLE": "Perbaiki",
+    "NO_DB": "MongoDB belum dikonfigurasi, jadi ekonomi dinonaktifkan.",
+    "USAGE": "Cara pakai: `{{prefix}}repair <id|nama|itemId>`",
+    "NOT_FOUND_TITLE": "Tidak ditemukan",
+    "NOT_FOUND_TEXT": "Aku tidak menemukan item itu.",
+    "NEED_KIT_TITLE": "Butuh kit",
+    "NEED_KIT_TEXT": "Kamu butuh **Kit Perbaikan** di inventori.",
+    "NOT_OWNED_TITLE": "Kamu tidak punya",
+    "NOT_OWNED_TEXT": "Kamu tidak punya item itu di tas.",
+    "SUCCESS_TITLE": "Berhasil diperbaiki!",
+    "SUCCESS_TEXT": "Kamu memperbaiki **{{item}}** menggunakan 1 kit.",
+    "ERROR": "Aku tidak bisa memperbaiki item itu."
+}

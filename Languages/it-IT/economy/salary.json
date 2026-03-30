@@ -1,0 +1,12 @@
+{
+    "TITLE": "Stipendio",
+    "DESC": "Riscatta il tuo stipendio giornaliero.",
+    "CLAIMED_TITLE": "Stipendio riscosso",
+    "CLAIMED_TEXT": "Hai riscosso **{{amount}}** 🪙.\nSaldo attuale: **{{balance}}** 🪙.{{jobLine}}",
+    "COOLDOWN_TITLE": "Stipendio in ricarica",
+    "COOLDOWN_TEXT": "Hai già riscosso lo stipendio. Torna tra **{{next}}**.\nSaldo attuale: **{{balance}}** 🪙.{{jobLine}}",
+    "NO_DB_TITLE": "Database non configurato",
+    "NO_DB_TEXT": "MongoDB non è configurato, quindi le ricompense di economia sono disabilitate.",
+    "ERROR_TITLE": "Errore",
+    "UNKNOWN_ERROR": "Qualcosa è andato storto."
+}

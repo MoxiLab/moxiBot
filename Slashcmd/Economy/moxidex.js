@@ -1,0 +1,35 @@
+const { MessageFlags } = require('discord.js');
+const { SlashCommandBuilder } = require('../../Util/slashCommandBuilder');
+const moxi = require('../../i18n');
+const { buildMoxidexMessage } = require('../../Util/moxidexView');
+const { getSlashCommandDescription } = require('../../Util/slashHelpI18n');
+
+const { description, localizations } = getSlashCommandDescription('moxidex');
+
+module.exports = {
+    cooldown: 0,
+    Category: function (lang) {
+        lang = lang || 'es-ES';
+        return moxi.translate('commands:CATEGORY_ECONOMIA', lang);
+    },
+    data: new SlashCommandBuilder()
+        .setName('moxidex')
+        .setDescription(description)
+        .setDescriptionLocalizations(localizations),
+
+    async run(Moxi, interaction) {
+        const guildId = interaction.guildId || interaction.guild?.id;
+        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+
+        const payload = await buildMoxidexMessage({
+            userId: interaction.user.id,
+            viewerId: interaction.user.id,
+            tierKey: 'all',
+            sort: 'new',
+            page: 0,
+            lang,
+        });
+
+        return interaction.reply(payload);
+    },
+};

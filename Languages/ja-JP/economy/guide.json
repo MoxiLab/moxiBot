@@ -1,0 +1,5 @@
+{
+    "TITLE": "経済ガイド",
+    "BODY": "よく使うコマンド:\n• `{{prefix}}bal` — コイン残高を見る\n• `{{prefix}}daily` — デイリー報酬\n• `{{prefix}}work` — 働いてコインを稼ぐ\n• `{{prefix}}moxishop list` — ショップを見る\n• `{{prefix}}moxishop buy <id> [amount]` — 購入する\n• `{{prefix}}bag` — バッグを見る\n• `{{prefix}}use <item>` — アイテムを使う\n• `{{prefix}}sell <item> [amount]` — アイテムを売る\n• `{{prefix}}leaderboard` — ランキング\n\nその他:\n• `{{prefix}}collect` — クールダウン付き採集\n• `{{prefix}}quest` — デイリークエスト\n• `{{prefix}}race` — クールダウン付きレース",
+    "FOOTER": "ヒント: うまく動かない場合は MongoDB (MONGODB) を確認してください。"
+}

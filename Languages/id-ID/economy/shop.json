@@ -1,0 +1,19 @@
+{
+    "SHOP_TITLE": "Toko",
+    "SHOP_EMBED_TITLE": "🛍️ Toko Moxi",
+    "SHOP_WELCOME": "Selamat datang di toko kecilku.",
+    "SHOP_INSTRUCTIONS": "Kamu bisa membeli dengan: `{{prefix}}buy <id|name|itemId> [amount]` atau `{{prefix}}moxishop buy <id|name|itemId> [amount]`.",
+    "SHOP_LIST_TITLE": "**Daftar item**",
+    "SHOP_ALL_ITEMS": "Semua item",
+    "SHOP_CATEGORY": "Kategori",
+    "SHOP_NO_ITEMS": "_Tidak ada item di kategori ini._",
+    "SHOP_FOOTER_PAGE": "Halaman {{page}} dari {{total}}",
+    "USAGE_BUY": "Cara pakai: `.moxishop buy <id|name|itemId> [amount]`",
+    "NOT_FOUND_BY_ID": "Tidak ada item dengan ID {{id}}. Gunakan .moxishop list untuk melihat ID.",
+    "NOT_FOUND_GENERIC": "Aku tidak bisa menemukan item itu di toko. Gunakan .moxishop list untuk melihat ID.",
+    "INVALID_PRICE": "Item ini tidak bisa dibeli (harga tidak valid).",
+    "INSUFFICIENT_FUNDS_TITLE": "Dana tidak cukup",
+    "INSUFFICIENT_FUNDS": "Kamu butuh {{cost}} 🪙 dan kamu punya {{balance}} 🪙.",
+    "PURCHASE_SUCCESS_TITLE": "Pembelian selesai",
+    "PURCHASE_SUCCESS": "Kamu membeli **{{amount}}x {{name}}** seharga **{{cost}}** 🪙."
+}

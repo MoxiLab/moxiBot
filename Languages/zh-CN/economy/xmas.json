@@ -1,0 +1,10 @@
+{
+    "TITLE": "圣诞节",
+    "OUT_OF_SEASON": "当前没有开启圣诞活动。",
+    "NO_DB": "MongoDB 未配置，因此经济功能已禁用。",
+    "COOLDOWN_TITLE": "圣诞节冷却中",
+    "COOLDOWN_TEXT": "**{{next}}** 后再来。",
+    "CLAIMED_TITLE": "圣诞礼物",
+    "CLAIMED_TEXT": "你获得了 **{{amount}}** 🪙。\n余额: **{{balance}}** 🪙。",
+    "ERROR": "无法领取礼物。"
+}

@@ -1,0 +1,19 @@
+{
+    "SHOP_TITLE": "المتجر",
+    "SHOP_EMBED_TITLE": "🛍️ متجر موكسي",
+    "SHOP_WELCOME": "مرحبًا بك في متجري الصغير.",
+    "SHOP_INSTRUCTIONS": "يمكنك الشراء عبر: `{{prefix}}buy <id|name|itemId> [amount]` أو `{{prefix}}moxishop buy <id|name|itemId> [amount]`.",
+    "SHOP_LIST_TITLE": "**قائمة العناصر**",
+    "SHOP_ALL_ITEMS": "كل العناصر",
+    "SHOP_CATEGORY": "الفئة",
+    "SHOP_NO_ITEMS": "_لا توجد عناصر في هذه الفئة._",
+    "SHOP_FOOTER_PAGE": "الصفحة {{page}} من {{total}}",
+    "USAGE_BUY": "الاستخدام: `.moxishop buy <id|name|itemId> [amount]`",
+    "NOT_FOUND_BY_ID": "لا يوجد عنصر بالمعرّف {{id}}. استخدم .moxishop list لعرض المعرّفات.",
+    "NOT_FOUND_GENERIC": "لم أجد هذا العنصر في المتجر. استخدم .moxishop list لعرض المعرّفات.",
+    "INVALID_PRICE": "لا يمكن شراء هذا العنصر (سعر غير صالح).",
+    "INSUFFICIENT_FUNDS_TITLE": "الأموال غير كافية",
+    "INSUFFICIENT_FUNDS": "تحتاج {{cost}} 🪙 ولديك {{balance}} 🪙.",
+    "PURCHASE_SUCCESS_TITLE": "تمت عملية الشراء",
+    "PURCHASE_SUCCESS": "اشتريت **{{amount}}x {{name}}** مقابل **{{cost}}** 🪙."
+}

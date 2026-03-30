@@ -1,0 +1,12 @@
+{
+    "TITLE": "Ajustes de economía",
+    "LINE_PREFIX": "• Prefix: `{{prefix}}`",
+    "LINE_LANG": "• Idioma: `{{lang}}`",
+    "LINE_DB": "• Base de datos: **{{status}}**",
+    "DB_ON": "ACTIVA",
+    "DB_OFF": "DESACTIVADA",
+    "LINE_DAILY": "• Daily: **{{min}}–{{max}}** 🪙",
+    "LINE_WORK": "• Work: **{{min}}–{{max}}** 🪙",
+    "LINE_SALARY": "• Salary: **{{min}}–{{max}}** 🪙",
+    "FOOTER": "Algunos rangos se controlan por variables de entorno."
+}

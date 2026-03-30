@@ -1,0 +1,12 @@
+{
+    "TITLE": "Redeem code",
+    "USAGE": "Usage: `{{prefix}}claimcode <code>`",
+    "NO_DB": "MongoDB is not configured, so I can’t redeem codes.",
+    "INVALID_TITLE": "Invalid code",
+    "INVALID_TEXT": "That code doesn’t exist or isn’t available.",
+    "ALREADY_TITLE": "Already redeemed",
+    "ALREADY_TEXT": "You already redeemed that code.",
+    "SUCCESS_TITLE": "Code redeemed!",
+    "SUCCESS_TEXT": "You received **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
+    "ERROR": "I couldn’t redeem that code."
+}

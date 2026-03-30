@@ -1,0 +1,15 @@
+{
+    "INVALID_USAGE_TITLE": "用法不正确",
+    "INVALID_USAGE_TEXT": "用法：`{{prefix}}deposit 100` 或 `{{prefix}}deposit all`。",
+    "BANK_TITLE": "银行",
+    "NO_COINS": "你没有任何金币可以存入。",
+    "INVALID_AMOUNT_TITLE": "金额无效",
+    "INVALID_AMOUNT_TEXT": "金额必须大于 0，或使用 `all`。",
+    "INSUFFICIENT_FUNDS_TITLE": "余额不足",
+    "INSUFFICIENT_FUNDS_TEXT": "你想存入 **{{wanted}}** 🪙，但你只有 **{{balance}}** 🪙。",
+    "DEPOSIT_SUCCESS_TITLE": "存入完成",
+    "DEPOSIT_SUCCESS_TEXT": "你已存入 **{{wanted}}** 🪙。\n余额：**{{balance}}** 🪙\n银行：**{{bank}}** 🏦",
+    "ERROR_TITLE": "错误",
+    "ERROR_MONGO": "MongoDB 未配置，银行暂不可用。",
+    "ERROR_GENERIC": "我现在无法完成存入操作，请稍后再试。"
+}

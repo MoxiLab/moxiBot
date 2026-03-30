@@ -1,0 +1,16 @@
+{
+    "TITLE_PUBLIC": "🎒 La tua borsa",
+    "TITLE_PRIVATE": "🎒 La tua borsa (privata)",
+    "CATEGORY_OTHER": "Altro",
+    "HELP_USE": "Puoi usare un oggetto con: {{use}}",
+    "HELP_BUFFS": "Puoi vedere i tuoi buff attivi con: {{buffs}}",
+    "EMBED_EMPTY": "_Non hai oggetti in questa categoria._",
+    "FOOTER_PAGE": "Pagina {{page}} di {{total}}",
+    "SELECT_PLACEHOLDER": "Scegli una categoria",
+    "SELECT_DESC": "{{types}} tipi • {{total}} totali",
+    "SELECT_EMPTY_OPTION": "Nessun oggetto",
+    "ONLY_AUTHOR_BUTTONS": "Solo l'utente che ha aperto la borsa può usare questi pulsanti.",
+    "ONLY_AUTHOR_MENU": "Solo l'utente che ha aperto la borsa può usare questo menu.",
+    "INFO_TEXT": "Usa il selettore per cambiare categoria. Naviga tra le pagine con ◀ ▶. Chiudi con ❌.",
+    "CLOSED_TEXT": "Borsa chiusa."
+}

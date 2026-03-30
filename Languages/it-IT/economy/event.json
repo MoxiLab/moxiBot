@@ -1,0 +1,10 @@
+{
+    "TITLE": "Evento",
+    "USAGE": "Uso: `{{prefix}}event`",
+    "NO_DB": "MongoDB non è configurato, quindi l'economia è disabilitata.",
+    "COOLDOWN_TITLE": "Evento in ricarica",
+    "COOLDOWN_TEXT": "Torna tra **{{next}}**.",
+    "CLAIMED_TITLE": "Ricompensa evento",
+    "CLAIMED_TEXT": "Hai ricevuto **{{amount}}** 🪙.\nSaldo: **{{balance}}** 🪙.",
+    "ERROR": "Non sono riuscito a riscattare l'evento."
+}

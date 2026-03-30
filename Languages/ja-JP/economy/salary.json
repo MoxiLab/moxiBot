@@ -1,0 +1,12 @@
+{
+    "TITLE": "給与",
+    "DESC": "毎日の給与を受け取ります。",
+    "CLAIMED_TITLE": "給与を受け取りました",
+    "CLAIMED_TEXT": "**{{amount}}** 🪙 を受け取りました。\n現在の残高: **{{balance}}** 🪙。{{jobLine}}",
+    "COOLDOWN_TITLE": "給与はクールダウン中",
+    "COOLDOWN_TEXT": "すでに給与を受け取っています。**{{next}}** 後に戻ってきてください。\n現在の残高: **{{balance}}** 🪙。{{jobLine}}",
+    "NO_DB_TITLE": "データベース未設定",
+    "NO_DB_TEXT": "MongoDB が設定されていないため、経済報酬は無効です。",
+    "ERROR_TITLE": "エラー",
+    "UNKNOWN_ERROR": "エラーが発生しました。"
+}

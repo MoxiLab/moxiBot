@@ -1,0 +1,12 @@
+{
+    "TITLE": "Wirtschaftseinstellungen",
+    "LINE_PREFIX": "• Präfix: `{{prefix}}`",
+    "LINE_LANG": "• Sprache: `{{lang}}`",
+    "LINE_DB": "• Datenbank: **{{status}}**",
+    "DB_ON": "AKTIV",
+    "DB_OFF": "INAKTIV",
+    "LINE_DAILY": "• Daily: **{{min}}–{{max}}** 🪙",
+    "LINE_WORK": "• Work: **{{min}}–{{max}}** 🪙",
+    "LINE_SALARY": "• Salary: **{{min}}–{{max}}** 🪙",
+    "FOOTER": "Einige Bereiche werden über Umgebungsvariablen gesteuert."
+}

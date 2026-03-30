@@ -1,0 +1,12 @@
+{
+    "TITLE": "Sell",
+    "NO_DB": "MongoDB is not configured, so economy is disabled.",
+    "USAGE": "Usage: `{{prefix}}sell <id|name|itemId> [amount]`",
+    "NOT_FOUND_TITLE": "Not found",
+    "NOT_FOUND_TEXT": "I couldn’t find that item.",
+    "NOT_OWNED_TITLE": "You don’t have it",
+    "NOT_OWNED_TEXT": "That item is not in your backpack.",
+    "SOLD_TITLE": "Sale completed",
+    "SOLD_TEXT": "You sold **{{amount}}x {{name}}** for **{{total}}** 🪙.\nBalance: **{{balance}}** 🪙.",
+    "ERROR": "I couldn’t sell that item."
+}

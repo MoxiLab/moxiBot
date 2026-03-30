@@ -1,0 +1,19 @@
+{
+    "TITLE": "काला बाज़ार",
+    "BALANCE": "बैलेंस: **{{balance}}** 🪙",
+    "HINT": "खरीदें: `blackmarket buy <1-3>`",
+    "OFFER_LINE": "{{slot}} • **{{name}}** ({{rarity}}) → **{{price}}** 🪙",
+    "BAD_SLOT_TITLE": "गलत चयन",
+    "BAD_SLOT_TEXT": "1 से 3 के बीच कोई नंबर चुनें। उदाहरण: `blackmarket buy 2`",
+    "NO_FUNDS_TITLE": "पर्याप्त बैलेंस नहीं",
+    "NO_FUNDS_TEXT": "आपको **{{price}}** 🪙 चाहिए। वर्तमान बैलेंस: **{{balance}}** 🪙.",
+    "BOUGHT_TITLE": "खरीद पूरी हुई",
+    "BOUGHT_TEXT": "आपने **{{name}}** को **{{price}}** 🪙 में खरीदा।\nवर्तमान बैलेंस: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "डेटाबेस सेट नहीं है",
+    "NO_DB_TEXT": "MongoDB सेट नहीं है, इसलिए इकोनॉमी बंद है।",
+    "RARITY_COMMON": "सामान्य",
+    "RARITY_UNCOMMON": "असामान्य",
+    "RARITY_RARE": "दुर्लभ",
+    "RARITY_EPIC": "एपिक",
+    "RARITY_LEGENDARY": "लेजेंडरी"
+}

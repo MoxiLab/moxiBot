@@ -1,0 +1,18 @@
+{
+    "DAYS": "{{amount}} दिन",
+    "HOURS": "{{amount}} घंटे",
+    "MINUTES": "{{amount}} मिनट",
+    "SECONDS": "{{amount}} सेकंड",
+    "NOT_NUMBER": "संख्या होनी चाहिए।",
+    "INCORRECT_DELIMITERS": "कृपया इन समय डिलीमीटर में से किसी एक का उपयोग करें: `d`, `h`, `m`, `s`.",
+    "INVALID_TIME": "अमान्य संख्या दर्ज की गई। (उदाहरण: 1m या 16h)",
+    "MAX_TIME": "10 दिनों से अधिक नहीं हो सकता।",
+    "day": "दिन",
+    "days": "दिन",
+    "hour": "घंटा",
+    "hours": "घंटे",
+    "minute": "मिनट",
+    "minutes": "मिनट",
+    "second": "सेकंड",
+    "seconds": "सेकंड"
+}

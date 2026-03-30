@@ -1,0 +1,12 @@
+{
+    "TITLE": "इकोनॉमी सेटिंग्स",
+    "LINE_PREFIX": "• प्रीफिक्स: `{{prefix}}`",
+    "LINE_LANG": "• भाषा: `{{lang}}`",
+    "LINE_DB": "• डेटाबेस: **{{status}}**",
+    "DB_ON": "चालू",
+    "DB_OFF": "बंद",
+    "LINE_DAILY": "• daily: **{{min}}–{{max}}** 🪙",
+    "LINE_WORK": "• work: **{{min}}–{{max}}** 🪙",
+    "LINE_SALARY": "• salary: **{{min}}–{{max}}** 🪙",
+    "FOOTER": "कुछ रेंज एनवायरनमेंट वेरिएबल्स से नियंत्रित होती हैं।"
+}

@@ -1,0 +1,17 @@
+{
+    "USAGE_BAD_TITLE": "用法不正确",
+    "USAGE_BAD_TEXT": "你必须输入要使用的物品名称或 ID。",
+    "ITEM_NOT_FOUND_TITLE": "找不到物品",
+    "ITEM_NOT_FOUND_TEXT": "我找不到该物品。使用 `{{prefix}}bag` 查看背包，或用 `{{prefix}}shop list` 查看 ID。",
+    "PETS_TITLE": "宠物",
+    "NO_PETS_TEXT_SHORT": "你还没有宠物。孵化一枚蛋即可获得。",
+    "OCARINA_TITLE": "羁绊陶笛",
+    "OCARINA_ALREADY_WITH_YOU": "你的宠物已经在你身边了，现在不需要使用这个。",
+    "OCARINA_NOT_OWNED": "你的背包里没有这个物品。",
+    "OCARINA_HEADER": "# 🎶 羁绊陶笛",
+    "PET_FALLBACK_NAME": "你的宠物",
+    "PET_RETURN_TEXT": "🐾 **{{pet}}** 听到了声音……回来了！",
+    "PET_VIEW_BUTTON": "查看宠物",
+    "INCUBATOR_TITLE": "孵化器",
+    "INCUBATOR_NOT_OWNED": "你的背包里没有孵化器。"
+}

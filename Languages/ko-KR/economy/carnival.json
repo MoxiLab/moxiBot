@@ -1,0 +1,10 @@
+{
+    "TITLE": "카니발",
+    "OUT_OF_SEASON": "현재 카니발 이벤트가 진행 중이 아닙니다.",
+    "NO_DB": "MongoDB가 설정되지 않아 경제 기능이 비활성화되었습니다.",
+    "COOLDOWN_TITLE": "카니발 쿨다운",
+    "COOLDOWN_TEXT": "**{{next}}** 후에 다시 시도하세요.",
+    "CLAIMED_TITLE": "카니발 보상",
+    "CLAIMED_TEXT": "**{{amount}}** 🪙를 받았습니다.\n잔액: **{{balance}}** 🪙.",
+    "ERROR": "카니발 보상을 받을 수 없었습니다."
+}

@@ -1,0 +1,14 @@
+{
+    "TITLE": "إصلاح",
+    "NO_DB": "MongoDB غير مُعدّ، لذا تم تعطيل نظام الاقتصاد.",
+    "USAGE": "الاستخدام: `{{prefix}}repair <id|name|itemId>`",
+    "NOT_FOUND_TITLE": "غير موجود",
+    "NOT_FOUND_TEXT": "لم أجد هذا العنصر.",
+    "NEED_KIT_TITLE": "تحتاج عدة إصلاح",
+    "NEED_KIT_TEXT": "تحتاج إلى **عدة إصلاح** في مخزونك.",
+    "NOT_OWNED_TITLE": "لا تملكه",
+    "NOT_OWNED_TEXT": "لا تملك هذا العنصر في حقيبتك.",
+    "SUCCESS_TITLE": "تم الإصلاح!",
+    "SUCCESS_TEXT": "أصلحت **{{item}}** باستخدام عدة واحدة.",
+    "ERROR": "لم أستطع إصلاح هذا العنصر."
+}

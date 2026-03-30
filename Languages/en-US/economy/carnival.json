@@ -1,0 +1,10 @@
+{
+    "TITLE": "Carnival",
+    "OUT_OF_SEASON": "There is no active Carnival right now.",
+    "NO_DB": "MongoDB is not configured, so economy is disabled.",
+    "COOLDOWN_TITLE": "Carnival cooldown",
+    "COOLDOWN_TEXT": "Come back in **{{next}}**.",
+    "CLAIMED_TITLE": "Carnival reward",
+    "CLAIMED_TEXT": "You received **{{amount}}** 🪙.\nBalance: **{{balance}}** 🪙.",
+    "ERROR": "I couldn’t claim the Carnival reward."
+}

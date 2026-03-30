@@ -1,0 +1,17 @@
+{
+    "USAGE_BAD_TITLE": "Falsche Nutzung",
+    "USAGE_BAD_TEXT": "Du musst den Namen oder die ID des Gegenstands angeben, den du benutzen möchtest.",
+    "ITEM_NOT_FOUND_TITLE": "Gegenstand nicht gefunden",
+    "ITEM_NOT_FOUND_TEXT": "Ich konnte diesen Gegenstand nicht finden. Nutze `{{prefix}}bag`, um dein Inventar zu sehen, oder `{{prefix}}shop list`, um IDs zu sehen.",
+    "PETS_TITLE": "Haustiere",
+    "NO_PETS_TEXT_SHORT": "Du hast noch keine Haustiere. Brüte ein Ei aus, um eins zu bekommen.",
+    "OCARINA_TITLE": "Bindungs-Okarina",
+    "OCARINA_ALREADY_WITH_YOU": "Dein Haustier ist bereits bei dir. Du musst das gerade nicht benutzen.",
+    "OCARINA_NOT_OWNED": "Du hast diesen Gegenstand nicht in deiner Tasche.",
+    "OCARINA_HEADER": "# 🎶 Bindungs-Okarina",
+    "PET_FALLBACK_NAME": "Dein Haustier",
+    "PET_RETURN_TEXT": "🐾 **{{pet}}** hat den Klang gehört… und ist zurückgekehrt!",
+    "PET_VIEW_BUTTON": "Haustier ansehen",
+    "INCUBATOR_TITLE": "Inkubator",
+    "INCUBATOR_NOT_OWNED": "Du hast keinen Inkubator in deiner Tasche."
+}

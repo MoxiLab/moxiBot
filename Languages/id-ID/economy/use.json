@@ -1,0 +1,17 @@
+{
+    "USAGE_BAD_TITLE": "Cara pakai salah",
+    "USAGE_BAD_TEXT": "Kamu harus mengetik nama atau ID item yang ingin kamu pakai.",
+    "ITEM_NOT_FOUND_TITLE": "Item tidak ditemukan",
+    "ITEM_NOT_FOUND_TEXT": "Aku tidak bisa menemukan item itu. Gunakan `{{prefix}}bag` untuk melihat inventori atau `{{prefix}}shop list` untuk melihat ID.",
+    "PETS_TITLE": "Peliharaan",
+    "NO_PETS_TEXT_SHORT": "Kamu belum punya peliharaan. Inkubasi telur untuk mendapatkannya.",
+    "OCARINA_TITLE": "Okarina Ikatan",
+    "OCARINA_ALREADY_WITH_YOU": "Peliharaanmu sudah bersamamu. Kamu tidak perlu memakai ini sekarang.",
+    "OCARINA_NOT_OWNED": "Kamu tidak punya item ini di tasmu.",
+    "OCARINA_HEADER": "# 🎶 Okarina Ikatan",
+    "PET_FALLBACK_NAME": "Peliharaanmu",
+    "PET_RETURN_TEXT": "🐾 **{{pet}}** mendengar suaranya… dan kembali!",
+    "PET_VIEW_BUTTON": "Lihat peliharaan",
+    "INCUBATOR_TITLE": "Inkubator",
+    "INCUBATOR_NOT_OWNED": "Kamu tidak punya inkubator di tasmu."
+}

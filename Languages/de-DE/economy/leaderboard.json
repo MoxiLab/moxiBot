@@ -1,0 +1,7 @@
+{
+    "TITLE": "Rangliste",
+    "NO_DB": "MongoDB ist nicht konfiguriert, daher kann ich deine Wirtschaftsdaten nicht lesen.",
+    "EMPTY": "Es gibt noch keine Wirtschaftsdaten zum Anzeigen.",
+    "FOOTER": "Globale Rangliste nach Gesamtvermögen (Bank + Coins + Sakuras).",
+    "ERROR": "Ich konnte die Rangliste gerade nicht laden."
+}

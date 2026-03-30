@@ -1,0 +1,12 @@
+{
+    "TITLE": "بيع",
+    "NO_DB": "MongoDB غير مُعدّ، لذا تم تعطيل نظام الاقتصاد.",
+    "USAGE": "الاستخدام: `{{prefix}}sell <id|name|itemId> [amount]`",
+    "NOT_FOUND_TITLE": "غير موجود",
+    "NOT_FOUND_TEXT": "لم أجد هذا العنصر.",
+    "NOT_OWNED_TITLE": "لا تملكه",
+    "NOT_OWNED_TEXT": "لا تملك هذا العنصر في حقيبتك.",
+    "SOLD_TITLE": "تم البيع",
+    "SOLD_TEXT": "بعت **{{amount}}x {{name}}** مقابل **{{total}}** 🪙.\nالرصيد: **{{balance}}** 🪙.",
+    "ERROR": "لم أستطع بيع هذا العنصر."
+}

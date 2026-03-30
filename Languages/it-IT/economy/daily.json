@@ -1,0 +1,13 @@
+{
+    "TITLE": "Giornaliero",
+    "DESC": "Riscatta la tua ricompensa giornaliera.",
+    "CLAIMED_TITLE": "Ricompensa giornaliera",
+    "CLAIMED_TEXT": "Hai ricevuto **{{amount}}** 🪙.\nSaldo attuale: **{{balance}}** 🪙.",
+    "COOLDOWN_TITLE": "Cooldown giornaliero",
+    "COOLDOWN_TEXT": "Hai già riscattato il giornaliero. Riprova tra **{{next}}**.\nSaldo attuale: **{{balance}}** 🪙.",
+    "COOLDOWN_SOFT_TEXT": "Ancora in cooldown. Riprova tra **{{next}}**.\nSaldo attuale: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "Database non configurato",
+    "NO_DB_TEXT": "MongoDB non è configurato, quindi le ricompense di economia sono disattivate.",
+    "ERROR_TITLE": "Errore",
+    "UNKNOWN_ERROR": "Si è verificato un errore."
+}

@@ -1,0 +1,19 @@
+{
+    "DESC": "Donne des coins à un autre utilisateur.",
+    "USAGE_TITLE": "Comment utiliser",
+    "USAGE_TEXT": "Utilise : `{{prefix}}give @utilisateur 100`",
+    "INVALID_AMOUNT_TITLE": "Quantité invalide",
+    "INVALID_AMOUNT_TEXT": "La quantité doit être supérieure à 0.",
+    "SELF_TITLE": "Non autorisé",
+    "SELF_TEXT": "Tu ne peux pas te donner des coins à toi-même.",
+    "BOT_TITLE": "Non autorisé",
+    "BOT_TEXT": "Tu ne peux pas donner des coins aux bots.",
+    "INSUFFICIENT_TITLE": "Fonds insuffisants",
+    "INSUFFICIENT_TEXT": "Tu as essayé de donner **{{amount}}** 🪙 mais tu n'as que **{{balance}}** 🪙.",
+    "SUCCESS_TITLE": "Envoi effectué",
+    "SUCCESS_TEXT": "Tu as donné à {{user}} **{{amount}}** 🪙.\nTon solde : **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "Base de données non configurée",
+    "NO_DB_TEXT": "MongoDB n'est pas configuré, donc les commandes d'économie sont désactivées.",
+    "ERROR_TITLE": "Erreur",
+    "UNKNOWN_ERROR": "Une erreur est survenue."
+}

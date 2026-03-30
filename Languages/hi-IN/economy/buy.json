@@ -1,0 +1,12 @@
+{
+    "ITEM_NOT_SPECIFIED_TITLE": "आइटम निर्दिष्ट नहीं किया गया",
+    "ITEM_NOT_SPECIFIED_TEXT": "जिस आइटम को आप खरीदना चाहते हैं, उसका `name` या `id` टाइप करें।",
+    "SHOP_TITLE": "दुकान",
+    "NOT_FOUND_BY_ID": "ID {{id}} वाला कोई आइटम मौजूद नहीं है। IDs देखने के लिए shop कमांड उपयोग करें।",
+    "NOT_FOUND_GENERIC": "मैं दुकान में वह आइटम नहीं ढूँढ पाया। IDs देखने के लिए shop कमांड उपयोग करें।",
+    "INVALID_PRICE": "यह आइटम खरीदा नहीं जा सकता (अमान्य कीमत)।",
+    "INSUFFICIENT_FUNDS_TITLE": "पर्याप्त धन नहीं",
+    "INSUFFICIENT_FUNDS": "आपको {{cost}} 🪙 चाहिए और आपके पास {{balance}} 🪙 हैं।",
+    "PURCHASE_SUCCESS_TITLE": "खरीदारी पूरी हुई",
+    "PURCHASE_SUCCESS": "आपने **{{amount}}x {{name}}** को **{{cost}}** 🪙 में खरीदा।"
+}

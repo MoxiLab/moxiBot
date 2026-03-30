@@ -1,0 +1,13 @@
+{
+    "greeting": "## 🌸 Ciao! Sono {{mention}}, la tua compagna musicale con un tocco orientale.",
+    "lang_label": "🌐 **{{langName}}** ({{lang}})",
+    "prefix_label": "✨ **Prefisso in questo server:** `{{prefix}}`",
+    "prefix_source_env": "Origine del prefisso: **ENV (.env)**",
+    "prefix_source_custom": "Origine del prefisso: **Personalizzato dal server**",
+    "user_prefix_label": "👤 **Il tuo prefisso personale:** `{{userPrefix}}`",
+    "forgot_prefix": "Hai dimenticato il mio prefisso? Menzionami per vederlo in qualsiasi momento.",
+    "invite": "Invitami",
+    "support": "Supporto",
+    "web": "Web",
+    "thanks": "Grazie per aver scelto {{mention}}!"
+}

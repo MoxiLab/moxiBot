@@ -1,0 +1,10 @@
+{
+    "TITLE": "嘉年华",
+    "OUT_OF_SEASON": "当前没有开启嘉年华活动。",
+    "NO_DB": "MongoDB 未配置，因此经济功能已禁用。",
+    "COOLDOWN_TITLE": "嘉年华冷却中",
+    "COOLDOWN_TEXT": "**{{next}}** 后再来。",
+    "CLAIMED_TITLE": "嘉年华奖励",
+    "CLAIMED_TEXT": "你获得了 **{{amount}}** 🪙。\n余额: **{{balance}}** 🪙。",
+    "ERROR": "无法领取嘉年华奖励。"
+}

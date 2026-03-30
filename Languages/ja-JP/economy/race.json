@@ -1,0 +1,17 @@
+{
+    "TITLE": "レース",
+    "NO_DB": "MongoDB が設定されていないため、経済機能は無効です。",
+    "COOLDOWN_TITLE": "レースはクールダウン中",
+    "COOLDOWN_TEXT": "**{{next}}** 後にもう一度。",
+    "WIN_TITLE": "レース！",
+    "WIN_TEXT": "参加者: {{racers}}\n勝者: **{{winner}}**\nあなたの賞金: **{{amount}}** 🪙\n残高: **{{balance}}** 🪙。",
+    "RACERS": [
+        "Moxi",
+        "Neko",
+        "Kitsune",
+        "Tanuki",
+        "Koi",
+        "Sakura"
+    ],
+    "ERROR": "レースを実行できませんでした。"
+}

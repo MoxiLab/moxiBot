@@ -1,0 +1,14 @@
+{
+    "TITLE": "Ripara",
+    "NO_DB": "MongoDB non è configurato, quindi l'economia è disabilitata.",
+    "USAGE": "Uso: `{{prefix}}repair <id|nome|itemId>`",
+    "NOT_FOUND_TITLE": "Non trovato",
+    "NOT_FOUND_TEXT": "Non ho trovato quell'oggetto.",
+    "NEED_KIT_TITLE": "Serve un kit",
+    "NEED_KIT_TEXT": "Ti serve un **Kit di Riparazione** nel tuo inventario.",
+    "NOT_OWNED_TITLE": "Non lo hai",
+    "NOT_OWNED_TEXT": "Non hai quell'oggetto nella tua borsa.",
+    "SUCCESS_TITLE": "Riparato!",
+    "SUCCESS_TEXT": "Hai riparato **{{item}}** usando 1 kit.",
+    "ERROR": "Non sono riuscito a riparare quell'oggetto."
+}

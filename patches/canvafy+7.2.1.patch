@@ -1,0 +1,425 @@
+diff --git a/node_modules/canvafy/src/ship.js b/node_modules/canvafy/src/ship.js
+index b68e412..35c5832 100644
+--- a/node_modules/canvafy/src/ship.js
++++ b/node_modules/canvafy/src/ship.js
+@@ -25,27 +25,27 @@ module.exports = class Ship {
+   }
+ 
+ 
+-   /**
+-     * .setAvatars
+-     * @param {string|Buffer|Image} image First Avatar 
+-     * @param {string|Buffer|Image} image2 Second Avatar
+-     * @returns {Ship}
+-     * @example setAvatars("https://someone-image.png","https://someone-image.png")
+-     */
+-  setAvatars(image,image2) {
++  /**
++    * .setAvatars
++    * @param {string|Buffer|Image} image First Avatar 
++    * @param {string|Buffer|Image} image2 Second Avatar
++    * @returns {Ship}
++    * @example setAvatars("https://someone-image.png","https://someone-image.png")
++    */
++  setAvatars(image, image2) {
+     this.avatar = image;
+     this.avatar2 = image2;
+     return this;
+   }
+ 
+-    /**
+-     * .setBackground
+-     * @param {string} type "image" or "color"
+-     * @param {string|Buffer|Image} value "url" or "hexcolor"
+-     * @returns {Ship}
+-     * @example setBackground("image","https://someone-image.png")
+-     * @example setBackground("color","#000")
+-     */
++  /**
++   * .setBackground
++   * @param {string} type "image" or "color"
++   * @param {string|Buffer|Image} value "url" or "hexcolor"
++   * @returns {Ship}
++   * @example setBackground("image","https://someone-image.png")
++   * @example setBackground("color","#000")
++   */
+   setBackground(type, value) {
+     if (type === 'color') {
+       if (value) {
+@@ -92,12 +92,12 @@ module.exports = class Ship {
+   }
+ 
+ 
+-    /**
+-     * .setOverlayOpacity
+-     * @param {number} opacity must be between 0 and 1
+-     * @returns {Ship}
+-     * @example setOverlayOpacity(0.7)
+-     */
++  /**
++   * .setOverlayOpacity
++   * @param {number} opacity must be between 0 and 1
++   * @returns {Ship}
++   * @example setOverlayOpacity(0.7)
++   */
+   setOverlayOpacity(opacity = 0) {
+     if (opacity) {
+       if (opacity >= 0 && opacity <= 1) {
+@@ -109,14 +109,14 @@ module.exports = class Ship {
+     }
+   }
+ 
+-    /**
+-     * .setCustomNumber
+-     * @param {number} num must be between 0 and 100
+-     * @returns {Ship}
+-     * @example setCustomNumber(65)
+-     */ 
++  /**
++   * .setCustomNumber
++   * @param {number} num must be between 0 and 100
++   * @returns {Ship}
++   * @example setCustomNumber(65)
++   */
+   setCustomNumber(num) {
+-    if(num < 0 || num > 100){
++    if (num < 0 || num > 100) {
+       throw new Error("The value of the setCustomNumber method must be between 0 and 100 (0 and 100 included).");
+     }
+     this.number = num;
+@@ -126,29 +126,29 @@ module.exports = class Ship {
+ 
+ 
+   async build() {
+-    if (this.font.path) registerFont(this.font.path, {family:this.font.name});
++    if (this.font.path) registerFont(this.font.path, { family: this.font.name });
+ 
+ 
+     let sayı = this.number;
+ 
+     const canvas = createCanvas(700, 350);
+     const ctx = canvas.getContext("2d");
+-    if(this.border){
+-    ctx.beginPath();
+-    ctx.lineWidth = 8;
+-    ctx.strokeStyle = this.border;
+-    ctx.moveTo(55, 15);
+-    ctx.lineTo(canvas.width - 55, 15);
+-    ctx.quadraticCurveTo(canvas.width - 20, 20, canvas.width - 15, 55);
+-    ctx.lineTo(canvas.width - 15, canvas.height - 55);
+-    ctx.quadraticCurveTo(canvas.width - 20, canvas.height - 20, canvas.width - 55, canvas.height - 15);
+-    ctx.lineTo(55, canvas.height - 15);
+-    ctx.quadraticCurveTo(20, canvas.height - 20, 15, canvas.height - 55);
+-    ctx.lineTo(15, 55);
+-    ctx.quadraticCurveTo(20, 20, 55, 15);
+-    ctx.lineTo(56, 15);
+-    ctx.stroke();
+-    ctx.closePath();
++    if (this.border) {
++      ctx.beginPath();
++      ctx.lineWidth = 8;
++      ctx.strokeStyle = this.border;
++      ctx.moveTo(55, 15);
++      ctx.lineTo(canvas.width - 55, 15);
++      ctx.quadraticCurveTo(canvas.width - 20, 20, canvas.width - 15, 55);
++      ctx.lineTo(canvas.width - 15, canvas.height - 55);
++      ctx.quadraticCurveTo(canvas.width - 20, canvas.height - 20, canvas.width - 55, canvas.height - 15);
++      ctx.lineTo(55, canvas.height - 15);
++      ctx.quadraticCurveTo(20, canvas.height - 20, 15, canvas.height - 55);
++      ctx.lineTo(15, 55);
++      ctx.quadraticCurveTo(20, 20, 55, 15);
++      ctx.lineTo(56, 15);
++      ctx.stroke();
++      ctx.closePath();
+     }
+ 
+     ctx.beginPath();
+@@ -195,80 +195,80 @@ module.exports = class Ship {
+     ctx.closePath();
+ 
+ 
+-var x = (700/2) - (150/2);
+-var y = (350/2) - (150/2);
+-
+-ctx.globalAlpha = 1;
+-
+-ctx.beginPath();
+-ctx.moveTo(x + 75, y + 30);
+-ctx.bezierCurveTo(x + 30, y, x, y + 30, x, y + 75);
+-ctx.bezierCurveTo(x, y + 120, x + 75, y + 150, x + 75, y + 150);
+-ctx.bezierCurveTo(x + 75, y + 150, x + 150, y + 120, x + 150, y + 75);
+-ctx.bezierCurveTo(x + 150, y + 30, x + 120, y, x + 75, y + 30);
+-ctx.closePath();
+-
+-ctx.strokeStyle = "black";
+-ctx.lineWidth = 2;
+-ctx.stroke();
+-
+-let doluluk;
+-if(sayı >= 100) doluluk = 101
+-if(sayı >= 90 && sayı < 100) doluluk = 130
+-if(sayı >= 80 && sayı < 90) doluluk = 160 
+-if(sayı >= 70 && sayı < 80) doluluk = 190
+-if(sayı >= 60 && sayı < 70) doluluk = 220
+-if(sayı >= 50 && sayı < 60) doluluk = 250
+-if(sayı >= 40 && sayı < 50) doluluk = 280
+-if(sayı >= 30 && sayı < 40) doluluk = 310
+-if(sayı >= 20 && sayı < 30) doluluk = 340
+-if(sayı >= 10 && sayı < 20) doluluk = 370
+-if(sayı >= 5 && sayı < 10) doluluk = 385
+-if(sayı >= 0 && sayı < 5) doluluk = 399
+-
+-
+-ctx.globalAlpha = 0.6;
+-var gradient = ctx.createLinearGradient(0, y, 0, doluluk);
+-gradient.addColorStop(0, "#ffffff");
+-gradient.addColorStop(0.5, "#ffffff");
+-gradient.addColorStop(0.5, "#ff0000");
+-gradient.addColorStop(0.1, "#ff0000");
+-ctx.fillStyle = gradient;
+-ctx.shadowBlur = 9;
+-ctx.shadowColor = "#ff0000";
+-ctx.shadowOffsetY = 0;
+-ctx.shadowOffsetX = 0;
+-ctx.fill();
+-
+-
+-
+- ctx.fillStyle = `WHITE`;
+- ctx.font = `bold 36px Sans`;
+- ctx.shadowBlur = 9;
+-        ctx.shadowColor = "#0a0a0a";
+-        ctx.shadowOffsetY = 8;
+-        ctx.shadowOffsetX = -6;
+-      ctx.globalAlpha = 1;
+-       ctx.textAlign = "center";
+-       ctx.fillText(`%${sayı}`, 350, 190)
++    var x = (700 / 2) - (150 / 2);
++    var y = (350 / 2) - (150 / 2);
++
++    ctx.globalAlpha = 1;
++
+     ctx.beginPath();
+-      ctx.lineWidth = 8;
+-    ctx.fill()
+-      ctx.lineWidth = 8;
++    ctx.moveTo(x + 75, y + 30);
++    ctx.bezierCurveTo(x + 30, y, x, y + 30, x, y + 75);
++    ctx.bezierCurveTo(x, y + 120, x + 75, y + 150, x + 75, y + 150);
++    ctx.bezierCurveTo(x + 75, y + 150, x + 150, y + 120, x + 150, y + 75);
++    ctx.bezierCurveTo(x + 150, y + 30, x + 120, y, x + 75, y + 30);
++    ctx.closePath();
++
++    ctx.strokeStyle = "black";
++    ctx.lineWidth = 2;
++    ctx.stroke();
++
++    let doluluk;
++    if (sayı >= 100) doluluk = 101
++    if (sayı >= 90 && sayı < 100) doluluk = 130
++    if (sayı >= 80 && sayı < 90) doluluk = 160
++    if (sayı >= 70 && sayı < 80) doluluk = 190
++    if (sayı >= 60 && sayı < 70) doluluk = 220
++    if (sayı >= 50 && sayı < 60) doluluk = 250
++    if (sayı >= 40 && sayı < 50) doluluk = 280
++    if (sayı >= 30 && sayı < 40) doluluk = 310
++    if (sayı >= 20 && sayı < 30) doluluk = 340
++    if (sayı >= 10 && sayı < 20) doluluk = 370
++    if (sayı >= 5 && sayı < 10) doluluk = 385
++    if (sayı >= 0 && sayı < 5) doluluk = 399
++
++
++    ctx.globalAlpha = 0.6;
++    var gradient = ctx.createLinearGradient(0, y, 0, doluluk);
++    gradient.addColorStop(0, "#ffffff");
++    gradient.addColorStop(0.5, "#ffffff");
++    gradient.addColorStop(0.5, "#ff0000");
++    gradient.addColorStop(0.1, "#ff0000");
++    ctx.fillStyle = gradient;
++    ctx.shadowBlur = 9;
++    ctx.shadowColor = "#ff0000";
++    ctx.shadowOffsetY = 0;
++    ctx.shadowOffsetX = 0;
++    ctx.fill();
+ 
+-  try {
+-    const messageAuthor = await loadImage(this.avatar)
+-    const targetMention = await loadImage(this.avatar2)
+ 
++
++    ctx.fillStyle = `WHITE`;
++    ctx.font = `bold 36px Sans`;
++    ctx.shadowBlur = 9;
++    ctx.shadowColor = "#0a0a0a";
++    ctx.shadowOffsetY = 8;
++    ctx.shadowOffsetX = -6;
+     ctx.globalAlpha = 1;
++    ctx.textAlign = "center";
++    ctx.fillText(`${sayı}%`, 350, 190)
+     ctx.beginPath();
+-  ctx.fill()
+     ctx.lineWidth = 8;
+-  ctx.arc(160, 175, 90, 0, 2 * Math.PI);
+-  ctx.arc(540, 175, 90, 0, 2 * Math.PI);
+-    ctx.clip();
+-    ctx.drawImage(messageAuthor, 60, 75, 200, 200) 
+-    ctx.drawImage(targetMention, 440, 75, 200, 200)
++    ctx.fill()
++    ctx.lineWidth = 8;
++
++    try {
++      const messageAuthor = await loadImage(this.avatar)
++      const targetMention = await loadImage(this.avatar2)
++
++      ctx.globalAlpha = 1;
++      ctx.beginPath();
++      ctx.fill()
++      ctx.lineWidth = 8;
++      ctx.arc(160, 175, 90, 0, 2 * Math.PI);
++      ctx.arc(540, 175, 90, 0, 2 * Math.PI);
++      ctx.clip();
++      ctx.drawImage(messageAuthor, 60, 75, 200, 200)
++      ctx.drawImage(targetMention, 440, 75, 200, 200)
+ 
+     } catch {
+       throw new Error("The image given in the argument of the setAvatars method is not valid or you are not connected to the internet.");
+diff --git a/node_modules/canvafy/typings/src/level-up.d.ts b/node_modules/canvafy/typings/src/level-up.d.ts
+index 9643dec..4c67035 100644
+--- a/node_modules/canvafy/typings/src/level-up.d.ts
++++ b/node_modules/canvafy/typings/src/level-up.d.ts
+@@ -7,15 +7,15 @@ export = LevelUp;
+  * @type {Class}
+  */
+ declare class LevelUp {
+-    data: CanvafyLevelUpData;
++  data: CanvafyLevelUpData;
+ 
+-   /**
+-     * .setAvatar
+-     * @param {string} image Set User Avatar URL
+-     * @returns {LevelUp}
+-     * @example setAvatar("https://someone-image.png")
+-     */
+-   setAvatar(image:string):LevelUp;
++  /**
++    * .setAvatar
++    * @param {string} image Set User Avatar URL
++    * @returns {LevelUp}
++    * @example setAvatar("https://someone-image.png")
++    */
++  setAvatar(image: string): LevelUp;
+ 
+   /**
+      * .setAvatarBorder
+@@ -23,7 +23,7 @@ declare class LevelUp {
+      * @returns {LevelUp}
+      * @example setAvatarBorder("#fff")
+      */
+-  setAvatarBorder(color:string):LevelUp;
++  setAvatarBorder(color: string): LevelUp;
+ 
+ 
+   /**
+@@ -34,7 +34,7 @@ declare class LevelUp {
+      * @example setBackground("image","https://someone-image.png")
+      * @example setBackground("color","#000")
+      */
+-  setBackground(type:"image"|"color", value:string):LevelUp;
++  setBackground(type: "image" | "color", value: string): LevelUp;
+ 
+   /**
+      * .setBorder
+@@ -42,7 +42,7 @@ declare class LevelUp {
+      * @returns {LevelUp}
+      * @example setBorder("#fff")
+      */
+-  setBorder(color:string):LevelUp;
++  setBorder(color: string): LevelUp;
+ 
+ 
+   /**
+@@ -52,15 +52,15 @@ declare class LevelUp {
+      * @returns {LevelUp}
+      * @example setLevels(5,6)
+      */
+-  setLevels(oldLevel:number, newLevel:number):LevelUp;
++  setLevels(oldLevel: number, newLevel: number): LevelUp;
+ 
+-    /**
+-     * .setOverlayOpacity
+-     * @param {number} opacity must be between 0 and 1
+-     * @returns {LevelUp}
+-     * @example setOverlayOpacity(0.7)
+-     */
+-  setOverlayOpacity(opacity:number):LevelUp;
++  /**
++   * .setOverlayOpacity
++   * @param {number} opacity must be between 0 and 1
++   * @returns {LevelUp}
++   * @example setOverlayOpacity(0.7)
++   */
++  setOverlayOpacity(opacity: number): LevelUp;
+ 
+   /**
+      * .setUsername
+@@ -70,36 +70,36 @@ declare class LevelUp {
+      * @example setUsername("fivesobes")
+      * @example setUsername("fivesobes","#ff0000")
+      */
+-  setUsername(text:string, color?:string):LevelUp;
++  setUsername(text: string, color?: string): LevelUp;
+ 
+ 
+-    build(): Promise<Buffer>;
++  build(): Promise<Buffer>;
+ }
+ 
+ declare namespace LevelUp { export { CanvafyLevelUpData }; }
+ 
+ type CanvafyLevelUpData = {
+-    avatar: "https://cdn.discordapp.com/embed/avatars/0.png";
+-    background: {
+-      type: "color",
+-      background: "#23272a"
+-    };
+-    title: {
+-      data: "Welcome",
+-      color: "#fff",
+-      size: 36
+-    };
+-    description: {
+-      data: "Welcome to this server, go read the rules please!",
+-      color: "#a7b9c5",
+-      size: 26
+-    };
+-    overlay_opacity: 0;
+-    levels: {
+-      oldLevel: 0,
+-      newLevel: 1
+-    }
+-    border:null;
+-    avatar_border: "#2a2e35";
++  avatar: "https://cdn.discordapp.com/embed/avatars/0.png";
++  background: {
++    type: "color",
++    value: "#5865F2"
++  };
++  title: {
++    data: "Welcome",
++    color: "#fff",
++    size: 36
++  };
++  description: {
++    data: "Welcome to this server, go read the rules please!",
++    color: "#a7b9c5",
++    size: 26
++  };
++  overlay_opacity: 0;
++  levels: {
++    oldLevel: 0,
++    newLevel: 1
++  }
++  border: null;
++  avatar_border: "#2a2e35";
+ };
+ //# sourceMappingURL=level-up.d.ts.map

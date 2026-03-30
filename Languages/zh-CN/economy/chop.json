@@ -1,0 +1,9 @@
+{
+    "TITLE": "砍伐",
+    "NO_DB": "MongoDB 未配置，因此经济功能已禁用。",
+    "COOLDOWN_TITLE": "砍伐冷却中",
+    "COOLDOWN_TEXT": "你累了。**{{next}}** 后再来。",
+    "SUCCESS_TITLE": "砍伐完成！",
+    "SUCCESS_TEXT": "你获得了 **{{amount}}x {{item}}** 和 **{{coins}}** 🪙。\n余额: **{{balance}}** 🪙。",
+    "ERROR": "无法完成砍伐。"
+}

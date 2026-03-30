@@ -1,0 +1,12 @@
+{
+    "TITLE": "Impostazioni economia",
+    "LINE_PREFIX": "• Prefisso: `{{prefix}}`",
+    "LINE_LANG": "• Lingua: `{{lang}}`",
+    "LINE_DB": "• Database: **{{status}}**",
+    "DB_ON": "ATTIVO",
+    "DB_OFF": "DISATTIVATO",
+    "LINE_DAILY": "• Daily: **{{min}}–{{max}}** 🪙",
+    "LINE_WORK": "• Work: **{{min}}–{{max}}** 🪙",
+    "LINE_SALARY": "• Salary: **{{min}}–{{max}}** 🪙",
+    "FOOTER": "Alcuni intervalli sono controllati da variabili d'ambiente."
+}

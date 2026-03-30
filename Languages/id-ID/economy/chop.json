@@ -1,0 +1,9 @@
+{
+    "TITLE": "Tebang kayu",
+    "NO_DB": "MongoDB belum dikonfigurasi, jadi ekonomi dinonaktifkan.",
+    "COOLDOWN_TITLE": "Tebang kayu dalam cooldown",
+    "COOLDOWN_TEXT": "Kamu lelah. Kembali dalam **{{next}}**.",
+    "SUCCESS_TITLE": "Tebang selesai!",
+    "SUCCESS_TEXT": "Kamu mendapatkan **{{amount}}x {{item}}** dan **{{coins}}** 🪙.\nSaldo: **{{balance}}** 🪙.",
+    "ERROR": "Aku tidak bisa menyelesaikan penebangan."
+}

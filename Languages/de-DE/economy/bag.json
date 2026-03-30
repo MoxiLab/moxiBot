@@ -1,0 +1,16 @@
+{
+    "TITLE_PUBLIC": "🎒 Deine Tasche",
+    "TITLE_PRIVATE": "🎒 Deine Tasche (privat)",
+    "CATEGORY_OTHER": "Sonstiges",
+    "HELP_USE": "Du kannst einen Gegenstand benutzen mit: {{use}}",
+    "HELP_BUFFS": "Du kannst deine aktiven Buffs ansehen mit: {{buffs}}",
+    "EMBED_EMPTY": "_Du hast keine Gegenstände in dieser Kategorie._",
+    "FOOTER_PAGE": "Seite {{page}} von {{total}}",
+    "SELECT_PLACEHOLDER": "Kategorie auswählen",
+    "SELECT_DESC": "{{types}} Typen • {{total}} insgesamt",
+    "SELECT_EMPTY_OPTION": "Keine Gegenstände",
+    "ONLY_AUTHOR_BUTTONS": "Nur der Nutzer, der die Tasche geöffnet hat, kann diese Buttons benutzen.",
+    "ONLY_AUTHOR_MENU": "Nur der Nutzer, der die Tasche geöffnet hat, kann dieses Menü benutzen.",
+    "INFO_TEXT": "Nutze den Selector, um die Kategorie zu wechseln. Seiten mit ◀ ▶ wechseln. Mit ❌ schließen.",
+    "CLOSED_TEXT": "Tasche geschlossen."
+}

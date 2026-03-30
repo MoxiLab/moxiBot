@@ -1,0 +1,115 @@
+const moxi = require('../../i18n');
+const { EMOJIS } = require('../../Util/emojis');
+const { buildNoticeContainer, asV2MessageOptions } = require('../../Util/v2Notice');
+const { shouldShowCooldownNotice } = require('../../Util/cooldownNotice');
+const { claimCooldownReward, formatDuration } = require('../../Util/economyCore');
+const { isPremiumActive } = require('../../Util/premium');
+
+const { economyCategory } = require('../../Util/commandCategories');
+
+module.exports = {
+    name: 'daily',
+    alias: ['daily'],
+    Category: economyCategory,
+    usage: 'daily',
+    description: 'commands:CMD_DAILY_DESC',
+    cooldown: 0,
+    command: {
+        prefix: true,
+        slash: false,
+        ephemeral: false,
+    },
+
+    async execute(Moxi, message) {
+        const guildId = message.guildId || message.guild?.id;
+        const lang = await moxi.guildLang(guildId, process.env.DEFAULT_LANG || 'es-ES');
+        const t = (k, vars = {}) => moxi.translate(`economy/daily:${k}`, lang, vars);
+
+        const cooldownMs = 24 * 60 * 60 * 1000;
+        const minAmount = Number.isFinite(Number(process.env.DAILY_MIN)) ? Math.max(0, Math.trunc(Number(process.env.DAILY_MIN))) : 200;
+        const maxAmount = Number.isFinite(Number(process.env.DAILY_MAX)) ? Math.max(minAmount, Math.trunc(Number(process.env.DAILY_MAX))) : 400;
+
+        const premium = await isPremiumActive(message.author.id);
+        const premiumMultiplierRaw = Number(process.env.DAILY_PREMIUM_MULTIPLIER);
+        const premiumMultiplier = Number.isFinite(premiumMultiplierRaw) ? Math.max(1, premiumMultiplierRaw) : 1.15;
+        const premiumBonusRaw = Number(process.env.DAILY_PREMIUM_BONUS);
+        const premiumBonus = Number.isFinite(premiumBonusRaw) ? Math.max(0, Math.trunc(premiumBonusRaw)) : 0;
+
+        const effectiveMinAmount = premium ? Math.max(0, Math.trunc(minAmount * premiumMultiplier) + premiumBonus) : minAmount;
+        const effectiveMaxAmount = premium
+            ? Math.max(effectiveMinAmount, Math.trunc(maxAmount * premiumMultiplier) + premiumBonus)
+            : maxAmount;
+
+        const res = await claimCooldownReward({
+            userId: message.author.id,
+            field: 'lastDaily',
+            cooldownMs,
+            minAmount: effectiveMinAmount,
+            maxAmount: effectiveMaxAmount,
+        });
+
+        if (!res.ok) {
+            if (res.reason === 'no-db') {
+                return message.reply(
+                    asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.cross,
+                            title: t('NO_DB_TITLE'),
+                            text: t('NO_DB_TEXT'),
+                        })
+                    )
+                );
+            }
+
+            if (res.reason === 'cooldown') {
+                const showFull = shouldShowCooldownNotice({ userId: message.author.id, key: 'daily', windowMs: 15_000, threshold: 3 });
+
+                const reply = await message.reply({
+                    ...asV2MessageOptions(
+                        buildNoticeContainer({
+                            emoji: EMOJIS.hourglass,
+                            title: t('COOLDOWN_TITLE'),
+                            text: showFull
+                                ? t('COOLDOWN_TEXT', {
+                                    next: formatDuration(res.nextInMs),
+                                    balance: res.balance,
+                                })
+                                : t('COOLDOWN_SOFT_TEXT', {
+                                    next: formatDuration(res.nextInMs),
+                                    balance: res.balance,
+                                }),
+                        })
+                    ),
+                    allowedMentions: { repliedUser: false },
+                });
+
+                if (!showFull) {
+                    setTimeout(() => reply.delete().catch(() => null), 10_000);
+                }
+
+                return;
+            }
+
+            return message.reply(
+                asV2MessageOptions(
+                    buildNoticeContainer({
+                        emoji: EMOJIS.cross,
+                        title: t('ERROR_TITLE'),
+                        text: res.message || t('UNKNOWN_ERROR'),
+                    })
+                )
+            );
+        }
+
+        return message.reply({
+            ...asV2MessageOptions(
+                buildNoticeContainer({
+                    emoji: '🎁',
+                    title: t('CLAIMED_TITLE'),
+                    text: t('CLAIMED_TEXT', { amount: res.amount, balance: res.balance }),
+                })
+            ),
+            allowedMentions: { repliedUser: false },
+        });
+    },
+};

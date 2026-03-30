@@ -1,0 +1,13 @@
+{
+    "TITLE": "رصيد {{user}}",
+    "COINS": "عملات",
+    "BANK": "البنك",
+    "SAKURAS": "ساكورا",
+    "GLOBAL_RANK": "الترتيب العالمي",
+    "BTN_DEPOSIT": "إيداع",
+    "BTN_WITHDRAW": "سحب",
+    "ONLY_AUTHOR": "فقط صاحب الرسالة يمكنه استخدام هذه الأزرار.",
+    "ONLY_OWN_BALANCE": "يمكنك إدارة رصيدك أنت فقط.",
+    "NO_COINS_TO_DEPOSIT": "ليس لديك عملات للإيداع.",
+    "NO_COINS_TO_WITHDRAW": "ليس لديك عملات في البنك للسحب."
+}

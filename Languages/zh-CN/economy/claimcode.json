@@ -1,0 +1,12 @@
+{
+    "TITLE": "兑换码",
+    "USAGE": "用法: `{{prefix}}claimcode <code>`",
+    "NO_DB": "MongoDB 未配置，因此无法兑换代码。",
+    "INVALID_TITLE": "无效代码",
+    "INVALID_TEXT": "该代码不存在或不可用。",
+    "ALREADY_TITLE": "已兑换",
+    "ALREADY_TEXT": "你已经兑换过该代码。",
+    "SUCCESS_TITLE": "兑换成功！",
+    "SUCCESS_TEXT": "你获得了 **{{amount}}** 🪙。\n余额: **{{balance}}** 🪙。",
+    "ERROR": "无法兑换该代码。"
+}

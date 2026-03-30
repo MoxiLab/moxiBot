@@ -1,0 +1,843 @@
+{
+    "categories": {
+        "Buffs": "Buff",
+        "Collectibles": "Koleksi",
+        "Consumables": "Konsumsi",
+        "Tools": "Alat",
+        "Keys": "Kunci",
+        "Loot": "Jarahan",
+        "Pets": "Peliharaan",
+        "Materials": "Material",
+        "Upgrades": "Peningkatan",
+        "Quests": "Misi",
+        "Potions": "Ramuan",
+        "Scrolls": "Gulungan",
+        "Protection": "Perlindungan"
+    },
+    "items": {
+        "buffs/scroll-de-impulso-moxi": {
+            "name": "Gulungan Peningkat Moxi",
+            "description": "Meningkatkan kecepatan semua aksi selama 1 jam."
+        },
+        "buffs/pez-lumina": {
+            "name": "Ikan Lumina",
+            "description": "Bonus pengalaman untuk aktivitas air."
+        },
+        "buffs/gusano-brillo": {
+            "name": "Cacing Berkilau",
+            "description": "Meningkatkan peluang menemukan sumber daya langka."
+        },
+        "buffs/linterna-solar": {
+            "name": "Lentera Surya",
+            "description": "Memungkinkanmu menjelajahi area gelap dan menemukan harta tersembunyi."
+        },
+        "buffs/fruta-vital": {
+            "name": "Buah Vital",
+            "description": "Memulihkan energi dan memberi sedikit peningkatan kecepatan."
+        },
+        "buffs/scroll-mascota-veloz": {
+            "name": "Gulungan Peliharaan Gesit",
+            "description": "Peliharaanmu mendapatkan bonus kecepatan sementara."
+        },
+        "buffs/fruta-mutante": {
+            "name": "Buah Mutan",
+            "description": "Memberi efek acak; bisa positif atau negatif."
+        },
+        "buffs/holly-prisma": {
+            "name": "Holly Prisma",
+            "description": "Bonus khusus di event musiman."
+        },
+        "buffs/pan-dulce-moxi": {
+            "name": "Roti Manis Moxi",
+            "description": "Melipatgandakan hadiah misi selama 10 menit."
+        },
+        "buffs/pase-de-evento": {
+            "name": "Pass Event",
+            "description": "Akses hadiah dan area eksklusif (kadaluarsa dan yang sedang berjalan)."
+        },
+        "buffs/fogata-elemental": {
+            "name": "Api Unggun Elemental",
+            "description": "Memungkinkanmu berkemah dan mendapat buff sementara tergantung jenis kayu."
+        },
+        "buffs/scroll-gelido": {
+            "name": "Gulungan Gletser",
+            "description": "Meningkatkan pertahanan di area dingin."
+        },
+        "buffs/corona-de-invierno": {
+            "name": "Mahkota Musim Dingin",
+            "description": "Bonus khusus di event musim dingin."
+        },
+        "buffs/dulce-de-fresa": {
+            "name": "Permen Stroberi",
+            "description": "Memulihkan energi dan memberi bonus keberuntungan."
+        },
+        "buffs/trebol-de-fortuna": {
+            "name": "Semanggi Keberuntungan",
+            "description": "Meningkatkan peluang mendapatkan item langka."
+        },
+        "buffs/cascanueces-moxi": {
+            "name": "Pemecah Kacang Moxi",
+            "description": "Bonus pertahanan selama event musim dingin."
+        },
+        "coleccionables/medalla-de-nieve": {
+            "name": "Medali Salju",
+            "description": "Koleksi musim dingin."
+        },
+        "coleccionables/medalla-prisma": {
+            "name": "Medali Prisma",
+            "description": "Koleksi event spesial."
+        },
+        "coleccionables/medalla-lunar": {
+            "name": "Medali Bulan",
+            "description": "Didapat dari misi malam."
+        },
+        "coleccionables/token-festivo": {
+            "name": "Token Festival",
+            "description": "Bisa ditukar dengan hadiah di toko event."
+        },
+        "coleccionables/carta-de-amistad": {
+            "name": "Surat Persahabatan",
+            "description": "Koleksi dari event sosial."
+        },
+        "coleccionables/moneda-de-fortuna": {
+            "name": "Koin Keberuntungan",
+            "description": "Memberi bonus keberuntungan selama kamu memilikinya."
+        },
+        "coleccionables/gema-de-espiritu": {
+            "name": "Permata Roh",
+            "description": "Dibutuhkan untuk misi tingkat lanjut."
+        },
+        "coleccionables/corazon-prisma": {
+            "name": "Hati Prisma",
+            "description": "Koleksi dari event romantis."
+        },
+        "coleccionables/petalo-de-sakura": {
+            "name": "Kelopak Sakura",
+            "description": "Koleksi musim semi."
+        },
+        "coleccionables/bouquet-festivo": {
+            "name": "Buket Festival",
+            "description": "Koleksi dari event bunga."
+        },
+        "coleccionables/ticket-de-temporada": {
+            "name": "Tiket Musim",
+            "description": "Akses ke event spesial."
+        },
+        "coleccionables/varita-de-luz": {
+            "name": "Tongkat Cahaya",
+            "description": "Koleksi magis."
+        },
+        "coleccionables/cascabel-festivo": {
+            "name": "Lonceng Jingle Meriah",
+            "description": "Koleksi musim dingin."
+        },
+        "coleccionables/flor-de-espiritu": {
+            "name": "Bunga Roh",
+            "description": "Koleksi dari event bunga."
+        },
+        "coleccionables/fantasmita-moxi": {
+            "name": "Hantu kecil Moxi",
+            "description": "Koleksi Halloween."
+        },
+        "coleccionables/gato-sombrio": {
+            "name": "Kucing Gelap",
+            "description": "Koleksi dari event gelap."
+        },
+        "coleccionables/copa-de-campeon": {
+            "name": "Piala Juara",
+            "description": "Didapat dengan menyelesaikan tantangan spesial."
+        },
+        "consumibles/galleta-energetica": {
+            "name": "Kue Energi",
+            "description": "Memulihkan energi."
+        },
+        "consumibles/pastel-de-celebracion": {
+            "name": "Kue Perayaan",
+            "description": "Memberi bonus pengalaman."
+        },
+        "consumibles/fruta-magica": {
+            "name": "Buah Ajaib",
+            "description": "Memberi efek acak."
+        },
+        "consumibles/ensalada-refrescante": {
+            "name": "Salad Menyegarkan",
+            "description": "Memulihkan energi dan kesehatan."
+        },
+        "consumibles/fuegos-artificiales": {
+            "name": "Kembang Api",
+            "description": "Memberi bonus keberuntungan dalam event."
+        },
+        "consumibles/calabaza-festiva": {
+            "name": "Labu Meriah",
+            "description": "Konsumsi Halloween."
+        },
+        "consumibles/nuez-dorada": {
+            "name": "Kacang Emas",
+            "description": "Memberi bonus pertahanan."
+        },
+        "consumibles/electrolito": {
+            "name": "Elektrolit",
+            "description": "Memulihkan energi seketika."
+        },
+        "consumibles/monedas-de-oro": {
+            "name": "Koin Emas",
+            "description": "Barang konsumsi untuk membeli item di toko."
+        },
+        "consumibles/agua-fresca": {
+            "name": "Air Segar",
+            "description": "Membuatmu tetap bertenaga: bonus energi kecil."
+        },
+        "consumibles/te-verde": {
+            "name": "Teh Hijau",
+            "description": "Mengurangi lelah: bonus fokus ringan."
+        },
+        "consumibles/cafe-moxi": {
+            "name": "Kopi Moxi",
+            "description": "Sedikit mempercepat aksimu selama beberapa menit."
+        },
+        "consumibles/chocolate-caliente": {
+            "name": "Cokelat Panas",
+            "description": "Menghangatkan: bonus kecil saat event dingin."
+        },
+        "consumibles/sopa-caliente": {
+            "name": "Sup Panas",
+            "description": "Memulihkan energi dan memberi bonus ketahanan ringan."
+        },
+        "consumibles/barra-proteica": {
+            "name": "Batang Protein",
+            "description": "Energi cepat untuk aktivitas berat."
+        },
+        "consumibles/batido-prisma": {
+            "name": "Shake Prisma",
+            "description": "Bonus keberuntungan kecil untuk sementara."
+        },
+        "consumibles/sandwich-de-aventura": {
+            "name": "Sandwich Petualangan",
+            "description": "Memulihkan energi dan sedikit meningkatkan eksplorasi."
+        },
+        "consumibles/sushi-marino": {
+            "name": "Sushi Laut",
+            "description": "Bonus kecil untuk memancing dan jarahan laut."
+        },
+        "consumibles/pan-de-ajo": {
+            "name": "Roti Bawang Putih",
+            "description": "Meningkatkan stamina: ideal untuk menambang."
+        },
+        "herramientas/pico-prisma": {
+            "name": "Beliung Prisma",
+            "description": "Memungkinkanmu menambang mineral langka."
+        },
+        "herramientas/cana-de-pesca-moxi": {
+            "name": "Joran Pancing Moxi",
+            "description": "Meningkatkan peluang menangkap item langka."
+        },
+        "herramientas/llave-multiusos": {
+            "name": "Kunci Serbaguna",
+            "description": "Alat untuk memperbaiki dan membangun."
+        },
+        "herramientas/varita-solar": {
+            "name": "Tongkat Surya",
+            "description": "Memungkinkanmu melakukan aksi magis."
+        },
+        "herramientas/hacha-elemental": {
+            "name": "Kapak Elemental",
+            "description": "Alat untuk mengumpulkan kayu spesial."
+        },
+        "herramientas/incubadora": {
+            "name": "Inkubator",
+            "description": "Memungkinkanmu menetaskan telur."
+        },
+        "herramientas/revelador-prisma": {
+            "name": "Pengungkap Prisma",
+            "description": "Alat untuk menemukan harta tersembunyi."
+        },
+        "herramientas/barco-moxi": {
+            "name": "Perahu Moxi",
+            "description": "Memungkinkanmu menjelajahi wilayah laut."
+        },
+        "herramientas/dinamita": {
+            "name": "Dinamit",
+            "description": "Memungkinkanmu membuka jalur yang terhalang."
+        },
+        "herramientas/golem-minero-pescador": {
+            "name": "Golem Penambang/Pemancing",
+            "description": "Alat otomatis untuk menambang/memancing."
+        },
+        "herramientas/pico-de-hierro": {
+            "name": "Beliung Besi",
+            "description": "Alat menambang dasar."
+        },
+        "herramientas/pico-de-acero": {
+            "name": "Beliung Baja",
+            "description": "Meningkatkan efisiensi menambang."
+        },
+        "herramientas/pico-de-diamante": {
+            "name": "Beliung Berlian",
+            "description": "Ideal untuk urat yang langka dan keras."
+        },
+        "herramientas/pico-de-obsidiana": {
+            "name": "Beliung Obsidian",
+            "description": "Alat legendaris untuk penambangan ekstrem."
+        },
+        "herramientas/cana-de-bambu": {
+            "name": "Joran Bambu",
+            "description": "Joran sederhana untuk mulai memancing."
+        },
+        "herramientas/cana-de-carbono": {
+            "name": "Joran Karbon",
+            "description": "Meningkatkan peluang mendapat tangkapan langka."
+        },
+        "herramientas/red-de-pesca": {
+            "name": "Jaring Ikan",
+            "description": "Menangkap lebih banyak jarahan umum di area laut."
+        },
+        "herramientas/arpon-marino": {
+            "name": "Harpoon Laut",
+            "description": "Meningkatkan jarahan saat memancing di laut dalam."
+        },
+        "herramientas/pala-de-excavacion": {
+            "name": "Sekop Penggalian",
+            "description": "Digunakan untuk menemukan benda yang terkubur."
+        },
+        "herramientas/brujula-prisma": {
+            "name": "Kompas Prisma",
+            "description": "Membantumu bernavigasi dan menemukan rute."
+        },
+        "herramientas/mapa-arrugado": {
+            "name": "Peta Kusut",
+            "description": "Petunjuk untuk eksplorasi dan harta."
+        },
+        "herramientas/linterna-de-caverna": {
+            "name": "Lentera Gua",
+            "description": "Menerangi area gelap saat menjelajah."
+        },
+        "herramientas/detector-de-metales": {
+            "name": "Detektor Logam",
+            "description": "Menemukan benda berharga di bawah tanah."
+        },
+        "herramientas/cuerda-de-escalada": {
+            "name": "Tali Panjat",
+            "description": "Berguna untuk rute pegunungan dan penyelamatan."
+        },
+        "herramientas/kit-de-reparacion": {
+            "name": "Kit Perbaikan",
+            "description": "Memperbaiki alat dan perlengkapan (fitur mendatang)."
+        },
+        "herramientas/lupa-antigua": {
+            "name": "Kaca Pembesar Kuno",
+            "description": "Membantu mengidentifikasi benda dan petunjuk."
+        },
+        "herramientas/frasco-cazabichos": {
+            "name": "Toples Penangkap Serangga",
+            "description": "Memungkinkanmu menangkap serangga dan makhluk kecil."
+        },
+        "herramientas/guantes-de-minero": {
+            "name": "Sarung Tangan Penambang",
+            "description": "Melindungi tanganmu saat bekerja keras."
+        },
+        "herramientas/sierra-de-carpintero": {
+            "name": "Gergaji Tukang Kayu",
+            "description": "Alat pertukangan kayu (fitur mendatang)."
+        },
+        "herramientas/cuchillo-de-supervivencia": {
+            "name": "Pisau Bertahan Hidup",
+            "description": "Alat serbaguna untuk eksplorasi."
+        },
+        "herramientas/martillo-de-forja": {
+            "name": "Palu Tempa",
+            "description": "Dibutuhkan untuk crafting tingkat lanjut (fitur mendatang)."
+        },
+        "herramientas/anzuelo-de-lux": {
+            "name": "Kail Lux",
+            "description": "Meningkatkan peluang tangkapan langka di perairan dalam."
+        },
+        "herramientas/cebo-prisma": {
+            "name": "Umpan Prisma",
+            "description": "Sementara meningkatkan peluang tangkapan langka."
+        },
+        "herramientas/taladro-portatil": {
+            "name": "Bor Portabel",
+            "description": "Alat kuat untuk menambang cepat (fitur mendatang)."
+        },
+        "herramientas/bomba-de-humo": {
+            "name": "Bom Asap",
+            "description": "Membantumu kabur atau menghindari bahaya (fitur mendatang)."
+        },
+        "llaves/llave-prisma": {
+            "name": "Kunci Prisma",
+            "description": "Membuka peti spesial."
+        },
+        "llaves/llave-elemental": {
+            "name": "Kunci Elemental",
+            "description": "Membuka area event dan peti."
+        },
+        "llaves/talisman-solar": {
+            "name": "Jimat Surya",
+            "description": "Memberi akses ke area magis."
+        },
+        "llaves/anillo-de-fuego": {
+            "name": "Cincin Api",
+            "description": "Kunci spesial untuk event bertema api."
+        },
+        "llaves/llave-abisal": {
+            "name": "Kunci Abisal",
+            "description": "Membuka peti dan pintu di area dalam."
+        },
+        "llaves/llave-glaciar": {
+            "name": "Kunci Gletser",
+            "description": "Membuka peti es dan ruang dingin."
+        },
+        "llaves/llave-volcanica": {
+            "name": "Kunci Vulkanik",
+            "description": "Membuka peti dan pintu di area panas."
+        },
+        "llaves/llave-lunar": {
+            "name": "Kunci Bulan",
+            "description": "Akses ruang malam dan hadiah bulan."
+        },
+        "llaves/llave-antigua": {
+            "name": "Kunci Kuno",
+            "description": "Kunci misterius untuk peti kuno."
+        },
+        "loots/caja-misteriosa": {
+            "name": "Kotak Misteri",
+            "description": "Berisi item acak."
+        },
+        "loots/cofre-de-fortuna": {
+            "name": "Peti Keberuntungan",
+            "description": "Berisi koin, material, atau item langka."
+        },
+        "loots/caja-marina": {
+            "name": "Kotak Laut",
+            "description": "Berisi item dari event air."
+        },
+        "loots/caja-premium-diamante-platino": {
+            "name": "Kotak Premium/Berlian/Platinum",
+            "description": "Berisi item berkualitas tinggi."
+        },
+        "loots/pack-de-celebracion": {
+            "name": "Paket Perayaan",
+            "description": "Paket berisi item event."
+        },
+        "loots/caja-de-suerte": {
+            "name": "Kotak Keberuntungan",
+            "description": "Kotak dengan peluang tinggi mendapatkan item langka."
+        },
+        "loots/tarjeta-de-regalo": {
+            "name": "Kartu Hadiah",
+            "description": "Dapat ditukar dengan item di toko."
+        },
+        "loots/bolsa-de-materiales": {
+            "name": "Kantong Material",
+            "description": "Berisi material acak untuk crafting."
+        },
+        "loots/bolsa-de-gemas": {
+            "name": "Kantong Permata",
+            "description": "Berisi permata atau pecahan langka."
+        },
+        "loots/caja-de-herramientas": {
+            "name": "Kotak Peralatan",
+            "description": "Peluang mendapatkan alat yang berguna."
+        },
+        "loots/cofre-abisal": {
+            "name": "Peti Abisal",
+            "description": "Jarahan langka dari area dalam."
+        },
+        "loots/cofre-glaciar": {
+            "name": "Peti Gletser",
+            "description": "Jarahan langka dari wilayah es dan aurora."
+        },
+        "loots/cofre-volcanico": {
+            "name": "Peti Vulkanik",
+            "description": "Jarahan langka dari lava dan mineral."
+        },
+        "mascotas/huevo-prisma": {
+            "name": "Telur Prisma",
+            "description": "Memungkinkanmu mendapatkan peliharaan dengan kemampuan unik."
+        },
+        "mascotas/huevo-festivo": {
+            "name": "Telur Festival",
+            "description": "Peliharaan dari event spesial."
+        },
+        "mascotas/huevo-elemental": {
+            "name": "Telur Elemental",
+            "description": "Peliharaan dengan kekuatan elemental."
+        },
+        "mascotas/huevo-legendario": {
+            "name": "Telur Legendaris",
+            "description": "Peliharaan yang langka dan kuat."
+        },
+        "mascotas/huevo-magico": {
+            "name": "Telur Ajaib",
+            "description": "Menetas menjadi peliharaan dengan sifat magis dan kemampuan spesial."
+        },
+        "mascotas/huevo-abisal": {
+            "name": "Telur Abisal",
+            "description": "Menetas dari area dalam; selaras dengan air dan bayangan."
+        },
+        "mascotas/huevo-solar": {
+            "name": "Telur Surya",
+            "description": "Anak menetas selaras cahaya; meningkatkan hadiah di siang hari."
+        },
+        "mascotas/huevo-brumoso": {
+            "name": "Telur Berkabut",
+            "description": "Anak menetas selaras kabut; bonus untuk eksplorasi diam-diam."
+        },
+        "mascotas/huevo-de-bosque": {
+            "name": "Telur Hutan",
+            "description": "Anak menetas selaras alam; bonus untuk mengumpulkan."
+        },
+        "mascotas/huevo-de-montana": {
+            "name": "Telur Gunung",
+            "description": "Anak menetas tangguh; bonus untuk menambang dan rute terjal."
+        },
+        "mascotas/huevo-de-tormenta": {
+            "name": "Telur Badai",
+            "description": "Anak menetas listrik; bonus saat event cuaca."
+        },
+        "mascotas/huevo-aurora": {
+            "name": "Telur Aurora",
+            "description": "Anak menetas musim dingin yang langka; bonus saat musim dingin."
+        },
+        "mascotas/huevo-jardin": {
+            "name": "Telur Kebun",
+            "description": "Anak menetas ramah; bonus untuk tugas sosial dan perawatan."
+        },
+        "mascotas/huevo-de-cristal": {
+            "name": "Telur Kristal",
+            "description": "Anak menetas prismatik; bonus keberuntungan kecil."
+        },
+        "mascotas/huevo-meteoro": {
+            "name": "Telur Meteor",
+            "description": "Anak menetas sangat langka; bonus untuk jarahan dan material spesial."
+        },
+        "mascotas/huevo-volcanico": {
+            "name": "Telur Vulkanik",
+            "description": "Menetas dari area panas; bonus untuk menambang dan ketahanan panas."
+        },
+        "mascotas/huevo-glaciar": {
+            "name": "Telur Gletser",
+            "description": "Menetas dari area dingin; bonus untuk bertahan hidup dan eksplorasi musim dingin."
+        },
+        "mascotas/huevo-marino": {
+            "name": "Telur Laut",
+            "description": "Anak menetas akuatik; bonus untuk memancing dan rute laut."
+        },
+        "mascotas/huevo-selvatico": {
+            "name": "Telur Liar",
+            "description": "Anak menetas hutan; bonus untuk mengumpulkan tanaman langka."
+        },
+        "mascotas/huevo-umbrio": {
+            "name": "Telur Bayangan",
+            "description": "Anak menetas bayangan; bonus saat event malam."
+        },
+        "mascotas/huevo-radiante": {
+            "name": "Telur Bercahaya",
+            "description": "Anak menetas cahaya; bonus keberuntungan kecil untuk peti."
+        },
+        "mascotas/ocarina-del-vinculo": {
+            "name": "Okarina Ikatan",
+            "description": "Melodi kuno yang memanggil peliharaanmu kembali jika pergi karena kurang dirawat."
+        },
+        "mascotas/huevo-torbellino": {
+            "name": "Telur Angin Puyuh",
+            "description": "Anak menetas angin; meningkatkan perjalanan dan misi cepat."
+        },
+        "mascotas/huevo-fertil": {
+            "name": "Telur Subur",
+            "description": "Anak menetas padang rumput; bonus untuk pengumpulan umum."
+        },
+        "mascotas/huevo-coral": {
+            "name": "Telur Karang",
+            "description": "Anak menetas terumbu; bonus untuk jarahan laut."
+        },
+        "mascotas/huevo-relampago": {
+            "name": "Telur Petir",
+            "description": "Anak menetas listrik yang langka; bonus untuk tantangan berbatas waktu."
+        },
+        "mascotas/huevo-lunar": {
+            "name": "Telur Bulan",
+            "description": "Anak menetas malam yang langka; bonus untuk misi malam."
+        },
+        "mascotas/huevo-solar-real": {
+            "name": "Telur Surya Asli",
+            "description": "Versi langka dari Telur Surya; bonus siang hari lebih besar."
+        },
+        "mascotas/huevo-prisma-antiguo": {
+            "name": "Telur Prisma Kuno",
+            "description": "Anak menetas sangat langka; bonus saat event spesial."
+        },
+        "mascotas/huevo-cometa": {
+            "name": "Telur Komet",
+            "description": "Anak menetas ultra-langka; peluang ekstra untuk item langka."
+        },
+        "mascotas/huevo-encantado": {
+            "name": "Telur Terpesona",
+            "description": "Anak menetas magis; bonus untuk efek buff sementara."
+        },
+        "mascotas/huevo-guardian": {
+            "name": "Telur Penjaga",
+            "description": "Anak menetas defensif; mengurangi penalti saat event."
+        },
+        "materiales/hierba-prisma": {
+            "name": "Rumput Prisma",
+            "description": "Material crafting."
+        },
+        "materiales/roca-volcanica": {
+            "name": "Batu Vulkanik",
+            "description": "Material untuk peningkatan pertahanan."
+        },
+        "materiales/barra-de-oro-acero": {
+            "name": "Batang Emas/Baja",
+            "description": "Material untuk crafting tingkat lanjut."
+        },
+        "materiales/fragmento-de-espiritu": {
+            "name": "Pecahan Roh",
+            "description": "Material untuk misi dan peningkatan."
+        },
+        "materiales/mineral-elemental": {
+            "name": "Mineral Elemen",
+            "description": "Material untuk crafting alat."
+        },
+        "materiales/flor-de-amor": {
+            "name": "Bunga Cinta",
+            "description": "Material untuk event romantis."
+        },
+        "materiales/fosil": {
+            "name": "Fosil",
+            "description": "Material untuk misi eksplorasi."
+        },
+        "materiales/dulce-festivo": {
+            "name": "Permen Festival",
+            "description": "Material untuk event musiman."
+        },
+        "materiales/alga-marina": {
+            "name": "Rumput Laut",
+            "description": "Material memancing dan bahan crafting laut."
+        },
+        "materiales/concha-marina": {
+            "name": "Cangkang Laut",
+            "description": "Material umum dari area pesisir."
+        },
+        "materiales/coral-prisma": {
+            "name": "Karang Prisma",
+            "description": "Material langka dari terumbu dan laut dalam."
+        },
+        "materiales/perla-azur": {
+            "name": "Mutiara Azur",
+            "description": "Harta laut yang berharga."
+        },
+        "materiales/mineral-de-cobre": {
+            "name": "Bijih Tembaga",
+            "description": "Material tambang umum."
+        },
+        "materiales/mineral-de-hierro": {
+            "name": "Bijih Besi",
+            "description": "Dasar untuk ingot dan alat."
+        },
+        "materiales/mineral-de-plata": {
+            "name": "Bijih Perak",
+            "description": "Mineral berharga untuk crafting."
+        },
+        "materiales/mineral-de-oro": {
+            "name": "Bijih Emas",
+            "description": "Mineral langka untuk crafting tingkat lanjut."
+        },
+        "materiales/mineral-de-diamante": {
+            "name": "Bijih Berlian",
+            "description": "Mineral sangat langka: crafting elit."
+        },
+        "materiales/madera-robusta": {
+            "name": "Kayu Kokoh",
+            "description": "Bagus untuk struktur dan alat."
+        },
+        "materiales/madera-encantada": {
+            "name": "Kayu Terpesona",
+            "description": "Kayu langka dengan sifat magis."
+        },
+        "materiales/cuero-curtido": {
+            "name": "Kulit Tersamak",
+            "description": "Material fleksibel untuk perlengkapan."
+        },
+        "materiales/tela-resistente": {
+            "name": "Kain Tahan Lama",
+            "description": "Material untuk ransel dan pakaian."
+        },
+        "materiales/hilo-fino": {
+            "name": "Benang Halus",
+            "description": "Material jahit untuk crafting."
+        },
+        "materiales/polvo-prisma": {
+            "name": "Debu Prisma",
+            "description": "Bahan magis untuk peningkatan."
+        },
+        "materiales/esencia-solar": {
+            "name": "Esensi Surya",
+            "description": "Bahan cerah untuk crafting langka."
+        },
+        "materiales/esencia-lunar": {
+            "name": "Esensi Bulan",
+            "description": "Bahan malam untuk resep spesial."
+        },
+        "materiales/esencia-umbria": {
+            "name": "Esensi Bayangan",
+            "description": "Energi gelap, sangat langka."
+        },
+        "materiales/fragmento-de-cristal": {
+            "name": "Pecahan Kristal",
+            "description": "Pecahan berkilau untuk crafting."
+        },
+        "materiales/gema-rubi": {
+            "name": "Permata Ruby",
+            "description": "Permata langka untuk barter dan peningkatan."
+        },
+        "materiales/gema-zafiro": {
+            "name": "Permata Safir",
+            "description": "Permata langka dengan energi akuatik."
+        },
+        "materiales/gema-esmeralda": {
+            "name": "Permata Zamrud",
+            "description": "Permata langka dengan energi alam."
+        },
+        "materiales/nucleo-elemental": {
+            "name": "Inti Elemental",
+            "description": "Komponen sangat langka untuk alat elemental."
+        },
+        "materiales/placa-de-acero": {
+            "name": "Pelat Baja",
+            "description": "Material kokoh untuk crafting tingkat lanjut."
+        },
+        "mejoras/potenciador-de-fortuna": {
+            "name": "Peningkat Keberuntungan",
+            "description": "Meningkatkan peluang mendapatkan hadiah besar."
+        },
+        "mejoras/escudo-de-tolerancia": {
+            "name": "Perisai Toleransi",
+            "description": "Mengurangi penalti saat event."
+        },
+        "mejoras/expansion-de-mochila": {
+            "name": "Perluasan Ransel",
+            "description": "Menambah ruang inventaris."
+        },
+        "mejoras/entrenamiento-moxi": {
+            "name": "Pelatihan Moxi",
+            "description": "Bonus pengalaman per aktivitas."
+        },
+        "mejoras/trabajo-en-equipo": {
+            "name": "Kerja Sama Tim",
+            "description": "Bonus saat bekerja dalam kelompok."
+        },
+        "mejoras/estrella-de-suerte": {
+            "name": "Bintang Keberuntungan",
+            "description": "Bonus keberuntungan."
+        },
+        "mejoras/aurora-festiva": {
+            "name": "Aurora Meriah",
+            "description": "Bonus saat event musim dingin."
+        },
+        "mejoras/tinte-personalizado": {
+            "name": "Pewarna Kustom",
+            "description": "Mengubah warna profil atau klubmu."
+        },
+        "mejoras/expansion-de-banco": {
+            "name": "Perluasan Bank",
+            "description": "Menambah kapasitas bank (fitur mendatang)."
+        },
+        "mejoras/expansion-de-mochila-plus": {
+            "name": "Perluasan Ransel Plus",
+            "description": "Menambah ruang inventaris lebih banyak (fitur mendatang)."
+        },
+        "mejoras/sello-de-proteccion": {
+            "name": "Segel Perlindungan",
+            "description": "Mengurangi kerugian saat event berbahaya (fitur mendatang)."
+        },
+        "mejoras/pase-premium-moxi": {
+            "name": "Tiket Premium Moxi",
+            "description": "Akses ke keuntungan sistem premium (fitur mendatang)."
+        },
+        "misiones/gema-prisma": {
+            "name": "Permata Prisma",
+            "description": "Dibutuhkan untuk misi tingkat lanjut."
+        },
+        "misiones/conejo-de-peluche": {
+            "name": "Boneka Kelinci",
+            "description": "Item misi spesial."
+        },
+        "misiones/espada-de-hielo": {
+            "name": "Pedang Es",
+            "description": "Dibutuhkan untuk misi eksplorasi."
+        },
+        "misiones/katana-solar": {
+            "name": "Katana Surya",
+            "description": "Item misi tingkat lanjut."
+        },
+        "misiones/mascara-de-zorro": {
+            "name": "Topeng Rubah",
+            "description": "Item misi spesial."
+        },
+        "pociones/pocion-de-regeneracion": {
+            "name": "Ramuan Regenerasi",
+            "description": "Memulihkan kesehatan."
+        },
+        "pociones/pocion-de-resistencia": {
+            "name": "Ramuan Ketahanan",
+            "description": "Sementara meningkatkan pertahanan."
+        },
+        "pociones/pocion-del-explorador": {
+            "name": "Ramuan Penjelajah",
+            "description": "Memungkinkanmu menjelajahi area baru."
+        },
+        "pociones/elixir-prisma": {
+            "name": "Eliksir Prisma",
+            "description": "Memberi bonus pengalaman dan energi."
+        },
+        "pociones/huevito-de-energia-exploracion-regeneracion-resistencia": {
+            "name": "Telur Kecil Energi/Eksplorasi/Regenerasi/Ketahanan",
+            "description": "Barang konsumsi spesial."
+        },
+        "pociones/pocion-de-suerte": {
+            "name": "Ramuan Keberuntungan",
+            "description": "Sementara meningkatkan keberuntungan."
+        },
+        "pociones/pocion-de-velocidad": {
+            "name": "Ramuan Kecepatan",
+            "description": "Sementara meningkatkan kecepatan."
+        },
+        "pociones/pocion-del-minero": {
+            "name": "Ramuan Penambang",
+            "description": "Sementara meningkatkan jarahan saat menambang."
+        },
+        "pociones/pocion-del-pescador": {
+            "name": "Ramuan Pemancing",
+            "description": "Sementara meningkatkan jarahan saat memancing."
+        },
+        "pociones/elixir-de-luz": {
+            "name": "Eliksir Cahaya",
+            "description": "Meningkatkan hadiah siang hari dan eksplorasi."
+        },
+        "pociones/elixir-de-sombra": {
+            "name": "Eliksir Bayangan",
+            "description": "Meningkatkan hadiah malam hari dan penyamaran."
+        },
+        "rollos/rollo-moxi": {
+            "name": "Gulungan Moxi",
+            "description": "Memberi kemampuan spesial sementara."
+        },
+        "rollos/rollo-de-estrategia": {
+            "name": "Gulungan Strategi",
+            "description": "Memungkinkan strategi tingkat lanjut dalam event."
+        },
+        "rollos/notas-del-explorador": {
+            "name": "Catatan Penjelajah",
+            "description": "Memberi petunjuk untuk misi."
+        },
+        "rollos/papiro-jeroglifico": {
+            "name": "Papirus/Hieroglif",
+            "description": "Membuka konten tersembunyi."
+        },
+        "proteccion/vida-extra": {
+            "name": "Nyawa Ekstra",
+            "description": "Memungkinkanmu hidup kembali sekali di event spesial."
+        }
+    }
+}

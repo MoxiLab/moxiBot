@@ -1,0 +1,12 @@
+{
+    "TITLE": "Salaire",
+    "DESC": "Récupère ton salaire quotidien.",
+    "CLAIMED_TITLE": "Salaire récupéré",
+    "CLAIMED_TEXT": "Tu as reçu **{{amount}}** 🪙.\nSolde actuel : **{{balance}}** 🪙.{{jobLine}}",
+    "COOLDOWN_TITLE": "Salaire en recharge",
+    "COOLDOWN_TEXT": "Tu as déjà récupéré ton salaire. Reviens dans **{{next}}**.\nSolde actuel : **{{balance}}** 🪙.{{jobLine}}",
+    "NO_DB_TITLE": "Base de données non configurée",
+    "NO_DB_TEXT": "MongoDB n'est pas configuré, donc les récompenses d'économie sont désactivées.",
+    "ERROR_TITLE": "Erreur",
+    "UNKNOWN_ERROR": "Une erreur est survenue."
+}

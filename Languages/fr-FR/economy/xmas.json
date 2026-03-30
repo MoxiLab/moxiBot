@@ -1,0 +1,10 @@
+{
+    "TITLE": "Noël",
+    "OUT_OF_SEASON": "Il n'y a pas de Noël actif pour le moment.",
+    "NO_DB": "MongoDB n'est pas configuré, donc l'économie est désactivée.",
+    "COOLDOWN_TITLE": "Noël en recharge",
+    "COOLDOWN_TEXT": "Reviens dans **{{next}}**.",
+    "CLAIMED_TITLE": "Cadeau de Noël",
+    "CLAIMED_TEXT": "Tu as reçu **{{amount}}** 🪙.\nSolde : **{{balance}}** 🪙.",
+    "ERROR": "Je n'ai pas pu récupérer le cadeau."
+}

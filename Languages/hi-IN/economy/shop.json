@@ -1,0 +1,19 @@
+{
+    "SHOP_TITLE": "दुकान",
+    "SHOP_EMBED_TITLE": "🛍️ Moxi की दुकान",
+    "SHOP_WELCOME": "मेरी छोटी-सी दुकान में आपका स्वागत है।",
+    "SHOP_INSTRUCTIONS": "आप खरीद सकते हैं: `{{prefix}}buy <id|name|itemId> [amount]` या `{{prefix}}moxishop buy <id|name|itemId> [amount]`.",
+    "SHOP_LIST_TITLE": "**आइटम सूची**",
+    "SHOP_ALL_ITEMS": "सभी आइटम",
+    "SHOP_CATEGORY": "श्रेणी",
+    "SHOP_NO_ITEMS": "_इस श्रेणी में कोई आइटम नहीं है।_",
+    "SHOP_FOOTER_PAGE": "पृष्ठ {{page}} / {{total}}",
+    "USAGE_BUY": "उपयोग: `.moxishop buy <id|name|itemId> [amount]`",
+    "NOT_FOUND_BY_ID": "ID {{id}} वाला कोई आइटम मौजूद नहीं है। IDs देखने के लिए .moxishop list उपयोग करें।",
+    "NOT_FOUND_GENERIC": "मैं दुकान में वह आइटम नहीं ढूँढ पाया। IDs देखने के लिए .moxishop list उपयोग करें।",
+    "INVALID_PRICE": "यह आइटम खरीदा नहीं जा सकता (अमान्य कीमत)।",
+    "INSUFFICIENT_FUNDS_TITLE": "पर्याप्त धन नहीं",
+    "INSUFFICIENT_FUNDS": "आपको {{cost}} 🪙 चाहिए और आपके पास {{balance}} 🪙 हैं।",
+    "PURCHASE_SUCCESS_TITLE": "खरीदारी पूरी हुई",
+    "PURCHASE_SUCCESS": "आपने **{{amount}}x {{name}}** को **{{cost}}** 🪙 में खरीदा।"
+}

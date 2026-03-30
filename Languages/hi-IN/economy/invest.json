@@ -1,0 +1,14 @@
+{
+    "BAD_AMOUNT_TITLE": "अमान्य मात्रा",
+    "BAD_AMOUNT_TEXT": "उपयोग: `invest <amount>`",
+    "NO_DB_TITLE": "डेटाबेस सेट नहीं है",
+    "NO_DB_TEXT": "MongoDB सेट नहीं है, इसलिए इकोनॉमी बंद है।",
+    "NO_FUNDS_TITLE": "पर्याप्त बैलेंस नहीं",
+    "NO_FUNDS_TEXT": "आपके पास **{{amount}}** 🪙 निवेश करने के लिए पर्याप्त बैलेंस नहीं है।\nवर्तमान बैलेंस: **{{balance}}** 🪙.",
+    "WIN_TITLE": "निवेश सफल",
+    "WIN_TEXT": "आपने **{{profit}}** 🪙 मुनाफ़ा कमाया।\nवर्तमान बैलेंस: **{{balance}}** 🪙.",
+    "LOSE_TITLE": "निवेश असफल",
+    "LOSE_TEXT": "आपने **{{amount}}** 🪙 खो दिए।\nवर्तमान बैलेंस: **{{balance}}** 🪙.",
+    "ERROR_TITLE": "त्रुटि",
+    "UNKNOWN_ERROR": "कोई त्रुटि हुई।"
+}

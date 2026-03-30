@@ -1,0 +1,12 @@
+{
+    "TITLE": "Gaji",
+    "DESC": "Klaim gaji harianmu.",
+    "CLAIMED_TITLE": "Gaji diklaim",
+    "CLAIMED_TEXT": "Kamu mendapat **{{amount}}** 🪙.\nSaldo saat ini: **{{balance}}** 🪙.{{jobLine}}",
+    "COOLDOWN_TITLE": "Gaji dalam cooldown",
+    "COOLDOWN_TEXT": "Kamu sudah klaim gaji. Kembali dalam **{{next}}**.\nSaldo saat ini: **{{balance}}** 🪙.{{jobLine}}",
+    "NO_DB_TITLE": "Database belum dikonfigurasi",
+    "NO_DB_TEXT": "MongoDB belum dikonfigurasi, jadi hadiah ekonomi dinonaktifkan.",
+    "ERROR_TITLE": "Error",
+    "UNKNOWN_ERROR": "Terjadi kesalahan."
+}

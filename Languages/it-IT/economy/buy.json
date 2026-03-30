@@ -1,0 +1,12 @@
+{
+    "ITEM_NOT_SPECIFIED_TITLE": "Oggetto non specificato",
+    "ITEM_NOT_SPECIFIED_TEXT": "Devi digitare il `name` o l'`id` dell'oggetto che vuoi comprare.",
+    "SHOP_TITLE": "Negozio",
+    "NOT_FOUND_BY_ID": "Non esiste nessun oggetto con ID {{id}}. Usa il comando shop per vedere gli ID.",
+    "NOT_FOUND_GENERIC": "Non sono riuscito a trovare quell'oggetto nel negozio. Usa il comando shop per vedere gli ID.",
+    "INVALID_PRICE": "Questo oggetto non può essere acquistato (prezzo non valido).",
+    "INSUFFICIENT_FUNDS_TITLE": "Fondi insufficienti",
+    "INSUFFICIENT_FUNDS": "Ti servono {{cost}} 🪙 e tu ne hai {{balance}} 🪙.",
+    "PURCHASE_SUCCESS_TITLE": "Acquisto completato",
+    "PURCHASE_SUCCESS": "Hai comprato **{{amount}}x {{name}}** per **{{cost}}** 🪙."
+}

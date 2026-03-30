@@ -1,0 +1,17 @@
+{
+    "TITLE": "Tendenze di mercato",
+    "FOOTER": "Queste tendenze cambiano ogni giorno (simulato).",
+    "LINE": "{{rank}}. {{icon}} **{{topic}}** — {{trend}}",
+    "UP": "📈 In salita",
+    "FLAT": "➖ Stabile",
+    "DOWN": "📉 In discesa",
+    "TOPIC_BUFFS": "Bonus",
+    "TOPIC_TOOLS": "Strumenti",
+    "TOPIC_PETS": "Animali domestici",
+    "TOPIC_MATERIALS": "Materiali",
+    "TOPIC_LOOT": "Bottino",
+    "TOPIC_KEYS": "Chiavi",
+    "TOPIC_COLLECTIBLES": "Collezionabili",
+    "TOPIC_POTIONS": "Pozioni",
+    "TOPIC_SCROLLS": "Pergamene"
+}

@@ -1,0 +1,13 @@
+{
+    "greeting": "## 🌸 مرحبًا! أنا {{mention}}، رفيقتك الموسيقية ذات الطابع الشرقي.",
+    "lang_label": "🌐 **{{langName}}** ({{lang}})",
+    "prefix_label": "✨ **البادئة في هذا الخادم:** `{{prefix}}`",
+    "prefix_source_env": "مصدر البادئة: **ENV (.env)**",
+    "prefix_source_custom": "مصدر البادئة: **إعداد مخصص للسيرفر**",
+    "user_prefix_label": "👤 **بادئتك الشخصية:** `{{userPrefix}}`",
+    "forgot_prefix": "هل نسيت البادئة الخاصة بي؟ فقط قم بمناداتي لترى ذلك في أي وقت.",
+    "invite": "ادعني",
+    "support": "الدعم",
+    "web": "الموقع",
+    "thanks": "شكرًا لاختيارك {{mention}}!"
+}

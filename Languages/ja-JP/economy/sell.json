@@ -1,0 +1,12 @@
+{
+    "TITLE": "売却",
+    "NO_DB": "MongoDB が設定されていないため、経済機能は無効です。",
+    "USAGE": "使い方: `{{prefix}}sell <id|name|itemId> [amount]`",
+    "NOT_FOUND_TITLE": "見つかりません",
+    "NOT_FOUND_TEXT": "そのアイテムが見つかりませんでした。",
+    "NOT_OWNED_TITLE": "所持していません",
+    "NOT_OWNED_TEXT": "そのアイテムをバッグに持っていません。",
+    "SOLD_TITLE": "売却完了",
+    "SOLD_TEXT": "**{{amount}}x {{name}}** を **{{total}}** 🪙 で売りました。\n残高: **{{balance}}** 🪙。",
+    "ERROR": "そのアイテムを売却できませんでした。"
+}

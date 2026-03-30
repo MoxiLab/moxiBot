@@ -1,0 +1,3 @@
+{
+    "README": "## Seguimiento de Bugs · Aura Moxi 🌙✨\n\n💬 ¿Qué pasó? ¿Cómo repetirlo?\n📸 Adjunta evidencia breve (capturas, videos, logs, IDs).\n🌈 ¿Qué esperabas ver?\n\n🎴 Un hilo por bug.\n🔴 · 🟡 · 🟢 etiquetas marcan el pulso.\n🪄 Botones para cerrar / reabrir.\n🎐 El bot fija la guía y enlaza duplicados detectados.\n\n📷 '.bug' necesita imágenes o pruebas para acelerarlo.\n🚀 Usa '/bug' para preparar el foro o escribe '/bug'/'.bug <texto>' para reportar.\n\nGracias por cuidar que {{guildName}} siga tranquilo."
+}

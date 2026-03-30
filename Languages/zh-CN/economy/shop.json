@@ -1,0 +1,19 @@
+{
+    "SHOP_TITLE": "商店",
+    "SHOP_EMBED_TITLE": "🛍️ Moxi 的商店",
+    "SHOP_WELCOME": "欢迎来到我的小店。",
+    "SHOP_INSTRUCTIONS": "你可以使用：`{{prefix}}buy <id|name|itemId> [amount]` 或 `{{prefix}}moxishop buy <id|name|itemId> [amount]` 进行购买。",
+    "SHOP_LIST_TITLE": "**物品列表**",
+    "SHOP_ALL_ITEMS": "全部物品",
+    "SHOP_CATEGORY": "分类",
+    "SHOP_NO_ITEMS": "_此分类下没有物品。_",
+    "SHOP_FOOTER_PAGE": "第 {{page}} / {{total}} 页",
+    "USAGE_BUY": "用法：`.moxishop buy <id|name|itemId> [amount]`",
+    "NOT_FOUND_BY_ID": "找不到 ID 为 {{id}} 的物品。用 .moxishop list 查看 ID。",
+    "NOT_FOUND_GENERIC": "我在商店里找不到该物品。用 .moxishop list 查看 ID。",
+    "INVALID_PRICE": "此物品无法购买（价格无效）。",
+    "INSUFFICIENT_FUNDS_TITLE": "余额不足",
+    "INSUFFICIENT_FUNDS": "你需要 {{cost}} 🪙，而你只有 {{balance}} 🪙。",
+    "PURCHASE_SUCCESS_TITLE": "购买完成",
+    "PURCHASE_SUCCESS": "你购买了 **{{amount}}x {{name}}**，花费 **{{cost}}** 🪙。"
+}

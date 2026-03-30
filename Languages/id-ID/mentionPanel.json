@@ -1,0 +1,13 @@
+{
+    "greeting": "## 🌸 Hai! Aku {{mention}}, teman musikmu dengan sentuhan oriental.",
+    "lang_label": "🌐 **{{langName}}** ({{lang}})",
+    "prefix_label": "✨ **Prefix di server ini:** `{{prefix}}`",
+    "prefix_source_env": "Sumber prefix: **ENV (.env)**",
+    "prefix_source_custom": "Sumber prefix: **Kustom server**",
+    "user_prefix_label": "👤 **Prefix pribadimu:** `{{userPrefix}}`",
+    "forgot_prefix": "Lupa prefix-ku? Mention saja aku untuk melihatnya kapan saja.",
+    "invite": "Undang aku",
+    "support": "Dukungan",
+    "web": "Web",
+    "thanks": "Terima kasih telah memilih {{mention}}!"
+}

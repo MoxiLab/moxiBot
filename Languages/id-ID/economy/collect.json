@@ -1,0 +1,9 @@
+{
+    "TITLE": "Kumpulkan",
+    "NO_DB": "MongoDB belum dikonfigurasi, jadi ekonomi dinonaktifkan.",
+    "COOLDOWN_TITLE": "Mengumpulkan dalam cooldown",
+    "COOLDOWN_TEXT": "Kamu sudah mengumpulkan. Kembali dalam **{{next}}**.\nSaldo: **{{balance}}** 🪙.",
+    "CLAIMED_TITLE": "Mengumpulkan",
+    "CLAIMED_TEXT": "Kamu mengumpulkan **{{amount}}** 🪙.\nSaldo: **{{balance}}** 🪙.",
+    "ERROR": "Terjadi kesalahan saat mengumpulkan."
+}

@@ -1,0 +1,12 @@
+{
+    "TITLE": "Jual",
+    "NO_DB": "MongoDB belum dikonfigurasi, jadi ekonomi dinonaktifkan.",
+    "USAGE": "Cara pakai: `{{prefix}}sell <id|nama|itemId> [jumlah]`",
+    "NOT_FOUND_TITLE": "Tidak ditemukan",
+    "NOT_FOUND_TEXT": "Aku tidak menemukan item itu.",
+    "NOT_OWNED_TITLE": "Kamu tidak punya",
+    "NOT_OWNED_TEXT": "Kamu tidak punya item itu di tas.",
+    "SOLD_TITLE": "Penjualan berhasil",
+    "SOLD_TEXT": "Kamu menjual **{{amount}}x {{name}}** seharga **{{total}}** 🪙.\nSaldo: **{{balance}}** 🪙.",
+    "ERROR": "Aku tidak bisa menjual item itu."
+}

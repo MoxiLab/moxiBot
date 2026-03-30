@@ -1,0 +1,19 @@
+{
+    "TITLE": "黑市",
+    "BALANCE": "余额: **{{balance}}** 🪙",
+    "HINT": "购买方式: `blackmarket buy <1-3>`",
+    "OFFER_LINE": "{{slot}}) **{{name}}**（{{rarity}}）— **{{price}}** 🪙",
+    "BAD_SLOT_TITLE": "选择无效",
+    "BAD_SLOT_TEXT": "请选择 1 到 3 的数字。例如: `blackmarket buy 2`",
+    "NO_FUNDS_TITLE": "余额不足",
+    "NO_FUNDS_TEXT": "需要 **{{price}}** 🪙。当前余额: **{{balance}}** 🪙。",
+    "BOUGHT_TITLE": "购买成功",
+    "BOUGHT_TEXT": "你以 **{{price}}** 🪙 购买了 **{{name}}**。\n当前余额: **{{balance}}** 🪙。",
+    "NO_DB_TITLE": "数据库未配置",
+    "NO_DB_TEXT": "MongoDB 未配置，因此经济功能已禁用。",
+    "RARITY_COMMON": "普通",
+    "RARITY_UNCOMMON": "少见",
+    "RARITY_RARE": "稀有",
+    "RARITY_EPIC": "史诗",
+    "RARITY_LEGENDARY": "传说"
+}

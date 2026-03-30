@@ -1,0 +1,9 @@
+{
+    "TITLE": "벌목",
+    "NO_DB": "MongoDB가 설정되지 않아 경제 기능이 비활성화되었습니다.",
+    "COOLDOWN_TITLE": "벌목 쿨다운",
+    "COOLDOWN_TEXT": "피곤합니다. **{{next}}** 후에 다시 오세요.",
+    "SUCCESS_TITLE": "벌목 완료!",
+    "SUCCESS_TEXT": "**{{amount}}x {{item}}** 및 **{{coins}}** 🪙를 획득했습니다.\n잔액: **{{balance}}** 🪙.",
+    "ERROR": "벌목을 완료하지 못했습니다."
+}

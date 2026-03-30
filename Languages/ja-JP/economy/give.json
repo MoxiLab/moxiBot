@@ -1,0 +1,19 @@
+{
+    "DESC": "他のユーザーにコインを渡します。",
+    "USAGE_TITLE": "使い方",
+    "USAGE_TEXT": "使用例: `{{prefix}}give @user 100`",
+    "INVALID_AMOUNT_TITLE": "無効な数量",
+    "INVALID_AMOUNT_TEXT": "数量は 0 より大きい必要があります。",
+    "SELF_TITLE": "許可されていません",
+    "SELF_TEXT": "自分自身にコインを渡すことはできません。",
+    "BOT_TITLE": "許可されていません",
+    "BOT_TEXT": "Bot にコインを渡すことはできません。",
+    "INSUFFICIENT_TITLE": "残高不足",
+    "INSUFFICIENT_TEXT": "**{{amount}}** 🪙 を渡そうとしましたが、所持は **{{balance}}** 🪙 です。",
+    "SUCCESS_TITLE": "送信しました",
+    "SUCCESS_TEXT": "{{user}} に **{{amount}}** 🪙 を渡しました。\nあなたの残高: **{{balance}}** 🪙。",
+    "NO_DB_TITLE": "データベース未設定",
+    "NO_DB_TEXT": "MongoDB が設定されていないため、経済コマンドは無効です。",
+    "ERROR_TITLE": "エラー",
+    "UNKNOWN_ERROR": "エラーが発生しました。"
+}

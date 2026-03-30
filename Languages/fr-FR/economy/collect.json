@@ -1,0 +1,9 @@
+{
+    "TITLE": "Collecter",
+    "NO_DB": "MongoDB n'est pas configuré, donc l'économie est désactivée.",
+    "COOLDOWN_TITLE": "Collecte en recharge",
+    "COOLDOWN_TEXT": "Tu as déjà collecté. Reviens dans **{{next}}**.\nSolde : **{{balance}}** 🪙.",
+    "CLAIMED_TITLE": "Collecte",
+    "CLAIMED_TEXT": "Tu as collecté **{{amount}}** 🪙.\nSolde : **{{balance}}** 🪙.",
+    "ERROR": "Une erreur est survenue lors de la collecte."
+}

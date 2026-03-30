@@ -1,0 +1,14 @@
+{
+    "BAD_AMOUNT_TITLE": "كمية غير صالحة",
+    "BAD_AMOUNT_TEXT": "الاستخدام: `invest <amount>`",
+    "NO_DB_TITLE": "قاعدة البيانات غير مهيأة",
+    "NO_DB_TEXT": "MongoDB غير مُعدّ، لذا تم تعطيل نظام الاقتصاد.",
+    "NO_FUNDS_TITLE": "رصيد غير كافٍ",
+    "NO_FUNDS_TEXT": "لا تملك رصيدًا كافيًا لاستثمار **{{amount}}** 🪙.\nالرصيد الحالي: **{{balance}}** 🪙.",
+    "WIN_TITLE": "استثمار ناجح",
+    "WIN_TEXT": "ربحت **{{profit}}** 🪙 كأرباح.\nالرصيد الحالي: **{{balance}}** 🪙.",
+    "LOSE_TITLE": "استثمار فاشل",
+    "LOSE_TEXT": "خسرت **{{amount}}** 🪙.\nالرصيد الحالي: **{{balance}}** 🪙.",
+    "ERROR_TITLE": "خطأ",
+    "UNKNOWN_ERROR": "حدث خطأ."
+}

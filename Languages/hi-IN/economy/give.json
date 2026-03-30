@@ -1,0 +1,19 @@
+{
+    "DESC": "किसी दूसरे यूज़र को कॉइन्स दें।",
+    "USAGE_TITLE": "कैसे इस्तेमाल करें",
+    "USAGE_TEXT": "उपयोग: `{{prefix}}give @user 100`",
+    "INVALID_AMOUNT_TITLE": "अमान्य मात्रा",
+    "INVALID_AMOUNT_TEXT": "मात्रा 0 से बड़ी होनी चाहिए।",
+    "SELF_TITLE": "अनुमति नहीं",
+    "SELF_TEXT": "आप खुद को कॉइन्स नहीं दे सकते।",
+    "BOT_TITLE": "अनुमति नहीं",
+    "BOT_TEXT": "आप बॉट्स को कॉइन्स नहीं दे सकते।",
+    "INSUFFICIENT_TITLE": "पर्याप्त बैलेंस नहीं",
+    "INSUFFICIENT_TEXT": "आपने **{{amount}}** 🪙 देने की कोशिश की, लेकिन आपके पास केवल **{{balance}}** 🪙 हैं।",
+    "SUCCESS_TITLE": "भेज दिया गया",
+    "SUCCESS_TEXT": "आपने {{user}} को **{{amount}}** 🪙 दिए।\nआपका बैलेंस: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "डेटाबेस सेट नहीं है",
+    "NO_DB_TEXT": "MongoDB सेट नहीं है, इसलिए इकोनॉमी कमांड्स बंद हैं।",
+    "ERROR_TITLE": "त्रुटि",
+    "UNKNOWN_ERROR": "कोई त्रुटि हुई।"
+}

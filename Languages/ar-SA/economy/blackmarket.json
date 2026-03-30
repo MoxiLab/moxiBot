@@ -1,0 +1,19 @@
+{
+    "TITLE": "السوق السوداء",
+    "BALANCE": "الرصيد: **{{balance}}** 🪙",
+    "HINT": "اشترِ باستخدام: `blackmarket buy <1-3>`",
+    "OFFER_LINE": "{{slot}} • **{{name}}** ({{rarity}}) → **{{price}}** 🪙",
+    "BAD_SLOT_TITLE": "اختيار غير صالح",
+    "BAD_SLOT_TEXT": "اختر رقمًا من 1 إلى 3. مثال: `blackmarket buy 2`",
+    "NO_FUNDS_TITLE": "رصيد غير كافٍ",
+    "NO_FUNDS_TEXT": "تحتاج إلى **{{price}}** 🪙. الرصيد الحالي: **{{balance}}** 🪙.",
+    "BOUGHT_TITLE": "تم الشراء",
+    "BOUGHT_TEXT": "اشتريت **{{name}}** مقابل **{{price}}** 🪙.\nالرصيد الحالي: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "قاعدة البيانات غير مهيأة",
+    "NO_DB_TEXT": "MongoDB غير مُعدّ، لذا تم تعطيل نظام الاقتصاد.",
+    "RARITY_COMMON": "عادي",
+    "RARITY_UNCOMMON": "غير شائع",
+    "RARITY_RARE": "نادر",
+    "RARITY_EPIC": "ملحمي",
+    "RARITY_LEGENDARY": "أسطوري"
+}

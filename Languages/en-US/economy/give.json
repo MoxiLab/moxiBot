@@ -1,0 +1,19 @@
+{
+    "DESC": "Give coins to another user.",
+    "USAGE_TITLE": "How to use",
+    "USAGE_TEXT": "Use: `{{prefix}}give @user 100`",
+    "INVALID_AMOUNT_TITLE": "Invalid amount",
+    "INVALID_AMOUNT_TEXT": "The amount must be greater than 0.",
+    "SELF_TITLE": "Not allowed",
+    "SELF_TEXT": "You can't give coins to yourself.",
+    "BOT_TITLE": "Not allowed",
+    "BOT_TEXT": "You can't give coins to bots.",
+    "INSUFFICIENT_TITLE": "Insufficient funds",
+    "INSUFFICIENT_TEXT": "You tried to give **{{amount}}** 🪙 but you only have **{{balance}}** 🪙.",
+    "SUCCESS_TITLE": "Gift sent",
+    "SUCCESS_TEXT": "You gave {{user}} **{{amount}}** 🪙.\nYour balance: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "Database not configured",
+    "NO_DB_TEXT": "MongoDB is not configured, so economy commands are disabled.",
+    "ERROR_TITLE": "Error",
+    "UNKNOWN_ERROR": "Something went wrong."
+}

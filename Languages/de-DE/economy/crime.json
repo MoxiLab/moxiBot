@@ -1,0 +1,423 @@
+{
+    "ui": {
+        "panelTitle": "Verbrechen",
+        "selectActivity": "Aktivität auswählen",
+        "riskPlaceholder": "Risikostufe",
+        "btnRun": "Los"
+    },
+    "options": {
+        "stealth": "Schleichen",
+        "talk": "Ablenkung",
+        "rush": "Schnappen"
+    },
+    "doors": {
+        "a": "Tür A",
+        "b": "Tür B",
+        "c": "Tür C"
+    },
+    "risks": {
+        "safe": "Sicher",
+        "normal": "Normal",
+        "risky": "Riskant"
+    },
+    "wires": {
+        "red": "Rotes Kabel",
+        "blue": "Blaues Kabel",
+        "yellow": "Gelbes Kabel",
+        "green": "Grünes Kabel"
+    },
+    "activities": {
+        "pickpocket": {
+            "title": "Taschendiebstahl",
+            "prompt": "Du bemerkst jemanden, der abgelenkt ist und die Tasche offen hat. Wie versuchst du es?"
+        },
+        "market-swipe": {
+            "title": "Gedrängter Markt",
+            "prompt": "Zwischen Ständen und Menschen lugt ein Portemonnaie hervor. Was tust du?"
+        },
+        "metro-bump": {
+            "title": "U-Bahn-Schubser",
+            "prompt": "Eine plötzliche Bremsung, Körper stoßen zusammen… und eine leichte Tasche bietet sich an."
+        },
+        "festival-confetti": {
+            "title": "Festival",
+            "prompt": "Musik, Konfetti und Ablenkung. Was ist dein Plan?"
+        },
+        "hotel-lobby": {
+            "title": "Hotellobby",
+            "prompt": "Die Leute lassen die Wachsamkeit sinken. Wie versuchst du es?"
+        },
+        "arcade-tokens": {
+            "title": "Spielhalle",
+            "prompt": "Jemand zählt Tokens. Niemand schaut hin. Was tust du?"
+        },
+        "library-silence": {
+            "title": "Library",
+            "prompt": "Totale Stille. Eine offene Tasche. Was ist deine Methode?"
+        },
+        "park-bench": {
+            "title": "Parkbank",
+            "prompt": "Ein Rucksack liegt daneben. Wie näherst du dich?"
+        },
+        "street-magician": {
+            "title": "Straßenmagier",
+            "prompt": "Alle schauen auf den Trick. Du schaust auf die Taschen."
+        },
+        "coffee-queue": {
+            "title": "Kaffeeschlange",
+            "prompt": "Die Schlange bewegt sich langsam. Kaum Aufmerksamkeit."
+        },
+        "cinema-dark": {
+            "title": "Dunkles Kino",
+            "prompt": "Licht aus. Nutzt du den Moment?"
+        },
+        "museum-exhibit": {
+            "title": "Museum",
+            "prompt": "Die Leute sind von einer Vitrine hypnotisiert."
+        },
+        "food-truck": {
+            "title": "Food truck",
+            "prompt": "Geldbörsen draußen und alle wollen schnell zahlen."
+        },
+        "crosswalk-rush": {
+            "title": "Belebter Zebrastreifen",
+            "prompt": "Grün. Kontrolliertes Chaos."
+        },
+        "gym-lockers": {
+            "title": "Fitnessstudio-Spinde",
+            "prompt": "Lose Schlösser und abgelenkte Leute."
+        },
+        "pier-crowd": {
+            "title": "Pier",
+            "prompt": "Touristen mit Rucksäcken und offenen Karten."
+        },
+        "station-platform": {
+            "title": "Platform",
+            "prompt": "Der Zug kommt. Nervosität. Gelegenheit."
+        },
+        "night-market": {
+            "title": "Nachtmarkt",
+            "prompt": "Warme Lichter. Schnelle Hände."
+        },
+        "street-performer": {
+            "title": "Straßenkünstler",
+            "prompt": "Der Sound überdeckt Schritte und Flüstern."
+        },
+        "salon-wait": {
+            "title": "Wartezimmer",
+            "prompt": "Handys draußen. Geldbörsen draußen. Hm."
+        },
+        "bank-atm": {
+            "title": "ATM",
+            "prompt": "Jemand hebt Geld ab und steckt den Beleg ein."
+        },
+        "taxi-backseat": {
+            "title": "Taxi",
+            "prompt": "Eine Geldbörse rutscht auf den Rücksitz."
+        },
+        "train-sleeper": {
+            "title": "Schlafwagen",
+            "prompt": "Köpfe unten, Taschen unbewacht."
+        },
+        "snow-coats": {
+            "title": "Wintermäntel",
+            "prompt": "Tiefe Taschen… und verlockend."
+        },
+        "rain-umbrella": {
+            "title": "Regentag",
+            "prompt": "Regenschirme stoßen an. Niemand sieht etwas."
+        },
+        "beach-towels": {
+            "title": "Beach",
+            "prompt": "Handtücher, Taschen, Ablenkung. Was tust du?"
+        },
+        "concert-mosh": {
+            "title": "Concert",
+            "prompt": "Die Menge bewegt sich. Du auch."
+        },
+        "market-auction": {
+            "title": "Auction",
+            "prompt": "Hohe Gebote. Geteilte Aufmerksamkeit."
+        },
+        "fashion-store": {
+            "title": "Modegeschäft",
+            "prompt": "Umkleiden voll. Personal abgelenkt."
+        },
+        "electronics-demo": {
+            "title": "Gadget-Demo",
+            "prompt": "Helle Screens. Helle Taschen."
+        },
+        "pet-parade": {
+            "title": "Haustierparade",
+            "prompt": "Alle schauen auf Welpen. Du… na ja."
+        },
+        "street-food": {
+            "title": "Street food",
+            "prompt": "Hände voll, Taschen unbewacht."
+        },
+        "bus-crowd": {
+            "title": "Voller Bus",
+            "prompt": "Schnelle Stopps. Schnelle Moves."
+        },
+        "book-fair": {
+            "title": "Buchmesse",
+            "prompt": "Signierstunden, Schlangen und perfekte Ablenkungen."
+        },
+        "flower-stall": {
+            "title": "Blumenstand",
+            "prompt": "Ein romantisches Geschenk. Eine sichtbare Geldbörse."
+        },
+        "campus-hall": {
+            "title": "Campusflur",
+            "prompt": "Offene Rucksäcke und Hektik zum Unterricht."
+        },
+        "airport-gate": {
+            "title": "Boarding-Gate",
+            "prompt": "Dokumente, Tickets, Chaos. Leicht."
+        },
+        "theme-park": {
+            "title": "Freizeitpark",
+            "prompt": "Schreie, Lachen und baumelnde Taschen."
+        },
+        "harbor-ferry": {
+            "title": "Ferry",
+            "prompt": "Wind, Seekrankheit… und ein Patzer."
+        },
+        "stadium-queue": {
+            "title": "Stadionschlange",
+            "prompt": "Alle schauen zum Eingang. Auf die Taschen eher nicht."
+        },
+        "vault": {
+            "title": "Drei Türen",
+            "prompt": "Du bist drin. Es gibt drei Türen. Hinter einer gibt es schnelle Beute; die anderen bringen Ärger."
+        },
+        "storage-doors": {
+            "title": "Storage",
+            "prompt": "Drei Metalltüren. Hinter einer wartet eine leichte Beute. Wähle."
+        },
+        "office-doors": {
+            "title": "Offices",
+            "prompt": "Leerer Flur. Drei unmarkierte Türen. Welche lohnt sich?"
+        },
+        "basement-doors": {
+            "title": "Basement",
+            "prompt": "Feucht und still. Drei Türen: Lärm, Ruhe, Glück."
+        },
+        "backstage-doors": {
+            "title": "Backstage",
+            "prompt": "Hinter der Bühne gibt es drei Zugänge. Einer führt zur Beute."
+        },
+        "dock-doors": {
+            "title": "Docks",
+            "prompt": "Container und drei Lagertüren. Schnell entscheiden."
+        },
+        "subway-doors": {
+            "title": "Tunnel",
+            "prompt": "Drei Wartungstüren. Hinter einer gibt es Vorräte."
+        },
+        "library-doors": {
+            "title": "Archive",
+            "prompt": "Drei Türen zum Sperrarchiv. Hinter einer gibt es Umschläge."
+        },
+        "casino-doors": {
+            "title": "Casino",
+            "prompt": "Drei Türen hinter VIP. Eine ist die richtige."
+        },
+        "hotel-doors": {
+            "title": "Privat-Etage",
+            "prompt": "Drei identische Türen. Eine ist nicht ganz eingerastet."
+        },
+        "museum-doors": {
+            "title": "Sperrbereich",
+            "prompt": "Drei Türen mit fragwürdigen Alarmen. Bei einer versagt er."
+        },
+        "trainyard-doors": {
+            "title": "Depot",
+            "prompt": "Drei rostige Türen. Eine geht leicht auf."
+        },
+        "lab-doors": {
+            "title": "Labor",
+            "prompt": "Drei Türen mit Panels. Eine ist im Testmodus."
+        },
+        "sewers-doors": {
+            "title": "Sewers",
+            "prompt": "Drei Luken. Eine führt zu einem Unterschlupf."
+        },
+        "attic-doors": {
+            "title": "Attic",
+            "prompt": "Drei alte Türen. Eine knarrt… aber gibt nach."
+        },
+        "theater-doors": {
+            "title": "Theater",
+            "prompt": "Drei Türen hinter der Bühne. Hinter einer ist eine Kasse."
+        },
+        "warehouse-doors": {
+            "title": "Industriebereich",
+            "prompt": "Drei von Hand nummerierte Türen. Hinter einer liegt das gute Zeug."
+        },
+        "ship-doors": {
+            "title": "Laderaum",
+            "prompt": "Drei Türen zum Laderaum. Wähle, bevor jemand zurückkommt."
+        },
+        "castle-doors": {
+            "title": "Passage",
+            "prompt": "Drei Steintüren. Hinter einer gibt es eine Abkürzung zum Schatz."
+        },
+        "clinic-doors": {
+            "title": "Clinic",
+            "prompt": "Drei Lagertüren. Hinter einer ist ein kleiner Safe."
+        },
+        "stadium-doors": {
+            "title": "Stadium",
+            "prompt": "Drei Umkleidetüren. Hinter einer ist das Fundbüro."
+        },
+        "mall-doors": {
+            "title": "Mall",
+            "prompt": "Drei Servicetüren. Eine führt zur Kasse."
+        },
+        "garage-doors": {
+            "title": "Garage",
+            "prompt": "Drei Metalltüren. Eine hat kein Schloss."
+        },
+        "serverroom-doors": {
+            "title": "Serverraum",
+            "prompt": "Drei Türen. Hinter einer gibt es wiederverkaufbare Hardware."
+        },
+        "kitchen-doors": {
+            "title": "Kitchen",
+            "prompt": "Drei Türen zum Lager. Hinter einer gibt es teure Vorräte."
+        },
+        "bakery-doors": {
+            "title": "Bakery",
+            "prompt": "Drei Hintertüren. Eine führt zur Kasse."
+        },
+        "gallery-doors": {
+            "title": "Gallery",
+            "prompt": "Drei Türen zum Hinterzimmer. Eine ist schlecht geschlossen."
+        },
+        "station-doors": {
+            "title": "Station",
+            "prompt": "Drei Reinigungstüren. Hinter einer ist eine Tasche versteckt."
+        },
+        "factory-doors": {
+            "title": "Factory",
+            "prompt": "Drei Türen. Eine führt in ein Ersatzteillager."
+        },
+        "dockyard-doors": {
+            "title": "Werft",
+            "prompt": "Drei Werkzeugtüren. Hinter einer gibt es neue Kisten."
+        },
+        "getaway": {
+            "title": "Flucht",
+            "prompt": "Beute in der Hand. Wie viel Risiko gehst du beim Entkommen ein?"
+        },
+        "alley-chase": {
+            "title": "Alley",
+            "prompt": "Schritte hinter dir. Sirenen weit weg. Wie entkommst du?"
+        },
+        "rooftops": {
+            "title": "Rooftops",
+            "prompt": "Hoch über die Feuertreppe. Wie viel riskierst du?"
+        },
+        "crowd-vanish": {
+            "title": "In der Menge verschwinden",
+            "prompt": "Die Menge kann dich retten… oder verraten."
+        },
+        "river-cross": {
+            "title": "Fluss überqueren",
+            "prompt": "Es gibt eine Brücke, ein Boot und einen Sprung. Risiko?"
+        },
+        "night-scooter": {
+            "title": "Nachtscooter",
+            "prompt": "Die Nacht ist Verbündete. Oder Feindin. Entscheide."
+        },
+        "smoke-bomb": {
+            "title": "Rauchwand",
+            "prompt": "Du kannst verschwinden… wenn es klappt."
+        },
+        "subway-hop": {
+            "title": "U-Bahn-Sprung",
+            "prompt": "Der Zug kommt. Stürmst du rein oder bleibst du ruhig?"
+        },
+        "taxi-dash": {
+            "title": "Schnelles Taxi",
+            "prompt": "Ein freies Taxi. Zahlen und fahren, oder abhauen?"
+        },
+        "crowbar-route": {
+            "title": "Notausgang",
+            "prompt": "Verschlossene Türen. Du könntest eine aufbrechen."
+        },
+        "rain-cover": {
+            "title": "Regendeckung",
+            "prompt": "Regen verdeckt Spuren… und Sicht."
+        },
+        "market-escape": {
+            "title": "Marktflucht",
+            "prompt": "Enge Stände. Ein Fehler ist teuer."
+        },
+        "stairs-sprint": {
+            "title": "Stairs",
+            "prompt": "Rauf oder runter. Jede Sekunde zählt."
+        },
+        "dock-fog": {
+            "title": "Hafennebel",
+            "prompt": "Nebel versteckt… aber verwirrt auch."
+        },
+        "warehouse-run": {
+            "title": "Zwischen Lagerhallen",
+            "prompt": "Abkürzungen drinnen. Risiko durch Wachen."
+        },
+        "festival-hide": {
+            "title": "Im Festival untertauchen",
+            "prompt": "Kostüme und Masken. Wie auffällig bist du?"
+        },
+        "parking-garage": {
+            "title": "Parkhaus",
+            "prompt": "Rampen, Autos, Kameras. Wähle dein Risiko."
+        },
+        "canal-walk": {
+            "title": "Canal",
+            "prompt": "Du kannst am Kanalrand entlang. Rutschig."
+        },
+        "construction-site": {
+            "title": "Baustelle",
+            "prompt": "Gerüste und Lücken. Du kannst verschwinden… oder fallen."
+        },
+        "mall-exit": {
+            "title": "Mall-Ausgang",
+            "prompt": "Drei Ausgänge, zwei Wachen. Was tust du?"
+        },
+        "hotel-elevator": {
+            "title": "Elevator",
+            "prompt": "Langsamer Aufzug oder schnelle Treppe. Risiko."
+        },
+        "station-cameras": {
+            "title": "Cameras",
+            "prompt": "Kameras verfolgen dich. Versuchst du ihnen auszuweichen?"
+        },
+        "rooftop-jump": {
+            "title": "Jump",
+            "prompt": "Ein Sprung zwischen Gebäuden. Deine Entscheidung."
+        },
+        "sewer-drop": {
+            "title": "Manhole",
+            "prompt": "Du kannst in die Kanalisation springen. Oder nicht."
+        },
+        "forest-edge": {
+            "title": "Waldrand",
+            "prompt": "Dunkelheit und Äste. Sicherer Weg oder Abkürzung."
+        },
+        "bridge-crossing": {
+            "title": "Bridge",
+            "prompt": "Schnell, aber sichtbar. Risiko?"
+        },
+        "crowd-metro": {
+            "title": "Bahnhofsmenge",
+            "prompt": "Untertauchen… oder sprinten."
+        },
+        "harbor-boat": {
+            "title": "Hafenboot",
+            "prompt": "Ein Boot löst sich. Nutzt du es?"
+        }
+    }
+}

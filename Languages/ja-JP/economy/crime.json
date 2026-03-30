@@ -1,0 +1,423 @@
+{
+    "ui": {
+        "panelTitle": "犯罪",
+        "selectActivity": "アクティビティを選択",
+        "riskPlaceholder": "リスクレベル",
+        "btnRun": "実行"
+    },
+    "options": {
+        "stealth": "ステルス",
+        "talk": "陽動",
+        "rush": "強奪"
+    },
+    "doors": {
+        "a": "ドアA",
+        "b": "ドアB",
+        "c": "ドアC"
+    },
+    "risks": {
+        "safe": "安全",
+        "normal": "通常",
+        "risky": "危険"
+    },
+    "wires": {
+        "red": "赤いワイヤー",
+        "blue": "青いワイヤー",
+        "yellow": "黄色いワイヤー",
+        "green": "緑のワイヤー"
+    },
+    "activities": {
+        "pickpocket": {
+            "title": "スリ",
+            "prompt": "気を取られてバッグが開いている人を見つけた。どう動く？"
+        },
+        "market-swipe": {
+            "title": "混雑した市場",
+            "prompt": "屋台と人混みの隙間に財布が見える。どうする？"
+        },
+        "metro-bump": {
+            "title": "地下鉄の押し合い",
+            "prompt": "急ブレーキで人がぶつかり…無防備なポケットが現れる。"
+        },
+        "festival-confetti": {
+            "title": "フェス",
+            "prompt": "音楽、紙吹雪、気の散る要素だらけ。どうする？"
+        },
+        "hotel-lobby": {
+            "title": "ホテルのロビー",
+            "prompt": "警戒が緩む場所。どう狙う？"
+        },
+        "arcade-tokens": {
+            "title": "ゲームセンター",
+            "prompt": "誰かがメダルを数えている。誰も見ていない。どうする？"
+        },
+        "library-silence": {
+            "title": "図書館",
+            "prompt": "静寂。開いたバッグ。どうやる？"
+        },
+        "park-bench": {
+            "title": "公園のベンチ",
+            "prompt": "少し離れた場所にリュックがある。どう近づく？"
+        },
+        "street-magician": {
+            "title": "路上マジシャン",
+            "prompt": "みんな手品に夢中。あなたはポケットを見る。"
+        },
+        "coffee-queue": {
+            "title": "コーヒーの列",
+            "prompt": "列はゆっくり進み、注意は散漫。"
+        },
+        "cinema-dark": {
+            "title": "暗い映画館",
+            "prompt": "真っ暗。今がチャンス？"
+        },
+        "museum-exhibit": {
+            "title": "博物館",
+            "prompt": "みんな展示ケースに見入っている。"
+        },
+        "food-truck": {
+            "title": "フードトラック",
+            "prompt": "支払いで財布が出ていて、みんな急いでいる。"
+        },
+        "crosswalk-rush": {
+            "title": "混雑した横断歩道",
+            "prompt": "青信号。制御された混沌。"
+        },
+        "gym-lockers": {
+            "title": "ジムのロッカー",
+            "prompt": "緩い鍵と、気の散った人たち。"
+        },
+        "pier-crowd": {
+            "title": "桟橋",
+            "prompt": "観光客がリュックを背負い、地図を広げている。"
+        },
+        "station-platform": {
+            "title": "ホーム",
+            "prompt": "電車が来る。焦り。チャンス。"
+        },
+        "night-market": {
+            "title": "夜市",
+            "prompt": "暖かな灯り。素早い手。"
+        },
+        "street-performer": {
+            "title": "ストリートパフォーマー",
+            "prompt": "音が足音や囁きをかき消す。"
+        },
+        "salon-wait": {
+            "title": "待合室",
+            "prompt": "スマホも財布も出ている。ふむ。"
+        },
+        "bank-atm": {
+            "title": "ATM",
+            "prompt": "誰かが現金を下ろして、レシートをポケットへ。"
+        },
+        "taxi-backseat": {
+            "title": "タクシー",
+            "prompt": "財布が後部座席に滑り落ちた。"
+        },
+        "train-sleeper": {
+            "title": "寝台車",
+            "prompt": "みんなうつむき、ポケットは無防備。"
+        },
+        "snow-coats": {
+            "title": "冬のコート",
+            "prompt": "深いポケット…魅力的。"
+        },
+        "rain-umbrella": {
+            "title": "雨の日",
+            "prompt": "傘がぶつかり合う。誰も何も見ていない。"
+        },
+        "beach-towels": {
+            "title": "ビーチ",
+            "prompt": "タオル、バッグ、気の散るもの。どうする？"
+        },
+        "concert-mosh": {
+            "title": "ライブ",
+            "prompt": "群衆が動く。あなたも動く。"
+        },
+        "market-auction": {
+            "title": "オークション",
+            "prompt": "高額入札。注意が分散する。"
+        },
+        "fashion-store": {
+            "title": "ファッション店",
+            "prompt": "試着室は大忙し。店員も気が散っている。"
+        },
+        "electronics-demo": {
+            "title": "ガジェット体験",
+            "prompt": "明るい画面。明るいポケット。"
+        },
+        "pet-parade": {
+            "title": "ペットパレード",
+            "prompt": "みんな子犬に夢中。あなたは…まあ。"
+        },
+        "street-food": {
+            "title": "屋台飯",
+            "prompt": "手が塞がり、ポケットは無防備。"
+        },
+        "bus-crowd": {
+            "title": "満員バス",
+            "prompt": "急停車。素早い動き。"
+        },
+        "book-fair": {
+            "title": "ブックフェア",
+            "prompt": "サイン会と列。完璧な気晴らし。"
+        },
+        "flower-stall": {
+            "title": "花屋",
+            "prompt": "ロマンチックな贈り物。見える財布。"
+        },
+        "campus-hall": {
+            "title": "キャンパスの廊下",
+            "prompt": "開いたリュックと、授業へ急ぐ人たち。"
+        },
+        "airport-gate": {
+            "title": "搭乗ゲート",
+            "prompt": "書類、チケット、混乱。簡単だ。"
+        },
+        "theme-park": {
+            "title": "テーマパーク",
+            "prompt": "叫び声、笑い声、ぶら下がるバッグ。"
+        },
+        "harbor-ferry": {
+            "title": "フェリー",
+            "prompt": "風、船酔い…そして隙。"
+        },
+        "stadium-queue": {
+            "title": "スタジアムの列",
+            "prompt": "みんな入口に注目。ポケットは…そうでもない。"
+        },
+        "vault": {
+            "title": "三つの扉",
+            "prompt": "侵入成功。扉は3つ。1つは簡単な獲物、残りは厄介だ。"
+        },
+        "storage-doors": {
+            "title": "倉庫",
+            "prompt": "金属扉が3つ。1つは簡単な戦利品。選べ。"
+        },
+        "office-doors": {
+            "title": "オフィス",
+            "prompt": "人気のない廊下。印のない扉が3つ。どれが当たり？"
+        },
+        "basement-doors": {
+            "title": "地下室",
+            "prompt": "湿って静か。3つの扉: 騒音、静けさ、運。"
+        },
+        "backstage-doors": {
+            "title": "舞台裏",
+            "prompt": "舞台裏に3つの入口がある。1つが戦利品へ続く。"
+        },
+        "dock-doors": {
+            "title": "波止場",
+            "prompt": "コンテナと倉庫の扉が3つ。素早く選べ。"
+        },
+        "subway-doors": {
+            "title": "トンネル",
+            "prompt": "保守扉が3つ。1つに備品がある。"
+        },
+        "library-doors": {
+            "title": "アーカイブ",
+            "prompt": "立入禁止の資料室へ3つの扉。1つには封筒がある。"
+        },
+        "casino-doors": {
+            "title": "カジノ",
+            "prompt": "VIP の裏に扉が3つ。当たりは1つだけ。"
+        },
+        "hotel-doors": {
+            "title": "専用フロア",
+            "prompt": "同じ扉が3つ。1つは閉まりきっていない。"
+        },
+        "museum-doors": {
+            "title": "立入禁止エリア",
+            "prompt": "怪しいアラーム付きの扉が3つ。1つは故障している。"
+        },
+        "trainyard-doors": {
+            "title": "車両基地",
+            "prompt": "錆びた扉が3つ。1つは簡単に開く。"
+        },
+        "lab-doors": {
+            "title": "研究所",
+            "prompt": "パネル付きの扉が3つ。1つはテストモードだ。"
+        },
+        "sewers-doors": {
+            "title": "下水道",
+            "prompt": "ハッチが3つ。1つは隠れ家へ続く。"
+        },
+        "attic-doors": {
+            "title": "屋根裏",
+            "prompt": "古い扉が3つ。1つは軋む…が開く。"
+        },
+        "theater-doors": {
+            "title": "劇場",
+            "prompt": "舞台裏の扉が3つ。1つに現金箱がある。"
+        },
+        "warehouse-doors": {
+            "title": "工業区画",
+            "prompt": "手書き番号の扉が3つ。良い物は1つにある。"
+        },
+        "ship-doors": {
+            "title": "船倉",
+            "prompt": "船倉への扉が3つ。誰か戻る前に選べ。"
+        },
+        "castle-doors": {
+            "title": "通路",
+            "prompt": "石の扉が3つ。1つは宝への近道だ。"
+        },
+        "clinic-doors": {
+            "title": "クリニック",
+            "prompt": "保管扉が3つ。1つに小さな金庫がある。"
+        },
+        "stadium-doors": {
+            "title": "スタジアム",
+            "prompt": "ロッカールームの扉が3つ。1つは落し物だ。"
+        },
+        "mall-doors": {
+            "title": "ショッピングモール",
+            "prompt": "サービス扉が3つ。1つはレジへ続く。"
+        },
+        "garage-doors": {
+            "title": "ガレージ",
+            "prompt": "金属扉が3つ。1つは鍵がない。"
+        },
+        "serverroom-doors": {
+            "title": "サーバールーム",
+            "prompt": "扉が3つ。1つに転売できる機材がある。"
+        },
+        "kitchen-doors": {
+            "title": "キッチン",
+            "prompt": "倉庫へ続く扉が3つ。1つに高価な備品がある。"
+        },
+        "bakery-doors": {
+            "title": "ベーカリー",
+            "prompt": "裏口が3つ。1つはレジへ続く。"
+        },
+        "gallery-doors": {
+            "title": "ギャラリー",
+            "prompt": "バックルームへ3つの扉。1つは閉め甘い。"
+        },
+        "station-doors": {
+            "title": "駅",
+            "prompt": "清掃用扉が3つ。1つにバッグが隠されている。"
+        },
+        "factory-doors": {
+            "title": "工場",
+            "prompt": "扉が3つ。1つは部品倉庫へ開く。"
+        },
+        "dockyard-doors": {
+            "title": "造船所",
+            "prompt": "工具庫の扉が3つ。1つに新しい木箱がある。"
+        },
+        "getaway": {
+            "title": "逃走",
+            "prompt": "戦利品を手にした。逃げ切るためにどれだけリスクを取る？"
+        },
+        "alley-chase": {
+            "title": "路地",
+            "prompt": "背後に足音。遠くにサイレン。どう逃げる？"
+        },
+        "rooftops": {
+            "title": "屋上",
+            "prompt": "非常階段を上がる。どれだけリスクを取る？"
+        },
+        "crowd-vanish": {
+            "title": "人混みに紛れる",
+            "prompt": "群衆は助けにも罠にもなる…"
+        },
+        "river-cross": {
+            "title": "川を渡る",
+            "prompt": "橋、ボート、ジャンプ。リスクは？"
+        },
+        "night-scooter": {
+            "title": "夜のスクーター",
+            "prompt": "夜は味方か敵か。決めろ。"
+        },
+        "smoke-bomb": {
+            "title": "煙幕",
+            "prompt": "うまくいけば…消えられる。"
+        },
+        "subway-hop": {
+            "title": "地下鉄に飛び乗る",
+            "prompt": "電車が来た。突っ込む？落ち着いて行く？"
+        },
+        "taxi-dash": {
+            "title": "高速タクシー",
+            "prompt": "空のタクシーだ。払って乗る？それとも走る？"
+        },
+        "crowbar-route": {
+            "title": "非常口ルート",
+            "prompt": "鍵のかかった扉。こじ開けることもできる。"
+        },
+        "rain-cover": {
+            "title": "雨に紛れる",
+            "prompt": "雨は足跡も視界も隠す…"
+        },
+        "market-escape": {
+            "title": "市場から脱出",
+            "prompt": "狭い通路。ミスは高くつく。"
+        },
+        "stairs-sprint": {
+            "title": "階段ダッシュ",
+            "prompt": "上か下か。一秒が勝負。"
+        },
+        "dock-fog": {
+            "title": "波止場の霧",
+            "prompt": "霧は隠す…が迷わせもする。"
+        },
+        "warehouse-run": {
+            "title": "倉庫の間",
+            "prompt": "屋内の近道。警備のリスク。"
+        },
+        "festival-hide": {
+            "title": "フェスに紛れる",
+            "prompt": "衣装と仮面。どれだけ目立つ？"
+        },
+        "parking-garage": {
+            "title": "立体駐車場",
+            "prompt": "スロープ、車、カメラ。リスクを選べ。"
+        },
+        "canal-walk": {
+            "title": "運河沿い",
+            "prompt": "運河沿いを進める。滑りやすい。"
+        },
+        "construction-site": {
+            "title": "工事現場",
+            "prompt": "足場と隙間。消える…か落ちる。"
+        },
+        "mall-exit": {
+            "title": "モールの出口",
+            "prompt": "出口が3つ、警備が2人。どうする？"
+        },
+        "hotel-elevator": {
+            "title": "エレベーター",
+            "prompt": "遅いエレベーターか速い階段か。リスクは？"
+        },
+        "station-cameras": {
+            "title": "監視カメラ",
+            "prompt": "カメラが追ってくる。避けようとする？"
+        },
+        "rooftop-jump": {
+            "title": "ジャンプ",
+            "prompt": "建物の間を飛ぶ必要がある。あなた次第だ。"
+        },
+        "sewer-drop": {
+            "title": "マンホール",
+            "prompt": "下水に降りることもできる…やめることも。"
+        },
+        "forest-edge": {
+            "title": "森の端",
+            "prompt": "暗闇と枝。安全な道か近道か。"
+        },
+        "bridge-crossing": {
+            "title": "橋",
+            "prompt": "速いが目立つ。リスクは？"
+        },
+        "crowd-metro": {
+            "title": "駅の人混み",
+            "prompt": "紛れる…か全力疾走。"
+        },
+        "harbor-boat": {
+            "title": "港のボート",
+            "prompt": "ボートが流れ出した。使う？"
+        }
+    }
+}

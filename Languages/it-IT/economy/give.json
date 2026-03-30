@@ -1,0 +1,19 @@
+{
+    "DESC": "Dai coins a un altro utente.",
+    "USAGE_TITLE": "Come usare",
+    "USAGE_TEXT": "Usa: `{{prefix}}give @utente 100`",
+    "INVALID_AMOUNT_TITLE": "Quantità non valida",
+    "INVALID_AMOUNT_TEXT": "La quantità deve essere maggiore di 0.",
+    "SELF_TITLE": "Non consentito",
+    "SELF_TEXT": "Non puoi darti coins da solo/a.",
+    "BOT_TITLE": "Non consentito",
+    "BOT_TEXT": "Non puoi dare coins ai bot.",
+    "INSUFFICIENT_TITLE": "Fondi insufficienti",
+    "INSUFFICIENT_TEXT": "Hai provato a dare **{{amount}}** 🪙 ma hai solo **{{balance}}** 🪙.",
+    "SUCCESS_TITLE": "Invio completato",
+    "SUCCESS_TEXT": "Hai dato a {{user}} **{{amount}}** 🪙.\nIl tuo saldo: **{{balance}}** 🪙.",
+    "NO_DB_TITLE": "Database non configurato",
+    "NO_DB_TEXT": "MongoDB non è configurato, quindi i comandi di economia sono disabilitati.",
+    "ERROR_TITLE": "Errore",
+    "UNKNOWN_ERROR": "Qualcosa è andato storto."
+}

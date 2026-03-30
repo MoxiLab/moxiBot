@@ -1,0 +1,5 @@
+{
+    "TITLE": "Guide de l'économie",
+    "BODY": "Commandes rapides :\n• `{{prefix}}bal` — voir tes coins\n• `{{prefix}}daily` — récompense quotidienne\n• `{{prefix}}work` — travailler pour des coins\n• `{{prefix}}moxishop list` — voir la boutique\n• `{{prefix}}moxishop buy <id> [quantité]` — acheter\n• `{{prefix}}bag` — voir le sac\n• `{{prefix}}use <item>` — utiliser un objet\n• `{{prefix}}sell <item> [quantité]` — vendre un objet\n• `{{prefix}}leaderboard` — classement\n\nExtras :\n• `{{prefix}}collect` — collecte avec recharge\n• `{{prefix}}quest` — quêtes quotidiennes\n• `{{prefix}}race` — course avec recharge",
+    "FOOTER": "Astuce : si quelque chose ne marche pas, vérifie MongoDB (MONGODB)."
+}

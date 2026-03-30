@@ -1,0 +1,12 @@
+{
+    "TITLE": "الراتب",
+    "DESC": "استلم راتبك اليومي.",
+    "CLAIMED_TITLE": "تم استلام الراتب",
+    "CLAIMED_TEXT": "استلمت **{{amount}}** 🪙.\nالرصيد الحالي: **{{balance}}** 🪙.{{jobLine}}",
+    "COOLDOWN_TITLE": "الراتب في فترة انتظار",
+    "COOLDOWN_TEXT": "لقد استلمت راتبك بالفعل. عد بعد **{{next}}**.\nالرصيد الحالي: **{{balance}}** 🪙.{{jobLine}}",
+    "NO_DB_TITLE": "قاعدة البيانات غير مهيأة",
+    "NO_DB_TEXT": "MongoDB غير مُعدّ، لذا تم تعطيل مكافآت الاقتصاد.",
+    "ERROR_TITLE": "خطأ",
+    "UNKNOWN_ERROR": "حدث خطأ."
+}

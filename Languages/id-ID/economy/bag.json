@@ -1,0 +1,16 @@
+{
+    "TITLE_PUBLIC": "🎒 Tasmu",
+    "TITLE_PRIVATE": "🎒 Tasmu (privat)",
+    "CATEGORY_OTHER": "Lainnya",
+    "HELP_USE": "Kamu bisa memakai item dengan: {{use}}",
+    "HELP_BUFFS": "Kamu bisa melihat buff aktifmu dengan: {{buffs}}",
+    "EMBED_EMPTY": "_Kamu tidak punya item di kategori ini._",
+    "FOOTER_PAGE": "Halaman {{page}} dari {{total}}",
+    "SELECT_PLACEHOLDER": "Pilih kategori",
+    "SELECT_DESC": "{{types}} jenis • {{total}} total",
+    "SELECT_EMPTY_OPTION": "Tidak ada item",
+    "ONLY_AUTHOR_BUTTONS": "Hanya pengguna yang membuka tas yang bisa memakai tombol ini.",
+    "ONLY_AUTHOR_MENU": "Hanya pengguna yang membuka tas yang bisa memakai menu ini.",
+    "INFO_TEXT": "Gunakan selector untuk mengganti kategori. Pindah halaman dengan ◀ ▶. Tutup dengan ❌.",
+    "CLOSED_TEXT": "Tas ditutup."
+}

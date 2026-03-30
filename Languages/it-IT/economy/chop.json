@@ -1,0 +1,9 @@
+{
+    "TITLE": "Taglia legna",
+    "NO_DB": "MongoDB non è configurato, quindi l'economia è disabilitata.",
+    "COOLDOWN_TITLE": "Taglio legna in ricarica",
+    "COOLDOWN_TEXT": "Sei stanco/a. Torna tra **{{next}}**.",
+    "SUCCESS_TITLE": "Taglio completato!",
+    "SUCCESS_TEXT": "Hai ottenuto **{{amount}}x {{item}}** e **{{coins}}** 🪙.\nSaldo: **{{balance}}** 🪙.",
+    "ERROR": "Non sono riuscito a completare il taglio."
+}

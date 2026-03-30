@@ -1,0 +1,5 @@
+{
+    "TITLE": "دليل الاقتصاد",
+    "BODY": "أوامر سريعة:\n• `{{prefix}}bal` — عرض رصيدك\n• `{{prefix}}daily` — مكافأة يومية\n• `{{prefix}}work` — العمل لكسب العملات\n• `{{prefix}}moxishop list` — عرض المتجر\n• `{{prefix}}moxishop buy <id> [amount]` — شراء\n• `{{prefix}}bag` — عرض الحقيبة\n• `{{prefix}}use <item>` — استخدام عنصر\n• `{{prefix}}sell <item> [amount]` — بيع عنصر\n• `{{prefix}}leaderboard` — لوحة الصدارة\n\nإضافات:\n• `{{prefix}}collect` — جمع مع فترة انتظار\n• `{{prefix}}quest` — مهام يومية\n• `{{prefix}}race` — سباق مع فترة انتظار",
+    "FOOTER": "نصيحة: إذا حدثت مشكلة، تحقق من MongoDB (MONGODB)."
+}
